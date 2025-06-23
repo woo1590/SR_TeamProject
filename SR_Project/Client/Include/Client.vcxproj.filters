@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="00. MainApp">
+      <UniqueIdentifier>{e8bd49f9-d4c2-4002-9ba4-50b9b9cda714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc">
+      <UniqueIdentifier>{a22aa319-320d-4f2b-ac3c-b97a66226eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\pch">
+      <UniqueIdentifier>{159b3947-5451-4117-8838-1d3118496c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="100. Executable">
+      <UniqueIdentifier>{7e0eb265-019d-47b0-894c-3b8acf6ec377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene">
+      <UniqueIdentifier>{2fd01564-4fdf-47b4-9062-cb5f13d0d79e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object">
+      <UniqueIdentifier>{28d66789-23f9-4794-81d6-2e11ae4821d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\TestScene">
+      <UniqueIdentifier>{d4dd108d-25b9-45c4-82a8-2126c1e925d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\LogoScene">
+      <UniqueIdentifier>{39b97083-7818-420c-a654-4bbc03ef0b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\SkyBox">
+      <UniqueIdentifier>{fa569c5c-5c68-4e03-9479-06d02a03255c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\BasicTerrain">
+      <UniqueIdentifier>{d7bd993e-a135-414f-a268-d250bb692d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\LoadingScene">
+      <UniqueIdentifier>{52678876-79dc-41a1-baf8-7610b6c30f02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\LoadingScene\Loader">
+      <UniqueIdentifier>{995b1923-0be6-49b5-b216-2f3b027b0909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\Header">
+      <UniqueIdentifier>{7fa944f9-866b-4c3b-93da-e6f8f3f14f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\TestObject">
+      <UniqueIdentifier>{6d846a5a-52ad-4eb1-ab0b-dba2484c9f11}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Header\MainApp.h">
+      <Filter>00. MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>99. Etc\pch</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99. Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestScene.h">
+      <Filter>01. Scene\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LogoScene.h">
+      <Filter>01. Scene\LogoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BasicTerrain.h">
+      <Filter>02. Object\BasicTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingScene.h">
+      <Filter>01. Scene\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Loader.h">
+      <Filter>01. Scene\LoadingScene\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="Client_Defines.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkyBox.h">
+      <Filter>02. Object\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestObject.h">
+      <Filter>02. Object\TestObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\MainApp.cpp">
+      <Filter>00. MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>99. Etc\pch</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>100. Executable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestScene.cpp">
+      <Filter>01. Scene\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LogoScene.cpp">
+      <Filter>01. Scene\LogoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBox.cpp">
+      <Filter>02. Object\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BasicTerrain.cpp">
+      <Filter>02. Object\BasicTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingScene.cpp">
+      <Filter>01. Scene\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Loader.cpp">
+      <Filter>01. Scene\LoadingScene\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestObject.cpp">
+      <Filter>02. Object\TestObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,28 @@
+#pragma once
+#include "Base.h"
+#include "Engine_Define.h"
+
+class Loader :
+    public Base
+{
+private:
+    Loader(LOADID loadId);
+    virtual ~Loader();
+
+public:
+    static Loader* Create(LOADID loadId);
+    HRESULT Ready_Loader();
+    HRESULT Loading();
+    _bool IsFinished()const;
+    static _uint __stdcall LoaderMain(void* arg);
+private:
+    HRESULT Load_TestScene();
+
+    void Free()override;
+    
+    HANDLE H_Thread;
+    CRITICAL_SECTION Crt;
+    _bool Is_Finish = false;
+    LOADID LoadId;
+};
+

@@ -1,0 +1,169 @@
+#include "TransformComponent.h"
+#include "MyMath.h"
+
+//object
+#include "Object.h"
+
+TransformComponent::TransformComponent(Object* owner)
+    :ObjectComponent(owner)
+{
+}
+
+TransformComponent::~TransformComponent()
+{
+}
+
+TransformComponent* TransformComponent::Create(Object* owner)
+{
+    TransformComponent* Instance = new TransformComponent(owner);
+
+    if (FAILED(Instance->Ready_Component()))
+    {
+        Safe_Release(Instance);
+
+        Instance = nullptr;
+    }
+
+    return Instance;
+}
+
+void TransformComponent::Update(float dt)
+{
+    
+}
+
+void TransformComponent::SetPosition(float x, float y, float z)
+{
+    SetPosition(_vec3(x, y, z));
+}
+
+void TransformComponent::SetPosition(_vec3 position)
+{
+    Position = position;
+}
+
+void TransformComponent::SetScale(float cx, float cy, float cz)
+{
+    SetScale(_vec3(cx, cy, cz));
+}
+
+void TransformComponent::SetScale(_vec3 scale)
+{
+    Scale = scale;
+}
+
+void TransformComponent::SetRotate(float pitch, float yaw, float roll)
+{
+    SetRotate(_vec3(pitch, yaw, roll));
+}
+
+void TransformComponent::SetRotate(_vec3 rotate)
+{
+    rotate.x = math::NormalizeAngle(rotate.x);
+    rotate.y = math::NormalizeAngle(rotate.y);
+    rotate.z = math::NormalizeAngle(rotate.z);
+
+    Rotation = rotate;
+}
+
+void TransformComponent::SetForward(_vec3 forward)
+{
+    Forward = forward;
+    _vec3 worldUp = { 0.f,1.f,0.f };
+    if (D3DXVec3Dot(&forward, &worldUp) > 0.999f)
+        worldUp = { 0.f,1.01f,0.f };
+
+    D3DXVec3Cross(&Right, &worldUp, &Forward);
+    D3DXVec3Normalize(&Right, &Right);
+    D3DXVec3Cross(&Up, &Forward, &Right);
+    D3DXVec3Normalize(&Up, &Up);
+
+    _float pitch = asin(std::clamp(-Forward.y, -1.f, 1.f));
+    _float yaw = atan2(Forward.x, Forward.z);
+    _float roll;
+
+    if (fabsf(cosf(pitch)) > 0.0001f) {                   
+        roll = atan2f(Right.y,Up.y);                      
+    }
+    else {                                                
+        roll = 0.0f;
+    }
+
+    Rotation = { pitch,yaw,roll };
+}
+
+void TransformComponent::SetParent(Object* parent)
+{
+    Parent = parent->GetComponent<TransformComponent>();
+}
+
+void TransformComponent::SetParent(TransformComponent* parent)
+{
+    Parent = parent;
+}
+
+void TransformComponent::Translate(_vec3 velocity)
+{
+    Position += velocity;
+}
+
+void TransformComponent::Translate(float x, float y, float z)
+{
+    Translate(_vec3(x, y, z));
+}
+
+_vec3 TransformComponent::GetPosition() const
+{
+    return Position;
+}
+
+_vec3 TransformComponent::GetScale() const
+{
+    return Scale;
+}
+
+_vec3 TransformComponent::GetRotate() const
+{
+    return Rotation;
+}
+
+_vec3 TransformComponent::GetFoward() const
+{
+    return Forward;
+}
+
+_vec3 TransformComponent::GetRight() const
+{
+    return Right;
+}
+
+_vec3 TransformComponent::GetUp() const
+{
+    return Up;
+}
+
+_matrix TransformComponent::GetWorldMatrix() const
+{
+    _matrix transMat;
+    _matrix rotX;
+    _matrix rotY;
+    _matrix rotZ;
+    _matrix scaleMat;
+
+    _matrix worldMat;
+
+    D3DXMatrixTranslation(&transMat, Position.x, Position.y, Position.z);
+    D3DXMatrixRotationX(&rotX, Rotation.x);
+    D3DXMatrixRotationY(&rotY, Rotation.y);
+    D3DXMatrixRotationZ(&rotZ, Rotation.z);
+    D3DXMatrixScaling(&scaleMat, Scale.x, Scale.y, Scale.z);
+
+    worldMat = scaleMat * rotY * rotX * rotZ * transMat;
+
+    return worldMat;
+}
+
+void TransformComponent::Free()
+{
+    //생성한 자원 해제
+}

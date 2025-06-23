@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="01. Engine Component">
+      <UniqueIdentifier>{30b4ef93-0208-42eb-be6e-5bc332542a4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc">
+      <UniqueIdentifier>{dda1ece1-be59-496c-b92b-869723cd2b48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\Header">
+      <UniqueIdentifier>{862f949f-9185-4de3-b5c9-fcbe1775b13d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. EngineCore">
+      <UniqueIdentifier>{c7d740f0-2e89-440a-939e-00714085aa0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\TimerManager">
+      <UniqueIdentifier>{ace0d722-4d26-4946-9a0e-3f72f8e60fbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\FrameManager">
+      <UniqueIdentifier>{7b4f3e87-7d12-44b2-b48e-7b9c242860f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\TimerManager\Timer">
+      <UniqueIdentifier>{f834bbb3-6f73-4431-8d14-ef255414fda1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\FrameManager\Frame">
+      <UniqueIdentifier>{23de1bf3-c19a-4612-b4dc-818a64d6ed1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\Math">
+      <UniqueIdentifier>{d0c4ad0e-0404-4910-9504-c2837b6d8e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\RenderSystem">
+      <UniqueIdentifier>{363dfc9b-2e5d-4f87-9c25-dc8c2848aa6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\InputSystem">
+      <UniqueIdentifier>{300e0ce1-0973-417c-b82b-aca479cae6ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\SceneManager">
+      <UniqueIdentifier>{c6ba8e92-2e80-42d4-94cc-3d143f726746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\LightSystem">
+      <UniqueIdentifier>{eba6c95a-2b18-42c6-81ce-5f65a1995e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager">
+      <UniqueIdentifier>{2886c4af-8bb9-4a3f-b7a9-7691db1d77a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh">
+      <UniqueIdentifier>{d03369b5-3674-48de-9f73-d75920cf0e1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Shader">
+      <UniqueIdentifier>{b1a528a5-c3f8-4ee7-90e7-3d4ff7265f47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Material">
+      <UniqueIdentifier>{d19ac74f-6c1d-440d-97e0-c2f66a9803c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. ImGui">
+      <UniqueIdentifier>{4cdcef45-9056-4e7e-b6e2-2e7ef49f174d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GraphicDevice">
+      <UniqueIdentifier>{6b7c17ea-e466-4e88-831b-2fd1e6ace52f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Scene">
+      <UniqueIdentifier>{b213d155-1af8-499f-a154-b0888945d7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component">
+      <UniqueIdentifier>{1f5af64b-23d1-4435-81be-233ec6563d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\ObjectManager">
+      <UniqueIdentifier>{cf033f2c-1cc8-4bdb-9d1f-c1b988b624fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object">
+      <UniqueIdentifier>{f3c05cca-2de6-49bd-baf1-8d16bd4651f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component">
+      <UniqueIdentifier>{60a077cb-5842-470d-8b9d-264acc208d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Renderer">
+      <UniqueIdentifier>{35a7310b-a36c-46a1-b4b2-cccead3ad7c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Renderer\MeshRenderer">
+      <UniqueIdentifier>{b394fbd1-9893-426c-81d3-d988c2ed667c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Renderer\TerrainRenderer">
+      <UniqueIdentifier>{353f7508-ec6b-4b56-a980-69e9dd7aa074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Camera">
+      <UniqueIdentifier>{0668d1df-b002-4063-a884-894f195425e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Light">
+      <UniqueIdentifier>{699c6ff4-28c8-46b7-a869-35ce32f2df82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Transform">
+      <UniqueIdentifier>{ef96e943-f2ba-4f06-bbb7-8cd3cad0e064}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\EngineCore.cpp">
+      <Filter>00. EngineCore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GraphicDevice.cpp">
+      <Filter>03. GraphicDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TimerManager.cpp">
+      <Filter>01. Engine Component\TimerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Timer.cpp">
+      <Filter>01. Engine Component\TimerManager\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Frame.cpp">
+      <Filter>01. Engine Component\FrameManager\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FrameManager.cpp">
+      <Filter>01. Engine Component\FrameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Scene.cpp">
+      <Filter>04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObjectManager.cpp">
+      <Filter>05. Scene Component\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Object.cpp">
+      <Filter>06. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObjectComponent.cpp">
+      <Filter>07. Object Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TransformComponent.cpp">
+      <Filter>07. Object Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SceneManager.cpp">
+      <Filter>01. Engine Component\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderSystem.cpp">
+      <Filter>01. Engine Component\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RendererComponent.cpp">
+      <Filter>07. Object Component\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraComponent.cpp">
+      <Filter>07. Object Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LightComponent.cpp">
+      <Filter>07. Object Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LightSystem.cpp">
+      <Filter>01. Engine Component\LightSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MeshRendererComponent.cpp">
+      <Filter>07. Object Component\Renderer\MeshRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FcamComponent.cpp">
+      <Filter>07. Object Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainRenderer.cpp">
+      <Filter>07. Object Component\Renderer\TerrainRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InputSystem.cpp">
+      <Filter>01. Engine Component\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ResourceManager.cpp">
+      <Filter>01. Engine Component\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Material.cpp">
+      <Filter>01. Engine Component\ResourceManager\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shader.cpp">
+      <Filter>01. Engine Component\ResourceManager\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ThirdcamComponent.cpp">
+      <Filter>07. Object Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\ImGui\imgui.cpp">
+      <Filter>02. ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\ImGui\imgui_demo.cpp">
+      <Filter>02. ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\ImGui\imgui_draw.cpp">
+      <Filter>02. ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\ImGui\imgui_tables.cpp">
+      <Filter>02. ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\ImGui\imgui_widgets.cpp">
+      <Filter>02. ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_dx9.cpp">
+      <Filter>02. ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_win32.cpp">
+      <Filter>02. ImGui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Header\EngineCore.h">
+      <Filter>00. EngineCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GraphicDevice.h">
+      <Filter>03. GraphicDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Define.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Enum.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Function.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Macro.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Struct.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_Typedef.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TimerManager.h">
+      <Filter>01. Engine Component\TimerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Timer.h">
+      <Filter>01. Engine Component\TimerManager\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Frame.h">
+      <Filter>01. Engine Component\FrameManager\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FrameManager.h">
+      <Filter>01. Engine Component\FrameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Scene.h">
+      <Filter>04. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObjectManager.h">
+      <Filter>05. Scene Component\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Object.h">
+      <Filter>06. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObjectComponent.h">
+      <Filter>07. Object Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TransformComponent.h">
+      <Filter>07. Object Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SceneManager.h">
+      <Filter>01. Engine Component\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RenderSystem.h">
+      <Filter>01. Engine Component\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RendererComponent.h">
+      <Filter>07. Object Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CameraComponent.h">
+      <Filter>07. Object Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LightComponent.h">
+      <Filter>07. Object Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LightSystem.h">
+      <Filter>01. Engine Component\LightSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MyMath.h">
+      <Filter>99. Etc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MeshRendererComponent.h">
+      <Filter>07. Object Component\Renderer\MeshRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FreecamComponent.h">
+      <Filter>07. Object Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TerrainRenderer.h">
+      <Filter>07. Object Component\Renderer\TerrainRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InputSystem.h">
+      <Filter>01. Engine Component\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ResourceManager.h">
+      <Filter>01. Engine Component\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Material.h">
+      <Filter>01. Engine Component\ResourceManager\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TerrainMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Shader.h">
+      <Filter>01. Engine Component\ResourceManager\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ThirdcamComponent.h">
+      <Filter>07. Object Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\imconfig.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\imgui.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\imgui_internal.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\imstb_rectpack.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\imstb_textedit.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\imstb_truetype.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_dx9.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_win32.h">
+      <Filter>02. ImGui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Header\Math.inl">
+      <Filter>99. Etc\Math</Filter>
+    </None>
+    <None Include="..\..\External\ImGui\.editorconfig">
+      <Filter>02. ImGui</Filter>
+    </None>
+  </ItemGroup>
+</Project>

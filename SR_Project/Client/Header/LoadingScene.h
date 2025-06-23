@@ -1,0 +1,26 @@
+#pragma once
+#include "Scene.h"
+
+class Loader;
+class LoadingScene :
+    public Scene
+{
+private:
+    LoadingScene(LOADID loadId);
+    virtual ~LoadingScene();
+
+public:
+    static LoadingScene* Create(LOADID loadId);
+
+    void Load()override;
+    void Update(_float dt)override;
+    void Late_Update(_float dt)override;
+    void Unload()override;
+
+private:
+    void Free()override;
+
+    Loader* loader = nullptr;
+    LOADID nextSceneID;
+};
+
