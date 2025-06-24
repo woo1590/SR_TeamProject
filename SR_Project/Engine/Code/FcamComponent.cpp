@@ -11,6 +11,7 @@
 FreecamComponent::FreecamComponent(Object* owner)
     :ObjectComponent(owner)
 {
+
 }
 
 FreecamComponent::~FreecamComponent()
