@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
-    <OutDir>..\Bin\Debug\</OutDir>
+    <OutDir>../Bin/Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
@@ -83,7 +83,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
-    <OutDir>..\Bin\Debug\</OutDir>
+    <OutDir>../Bin/Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
@@ -110,7 +110,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call "$(ProjectDir)..\..\Copy.bat"</Command>
+      <Command>call "$(SolutionDir)Copy.bat"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,7 +137,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call "$(ProjectDir)..\..\Copy.bat"</Command>
+      <Command>call "$(SolutionDir)Copy.bat"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -161,7 +161,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call "$(ProjectDir)..\..\Copy.bat"</Command>
+      <Command>call "$(SolutionDir)Copy.bat"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -188,7 +188,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>call "$(ProjectDir)..\..\Copy.bat"</Command>
+      <Command>call "$(SolutionDir)Copy.bat"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
