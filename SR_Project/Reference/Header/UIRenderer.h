@@ -7,12 +7,13 @@ BEGIN(Engine)
 class ENGINE_DLL UIRenderer : public RendererComponent
 {
 public:
-	UIRenderer(Object* owner, const wstring& key);
+	UIRenderer(Object* owner);
 	virtual ~UIRenderer() = default;
 
 public:
-	static UIRenderer* Create(Object* owner, const wstring& key);
+	static UIRenderer* Create(Object* owner);
 
+	void SetTexture(const wstring& key);
 	void Render() override;
 
 private:

@@ -61,28 +61,11 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!UIMgr)
 		return E_FAIL;
 
-	/*----------------Init ImGui-----------------*/
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGui::StyleColorsDark();
-
-	ImGui_ImplWin32_Init(hWnd);
-	ImGui_ImplDX9_Init(GraphicDevice::GetInstance()->GetDevice());
-
 	return S_OK;
 }
 
 void EngineCore::Tick(float dt)
 {
-	ImGui_ImplDX9_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-
-	// --- UI À§Á¬ ÀÛ¼º ---
-	ImGui::Begin("ImGui Test");   
-	ImGui::End();
-	ImGui::Render();
-	//---------------------
 
 	InputSys->BeginFrame();
 
@@ -93,7 +76,6 @@ void EngineCore::Tick(float dt)
 
 	RenderSys->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 	RenderSys->Render();
-	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
 	RenderSys->Render_End();
 
@@ -159,11 +141,6 @@ void EngineCore::Free()
 	Safe_Release(RenderSys);
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
-
-	/*-------ImGui--------*/
-	ImGui_ImplDX9_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

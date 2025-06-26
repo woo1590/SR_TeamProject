@@ -23,7 +23,8 @@ UIObj* UIObj::Create(ObjectManager* owner, ObjectType objType)
 HRESULT UIObj::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
-	auto renderer = AddComponent<UIRenderer>(L"Shield");
+	auto renderer = AddComponent<UIRenderer>();
+	renderer->SetTexture(L"Shield");
 
 	return S_OK;
 }
