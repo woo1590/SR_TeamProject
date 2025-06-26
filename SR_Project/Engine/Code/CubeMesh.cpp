@@ -13,19 +13,60 @@ CubeMesh* CubeMesh::Create()
 {
 	CubeMesh* Instance = new CubeMesh;
 
+	if (FAILED(Instance->Ready_Mesh()))
+	{
+		Safe_Release(Instance);
+
+		Instance = nullptr;
+	}
+
 	return Instance;
 }
 
 HRESULT CubeMesh::Ready_Mesh()
 {
+	Vertices.push_back(VTXCUBE({ -1.f,-1.f,-1.f }));
+	Vertices.push_back(VTXCUBE({ -1.f,1.f,-1.f }));
+	Vertices.push_back(VTXCUBE({ 1.f,1.f,-1.f }));
+	Vertices.push_back(VTXCUBE({ 1.f,-1.f,-1.f }));
+
+	Vertices.push_back(VTXCUBE({ -1.f,-1.f,1.f }));
+	Vertices.push_back(VTXCUBE({ -1.f,1.f,1.f }));
+	Vertices.push_back(VTXCUBE({ 1.f,1.f,1.f }));
+	Vertices.push_back(VTXCUBE({ 1.f,-1.f,1.f }));
+
+	//¾Õ¸é
+	Indices.push_back(INDEX32(0, 1, 2));
+	Indices.push_back(INDEX32(0, 2, 3));
+
+	//µÞ¸é
+	Indices.push_back(INDEX32(5, 4, 7));
+	Indices.push_back(INDEX32(5, 7, 6));
+
+	//¿ÞÂÊ
+	Indices.push_back(INDEX32(4, 5, 1));
+	Indices.push_back(INDEX32(4, 1, 0));
+
+	//¿À¸¥ÂÊ
+	Indices.push_back(INDEX32(3, 2, 6));
+	Indices.push_back(INDEX32(3, 6, 7));
+
+	//À­¸é
+	Indices.push_back(INDEX32(1, 5, 6));
+	Indices.push_back(INDEX32(1, 6, 2));
+
+	//¾Æ·¡¸é
+	Indices.push_back(INDEX32(4, 0, 3));
+	Indices.push_back(INDEX32(4, 3, 7));
+
+	if (FAILED(CreateBuffer()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
-HRESULT CubeMesh::SetMeshData(std::vector<VTXCUBE>& vertices, std::vector<INDEX32>& indices)
+HRESULT CubeMesh::CreateBuffer()
 {
-	Vertices = vertices;
-	Indices = indices;
-
 	VertexCnt = Vertices.size();
 	IndexCnt = Indices.size() * 3;
 

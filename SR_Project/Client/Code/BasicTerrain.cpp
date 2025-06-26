@@ -38,7 +38,7 @@ HRESULT BasicTerrain::Ready_Object()
 
     auto renderer = AddComponent<TerrainRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMesh(L"Basic_Terrain");
-    renderer->SetMaterial(L"Basic_Terrain_Material");
+    renderer->SetMaterial(L"Terrain_Mtrl");
 
     return S_OK;
 }

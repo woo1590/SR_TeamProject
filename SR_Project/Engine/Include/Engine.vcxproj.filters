@@ -52,9 +52,6 @@
     <Filter Include="01. Engine Component\ResourceManager\Material">
       <UniqueIdentifier>{d19ac74f-6c1d-440d-97e0-c2f66a9803c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. ImGui">
-      <UniqueIdentifier>{4cdcef45-9056-4e7e-b6e2-2e7ef49f174d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. GraphicDevice">
       <UniqueIdentifier>{6b7c17ea-e466-4e88-831b-2fd1e6ace52f}</UniqueIdentifier>
     </Filter>
@@ -93,7 +90,7 @@
     </Filter>
     <Filter Include="01. Engine Component\UIManager">
       <UniqueIdentifier>{6b3a785b-d917-491d-9100-f10ef5152c6b}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="01. Engine Component\SoundManager">
       <UniqueIdentifier>{28874628-650c-4c6c-9bdb-e297ab310d94}</UniqueIdentifier>
     </Filter>
@@ -186,33 +183,12 @@
     <ClCompile Include="..\Code\ThirdcamComponent.cpp">
       <Filter>07. Object Component\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_demo.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_draw.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_tables.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_widgets.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_dx9.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_win32.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UIManager.cpp">
       <Filter>01. Engine Component\UIManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EnginePCH.cpp">
       <Filter>99. Etc\Header</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\SoundManager.cpp">
       <Filter>01. Engine Component\SoundManager</Filter>
     </ClCompile>
@@ -323,36 +299,12 @@
     <ClInclude Include="..\Header\ThirdcamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imconfig.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imgui.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imgui_internal.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imstb_rectpack.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imstb_textedit.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imstb_truetype.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_dx9.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_win32.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UIManager.h">
       <Filter>01. Engine Component\UIManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EnginePCH.h">
       <Filter>99. Etc\Header</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\SoundManager.h">
       <Filter>01. Engine Component\SoundManager</Filter>
     </ClInclude>
@@ -360,9 +312,6 @@
   <ItemGroup>
     <None Include="..\Header\Math.inl">
       <Filter>99. Etc\Math</Filter>
-    </None>
-    <None Include="..\..\External\ImGui\.editorconfig">
-      <Filter>02. ImGui</Filter>
     </None>
   </ItemGroup>
 </Project>

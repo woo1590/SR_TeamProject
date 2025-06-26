@@ -1,6 +1,5 @@
 #pragma once
 #include "Base.h"
-#include "Engine_Define.h"
 
 class Loader :
     public Base

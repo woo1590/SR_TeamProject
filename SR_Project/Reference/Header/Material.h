@@ -12,7 +12,7 @@ public:
     static Material* Create();
     HRESULT Ready_Material();
     HRESULT SetMaterial(D3DMATERIAL9& mtrl);
-    HRESULT SetTexture(const std::wstring& filePath, TEXTURE texType);
+    HRESULT SetTexture(const std::wstring& key);
     void Apply();
 
 private:
@@ -20,7 +20,6 @@ private:
 
     D3DMATERIAL9 Mtrl{};
     LPDIRECT3DBASETEXTURE9 Texture = nullptr;
-
     LPDIRECT3DDEVICE9 Device = nullptr;
 };
 

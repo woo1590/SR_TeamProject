@@ -9,6 +9,7 @@
 #include <memory.h>
 #include <tchar.h>
 
+
 //DirectX
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -35,9 +36,6 @@
 #include "Engine_Function.h"
 
 //Library
-#include <../External/ImGui/imgui.h>
-#include <../External/ImGui/backends/imgui_impl_dx9.h>
-#include <../External/ImGui/backends/imgui_impl_win32.h>
 #include <fmod.hpp>
 
 //Header

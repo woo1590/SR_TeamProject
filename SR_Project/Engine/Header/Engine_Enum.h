@@ -10,7 +10,7 @@ namespace Engine
 	enum class INFO { Info_Right, Info_Up, Info_Look, Info_Pos, Info_End };
 	enum class ROTATION { Rot_X, Rot_Y, Rot_Z, Rot_End };
 
-	enum class TEXTURE { Tex_Normal, Tex_Cube, Tex_End };
+	enum class TEXTURE { Tex_Normal, Tex_Cube, Tex_Sprite ,Tex_End };
 
 	enum class RENDER_ID { Render_Priority, Render_NonAlpha, Render_Mask, Render_Shadow, Render_Reflect, Render_Alpha, Render_UI, Render_End };
 

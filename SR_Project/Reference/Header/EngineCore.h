@@ -9,6 +9,8 @@ class RenderSystem;
 class LightSystem;
 class InputSystem;
 class ResourceManager;
+class UIManager;
+
 class SoundManager;
 class ENGINE_DLL EngineCore :
     public Base
