@@ -1,21 +1,18 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
-class ENGINE_DLL Shader :
-    public Base
+class ENGINE_DLL Shader : public Base
 {
 private:
-    Shader();
-    virtual ~Shader();
+    Shader() {}
+    virtual ~Shader() {}
 
 public:
-    static Shader* Create();
+    static Shader* Create() { return {}; }
 
 private:
-    void Free()override;
+    void Free()override {}
 
 };
 

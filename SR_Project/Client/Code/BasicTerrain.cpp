@@ -36,7 +36,7 @@ HRESULT BasicTerrain::Ready_Object()
     transform->SetPosition(0.f, 0.f, 0.f);
     transform->SetScale(1.f, 1.f, 1.f);
 
-    auto renderer = AddComponent<TerrainRenderer>(RENDER_NONALPHA);
+    auto renderer = AddComponent<TerrainRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMesh(L"Basic_Terrain");
     renderer->SetMaterial(L"Basic_Terrain_Material");
 

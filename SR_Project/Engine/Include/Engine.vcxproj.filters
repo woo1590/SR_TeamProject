@@ -52,9 +52,6 @@
     <Filter Include="01. Engine Component\ResourceManager\Material">
       <UniqueIdentifier>{d19ac74f-6c1d-440d-97e0-c2f66a9803c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. ImGui">
-      <UniqueIdentifier>{4cdcef45-9056-4e7e-b6e2-2e7ef49f174d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. GraphicDevice">
       <UniqueIdentifier>{6b7c17ea-e466-4e88-831b-2fd1e6ace52f}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,12 @@
     </Filter>
     <Filter Include="07. Object Component\Transform">
       <UniqueIdentifier>{ef96e943-f2ba-4f06-bbb7-8cd3cad0e064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\UIManager">
+      <UniqueIdentifier>{6b3a785b-d917-491d-9100-f10ef5152c6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Renderer\UIRenderer">
+      <UniqueIdentifier>{329907d1-3a7e-4a08-96fc-7abe7903cef3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -180,26 +183,14 @@
     <ClCompile Include="..\Code\ThirdcamComponent.cpp">
       <Filter>07. Object Component\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui.cpp">
-      <Filter>02. ImGui</Filter>
+    <ClCompile Include="..\Code\UIManager.cpp">
+      <Filter>01. Engine Component\UIManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_demo.cpp">
-      <Filter>02. ImGui</Filter>
+    <ClCompile Include="..\Code\EnginePCH.cpp">
+      <Filter>99. Etc\Header</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_draw.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_tables.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\imgui_widgets.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_dx9.cpp">
-      <Filter>02. ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_win32.cpp">
-      <Filter>02. ImGui</Filter>
+    <ClCompile Include="..\Code\UIRenderer.cpp">
+      <Filter>07. Object Component\Renderer\UIRenderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +199,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\GraphicDevice.h">
       <Filter>03. GraphicDevice</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Engine_Define.h">
-      <Filter>99. Etc\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Engine_Enum.h">
       <Filter>99. Etc\Header</Filter>
@@ -311,37 +299,19 @@
     <ClInclude Include="..\Header\ThirdcamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imconfig.h">
-      <Filter>02. ImGui</Filter>
+    <ClInclude Include="..\Header\UIManager.h">
+      <Filter>01. Engine Component\UIManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imgui.h">
-      <Filter>02. ImGui</Filter>
+    <ClInclude Include="..\Header\EnginePCH.h">
+      <Filter>99. Etc\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imgui_internal.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imstb_rectpack.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imstb_textedit.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\imstb_truetype.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_dx9.h">
-      <Filter>02. ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_win32.h">
-      <Filter>02. ImGui</Filter>
+    <ClInclude Include="..\Header\UIRenderer.h">
+      <Filter>07. Object Component\Renderer\UIRenderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Header\Math.inl">
       <Filter>99. Etc\Math</Filter>
-    </None>
-    <None Include="..\..\External\ImGui\.editorconfig">
-      <Filter>02. ImGui</Filter>
     </None>
   </ItemGroup>
 </Project>

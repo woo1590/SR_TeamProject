@@ -27,7 +27,7 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
     if (!InitWindow(hInst, nCmdShow))
         return E_FAIL;
 
-    if (FAILED(Engine::GraphicDevice::GetInstance()->Ready_GraphicDev(hWnd, MODE_WIN,
+    if (FAILED(Engine::GraphicDevice::GetInstance()->Ready_GraphicDev(hWnd, WINMODE::Mode_Win,
         windowSize.right,
         windowSize.bottom,
         &GraphicDev)))
@@ -205,9 +205,9 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
         lt.x,lt.y,rb.x,rb.y
     };
 
-    ClipCursor(&clipRect);
+    //ClipCursor(&clipRect);
 
-    ShowCursor(FALSE);
+    //ShowCursor(FALSE);
 
    /*--------------Raw Input---------------*/
    RAWINPUTDEVICE rid{};

@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "StaticMesh.h"
 
 StaticMesh::StaticMesh()

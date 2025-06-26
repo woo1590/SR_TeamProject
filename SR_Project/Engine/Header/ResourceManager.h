@@ -1,14 +1,11 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class Mesh;
 class TerrainMesh;
 class Material;
-class ENGINE_DLL ResourceManager :
-    public Base
+class ENGINE_DLL ResourceManager : public Base
 {
 private:
     ResourceManager();
@@ -23,6 +20,9 @@ public:
     void LoadMesh(const std::wstring& key, Mesh* mesh);
     void LoadMaterial(const std::wstring& key, Material* mtrl);
 
+    void LoadTexture(const wstring& key, const wstring& path);
+    LPDIRECT3DTEXTURE9 GetTexture(const wstring& key);
+
     Mesh* GetMesh(const std::wstring& key);
     Material* GetMaterial(const std::wstring& key);
     TerrainMesh* GetTerrain(const std::wstring& key);
@@ -32,6 +32,8 @@ private:
     std::unordered_map<std::wstring, Mesh*> MeshContainer;
     std::unordered_map<std::wstring, Material*> MaterialContainer;
     std::unordered_map<std::wstring, TerrainMesh*> TerrainContainer;
+    
+    unordered_map<wstring, LPDIRECT3DTEXTURE9> TextureContainer;
 };
 
 END

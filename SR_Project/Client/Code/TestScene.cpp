@@ -11,6 +11,7 @@
 #include "BasicTerrain.h"
 #include "TestObject.h"
 #include "SkyBox.h"
+#include "UIObj.h"
 
 //component
 #include "TransformComponent.h"
@@ -36,12 +37,12 @@ void TestScene::Load()
 {
 	ObjectMgr = ObjectManager::Create(this);
 
-	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
+	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+	//ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
-	/*----------------------------------------------------------------------------------------------*/
+	ObjectMgr->AddObject(ObjectType::UI, UIObj::Create(ObjectMgr, ObjectType::UI));
 
-	
+	/*----------------------------------------------------------------------------------------------*/
 }
 
 void TestScene::Update(float dt)

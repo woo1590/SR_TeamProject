@@ -1,12 +1,9 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class LightComponent;
-class ENGINE_DLL LightSystem :
-    public Base
+class ENGINE_DLL LightSystem : public Base
 {
 private:
     explicit LightSystem();

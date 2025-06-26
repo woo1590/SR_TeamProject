@@ -1,12 +1,9 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class Timer;
-class ENGINE_DLL TimerManager :
-    public Base
+class ENGINE_DLL TimerManager : public Base
 {
 private:
     TimerManager();

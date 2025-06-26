@@ -1,5 +1,4 @@
-#ifndef Engine_Define_h__
-#define Engine_Define_h__
+#pragma once
 
 //window
 #include <SDKDDKVer.h>
@@ -10,6 +9,8 @@
 #include <memory.h>
 #include <tchar.h>
 
+#define IMGUI_DEFINE_MATH_OPERATORS
+
 //DirectX
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -19,7 +20,6 @@
 #include <typeindex>
 #include <fstream>
 #include <tchar.h>
-
 
 //stl
 #include <vector>
@@ -36,11 +36,8 @@
 #include "Engine_Typedef.h"
 #include "Engine_Function.h"
 
-//ImGui
-#include <../External/ImGui/imgui.h>
-#include <../External/ImGui/backends/imgui_impl_dx9.h>
-#include <../External/ImGui/backends/imgui_impl_win32.h>
-
+//Header
+#include "Base.h"
 
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>
@@ -63,7 +60,3 @@
 
 using namespace std;
 using namespace Engine;
-
-
-#endif // Engine_Define_h__
-

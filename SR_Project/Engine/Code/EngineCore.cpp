@@ -1,12 +1,15 @@
+#include "EnginePCH.h"
 #include "EngineCore.h"
 #include "GraphicDevice.h"
 #include "FrameManager.h"
 #include "TimerManager.h"
 #include "SceneManager.h"
+#include "UIManager.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "LightSystem.h"
 #include "InputSystem.h"
+
 
 #include "Mesh.h"
 #include "Material.h"
@@ -54,28 +57,15 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!InputSys)
 		return E_FAIL;
 
-	/*----------------Init ImGui-----------------*/
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGui::StyleColorsDark();
-
-	ImGui_ImplWin32_Init(hWnd);
-	ImGui_ImplDX9_Init(GraphicDevice::GetInstance()->GetDevice());
+	UIMgr = UIManager::Create();
+	if (!UIMgr)
+		return E_FAIL;
 
 	return S_OK;
 }
 
 void EngineCore::Tick(float dt)
 {
-	ImGui_ImplDX9_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-
-	// --- UI À§Á¬ ÀÛ¼º ---
-	ImGui::Begin("ImGui Test");   
-	ImGui::End();
-	ImGui::Render();
-	//---------------------
 
 	InputSys->BeginFrame();
 
@@ -86,7 +76,6 @@ void EngineCore::Tick(float dt)
 
 	RenderSys->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 	RenderSys->Render();
-	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
 	RenderSys->Render_End();
 
@@ -133,6 +122,11 @@ InputSystem* EngineCore::GetInputSystem() const
 	return InputSys;
 }
 
+UIManager* EngineCore::GetUIManager() const
+{
+	return UIMgr;
+}
+
 HWND EngineCore::GetWindowHandle() const
 {
 	return hWnd;
@@ -147,11 +141,6 @@ void EngineCore::Free()
 	Safe_Release(RenderSys);
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
-
-	/*-------ImGui--------*/
-	ImGui_ImplDX9_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

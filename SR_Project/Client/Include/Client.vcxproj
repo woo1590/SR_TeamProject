@@ -138,7 +138,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/ImGui;../../External/ImGui/backends;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -159,7 +159,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/ImGui;../../External/ImGui/backends;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -181,6 +181,7 @@
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\TestObject.h" />
     <ClInclude Include="..\Header\TestScene.h" />
+    <ClInclude Include="..\Header\UIObj.h" />
     <ClInclude Include="Client_Defines.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\TestObject.cpp" />
     <ClCompile Include="..\Code\TestScene.cpp" />
+    <ClCompile Include="..\Code\UIObj.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

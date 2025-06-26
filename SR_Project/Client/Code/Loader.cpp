@@ -47,6 +47,7 @@ HRESULT Loader::Loading()
 	{
 	case LOADID::TestScene:
 		hr = Load_TestScene();
+		hr = load_UIResources();
 		break;
 	default:
 		break;
@@ -145,7 +146,7 @@ HRESULT Loader::Load_TestScene()
 
 	/*--------------Load File Resource-----------------*/
 	auto terrainMtrl = Material::Create();
-	terrainMtrl->SetTexture(L"../Resource/Texture/Terrain/Terrain0.png", TEX_NORMAL);
+	terrainMtrl->SetTexture(L"../Resource/Texture/Terrain/Terrain0.png", TEXTURE::Tex_Normal);
 
 	resource->LoadTerrain(L"../Resource/Texture/Terrain/Height1.bmp", L"Basic_Terrain", 50.f, 1.f);
 	resource->LoadMaterial(L"Basic_Terrain_Material", terrainMtrl);
@@ -163,12 +164,21 @@ HRESULT Loader::Load_TestScene()
 	vertices2.push_back(VTXCUBE({ 1.f,-1.f,1.f }));
 
 	auto skyboxMtrl = Material::Create();
-	skyboxMtrl->SetTexture(L"../Resource/Texture/SkyBox/burger3.dds", TEX_CUBE);
+	skyboxMtrl->SetTexture(L"../Resource/Texture/SkyBox/burger3.dds", TEXTURE::Tex_Cube);
 	auto skyboxMesh = CubeMesh::Create();
 	skyboxMesh->SetMeshData(vertices2, indices);
 
 	resource->LoadMaterial(L"SkyBox_Material", skyboxMtrl);
 	resource->LoadMesh(L"SkyBox_Mesh", skyboxMesh);
+	return S_OK;
+}
+
+HRESULT Loader::load_UIResources()
+{
+	auto rm = EngineCore::GetInstance()->GetResourceManager();
+
+	rm->LoadTexture(L"Shield", L"../Bin/Assets/Jehyun/Shield.png");
+
 	return S_OK;
 }
 

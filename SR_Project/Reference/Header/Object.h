@@ -1,13 +1,10 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class ObjectComponent;
 class ObjectManager;
-class ENGINE_DLL Object :
-    public Base
+class ENGINE_DLL Object :  public Base
 {
 protected:
     explicit Object(ObjectManager* owner, ObjectType objType);

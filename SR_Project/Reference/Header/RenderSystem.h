@@ -1,13 +1,10 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class RendererComponent;
 class CameraComponent;
-class ENGINE_DLL RenderSystem :
-    public Base
+class ENGINE_DLL RenderSystem : public Base
 {
 private:
     explicit RenderSystem();
@@ -23,16 +20,22 @@ public:
 
     void RegisterRenderer(RENDER_ID layer, RendererComponent* renderer);
     void SetCamera(CameraComponent* cam);
+
+    ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
+
 private:
     void PriorityPass();
     void OpaquePass();
+    void UIPass();
     void Reset();
 
     void Free()override;
 
     std::vector<std::list<RendererComponent*>> RenderList;
     CameraComponent* Camera;
+   
     LPDIRECT3DDEVICE9 Device;
+    ID3DXSprite* spriteBatch = nullptr;
 };
 
 END

@@ -1,12 +1,9 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class Scene;
-class ENGINE_DLL SceneManager :
-    public Base
+class ENGINE_DLL SceneManager : public Base
 {
 private:
     explicit SceneManager();

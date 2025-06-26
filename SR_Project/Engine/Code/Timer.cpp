@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "Timer.h"
 
 Timer::Timer() :m_fDeltaTime(0.f)
