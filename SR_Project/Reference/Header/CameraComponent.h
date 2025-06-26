@@ -1,12 +1,10 @@
 #pragma once
 #include "ObjectComponent.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class TransformComponent;
-class ENGINE_DLL CameraComponent :
-    public ObjectComponent
+class ENGINE_DLL CameraComponent : public ObjectComponent
 {
 public:
     enum class CamType { Static, Target, Free, Count };

@@ -1,13 +1,10 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class RendererComponent;
 class CameraComponent;
-class ENGINE_DLL RenderSystem :
-    public Base
+class ENGINE_DLL RenderSystem : public Base
 {
 private:
     explicit RenderSystem();

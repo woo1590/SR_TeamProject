@@ -1,12 +1,10 @@
 #pragma once
 #include "ObjectComponent.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class TransformComponent;
-class ENGINE_DLL ThirdcamComponent :
-    public ObjectComponent
+class ENGINE_DLL ThirdcamComponent : public ObjectComponent
 {
 private:
     ThirdcamComponent(Object* owner);

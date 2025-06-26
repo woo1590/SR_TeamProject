@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "CubeMesh.h"
 
 CubeMesh::CubeMesh()

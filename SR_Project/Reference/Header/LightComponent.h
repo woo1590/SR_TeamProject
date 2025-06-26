@@ -1,13 +1,11 @@
 #pragma once
 #include "ObjectComponent.h"
-#include "Engine_Define.h"
 
 enum class LightType { Point, Directional, Spot, Count };
 
 BEGIN(Engine)
 
-class ENGINE_DLL LightComponent :
-    public ObjectComponent
+class ENGINE_DLL LightComponent : public ObjectComponent
 {
 private:
     explicit LightComponent(Object* owner);

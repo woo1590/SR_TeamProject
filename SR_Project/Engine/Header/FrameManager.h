@@ -1,12 +1,9 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class Frame;
-class ENGINE_DLL FrameManager :
-    public Base
+class ENGINE_DLL FrameManager :  public Base
 {
 private:
     FrameManager();

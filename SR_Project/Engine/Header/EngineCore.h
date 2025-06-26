@@ -1,6 +1,4 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
@@ -11,6 +9,8 @@ class RenderSystem;
 class LightSystem;
 class InputSystem;
 class ResourceManager;
+class UIManager;
+
 class ENGINE_DLL EngineCore :
     public Base
 {
@@ -31,6 +31,7 @@ public:
     FrameManager*       GetFrameManager()const;
     SceneManager*       GetSceneManager()const;
     ResourceManager*    GetResourceManager()const;
+    UIManager*          GetUIManager() const;
 
     RenderSystem*       GetRenderSystem()const;
     LightSystem*        GetLightSystem()const;
@@ -42,10 +43,12 @@ private:
     FrameManager* FrameMgr;
     SceneManager* SceneMgr;
     ResourceManager* ResourceMgr;
+    UIManager* UIMgr;
 
     RenderSystem* RenderSys;
     LightSystem* LightSys;
     InputSystem* InputSys;
+
 
     HWND hWnd;
 

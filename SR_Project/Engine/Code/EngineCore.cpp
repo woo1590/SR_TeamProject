@@ -1,12 +1,15 @@
+#include "EnginePCH.h"
 #include "EngineCore.h"
 #include "GraphicDevice.h"
 #include "FrameManager.h"
 #include "TimerManager.h"
 #include "SceneManager.h"
+#include "UIManager.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "LightSystem.h"
 #include "InputSystem.h"
+
 
 #include "Mesh.h"
 #include "Material.h"
@@ -53,6 +56,8 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	InputSys = InputSystem::Create();
 	if (!InputSys)
 		return E_FAIL;
+
+	UIMgr = UIManager::Create();
 
 	/*----------------Init ImGui-----------------*/
 	IMGUI_CHECKVERSION();
@@ -131,6 +136,11 @@ LightSystem* EngineCore::GetLightSystem() const
 InputSystem* EngineCore::GetInputSystem() const
 {
 	return InputSys;
+}
+
+UIManager* EngineCore::GetUIManager() const
+{
+	return UIMgr;
 }
 
 HWND EngineCore::GetWindowHandle() const

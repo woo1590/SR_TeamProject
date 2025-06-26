@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "RenderSystem.h"
 #include "GraphicDevice.h"
 #include "EngineCore.h"
@@ -32,7 +33,7 @@ RenderSystem* RenderSystem::Create()
 
 HRESULT RenderSystem::Ready_RenderSystem()
 {
-	RenderList.resize(RENDER_END);
+	RenderList.resize((int)RENDER_ID::Render_End);
 	Camera = nullptr;
 	Device = GraphicDevice::GetInstance()->GetDevice();
 	Device->AddRef();
@@ -72,7 +73,7 @@ void RenderSystem::Render()
 
 void RenderSystem::RegisterRenderer(RENDER_ID layer, RendererComponent* renderer)
 {
-	RenderList[layer].push_back(renderer);
+	RenderList[(int)layer].push_back(renderer);
 }
 
 void RenderSystem::SetCamera(CameraComponent* cam)
@@ -95,7 +96,7 @@ void RenderSystem::PriorityPass()
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	for (const auto& r : RenderList[RENDER_PRIORITY])
+	for (const auto& r : RenderList[(int)RENDER_ID::Render_Priority])
 		r->Render();
 
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -107,7 +108,7 @@ void RenderSystem::OpaquePass()
 	_matrix view = Camera->GetViewMatrix();
 	Device->SetTransform(D3DTS_VIEW, &view);
 
-	for (const auto& r : RenderList[RENDER_NONALPHA])
+	for (const auto& r : RenderList[(int)RENDER_ID::Render_NonAlpha])
 		r->Render();
 
 }

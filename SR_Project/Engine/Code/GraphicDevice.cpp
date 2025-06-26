@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "GraphicDevice.h"
 
 IMPLEMENT_SINGLETON(GraphicDevice)
@@ -57,7 +58,7 @@ HRESULT GraphicDevice::Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _uint wi
 
 	d3dpp.hDeviceWindow = hWnd;
 
-	d3dpp.Windowed = eMode;	// 창 모드 또는 전체화면 모드
+	d3dpp.Windowed = (int)eMode;	// 창 모드 또는 전체화면 모드
 
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;
