@@ -94,6 +94,9 @@
     <Filter Include="01. Engine Component\UIManager">
       <UniqueIdentifier>{6b3a785b-d917-491d-9100-f10ef5152c6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\Renderer\UIRenderer">
+      <UniqueIdentifier>{329907d1-3a7e-4a08-96fc-7abe7903cef3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -209,6 +212,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EnginePCH.cpp">
       <Filter>99. Etc\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UIRenderer.cpp">
+      <Filter>07. Object Component\Renderer\UIRenderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\EnginePCH.h">
       <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UIRenderer.h">
+      <Filter>07. Object Component\Renderer\UIRenderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

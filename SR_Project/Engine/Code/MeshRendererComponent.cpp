@@ -37,7 +37,7 @@ MeshRenderer* MeshRenderer::Create(Object* owner, RENDER_ID renderId)
 
 void MeshRenderer::Late_Update(_float dt)
 {
-	RendererComponent::Late_Update(dt);
+	RendererComponent::Late_Update(dt); 
 
 	if (ShadowCast)
 		EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(RENDER_ID::Render_Shadow, this);

@@ -205,7 +205,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
         lt.x,lt.y,rb.x,rb.y
     };
 
-    ClipCursor(&clipRect);
+    //ClipCursor(&clipRect);
 
     //ShowCursor(FALSE);
 

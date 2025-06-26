@@ -244,6 +244,7 @@
     <ClInclude Include="..\Header\TimerManager.h" />
     <ClInclude Include="..\Header\TransformComponent.h" />
     <ClInclude Include="..\Header\UIManager.h" />
+    <ClInclude Include="..\Header\UIRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_dx9.cpp" />
@@ -289,6 +290,7 @@
     <ClCompile Include="..\Code\TimerManager.cpp" />
     <ClCompile Include="..\Code\TransformComponent.cpp" />
     <ClCompile Include="..\Code\UIManager.cpp" />
+    <ClCompile Include="..\Code\UIRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\External\ImGui\.editorconfig" />

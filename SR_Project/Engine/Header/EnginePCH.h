@@ -9,6 +9,8 @@
 #include <memory.h>
 #include <tchar.h>
 
+#define IMGUI_DEFINE_MATH_OPERATORS
+
 //DirectX
 #include <d3d9.h>
 #include <d3dx9.h>

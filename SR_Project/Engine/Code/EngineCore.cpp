@@ -58,6 +58,8 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 		return E_FAIL;
 
 	UIMgr = UIManager::Create();
+	if (!UIMgr)
+		return E_FAIL;
 
 	/*----------------Init ImGui-----------------*/
 	IMGUI_CHECKVERSION();

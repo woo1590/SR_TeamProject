@@ -20,16 +20,22 @@ public:
 
     void RegisterRenderer(RENDER_ID layer, RendererComponent* renderer);
     void SetCamera(CameraComponent* cam);
+
+    ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
+
 private:
     void PriorityPass();
     void OpaquePass();
+    void UIPass();
     void Reset();
 
     void Free()override;
 
     std::vector<std::list<RendererComponent*>> RenderList;
     CameraComponent* Camera;
+   
     LPDIRECT3DDEVICE9 Device;
+    ID3DXSprite* spriteBatch = nullptr;
 };
 
 END

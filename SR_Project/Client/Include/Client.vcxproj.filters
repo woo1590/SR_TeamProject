@@ -43,6 +43,9 @@
     <Filter Include="02. Object\TestObject">
       <UniqueIdentifier>{6d846a5a-52ad-4eb1-ab0b-dba2484c9f11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj">
+      <UniqueIdentifier>{edd0f473-f082-4ad7-81f3-d71fe38fe4ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -78,6 +81,9 @@
     <ClInclude Include="..\Header\TestObject.h">
       <Filter>02. Object\TestObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UIObj.h">
+      <Filter>02. Object\UIObj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -109,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\TestObject.cpp">
       <Filter>02. Object\TestObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UIObj.cpp">
+      <Filter>02. Object\UIObj</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
