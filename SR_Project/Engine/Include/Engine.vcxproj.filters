@@ -91,6 +91,9 @@
     <Filter Include="07. Object Component\Transform">
       <UniqueIdentifier>{ef96e943-f2ba-4f06-bbb7-8cd3cad0e064}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine Component\SoundManager">
+      <UniqueIdentifier>{28874628-650c-4c6c-9bdb-e297ab310d94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -200,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_win32.cpp">
       <Filter>02. ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundManager.cpp">
+      <Filter>01. Engine Component\SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +340,9 @@
     </ClInclude>
     <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_win32.h">
       <Filter>02. ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoundManager.h">
+      <Filter>01. Engine Component\SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

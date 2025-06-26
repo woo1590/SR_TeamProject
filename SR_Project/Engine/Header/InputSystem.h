@@ -52,9 +52,9 @@ public:
 	void EndFrame();
 
 	KEY_STATE getKeyState(KEY _eKey);
-	bool IsKeyPressed(KEY _ekey);
-	bool IsKeyDown(KEY _ekey);
-	bool IsKeyRelease(KEY _ekey);
+	bool IsKeyPressed(KEY _ekey);		//처음 누른 시점에만 true 반환
+	bool IsKeyDown(KEY _ekey);			//누르고 있는 동안 계속 true 반환
+	bool IsKeyRelease(KEY _ekey);		//누르고 키를 떼면 true 반환
 
 	_vec2 GetMousePos()const;
 	_vec2 GetMouseDelta()const;
@@ -71,6 +71,7 @@ private:
 	_vec2 LastMousePos{ 0.f,0.f };
 	_vec2 CenterMousePos{ 0.f,0.f };
 	_vec2 MouseDelta{ 0.f,0.f };
+
 	bool Is_KeyWork = true;
 	bool Is_MouseLock = true;
 	bool First_Mouse = true;

@@ -7,6 +7,7 @@
 #include "RenderSystem.h"
 #include "LightSystem.h"
 #include "InputSystem.h"
+#include "SoundManager.h"
 
 #include "Mesh.h"
 #include "Material.h"
@@ -40,6 +41,10 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 
 	ResourceMgr = ResourceManager::Create();
 	if (!ResourceMgr)
+		return E_FAIL;
+
+	SoundMgr = SoundManager::Create();
+	if (!SoundMgr)
 		return E_FAIL;
 
 	RenderSys = RenderSystem::Create();
@@ -118,6 +123,11 @@ ResourceManager* EngineCore::GetResourceManager() const
 	return ResourceMgr;
 }
 
+SoundManager* EngineCore::GetSoundManager() const
+{
+	return SoundMgr;
+}
+
 RenderSystem* EngineCore::GetRenderSystem() const
 {
 	return RenderSys;
@@ -144,6 +154,7 @@ void EngineCore::Free()
 	Safe_Release(TimerMgr);
 	Safe_Release(SceneMgr);
 	Safe_Release(ResourceMgr);
+	Safe_Release(SoundMgr);
 	Safe_Release(RenderSys);
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);

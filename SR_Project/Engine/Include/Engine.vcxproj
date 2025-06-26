@@ -98,14 +98,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;../../External/FMOD/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -123,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -131,8 +131,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;../../External/FMOD/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -148,15 +148,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;../../External/FMOD/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -174,7 +174,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -183,8 +183,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;../../External/FMOD/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;d3dx9d.lib;dinput8.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -232,6 +232,7 @@
     <ClInclude Include="..\Header\Scene.h" />
     <ClInclude Include="..\Header\SceneManager.h" />
     <ClInclude Include="..\Header\Shader.h" />
+    <ClInclude Include="..\Header\SoundManager.h" />
     <ClInclude Include="..\Header\StaticMesh.h" />
     <ClInclude Include="..\Header\TerrainMesh.h" />
     <ClInclude Include="..\Header\TerrainRenderer.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="..\Code\Scene.cpp" />
     <ClCompile Include="..\Code\SceneManager.cpp" />
     <ClCompile Include="..\Code\Shader.cpp" />
+    <ClCompile Include="..\Code\SoundManager.cpp" />
     <ClCompile Include="..\Code\StaticMesh.cpp" />
     <ClCompile Include="..\Code\TerrainMesh.cpp" />
     <ClCompile Include="..\Code\TerrainRenderer.cpp" />
