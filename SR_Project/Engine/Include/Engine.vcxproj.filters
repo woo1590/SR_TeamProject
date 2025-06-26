@@ -93,6 +93,8 @@
     </Filter>
     <Filter Include="01. Engine Component\UIManager">
       <UniqueIdentifier>{6b3a785b-d917-491d-9100-f10ef5152c6b}</UniqueIdentifier>
+    <Filter Include="01. Engine Component\SoundManager">
+      <UniqueIdentifier>{28874628-650c-4c6c-9bdb-e297ab310d94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +211,8 @@
     </ClCompile>
     <ClCompile Include="..\Code\EnginePCH.cpp">
       <Filter>99. Etc\Header</Filter>
+    <ClCompile Include="..\Code\SoundManager.cpp">
+      <Filter>01. Engine Component\SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +350,8 @@
     </ClInclude>
     <ClInclude Include="..\Header\EnginePCH.h">
       <Filter>99. Etc\Header</Filter>
+    <ClInclude Include="..\Header\SoundManager.h">
+      <Filter>01. Engine Component\SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

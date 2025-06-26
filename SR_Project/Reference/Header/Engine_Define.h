@@ -36,10 +36,11 @@
 #include "Engine_Typedef.h"
 #include "Engine_Function.h"
 
-//ImGui
+//Library
 #include <../External/ImGui/imgui.h>
 #include <../External/ImGui/backends/imgui_impl_dx9.h>
 #include <../External/ImGui/backends/imgui_impl_win32.h>
+#include <fmod.hpp>
 
 
 #define DIRECTINPUT_VERSION	0x0800
