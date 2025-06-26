@@ -13,7 +13,7 @@ private:
 public:
     static CubeMesh* Create();
     HRESULT Ready_Mesh();
-    HRESULT SetMeshData(std::vector<VTXCUBE>& vertices, std::vector<INDEX32>& indices);
+    HRESULT CreateBuffer();
     void Draw()override;
 
 private:

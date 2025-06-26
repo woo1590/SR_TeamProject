@@ -64,7 +64,7 @@ void RenderSystem::Render()
 	if (!Camera) return;
 
 	PriorityPass();
-	OpaquePass();
+	NonAlphaPass();
 	
 	Reset();
 	for (auto& list : RenderList)
@@ -103,13 +103,18 @@ void RenderSystem::PriorityPass()
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 
-void RenderSystem::OpaquePass()
+void RenderSystem::NonAlphaPass()
 {
 	_matrix view = Camera->GetViewMatrix();
 	Device->SetTransform(D3DTS_VIEW, &view);
 
 	for (const auto& r : RenderList[(int)RENDER_ID::Render_NonAlpha])
 		r->Render();
+
+}
+
+void RenderSystem::AlphaPass()
+{
 
 }
 

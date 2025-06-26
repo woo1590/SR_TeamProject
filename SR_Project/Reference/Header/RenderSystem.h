@@ -22,7 +22,8 @@ public:
     void SetCamera(CameraComponent* cam);
 private:
     void PriorityPass();
-    void OpaquePass();
+    void NonAlphaPass();
+    void AlphaPass();
     void Reset();
 
     void Free()override;

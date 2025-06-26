@@ -98,8 +98,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,8 +125,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -176,7 +180,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -199,14 +203,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_dx9.h" />
-    <ClInclude Include="..\..\External\ImGui\backends\imgui_impl_win32.h" />
-    <ClInclude Include="..\..\External\ImGui\imconfig.h" />
-    <ClInclude Include="..\..\External\ImGui\imgui.h" />
-    <ClInclude Include="..\..\External\ImGui\imgui_internal.h" />
-    <ClInclude Include="..\..\External\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="..\..\External\ImGui\imstb_textedit.h" />
-    <ClInclude Include="..\..\External\ImGui\imstb_truetype.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
     <ClInclude Include="..\Header\CubeMesh.h" />
     <ClInclude Include="..\Header\EngineCore.h" />
@@ -247,13 +243,6 @@
     <ClInclude Include="..\Header\UIManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_dx9.cpp" />
-    <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="..\..\External\ImGui\imgui.cpp" />
-    <ClCompile Include="..\..\External\ImGui\imgui_demo.cpp" />
-    <ClCompile Include="..\..\External\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="..\..\External\ImGui\imgui_tables.cpp" />
-    <ClCompile Include="..\..\External\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="..\Code\CameraComponent.cpp" />
     <ClCompile Include="..\Code\CubeMesh.cpp" />
     <ClCompile Include="..\Code\EngineCore.cpp" />
@@ -262,6 +251,8 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnginePCH.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EnginePCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameManager.cpp" />
@@ -293,7 +284,6 @@
     <ClCompile Include="..\Code\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\External\ImGui\.editorconfig" />
     <None Include="..\Header\Math.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

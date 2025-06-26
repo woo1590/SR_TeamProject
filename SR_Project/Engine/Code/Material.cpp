@@ -1,6 +1,8 @@
 #include "EnginePCH.h"
 #include "Material.h"
 #include "GraphicDevice.h"
+#include "EngineCore.h"
+#include "ResourceManager.h"
 
 Material::Material()
     :Device(GraphicDevice::GetInstance()->GetDevice())
@@ -44,19 +46,13 @@ HRESULT Material::SetMaterial(D3DMATERIAL9& mtrl)
     return S_OK;
 }
 
-HRESULT Material::SetTexture(const std::wstring& filePath, TEXTURE texType)
+HRESULT Material::SetTexture(const std::wstring& key)
 {
-    switch (texType)
-    {
-    case Engine::TEXTURE::Tex_Normal:
-        D3DXCreateTextureFromFileW(Device, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&Texture);
-        break;
-    case Engine::TEXTURE::Tex_Cube:
-        D3DXCreateCubeTextureFromFileW(Device, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&Texture);
-        break;
-    default:
-        break;
-    }
+    auto tex = EngineCore::GetInstance()->GetResourceManager()->GetTexture(key);
+    if (!tex)
+        return E_FAIL;
+
+    Texture = tex;
 
     return S_OK;
 }
