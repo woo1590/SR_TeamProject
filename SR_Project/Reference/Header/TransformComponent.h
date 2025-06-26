@@ -40,6 +40,7 @@ public:
     _vec3 GetUp()const;
 
     _matrix GetWorldMatrix()const;
+    _matrix GetLocalMatrix()const;
 private:
     void Free()override;
 

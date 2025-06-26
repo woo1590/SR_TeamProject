@@ -145,13 +145,23 @@ _vec3 TransformComponent::GetUp() const
 
 _matrix TransformComponent::GetWorldMatrix() const
 {
+    _matrix worldMat = GetLocalMatrix();
+
+    if (Parent)
+        worldMat *= Parent->GetWorldMatrix();
+
+    return worldMat;
+}
+
+_matrix TransformComponent::GetLocalMatrix() const
+{
     _matrix transMat;
     _matrix rotX;
     _matrix rotY;
     _matrix rotZ;
     _matrix scaleMat;
 
-    _matrix worldMat;
+    _matrix localMat;
 
     D3DXMatrixTranslation(&transMat, Position.x, Position.y, Position.z);
     D3DXMatrixRotationX(&rotX, Rotation.x);
@@ -159,9 +169,9 @@ _matrix TransformComponent::GetWorldMatrix() const
     D3DXMatrixRotationZ(&rotZ, Rotation.z);
     D3DXMatrixScaling(&scaleMat, Scale.x, Scale.y, Scale.z);
 
-    worldMat = scaleMat * rotY * rotX * rotZ * transMat;
+    localMat = scaleMat * rotY * rotX * rotZ * transMat;
 
-    return worldMat;
+    return localMat;
 }
 
 void TransformComponent::Free()
