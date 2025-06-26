@@ -50,7 +50,7 @@ void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstri
 
     switch (texType)
     {
-    case Engine::TEXTURE::Tex_Normal:
+    case Engine::TEXTURE::Tex_Diffuse:
         D3DXCreateTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&tex);
         break;
     case Engine::TEXTURE::Tex_Cube:

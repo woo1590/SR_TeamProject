@@ -86,7 +86,7 @@ HRESULT Loader::Load_TestScene()
 
 	/*--------------Load File Resource-----------------*/
 	resource->LoadTerrain(L"../Resource/Texture/Terrain/Height1.bmp", L"Basic_Terrain", 50.f, 1.f);
-	resource->LoadTexture(L"../Resource/Texture/Terrain/Terrain0.png",L"Basic_Terrain_Texture", TEXTURE::Tex_Normal);
+	resource->LoadTexture(L"../Resource/Texture/Terrain/Terrain0.png",L"Basic_Terrain_Texture", TEXTURE::Tex_Diffuse);
 	auto terrainMtrl = Material::Create();
 	terrainMtrl->SetTexture(L"Basic_Terrain_Texture");
 	resource->LoadMaterial(L"Terrain_Mtrl", terrainMtrl);
