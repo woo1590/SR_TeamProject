@@ -36,6 +36,7 @@ void UIRenderer::SetTexture(const wstring& key)
 	srcRect = {0, 0, LONG(desc.Width), LONG(desc.Height)};
 	center = {desc.Width * 0.5f, desc.Height * 0.5f, 0.f};
 
+
 	pos = center;
 }
 
