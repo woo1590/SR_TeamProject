@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "MeshRendererComponent.h"
 #include "GraphicDevice.h"
 #include "Object.h"
@@ -39,9 +40,9 @@ void MeshRenderer::Late_Update(_float dt)
 	RendererComponent::Late_Update(dt);
 
 	if (ShadowCast)
-		EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(RENDER_SHADOW, this);
+		EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(RENDER_ID::Render_Shadow, this);
 	if (ReflectCast)
-		EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(RENDER_REFLECT, this);
+		EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(RENDER_ID::Render_Reflect, this);
 }
 
 void MeshRenderer::Render()

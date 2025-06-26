@@ -1,13 +1,10 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class ObjectManager;
 class Object;
-class ENGINE_DLL Scene :
-    public Base
+class ENGINE_DLL Scene : public Base
 {
 protected:
     explicit Scene();

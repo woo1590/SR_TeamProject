@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "LightSystem.h"
 #include "GraphicDevice.h"
 

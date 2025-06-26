@@ -1,11 +1,8 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
-class ENGINE_DLL GraphicDevice
-	:public Base
+class ENGINE_DLL GraphicDevice :public Base
 {
 	DECLARE_SINGLETON(GraphicDevice)
 private:

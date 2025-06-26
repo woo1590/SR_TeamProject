@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "LightComponent.h"
 #include "EngineCore.h"
 

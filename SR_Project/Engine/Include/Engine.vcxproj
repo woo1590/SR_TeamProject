@@ -151,6 +151,8 @@
       <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -177,6 +179,8 @@
       <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/ImGui;../../External/ImGui/backeds;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -206,7 +210,7 @@
     <ClInclude Include="..\Header\CameraComponent.h" />
     <ClInclude Include="..\Header\CubeMesh.h" />
     <ClInclude Include="..\Header\EngineCore.h" />
-    <ClInclude Include="..\Header\Engine_Define.h" />
+    <ClInclude Include="..\Header\EnginePCH.h" />
     <ClInclude Include="..\Header\Engine_Enum.h" />
     <ClInclude Include="..\Header\Engine_Function.h" />
     <ClInclude Include="..\Header\Engine_Macro.h" />
@@ -239,6 +243,7 @@
     <ClInclude Include="..\Header\Timer.h" />
     <ClInclude Include="..\Header\TimerManager.h" />
     <ClInclude Include="..\Header\TransformComponent.h" />
+    <ClInclude Include="..\Header\UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\External\ImGui\backends\imgui_impl_dx9.cpp" />
@@ -251,6 +256,12 @@
     <ClCompile Include="..\Code\CameraComponent.cpp" />
     <ClCompile Include="..\Code\CubeMesh.cpp" />
     <ClCompile Include="..\Code\EngineCore.cpp" />
+    <ClCompile Include="..\Code\EnginePCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnginePCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EnginePCH.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameManager.cpp" />
     <ClCompile Include="..\Code\FcamComponent.cpp" />
@@ -277,6 +288,7 @@
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerManager.cpp" />
     <ClCompile Include="..\Code\TransformComponent.cpp" />
+    <ClCompile Include="..\Code\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\External\ImGui\.editorconfig" />

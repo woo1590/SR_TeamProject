@@ -3,19 +3,20 @@
 
 namespace Engine
 {
-	enum WINMODE { MODE_FULL, MODE_WIN };
+	enum class WINMODE { Mode_Full, Mode_Win };
 
-	enum COMPONENTID { ID_DYNAMIC, ID_STATIC, ID_END };
+	enum class COMPONENTID { ID_Dynamic, ID_Static, ID_End };
 
-	enum INFO { INFO_RIGHT, INFO_UP, INFO_LOOK, INFO_POS, INFO_END };
-	enum ROTATION { ROT_X, ROT_Y, ROT_Z, ROT_END };
+	enum class INFO { Info_Right, Info_Up, Info_Look, Info_Pos, Info_End };
+	enum class ROTATION { Rot_X, Rot_Y, Rot_Z, Rot_End };
 
-	enum TEXTURE { TEX_NORMAL, TEX_CUBE, TEX_END };
+	enum class TEXTURE { Tex_Normal, Tex_Cube, Tex_End };
 
-	enum RENDER_ID { RENDER_PRIORITY, RENDER_NONALPHA, RENDER_MASK, RENDER_SHADOW, RENDER_REFLECT, RENDER_ALPHA, RENDER_UI, RENDER_END };
+	enum class RENDER_ID { Render_Priority, Render_NonAlpha, Render_Mask, Render_Shadow, Render_Reflect, Render_Alpha, Render_UI, Render_End };
 
-	enum MOUSEKEYSTATE { DIM_LB, DIM_RB, DIM_MB, DIM_END };
-	enum MOUSEMOVESTATE { DIMS_X, DIMS_Y, DIMS_Z, DIMS_END };
+	enum class MOUSEKEYSTATE { Dim_Lb, Dim_Rb, Dim_Mb, Dim_End };
+	enum class MOUSEMOVESTATE { Dims_X, Dims_Y, Dims_Z, Dims_End };
+
 
 	/*----------------------my enum----------------------*/
 	enum class ObjectType

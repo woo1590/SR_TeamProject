@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "RendererComponent.h"
 #include "EngineCore.h"
 #include "RenderSystem.h"

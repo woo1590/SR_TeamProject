@@ -1,5 +1,4 @@
-#ifndef Engine_Define_h__
-#define Engine_Define_h__
+#pragma once
 
 //window
 #include <SDKDDKVer.h>
@@ -19,7 +18,6 @@
 #include <typeindex>
 #include <fstream>
 #include <tchar.h>
-
 
 //stl
 #include <vector>
@@ -41,6 +39,8 @@
 #include <../External/ImGui/backends/imgui_impl_dx9.h>
 #include <../External/ImGui/backends/imgui_impl_win32.h>
 
+//Header
+#include "Base.h"
 
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>
@@ -63,7 +63,3 @@
 
 using namespace std;
 using namespace Engine;
-
-
-#endif // Engine_Define_h__
-

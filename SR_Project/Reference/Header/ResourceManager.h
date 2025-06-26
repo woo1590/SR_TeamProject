@@ -1,14 +1,11 @@
 #pragma once
-#include "Base.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 
 class Mesh;
 class TerrainMesh;
 class Material;
-class ENGINE_DLL ResourceManager :
-    public Base
+class ENGINE_DLL ResourceManager : public Base
 {
 private:
     ResourceManager();

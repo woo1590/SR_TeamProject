@@ -30,4 +30,6 @@
 //MyHeader
 #include "Client_Defines.h"
 
+#include "EnginePCH.h"
+
 #endif //PCH_H

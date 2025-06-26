@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "Material.h"
 #include "GraphicDevice.h"
 
@@ -47,10 +48,10 @@ HRESULT Material::SetTexture(const std::wstring& filePath, TEXTURE texType)
 {
     switch (texType)
     {
-    case Engine::TEX_NORMAL:
+    case Engine::TEXTURE::Tex_Normal:
         D3DXCreateTextureFromFileW(Device, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&Texture);
         break;
-    case Engine::TEX_CUBE:
+    case Engine::TEXTURE::Tex_Cube:
         D3DXCreateCubeTextureFromFileW(Device, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&Texture);
         break;
     default:

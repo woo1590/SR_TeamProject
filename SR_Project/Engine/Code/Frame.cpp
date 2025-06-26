@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "Frame.h"
 
 Frame::Frame() :CallLimit(0.f), AccDeltaTime(0.f)

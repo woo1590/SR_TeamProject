@@ -1,3 +1,4 @@
+#include "EnginePCH.h"
 #include "ThirdcamComponent.h"
 #include "TransformComponent.h"
 
