@@ -1,5 +1,4 @@
 #pragma once
-#include "Base.h"
 
 class Loader :
     public Base
@@ -16,6 +15,7 @@ public:
     static _uint __stdcall LoaderMain(void* arg);
 private:
     HRESULT Load_TestScene();
+    HRESULT load_UIResources();
 
     void Free()override;
     

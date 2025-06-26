@@ -47,6 +47,7 @@ HRESULT Loader::Loading()
 	{
 	case LOADID::TestScene:
 		hr = Load_TestScene();
+		hr = load_UIResources();
 		break;
 	default:
 		break;
@@ -97,6 +98,15 @@ HRESULT Loader::Load_TestScene()
 	auto skyboxMtrl = Material::Create();
 	skyboxMtrl->SetTexture(L"Basic_SkyBox");
 	resource->LoadMaterial(L"SkyBox_Mtrl", skyboxMtrl);
+
+	return S_OK;
+}
+
+HRESULT Loader::load_UIResources()
+{
+	auto rm = EngineCore::GetInstance()->GetResourceManager();
+
+	rm->LoadTexture(L"Shield", L"../Bin/Assets/Jehyun/Shield.png");
 
 	return S_OK;
 }

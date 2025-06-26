@@ -10,8 +10,7 @@ UIManager* UIManager::Create()
 		Safe_Release(instance);
 		instance = nullptr;
 	}
-
-	return instance;
+	return instance; 
 }
 
 HRESULT UIManager::Ready_UIManager()

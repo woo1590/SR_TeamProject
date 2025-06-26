@@ -55,6 +55,8 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
 
+	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -62,9 +64,10 @@ HRESULT RenderSystem::Ready_RenderSystem()
 void RenderSystem::Render()
 {
 	if (!Camera) return;
-
+	
 	PriorityPass();
 	NonAlphaPass();
+	UIPass(); 
 	
 	Reset();
 	for (auto& list : RenderList)
@@ -110,7 +113,38 @@ void RenderSystem::NonAlphaPass()
 
 	for (const auto& r : RenderList[(int)RENDER_ID::Render_NonAlpha])
 		r->Render();
+}
 
+void RenderSystem::UIPass()
+{
+	// ï¿½ï¿½ï¿½ï¿½ projection ï¿½ï¿½ï¿½ï¿½
+	_matrix originProj;
+	Device->GetTransform(D3DTS_PROJECTION, &originProj);
+
+	float width = (float)WINCX;
+	float height = (float)WINCY;
+	_matrix ortho;
+	D3DXMatrixOrthoOffCenterLH(&ortho, 0, width, height, 0, 0.1f, 1.f);
+
+	_matrix identity;
+	D3DXMatrixIdentity(&identity);
+	Device->SetTransform(D3DTS_WORLD, &identity);
+	Device->SetTransform(D3DTS_VIEW, &identity);
+	Device->SetTransform(D3DTS_PROJECTION, &ortho);
+
+	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
+
+	for (auto& ui : RenderList[(int)RENDER_ID::Render_UI])
+		ui->Render();
+
+	spriteBatch->End();
+
+	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	Device->SetTransform(D3DTS_PROJECTION, &originProj);
 }
 
 void RenderSystem::AlphaPass()
@@ -131,9 +165,9 @@ void RenderSystem::Render_Begin(D3DXCOLOR color)
 	Device->Clear(0,
 		NULL,
 		D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER,
-		color,		// ÈÄ¸é ¹öÆÛ ÅØ½ºÃ³ »ö»ó
-		1.f,		// z¹öÆÛ ÃÊ±âÈ­ °ª
-		0);			// ½ºÅÙ½Ç ÃÊ±âÈ­ °ª
+		color,		// ï¿½Ä¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½
+		1.f,		// zï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½
+		0);			// ï¿½ï¿½ï¿½Ù½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½
 
 	Device->BeginScene();
 }
@@ -147,6 +181,7 @@ void RenderSystem::Render_End()
 
 void RenderSystem::Free()
 {
+	Safe_Release(spriteBatch);
 	Safe_Release(Device);
 }
 

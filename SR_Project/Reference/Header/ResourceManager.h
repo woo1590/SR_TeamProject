@@ -15,11 +15,11 @@ public:
     static ResourceManager* Create();
     HRESULT Ready_ResourceManager();
 
-    /*----------¿ÜºÎ ÆÄÀÏ ·Îµù ÇÔ¼ö----------------*/
+    /*----------ï¿½Üºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Ô¼ï¿½----------------*/
     void LoadTerrain(const std::wstring& filePath, const std::wstring& key, _float cellSpacing, _float heightScale);
     void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
 
-    /*----------³»ºÎ »ý¼º ÇÔ¼ö(Å×½ºÆ®¿ë)-------------*/
+    /*----------ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½(ï¿½×½ï¿½Æ®ï¿½ï¿½)-------------*/
     void LoadMesh(const std::wstring& key, Mesh* mesh);
     void LoadMaterial(const std::wstring& key, Material* mtrl);
 
@@ -35,6 +35,8 @@ private:
     std::unordered_map<std::wstring, LPDIRECT3DBASETEXTURE9> TextureContainer;
 
     std::unordered_map<std::wstring, TerrainMesh*> TerrainContainer;
+    
+    unordered_map<wstring, LPDIRECT3DTEXTURE9> TextureContainer;
 };
 
 END

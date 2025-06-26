@@ -26,6 +26,7 @@ namespace Engine
 		Terrain,
 		SkyBox,
 		Camera,
+		UI,
 		Count
 	};
 }

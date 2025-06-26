@@ -5,6 +5,7 @@
 #include "Material.h"
 #include "TerrainMesh.h"
 #include "StaticMesh.h"
+#include "GraphicDevice.h"
 
 ResourceManager::ResourceManager()
 {
@@ -30,8 +31,6 @@ ResourceManager* ResourceManager::Create()
 
 HRESULT ResourceManager::Ready_ResourceManager()
 {
-	
-
     return S_OK;
 }
 
@@ -134,4 +133,8 @@ void ResourceManager::Free()
 		{
 			Safe_Release(pair.second);
 		});
+
+    for (auto& p : TextureContainer)
+        Safe_Release(p.second);
+    TextureContainer.clear();
 }
