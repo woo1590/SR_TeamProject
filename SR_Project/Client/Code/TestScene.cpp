@@ -6,6 +6,7 @@
 #include "ObjectManager.h"
 #include "RenderSystem.h"
 #include "ResourceManager.h"
+#include "ImGuiManager.h"
 
 //object
 #include "BasicTerrain.h"
@@ -38,6 +39,10 @@ void TestScene::Load()
 {
 	ObjectMgr = ObjectManager::Create(this);
 
+	/*----------------Load ImGui----------------------*/
+    EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->ImGuiTestFunc();});
+
+	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
@@ -60,6 +65,13 @@ void TestScene::Late_Update(float dt)
 void TestScene::Unload()
 {
 
+}
+
+void TestScene::ImGuiTestFunc()
+{
+	ImGui::Begin("Simple Window");
+	ImGui::Text("Hello, ImGui!");
+	ImGui::End();
 }
 
 void TestScene::Free()

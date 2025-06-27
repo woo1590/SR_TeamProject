@@ -39,7 +39,7 @@ HRESULT BaseCharacter::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     Object::Ready_Object();
 
-    Bones["Body"] = Bone::Create(owner, objType, _vec3(1.f, 1.f, 0.5f), nullptr, L"ZombieBody_Mtrl");
+    Bones["Body"] = Bone::Create(owner, objType, _vec3(1.f, 1.f, 0.5f), this, L"ZombieBody_Mtrl");
 
     Bones["Head"] = Bone::Create(owner, objType, _vec3(1.f, 1.f, 1.f), Bones["Body"], L"ZombieHead_Mtrl");
     SetPosition("Head", _vec3(0.f, 2.f, 0.f));
