@@ -41,6 +41,7 @@ public:
 
     _matrix GetWorldMatrix()const;
     _matrix GetLocalMatrix()const;
+    _matrix GetParentMatrix()const;
 private:
     void Free()override;
 
@@ -51,6 +52,7 @@ private:
     _vec3 Right{ 1.f,0.f,0.f };
     _vec3 Up{ 0.f,1.f,0.f };
     _vec3 Forward{ 0.f,0.f,1.f };
+
 
     TransformComponent* Parent = nullptr;
 };

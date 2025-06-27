@@ -30,7 +30,7 @@ TransformComponent* TransformComponent::Create(Object* owner)
 
 void TransformComponent::Update(float dt)
 {
-    
+
 }
 
 void TransformComponent::SetPosition(float x, float y, float z)
@@ -83,10 +83,10 @@ void TransformComponent::SetForward(_vec3 forward)
     _float yaw = atan2(Forward.x, Forward.z);
     _float roll;
 
-    if (fabsf(cosf(pitch)) > 0.0001f) {                   
-        roll = atan2f(Right.y,Up.y);                      
+    if (fabsf(cosf(pitch)) > 0.0001f) {
+        roll = atan2f(Right.y, Up.y);
     }
-    else {                                                
+    else {
         roll = 0.0f;
     }
 
@@ -148,7 +148,7 @@ _matrix TransformComponent::GetWorldMatrix() const
     _matrix worldMat = GetLocalMatrix();
 
     if (Parent)
-        worldMat *= Parent->GetWorldMatrix();
+        worldMat *= Parent->GetParentMatrix();
 
     return worldMat;
 }
@@ -174,7 +174,26 @@ _matrix TransformComponent::GetLocalMatrix() const
     return localMat;
 }
 
+_matrix TransformComponent::GetParentMatrix() const
+{
+    _matrix transMat;
+    _matrix rotX;
+    _matrix rotY;
+    _matrix rotZ;
+
+    _matrix localMat;
+
+    D3DXMatrixTranslation(&transMat, Position.x, Position.y, Position.z);
+    D3DXMatrixRotationX(&rotX, Rotation.x);
+    D3DXMatrixRotationY(&rotY, Rotation.y);
+    D3DXMatrixRotationZ(&rotZ, Rotation.z);
+
+    localMat = rotY * rotX * rotZ * transMat;
+
+    return localMat;
+}
+
 void TransformComponent::Free()
 {
-    //생성한 자원 해제
+    //
 }
