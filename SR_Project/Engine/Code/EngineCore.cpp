@@ -76,7 +76,7 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 void EngineCore::Tick(float dt)
 {
 	InputSys->BeginFrame();
-	ImGuiMgr->BeginFrame();
+	//ImGuiMgr->BeginFrame();
 
 	SceneMgr->Update(dt);
 	SceneMgr->Late_Update(dt);
@@ -94,7 +94,7 @@ void EngineCore::Tick(float dt)
 
 void EngineCore::LoadDefaultResource()
 {
-	
+
 }
 
 TimerManager* EngineCore::GetTimerManager() const
@@ -163,7 +163,7 @@ void EngineCore::Free()
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
 	Safe_Release(UIMgr);
-	Safe_Release(ImGuiMgr);
+	//Safe_Release(ImGuiMgr);
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

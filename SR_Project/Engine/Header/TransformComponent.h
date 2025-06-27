@@ -26,6 +26,11 @@ public:
 
     void SetForward(_vec3 forward);
 
+    void SetPivot(float px, float py, float pz);
+    void SetPivot(_vec3 pivot);
+
+    void SetPivotEnable(_bool enabled);
+
     void SetParent(Object* parent);
     void SetParent(TransformComponent* parent);
 
@@ -52,8 +57,9 @@ private:
     _vec3 Right{ 1.f,0.f,0.f };
     _vec3 Up{ 0.f,1.f,0.f };
     _vec3 Forward{ 0.f,0.f,1.f };
-    
 
+    _vec3 Pivot{ 0.f, 0.f, 0.f };
+    _bool IsPivotEnabled = false;
 
     TransformComponent* Parent = nullptr;
 };

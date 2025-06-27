@@ -93,6 +93,21 @@ void TransformComponent::SetForward(_vec3 forward)
     Rotation = { pitch,yaw,roll };
 }
 
+void TransformComponent::SetPivot(float px, float py, float pz)
+{
+    SetPivot(_vec3(px, py, pz));
+}
+
+void TransformComponent::SetPivot(_vec3 pivot)
+{
+    Pivot = pivot;
+}
+
+void TransformComponent::SetPivotEnable(_bool enabled)
+{
+    IsPivotEnabled = enabled;
+}
+
 void TransformComponent::SetParent(Object* parent)
 {
     Parent = parent->GetComponent<TransformComponent>();
@@ -155,6 +170,9 @@ _matrix TransformComponent::GetWorldMatrix() const
 
 _matrix TransformComponent::GetLocalMatrix() const
 {
+    _matrix pivotMat;
+    _matrix reverseMat;
+
     _matrix transMat;
     _matrix rotX;
     _matrix rotY;
@@ -163,13 +181,18 @@ _matrix TransformComponent::GetLocalMatrix() const
 
     _matrix localMat;
 
+    D3DXMatrixTranslation(&pivotMat, Pivot.x, Pivot.y, Pivot.z);
+    D3DXMatrixTranslation(&reverseMat, -Pivot.x, -Pivot.y, -Pivot.z);
+
     D3DXMatrixTranslation(&transMat, Position.x, Position.y, Position.z);
     D3DXMatrixRotationX(&rotX, Rotation.x);
     D3DXMatrixRotationY(&rotY, Rotation.y);
     D3DXMatrixRotationZ(&rotZ, Rotation.z);
     D3DXMatrixScaling(&scaleMat, Scale.x, Scale.y, Scale.z);
 
-    localMat = scaleMat * rotY * rotX * rotZ * transMat;
+    if (IsPivotEnabled) localMat = scaleMat * transMat * pivotMat * rotY * rotX * rotZ * reverseMat;
+
+    else localMat = scaleMat * rotY * rotX * rotZ * transMat;
 
     return localMat;
 }
