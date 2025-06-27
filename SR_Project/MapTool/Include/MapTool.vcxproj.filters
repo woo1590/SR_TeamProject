@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="00. MainApp">
+      <UniqueIdentifier>{9d9ef513-f0c6-4468-905a-fdbc050fa57e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc">
+      <UniqueIdentifier>{7ac164d1-5da2-48b5-b291-1387d79a16dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="100. Executable">
+      <UniqueIdentifier>{a8cb43ea-3f39-48ad-9765-f650530c9b56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\Header">
+      <UniqueIdentifier>{36c5d75f-c80d-4247-a145-a118a80a0c70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\pch">
+      <UniqueIdentifier>{1f41f857-2a29-4722-9ce4-c8e2d3cf7e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. EditScene">
+      <UniqueIdentifier>{ef8f98ea-b74a-406f-9899-be0f992b27d9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>99. Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>99. Etc\pch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainApp.h">
+      <Filter>00. MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EditScene.h">
+      <Filter>01. EditScene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>99. Etc\pch</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTool.cpp">
+      <Filter>100. Executable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainApp.cpp">
+      <Filter>00. MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EditScene.cpp">
+      <Filter>01. EditScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -10,9 +10,17 @@ xcopy	/y	.\Engine\Bin\Debug\Engine.lib	.\Client\Bin\Debug\
 xcopy	/y	.\Engine\Bin\Release\Engine.dll	.\Client\Bin\Release\
 xcopy	/y	.\Engine\Bin\Release\Engine.lib	.\Client\Bin\Release\
 
+xcopy	/y	.\Engine\Bin\Debug\Engine.dll	.\MapTool\Bin\Debug\
+xcopy	/y	.\Engine\Bin\Debug\Engine.lib	.\MapTool\Bin\Debug\
+
+xcopy	/y	.\Engine\Bin\Release\Engine.dll	.\MapTool\Bin\Release\
+xcopy	/y	.\Engine\Bin\Release\Engine.lib	.\MapTool\Bin\Release\
+
 xcopy	/y	.\Engine\Bin\Debug\Engine.lib	.\Reference\Library\Debug\
 xcopy	/y	.\Engine\Bin\Release\Engine.lib	.\Reference\Library\Release\
 
 xcopy	/y	.\External\FMOD\lib\x64\fmod.dll .\Client\Bin\Debug\
 xcopy	/y	.\External\FMOD\lib\x64\fmod.dll .\Client\Bin\Release\
 
+xcopy	/y	.\External\FMOD\lib\x64\fmod.dll .\MapTool\Bin\Debug\
+xcopy	/y	.\External\FMOD\lib\x64\fmod.dll .\MapTool\Bin\Release\
