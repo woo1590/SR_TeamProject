@@ -46,6 +46,12 @@
     <Filter Include="02. Object\UIObj">
       <UniqueIdentifier>{edd0f473-f082-4ad7-81f3-d71fe38fe4ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\BaseCharacter">
+      <UniqueIdentifier>{6a607e94-9719-4b35-b32c-7934cd34fd2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\BaseCharacter\Bone">
+      <UniqueIdentifier>{842e4533-b8b5-4f6a-95b3-74c679d50293}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -84,6 +90,12 @@
     <ClInclude Include="..\Header\UIObj.h">
       <Filter>02. Object\UIObj</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BaseCharacter.h">
+      <Filter>02. Object\BaseCharacter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bone.h">
+      <Filter>02. Object\BaseCharacter\Bone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -118,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\UIObj.cpp">
       <Filter>02. Object\UIObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseCharacter.cpp">
+      <Filter>02. Object\BaseCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bone.cpp">
+      <Filter>02. Object\BaseCharacter\Bone</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

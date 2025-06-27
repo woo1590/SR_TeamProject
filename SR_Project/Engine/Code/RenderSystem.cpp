@@ -51,8 +51,8 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	/*---------------Texture Setting-------------------------*/
-	Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
+	Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 	Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
 
 	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))

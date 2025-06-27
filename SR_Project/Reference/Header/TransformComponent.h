@@ -54,6 +54,7 @@ private:
     _vec3 Forward{ 0.f,0.f,1.f };
     
 
+
     TransformComponent* Parent = nullptr;
 };
 

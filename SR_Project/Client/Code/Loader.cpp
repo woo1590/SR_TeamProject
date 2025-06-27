@@ -99,6 +99,32 @@ HRESULT Loader::Load_TestScene()
 	skyboxMtrl->SetTexture(L"Basic_SkyBox");
 	resource->LoadMaterial(L"SkyBox_Mtrl", skyboxMtrl);
 
+	//////////////////////////////////////////////////////////////////////////////////
+	resource->LoadMesh(L"Cube_Mesh", cube);
+	resource->LoadTexture(L"../Resource/Asset/HY/Body2.dds", L"Body", TEXTURE::Tex_Cube);
+	auto zombieMtrl = Material::Create();
+	zombieMtrl->SetTexture(L"Body");
+	resource->LoadMaterial(L"ZombieBody_Mtrl", zombieMtrl);
+
+	resource->LoadMesh(L"Cube_Mesh", cube);
+	resource->LoadTexture(L"../Resource/Asset/HY/ZombieHead.dds", L"Head", TEXTURE::Tex_Cube);
+	zombieMtrl = Material::Create();
+	zombieMtrl->SetTexture(L"Head");
+	resource->LoadMaterial(L"ZombieHead_Mtrl", zombieMtrl);
+
+	resource->LoadMesh(L"Cube_Mesh", cube);
+	resource->LoadTexture(L"../Resource/Asset/HY/Arm.dds", L"Arm", TEXTURE::Tex_Cube);
+	zombieMtrl = Material::Create();
+	zombieMtrl->SetTexture(L"Arm");
+	resource->LoadMaterial(L"ZombieArm_Mtrl", zombieMtrl);
+
+	resource->LoadMesh(L"Cube_Mesh", cube);
+	resource->LoadTexture(L"../Resource/Asset/HY/Leg.dds", L"Leg", TEXTURE::Tex_Cube);
+	zombieMtrl = Material::Create();
+	zombieMtrl->SetTexture(L"Leg");
+	resource->LoadMaterial(L"ZombieLeg_Mtrl", zombieMtrl);
+	//////////////////////////////////////////////////////////////////////////////////
+
 	return S_OK;
 }
 

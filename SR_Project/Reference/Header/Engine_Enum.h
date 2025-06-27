@@ -22,6 +22,7 @@ namespace Engine
 	enum class ObjectType
 	{
 		Player,
+		Monster,
 		Light,
 		Terrain,
 		SkyBox,

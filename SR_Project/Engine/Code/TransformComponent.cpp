@@ -30,7 +30,7 @@ TransformComponent* TransformComponent::Create(Object* owner)
 
 void TransformComponent::Update(float dt)
 {
-    
+
 }
 
 void TransformComponent::SetPosition(float x, float y, float z)
@@ -83,10 +83,10 @@ void TransformComponent::SetForward(_vec3 forward)
     _float yaw = atan2(Forward.x, Forward.z);
     _float roll;
 
-    if (fabsf(cosf(pitch)) > 0.0001f) {                   
-        roll = atan2f(Right.y,Up.y);                      
+    if (fabsf(cosf(pitch)) > 0.0001f) {
+        roll = atan2f(Right.y, Up.y);
     }
-    else {                                                
+    else {
         roll = 0.0f;
     }
 
@@ -195,5 +195,5 @@ _matrix TransformComponent::GetParentMatrix() const
 
 void TransformComponent::Free()
 {
-    //생성한 자원 해제
+    //
 }
