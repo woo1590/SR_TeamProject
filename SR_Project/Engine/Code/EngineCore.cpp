@@ -10,6 +10,7 @@
 #include "LightSystem.h"
 #include "InputSystem.h"
 #include "SoundManager.h"
+#include "ImGuiManager.h"
 
 #include "Mesh.h"
 #include "Material.h"
@@ -65,12 +66,15 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!UIMgr)
 		return E_FAIL;
 
+	ImGuiMgr = ImGuiManager::Create(hWnd);
+
 	return S_OK;
 }
 
 void EngineCore::Tick(float dt)
 {
 	InputSys->BeginFrame();
+	ImGuiMgr->BeginFrame();
 
 	SceneMgr->Update(dt);
 	SceneMgr->Late_Update(dt);
@@ -79,9 +83,9 @@ void EngineCore::Tick(float dt)
 
 	RenderSys->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 	RenderSys->Render();
-
 	RenderSys->Render_End();
 
+	ImGuiMgr->EndFrame();
 	InputSys->EndFrame();
 }
 
@@ -113,6 +117,11 @@ ResourceManager* EngineCore::GetResourceManager() const
 SoundManager* EngineCore::GetSoundManager() const
 {
 	return SoundMgr;
+}
+
+ImGuiManager* EngineCore::GetImGuiManager() const
+{
+	return ImGuiMgr;
 }
 
 RenderSystem* EngineCore::GetRenderSystem() const
@@ -151,6 +160,7 @@ void EngineCore::Free()
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
 	Safe_Release(UIMgr);
+	Safe_Release(ImGuiMgr);
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

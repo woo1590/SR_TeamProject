@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
@@ -125,7 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
@@ -152,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -180,7 +180,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;./;../../External/FMOD/inc;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -203,6 +203,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\External\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="..\..\External\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="..\..\External\imgui\imconfig.h" />
+    <ClInclude Include="..\..\External\imgui\imgui.h" />
+    <ClInclude Include="..\..\External\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\External\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\External\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\..\External\imgui\imstb_truetype.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
     <ClInclude Include="..\Header\CubeMesh.h" />
     <ClInclude Include="..\Header\EngineCore.h" />
@@ -216,6 +224,7 @@
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\FreecamComponent.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
+    <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\InputSystem.h" />
     <ClInclude Include="..\Header\LightComponent.h" />
     <ClInclude Include="..\Header\LightSystem.h" />
@@ -244,6 +253,48 @@
     <ClInclude Include="..\Header\UIRenderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\External\imgui\backends\imgui_impl_dx9.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\External\imgui\backends\imgui_impl_win32.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\External\imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\External\imgui\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\External\imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\External\imgui\imgui_tables.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\External\imgui\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\Code\CameraComponent.cpp" />
     <ClCompile Include="..\Code\CubeMesh.cpp" />
     <ClCompile Include="..\Code\EngineCore.cpp" />
@@ -259,6 +310,7 @@
     <ClCompile Include="..\Code\FrameManager.cpp" />
     <ClCompile Include="..\Code\FcamComponent.cpp" />
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
+    <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\InputSystem.cpp" />
     <ClCompile Include="..\Code\LightComponent.cpp" />
     <ClCompile Include="..\Code\LightSystem.cpp" />
@@ -286,6 +338,7 @@
     <ClCompile Include="..\Code\UIRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\External\imgui\.editorconfig" />
     <None Include="..\Header\Math.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

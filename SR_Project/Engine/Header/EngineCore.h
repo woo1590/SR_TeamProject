@@ -10,8 +10,9 @@ class LightSystem;
 class InputSystem;
 class ResourceManager;
 class UIManager;
-
 class SoundManager;
+class ImGuiManager;
+
 class ENGINE_DLL EngineCore :
     public Base
 {
@@ -34,6 +35,7 @@ public:
     ResourceManager*    GetResourceManager()const;
     UIManager*          GetUIManager() const;
     SoundManager*       GetSoundManager()const;
+    ImGuiManager*       GetImGuiManager()const;
 
     RenderSystem*       GetRenderSystem()const;
     LightSystem*        GetLightSystem()const;
@@ -47,6 +49,7 @@ private:
     ResourceManager* ResourceMgr;
     UIManager* UIMgr;
     SoundManager* SoundMgr;
+    ImGuiManager* ImGuiMgr;
 
     RenderSystem* RenderSys;
     LightSystem* LightSys;
