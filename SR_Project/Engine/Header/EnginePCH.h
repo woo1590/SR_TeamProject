@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
-#include <tchar.h>
 
 
 //DirectX
@@ -15,6 +14,8 @@
 #include <d3dx9.h>
 
 //c, c++
+#include <new>
+#include <cstddef>
 #include <ctime>
 #include <typeindex>
 #include <fstream>
@@ -29,22 +30,26 @@
 #include <string>
 #include <unordered_map>
 
+//Header
+#include "Base.h"
+
+
+
 #include "Engine_Enum.h"
 #include "Engine_Macro.h"
 #include "Engine_Struct.h"
 #include "Engine_Typedef.h"
 #include "Engine_Function.h"
 
+
 //Library
 #include <fmod.hpp>
 
-//Header
-#include "Base.h"
+#ifdef _DEBUG
+#define USE_IMGUI
+#endif
 
-#define DIRECTINPUT_VERSION	0x0800
-#include <dinput.h>
-
-#pragma warning(disable : 4251)
+#ifndef USE_IMGUI
 
 #ifdef _DEBUG
 
@@ -57,8 +62,16 @@
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
 #define new DBG_NEW 
 
-#endif
-#endif
+#endif // _DEBUG
+#endif	//DBG_NEW
+#endif // !USE_IMGUI
+
+
+
+#define DIRECTINPUT_VERSION	0x0800
+#include <dinput.h>
+
+#pragma warning(disable : 4251)
 
 using namespace std;
 using namespace Engine;

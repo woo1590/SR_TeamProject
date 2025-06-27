@@ -1,4 +1,3 @@
-#include "EnginePCH.h"
 // dear imgui, v1.92.0 WIP
 // (main code and documentation)
 
@@ -1172,6 +1171,7 @@ CODE
 #ifndef IMGUI_DEFINE_MATH_OPERATORS
 #define IMGUI_DEFINE_MATH_OPERATORS
 #endif
+
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
 #include "imgui_internal.h"
@@ -7077,7 +7077,7 @@ void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar
 
         // Borders
         if (handle_borders_and_resize_grips)
-            RenderWindowOuterBorders(window); 
+            RenderWindowOuterBorders(window);
     }
     window->DC.NavLayerCurrent = ImGuiNavLayer_Main;
 }

@@ -85,9 +85,7 @@ void FreecamComponent::Update(_float dt)
     _float cp = cos(D3DXToRadian(Pitch));
     _float sp = sin(D3DXToRadian(Pitch));
     _float sy = sin(D3DXToRadian(Yaw));
-    sy = sy;
-    sy = sy;
-    sy = sy;
+
     _vec3 front{ sy * cp,sp,cy * cp };
     Target->SetForward(front);
 }
