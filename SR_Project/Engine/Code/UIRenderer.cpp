@@ -28,21 +28,38 @@ UIRenderer* UIRenderer::Create(Object* owner)
 
 void UIRenderer::SetTexture(const wstring& key)
 {
-	auto resourceMgr = EngineCore::GetInstance()->GetResourceManager();
-	texture = resourceMgr->GetTexture(key);
-	/////////////////////////////////////////////////////////////////////
-	D3DSURFACE_DESC desc;
-	texture->GetLevelDesc(0, &desc);
-	srcRect = {0, 0, LONG(desc.Width), LONG(desc.Height)};
-	center = {desc.Width * 0.5f, desc.Height * 0.5f, 0.f};
+    // ResourceManager에서 BaseTexture9 반환
+    texture = EngineCore::GetInstance()
+        ->GetResourceManager()
+        ->GetTexture(key);
 
+    // IBaseTexture9 → ITexture9로 QueryInterface
+    if (texture && SUCCEEDED(texture->QueryInterface(
+        __uuidof(IDirect3DTexture9),
+        reinterpret_cast<void**>(&tex2D))))
+    {
+        D3DSURFACE_DESC desc;
+        tex2D->GetLevelDesc(0, &desc);
+        tex2D->Release();
 
-	pos = center;
+        srcRect = {0, 0, LONG(desc.Width), LONG(desc.Height)};
+        center = {desc.Width * 0.5f, desc.Height * 0.5f, 0.f};
+        pos = center;
+    }
 }
 
 void UIRenderer::Render()
 {
-	auto sprite = EngineCore::GetInstance()->GetRenderSystem()->GetSpriteBatch();
+    auto sprite = EngineCore::GetInstance()
+        ->GetRenderSystem()
+        ->GetSpriteBatch();
 
-	sprite->Draw(texture, &srcRect, &center, &pos, D3DCOLOR_ARGB(255, 255, 255, 255));
+    sprite->Draw(
+        tex2D,
+        &srcRect,
+        &center,
+        &pos,
+        D3DCOLOR_ARGB(255, 255, 255, 255)
+    );
+
 }
