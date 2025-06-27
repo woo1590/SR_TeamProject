@@ -66,7 +66,9 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!UIMgr)
 		return E_FAIL;
 
-	//ImGuiMgr = ImGuiManager::Create(hWnd);
+	ImGuiMgr = ImGuiManager::Create(hWnd);
+	if (!ImGuiMgr)
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -74,18 +76,19 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 void EngineCore::Tick(float dt)
 {
 	InputSys->BeginFrame();
-	//ImGuiMgr->BeginFrame();
+	ImGuiMgr->BeginFrame();
 
 	SceneMgr->Update(dt);
 	SceneMgr->Late_Update(dt);
+
 
 	LightSys->ApplyLight();
 
 	RenderSys->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 	RenderSys->Render();
+	ImGuiMgr->Render();
 	RenderSys->Render_End();
 
-	//ImGuiMgr->EndFrame();
 	InputSys->EndFrame();
 }
 
@@ -160,7 +163,7 @@ void EngineCore::Free()
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
 	Safe_Release(UIMgr);
-	//Safe_Release(ImGuiMgr);
+	Safe_Release(ImGuiMgr);
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

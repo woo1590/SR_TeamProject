@@ -18,6 +18,8 @@ public:
     void Late_Update(float dt) override;
     void Unload() override;
 
+    /*---------ImGui Test---------*/
+    void ImGuiTestFunc();
 private:
     void Free() override;
 };
