@@ -17,7 +17,8 @@ public:
 	void Render() override;
 
 private:
-	LPDIRECT3DTEXTURE9 texture = nullptr;
+	LPDIRECT3DBASETEXTURE9 texture = nullptr;
+	IDirect3DTexture9* tex2D = nullptr;
 	RECT srcRect{};
 	_vec3 pos{};
 	_vec3 center{};

@@ -35,8 +35,6 @@ private:
     std::unordered_map<std::wstring, LPDIRECT3DBASETEXTURE9> TextureContainer;
 
     std::unordered_map<std::wstring, TerrainMesh*> TerrainContainer;
-    
-    unordered_map<wstring, LPDIRECT3DTEXTURE9> TextureContainer;
 };
 
 END

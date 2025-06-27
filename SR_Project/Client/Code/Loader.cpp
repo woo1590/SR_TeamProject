@@ -106,7 +106,7 @@ HRESULT Loader::load_UIResources()
 {
 	auto rm = EngineCore::GetInstance()->GetResourceManager();
 
-	rm->LoadTexture(L"Shield", L"../Bin/Assets/Jehyun/Shield.png");
+	rm->LoadTexture(L"Shield", L"../Bin/Assets/Jehyun/Shield.png",TEXTURE::Tex_Diffuse);
 
 	return S_OK;
 }

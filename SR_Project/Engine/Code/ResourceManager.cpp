@@ -129,12 +129,8 @@ void ResourceManager::Free()
             Safe_Release(pair.second);
         });
 
-	std::for_each(TerrainContainer.begin(), TerrainContainer.end(), [](auto& pair)
-		{
-			Safe_Release(pair.second);
-		});
-
-    for (auto& p : TextureContainer)
-        Safe_Release(p.second);
-    TextureContainer.clear();
+    std::for_each(TerrainContainer.begin(), TerrainContainer.end(), [](auto& pair)
+        {
+            Safe_Release(pair.second);
+        });
 }
