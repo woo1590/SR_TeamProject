@@ -148,7 +148,7 @@ _matrix TransformComponent::GetWorldMatrix() const
     _matrix worldMat = GetLocalMatrix();
 
     if (Parent)
-        worldMat *= Parent->GetWorldMatrix();
+        worldMat *= Parent->GetParentMatrix();
 
     return worldMat;
 }
@@ -170,6 +170,25 @@ _matrix TransformComponent::GetLocalMatrix() const
     D3DXMatrixScaling(&scaleMat, Scale.x, Scale.y, Scale.z);
 
     localMat = scaleMat * rotY * rotX * rotZ * transMat;
+
+    return localMat;
+}
+
+_matrix TransformComponent::GetParentMatrix() const
+{
+    _matrix transMat;
+    _matrix rotX;
+    _matrix rotY;
+    _matrix rotZ;
+
+    _matrix localMat;
+
+    D3DXMatrixTranslation(&transMat, Position.x, Position.y, Position.z);
+    D3DXMatrixRotationX(&rotX, Rotation.x);
+    D3DXMatrixRotationY(&rotY, Rotation.y);
+    D3DXMatrixRotationZ(&rotZ, Rotation.z);
+
+    localMat = rotY * rotX * rotZ * transMat;
 
     return localMat;
 }

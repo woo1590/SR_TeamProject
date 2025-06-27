@@ -41,6 +41,7 @@ public:
 
     _matrix GetWorldMatrix()const;
     _matrix GetLocalMatrix()const;
+    _matrix GetParentMatrix()const;
 private:
     void Free()override;
 
