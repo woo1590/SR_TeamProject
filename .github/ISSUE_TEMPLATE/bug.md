@@ -2,7 +2,7 @@
 name: Bug
 about: 버그 발생 시 작성
 title: "[Bug] 이슈 제목"
-labels: ''
+labels: Bug
 assignees: ''
 
 ---
