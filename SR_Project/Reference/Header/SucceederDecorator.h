@@ -1,11 +1,14 @@
 #pragma once
 #include "DecoratorNode.h"
-class InverterDecorator :
+
+BEGIN(Engine)
+
+class ENGINE_DLL SucceederDecorator :
     public DecoratorNode
 {
 protected:
-    explicit InverterDecorator(BTNode* child = nullptr);
-    virtual ~InverterDecorator();
+    explicit SucceederDecorator(BTNode* child = nullptr);
+    virtual ~SucceederDecorator();
 
 public:
     BTStatus Initialize(float dt) override;
@@ -13,5 +16,6 @@ public:
 
 protected:
     void Free() override;
-
 };
+
+END

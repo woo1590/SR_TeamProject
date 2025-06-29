@@ -1,7 +1,9 @@
 #pragma once
 #include "CompositeNode.h"
 
-class RandomSelectorNode :
+BEGIN(Engine)
+
+class ENGINE_DLL RandomSelectorNode :
     public CompositeNode
 {
 protected:
@@ -18,3 +20,5 @@ protected:
 protected:
     std::vector<_uint> RandomIndexes;
 };
+
+END

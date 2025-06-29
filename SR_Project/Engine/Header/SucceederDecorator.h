@@ -1,11 +1,14 @@
 #pragma once
 #include "DecoratorNode.h"
-class RepeatDecorator :
+
+BEGIN(Engine)
+
+class ENGINE_DLL SucceederDecorator :
     public DecoratorNode
 {
 protected:
-    explicit RepeatDecorator(BTNode* child = nullptr);
-    virtual ~RepeatDecorator();
+    explicit SucceederDecorator(BTNode* child = nullptr);
+    virtual ~SucceederDecorator();
 
 public:
     BTStatus Initialize(float dt) override;
@@ -13,9 +16,6 @@ public:
 
 protected:
     void Free() override;
-
-protected:
-    _uint       RepeatCnt;
-    _uint       CurrentCnt;
 };
 
+END

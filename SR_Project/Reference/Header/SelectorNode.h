@@ -1,12 +1,14 @@
 #pragma once
-#include "DecoratorNode.h"
+#include "CompositeNode.h"
 
-class SucceederDecorator :
-    public DecoratorNode
+BEGIN(Engine)
+
+class ENGINE_DLL SelectorNode :
+    public CompositeNode
 {
 protected:
-    explicit SucceederDecorator(BTNode* child = nullptr);
-    virtual ~SucceederDecorator();
+    explicit SelectorNode();
+    virtual ~SelectorNode();
 
 public:
     BTStatus Initialize(float dt) override;
@@ -16,3 +18,4 @@ protected:
     void Free() override;
 };
 
+END

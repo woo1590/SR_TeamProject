@@ -10,7 +10,9 @@ enum BTStatus
     End
 };
 
-class BTNode :
+BEGIN(Engine)
+
+class ENGINE_DLL BTNode :
     public Base
 {
 protected:
@@ -25,3 +27,4 @@ protected:
     void Free()override;
 };
 
+END

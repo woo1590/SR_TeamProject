@@ -1,12 +1,14 @@
 #pragma once
 #include "CompositeNode.h"
 
-class SelectorNode :
+BEGIN(Engine)
+
+class ENGINE_DLL RandomSelectorNode :
     public CompositeNode
 {
 protected:
-    explicit SelectorNode();
-    virtual ~SelectorNode();
+    explicit RandomSelectorNode();
+    virtual ~RandomSelectorNode();
 
 public:
     BTStatus Initialize(float dt) override;
@@ -14,5 +16,9 @@ public:
 
 protected:
     void Free() override;
+
+protected:
+    std::vector<_uint> RandomIndexes;
 };
 
+END

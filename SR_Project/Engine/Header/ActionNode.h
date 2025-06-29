@@ -1,22 +1,21 @@
 #pragma once
 #include "BTNode.h"
-class DecoratorNode :
+
+BEGIN(Engine)
+
+class ENGINE_DLL ActionNode :
     public BTNode
 {
 protected:
-    explicit DecoratorNode(BTNode* child = nullptr);
-    virtual ~DecoratorNode();
+    explicit ActionNode();
+    virtual ~ActionNode();
 
 public:
     virtual BTStatus Initialize(float dt) = 0;
     virtual BTStatus Tick(float dt, BlackBoard* bb) = 0;
 
-    void SetChild(BTNode* childNode);
-
 protected:
     void Free() override;
-
-protected:
-    BTNode* Child = nullptr;
 };
 
+END

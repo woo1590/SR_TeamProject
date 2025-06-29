@@ -1,7 +1,9 @@
 #pragma once
 #include "Base.h"
 
-class BlackBoard :
+BEGIN(Engine)
+
+class ENGINE_DLL BlackBoard :
     public Base
 {
 protected:
@@ -20,3 +22,4 @@ private:
     std::unordered_map<std::string, void*> Data;
 };
 
+END

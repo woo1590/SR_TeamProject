@@ -3,8 +3,10 @@
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
 
+BEGIN(Engine)
+
 class Object;
-class AIController :
+class ENGINE_DLL AIController :
     public Base
 {
 protected:
@@ -30,3 +32,4 @@ protected:
     Object* Owner = nullptr;
 };
 
+END

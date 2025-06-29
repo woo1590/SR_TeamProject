@@ -3,7 +3,9 @@
 #include "BTNode.h"
 #include "BlackBoard.h"
 
-class BehaviorTree :
+BEGIN(Engine)
+
+class ENGINE_DLL BehaviorTree :
     public Base
 {
 protected:
@@ -24,3 +26,4 @@ protected:
     BTNode* RootNode = nullptr;
 };
 
+END

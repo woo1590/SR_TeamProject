@@ -1,7 +1,9 @@
 #pragma once
 #include "BTNode.h"
 
-class ActionNode :
+BEGIN(Engine)
+
+class ENGINE_DLL ActionNode :
     public BTNode
 {
 protected:
@@ -16,3 +18,4 @@ protected:
     void Free() override;
 };
 
+END
