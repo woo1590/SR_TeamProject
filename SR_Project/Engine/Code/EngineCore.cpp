@@ -61,10 +61,6 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!InputSys)
 		return E_FAIL;
 
-	UIMgr = UIManager::Create();
-	if (!UIMgr)
-		return E_FAIL;
-
 	ImGuiMgr = ImGuiManager::Create(hWnd);
 	if (!ImGuiMgr)
 		return E_FAIL;
@@ -156,8 +152,7 @@ void EngineCore::Free()
 	Safe_Release(RenderSys);
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
-	Safe_Release(UIMgr);
-	//Safe_Release(ImGuiMgr);
+	Safe_Release(ImGuiMgr);
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

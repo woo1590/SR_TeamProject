@@ -99,6 +99,7 @@
     </Filter>
     <Filter Include="99. Etc\ImGui">
       <UniqueIdentifier>{270618e6-ebb6-4038-80b5-1754c521a72f}</UniqueIdentifier>
+	</Filter>
     <Filter Include="08. UI">
       <UniqueIdentifier>{957a43f5-ea90-4336-bc62-0d6265e7717b}</UniqueIdentifier>
     </Filter>
@@ -238,6 +239,7 @@
     </ClCompile>
     <ClCompile Include="..\..\External\imgui\backends\imgui_impl_win32.cpp">
       <Filter>99. Etc\ImGui</Filter>
+	</ClCompile>
     <ClCompile Include="..\Code\IObserver.cpp">
       <Filter>08. UI\00. UIObserver</Filter>
     </ClCompile>
@@ -392,6 +394,7 @@
     </ClInclude>
     <ClInclude Include="..\..\External\imgui\backends\imgui_impl_win32.h">
       <Filter>99. Etc\ImGui</Filter>
+	</ClInclude>
     <ClInclude Include="..\Header\IObserver.h">
       <Filter>08. UI\00. UIObserver</Filter>
     </ClInclude>

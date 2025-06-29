@@ -51,6 +51,7 @@
     </Filter>
     <Filter Include="02. Object\BaseCharacter\Bone">
       <UniqueIdentifier>{842e4533-b8b5-4f6a-95b3-74c679d50293}</UniqueIdentifier>
+	</Filter>
     <Filter Include="02. Object\UIObj\HPBarFront">
       <UniqueIdentifier>{f48f0958-d4af-4bfd-a97b-e2af1b555b5a}</UniqueIdentifier>
     </Filter>
@@ -100,6 +101,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Bone.h">
       <Filter>02. Object\BaseCharacter\Bone</Filter>
+	</ClInclude>
     <ClInclude Include="..\Header\HPBarFront.h">
       <Filter>02. Object\UIObj\HPBarFront</Filter>
     </ClInclude>
@@ -146,6 +148,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bone.cpp">
       <Filter>02. Object\BaseCharacter\Bone</Filter>
+	</ClCompile>
     <ClCompile Include="..\Code\HPBarFront.cpp">
       <Filter>02. Object\UIObj\HPBarFront</Filter>
     </ClCompile>
