@@ -8,7 +8,7 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 
-Player::Player(ObjectManager* owner, ObjectType objType) :Object(owner, objType)
+Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType)
 {
 }
 
@@ -32,41 +32,57 @@ Player* Player::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Object::Ready_Object();
+    BaseCharacter::Ready_Object(owner, objType);
 
     auto transform = AddComponent<TransformComponent>();
 
-    Bones["Body"] = Bone::Create(owner, objType, _vec3(8.f, 12.f, 4.f), this, L"playerBody_Mtrl");
-    SetPosition("Body", _vec3(0.f, 0.f, 0.f));
+    SetScale(1.f);
 
-    Bones["Head"] = Bone::Create(owner, objType, _vec3(8.f, 8.f, 8.f), Bones["Body"], L"playerHead_Mtrl");
-    SetPosition("Head", _vec3(0.f, 20.f, 0.f));
+    SetMaterial(L"playerBody_Mtrl","Body");
+    Bones["Body"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 12.f * Scale, 4.f * Scale);
+    Bones["Body"]->GetComponent<TransformComponent>()->SetPosition(0.f, 0.f, 0.f);
 
-    Bones["LHand"] = Bone::Create(owner, objType, _vec3(3.f, 12.f, 4.f), Bones["Body"], L"playerLeftArm_Mtrl");
-    SetPosition("LHand", _vec3(-11.f, 0.f, 0.f));
-    
-    Bones["RHand"] = Bone::Create(owner, objType, _vec3(3.f, 12.f, 4.f), Bones["Body"], L"playerRightArm_Mtrl");
-    SetPosition("RHand", _vec3(11.f, 0.f, 0.f));
-    
-    Bones["LLeg"] = Bone::Create(owner, objType, _vec3(4.f, 12.f, 4.f), Bones["Body"], L"playerLeftLeg_Mtrl");
-    SetPosition("LLeg", _vec3(-4.f, -24.f, 0.f));
-    
-    Bones["RLeg"] = Bone::Create(owner, objType, _vec3(4.f, 12.f, 4.f), Bones["Body"], L"playerRightLeg_Mtrl");
-    SetPosition("RLeg", _vec3(4.f, -24.f, 0.f));
+    SetMaterial(L"playerHead_Mtrl","Head");
+    Bones["Head"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 8.f * Scale, 8.f * Scale);
+    Bones["Head"]->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f * Scale, 0.f);
+    Bones["Head"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -8.f * Scale, 0.0f));
+    Bones["Head"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
-    owner->AddObject(ObjectType::Player, Bones["Body"]);
-    owner->AddObject(ObjectType::Player, Bones["Head"]);
-    owner->AddObject(ObjectType::Player, Bones["LHand"]);
-    owner->AddObject(ObjectType::Player, Bones["RHand"]);
-    owner->AddObject(ObjectType::Player, Bones["LLeg"]);
-    owner->AddObject(ObjectType::Player, Bones["RLeg"]);
+    SetMaterial(L"playerLeftArm_Mtrl","LHand");
+    Bones["LHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
+    Bones["LHand"]->GetComponent<TransformComponent>()->SetPosition(-11.f * Scale, 0.f, 0.f);
+    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
+    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+    
+    SetMaterial(L"playerRightArm_Mtrl","RHand");
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetPosition(11.f * Scale, 0.f, 0.f);
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+
+    SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
+    Bones["LLeg"]->GetComponent<TransformComponent>()->SetScale(4.f * Scale, 12.f * Scale, 4.f * Scale);
+    Bones["LLeg"]->GetComponent<TransformComponent>()->SetPosition(-4.f * Scale, -24.f * Scale, 0.f);
+    Bones["LLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 12.f * Scale, 0.0f));
+    Bones["LLeg"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+
+    SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
+    Bones["RLeg"]->GetComponent<TransformComponent>()->SetScale(4.f * Scale, 12.f * Scale, 4.f * Scale);
+    Bones["RLeg"]->GetComponent<TransformComponent>()->SetPosition(4.f * Scale, -24.f * Scale, 0.f);
+    Bones["RLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 12.f * Scale, 0.0f));
+    Bones["RLeg"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+
+    for (auto& pair : Bones) {
+        auto pBoneTransform = pair.second->GetComponent<TransformComponent>();
+        pBoneTransform->SetParent(transform);
+    }
 
     return S_OK;
 }
 
 void Player::Update(_float dt)
 {
-    Object::Update(dt);
+    BaseCharacter::Update(dt);
 
     KeyInput(dt);
     switch (m_eState) {
@@ -76,12 +92,14 @@ void Player::Update(_float dt)
     case ePlayerState::WALK:
         UpdateWalk(dt);
         break;
+    case ePlayerState::ROLL:
+        UpdateRoll(dt);
     }
 }
 
 void Player::Late_Update(_float dt)
 {
-    Object::Late_Update(dt);
+    BaseCharacter::Late_Update(dt);
 }
 
 void Player::Free()
@@ -89,61 +107,89 @@ void Player::Free()
     Object::Free();
 }
 
-void Player::SetMaterial(string str, const std::wstring& mtrl)
-{
-    if (Bones[str] != nullptr)
-    {
-        Bones[str]->GetComponent<MeshRenderer>()->SetMaterial(mtrl);
-    }
-}
-
-void Player::SetScale(string str, _vec3 scale)
-{
-    if (Bones[str] != nullptr)
-    {
-        Bones[str]->GetComponent<TransformComponent>()->SetScale(scale);
-    }
-}
-
-void Player::SetPosition(string str, _vec3 position)
-{
-    if (Bones[str] != nullptr)
-    {
-        Bones[str]->GetComponent<TransformComponent>()->SetPosition(position);
-    }
-}
-
-void Player::MovePosition(_vec3 moveVec)
+void Player::MovePlayer(_vec3 moveVec)
 {
     auto transform = GetComponent<TransformComponent>();
     transform->SetPosition(transform->GetPosition()+moveVec);
 }
 
-void Player::SetRotation(string str, _vec3 rotation)
+void Player::RotatePlayer(_vec3 rotateVec)
 {
-    if (Bones[str] != nullptr)
-    {
-        Bones[str]->GetComponent<TransformComponent>()->SetRotate(rotation);
-    }
+    auto transform = GetComponent<TransformComponent>();
+    transform->SetRotate(transform->GetRotate()+rotateVec);
 }
 
 void Player::UpdateIdle(_float dt)
 {
-    if (m_fWalkTime != 0.f) m_fWalkTime = 0.f;
 }
 
 void Player::UpdateWalk(_float dt)
 {
     m_fWalkTime += dt;
-    _vec3 moveVec = { 0.f * dt, 0.f * dt, 100.f * dt };
-    MovePosition(moveVec);
 
-    float fAngle = sinf(m_fWalkTime) * 30.f;
-    SetRotation("LLeg", { fAngle, 0.f, 0.f });
-    SetRotation("RLeg", { -fAngle, 0.f, 0.f });
+    float fAngle = sinf(m_fWalkTime*10.f);
+    SetRotation( { fAngle, 0.f, 0.f }, "LLeg" );
+    SetRotation( { -fAngle, 0.f, 0.f }, "RLeg");
 
-    SetRotation("LHand", { -fAngle, 0.f, 0.f });
-    SetRotation("RHand", { fAngle, 0.f, 0.f });
+    SetRotation( { -fAngle, 0.f, 0.f }, "LHand");
+    SetRotation( { fAngle, 0.f, 0.f }, "RHand");
+
+    _vec3 moveVec = { 0.f * dt, 0.f * dt, m_fSpeed * Scale * dt };
+    MovePlayer(moveVec);
+    _vec3 rotateVec = { 0.f * dt, 0.f * dt, 0.f * dt };
+    RotatePlayer(rotateVec);
+}
+
+void Player::UpdateRoll(_float dt)
+{
+    const float fRollDuration = 0.5f;
+    m_fRollTime += dt;
+
+    float fProgress = m_fRollTime / fRollDuration;
+    fProgress = std::clamp(fProgress, 0.f, 1.f);
+
+    float fLerpRatio = 0.f;
+    if (fProgress <= 0.2f) {
+        fLerpRatio = fProgress / 0.2f;
+    }
+    else if (fProgress >= 0.8f) {
+        fLerpRatio = (1.f - fProgress) / 0.2f;
+    }
+    else {
+        fLerpRatio = 1.f;
+    }
+
+    auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
+        return start + offset * ratio;
+    };
+
+    SetRotation(LerpRot(m_mapStartRotations["Head"], { 1.f, 0.f, 0.f }, fLerpRatio), "Head");
+    SetRotation(LerpRot(m_mapStartRotations["LLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "LLeg");
+    SetRotation(LerpRot(m_mapStartRotations["RLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "RLeg");
+    SetRotation(LerpRot(m_mapStartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
+    SetRotation(LerpRot(m_mapStartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
+
+    float fTotalRollAngle = D3DX_PI * 2.f;
+    float fCurrentAngle = fTotalRollAngle * dt / fRollDuration;
+
+    float fYOffset = sinf(fProgress * D3DX_PI) * -15.f;
+    auto transform = GetComponent<TransformComponent>();
+    _vec3 vCurPos = transform->GetPosition();
+    vCurPos.y = fYOffset; // 항상 기준값 (0.f)에서 출발
+    transform->SetPosition(vCurPos);
+
+    _vec3 moveVec = { 0.f, 0.f, 3 * m_fSpeed * Scale * dt };
+    MovePlayer(moveVec);
+
+    _vec3 rotateVec = { fCurrentAngle, 0.f, 0.f };
+    RotatePlayer(rotateVec);
+
+    if (m_fRollTime >= fRollDuration) {
+        m_fRollTime = 0.f;
+        m_eState = ePlayerState::WALK;
+        rotateVec = { 0.f, 0.f, 0.f };
+        RotatePlayer(rotateVec);
+    }
 }
 
 void Player::KeyInput(_float dt)
@@ -155,7 +201,12 @@ void Player::KeyInput(_float dt)
             m_eState = ePlayerState::WALK;
             break;
         case ePlayerState::WALK:
-            m_eState = ePlayerState::IDLE;
+            m_eState = ePlayerState::ROLL;
+            m_mapStartRotations["Head"] = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
+            m_mapStartRotations["LLeg"] = Bones["LLeg"]->GetComponent<TransformComponent>()->GetRotate();
+            m_mapStartRotations["RLeg"] = Bones["RLeg"]->GetComponent<TransformComponent>()->GetRotate();
+            m_mapStartRotations["LHand"] = Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate();
+            m_mapStartRotations["RHand"] = Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate();
             break;
         }
     }

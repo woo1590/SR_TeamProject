@@ -60,7 +60,7 @@
     </Filter>
     <Filter Include="02. Object\Player">
       <UniqueIdentifier>{6ffcf943-49b9-49bf-8352-399ad641cdbd}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. Object\CameraActor">
       <UniqueIdentifier>{787cf409-8411-4408-97c8-8ddd782499c4}</UniqueIdentifier>
     </Filter>
@@ -99,9 +99,6 @@
     <ClInclude Include="..\Header\TestObject.h">
       <Filter>02. Object\TestObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Player.h">
-      <Filter>02. Object\UIObj</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\BaseCharacter.h">
       <Filter>02. Object\BaseCharacter</Filter>
     </ClInclude>
@@ -116,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CameraActor.h">
       <Filter>02. Object\CameraActor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player.h">
+      <Filter>02. Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +166,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\Player</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CameraActor.cpp">
       <Filter>02. Object\CameraActor</Filter>
     </ClCompile>

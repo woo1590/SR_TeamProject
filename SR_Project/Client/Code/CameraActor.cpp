@@ -7,6 +7,7 @@
 #include "CameraComponent.h"
 #include "ThirdcamComponent.h"
 #include "TransformComponent.h"
+#include "FreecamComponent.h"
 
 CameraActor::CameraActor(ObjectManager* owner, ObjectType objType)
 	:Object(owner,objType)
@@ -35,7 +36,7 @@ HRESULT CameraActor::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto cam = AddComponent<CameraComponent>();
-	auto tCam = AddComponent<ThirdcamComponent>();
+	auto controller = AddComponent<FreecamComponent>();
 
 	EngineCore::GetInstance()->GetRenderSystem()->SetCamera(cam);
 

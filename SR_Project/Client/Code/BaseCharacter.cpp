@@ -93,7 +93,7 @@ void BaseCharacter::SetMaterial(const std::wstring& mtrl, string str)
     }
 }
 
-void BaseCharacter::SetScale(float scale)       //�ʹݿ� �����ؾ���
+void BaseCharacter::SetScale(float scale)
 {
     Scale = scale;
 }
