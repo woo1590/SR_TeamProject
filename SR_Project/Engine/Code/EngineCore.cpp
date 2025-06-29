@@ -71,7 +71,7 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 void EngineCore::Tick(float dt)
 {
 	InputSys->BeginFrame();
-	//ImGuiMgr->BeginFrame();
+	ImGuiMgr->BeginFrame();
 
 	SceneMgr->Update(dt);
 	SceneMgr->Late_Update(dt);

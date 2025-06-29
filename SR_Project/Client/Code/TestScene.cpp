@@ -13,7 +13,6 @@
 #include "BasicTerrain.h"
 #include "TestObject.h"
 #include "SkyBox.h"
-#include "UIObj.h"
 #include "BaseCharacter.h"
 #include "HPBarFront.h"
 #include "Player.h"
@@ -50,7 +49,6 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
-	ObjectMgr->AddObject(ObjectType::UI, UIObj::Create(ObjectMgr, ObjectType::UI));
 	ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
 
 	player = Player::Create(ObjectMgr, ObjectType::Player);
@@ -95,9 +93,9 @@ void TestScene::Unload()
 
 void TestScene::ImGuiTestFunc()
 {
-	ImGui::Begin("Simple Window");
+	/*ImGui::Begin("Simple Window");
 	ImGui::Text("Hello, ImGui!");
-	ImGui::End();
+	ImGui::End();*/
 }
 
 void TestScene::Free()
