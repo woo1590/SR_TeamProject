@@ -56,8 +56,8 @@ void TestScene::Load()
 	auto info = player->GetComponent<PlayerInfoComponent>();
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
-	ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
-	ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));
+	//ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
+	//ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));
 
 	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
 	/*----------------------------------------------------------------------------------------------*/

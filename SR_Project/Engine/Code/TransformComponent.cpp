@@ -163,8 +163,24 @@ _matrix TransformComponent::GetWorldMatrix() const
 {
     _matrix worldMat = GetLocalMatrix();
 
-    if (Parent)
-        worldMat *= Parent->GetParentMatrix();
+    if (Parent) {
+        _matrix matParentWorld = Parent->GetWorldMatrix();
+
+        // 부모의 스케일 역행렬 생성
+        _vec3 vParentScale = Parent->GetScale();
+
+        _matrix matScaleInverse;
+        D3DXMatrixScaling(&matScaleInverse,
+            vParentScale.x != 0.f ? 1.f / vParentScale.x : 1.f,
+            vParentScale.y != 0.f ? 1.f / vParentScale.y : 1.f,
+            vParentScale.z != 0.f ? 1.f / vParentScale.z : 1.f);
+
+        // 스케일 제거된 부모 행렬 = 부모행렬 * 부모스케일의 역행렬
+        matParentWorld = matScaleInverse * matParentWorld;
+
+        // 자식의 로컬 행렬에 곱함
+        worldMat *= matParentWorld;
+    }
 
     return worldMat;
 }
@@ -194,25 +210,6 @@ _matrix TransformComponent::GetLocalMatrix() const
     if (IsPivotEnabled) localMat = scaleMat * transMat * pivotMat * rotY * rotX * rotZ * reverseMat;
 
     else localMat = scaleMat * rotY * rotX * rotZ * transMat;
-
-    return localMat;
-}
-
-_matrix TransformComponent::GetParentMatrix() const
-{
-    _matrix transMat;
-    _matrix rotX;
-    _matrix rotY;
-    _matrix rotZ;
-
-    _matrix localMat;
-
-    D3DXMatrixTranslation(&transMat, Position.x, Position.y, Position.z);
-    D3DXMatrixRotationX(&rotX, Rotation.x);
-    D3DXMatrixRotationY(&rotY, Rotation.y);
-    D3DXMatrixRotationZ(&rotZ, Rotation.z);
-
-    localMat = rotY * rotX * rotZ * transMat;
 
     return localMat;
 }

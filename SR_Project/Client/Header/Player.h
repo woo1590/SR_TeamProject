@@ -1,7 +1,11 @@
 #pragma once
 #include "Object.h"
 class Player : public Object
-{
+{   
+    enum class ePlayerState {
+        IDLE,
+        WALK
+    };
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -21,7 +25,11 @@ private:
     void SetPosition(string str, _vec3 position);
     void MovePosition(_vec3 moveVec);
     void SetRotation(string str, _vec3 rotation);
-
+    void UpdateIdle(_float dt);
+    void UpdateWalk(_float dt);
+    void KeyInput(_float dt);
 private:
     std::unordered_map<string, Object*> Bones;
+    float m_fWalkTime = 0.f;
+    ePlayerState m_eState = ePlayerState::IDLE;
 };
