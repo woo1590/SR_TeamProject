@@ -19,6 +19,12 @@
     <Filter Include="01. EditScene">
       <UniqueIdentifier>{ef8f98ea-b74a-406f-9899-be0f992b27d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Camera">
+      <UniqueIdentifier>{4523861f-d301-4bba-9913-5d71ba8c13f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Block">
+      <UniqueIdentifier>{a2c74bb6-fa47-4b8d-85b8-6e972c760d18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -33,6 +39,12 @@
     <ClInclude Include="..\Header\EditScene.h">
       <Filter>01. EditScene</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Camera.h">
+      <Filter>02. Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestBlock.h">
+      <Filter>03. Block</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -46,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\EditScene.cpp">
       <Filter>01. EditScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Camera.cpp">
+      <Filter>02. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestBlock.cpp">
+      <Filter>03. Block</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

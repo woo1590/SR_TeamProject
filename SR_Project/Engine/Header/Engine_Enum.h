@@ -28,6 +28,7 @@ namespace Engine
 		SkyBox,
 		Camera,
 		UI,
+		Block,
 		Count
 	};
 }
