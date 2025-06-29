@@ -51,12 +51,15 @@
     </Filter>
     <Filter Include="02. Object\BaseCharacter\Bone">
       <UniqueIdentifier>{842e4533-b8b5-4f6a-95b3-74c679d50293}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. Object\UIObj\HPBarFront">
       <UniqueIdentifier>{f48f0958-d4af-4bfd-a97b-e2af1b555b5a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\UIObj\HPBarBack">
       <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor">
+      <UniqueIdentifier>{787cf409-8411-4408-97c8-8ddd782499c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,12 +104,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\Bone.h">
       <Filter>02. Object\BaseCharacter\Bone</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\HPBarFront.h">
       <Filter>02. Object\UIObj\HPBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HPBarBack.h">
       <Filter>02. Object\UIObj\HPBarBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CameraActor.h">
+      <Filter>02. Object\CameraActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,12 +154,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bone.cpp">
       <Filter>02. Object\BaseCharacter\Bone</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\HPBarFront.cpp">
       <Filter>02. Object\UIObj\HPBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HPBarBack.cpp">
       <Filter>02. Object\UIObj\HPBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CameraActor.cpp">
+      <Filter>02. Object\CameraActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

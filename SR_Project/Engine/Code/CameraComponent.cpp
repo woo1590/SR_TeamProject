@@ -31,6 +31,15 @@ CameraComponent* CameraComponent::Create(Object* owner)
     return Instance;
 }
 
+HRESULT CameraComponent::Ready_Component()
+{
+    Target = owner->GetComponent<TransformComponent>();
+    if (!Target)
+        return E_FAIL;
+
+    return S_OK;
+}
+
 void CameraComponent::SetFOV(float fov)
 {
     FOV = fov;
@@ -50,16 +59,6 @@ void CameraComponent::SetMinMaxZ(float minZ, float maxZ)
 {
     MinZ = minZ;
     MaxZ = maxZ;
-}
-
-void CameraComponent::SetTarget(Object* target)
-{
-    Target = target->GetComponent<TransformComponent>();
-}
-
-void CameraComponent::SetTarget(TransformComponent* target)
-{
-    Target = target;
 }
 
 _matrix CameraComponent::GetViewMatrix() const

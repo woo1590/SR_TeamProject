@@ -312,7 +312,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameManager.cpp" />
-    <ClCompile Include="..\Code\FcamComponent.cpp" />
+    <ClCompile Include="..\Code\FreecamComponent.cpp" />
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\HpComponent.cpp" />

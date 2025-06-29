@@ -14,6 +14,7 @@ private:
 
 public:
     static CameraComponent* Create(Object* owner);
+    HRESULT Ready_Component()override;
 
     void SetFOV(float fov);
 
@@ -21,9 +22,6 @@ public:
     void SetAspect(float aspect);
 
     void SetMinMaxZ(float minZ, float maxZ);
-
-    void SetTarget(Object* target);
-    void SetTarget(TransformComponent* target);
 
     _matrix GetViewMatrix()const;
     _matrix GetProjMatrix()const;

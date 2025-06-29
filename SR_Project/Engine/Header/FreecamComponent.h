@@ -13,10 +13,9 @@ private:
 
 public:
     static FreecamComponent* Create(Object* owner);
+    HRESULT Ready_Component()override;
     void Update(_float dt)override;
 
-    void SetTarget(Object* target);
-    void SetTarget(TransformComponent* target);
     void SetSensitivity(_float sensitivity);
 private:
     void Free()override;
