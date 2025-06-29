@@ -52,6 +52,9 @@
     <Filter Include="02. Object\BaseCharacter\Bone">
       <UniqueIdentifier>{842e4533-b8b5-4f6a-95b3-74c679d50293}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Player">
+      <UniqueIdentifier>{6ffcf943-49b9-49bf-8352-399ad641cdbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -96,6 +99,9 @@
     <ClInclude Include="..\Header\Bone.h">
       <Filter>02. Object\BaseCharacter\Bone</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Player.h">
+      <Filter>02. Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -136,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bone.cpp">
       <Filter>02. Object\BaseCharacter\Bone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player.cpp">
+      <Filter>02. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
+#include <Player.h>
 
 TestScene::TestScene()
 {
@@ -42,8 +43,8 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::UI, UIObj::Create(ObjectMgr, ObjectType::UI));
-	ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
-
+	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Player, Player::Create(ObjectMgr, ObjectType::Player));
 	/*----------------------------------------------------------------------------------------------*/
 }
 
