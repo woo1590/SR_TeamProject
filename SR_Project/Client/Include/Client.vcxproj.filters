@@ -46,6 +46,12 @@
     <Filter Include="02. Object\UIObj">
       <UniqueIdentifier>{edd0f473-f082-4ad7-81f3-d71fe38fe4ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\HPBarFront">
+      <UniqueIdentifier>{f48f0958-d4af-4bfd-a97b-e2af1b555b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HPBarBack">
+      <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -81,8 +87,14 @@
     <ClInclude Include="..\Header\TestObject.h">
       <Filter>02. Object\TestObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UIObj.h">
+    <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\UIObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HPBarFront.h">
+      <Filter>02. Object\UIObj\HPBarFront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HPBarBack.h">
+      <Filter>02. Object\UIObj\HPBarBack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -116,8 +128,14 @@
     <ClCompile Include="..\Code\TestObject.cpp">
       <Filter>02. Object\TestObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UIObj.cpp">
+    <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\UIObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HPBarFront.cpp">
+      <Filter>02. Object\UIObj\HPBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HPBarBack.cpp">
+      <Filter>02. Object\UIObj\HPBarBack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -112,6 +112,17 @@ TerrainMesh* ResourceManager::GetTerrain(const std::wstring& key)
 		return nullptr;
 }
 
+void ResourceManager::RegisterUILayer(const wstring& tag, int layer)
+{
+    uiLayerTable.emplace(tag, layer);
+}
+
+optional<int> ResourceManager::GetUILayer(const wstring& tag) const
+{
+    auto it = uiLayerTable.find(tag);
+    return (it == uiLayerTable.end()) ? nullopt : optional<int>(it->second);
+}
+
 void ResourceManager::Free()
 {
     std::for_each(MeshContainer.begin(), MeshContainer.end(), [](auto& pair)

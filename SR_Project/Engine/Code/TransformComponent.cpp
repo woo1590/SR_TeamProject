@@ -43,6 +43,7 @@ void TransformComponent::SetPosition(_vec3 position)
     Position = position;
 }
 
+
 void TransformComponent::SetScale(float cx, float cy, float cz)
 {
     SetScale(_vec3(cx, cy, cz));

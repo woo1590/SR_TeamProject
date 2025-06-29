@@ -4,62 +4,64 @@
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "TransformComponent.h"
+#include "Object.h"
 
 UIRenderer::UIRenderer(Object* owner)
-	:RendererComponent(owner,RENDER_ID::Render_UI)
-{
-	
-}
+	:RendererComponent(owner,RENDER_ID::Render_UI){}
 
 UIRenderer* UIRenderer::Create(Object* owner)
 {
-	UIRenderer* instance = new UIRenderer(owner);
+	auto* instance = new UIRenderer(owner);
 	
-	if (FAILED(instance->Ready_Component()))
-	{
-		Safe_Release(instance);
-		instance = nullptr;
-	}
+    if (FAILED(instance->Ready_Component()))
+        return Safe_Release(instance), nullptr;
 
 	EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(RENDER_ID::Render_UI, instance);
-	
 	return instance;
 }
 
 void UIRenderer::SetTexture(const wstring& key)
 {
-    // ResourceManager에서 BaseTexture9 반환
-    texture = EngineCore::GetInstance()
-        ->GetResourceManager()
-        ->GetTexture(key);
+    auto* rm = EngineCore::GetInstance()->GetResourceManager();
+    texture = rm->GetTexture(key);
 
-    // IBaseTexture9 → ITexture9로 QueryInterface
-    if (texture && SUCCEEDED(texture->QueryInterface(
-        __uuidof(IDirect3DTexture9),
-        reinterpret_cast<void**>(&tex2D))))
-    {
-        D3DSURFACE_DESC desc;
-        tex2D->GetLevelDesc(0, &desc);
-        tex2D->Release();
+    if (auto layer = rm->GetUILayer(key); layer.has_value())
+        SetLayer(layer.value());
 
-        srcRect = {0, 0, LONG(desc.Width), LONG(desc.Height)};
-        center = {desc.Width * 0.5f, desc.Height * 0.5f, 0.f};
-        pos = center;
-    }
+    Safe_Release(tex2D);
+    if (!texture) return;
+
+    texture->QueryInterface(__uuidof(IDirect3DTexture9), reinterpret_cast<void**>(&tex2D));
+
+    D3DSURFACE_DESC desc;
+    tex2D->GetLevelDesc(0, &desc);
+   
+    fullWidth  = static_cast<LONG>(desc.Width);
+    fullHeight = static_cast<LONG>(desc.Height);
+
+    srcRect = {0, 0, fullWidth, fullHeight};
+    center = {fullWidth * 0.5f, static_cast<float>(fullHeight),0.f};
+    pos = center;
+}
+
+void UIRenderer::ApplyRatio(float _ratio)
+{
+    LONG visible = static_cast<LONG>(fullHeight * _ratio);
+
+    srcRect.top = fullHeight - visible;
+    srcRect.bottom = fullHeight;
+
+    center.x = fullWidth * 0.5f;
+    center.y = static_cast<float>(visible);
 }
 
 void UIRenderer::Render()
 {
-    auto sprite = EngineCore::GetInstance()
-        ->GetRenderSystem()
-        ->GetSpriteBatch();
+    auto sprite = EngineCore::GetInstance()->GetRenderSystem()->GetSpriteBatch();
+    auto transform = owner->GetComponent<TransformComponent>();
 
-    sprite->Draw(
-        tex2D,
-        &srcRect,
-        &center,
-        &pos,
-        D3DCOLOR_ARGB(255, 255, 255, 255)
-    );
+    _vec3 worldPos = transform->GetPosition();
 
+    sprite->Draw(tex2D,&srcRect,&center,&worldPos,
+        D3DCOLOR_ARGB(255, 255, 255, 255));
 }

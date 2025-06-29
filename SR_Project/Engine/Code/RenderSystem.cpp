@@ -3,6 +3,7 @@
 #include "GraphicDevice.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
+#include "UIRenderer.h"
 
 //component
 #include "RendererComponent.h"
@@ -117,7 +118,11 @@ void RenderSystem::NonAlphaPass()
 
 void RenderSystem::UIPass()
 {
-	// ���� projection ����
+	// 낮은 layer 값 먼저 정렬
+	auto& uiList = RenderList[(int)RENDER_ID::Render_UI];
+	stable_sort(uiList.begin(), uiList.end(), [](auto* a, auto* b)
+		{return static_cast<UIRenderer*>(a)->GetLayer() < static_cast<UIRenderer*>(b)->GetLayer(); });
+
 	_matrix originProj;
 	Device->GetTransform(D3DTS_PROJECTION, &originProj);
 
@@ -137,7 +142,7 @@ void RenderSystem::UIPass()
 
 	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
 
-	for (auto& ui : RenderList[(int)RENDER_ID::Render_UI])
+	for (auto& ui : uiList)
 		ui->Render();
 
 	spriteBatch->End();

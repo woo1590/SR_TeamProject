@@ -4,7 +4,6 @@
 #include "FrameManager.h"
 #include "TimerManager.h"
 #include "SceneManager.h"
-#include "UIManager.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "LightSystem.h"
@@ -59,10 +58,6 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 
 	InputSys = InputSystem::Create();
 	if (!InputSys)
-		return E_FAIL;
-
-	UIMgr = UIManager::Create();
-	if (!UIMgr)
 		return E_FAIL;
 
 	return S_OK;
@@ -130,11 +125,6 @@ InputSystem* EngineCore::GetInputSystem() const
 	return InputSys;
 }
 
-UIManager* EngineCore::GetUIManager() const
-{
-	return UIMgr;
-}
-
 HWND EngineCore::GetWindowHandle() const
 {
 	return hWnd;
@@ -150,7 +140,6 @@ void EngineCore::Free()
 	Safe_Release(RenderSys);
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
-	Safe_Release(UIMgr);
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

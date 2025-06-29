@@ -6,12 +6,15 @@
 #include "ObjectManager.h"
 #include "RenderSystem.h"
 #include "ResourceManager.h"
+#include "InputSystem.h"
 
 //object
 #include "BasicTerrain.h"
 #include "TestObject.h"
 #include "SkyBox.h"
-#include "UIObj.h"
+#include "HPBarFront.h"
+#include "Player.h"
+#include "HPBarBack.h"
 
 //component
 #include "TransformComponent.h"
@@ -40,13 +43,34 @@ void TestScene::Load()
 	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	//ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
-	ObjectMgr->AddObject(ObjectType::UI, UIObj::Create(ObjectMgr, ObjectType::UI));
+
+	player = Player::Create(ObjectMgr, ObjectType::Player);
+	auto info = player->GetComponent<PlayerInfoComponent>();
+	ObjectMgr->AddObject(ObjectType::Player, player);
+
+	ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
+	ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));
 
 	/*----------------------------------------------------------------------------------------------*/
 }
 
 void TestScene::Update(float dt)
 {
+	const auto& input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (input->IsKeyPressed(KEY::LBUTTON))
+	{
+		if (player)
+		{
+			auto info = player->GetComponent<PlayerInfoComponent>();
+			if (info)
+			{
+				int curHp = info->GetCurHp();
+				int newHp = max(0, curHp - 10);
+				info->SetHp(newHp);
+			}
+		}
+	}
 	ObjectMgr->Update(dt);
 }
 

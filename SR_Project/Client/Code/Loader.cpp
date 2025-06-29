@@ -102,11 +102,33 @@ HRESULT Loader::Load_TestScene()
 	return S_OK;
 }
 
-HRESULT Loader::load_UIResources()
+HRESULT Loader::load_UIResources() // 제현 UI 전용함수
 {
-	auto rm = EngineCore::GetInstance()->GetResourceManager();
+	static const unordered_map<wstring, TEXTURE> uiTexture = {
+		{L"Shield",       TEXTURE::Tex_Diffuse},
+		{L"Logo",         TEXTURE::Tex_Diffuse},
+		{L"hpbar_front",  TEXTURE::Tex_Diffuse},
+		{L"hpbar_back",   TEXTURE::Tex_Diffuse}
+	};
 
-	rm->LoadTexture(L"Shield", L"../Bin/Assets/Jehyun/Shield.png",TEXTURE::Tex_Diffuse);
+	// layer 낮을수록 먼저 그림
+	static const unordered_map<wstring, int> uiLayers = {
+		{L"hpbar_back", -1},
+		{L"hpbar_front", 0},
+		{L"Shield", 5},
+		{L"Logo", 100}
+	};
+
+	auto rm = EngineCore::GetInstance()->GetResourceManager();
+	const wstring basePath = L"../Resource/Jehyun/";
+
+	for (auto const [key, type] : uiTexture)
+	{
+		rm->LoadTexture(basePath + key + L".png", key, type);
+
+		if (auto it = uiLayers.find(key); it != uiLayers.end())
+			rm->RegisterUILayer(key, it->second);
+	}
 
 	return S_OK;
 }

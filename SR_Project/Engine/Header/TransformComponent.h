@@ -18,6 +18,8 @@ public:
     void SetPosition(float x, float y, float z);
     void SetPosition(_vec3 position);
 
+    void SetPosition(float x, float y) { SetPosition(x, y, 0.f); }
+
     void SetScale(float cx, float cy, float cz);
     void SetScale(_vec3 scale);
 
@@ -41,6 +43,7 @@ public:
 
     _matrix GetWorldMatrix()const;
     _matrix GetLocalMatrix()const;
+
 private:
     void Free()override;
 

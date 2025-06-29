@@ -36,8 +36,7 @@ typedef struct tagKeyInfo
 	bool		bPrePress = false;
 }KEYINFO;
 
-class ENGINE_DLL InputSystem
-	:public Base
+class ENGINE_DLL InputSystem :public Base
 {
 private:
 	InputSystem();
@@ -58,7 +57,7 @@ public:
 	_vec2 GetMouseDelta()const;
 	void SetMouseDelta(_vec2 delta);
 
-	void SetKeyWork(bool work) { Is_KeyWork = work; }
+	void SetKeyWork(bool work) { Is_KeyWork = work; } 
 
 private:
 	void Free()override;

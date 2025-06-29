@@ -174,28 +174,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BasicTerrain.h" />
+    <ClInclude Include="..\Header\HPBarBack.h" />
+    <ClInclude Include="..\Header\HPBarFront.h" />
     <ClInclude Include="..\Header\Loader.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\LogoScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\TestObject.h" />
     <ClInclude Include="..\Header\TestScene.h" />
-    <ClInclude Include="..\Header\UIObj.h" />
     <ClInclude Include="Client_Defines.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BasicTerrain.cpp" />
+    <ClCompile Include="..\Code\HPBarBack.cpp" />
+    <ClCompile Include="..\Code\HPBarFront.cpp" />
     <ClCompile Include="..\Code\Loader.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\LogoScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\TestObject.cpp" />
     <ClCompile Include="..\Code\TestScene.cpp" />
-    <ClCompile Include="..\Code\UIObj.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

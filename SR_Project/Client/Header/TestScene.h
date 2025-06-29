@@ -1,8 +1,9 @@
 #pragma once
 #include "Scene.h"
 
-class TestScene :
-    public Scene
+class Player;
+
+class TestScene : public Scene
 {
     friend class Scene;
 
@@ -20,5 +21,8 @@ public:
 
 private:
     void Free() override;
+
+private:
+    Player* player;
 };
 

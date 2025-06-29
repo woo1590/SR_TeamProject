@@ -27,6 +27,11 @@ public:
     Material*       GetMaterial(const std::wstring& key);
     LPDIRECT3DBASETEXTURE9 GetTexture(const std::wstring& key);
     TerrainMesh*    GetTerrain(const std::wstring& key);
+
+    void RegisterUILayer(const wstring& tag, int layer);
+    optional<int> GetUILayer(const wstring& tag) const;
+
+
 private:
     void Free()override;
 
@@ -35,6 +40,8 @@ private:
     std::unordered_map<std::wstring, LPDIRECT3DBASETEXTURE9> TextureContainer;
 
     std::unordered_map<std::wstring, TerrainMesh*> TerrainContainer;
+
+    unordered_map<wstring, int> uiLayerTable;
 };
 
 END
