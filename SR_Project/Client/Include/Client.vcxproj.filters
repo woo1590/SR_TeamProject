@@ -60,6 +60,7 @@
     </Filter>
     <Filter Include="02. Object\Player">
       <UniqueIdentifier>{6ffcf943-49b9-49bf-8352-399ad641cdbd}</UniqueIdentifier>
+	</Filter>
     <Filter Include="02. Object\CameraActor">
       <UniqueIdentifier>{787cf409-8411-4408-97c8-8ddd782499c4}</UniqueIdentifier>
     </Filter>
@@ -165,6 +166,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\Player</Filter>
+	</ClCompile>
     <ClCompile Include="..\Code\CameraActor.cpp">
       <Filter>02. Object\CameraActor</Filter>
     </ClCompile>
