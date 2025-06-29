@@ -176,6 +176,7 @@
     <ClInclude Include="..\Header\BaseCharacter.h" />
     <ClInclude Include="..\Header\BasicTerrain.h" />
     <ClInclude Include="..\Header\Bone.h" />
+    <ClInclude Include="..\Header\CameraActor.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
     <ClInclude Include="..\Header\Loader.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="..\Code\BaseCharacter.cpp" />
     <ClCompile Include="..\Code\BasicTerrain.cpp" />
     <ClCompile Include="..\Code\Bone.cpp" />
+    <ClCompile Include="..\Code\CameraActor.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />
     <ClCompile Include="..\Code\Loader.cpp" />

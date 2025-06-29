@@ -2,6 +2,7 @@
 #include "TestObject.h"
 #include "EngineCore.h"
 #include "RenderSystem.h"
+#include "InputSystem.h"
 
 //component
 #include "FreecamComponent.h"
@@ -37,13 +38,6 @@ HRESULT TestObject::Ready_Object()
 
     auto transform = AddComponent<TransformComponent>();
 
-    auto fCam = AddComponent<FreecamComponent>();
-    fCam->SetTarget(transform);
-
-    auto cam = AddComponent<CameraComponent>();
-    cam->SetTarget(transform);
-
-    EngineCore::GetInstance()->GetRenderSystem()->SetCamera(cam);
 
     return S_OK;
 }
@@ -51,6 +45,21 @@ HRESULT TestObject::Ready_Object()
 void TestObject::Update(_float dt)
 {
     Object::Update(dt);
+
+    auto Input = EngineCore::GetInstance()->GetInputSystem();
+    auto transform = GetComponent<TransformComponent>();
+
+    if (Input->IsKeyDown(W))
+        transform->Translate(0.f, 0.f, 100.f * dt);
+    if (Input->IsKeyDown(A))
+        transform->Translate(-100.f*dt, 0.f, 0.f);
+    if (Input->IsKeyDown(S))
+        transform->Translate(0.f, 0.f, -100.f * dt);
+    if (Input->IsKeyDown(D))
+        transform->Translate(100.f * dt, 0.f, 0.f);
+
+    if (Input->IsKeyDown(SPACE))
+        transform->Translate(0.f, 100.f * dt, 0.f);
 }
 
 void TestObject::Late_Update(_float dt)

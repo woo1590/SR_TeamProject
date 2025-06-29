@@ -6,6 +6,9 @@
 //system
 #include "InputSystem.h"
 
+//object
+#include "Object.h"
+
 //component
 #include "TransformComponent.h"
 
@@ -31,6 +34,15 @@ FreecamComponent* FreecamComponent::Create(Object* owner)
     }
 
     return Instance;
+}
+
+HRESULT FreecamComponent::Ready_Component()
+{
+    Target = owner->GetComponent<TransformComponent>();
+    if (!Target)
+        return E_FAIL;
+
+    return S_OK;
 }
 
 void FreecamComponent::Update(_float dt)
@@ -88,16 +100,6 @@ void FreecamComponent::Update(_float dt)
 
     _vec3 front{ sy * cp,sp,cy * cp };
     Target->SetForward(front);
-}
-
-void FreecamComponent::SetTarget(Object* target)
-{
-
-}
-
-void FreecamComponent::SetTarget(TransformComponent* target)
-{
-    Target = target;
 }
 
 void FreecamComponent::SetSensitivity(_float sensitivity)

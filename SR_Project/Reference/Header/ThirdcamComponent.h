@@ -12,16 +12,23 @@ private:
 
 public:
     static ThirdcamComponent* Create(Object* owner);
+    HRESULT Ready_Component()override;
     void Update(_float dt)override;
 
-    void SetTarget(TransformComponent* target);
+    void SetFollowTarget(TransformComponent* target);
+    void SetFollowTarget(Object* target);
+
+    void SetOffset(_vec3 offset);
+    void SetOffset(_float x, _float y, _float z);
 
 private:
     void Free()override;
 
     TransformComponent* Target = nullptr;
-    _vec3 Direction{ 0.f,1.f,1.f };
-    _float Distance = 50.f;
+    TransformComponent* FollowTarget = nullptr;
+
+    _vec3 Offset{ 0.f,30.f,-30.f };
+    _vec3 Direction{ 0.f,0.f,0.f };
 };
 
 END
