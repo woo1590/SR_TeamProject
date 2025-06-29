@@ -9,7 +9,7 @@ protected:
 
 public:
     virtual BTStatus Initialize(float dt) = 0;
-    virtual BTStatus Tick(float dt) = 0;
+    virtual BTStatus Tick(float dt, BlackBoard* bb) = 0;
 
     void SetChild(BTNode* childNode);
 

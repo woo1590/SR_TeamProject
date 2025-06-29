@@ -22,7 +22,7 @@ BTStatus ParallelNode::Initialize(float dt)
     return BTStatus::Running;
 }
 
-BTStatus ParallelNode::Tick(float dt)
+BTStatus ParallelNode::Tick(float dt,BlackBoard* bb)
 {
     if (ChildNodes.size() == 0) return BTStatus::Failure;
 	
@@ -31,7 +31,7 @@ BTStatus ParallelNode::Tick(float dt)
 
     for (auto& node : ChildNodes)
     {
-        BTStatus status = node->Tick(dt);
+        BTStatus status = node->Tick(dt, bb);
 
         if (BTStatus::Running == status)
             HasRunning = true;

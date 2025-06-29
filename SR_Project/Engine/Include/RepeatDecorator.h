@@ -3,13 +3,13 @@
 class RepeatDecorator :
     public DecoratorNode
 {
-public:
+protected:
     explicit RepeatDecorator(BTNode* child = nullptr);
     virtual ~RepeatDecorator();
 
 public:
     BTStatus Initialize(float dt) override;
-    BTStatus Tick(float dt) override;
+    BTStatus Tick(float dt, BlackBoard* bb) override;
 
 protected:
     void Free() override;

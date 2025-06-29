@@ -17,12 +17,12 @@ BTStatus SucceederDecorator::Initialize(float dt)
 	return BTStatus::Failure;
 }
 
-BTStatus SucceederDecorator::Tick(float dt)
+BTStatus SucceederDecorator::Tick(float dt, BlackBoard* bb)
 {
     if (!Child)
         return BTStatus::Failure;
 
-    BTStatus status = Child->Tick(dt);
+    BTStatus status = Child->Tick(dt, bb);
 
     switch (status)
     {
@@ -41,4 +41,5 @@ BTStatus SucceederDecorator::Tick(float dt)
 
 void SucceederDecorator::Free()
 {
+    DecoratorNode::Free();
 }

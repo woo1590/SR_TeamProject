@@ -19,12 +19,12 @@ BTStatus RepeatDecorator::Initialize(float dt)
 	return BTStatus::Failure;
 }
 
-BTStatus RepeatDecorator::Tick(float dt)
+BTStatus RepeatDecorator::Tick(float dt, BlackBoard* bb)
 {
     if (!Child)
         return BTStatus::Failure;
 
-    BTStatus status = Child->Tick(dt);
+    BTStatus status = Child->Tick(dt, bb);
 
     switch (status)
     {

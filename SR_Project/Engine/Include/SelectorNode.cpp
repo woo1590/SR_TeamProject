@@ -21,12 +21,12 @@ BTStatus SelectorNode::Initialize(float dt)
     return BTStatus::Running;
 }
 
-BTStatus SelectorNode::Tick(float dt)
+BTStatus SelectorNode::Tick(float dt, BlackBoard* bb)
 {
     if (CurrentIndex >= ChildNodes.size())
         return BTStatus::Failure;
 
-    BTStatus status = ChildNodes[CurrentIndex]->Tick(dt);
+    BTStatus status = ChildNodes[CurrentIndex]->Tick(dt, bb);
 
     switch (status)
     {

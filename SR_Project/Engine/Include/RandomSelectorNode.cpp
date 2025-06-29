@@ -28,13 +28,13 @@ BTStatus RandomSelectorNode::Initialize(float dt)
     return BTStatus::Running;
 }
 
-BTStatus RandomSelectorNode::Tick(float dt)
+BTStatus RandomSelectorNode::Tick(float dt, BlackBoard* bb)
 {
     if (CurrentIndex >= RandomIndexes.size() || 
         RandomIndexes[CurrentIndex] >= ChildNodes.size())
         return BTStatus::Failure;
 
-    BTStatus status = ChildNodes[RandomIndexes[CurrentIndex]]->Tick(dt);
+    BTStatus status = ChildNodes[RandomIndexes[CurrentIndex]]->Tick(dt, bb);
 
     switch (status)
     {

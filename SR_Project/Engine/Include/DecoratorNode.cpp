@@ -16,5 +16,5 @@ void DecoratorNode::SetChild(BTNode* childNode)
 
 void DecoratorNode::Free()
 {
-	Safe_Delete(Child);
+	Safe_Release(Child);
 }

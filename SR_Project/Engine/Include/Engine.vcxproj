@@ -252,6 +252,9 @@
     <ClInclude Include="..\Header\UIManager.h" />
     <ClInclude Include="..\Header\UIRenderer.h" />
     <ClInclude Include="ActionNode.h" />
+    <ClInclude Include="AIController.h" />
+    <ClInclude Include="BehaviorTree.h" />
+    <ClInclude Include="BlackBoard.h" />
     <ClInclude Include="BTNode.h" />
     <ClInclude Include="CompositeNode.h" />
     <ClInclude Include="DecoratorNode.h" />
@@ -348,6 +351,9 @@
     <ClCompile Include="..\Code\UIManager.cpp" />
     <ClCompile Include="..\Code\UIRenderer.cpp" />
     <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="AIController.cpp" />
+    <ClCompile Include="BehaviorTree.cpp" />
+    <ClCompile Include="BlackBoard.cpp" />
     <ClCompile Include="BTNode.cpp" />
     <ClCompile Include="CompositeNode.cpp" />
     <ClCompile Include="DecoratorNode.cpp" />
