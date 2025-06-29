@@ -103,6 +103,45 @@
     <Filter Include="99. Etc\ImGui">
       <UniqueIdentifier>{270618e6-ebb6-4038-80b5-1754c521a72f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\BehaviorTree">
+      <UniqueIdentifier>{0b3501f4-9868-4bfc-a2e9-255dec0a765d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode">
+      <UniqueIdentifier>{4ff99d72-de73-46bc-996b-21e220b7a1ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\ActionNode">
+      <UniqueIdentifier>{1a867141-6a3d-40f4-a2c4-7c669994bf3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\CompositeNode">
+      <UniqueIdentifier>{a4acbe83-6809-4a90-87ff-f9d4d57682b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\DecoratorNode">
+      <UniqueIdentifier>{f1f36253-16ee-4f74-93b0-3b55785895f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\CompositeNode\Sequence">
+      <UniqueIdentifier>{c1350241-1f97-428f-b948-f55a26e682cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\CompositeNode\Selector">
+      <UniqueIdentifier>{603c4125-03a6-4fdd-a4a6-19d20d9189cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\CompositeNode\RandomSelector">
+      <UniqueIdentifier>{e318d539-b753-44fb-bc43-992d387d9fe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\CompositeNode\Parallel">
+      <UniqueIdentifier>{b01fa434-e235-4193-acc7-9014b2345cf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\DecoratorNode\Inverter">
+      <UniqueIdentifier>{e46cf2c2-513a-49fa-8dab-6d2af338ab3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\DecoratorNode\Repeat">
+      <UniqueIdentifier>{fc44961b-f1ad-44bd-942f-84925df56548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BTNode\DecoratorNode\Succeeder">
+      <UniqueIdentifier>{a504344e-7476-4b37-b3a9-933abf964fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\BehaviorTree\BlackBoard">
+      <UniqueIdentifier>{9445595e-5cf9-42f8-8b59-e5155b3fedea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -227,6 +266,39 @@
     </ClCompile>
     <ClCompile Include="..\..\External\imgui\backends\imgui_impl_win32.cpp">
       <Filter>99. Etc\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="BTNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\ActionNode</Filter>
+    </ClCompile>
+    <ClCompile Include="CompositeNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoratorNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode</Filter>
+    </ClCompile>
+    <ClCompile Include="SequenceNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\Sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectorNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\Selector</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomSelectorNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\RandomSelector</Filter>
+    </ClCompile>
+    <ClCompile Include="ParallelNode.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\Parallel</Filter>
+    </ClCompile>
+    <ClCompile Include="InverterDecorator.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode\Inverter</Filter>
+    </ClCompile>
+    <ClCompile Include="SucceederDecorator.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode\Succeeder</Filter>
+    </ClCompile>
+    <ClCompile Include="RepeatDecorator.cpp">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode\Repeat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -373,6 +445,39 @@
     </ClInclude>
     <ClInclude Include="..\..\External\imgui\backends\imgui_impl_win32.h">
       <Filter>99. Etc\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="BTNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\ActionNode</Filter>
+    </ClInclude>
+    <ClInclude Include="CompositeNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoratorNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode</Filter>
+    </ClInclude>
+    <ClInclude Include="SequenceNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\Sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectorNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\Selector</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomSelectorNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\RandomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallelNode.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\CompositeNode\Parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="InverterDecorator.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode\Inverter</Filter>
+    </ClInclude>
+    <ClInclude Include="SucceederDecorator.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode\Succeeder</Filter>
+    </ClInclude>
+    <ClInclude Include="RepeatDecorator.h">
+      <Filter>07. Object Component\BehaviorTree\BTNode\DecoratorNode\Repeat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

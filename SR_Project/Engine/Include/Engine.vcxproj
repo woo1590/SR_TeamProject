@@ -251,6 +251,17 @@
     <ClInclude Include="..\Header\TransformComponent.h" />
     <ClInclude Include="..\Header\UIManager.h" />
     <ClInclude Include="..\Header\UIRenderer.h" />
+    <ClInclude Include="ActionNode.h" />
+    <ClInclude Include="BTNode.h" />
+    <ClInclude Include="CompositeNode.h" />
+    <ClInclude Include="DecoratorNode.h" />
+    <ClInclude Include="InverterDecorator.h" />
+    <ClInclude Include="ParallelNode.h" />
+    <ClInclude Include="RandomSelectorNode.h" />
+    <ClInclude Include="RepeatDecorator.h" />
+    <ClInclude Include="SelectorNode.h" />
+    <ClInclude Include="SequenceNode.h" />
+    <ClInclude Include="SucceederDecorator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\External\imgui\backends\imgui_impl_dx9.cpp">
@@ -336,6 +347,17 @@
     <ClCompile Include="..\Code\TransformComponent.cpp" />
     <ClCompile Include="..\Code\UIManager.cpp" />
     <ClCompile Include="..\Code\UIRenderer.cpp" />
+    <ClCompile Include="ActionNode.cpp" />
+    <ClCompile Include="BTNode.cpp" />
+    <ClCompile Include="CompositeNode.cpp" />
+    <ClCompile Include="DecoratorNode.cpp" />
+    <ClCompile Include="InverterDecorator.cpp" />
+    <ClCompile Include="ParallelNode.cpp" />
+    <ClCompile Include="RandomSelectorNode.cpp" />
+    <ClCompile Include="RepeatDecorator.cpp" />
+    <ClCompile Include="SelectorNode.cpp" />
+    <ClCompile Include="SequenceNode.cpp" />
+    <ClCompile Include="SucceederDecorator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\External\imgui\.editorconfig" />
