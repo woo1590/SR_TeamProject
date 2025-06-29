@@ -3,7 +3,7 @@
 class BaseCharacter :
     public Object
 {
-private:
+protected:
     BaseCharacter(ObjectManager* owner, ObjectType objType);
     virtual ~BaseCharacter();
 
@@ -22,7 +22,7 @@ public:
 private:
     void Free()override;
 
-private:
+protected:
     std::unordered_map<string, Object*> Bones;
-    float                               Scale = 1.f;
+    float Scale = 1.f;
 };

@@ -1,10 +1,11 @@
 #pragma once
-#include "Object.h"
-class Player : public Object
+#include "BaseCharacter.h"
+class Player : public BaseCharacter
 {   
     enum class ePlayerState {
         IDLE,
-        WALK
+        WALK,
+        ROLL
     };
 private:
     Player(ObjectManager* owner, ObjectType objType);
@@ -20,16 +21,19 @@ private:
     void Free()override;
 
 private:
-    void SetMaterial(string str, const std::wstring& mtrl);
-    void SetScale(string str, _vec3 scale);
-    void SetPosition(string str, _vec3 position);
-    void MovePosition(_vec3 moveVec);
-    void SetRotation(string str, _vec3 rotation);
+    void MovePlayer(_vec3 moveVec);
+    void RotatePlayer(_vec3 rotateVec);
+    void KeyInput(_float dt);
+
     void UpdateIdle(_float dt);
     void UpdateWalk(_float dt);
-    void KeyInput(_float dt);
+    void UpdateRoll(_float dt);
 private:
-    std::unordered_map<string, Object*> Bones;
-    float m_fWalkTime = 0.f;
     ePlayerState m_eState = ePlayerState::IDLE;
+    float m_fWalkTime = 0.f;
+    float m_fRollTime = 0.f;
+
+    std::unordered_map<std::string, _vec3> m_mapStartRotations;
+    float m_fSpeed = 100.f;
 };
+    

@@ -49,12 +49,12 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
-	ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
+	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
 
 	auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
 	auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);
-	camActor->GetComponent<ThirdcamComponent>()->SetFollowTarget(testObj);
+	//camActor->GetComponent<ThirdcamComponent>()->SetFollowTarget(testObj);
 
 	ObjectMgr->AddObject(ObjectType::Player, testObj);
 	ObjectMgr->AddObject(ObjectType::Camera, camActor);
