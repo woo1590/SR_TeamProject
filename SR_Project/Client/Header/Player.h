@@ -1,33 +1,27 @@
 #pragma once
-
 #include "Object.h"
-#include "playerInfoComponent.h"
-
 class Player : public Object
 {
+private:
+    Player(ObjectManager* owner, ObjectType objType);
+    virtual ~Player();
+
 public:
-	Player(ObjectManager* owner, ObjectType objType)
-		:Object(owner, objType) {
-	}
+    static Player* Create(ObjectManager* owner, ObjectType objType);
+    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
+    void Update(_float dt)override;
+    void Late_Update(_float dt)override;
 
-	static Player* Create(ObjectManager* owner, ObjectType objType)
-	{
-		Player* instance = new Player(owner,objType);
-		
-		if (FAILED(instance->Ready_Object()))
-		{
-			Safe_Release(instance);
-			instance = nullptr;
-		}
+private:
+    void Free()override;
 
-		return instance;
-	}
+private:
+    void SetMaterial(string str, const std::wstring& mtrl);
+    void SetScale(string str, _vec3 scale);
+    void SetPosition(string str, _vec3 position);
+    void MovePosition(_vec3 moveVec);
+    void SetRotation(string str, _vec3 rotation);
 
-	HRESULT Ready_Object()
-	{
-		auto info = AddComponent<PlayerInfoComponent>();
-		
-		return S_OK;
-	}
+private:
+    std::unordered_map<string, Object*> Bones;
 };
-

@@ -58,6 +58,9 @@
     <Filter Include="02. Object\UIObj\HPBarBack">
       <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Player">
+      <UniqueIdentifier>{6ffcf943-49b9-49bf-8352-399ad641cdbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -108,6 +111,9 @@
     <ClInclude Include="..\Header\HPBarBack.h">
       <Filter>02. Object\UIObj\HPBarBack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Player.h">
+      <Filter>02. Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -154,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\HPBarBack.cpp">
       <Filter>02. Object\UIObj\HPBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player.cpp">
+      <Filter>02. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

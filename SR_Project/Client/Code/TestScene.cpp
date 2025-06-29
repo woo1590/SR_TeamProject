@@ -22,6 +22,7 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
+#include <Player.h>
 
 TestScene::TestScene()
 {
@@ -58,6 +59,7 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
 	ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));
 
+	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
 	/*----------------------------------------------------------------------------------------------*/
 }
 
