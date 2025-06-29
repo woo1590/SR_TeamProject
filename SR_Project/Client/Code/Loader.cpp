@@ -124,6 +124,35 @@ HRESULT Loader::Load_TestScene()
 	zombieMtrl->SetTexture(L"Leg");
 	resource->LoadMaterial(L"ZombieLeg_Mtrl", zombieMtrl);
 	//////////////////////////////////////////////////////////////////////////////////
+	resource->LoadTexture(L"../Resource/Texture/Player/playerHead.dds", L"playerHead", TEXTURE::Tex_Cube);
+	auto playerHeadMtrl = Material::Create();
+	playerHeadMtrl->SetTexture(L"playerHead");
+	resource->LoadMaterial(L"playerHead_Mtrl", playerHeadMtrl);
+
+	resource->LoadTexture(L"../Resource/Texture/Player/playerBody.dds", L"playerBody", TEXTURE::Tex_Cube);
+	auto playerBodyMtrl = Material::Create();
+	playerBodyMtrl->SetTexture(L"playerBody");
+	resource->LoadMaterial(L"playerBody_Mtrl", playerBodyMtrl);
+
+	resource->LoadTexture(L"../Resource/Texture/Player/playerRightArm.dds", L"playerRightArm", TEXTURE::Tex_Cube);
+	auto playerRightArmMtrl = Material::Create();
+	playerRightArmMtrl->SetTexture(L"playerRightArm");
+	resource->LoadMaterial(L"playerRightArm_Mtrl", playerRightArmMtrl);
+
+	resource->LoadTexture(L"../Resource/Texture/Player/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube);
+	auto playerLeftArmMtrl = Material::Create();
+	playerLeftArmMtrl->SetTexture(L"playerLeftArm");
+	resource->LoadMaterial(L"playerLeftArm_Mtrl", playerLeftArmMtrl);
+
+	resource->LoadTexture(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube);
+	auto playerRightLegMtrl = Material::Create();
+	playerRightLegMtrl->SetTexture(L"playerRightLeg");
+	resource->LoadMaterial(L"playerRightLeg_Mtrl", playerRightLegMtrl);
+
+	resource->LoadTexture(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLeg", TEXTURE::Tex_Cube);
+	auto playerLeftLegMtrl = Material::Create();
+	playerLeftLegMtrl->SetTexture(L"playerLeftLeg");
+	resource->LoadMaterial(L"playerLeftLeg_Mtrl", playerLeftLegMtrl);
 
 	return S_OK;
 }
