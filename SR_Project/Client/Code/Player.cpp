@@ -5,6 +5,8 @@
 #include "TransformComponent.h"
 #include "ObjectManager.h"
 #include "MeshRendererComponent.h"
+#include "EngineCore.h"
+#include "InputSystem.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) :Object(owner, objType)
 {
@@ -32,7 +34,10 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     Object::Ready_Object();
 
-    Bones["Body"] = Bone::Create(owner, objType, _vec3(8.f, 12.f, 4.f), nullptr, L"playerBody_Mtrl");
+    auto transform = AddComponent<TransformComponent>();
+
+    Bones["Body"] = Bone::Create(owner, objType, _vec3(8.f, 12.f, 4.f), this, L"playerBody_Mtrl");
+    SetPosition("Body", _vec3(0.f, 0.f, 0.f));
 
     Bones["Head"] = Bone::Create(owner, objType, _vec3(8.f, 8.f, 8.f), Bones["Body"], L"playerHead_Mtrl");
     SetPosition("Head", _vec3(0.f, 20.f, 0.f));
@@ -56,16 +61,22 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     owner->AddObject(ObjectType::Player, Bones["LLeg"]);
     owner->AddObject(ObjectType::Player, Bones["RLeg"]);
 
-    auto transform = AddComponent<TransformComponent>();
-
     return S_OK;
 }
 
 void Player::Update(_float dt)
 {
     Object::Update(dt);
-    _vec3 moveVec = { 0.f * dt, 0.f * dt, 100.f * dt }; // ���� status �ӵ� �����ͼ� x,y,z �̵��� ����
-    MovePosition(moveVec);
+
+    KeyInput(dt);
+    switch (m_eState) {
+    case ePlayerState::IDLE:
+        UpdateIdle(dt);
+        break;
+    case ePlayerState::WALK:
+        UpdateWalk(dt);
+        break;
+    }
 }
 
 void Player::Late_Update(_float dt)
@@ -104,7 +115,7 @@ void Player::SetPosition(string str, _vec3 position)
 
 void Player::MovePosition(_vec3 moveVec)
 {
-    auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+    auto transform = GetComponent<TransformComponent>();
     transform->SetPosition(transform->GetPosition()+moveVec);
 }
 
@@ -113,5 +124,39 @@ void Player::SetRotation(string str, _vec3 rotation)
     if (Bones[str] != nullptr)
     {
         Bones[str]->GetComponent<TransformComponent>()->SetRotate(rotation);
+    }
+}
+
+void Player::UpdateIdle(_float dt)
+{
+    if (m_fWalkTime != 0.f) m_fWalkTime = 0.f;
+}
+
+void Player::UpdateWalk(_float dt)
+{
+    m_fWalkTime += dt;
+    _vec3 moveVec = { 0.f * dt, 0.f * dt, 100.f * dt };
+    MovePosition(moveVec);
+
+    float fAngle = sinf(m_fWalkTime) * 30.f;
+    SetRotation("LLeg", { fAngle, 0.f, 0.f });
+    SetRotation("RLeg", { -fAngle, 0.f, 0.f });
+
+    SetRotation("LHand", { -fAngle, 0.f, 0.f });
+    SetRotation("RHand", { fAngle, 0.f, 0.f });
+}
+
+void Player::KeyInput(_float dt)
+{
+    auto input = EngineCore::GetInstance()->GetInputSystem();
+    if (input->IsKeyPressed(TAB)) {
+        switch (m_eState) {
+        case ePlayerState::IDLE:
+            m_eState = ePlayerState::WALK;
+            break;
+        case ePlayerState::WALK:
+            m_eState = ePlayerState::IDLE;
+            break;
+        }
     }
 }
