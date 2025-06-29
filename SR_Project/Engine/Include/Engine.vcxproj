@@ -220,11 +220,14 @@
     <ClInclude Include="..\Header\Engine_Macro.h" />
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
+    <ClInclude Include="..\Header\Engine_UIStruct.h" />
     <ClInclude Include="..\Header\Frame.h" />
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\FreecamComponent.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
+    <ClInclude Include="..\Header\HpComponent.h" />
+    <ClInclude Include="..\Header\PlayerInfoComponent.h" />
     <ClInclude Include="..\Header\InputSystem.h" />
     <ClInclude Include="..\Header\LightComponent.h" />
     <ClInclude Include="..\Header\LightSystem.h" />
@@ -243,13 +246,14 @@
     <ClInclude Include="..\Header\Shader.h" />
     <ClInclude Include="..\Header\SoundManager.h" />
     <ClInclude Include="..\Header\StaticMesh.h" />
+    <ClInclude Include="..\Header\Subject.h" />
     <ClInclude Include="..\Header\TerrainMesh.h" />
     <ClInclude Include="..\Header\TerrainRenderer.h" />
     <ClInclude Include="..\Header\ThirdcamComponent.h" />
     <ClInclude Include="..\Header\Timer.h" />
     <ClInclude Include="..\Header\TimerManager.h" />
     <ClInclude Include="..\Header\TransformComponent.h" />
-    <ClInclude Include="..\Header\UIManager.h" />
+    <ClInclude Include="..\Header\IObserver.h" />
     <ClInclude Include="..\Header\UIRenderer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +315,8 @@
     <ClCompile Include="..\Code\FcamComponent.cpp" />
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
+    <ClCompile Include="..\Code\HpComponent.cpp" />
+    <ClCompile Include="..\Code\PlayerInfoComponent.cpp" />
     <ClCompile Include="..\Code\InputSystem.cpp" />
     <ClCompile Include="..\Code\LightComponent.cpp" />
     <ClCompile Include="..\Code\LightSystem.cpp" />
@@ -328,13 +334,14 @@
     <ClCompile Include="..\Code\Shader.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp" />
     <ClCompile Include="..\Code\StaticMesh.cpp" />
+    <ClCompile Include="..\Code\Subject.cpp" />
     <ClCompile Include="..\Code\TerrainMesh.cpp" />
     <ClCompile Include="..\Code\TerrainRenderer.cpp" />
     <ClCompile Include="..\Code\ThirdcamComponent.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerManager.cpp" />
     <ClCompile Include="..\Code\TransformComponent.cpp" />
-    <ClCompile Include="..\Code\UIManager.cpp" />
+    <ClCompile Include="..\Code\IObserver.cpp" />
     <ClCompile Include="..\Code\UIRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>

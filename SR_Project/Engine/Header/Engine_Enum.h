@@ -30,5 +30,10 @@ namespace Engine
 		UI,
 		Count
 	};
+
+	enum class NotifyType
+	{
+		HP_Changed
+	};
 }
 #endif // Engine_Enum_h__

@@ -4,7 +4,6 @@
 #include "FrameManager.h"
 #include "TimerManager.h"
 #include "SceneManager.h"
-#include "UIManager.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "LightSystem.h"
@@ -140,11 +139,6 @@ LightSystem* EngineCore::GetLightSystem() const
 InputSystem* EngineCore::GetInputSystem() const
 {
 	return InputSys;
-}
-
-UIManager* EngineCore::GetUIManager() const
-{
-	return UIMgr;
 }
 
 HWND EngineCore::GetWindowHandle() const

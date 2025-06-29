@@ -47,7 +47,6 @@ private:
     FrameManager* FrameMgr;
     SceneManager* SceneMgr;
     ResourceManager* ResourceMgr;
-    UIManager* UIMgr;
     SoundManager* SoundMgr;
     ImGuiManager* ImGuiMgr;
 

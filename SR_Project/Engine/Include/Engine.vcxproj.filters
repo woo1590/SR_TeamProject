@@ -88,9 +88,6 @@
     <Filter Include="07. Object Component\Transform">
       <UniqueIdentifier>{ef96e943-f2ba-4f06-bbb7-8cd3cad0e064}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Engine Component\UIManager">
-      <UniqueIdentifier>{6b3a785b-d917-491d-9100-f10ef5152c6b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Engine Component\SoundManager">
       <UniqueIdentifier>{28874628-650c-4c6c-9bdb-e297ab310d94}</UniqueIdentifier>
     </Filter>
@@ -102,6 +99,23 @@
     </Filter>
     <Filter Include="99. Etc\ImGui">
       <UniqueIdentifier>{270618e6-ebb6-4038-80b5-1754c521a72f}</UniqueIdentifier>
+    <Filter Include="08. UI">
+      <UniqueIdentifier>{957a43f5-ea90-4336-bc62-0d6265e7717b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. UI\00. UIObserver">
+      <UniqueIdentifier>{dda7e1e7-6eb9-42b7-b7ab-f24d1bdf40ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent">
+      <UniqueIdentifier>{39a382c5-ba13-41a5-9ef4-3b535a9afeef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. UI\01. Subject">
+      <UniqueIdentifier>{be3b91ac-2cbb-4378-8c76-6997283b589b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\02. PlayerInfoComponent">
+      <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\00. HPBarComponent">
+      <UniqueIdentifier>{fa3ce7a5-cee8-45dd-89c8-5945d6e9c277}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +206,6 @@
     <ClCompile Include="..\Code\ThirdcamComponent.cpp">
       <Filter>07. Object Component\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UIManager.cpp">
-      <Filter>01. Engine Component\UIManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\EnginePCH.cpp">
       <Filter>99. Etc\Header</Filter>
     </ClCompile>
@@ -227,6 +238,17 @@
     </ClCompile>
     <ClCompile Include="..\..\External\imgui\backends\imgui_impl_win32.cpp">
       <Filter>99. Etc\ImGui</Filter>
+    <ClCompile Include="..\Code\IObserver.cpp">
+      <Filter>08. UI\00. UIObserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Subject.cpp">
+      <Filter>08. UI\01. Subject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerInfoComponent.cpp">
+      <Filter>07. Object Component\UIComponent\02. PlayerInfoComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HpComponent.cpp">
+      <Filter>07. Object Component\UIComponent\00. HPBarComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,9 +357,6 @@
     <ClInclude Include="..\Header\ThirdcamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UIManager.h">
-      <Filter>01. Engine Component\UIManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\EnginePCH.h">
       <Filter>99. Etc\Header</Filter>
     </ClInclude>
@@ -373,6 +392,20 @@
     </ClInclude>
     <ClInclude Include="..\..\External\imgui\backends\imgui_impl_win32.h">
       <Filter>99. Etc\ImGui</Filter>
+    <ClInclude Include="..\Header\IObserver.h">
+      <Filter>08. UI\00. UIObserver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Subject.h">
+      <Filter>08. UI\01. Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Engine_UIStruct.h">
+      <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerInfoComponent.h">
+      <Filter>07. Object Component\UIComponent\02. PlayerInfoComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HpComponent.h">
+      <Filter>07. Object Component\UIComponent\00. HPBarComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
