@@ -56,6 +56,12 @@ namespace Engine
 	}VTXNOR;
 
 	constexpr _ulong FVF_NOR = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
+
+	typedef struct BlockData
+	{
+		_vec3 Pos;
+		BlockType Type;
+	}BLOCK;
 }
 
 #endif // Engine_Struct_h__

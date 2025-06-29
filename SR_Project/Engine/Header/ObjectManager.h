@@ -18,6 +18,8 @@ public:
     void Late_Update(float dt);
 
     void AddObject(ObjectType objType, Object* object);
+    void RemoveObject(ObjectType objType, const _vec3& worldPosition);
+
     Object* GetFrontObject(ObjectType objType);
     std::list<Object*> GetObjectList(ObjectType objType);
 

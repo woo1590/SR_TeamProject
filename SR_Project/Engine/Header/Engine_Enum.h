@@ -31,5 +31,7 @@ namespace Engine
 		Block,
 		Count
 	};
+
+	enum BlockType { Dirt, GrassDirt };
 }
 #endif // Engine_Enum_h__

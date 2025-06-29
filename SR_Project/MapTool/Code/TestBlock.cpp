@@ -5,7 +5,7 @@
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 
-TestBlock::TestBlock(ObjectManager* owner, ObjectType objType) : Object(owner, objType)
+TestBlock::TestBlock(ObjectManager* owner, ObjectType objType, BlockType blockType) : Object(owner, objType), m_eType(blockType)
 {
 }
 
@@ -13,9 +13,9 @@ TestBlock::~TestBlock()
 {
 }
 
-TestBlock* TestBlock::Create(ObjectManager* owner, ObjectType objType)
+TestBlock* TestBlock::Create(ObjectManager* owner, ObjectType objType, BlockType blockType)
 {
-    TestBlock* Instance = new TestBlock(owner, objType);
+    TestBlock* Instance = new TestBlock(owner, objType, blockType);
 
     if (FAILED(Instance->Ready_Object()))
     {
@@ -33,8 +33,19 @@ HRESULT TestBlock::Ready_Object()
     transform->SetScale(1.f, 1.f, 1.f);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-    renderer->SetMesh(L"DirtBlock");
-    renderer->SetMaterial(L"DirtBlock_Mtrl");
+    
+    switch (m_eType)
+    {
+    case Dirt:
+        renderer->SetMesh(L"DirtBlock");
+        renderer->SetMaterial(L"DirtBlock_Mtrl");
+        break;
+
+    case GrassDirt:
+        renderer->SetMesh(L"GrassBlock");
+        renderer->SetMaterial(L"GrassBlock_Mtrl");
+        break;
+    }
 
     return S_OK;
 }

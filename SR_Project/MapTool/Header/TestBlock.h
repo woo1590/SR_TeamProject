@@ -6,11 +6,11 @@ class TestBlock : public Object
 {
     friend class Object;
 private:
-    TestBlock(ObjectManager* owner, ObjectType objType);
+    TestBlock(ObjectManager* owner, ObjectType objType, BlockType blockType);
     virtual ~TestBlock();
 
 public:
-    static TestBlock* Create(ObjectManager* owner, ObjectType objType);
+    static TestBlock* Create(ObjectManager* owner, ObjectType objType, BlockType blockType);
     HRESULT Ready_Object()override;
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
@@ -20,4 +20,7 @@ public:
 
 private:
     void Free() override;
+
+private:
+    BlockType m_eType;
 };
