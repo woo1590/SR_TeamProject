@@ -173,6 +173,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Attack.h" />
     <ClInclude Include="..\Header\BaseCharacter.h" />
     <ClInclude Include="..\Header\BasicTerrain.h" />
     <ClInclude Include="..\Header\Bone.h" />
@@ -181,12 +182,16 @@
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
     <ClInclude Include="..\Header\InventoryPanel.h" />
+    <ClInclude Include="..\Header\Chase.h" />
+    <ClInclude Include="..\Header\IsTargetInAttackRange.h" />
+    <ClInclude Include="..\Header\IsTargetInDetectRange.h" />
     <ClInclude Include="..\Header\Loader.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\LoadingUI.h" />
     <ClInclude Include="..\Header\LogoScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\TestObject.h" />
     <ClInclude Include="..\Header\TestScene.h" />
@@ -195,6 +200,7 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Attack.cpp" />
     <ClCompile Include="..\Code\BaseCharacter.cpp" />
     <ClCompile Include="..\Code\BasicTerrain.cpp" />
     <ClCompile Include="..\Code\Bone.cpp" />
@@ -203,12 +209,16 @@
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />
     <ClCompile Include="..\Code\InventoryPanel.cpp" />
+    <ClCompile Include="..\Code\Chase.cpp" />
+    <ClCompile Include="..\Code\IsTargetInAttackRange.cpp" />
+    <ClCompile Include="..\Code\IsTargetInDetectRange.cpp" />
     <ClCompile Include="..\Code\Loader.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\LoadingUI.cpp" />
     <ClCompile Include="..\Code\LogoScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\TestObject.cpp" />
     <ClCompile Include="..\Code\TestScene.cpp" />

@@ -21,6 +21,7 @@
 #include "LoadingUI.h"
 #include "Cursor.h"
 #include "InventoryPanel.h"
+#include "Monster.h"
 
 //component
 #include "TransformComponent.h"
@@ -60,7 +61,7 @@ void TestScene::Load()
 	LoadBlock();
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::UI, UIObj::Create(ObjectMgr, ObjectType::UI));
-	ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 
 	auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
 	auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);

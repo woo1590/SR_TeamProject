@@ -14,13 +14,17 @@ public:
     void Late_Update(_float dt)override;
 
 public:
+    virtual void MoveTo(_vec3* dir);
+    virtual void Attack(Object* target);
+
+protected:
     void SetMaterial(const std::wstring& mtrl, string str = "Body");
     void SetScale(float scale);
     void SetPosition(_vec3 position, string str = "Body");
     void SetRotation(_vec3 rotation, string str = "Body");
 
-private:
-    void Free()override;
+protected:
+    void Free() override;
 
 protected:
     std::unordered_map<string, Object*> Bones;
