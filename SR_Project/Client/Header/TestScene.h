@@ -26,5 +26,8 @@ private:
 
 private:
     Player* player;
+    void LoadBlock();
+
+    std::vector<BlockData> Blocks;
 };
 

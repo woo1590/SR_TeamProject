@@ -1,6 +1,7 @@
 #include "EnginePCH.h"
 #include "ObjectManager.h"
 #include "Object.h"
+#include "TransformComponent.h"
 
 ObjectManager::ObjectManager(Scene* owner)
 	:owner(owner)
@@ -55,6 +56,30 @@ void ObjectManager::Late_Update(float dt)
 void ObjectManager::AddObject(ObjectType objType, Object* object)
 {
 	Objects[static_cast<int>(objType)].push_back(object);
+}
+
+void ObjectManager::RemoveObject(ObjectType objType, const _vec3& worldPosition)
+{
+	auto& list = Objects[(int)objType];
+	auto it = std::find_if(list.begin(), list.end(),
+		[&](Object* obj)
+		{
+			auto tf = obj->GetComponent<TransformComponent>();
+			return tf && tf->GetPosition() == worldPosition;
+		});
+
+	if (it != list.end())
+	{
+		Safe_Release(*it);
+		list.erase(it);
+	}
+}
+
+void ObjectManager::ClearList(ObjectType objType)
+{
+	for (auto& object : Objects[static_cast<int>(objType)])
+		Safe_Release(object);
+	Objects[static_cast<int>(objType)].clear();
 }
 
 Object* ObjectManager::GetFrontObject(ObjectType objType)

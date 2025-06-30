@@ -24,5 +24,5 @@ private:
 
 protected:
     std::unordered_map<string, Object*> Bones;
-    float Scale = 1.f;
+    float                               Scale = 0.75f; // 1 -> 0.75
 };

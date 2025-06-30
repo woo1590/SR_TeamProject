@@ -10,6 +10,7 @@
 
 //scene
 #include "EditScene.h"
+#include <imgui_impl_win32.cpp>
 
 MainApp::MainApp() : isRunning(false), hWnd(nullptr), hInstance(nullptr), hAccel(nullptr), Core(nullptr), GraphicDev(nullptr)
 {
@@ -98,6 +99,9 @@ MainApp* MainApp::Create(HINSTANCE hInst, int nCmdShow)
 
 LRESULT MainApp::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+        return true;
+
     switch (msg)
     {
     case WM_INPUT:

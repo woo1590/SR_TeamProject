@@ -83,19 +83,19 @@ _uint __stdcall Loader::LoaderMain(void* arg)
 
 HRESULT Loader::Load_TestScene()
 {
+	auto cube = CubeMesh::Create();
+	auto skyboxMtrl = Material::Create();
+	auto terrainMtrl = Material::Create();
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 
 	/*--------------Load File Resource-----------------*/
 	resource->LoadTerrain(L"../Resource/Texture/Terrain/Height1.bmp", L"Basic_Terrain", 50.f, 1.f);
 	resource->LoadTexture(L"../Resource/Texture/Terrain/Terrain0.png",L"Basic_Terrain_Texture", TEXTURE::Tex_Diffuse);
-	auto terrainMtrl = Material::Create();
 	terrainMtrl->SetTexture(L"Basic_Terrain_Texture");
 	resource->LoadMaterial(L"Terrain_Mtrl", terrainMtrl);
 
-	auto cube = CubeMesh::Create();
 	resource->LoadMesh(L"Cube_Mesh", cube);
 	resource->LoadTexture(L"../Resource/Texture/SkyBox/burger3.dds", L"Basic_SkyBox", TEXTURE::Tex_Cube);
-	auto skyboxMtrl = Material::Create();
 	skyboxMtrl->SetTexture(L"Basic_SkyBox");
 	resource->LoadMaterial(L"SkyBox_Mtrl", skyboxMtrl);
 
@@ -153,6 +153,20 @@ HRESULT Loader::Load_TestScene()
 	auto playerLeftLegMtrl = Material::Create();
 	playerLeftLegMtrl->SetTexture(L"playerLeftLeg");
 	resource->LoadMaterial(L"playerLeftLeg_Mtrl", playerLeftLegMtrl);
+
+	resource->LoadTexture(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
+	resource->LoadMesh(L"DirtBlock", cube);
+
+	resource->LoadTexture(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
+	resource->LoadMesh(L"GrassBlock", cube);
+
+	auto dirtBlockMtrl = Material::Create();
+	dirtBlockMtrl->SetTexture(L"DirtBlock");
+	resource->LoadMaterial(L"DirtBlock_Mtrl", dirtBlockMtrl);
+
+	auto grassBlockMtrl = Material::Create();
+	grassBlockMtrl->SetTexture(L"GrassBlock");
+	resource->LoadMaterial(L"GrassBlock_Mtrl", grassBlockMtrl);
 
 	return S_OK;
 }

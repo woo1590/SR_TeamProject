@@ -12,7 +12,7 @@ namespace Engine
 
 	}VTXCOL;
 
-	constexpr _ulong	FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;	//tex0Àº ¾ø¾îµµ µÊ, ÅØ½ºÃÄ°¡ ¾ø´Ù´Â ÀÇ¹Ì¸¦ ³ªÅ¸³»´Â °ü½À
+	constexpr _ulong	FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;	//tex0ï¿½ï¿½ ï¿½ï¿½ï¿½îµµ ï¿½ï¿½, ï¿½Ø½ï¿½ï¿½Ä°ï¿½ ï¿½ï¿½ï¿½Ù´ï¿½ ï¿½Ç¹Ì¸ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	typedef struct tagVertexTexture
 	{
@@ -64,6 +64,11 @@ namespace Engine
 	}Ray;
 
 	
+	typedef struct BlockData
+	{
+		_vec3 Pos;
+		BlockType Type;
+	}BLOCK;
 }
 
 #endif // Engine_Struct_h__

@@ -253,6 +253,7 @@
     <ClInclude Include="..\Header\Subject.h" />
     <ClInclude Include="..\Header\TerrainMesh.h" />
     <ClInclude Include="..\Header\TerrainRenderer.h" />
+    <ClInclude Include="..\Header\TestBlock.h" />
     <ClInclude Include="..\Header\ThirdcamComponent.h" />
     <ClInclude Include="..\Header\Timer.h" />
     <ClInclude Include="..\Header\TimerManager.h" />
@@ -345,6 +346,7 @@
     <ClCompile Include="..\Code\Subject.cpp" />
     <ClCompile Include="..\Code\TerrainMesh.cpp" />
     <ClCompile Include="..\Code\TerrainRenderer.cpp" />
+    <ClCompile Include="..\Code\TestBlock.cpp" />
     <ClCompile Include="..\Code\ThirdcamComponent.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerManager.cpp" />

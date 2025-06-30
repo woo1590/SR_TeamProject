@@ -28,6 +28,7 @@ namespace Engine
 		SkyBox,
 		Camera,
 		UI,
+		Block,
 		Count
 	};
 
@@ -60,12 +61,12 @@ namespace Engine
 
 	enum class FontType
 	{
-		Regular,     // ±âº»: 18pt, FW_NORMAL
-		Bold,        // ±½°Ô: 18pt, FW_BOLD
-		Small,       // ÀÛ°Ô: 12pt, FW_NORMAL
-		Large,       // Å©°Ô: 28pt, FW_NORMAL
-		Title,       // Å¸ÀÌÆ²¿ë: 36pt, FW_BOLD
-		Custom       // »ç¿ëÀÚ ÁöÁ¤ (¼±ÅÃÀû È®Àå¿ë)
+		Regular,     // ï¿½âº»: 18pt, FW_NORMAL
+		Bold,        // ï¿½ï¿½ï¿½ï¿½: 18pt, FW_BOLD
+		Small,       // ï¿½Û°ï¿½: 12pt, FW_NORMAL
+		Large,       // Å©ï¿½ï¿½: 28pt, FW_NORMAL
+		Title,       // Å¸ï¿½ï¿½Æ²ï¿½ï¿½: 36pt, FW_BOLD
+		Custom       // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½)
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)
@@ -90,5 +91,6 @@ namespace Engine
 		default:                return D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 		}
 	}
+	enum BlockType { Dirt, GrassDirt };
 }
 #endif // Engine_Enum_h__
