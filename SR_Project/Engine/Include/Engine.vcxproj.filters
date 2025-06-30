@@ -120,6 +120,7 @@
     </Filter>
     <Filter Include="07. Object Component\Font">
       <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
+	</Filter>
     <Filter Include="07. Object Component\Collision">
       <UniqueIdentifier>{1fabb508-3f70-42f6-9b54-e5dfa2c38cc5}</UniqueIdentifier>
     </Filter>
@@ -265,6 +266,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp">
       <Filter>07. Object Component\Font</Filter>
+	</ClCompile>
     <ClCompile Include="..\Code\CollisionComponent.cpp">
       <Filter>07. Object Component\Collision</Filter>
     </ClCompile>
@@ -434,6 +436,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\FontComponent.h">
       <Filter>07. Object Component\Font</Filter>
+	</ClInclude>
     <ClInclude Include="..\Header\CollisionComponent.h">
       <Filter>07. Object Component\Collision</Filter>
     </ClInclude>
