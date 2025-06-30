@@ -23,9 +23,12 @@ BTStatus SequenceNode::Initialize(float dt)
 
 BTStatus SequenceNode::Tick(float dt, BlackBoard* bb)
 {
-    if (CurrentIndex >= ChildNodes.size()) 
+    if (CurrentIndex >= ChildNodes.size())
+    {
+        CurrentIndex = 0;
         return BTStatus::Success;
-    
+    }
+
     BTStatus status = ChildNodes[CurrentIndex]->Tick(dt, bb);
 
     switch (status)

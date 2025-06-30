@@ -11,6 +11,8 @@ protected:
     virtual ~BlackBoard();
 
 public:
+    static BlackBoard* Create();
+
     void SetValue(const std::string& key, const void* value);
     void* GetValue(const std::string& key) const;
     bool HasKey(const std::string& key) const;
@@ -18,7 +20,7 @@ public:
 protected:
     void Free() override;
 
-private:
+protected:
     std::unordered_map<std::string, void*> Data;
 };
 

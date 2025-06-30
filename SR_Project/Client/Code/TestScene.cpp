@@ -14,6 +14,7 @@
 #include "SkyBox.h"
 #include "UIObj.h"
 #include "BaseCharacter.h"
+#include "Monster.h"
 
 //component
 #include "TransformComponent.h"
@@ -47,7 +48,7 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::UI, UIObj::Create(ObjectMgr, ObjectType::UI));
-	ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 
 	/*----------------------------------------------------------------------------------------------*/
 }

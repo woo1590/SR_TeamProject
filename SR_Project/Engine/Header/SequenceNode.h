@@ -6,7 +6,7 @@ BEGIN(Engine)
 class ENGINE_DLL SequenceNode :
     public CompositeNode
 {
-protected:
+public:
     explicit SequenceNode();
     virtual ~SequenceNode();
 

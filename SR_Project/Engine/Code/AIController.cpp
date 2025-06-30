@@ -2,7 +2,7 @@
 #include "AIController.h"
 
 AIController::AIController(Object* owner)
-    :Owner(owner)
+    :ObjectComponent(owner)
 {
 }
 
@@ -26,16 +26,13 @@ AIController* AIController::Create(Object* owner, BehaviorTree* bt, BlackBoard* 
 
 HRESULT AIController::Ready_Object(BehaviorTree* bt, BlackBoard* bb)
 {
-    if(bt != nullptr)
-        SetBehaviorTree(bt);
-
-    if (bb != nullptr)
-        SetBlackBoard(bb);
+    SetBehaviorTree(bt);
+    SetBlackBoard(bb);
 
     return S_OK;
 }
 
-void AIController::Tick(float dt)
+void AIController::Update(float dt)
 {
     if (behaviorTree)
         behaviorTree->Tick(dt, blackBoard);
@@ -63,4 +60,6 @@ void AIController::Free()
 
     if (blackBoard)
         Safe_Release(blackBoard);
+
+    ObjectComponent::Free();
 }

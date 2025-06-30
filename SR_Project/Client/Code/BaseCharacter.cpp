@@ -48,11 +48,13 @@ HRESULT BaseCharacter::Ready_Object(ObjectManager* owner, ObjectType objType)
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -Scale / 2.f, 0.0f));
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     SetPosition(_vec3(-Scale / 2.f * 3.f, -Scale / 2.f, 0.f),"LHand");
+    SetRotation(_vec3(D3DXToRadian( -90.f), 0.f, 0.f), "LHand");
 
     Bones["RHand"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieArm_Mtrl");
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -Scale / 2.f, 0.0f));
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     SetPosition(_vec3(Scale / 2.f * 3.f, -Scale / 2.f, 0.f), "RHand");
+    SetRotation(_vec3(D3DXToRadian(-90.f), 0.f, 0.f),"RHand");
 
     Bones["LLeg"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieLeg_Mtrl");
     Bones["LLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, Scale / 2.f, 0.0f));
@@ -78,6 +80,15 @@ void BaseCharacter::Update(_float dt)
 void BaseCharacter::Late_Update(_float dt)
 {
     Object::Late_Update(dt);
+}
+
+void BaseCharacter::MoveTo(_vec3* dir)
+{
+    GetComponent<TransformComponent>()->Translate((*dir)* 0.1f);
+}
+
+void BaseCharacter::Attack(Object* target)
+{
 }
 
 void BaseCharacter::Free()

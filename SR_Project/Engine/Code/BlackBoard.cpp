@@ -10,6 +10,12 @@ BlackBoard::~BlackBoard()
     Free();
 }
 
+BlackBoard* BlackBoard::Create()
+{
+    BlackBoard* Instance = new BlackBoard();
+    return Instance;
+}
+
 void BlackBoard::SetValue(const std::string& key, const void* value)
 {
     Data[key] = const_cast<void*>(value);
@@ -32,9 +38,5 @@ bool BlackBoard::HasKey(const std::string& key) const
 
 void BlackBoard::Free()
 {
-    for (auto& data : Data)
-    {
-        Safe_Delete(data.second);
-    }
-    Data.clear();
+   //
 }

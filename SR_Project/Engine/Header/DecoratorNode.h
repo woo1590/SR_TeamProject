@@ -11,7 +11,7 @@ protected:
     virtual ~DecoratorNode();
 
 public:
-    virtual BTStatus Initialize(float dt) = 0;
+    virtual BTStatus Initialize(float dt);
     virtual BTStatus Tick(float dt, BlackBoard* bb) = 0;
 
     void SetChild(BTNode* childNode);

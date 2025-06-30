@@ -1,14 +1,11 @@
 #pragma once
-#include "CompositeNode.h"
-
-BEGIN(Engine)
-
-class ENGINE_DLL SelectorNode :
-    public CompositeNode
+#include "ActionNode.h"
+class Chase :
+    public ActionNode
 {
 public:
-    explicit SelectorNode();
-    virtual ~SelectorNode();
+    explicit Chase();
+    virtual ~Chase();
 
 public:
     BTStatus Initialize(float dt) override;
@@ -18,4 +15,3 @@ protected:
     void Free() override;
 };
 
-END

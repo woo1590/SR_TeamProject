@@ -6,7 +6,7 @@ BEGIN(Engine)
 class ENGINE_DLL SelectorNode :
     public CompositeNode
 {
-protected:
+public:
     explicit SelectorNode();
     virtual ~SelectorNode();
 

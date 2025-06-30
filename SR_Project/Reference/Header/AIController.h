@@ -1,5 +1,5 @@
 #pragma once
-#include "Base.h"
+#include "ObjectComponent.h"
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
 
@@ -7,7 +7,7 @@ BEGIN(Engine)
 
 class Object;
 class ENGINE_DLL AIController :
-    public Base
+    public ObjectComponent
 {
 protected:
     explicit AIController(Object* owner);
@@ -17,8 +17,7 @@ public:
     static AIController* Create(Object* owner, BehaviorTree* bt, BlackBoard* bb);
 
     virtual HRESULT Ready_Object(BehaviorTree* bt, BlackBoard* bb);
-    virtual void Tick(float dt);
-
+    void Update(float dt) override;
     void SetBehaviorTree(BehaviorTree* tree);
     void SetBlackBoard(BlackBoard* board);
     BlackBoard* GetBlackBoard() const;

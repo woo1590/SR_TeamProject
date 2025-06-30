@@ -15,7 +15,7 @@ protected:
 public:
     static BehaviorTree* Create(BTNode* rootNode);
 
-    void Tick(float dt, BlackBoard* bb);        
+    virtual void Tick(float dt, BlackBoard* bb);        
 
     void SetRoot(BTNode* rootNode);
 
