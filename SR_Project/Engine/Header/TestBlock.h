@@ -2,7 +2,7 @@
 #include "Object.h"
 #include "TransformComponent.h"
 
-class TestBlock : public Object
+class ENGINE_DLL TestBlock  : public Object
 {
     friend class Object;
 private:

@@ -22,5 +22,8 @@ public:
     void ImGuiTestFunc();
 private:
     void Free() override;
+    void LoadBlock();
+
+    std::vector<BlockData> Blocks;
 };
 

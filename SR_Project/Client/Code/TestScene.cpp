@@ -19,6 +19,7 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
+#include "TestBlock.h"
 
 TestScene::TestScene()
 {
@@ -44,7 +45,8 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
+	// ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
+	LoadBlock();
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::UI, UIObj::Create(ObjectMgr, ObjectType::UI));
 	ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
@@ -78,4 +80,36 @@ void TestScene::Free()
 {
 	Safe_Release(ObjectMgr);
 	Scene::Free();
+}
+
+void TestScene::LoadBlock()
+{
+	HANDLE hFile(nullptr);
+	hFile = CreateFile(L"../../Reference/MapData/TestScene.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Fail", _T("Fail"), MB_OK);
+		return;
+	}
+
+	ObjectMgr->ClearList(ObjectType::Block);
+	Blocks.clear();
+	Blocks.shrink_to_fit();
+
+	DWORD dwByte(0);
+	BlockData newBlock;
+	while (TRUE)
+	{
+		if (!ReadFile(hFile, &newBlock, sizeof(BlockData), &dwByte, nullptr)) return;
+		if (dwByte == 0) break;
+
+		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type);
+		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
+		ObjectMgr->AddObject(ObjectType::Block, block);
+		Blocks.push_back(newBlock);
+	}
+
+	CloseHandle(hFile);
+	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
 }

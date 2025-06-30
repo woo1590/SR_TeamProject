@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "EnginePCH.h"
 #include "TestBlock.h"
 #include "UIRenderer.h"
 
@@ -20,7 +20,7 @@ TestBlock* TestBlock::Create(ObjectManager* owner, ObjectType objType, BlockType
     if (FAILED(Instance->Ready_Object()))
     {
         Safe_Release(Instance);
-        MSG_BOX("TestBlock Create Failed");
+        MessageBoxW(nullptr, L"TestBox Created Failed", L"Fail", MB_OK);
         Instance = nullptr;
     }
 
@@ -33,7 +33,7 @@ HRESULT TestBlock::Ready_Object()
     transform->SetScale(1.f, 1.f, 1.f);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-    
+
     switch (m_eType)
     {
     case Dirt:

@@ -138,11 +138,6 @@ void EditScene::ImGuiTest()
 	ImGui::TreeNode(const char* label): 트리 노드를 생성합니다.
 	ImGui::TreePop(): 트리 노드를 닫습니다.
 	ImGui::ProgressBar(float fraction, const ImVec2& size_arg = ImVec2(-FLT_MIN, 0), const char* overlay = NULL): 진행률 표시줄을 표시합니다.
-	
-	3. 스타일 관련 명령어:
-	ImGui::PushStyleColor(ImGuiCol idx, const ImVec4& col): 스타일 색상을 변경합니다.
-	ImGui::PopStyleColor(int count = 1): 스타일 색상 변경을 되돌립니다.
-	ImGui::PushStyleVar(ImGuiStyleVar idx, float val): 스타일 변수를 변경합니다.
 	*/
 }
 

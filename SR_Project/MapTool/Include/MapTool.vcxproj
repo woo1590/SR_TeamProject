@@ -141,7 +141,6 @@
     <ClInclude Include="..\Header\Camera.h" />
     <ClInclude Include="..\Header\EditScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
-    <ClInclude Include="..\Header\TestBlock.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
@@ -149,7 +148,6 @@
     <ClCompile Include="..\Code\Camera.cpp" />
     <ClCompile Include="..\Code\EditScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
-    <ClCompile Include="..\Code\TestBlock.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>

@@ -103,6 +103,9 @@
     <Filter Include="99. Etc\ImGui">
       <UniqueIdentifier>{270618e6-ebb6-4038-80b5-1754c521a72f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\Block">
+      <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -227,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="..\..\External\imgui\backends\imgui_impl_win32.cpp">
       <Filter>99. Etc\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestBlock.cpp">
+      <Filter>07. Object Component\Block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -373,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="..\..\External\imgui\backends\imgui_impl_win32.h">
       <Filter>99. Etc\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestBlock.h">
+      <Filter>07. Object Component\Block</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
