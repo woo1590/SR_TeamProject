@@ -28,6 +28,7 @@ EditScene::EditScene() : blockType(Dirt)
 
 EditScene::~EditScene()
 {
+	Free();
 }
 
 EditScene* EditScene::Create()
@@ -38,7 +39,7 @@ EditScene* EditScene::Create()
 
 void EditScene::Load()
 {
-	// EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapToolTest", [this]() {this->ImGuiTest();});
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapToolTest", [this]() {this->ImGuiTest();});
 
 	auto cube = CubeMesh::Create();
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
@@ -57,7 +58,7 @@ void EditScene::Load()
 	grassBlockMtrl->SetTexture(L"GrassBlock");
 	resource->LoadMaterial(L"GrassBlock_Mtrl", grassBlockMtrl);
 
-	BlockData baseBlock{ {0, 0, 0}, BlockType::Dirt };
+	BlockData baseBlock{ {0, 0, 0}, BlockType::GrassDirt };
 	Blocks.push_back(baseBlock);
 
 	ObjectMgr = ObjectManager::Create(this);
@@ -87,8 +88,12 @@ void EditScene::Update(float dt)
 		OnRightClick(rayOrigin, rayDir);
 	}
 
+	// 임시 Key Input
 	if (Input->IsKeyPressed(NUM1)) blockType = Dirt;
 	if (Input->IsKeyPressed(NUM2)) blockType = GrassDirt;
+
+	if (Input->IsKeyPressed(Q)) SaveBlock();
+	if (Input->IsKeyPressed(E)) LoadBlock();
 }
 
 void EditScene::Late_Update(float dt)
@@ -168,8 +173,7 @@ void EditScene::OnLeftClick(_vec3& rayOrigin, _vec3& rayDir)
 		}
 	}
 
-	if (!found)
-		return;
+	if (!found) return;
 
 	_vec3 normal = GetHitNormal(closestHitPoint, selectedBlockPos - _vec3(1, 1, 1), selectedBlockPos + _vec3(1, 1, 1));
 	_vec3 newBlockPos = selectedBlockPos + normal * 2.0f;
@@ -255,26 +259,70 @@ void EditScene::PlaceBlock(const _vec3& position, BlockType type)
 		if (block.Pos == position)
 			return;
 
-	BlockData newBlock{ position, type };
-	Blocks.push_back(newBlock);
+	Blocks.push_back({ position, type });
 
 	auto newBlockObj = TestBlock::Create(ObjectMgr, ObjectType::Block, type);
-	auto transform = newBlockObj->GetComponent<TransformComponent>();
-	transform->SetPosition(position);
+	newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 	ObjectMgr->AddObject(ObjectType::Block, newBlockObj);
 }
 
 void EditScene::SaveBlock()
 {
+	HANDLE hFile(nullptr);
+	hFile = CreateFile(L"../../Reference/MapData/Test.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Fail", _T("Fail"), MB_OK);
+		return;
+	}
+
+	DWORD dwByte(0);
+	for (auto& block : Blocks)
+	{
+		WriteFile(hFile, &block, sizeof(BlockData), &dwByte, nullptr);
+	}
+
+	CloseHandle(hFile);
+	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Success", _T("Success"), MB_OK);
 }
 
 void EditScene::LoadBlock()
 {
+	HANDLE hFile(nullptr);
+	hFile = CreateFile(L"../../Reference/MapData/Test.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Fail", _T("Fail"), MB_OK);
+		return;
+	}
+	
+	ObjectMgr->ClearList(ObjectType::Block);
+	Blocks.clear();
+	Blocks.shrink_to_fit();
+
+	DWORD dwByte(0);
+	BlockData newBlock;
+	while (TRUE)
+	{
+		if (!ReadFile(hFile, &newBlock, sizeof(BlockData), &dwByte, nullptr)) return;
+		if (dwByte == 0) break;
+
+		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type);
+		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
+		ObjectMgr->AddObject(ObjectType::Block, block);
+		Blocks.push_back(newBlock);
+	}
+
+	CloseHandle(hFile);
+	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
 }
 
 void EditScene::Free()
 {
 	Safe_Release(ObjectMgr);
 	Blocks.clear();
+	Blocks.shrink_to_fit();
 	Scene::Free();
 }

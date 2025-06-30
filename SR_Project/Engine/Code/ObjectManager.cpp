@@ -75,6 +75,13 @@ void ObjectManager::RemoveObject(ObjectType objType, const _vec3& worldPosition)
 	}
 }
 
+void ObjectManager::ClearList(ObjectType objType)
+{
+	for (auto& object : Objects[static_cast<int>(objType)])
+		Safe_Release(object);
+	Objects[static_cast<int>(objType)].clear();
+}
+
 Object* ObjectManager::GetFrontObject(ObjectType objType)
 {
 	return Objects[static_cast<int>(objType)].front();

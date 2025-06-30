@@ -1,11 +1,6 @@
 #pragma once
 #include "Scene.h"
 
-namespace Engine
-{
-    class TransformComponent;
-}
-
 class EditScene : public Scene
 {
     friend class Scene;
@@ -16,26 +11,25 @@ private:
 
 public:
     static EditScene* Create();
-
     void Load() override;
     void Update(float dt) override;
     void Late_Update(float dt) override;
     void Unload() override;
 
-    //imgui test
-    void ImGuiTest();
-
 private:
-    void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);
-    void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);
-    void OnRightClick(_vec3& rayOrigin, _vec3& rayDir);
-    
-    bool RayIntersectsAABB(const _vec3& rayOrigin, const _vec3& rayDir, const _vec3& boxMin, const _vec3& boxMax, float& outDistance);
-    _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax);
-    void PlaceBlock(const _vec3& position, BlockType type);
+    void ImGuiTest(); // ImGUI 작성
 
-    void SaveBlock();
-    void LoadBlock();
+    void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);     // 광선 위치와 방향 초기화
+    void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);              // 좌클릭
+    void OnRightClick(_vec3& rayOrigin, _vec3& rayDir);             // 우클릭
+    
+    bool RayIntersectsAABB(const _vec3& rayOrigin, const _vec3& rayDir,
+                            const _vec3& boxMin, const _vec3& boxMax, float& outDistance);  // 광선과 박스 충돌
+    _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax);    // 충돌한 면의 법선 반환
+    void PlaceBlock(const _vec3& position, BlockType type);                                 // 블럭 설치
+
+    void SaveBlock();   // 맵 저장
+    void LoadBlock();   // 맵 로드
 
 private:
     void Free() override;
