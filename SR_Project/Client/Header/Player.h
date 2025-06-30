@@ -34,6 +34,6 @@ private:
     float m_fRollTime = 0.f;
 
     std::unordered_map<std::string, _vec3> m_mapStartRotations;
-    float m_fSpeed = 100.f;
+    float m_fSpeed = 0.f;
 };
     
