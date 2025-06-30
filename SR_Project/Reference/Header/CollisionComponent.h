@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectComponent.h"
+#include "CollisionSystem.h"
 
 BEGIN(Engine)
 
@@ -12,19 +13,28 @@ private:
 
 public:
     static CollisionComponent* Create(Object* owner);
-
-    void SetSize(_vec3 size);
-    void SetSize(_float x, _float y, _float z);
+    HRESULT Ready_Component()override;
 
     void SetOffset(_vec3 offset);
     void SetOffset(_float x, _float y, _float z);
-    
+
+    void SetBoudingBox(BoundingBoxType bbType);
+    void SetSize(_vec3 size);
+
+    /*----------------Collision-----------------*/
+    bool RayIntersectAABB(Ray ray, HitInfo& hit);
 private:
+
     void Free()override;
 
-    _vec3 Size{ 1.f,1.f,1.f };
     _vec3 Offset{ 0.f,0.f,0.f };
-    LPD3DXMESH BoundingBox = nullptr;
+
+    LPD3DXMESH BoundingBox = nullptr;   //디버그용 메쉬 
+    BoundingBoxType BBType = BoundingBoxType::Box;
+
+    _vec3 LocalMin{ -1.f,-1.f,-1.f };
+    _vec3 LocalMax{ 1.f,1.f,1.f };
+    /*----------------------*/
 };
 
 END
