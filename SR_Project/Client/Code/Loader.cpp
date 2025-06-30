@@ -105,10 +105,14 @@ HRESULT Loader::Load_TestScene()
 HRESULT Loader::load_UIResources() // 제현 UI 전용함수
 {
 	static const unordered_map<wstring, TEXTURE> uiTexture = {
-		{L"Shield",       TEXTURE::Tex_Diffuse},
-		{L"Logo",         TEXTURE::Tex_Diffuse},
-		{L"hpbar_front",  TEXTURE::Tex_Diffuse},
-		{L"hpbar_back",   TEXTURE::Tex_Diffuse}
+		{L"Shield",         TEXTURE::Tex_Diffuse},
+		{L"Logo",           TEXTURE::Tex_Diffuse},
+		{L"hpbar_front",    TEXTURE::Tex_Diffuse},
+		{L"hpbar_back",     TEXTURE::Tex_Diffuse},
+		{L"loadingscene",   TEXTURE::Tex_Diffuse},
+		{L"Cursor",         TEXTURE::Tex_Diffuse},
+		{L"InventoryPanel", TEXTURE::Tex_Diffuse},
+
 	};
 
 	// layer 낮을수록 먼저 그림
@@ -116,7 +120,10 @@ HRESULT Loader::load_UIResources() // 제현 UI 전용함수
 		{L"hpbar_back", -1},
 		{L"hpbar_front", 0},
 		{L"Shield", 5},
-		{L"Logo", 100}
+		{L"Logo", 100},
+		{L"loadingscene", -100},
+		{L"Cursor", 1000},
+		{L"InventoryPanel", -100}
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "LogoScene.h"
 
+#include "LoadingUI.h"
+
 #include "ObjectManager.h"
 
 LogoScene::LogoScene()
@@ -11,8 +13,16 @@ LogoScene::~LogoScene()
 {
 }
 
+LogoScene* LogoScene::Create()
+{
+	return new LogoScene();
+}
+
 void LogoScene::Load()
 {
+	ObjectMgr = ObjectManager::Create(this);
+
+	ObjectMgr->AddObject(ObjectType::UI, LoadingUI::Create(ObjectMgr, ObjectType::UI));
 }
 
 void LogoScene::Update(float dt)

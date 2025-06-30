@@ -7,8 +7,7 @@ class HPBarFront : public Object
 {
 private:
 	HPBarFront(ObjectManager* owner, ObjectType type)
-		:Object(owner, type) {
-	}
+		:Object(owner, type) {}
 
 public:
 	static HPBarFront* Create(ObjectManager* owner, ObjectType type, PlayerInfoComponent* playerInfo);

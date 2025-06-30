@@ -52,6 +52,15 @@
     <Filter Include="02. Object\UIObj\HPBarBack">
       <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\LoadingUI">
+      <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Cursor">
+      <UniqueIdentifier>{921a1788-6987-4885-b04c-ad1d1ef2bf8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\InventoryPanel">
+      <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -96,6 +105,15 @@
     <ClInclude Include="..\Header\HPBarBack.h">
       <Filter>02. Object\UIObj\HPBarBack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LoadingUI.h">
+      <Filter>02. Object\UIObj\LoadingUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Cursor.h">
+      <Filter>02. Object\UIObj\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryPanel.h">
+      <Filter>02. Object\UIObj\InventoryPanel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -136,6 +154,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\HPBarBack.cpp">
       <Filter>02. Object\UIObj\HPBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingUI.cpp">
+      <Filter>02. Object\UIObj\LoadingUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Cursor.cpp">
+      <Filter>02. Object\UIObj\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryPanel.cpp">
+      <Filter>02. Object\UIObj\InventoryPanel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

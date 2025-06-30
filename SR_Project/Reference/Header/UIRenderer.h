@@ -22,21 +22,25 @@ public:
 	void SetLayer(int idx) { layerIdx = idx; }
 	int  GetLayer() const { return layerIdx; }
 
+	void SetPivot(UIPivot _pivot);
+	void UpdateCenter();
+
+	void SetScale(float x, float y) { scale = {x, y}; }
+
 private:
 	LPDIRECT3DBASETEXTURE9 texture = nullptr;
 	IDirect3DTexture9* tex2D = nullptr;
-	int layerIdx = 0;
-
 	RECT  srcRect{};
-	_vec3 pos{};
-	_vec3 center{};
+	_vec3 center{}, pos{};
 
-	float curRatio = 1.f;
-	float targetRatio = 1.f;
+	float curRatio = 1.f, targetRatio = 1.f;
 	float lerpSpeed = 6.f;
 
-	LONG fullWidth = 0;
-	LONG fullHeight = 0;
+	LONG fullWidth = 0, fullHeight = 0;
+	int layerIdx = 0;
+
+	UIPivot pivot = UIPivot::Center;
+	_vec2 scale = {1.f, 1.f};
 };
 
 END

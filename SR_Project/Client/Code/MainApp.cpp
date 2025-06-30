@@ -174,12 +174,21 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
     AdjustWindowRect(&windowSize, WS_OVERLAPPEDWINDOW, FALSE);
 
+    // 화면 해상도 정보 
+    int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+    int windowWidth = windowSize.right - windowSize.left;
+    int windowHeight = windowSize.bottom - windowSize.top;
+
+    int x = (screenWidth - windowWidth) / 2;
+    int y = (screenHeight - windowHeight) / 2;
+
     hWnd = CreateWindowW(
         CLASS_NAME, L"My Game Window",
         WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT,
-        windowSize.right- windowSize.left,
-        windowSize.bottom- windowSize.top,
+        x, y,
+        windowWidth,
+        windowHeight,
         nullptr, nullptr, hInstance, nullptr
     );
 
@@ -207,7 +216,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
     //ClipCursor(&clipRect);
 
-    //ShowCursor(FALSE);
+    ShowCursor(FALSE);
 
    /*--------------Raw Input---------------*/
    RAWINPUTDEVICE rid{};

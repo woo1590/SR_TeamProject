@@ -112,6 +112,9 @@
     <Filter Include="07. Object Component\UIComponent\00. HPBarComponent">
       <UniqueIdentifier>{fa3ce7a5-cee8-45dd-89c8-5945d6e9c277}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\Font">
+      <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -221,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\HpComponent.cpp">
       <Filter>07. Object Component\UIComponent\00. HPBarComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FontComponent.cpp">
+      <Filter>07. Object Component\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\HpComponent.h">
       <Filter>07. Object Component\UIComponent\00. HPBarComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FontComponent.h">
+      <Filter>07. Object Component\Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

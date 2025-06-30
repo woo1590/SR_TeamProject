@@ -15,11 +15,15 @@
 #include "HPBarFront.h"
 #include "Player.h"
 #include "HPBarBack.h"
+#include "LoadingUI.h"
+#include "Cursor.h"
+#include "InventoryPanel.h"
 
 //component
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
+#include "HpComponent.h"
 
 TestScene::TestScene()
 {
@@ -42,35 +46,24 @@ void TestScene::Load()
 
 	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	//ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
-	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
-
+	
+	// ------------------------------------- UI Object -----------------------------------------------//
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	auto info = player->GetComponent<PlayerInfoComponent>();
+	const auto& info = player->GetComponent<PlayerInfoComponent>();
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
+	//ObjectMgr->AddObject(ObjectType::UI, LoadingUI::Create(ObjectMgr, ObjectType::UI));
+	//ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
 	ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));
+	ObjectMgr->AddObject(ObjectType::UI, Cursor::Create(ObjectMgr, ObjectType::UI));
+	//ObjectMgr->AddObject(ObjectType::UI, InventoryPanel::Create(ObjectMgr, ObjectType::UI));
 
 	/*----------------------------------------------------------------------------------------------*/
 }
 
 void TestScene::Update(float dt)
 {
-	const auto& input = EngineCore::GetInstance()->GetInputSystem();
-
-	if (input->IsKeyPressed(KEY::LBUTTON))
-	{
-		if (player)
-		{
-			auto info = player->GetComponent<PlayerInfoComponent>();
-			if (info)
-			{
-				int curHp = info->GetCurHp();
-				int newHp = max(0, curHp - 10);
-				info->SetHp(newHp);
-			}
-		}
-	}
 	ObjectMgr->Update(dt);
 }
 

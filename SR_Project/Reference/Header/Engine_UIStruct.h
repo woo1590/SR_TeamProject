@@ -8,9 +8,11 @@ namespace Engine
 		void* data;
 	};
 
-	struct HPData
+	struct PlayerInfo
 	{
-		int curHp{};
-		int maxHp{};
+		int level;
+		int curHp, maxHp;
+		int curExp, maxExp;
+		float speed = 6.f;
 	};
 }

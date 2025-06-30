@@ -11,8 +11,10 @@ class UIRenderer;
 
 class ENGINE_DLL HpComponent : public ObjectComponent, public IObserver
 {
+private:
+	explicit HpComponent(Object* owner) : ObjectComponent(owner) {}
+
 public:
-	explicit HpComponent(Object* owner);
 	static HpComponent* Create(Object* owner);
 	
 	HRESULT Ready_Component(Object* owner);
