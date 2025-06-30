@@ -7,6 +7,7 @@
 #include "TimerManager.h"
 #include "FrameManager.h"
 #include "SceneManager.h"
+#include "ImGuiManager.h"
 
 //scene
 #include "LoadingScene.h"
@@ -99,6 +100,9 @@ MainApp* MainApp::Create(HINSTANCE hInst, int nCmdShow)
 
 LRESULT MainApp::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    if (EngineCore::GetInstance()->GetImGuiManager()->WndProcHandler(hWnd, msg, wParam, lParam))
+        return true;
+
     switch (msg)
     {
     case WM_INPUT:
