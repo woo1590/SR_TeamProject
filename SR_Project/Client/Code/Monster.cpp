@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "Monster.h"
-#include "MonsterBehaviorTree.h"
-#include "BlackBoard.h"
-#include "MonsterAI.h"
 #include "IsTargetInAttackRange.h"
 #include "Chase.h"
 #include "Attack.h"
 #include "SequenceNode.h"
 #include "SelectorNode.h"
 #include "ObjectManager.h"
+#include "BehaviorTree.h"
+#include "BlackBoard.h"
 #include "TransformComponent.h"
+#include "AIController.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)

@@ -24,7 +24,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
 
     auto transform = AddComponent<TransformComponent>();
-    SetScale(1.f);
+    SetScale(0.1f);
 
     SetMaterial(L"playerBody_Mtrl","Body");
     Bones["Body"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 12.f * Scale, 4.f * Scale);

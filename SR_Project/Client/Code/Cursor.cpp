@@ -27,7 +27,7 @@ void Cursor::Update(float dt)
 {
 	auto transform = GetComponent<TransformComponent>();
 
-	_vec2 mousePos = EngineCore::GetInstance()->GetInputSystem()->GetMousePos();
+	_vec3 mousePos = EngineCore::GetInstance()->GetInputSystem()->GetMousePos();
 
 	transform->SetPosition(mousePos.x, mousePos.y);
 }
