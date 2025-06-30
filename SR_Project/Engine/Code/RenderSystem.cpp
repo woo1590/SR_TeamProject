@@ -64,11 +64,14 @@ HRESULT RenderSystem::Ready_RenderSystem()
 
 void RenderSystem::Render()
 {
-	if (!Camera) return;
-	
-	PriorityPass();
-	NonAlphaPass();
-	UIPass(); 
+	if (Camera)
+	{
+		PriorityPass();
+		NonAlphaPass();
+		AlphaPass();
+	}
+
+	UIPass();
 	
 	Reset();
 	for (auto& list : RenderList)
@@ -170,9 +173,9 @@ void RenderSystem::Render_Begin(D3DXCOLOR color)
 	Device->Clear(0,
 		NULL,
 		D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER,
-		color,		// �ĸ� ���� �ؽ�ó ����
-		1.f,		// z���� �ʱ�ȭ ��
-		0);			// ���ٽ� �ʱ�ȭ ��
+		color,		
+		1.f,	
+		0);			
 
 	Device->BeginScene();
 }

@@ -2,6 +2,7 @@
 #include "HPBarFront.h"
 #include "TransformComponent.h"
 #include "HpComponent.h"
+#include "UIRenderer.h"
 
 HPBarFront* HPBarFront::Create(ObjectManager* owner, ObjectType type, PlayerInfoComponent* playerInfo)
 {
@@ -13,10 +14,11 @@ HPBarFront* HPBarFront::Create(ObjectManager* owner, ObjectType type, PlayerInfo
 HRESULT HPBarFront::Ready_Object(PlayerInfoComponent* playerInfo)
 {
 	auto transform = AddComponent<TransformComponent>();
-	transform->SetPosition(600.f, 500.f);
-	//transform->SetScale(0.5f, 0.5f, 0.5f);
+	auto hpUI      = AddComponent<HpComponent>();
+	auto renderer  = GetComponent<UIRenderer>();
 
-	auto hpUI = AddComponent<HpComponent>();
+	renderer->SetScale(0.32f, 0.32f);
+	transform->SetPosition(WINCX * 0.5f, WINCY * 0.96f);
 
 	if (playerInfo)
 		hpUI->AttachPlayerInfo(playerInfo);

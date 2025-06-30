@@ -175,7 +175,7 @@ void Player::UpdateRoll(_float dt)
     float fYOffset = sinf(fProgress * D3DX_PI) * -15.f;
     auto transform = GetComponent<TransformComponent>();
     _vec3 vCurPos = transform->GetPosition();
-    vCurPos.y = fYOffset; // Ç×»ó ±âÁØ°ª (0.f)¿¡¼­ Ãâ¹ß
+    vCurPos.y = fYOffset; // ï¿½×»ï¿½ ï¿½ï¿½ï¿½Ø°ï¿½ (0.f)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     transform->SetPosition(vCurPos);
 
     _vec3 moveVec = { 0.f, 0.f, 3 * m_fSpeed * Scale * dt };

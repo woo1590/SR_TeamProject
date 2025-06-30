@@ -18,12 +18,16 @@
 #include "Player.h"
 #include "HPBarBack.h"
 #include "CameraActor.h"
+#include "LoadingUI.h"
+#include "Cursor.h"
+#include "InventoryPanel.h"
 
 //component
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
+#include "HpComponent.h"
 
 TestScene::TestScene()
 {
@@ -61,7 +65,7 @@ void TestScene::Load()
 	
 	/*------------------Load UI------------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	auto info = player->GetComponent<PlayerInfoComponent>();
+	const auto& info = player->GetComponent<PlayerInfoComponent>();
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	//ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
@@ -73,21 +77,6 @@ void TestScene::Load()
 
 void TestScene::Update(float dt)
 {
-	const auto& input = EngineCore::GetInstance()->GetInputSystem();
-
-	if (input->IsKeyPressed(KEY::LBUTTON))
-	{
-		if (player)
-		{
-			auto info = player->GetComponent<PlayerInfoComponent>();
-			if (info)
-			{
-				int curHp = info->GetCurHp();
-				int newHp = max(0, curHp - 10);
-				info->SetHp(newHp);
-			}
-		}
-	}
 	ObjectMgr->Update(dt);
 }
 

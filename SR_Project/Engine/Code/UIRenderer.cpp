@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include "RenderSystem.h"
 #include "TransformComponent.h"
+#include "FontComponent.h"
 #include "Object.h"
 
 UIRenderer::UIRenderer(Object* owner)
@@ -40,28 +41,64 @@ void UIRenderer::SetTexture(const wstring& key)
     fullHeight = static_cast<LONG>(desc.Height);
 
     srcRect = {0, 0, fullWidth, fullHeight};
-    center = {fullWidth * 0.5f, static_cast<float>(fullHeight),0.f};
-    pos = center;
+    
+    UpdateCenter();
 }
 
 void UIRenderer::ApplyRatio(float _ratio)
 {
     LONG visible = static_cast<LONG>(fullHeight * _ratio);
-
     srcRect.top = fullHeight - visible;
     srcRect.bottom = fullHeight;
 
-    center.x = fullWidth * 0.5f;
-    center.y = static_cast<float>(visible);
+    UpdateCenter();
+}
+
+void UIRenderer::SetPivot(UIPivot _pivot)
+{
+    pivot = _pivot;
+    UpdateCenter();
+}
+
+void UIRenderer::UpdateCenter()
+{
+    const float width = static_cast<float>(srcRect.right - srcRect.left);
+    const float height = static_cast<float>(srcRect.bottom - srcRect.top);
+
+    switch (pivot)
+    {
+    case UIPivot::Center:  center = {width * 0.5f, height * 0.5f, 0.f}; break;
+    case UIPivot::Bottom:  center = {width * 0.5f, height, 0.f}; break;
+    case UIPivot::LeftTop: center = {0.f, 0.f, 0.f}; break;
+    }
 }
 
 void UIRenderer::Render()
 {
-    auto sprite = EngineCore::GetInstance()->GetRenderSystem()->GetSpriteBatch();
-    auto transform = owner->GetComponent<TransformComponent>();
+    if (tex2D)
+    {
+        auto sprite = EngineCore::GetInstance()->GetRenderSystem()->GetSpriteBatch();
+        auto transform = owner->GetComponent<TransformComponent>();
 
-    _vec3 worldPos = transform->GetPosition();
+        _vec3 worldPos = transform->GetPosition();
 
-    sprite->Draw(tex2D,&srcRect,&center,&worldPos,
-        D3DCOLOR_ARGB(255, 255, 255, 255));
+        _matrix oldMatrix, newMatrix;
+        sprite->GetTransform(&oldMatrix);
+
+        _vec2 anchor = {worldPos.x, worldPos.y};
+
+        D3DXMatrixTransformation2D(&newMatrix, &anchor, 0.f, &scale, nullptr, 0.f, nullptr);
+
+        sprite->SetTransform(&newMatrix);
+
+        sprite->Draw(tex2D, &srcRect, &center, &worldPos,
+            D3DCOLOR_ARGB(255, 255, 255, 255));
+
+        sprite->SetTransform(&oldMatrix);
+    }
+
+    auto font = owner->GetComponent<FontComponent>();
+
+    if (font)
+        font->Render();
 }

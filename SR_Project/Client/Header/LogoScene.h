@@ -10,6 +10,8 @@ private:
     virtual ~LogoScene();
 
 public:
+    static LogoScene* Create();
+
     void Load()override;
     void Update(float dt)override;
     void Late_Update(float dt)override;

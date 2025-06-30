@@ -3,17 +3,17 @@
 #include "PlayerInfoComponent.h"
 #include "UIRenderer.h"
 
-HpComponent::HpComponent(Object* owner) :ObjectComponent(owner){}
-
 HpComponent* HpComponent::Create(Object* owner)
 {
 	HpComponent* instance = new HpComponent(owner);
+	
 	return (FAILED(instance->Ready_Component(owner))) ? Safe_Release(instance), nullptr : instance;
 }
 
 HRESULT HpComponent::Ready_Component(Object* owner)
 {
 	front = owner->AddComponent<UIRenderer>(); 
+	front->SetPivot(UIPivot::Bottom);
 	front->SetTexture(L"hpbar_front");
 
 	return front ? S_OK : E_FAIL;
@@ -22,18 +22,20 @@ HRESULT HpComponent::Ready_Component(Object* owner)
 void HpComponent::AttachPlayerInfo(PlayerInfoComponent* info)
 {
 	if (!info) return;
-
 	info->Attach(this);
-	maxHp = curHp = info->GetMaxHp();
+
+	const auto& data = info->GetInfo();
+	curHp = data.curHp;
+	maxHp = data.maxHp;
 }
 
 void HpComponent::OnNotify(const NotifyEvent& event)
 {
 	if (event.type != static_cast<int>(NotifyType::HP_Changed)) return;
 
-	auto* hp = static_cast<HPData*>(event.data);
-	curHp = hp->curHp;
-	maxHp = hp->maxHp;
+	auto* info = static_cast<const PlayerInfo*>(event.data);
+	curHp = info->curHp;
+	maxHp = info->maxHp;
 	targetRatio = static_cast<float>(curHp) / maxHp;
 }
 

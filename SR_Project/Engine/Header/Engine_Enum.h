@@ -33,7 +33,62 @@ namespace Engine
 
 	enum class NotifyType
 	{
-		HP_Changed
+		HP_Changed,
+
 	};
+
+	enum class UIPivot {Center, Bottom, LeftTop};
+
+	enum class Color
+	{
+		White,
+		Black,
+		Red,
+		Green,
+		Blue,
+		Yellow,
+		Cyan,
+		Magenta,
+		Pink,
+		Orange,
+		Gray,
+		SkyBlue,
+		Purple,
+		Brown,
+		Transparent
+	};
+
+	enum class FontType
+	{
+		Regular,     // 기본: 18pt, FW_NORMAL
+		Bold,        // 굵게: 18pt, FW_BOLD
+		Small,       // 작게: 12pt, FW_NORMAL
+		Large,       // 크게: 28pt, FW_NORMAL
+		Title,       // 타이틀용: 36pt, FW_BOLD
+		Custom       // 사용자 지정 (선택적 확장용)
+	};
+
+	inline D3DXCOLOR ToD3DXColor(Color color)
+	{
+		switch (color)
+		{
+		case Color::White:      return D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+		case Color::Black:      return D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+		case Color::Red:        return D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+		case Color::Green:      return D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+		case Color::Blue:       return D3DXCOLOR(0.f, 0.f, 1.f, 1.f);
+		case Color::Yellow:     return D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
+		case Color::Cyan:       return D3DXCOLOR(0.f, 1.f, 1.f, 1.f);
+		case Color::Magenta:    return D3DXCOLOR(1.f, 0.f, 1.f, 1.f);
+		case Color::Pink:       return D3DXCOLOR(1.f, 0.75f, 0.8f, 1.f);
+		case Color::Orange:     return D3DXCOLOR(1.f, 0.5f, 0.f, 1.f);
+		case Color::Gray:       return D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
+		case Color::SkyBlue:    return D3DXCOLOR(0.53f, 0.81f, 0.92f, 1.f);
+		case Color::Purple:     return D3DXCOLOR(0.5f, 0.f, 0.5f, 1.f);
+		case Color::Brown:      return D3DXCOLOR(0.6f, 0.4f, 0.2f, 1.f);
+		case Color::Transparent:return D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
+		default:                return D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+		}
+	}
 }
 #endif // Engine_Enum_h__

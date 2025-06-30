@@ -177,10 +177,13 @@
     <ClInclude Include="..\Header\BasicTerrain.h" />
     <ClInclude Include="..\Header\Bone.h" />
     <ClInclude Include="..\Header\CameraActor.h" />
+    <ClInclude Include="..\Header\Cursor.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
+    <ClInclude Include="..\Header\InventoryPanel.h" />
     <ClInclude Include="..\Header\Loader.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
+    <ClInclude Include="..\Header\LoadingUI.h" />
     <ClInclude Include="..\Header\LogoScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\Player.h" />
@@ -196,10 +199,13 @@
     <ClCompile Include="..\Code\BasicTerrain.cpp" />
     <ClCompile Include="..\Code\Bone.cpp" />
     <ClCompile Include="..\Code\CameraActor.cpp" />
+    <ClCompile Include="..\Code\Cursor.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />
+    <ClCompile Include="..\Code\InventoryPanel.cpp" />
     <ClCompile Include="..\Code\Loader.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
+    <ClCompile Include="..\Code\LoadingUI.cpp" />
     <ClCompile Include="..\Code\LogoScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />

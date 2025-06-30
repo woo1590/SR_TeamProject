@@ -4,9 +4,11 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "SceneManager.h"
+#include "ObjectManager.h"
 
 //scene
 #include "TestScene.h"
+#include "LogoScene.h"
 
 LoadingScene::LoadingScene(LOADID loadId)
 	:nextSceneID(loadId)
