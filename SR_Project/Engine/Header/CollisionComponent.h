@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectComponent.h"
+#include "CollisionSystem.h"
 
 BEGIN(Engine)
 

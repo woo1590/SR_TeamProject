@@ -120,7 +120,7 @@
     </Filter>
     <Filter Include="07. Object Component\Font">
       <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="07. Object Component\Collision">
       <UniqueIdentifier>{1fabb508-3f70-42f6-9b54-e5dfa2c38cc5}</UniqueIdentifier>
     </Filter>
@@ -129,7 +129,7 @@
     </Filter>
     <Filter Include="01. Engine Component\CollisionSystem">
       <UniqueIdentifier>{6a1dc87a-3470-4343-855c-be7100afd809}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="07. Object Component\Block">
       <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
     </Filter>
@@ -269,7 +269,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp">
       <Filter>07. Object Component\Font</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CollisionComponent.cpp">
       <Filter>07. Object Component\Collision</Filter>
     </ClCompile>
@@ -278,9 +278,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CollisionSystem.cpp">
       <Filter>01. Engine Component\CollisionSystem</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\TestBlock.cpp">
       <Filter>07. Object Component\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolcamComponent.cpp">
+      <Filter>07. Object Component\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -442,7 +445,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\FontComponent.h">
       <Filter>07. Object Component\Font</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\CollisionComponent.h">
       <Filter>07. Object Component\Collision</Filter>
     </ClInclude>
@@ -451,9 +454,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CollisionSystem.h">
       <Filter>01. Engine Component\CollisionSystem</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\TestBlock.h">
       <Filter>07. Object Component\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolcamComponent.h">
+      <Filter>07. Object Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

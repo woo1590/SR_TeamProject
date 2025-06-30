@@ -34,6 +34,7 @@ private:
     void Free() override;
 
 private:
-    BlockType blockType;
+    int selectedBlockType = 0;
+    BlockType blockType = BlockType::Dirt;
     std::vector<BlockData> Blocks;
 };

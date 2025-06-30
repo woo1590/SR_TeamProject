@@ -6,10 +6,9 @@ BEGIN(Engine)
 class CollisionComponent;
 typedef struct tagHitInfo
 {
-    _bool IsHit;
-    CollisionComponent* Component;
-    _float Distance;
-    _vec3 Position;
+    CollisionComponent* Component = nullptr;
+    _float              Distance = FLT_MAX;
+    _vec3               Position{ 0.f,0.f,0.f };
 
 }HitInfo;
 

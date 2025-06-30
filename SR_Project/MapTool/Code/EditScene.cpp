@@ -22,7 +22,7 @@
 #include "Material.h"
 #include "GraphicDevice.h"
 
-EditScene::EditScene() : blockType(Dirt)
+EditScene::EditScene()
 {
 }
 
@@ -116,13 +116,15 @@ void EditScene::ImGuiTest()
 	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
 	if (ImGui::Button("LOAD")) LoadBlock(load);
 
+	const char* blockNames[] = { "Dirt", "GrassDirt" };
+	if (ImGui::Combo("<- Block Type", &selectedBlockType, blockNames, IM_ARRAYSIZE(blockNames)))
+		blockType = static_cast<BlockType>(selectedBlockType);
+
 	ImGui::End();
 
 	ImGui::SetNextWindowPos({ 0.f, 300.f });
 	ImGui::SetNextWindowSize({ 200.f, 200.f });
 	ImGui::Begin("==== Block Image ====");
-
-
 
 	ImGui::End();
 

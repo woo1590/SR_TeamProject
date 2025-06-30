@@ -5,6 +5,7 @@
 
 //component
 #include "FreecamComponent.h"
+#include "ToolcamComponent.h"
 #include "CameraComponent.h"
 #include "TransformComponent.h"
 
@@ -35,14 +36,8 @@ HRESULT Camera::Ready_Object()
     Object::Ready_Object();
 
     auto transform = AddComponent<TransformComponent>();
-
-    auto fCam = AddComponent<FreecamComponent>();
-    fCam->SetTarget(transform);
-    fCam->SetSensitivity(0.5f);
-
+    auto tCam = AddComponent<ToolcamComponent>();
     auto cam = AddComponent<CameraComponent>();
-    cam->SetTarget(transform);
-
     EngineCore::GetInstance()->GetRenderSystem()->SetCamera(cam);
 
     _vec3 Pos{ -10.f, 10.f, -10.f };
