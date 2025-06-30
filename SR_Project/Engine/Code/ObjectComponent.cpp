@@ -14,7 +14,6 @@ ObjectComponent::~ObjectComponent()
 
 HRESULT ObjectComponent::Ready_Component()
 {
-
     return S_OK;
 }
 

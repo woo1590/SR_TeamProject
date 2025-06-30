@@ -4,15 +4,18 @@
 BEGIN(Engine)
 
 class CollisionComponent;
+typedef struct tagHitInfo
+{
+    _bool IsHit;
+    CollisionComponent* Component;
+    _float Distance;
+    _vec3 Position;
+
+}HitInfo;
+
 class ENGINE_DLL CollisionSystem :
     public Base
 {
-public:
-    typedef struct tagHitInfo
-    {
-        _bool Hit
-    }HitInfo;
-
 private:
     CollisionSystem();
     virtual ~CollisionSystem();
@@ -23,7 +26,7 @@ public:
     void Update();
     void RegisterCollision(CollisionComponent* collision);
 
-    void Raycast(Ray ray);   //¸¶¿ì½º ÇÈÅ· ÅëÇÕ Ã³¸®
+    HitInfo Raycast(Ray ray);   //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 
 private:
     void Free()override;

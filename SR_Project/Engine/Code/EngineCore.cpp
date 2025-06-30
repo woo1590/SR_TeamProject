@@ -10,6 +10,8 @@
 #include "InputSystem.h"
 #include "SoundManager.h"
 #include "ImGuiManager.h"
+#include "EventSystem.h"
+#include "CollisionSystem.h"
 
 #include "Mesh.h"
 #include "Material.h"
@@ -63,6 +65,14 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 
 	ImGuiMgr = ImGuiManager::Create(hWnd);
 	if (!ImGuiMgr)
+		return E_FAIL;
+
+	EventSys = EventSystem::Create();
+	if (!EventSys)
+		return E_FAIL;
+
+	CollisionSys = CollisionSystem::Create();
+	if (!CollisionSys)
 		return E_FAIL;
 
 	return S_OK;
@@ -137,6 +147,16 @@ InputSystem* EngineCore::GetInputSystem() const
 	return InputSys;
 }
 
+EventSystem* EngineCore::GetEventSystem() const
+{
+	return EventSys;
+}
+
+CollisionSystem* EngineCore::GetCollisionSystem() const
+{
+	return CollisionSys;
+}
+
 HWND EngineCore::GetWindowHandle() const
 {
 	return hWnd;
@@ -153,6 +173,8 @@ void EngineCore::Free()
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
 	Safe_Release(ImGuiMgr);
+	Safe_Release(EventSys);
+	Safe_Release(CollisionSys);
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

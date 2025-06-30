@@ -12,6 +12,8 @@ class ResourceManager;
 class UIManager;
 class SoundManager;
 class ImGuiManager;
+class EventSystem;
+class CollisionSystem;
 
 class ENGINE_DLL EngineCore :
     public Base
@@ -33,13 +35,14 @@ public:
     FrameManager*       GetFrameManager()const;
     SceneManager*       GetSceneManager()const;
     ResourceManager*    GetResourceManager()const;
-    UIManager*          GetUIManager() const;
     SoundManager*       GetSoundManager()const;
     ImGuiManager*       GetImGuiManager()const;
 
     RenderSystem*       GetRenderSystem()const;
     LightSystem*        GetLightSystem()const;
     InputSystem*        GetInputSystem()const;
+    EventSystem*        GetEventSystem()const;
+    CollisionSystem*    GetCollisionSystem()const;
 
     HWND GetWindowHandle()const;
 private:
@@ -53,7 +56,8 @@ private:
     RenderSystem* RenderSys;
     LightSystem* LightSys;
     InputSystem* InputSys;
-
+    EventSystem* EventSys;
+    CollisionSystem* CollisionSys;
 
     HWND hWnd;
 

@@ -28,6 +28,7 @@ private:
     void NonAlphaPass();
     void AlphaPass();
     void UIPass();
+    void DebugPass();
     void Reset();
 
     void Free()override;
