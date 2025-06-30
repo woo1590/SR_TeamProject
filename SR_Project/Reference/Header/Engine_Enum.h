@@ -31,6 +31,13 @@ namespace Engine
 		Count
 	};
 
+	enum class BoundingBoxType
+	{
+		Sphere,
+		Box,
+		Count
+	};
+
 	enum class NotifyType
 	{
 		HP_Changed
