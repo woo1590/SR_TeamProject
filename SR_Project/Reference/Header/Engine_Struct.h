@@ -68,7 +68,8 @@ namespace Engine
 	{
 		_vec3 Pos;
 		BlockType Type;
-	}BLOCK;
+		BlockDir Dir;
+	} BLOCK;
 }
 
 #endif // Engine_Struct_h__

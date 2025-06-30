@@ -58,12 +58,12 @@ void EditScene::Load()
 	grassBlockMtrl->SetTexture(L"GrassBlock");
 	resource->LoadMaterial(L"GrassBlock_Mtrl", grassBlockMtrl);
 
-	BlockData baseBlock{ {0, 0, 0}, BlockType::GrassDirt };
+	BlockData baseBlock{ {0, 0, 0}, BlockType::GrassDirt, BlockDir::BlockY };
 	Blocks.push_back(baseBlock);
 
 	ObjectMgr = ObjectManager::Create(this);
 	ObjectMgr->AddObject(ObjectType::Camera, Camera::Create(ObjectMgr, ObjectType::Camera));
-	ObjectMgr->AddObject(ObjectType::Block, TestBlock::Create(ObjectMgr, ObjectType::Block, BlockType::GrassDirt));
+	ObjectMgr->AddObject(ObjectType::Block, TestBlock::Create(ObjectMgr, ObjectType::Block, BlockType::GrassDirt, BlockDir::BlockY));
 }
 
 void EditScene::Update(float dt)
@@ -87,10 +87,6 @@ void EditScene::Update(float dt)
 		MakePickingRay(rayOrigin, rayDir);
 		OnRightClick(rayOrigin, rayDir);
 	}
-
-	// 임시 Key Input
-	if (Input->IsKeyPressed(NUM1)) blockType = Dirt;
-	if (Input->IsKeyPressed(NUM2)) blockType = GrassDirt;
 }
 
 void EditScene::Late_Update(float dt)
@@ -105,26 +101,31 @@ void EditScene::Unload()
 void EditScene::ImGuiTest()
 {
 	ImGui::SetNextWindowPos({ 0.f, 0.f });
+
 	ImGui::Begin("==== MineCraft Dungeon Map Editor ====", NULL, 0);
 
 	static char save[64]{};
-	static char load[64]{};
-
 	ImGui::InputText("<- Save Stage Name", save, sizeof(save));
 	if (ImGui::Button("SAVE")) SaveBlock(save);
 
+	static char load[64]{};
 	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
 	if (ImGui::Button("LOAD")) LoadBlock(load);
 
-	const char* blockNames[] = { "Dirt", "GrassDirt" };
-	if (ImGui::Combo("<- Block Type", &selectedBlockType, blockNames, IM_ARRAYSIZE(blockNames)))
+	const char* blockTypeNames[] = { "Dirt", "GrassDirt" };
+	if (ImGui::Combo("<- Type", &selectedBlockType, blockTypeNames, IM_ARRAYSIZE(blockTypeNames)))
 		blockType = static_cast<BlockType>(selectedBlockType);
 
 	ImGui::End();
 
 	ImGui::SetNextWindowPos({ 0.f, 300.f });
 	ImGui::SetNextWindowSize({ 200.f, 200.f });
+
 	ImGui::Begin("==== Block Image ====");
+
+	const char* blockDirNames[] = { "X", "Y", "Z" };
+	if (ImGui::Combo("<- Dir", &selectedBlockDir, blockDirNames, IM_ARRAYSIZE(blockDirNames)))
+		blockDir = static_cast<BlockDir>(selectedBlockDir);
 
 	ImGui::End();
 
@@ -208,7 +209,7 @@ void EditScene::OnLeftClick(_vec3& rayOrigin, _vec3& rayDir)
 
 	_vec3 normal = GetHitNormal(closestHitPoint, selectedBlockPos - _vec3(1, 1, 1), selectedBlockPos + _vec3(1, 1, 1));
 	_vec3 newBlockPos = selectedBlockPos + normal * 2.0f;
-	PlaceBlock(newBlockPos, blockType);
+	PlaceBlock(newBlockPos, blockType, blockDir);
 }
 
 void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
@@ -284,15 +285,15 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 	return _vec3(0, 0, 0);
 }
 
-void EditScene::PlaceBlock(const _vec3& position, BlockType type)
+void EditScene::PlaceBlock(const _vec3& position, BlockType type, BlockDir dir)
 {
 	for (const auto& block : Blocks)
 		if (block.Pos == position)
 			return;
 
-	Blocks.push_back({ position, type });
+	Blocks.push_back({ position, type, dir });
 
-	auto newBlockObj = TestBlock::Create(ObjectMgr, ObjectType::Block, type);
+	auto newBlockObj = TestBlock::Create(ObjectMgr, ObjectType::Block, type, dir);
 	newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 	ObjectMgr->AddObject(ObjectType::Block, newBlockObj);
 }
@@ -352,7 +353,7 @@ void EditScene::LoadBlock(const char* loadStage)
 		if (!ReadFile(hFile, &newBlock, sizeof(BlockData), &dwByte, nullptr)) return;
 		if (dwByte == 0) break;
 
-		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type);
+		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type, newBlock.Dir);
 		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
 		ObjectMgr->AddObject(ObjectType::Block, block);
 		Blocks.push_back(newBlock);
