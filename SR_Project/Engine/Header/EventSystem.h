@@ -4,22 +4,25 @@
 BEGIN(Engine)
 
 class CameraComponent;
+class Scene;
 class ENGINE_DLL EventSystem :
     public Base
 {
 private:
-    EventSystem();
+    EventSystem(Scene* owner);
     virtual ~EventSystem();
 
 public:
-    static EventSystem* Create();
+    static EventSystem* Create(Scene* owner);
     HRESULT Ready_EventSystem();
     void Update();
 
+    void SetCamera(CameraComponent* cam);
 private:
     void Free()override;
 
     CameraComponent* Camera = nullptr;
+    Scene* owner = nullptr;
 };
 
 END

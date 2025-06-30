@@ -4,6 +4,7 @@
 BEGIN(Engine)
 
 class CollisionComponent;
+class Scene;
 typedef struct tagHitInfo
 {
     CollisionComponent* Component = nullptr;
@@ -16,11 +17,11 @@ class ENGINE_DLL CollisionSystem :
     public Base
 {
 private:
-    CollisionSystem();
+    CollisionSystem(Scene* owner);
     virtual ~CollisionSystem();
 
 public:
-    static CollisionSystem* Create();
+    static CollisionSystem* Create(Scene* owner);
     HRESULT Ready_CollisionSystem();
     void Update();
     void RegisterCollision(CollisionComponent* collision);
@@ -30,6 +31,7 @@ public:
 private:
     void Free()override;
     std::list<CollisionComponent*> Collisions;
+    Scene* owner = nullptr;
 };
 
 END

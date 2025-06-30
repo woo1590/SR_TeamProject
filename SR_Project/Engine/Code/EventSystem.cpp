@@ -3,11 +3,13 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "CollisionSystem.h"
+#include "Scene.h"
 
 //component
 #include "CameraComponent.h"
 
-EventSystem::EventSystem()
+EventSystem::EventSystem(Scene* owner)
+	:owner(owner)
 {
 }
 
@@ -15,9 +17,9 @@ EventSystem::~EventSystem()
 {
 }
 
-EventSystem* EventSystem::Create()
+EventSystem* EventSystem::Create(Scene* owner)
 {
-	EventSystem* Instance = new EventSystem;
+	EventSystem* Instance = new EventSystem(owner);
 
 	if (FAILED(Instance->Ready_EventSystem()))
 	{
@@ -39,14 +41,22 @@ void EventSystem::Update()
 {
 	if (Camera)
 	{
-		HitInfo hit;
-		Ray ray = Camera->ScreenPointRay();
-		auto collision = EngineCore::GetInstance()->GetCollisionSystem();
+		auto Input = EngineCore::GetInstance()->GetInputSystem();
+		if (Input->IsKeyPressed(LBUTTON))
+		{
+			HitInfo hit;
+			Ray ray = Camera->ScreenPointRay();
+			auto collision = owner->GetCollisionSystem();
 
-		hit = collision->Raycast(ray);
+			hit = collision->Raycast(ray);
 
+		}
 	}
+}
 
+void EventSystem::SetCamera(CameraComponent* cam)
+{
+	Camera = cam;
 }
 
 void EventSystem::Free()

@@ -3,9 +3,10 @@
 #include "GraphicDevice.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
-#include "UIRenderer.h"
+#include "Object.h"
 
 //component
+#include "UIRenderer.h"
 #include "RendererComponent.h"
 #include "CameraComponent.h"
 #include "MeshRendererComponent.h"
@@ -83,9 +84,9 @@ void RenderSystem::RegisterRenderer(RENDER_ID layer, RendererComponent* renderer
 	RenderList[(int)layer].push_back(renderer);
 }
 
-void RenderSystem::SetCamera(CameraComponent* cam)
+void RenderSystem::SetCamera(Object* cam)
 {
-	Camera = cam;
+	Camera = cam->GetComponent<CameraComponent>();
 }
 
 void RenderSystem::PriorityPass()

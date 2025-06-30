@@ -4,7 +4,8 @@
 //component
 #include "CollisionComponent.h"
 
-CollisionSystem::CollisionSystem()
+CollisionSystem::CollisionSystem(Scene* owner)
+	:owner(owner)
 {
 }
 
@@ -12,9 +13,9 @@ CollisionSystem::~CollisionSystem()
 {
 }
 
-CollisionSystem* CollisionSystem::Create()
+CollisionSystem* CollisionSystem::Create(Scene* owner)
 {
-	CollisionSystem* Instance = new CollisionSystem;
+	CollisionSystem* Instance = new CollisionSystem(owner);
 
 	if (FAILED(Instance->Ready_CollisionSystem()))
 	{

@@ -67,14 +67,6 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!ImGuiMgr)
 		return E_FAIL;
 
-	EventSys = EventSystem::Create();
-	if (!EventSys)
-		return E_FAIL;
-
-	CollisionSys = CollisionSystem::Create();
-	if (!CollisionSys)
-		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -173,8 +165,6 @@ void EngineCore::Free()
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
 	Safe_Release(ImGuiMgr);
-	Safe_Release(EventSys);
-	Safe_Release(CollisionSys);
 
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

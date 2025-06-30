@@ -63,7 +63,7 @@
     </Filter>
     <Filter Include="02. Object\CameraActor">
       <UniqueIdentifier>{787cf409-8411-4408-97c8-8ddd782499c4}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. Object\UIObj\LoadingUI">
       <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
     </Filter>
@@ -72,6 +72,15 @@
     </Filter>
     <Filter Include="02. Object\UIObj\InventoryPanel">
       <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor\FirstCam">
+      <UniqueIdentifier>{39a1611e-d6dd-4459-af2d-a4063cc80494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor\ThirdCam">
+      <UniqueIdentifier>{e6d8228b-fc52-4916-970b-cf19b1283649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor\RailCam">
+      <UniqueIdentifier>{038db0cb-ea10-4b61-9f5a-3c46340a7892}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +134,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\Player</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\LoadingUI.h">
       <Filter>02. Object\UIObj\LoadingUI</Filter>
     </ClInclude>
@@ -134,6 +143,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\InventoryPanel.h">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FirstCam.h">
+      <Filter>02. Object\CameraActor\FirstCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ThirdCam.h">
+      <Filter>02. Object\CameraActor\ThirdCam</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,7 +202,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraActor.cpp">
       <Filter>02. Object\CameraActor</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\LoadingUI.cpp">
       <Filter>02. Object\UIObj\LoadingUI</Filter>
     </ClCompile>
@@ -196,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FirstCam.cpp">
+      <Filter>02. Object\CameraActor\FirstCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ThirdCam.cpp">
+      <Filter>02. Object\CameraActor\ThirdCam</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

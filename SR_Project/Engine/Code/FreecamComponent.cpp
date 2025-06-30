@@ -100,6 +100,8 @@ void FreecamComponent::Update(_float dt)
 
     _vec3 front{ sy * cp,sp,cy * cp };
     Target->SetForward(front);
+
+
 }
 
 void FreecamComponent::SetSensitivity(_float sensitivity)

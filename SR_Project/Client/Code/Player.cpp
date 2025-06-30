@@ -24,7 +24,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
 
     auto transform = AddComponent<TransformComponent>();
-    SetScale(1.f);
+    SetScale(0.1f);
 
     SetMaterial(L"playerBody_Mtrl","Body");
     Bones["Body"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 12.f * Scale, 4.f * Scale);
@@ -43,7 +43,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     
     SetMaterial(L"playerRightArm_Mtrl","RHand");
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale); 
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPosition(11.f * Scale, 0.f, 0.f);
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);

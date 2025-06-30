@@ -13,6 +13,7 @@ public:
     virtual HRESULT Ready_Component();
     virtual void Update(float dt) {}
     virtual void Late_Update(float dt) {}
+    Object* GetOwner()const;
 
 protected:
     void Free()override;
