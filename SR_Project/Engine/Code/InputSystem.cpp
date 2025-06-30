@@ -52,8 +52,8 @@ HRESULT InputSystem::Ready_InputSystem()
 		m_vecKey.push_back({ KS_NONE,false });
 	}
 
-	MousePos = { 0,0 };
-	LastMousePos = { 0.f,0.f };
+	MousePos = { 0,0,0.f };
+	LastMousePos = { 0.f,0.f,0.f };
 
 	RECT clientRect;
 	GetClientRect(EngineCore::GetInstance()->GetWindowHandle(), &clientRect);
@@ -61,7 +61,7 @@ HRESULT InputSystem::Ready_InputSystem()
 	_float x = clientRect.right * 0.5f;
 	_float y = clientRect.bottom * 0.5f;
 
-	CenterMousePos = { x,y };
+	CenterMousePos = { x,y,0.f };
 
 	return S_OK;
 }
@@ -72,7 +72,7 @@ void InputSystem::BeginFrame()
 	
 	GetCursorPos(&pos);
 	ScreenToClient(EngineCore::GetInstance()->GetWindowHandle(), &pos);
-	MousePos = { (float)pos.x,(float)pos.y };
+	MousePos = { (float)pos.x,(float)pos.y,0.f };
 
 	for (int i = 0; i < m_vecKey.size(); ++i)
 	{
@@ -130,7 +130,7 @@ bool InputSystem::IsKeyRelease(KEY _ekey)
 	return false;
 }
 
-_vec2 InputSystem::GetMousePos()const
+_vec3 InputSystem::GetMousePos()const
 {
 	return MousePos;
 }

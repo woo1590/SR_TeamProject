@@ -152,6 +152,13 @@ void RenderSystem::UIPass()
 	Device->SetTransform(D3DTS_PROJECTION, &originProj);
 }
 
+void RenderSystem::DebugPass()
+{
+	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+}
+
 void RenderSystem::AlphaPass()
 {
 

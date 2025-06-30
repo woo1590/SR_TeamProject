@@ -56,6 +56,14 @@ namespace Engine
 	}VTXNOR;
 
 	constexpr _ulong FVF_NOR = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
+
+	typedef struct tagRay
+	{
+		_vec3 Origin;
+		_vec3 Direction;
+	}Ray;
+
+	
 }
 
 #endif // Engine_Struct_h__

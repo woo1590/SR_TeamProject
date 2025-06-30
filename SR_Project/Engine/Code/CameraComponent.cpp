@@ -1,6 +1,9 @@
 #include "EnginePCH.h"
 #include "CameraComponent.h"
 #include "MyMath.h"
+#include "EngineCore.h"
+#include "InputSystem.h"
+#include "GraphicDevice.h"
 
 //object
 #include "Object.h"
@@ -77,6 +80,33 @@ _matrix CameraComponent::GetProjMatrix() const
     _matrix proj = math::PerspectiveFovLH(FOV, Aspect, MinZ, MaxZ);
     //D3DXMatrixPerspectiveFovLH(&proj,FOV, Aspect, MinZ, MaxZ);
     return proj;
+}
+
+Ray CameraComponent::ScreenPointRay()
+{
+    _vec3 mousePos = EngineCore::GetInstance()->GetInputSystem()->GetMousePos();
+    Ray ray;
+
+    D3DVIEWPORT9 vp;
+    GraphicDevice::GetInstance()->GetDevice()->GetViewport(&vp);
+    
+    _matrix view = GetViewMatrix();
+    D3DXMatrixInverse(&view, nullptr, &view);
+
+    _matrix proj = GetProjMatrix();
+    D3DXMatrixInverse(&proj, nullptr, &proj);
+
+    mousePos.x = (((2.f * mousePos.x) / vp.Width) - 1.f);
+    mousePos.y = (((-2.f * mousePos.y) / vp.Height) + 1.f);
+    D3DXVec3TransformCoord(&mousePos, &mousePos, &proj);
+
+    ray.Origin = { 0.f,0.f,0.f };
+    ray.Direction = mousePos - ray.Origin;
+
+    D3DXVec3TransformCoord(&ray.Origin, &ray.Origin, &view);
+    D3DXVec3TransformNormal(&ray.Direction, &ray.Direction, &view);
+
+    return ray;
 }
 
 void CameraComponent::Free()

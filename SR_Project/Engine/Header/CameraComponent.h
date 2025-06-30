@@ -25,6 +25,7 @@ public:
 
     _matrix GetViewMatrix()const;
     _matrix GetProjMatrix()const;
+    Ray ScreenPointRay();
 private:
     void Free()override;
 
