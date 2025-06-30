@@ -8,34 +8,22 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 
-Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType)
-{
-}
+Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType){}
+Player::~Player(){}
 
-Player::~Player()
-{
-}
-
-Player* Player::Create(ObjectManager* owner, ObjectType objType)
-{
+Player* Player::Create(ObjectManager* owner, ObjectType objType){
     Player* Instance = new Player(owner, objType);
-
-    if (FAILED(Instance->Ready_Object(owner, objType)))
-    {
+    if (FAILED(Instance->Ready_Object(owner, objType))){
         Safe_Release(Instance);
-
         Instance = nullptr;
     }
-
     return Instance;
 }
 
-HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
-{
+HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
 
     auto transform = AddComponent<TransformComponent>();
-
     SetScale(1.f);
 
     SetMaterial(L"playerBody_Mtrl","Body");
@@ -187,19 +175,28 @@ void Player::UpdateRoll(_float dt)
     if (m_fRollTime >= fRollDuration) {
         m_fRollTime = 0.f;
         m_eState = ePlayerState::WALK;
-        rotateVec = { 0.f, 0.f, 0.f };
-        RotatePlayer(rotateVec);
     }
 }
 
 void Player::KeyInput(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
-    if (input->IsKeyPressed(TAB)) {
+    if (input->IsKeyPressed(Z)) {
         switch (m_eState) {
         case ePlayerState::IDLE:
             m_eState = ePlayerState::WALK;
             break;
+        }
+    }
+    if (input->IsKeyRelease(Z)) {
+        switch (m_eState) {
+        case ePlayerState::WALK:
+            m_eState = ePlayerState::IDLE;
+            break;
+        }
+    }
+    if (input->IsKeyPressed(X)) {
+        switch (m_eState) {
         case ePlayerState::WALK:
             m_eState = ePlayerState::ROLL;
             m_mapStartRotations["Head"] = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
