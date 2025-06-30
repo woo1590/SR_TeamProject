@@ -91,9 +91,6 @@ void EditScene::Update(float dt)
 	// 임시 Key Input
 	if (Input->IsKeyPressed(NUM1)) blockType = Dirt;
 	if (Input->IsKeyPressed(NUM2)) blockType = GrassDirt;
-
-	if (Input->IsKeyPressed(Q)) SaveBlock();
-	if (Input->IsKeyPressed(E)) LoadBlock();
 }
 
 void EditScene::Late_Update(float dt)
@@ -107,9 +104,46 @@ void EditScene::Unload()
 
 void EditScene::ImGuiTest()
 {
-	ImGui::Begin("Simple Window");
-	ImGui::Text("Hello, ImGui!");
+	ImGui::SetNextWindowPos({ 0.f, 0.f });
+	ImGui::Begin("==== MineCraft Dungeon Map Editor ====", NULL, 0);
+
+	static char save[64]{};
+	static char load[64]{};
+
+	ImGui::InputText("<- Save Stage Name", save, sizeof(save));
+	if (ImGui::Button("SAVE")) SaveBlock(save);
+
+	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
+	if (ImGui::Button("LOAD")) LoadBlock(load);
+
 	ImGui::End();
+
+	ImGui::SetNextWindowPos({ 0.f, 300.f });
+	ImGui::SetNextWindowSize({ 200.f, 200.f });
+	ImGui::Begin("==== Block Image ====");
+
+
+
+	ImGui::End();
+
+	/*
+	2. 위젯 관련 명령어:
+	ImGui::Checkbox(const char* label, bool* v): 체크박스를 생성합니다.
+	ImGui::SliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = "%.3f", ImGuiSliderFlags flags = 0): 슬라이더를 생성합니다.
+	ImGui::InputText(const char* label, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL): 텍스트 입력 필드를 생성합니다.
+	ImGui::Text(const char* fmt, ...): 텍스트를 출력합니다.
+	ImGui::Image(ImTextureID user_texture_id, const ImVec2& size, const ImVec2& uv0 = ImVec2(0, 0), const ImVec2& uv1 = ImVec2(1, 1), const ImVec4& tint_col = ImVec4(1, 1, 1, 1), const ImVec4& border_col = ImVec4(0, 0, 0, 0)): 이미지를 출력합니다.
+	ImGui::ListBox(const char* label, int* current_item, const char* const items[], int items_count, int height_in_items = -1): 리스트 박스를 생성합니다.
+	ImGui::Selectable(const char* label, bool selected = false, ImGuiSelectableFlags flags = 0, const ImVec2& size = ImVec2(0, 0)): 선택 가능한 항목을 생성합니다.
+	ImGui::TreeNode(const char* label): 트리 노드를 생성합니다.
+	ImGui::TreePop(): 트리 노드를 닫습니다.
+	ImGui::ProgressBar(float fraction, const ImVec2& size_arg = ImVec2(-FLT_MIN, 0), const char* overlay = NULL): 진행률 표시줄을 표시합니다.
+	
+	3. 스타일 관련 명령어:
+	ImGui::PushStyleColor(ImGuiCol idx, const ImVec4& col): 스타일 색상을 변경합니다.
+	ImGui::PopStyleColor(int count = 1): 스타일 색상 변경을 되돌립니다.
+	ImGui::PushStyleVar(ImGuiStyleVar idx, float val): 스타일 변수를 변경합니다.
+	*/
 }
 
 void EditScene::MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir)
@@ -266,10 +300,16 @@ void EditScene::PlaceBlock(const _vec3& position, BlockType type)
 	ObjectMgr->AddObject(ObjectType::Block, newBlockObj);
 }
 
-void EditScene::SaveBlock()
+void EditScene::SaveBlock(const char* saveStage)
 {
 	HANDLE hFile(nullptr);
-	hFile = CreateFile(L"../../Reference/MapData/Test.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	string path = "../../Reference/MapData/"; path += saveStage; path += ".dat";
+
+	int len(MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, NULL, 0));
+	wstring wpath(len, 0);
+	MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, &wpath[0], len);
+
+	hFile = CreateFile(wpath.c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
@@ -287,10 +327,16 @@ void EditScene::SaveBlock()
 	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Success", _T("Success"), MB_OK);
 }
 
-void EditScene::LoadBlock()
+void EditScene::LoadBlock(const char* loadStage)
 {
 	HANDLE hFile(nullptr);
-	hFile = CreateFile(L"../../Reference/MapData/Test.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	string path = "../../Reference/MapData/"; path += loadStage; path += ".dat";
+
+	int len(MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, NULL, 0));
+	wstring wpath(len, 0);
+	MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, &wpath[0], len);
+
+	hFile = CreateFile(wpath.c_str(), GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
