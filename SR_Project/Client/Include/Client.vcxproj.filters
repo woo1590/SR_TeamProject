@@ -208,7 +208,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraActor.cpp">
       <Filter>02. Object\CameraActor</Filter>
-	  </ClCompile>
+	</ClCompile>
     <ClCompile Include="..\Code\LoadingUI.cpp">
       <Filter>02. Object\UIObj\LoadingUI</Filter>
     </ClCompile>
@@ -217,6 +217,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
+	</ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\Monster</Filter>
     </ClCompile>
