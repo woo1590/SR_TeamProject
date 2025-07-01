@@ -4,36 +4,31 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL Subject
+template<typename EventT>
+class Subject
 {
 public:
-	void Attach(IObserver* observer)
+	void Attach(IObserver<EventT>* obs)
 	{
-		if (find(observers.begin(), observers.end(), observer) == observers.end())
-			observers.push_back(observer);
+		if (find(observers.begin(), observers.end(), obs) == observers.end())
+			observers.push_back(obs);
 	}
-	void Detach(IObserver* observer)
+
+	void Detach(IObserver<EventT>* obs)
 	{
-		observers.erase(remove(observers.begin(), observers.end(), observer), observers.end());
+		observers.erase(remove(observers.begin(), observers.end(), obs), observers.end());
 	}
 
 protected:
-	void Notify(const NotifyEvent& event)
+	void Notify(const EventT& event)
 	{
 		assert(!observers.empty() && "Subject::Notify - no observers registered");
-		for (auto* observer : observers)
-			observer->OnNotify(event);
-	}
-
-	void NotifyDestroy()
-	{
-		for (auto* observer : observers)
-			observer->OnDestory();
-		observers.clear();
+		for (auto* obs : observers)
+			obs->OnNotify(event);
 	}
 
 private:
-	vector<IObserver*> observers;
+	vector<IObserver<EventT>*> observers;
 };
 
 END

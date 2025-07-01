@@ -3,7 +3,6 @@
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 #include "FontComponent.h"
-#include "PlayerInfoComponent.h"
 
 HPBarBack* HPBarBack::Create(ObjectManager* owner)
 {

@@ -31,15 +31,7 @@ namespace Engine
 		Count
 	};
 
-	enum class NotifyType
-	{
-		None, 
-		HP_Changed,
-		EXP_Changed,
-		Player_Damaged
-	};
-
-	enum class BarDirection {Vertical, Horizontal};
+	enum class BarDirection {Vertical, Horizontal, ClockWise16};
 
 	enum class UIPivot {Center, Bottom, LeftTop, Left, Right};
 

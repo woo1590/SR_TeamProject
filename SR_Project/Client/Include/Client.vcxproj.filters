@@ -97,6 +97,15 @@
     <Filter Include="02. Object\UIObj\Emerald">
       <UniqueIdentifier>{b55a1429-2e13-414d-9c7a-24a3cf430b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UILoader">
+      <UniqueIdentifier>{ec1854eb-50ce-458e-bccb-91ce40f888d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ExpBar\ExpBarBack">
+      <UniqueIdentifier>{1775174d-adba-4545-96c2-743069a39dab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ExpBar\ExpBarFront">
+      <UniqueIdentifier>{5515acd8-81a5-47da-952c-104d006748bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -165,9 +174,6 @@
     <ClInclude Include="..\Header\HotBarBack.h">
       <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ExpBarFront.h">
-      <Filter>02. Object\UIObj\ExpBar</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Slot.h">
       <Filter>02. Object\UIObj\Slot</Filter>
     </ClInclude>
@@ -177,6 +183,15 @@
     <ClInclude Include="..\Header\Emerald.h">
       <Filter>02. Object\UIObj\Emerald</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UILoader.h">
+      <Filter>02. Object\UILoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarFront.h">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarBack.h">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -184,9 +199,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>99. Etc\pch</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>100. Executable</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestScene.cpp">
       <Filter>01. Scene\TestScene</Filter>
@@ -245,9 +257,6 @@
     <ClCompile Include="..\Code\HotBarBack.cpp">
       <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ExpBarFront.cpp">
-      <Filter>02. Object\UIObj\ExpBar</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Slot.cpp">
       <Filter>02. Object\UIObj\Slot</Filter>
     </ClCompile>
@@ -256,6 +265,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Emerald.cpp">
       <Filter>02. Object\UIObj\Emerald</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>100. Executable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UILoader.cpp">
+      <Filter>02. Object\UILoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarFront.cpp">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarBack.cpp">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -223,15 +223,13 @@
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\Engine_UIStruct.h" />
-    <ClInclude Include="..\Header\ExpComponent.h" />
     <ClInclude Include="..\Header\FontComponent.h" />
     <ClInclude Include="..\Header\Frame.h" />
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\FreecamComponent.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
-    <ClInclude Include="..\Header\HpComponent.h" />
-    <ClInclude Include="..\Header\PlayerInfoComponent.h" />
+    <ClInclude Include="..\Header\InfoComponent.h" />
     <ClInclude Include="..\Header\InputSystem.h" />
     <ClInclude Include="..\Header\LightComponent.h" />
     <ClInclude Include="..\Header\LightSystem.h" />
@@ -315,15 +313,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\Code\ExpComponent.cpp" />
     <ClCompile Include="..\Code\FontComponent.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameManager.cpp" />
     <ClCompile Include="..\Code\FreecamComponent.cpp" />
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
-    <ClCompile Include="..\Code\HpComponent.cpp" />
-    <ClCompile Include="..\Code\PlayerInfoComponent.cpp" />
+    <ClCompile Include="..\Code\InfoComponent.cpp" />
     <ClCompile Include="..\Code\InputSystem.cpp" />
     <ClCompile Include="..\Code\LightComponent.cpp" />
     <ClCompile Include="..\Code\LightSystem.cpp" />

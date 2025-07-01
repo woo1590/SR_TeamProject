@@ -6,7 +6,6 @@ FontComponent::FontComponent(Object* owner)
 	:ObjectComponent(owner)
 {
 	CreateFontResource();
-	color = ToD3DXColor(Color::White);
 }
 
 FontComponent::~FontComponent()
@@ -19,7 +18,6 @@ FontComponent* FontComponent::Create(Object* owner)
 {
 	return new FontComponent(owner);
 }
-
 HRESULT FontComponent::CreateFontResource()
 {
 	return D3DXCreateFont(
@@ -56,9 +54,22 @@ void FontComponent::SetFontType(FontType type)
 		DEFAULT_PITCH || FF_DONTCARE, "¸¼Àº °íµñ", &font);
 }
 
+void FontComponent::AddText(const wstring& text, const RECT& rect, Color color, DWORD format)
+{
+	TextEntry entry;
+	entry.text = text;
+	entry.rect = rect;
+	entry.format = format;
+	entry.color = ToD3DXColor(color);
+
+	entries.push_back(move(entry));
+}
+
 void FontComponent::Render()
 {
-	if (!font || text.empty()) return;
+	if (!font || entries.empty())
+		return;
 
-	font->DrawTextW(nullptr, text.c_str(), -1, &rect, format, color);
+	for (auto& entry : entries)
+		font->DrawTextW(nullptr, entry.text.c_str(), -1, &entry.rect, entry.format, entry.color);
 }
