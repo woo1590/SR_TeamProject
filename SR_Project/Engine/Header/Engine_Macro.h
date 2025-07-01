@@ -21,8 +21,6 @@ namespace Engine
 #define	ENGINE_DLL		_declspec(dllimport)
 #endif
 
-#define IMGUI_IMPL_API
-
 #define	NO_COPY(CLASSNAME)								\
 		private:										\
 		CLASSNAME(const CLASSNAME&) = delete;			\

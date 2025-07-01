@@ -130,6 +130,11 @@ bool InputSystem::IsKeyRelease(KEY _ekey)
 	return false;
 }
 
+void InputSystem::SetMousePos() const
+{
+	SetCursorPos(CenterMousePos.x, CenterMousePos.y);
+}
+
 _vec3 InputSystem::GetMousePos()const
 {
 	return MousePos;

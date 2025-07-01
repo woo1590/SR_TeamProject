@@ -120,17 +120,20 @@
     </Filter>
     <Filter Include="07. Object Component\Font">
       <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="07. Object Component\Collision">
       <UniqueIdentifier>{1fabb508-3f70-42f6-9b54-e5dfa2c38cc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Engine Component\EventSystem">
+    <Filter Include="05. Scene Component\EventSystem">
       <UniqueIdentifier>{f87e9172-c4cc-4273-a6d7-876226c23b74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Engine Component\CollisionSystem">
+    <Filter Include="05. Scene Component\CollisionSystem">
       <UniqueIdentifier>{6a1dc87a-3470-4343-855c-be7100afd809}</UniqueIdentifier>
-	</Filter>
-    <Filter Include="07. Object Component\Block">
+    </Filter>
+    <Filter Include="05. Scene Component\CameraManager">
+      <UniqueIdentifier>{16e084cc-28e0-42e1-ad97-7d1a4ad213c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\Block">
       <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
 	</Filter>
     <Filter Include="07. Object Component\AIController">
@@ -311,16 +314,16 @@
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp">
       <Filter>07. Object Component\Font</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CollisionComponent.cpp">
       <Filter>07. Object Component\Collision</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EventSystem.cpp">
-      <Filter>01. Engine Component\EventSystem</Filter>
+      <Filter>05. Scene Component\EventSystem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CollisionSystem.cpp">
-      <Filter>01. Engine Component\CollisionSystem</Filter>
-	</ClCompile>
+      <Filter>05. Scene Component\CollisionSystem</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\TestBlock.cpp">
       <Filter>07. Object Component\Block</Filter>
 	</ClCompile>
@@ -365,6 +368,10 @@
     </ClCompile>
     <ClCompile Include="..\Code\AIController.cpp">
       <Filter>07. Object Component\AIController</Filter>
+      <Filter>06. Object\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>05. Scene Component\CameraManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -526,16 +533,16 @@
     </ClInclude>
     <ClInclude Include="..\Header\FontComponent.h">
       <Filter>07. Object Component\Font</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\CollisionComponent.h">
       <Filter>07. Object Component\Collision</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EventSystem.h">
-      <Filter>01. Engine Component\EventSystem</Filter>
+      <Filter>05. Scene Component\EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CollisionSystem.h">
-      <Filter>01. Engine Component\CollisionSystem</Filter>
-	</ClInclude>
+      <Filter>05. Scene Component\CollisionSystem</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\TestBlock.h">
       <Filter>07. Object Component\Block</Filter>
 	</ClInclude>
@@ -580,6 +587,10 @@
     </ClInclude>
     <ClInclude Include="..\Header\BehaviorTree.h">
       <Filter>07. Object Component\AIController\BehaviorTree</Filter>
+      <Filter>06. Object\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CameraManager.h">
+      <Filter>05. Scene Component\CameraManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

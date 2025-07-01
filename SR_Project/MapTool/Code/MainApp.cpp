@@ -99,7 +99,7 @@ MainApp* MainApp::Create(HINSTANCE hInst, int nCmdShow)
 
 LRESULT MainApp::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    if (EngineCore::GetInstance()->GetImGuiManager()->WndProcHandler(hWnd, msg, wParam, lParam))
+    if (EngineCore::GetInstance()->GetImGuiManager()->WndProcHandler(hWnd,msg,wParam,lParam))
         return true;
 
     switch (msg)

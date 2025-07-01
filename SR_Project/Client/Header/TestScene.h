@@ -20,7 +20,7 @@ public:
     void Unload() override;
 
     /*---------ImGui Test---------*/
-    void ImGuiTestFunc();
+    void TestSceneImGui();
 private:
     void Free() override;
 

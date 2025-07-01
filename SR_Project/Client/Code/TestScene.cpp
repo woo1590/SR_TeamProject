@@ -8,6 +8,9 @@
 #include "ResourceManager.h"
 #include "ImGuiManager.h"
 #include "InputSystem.h"
+#include "EventSystem.h"
+#include "CollisionSystem.h"
+#include "CameraManager.h"
 
 //object
 #include "BasicTerrain.h"
@@ -22,6 +25,8 @@
 #include "Cursor.h"
 #include "InventoryPanel.h"
 #include "Monster.h"
+#include "FirstCam.h"
+#include "ThirdCam.h"
 
 //component
 #include "TransformComponent.h"
@@ -49,46 +54,63 @@ TestScene* TestScene::Create()
 void TestScene::Load()
 {
 	ObjectMgr = ObjectManager::Create(this);
+	EventSys = EventSystem::Create(this);
+	CollisionSys = CollisionSystem::Create(this);
+	CameraMgr = CameraManager::Create(this);
 
 	/*----------------Load ImGui----------------------*/
-    EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->ImGuiTestFunc();});
+    EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
+
+	/*----------------Load Camera---------------------*/
+	player = Player::Create(ObjectMgr, ObjectType::Player);
+	player->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 0.f);
+
+	auto fCam = FirstCam::Create(ObjectMgr);
+	auto tCam = ThirdCam::Create(ObjectMgr);
+
+	CameraMgr->AddCamera(L"First_Camera", fCam);
+	CameraMgr->AddCamera(L"Third_Camera", tCam);
+	tCam->SetTarget(player);
+
+	CameraMgr->SetMainCamera(L"First_Camera");
+	EventSys->SetCamera();
+
+	ObjectMgr->AddObject(ObjectType::Camera, fCam);
+	ObjectMgr->AddObject(ObjectType::Camera, tCam);
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	//ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
-	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
-	// ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	LoadBlock();
+
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
-
-	auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
-	auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);
-	//camActor->GetComponent<ThirdcamComponent>()->SetFollowTarget(testObj);
-
-	ObjectMgr->AddObject(ObjectType::Player, testObj);
-	ObjectMgr->AddObject(ObjectType::Camera, camActor);
 	
 	/*------------------Load UI------------------------*/
-	player = Player::Create(ObjectMgr, ObjectType::Player);
 	const auto& info = player->GetComponent<PlayerInfoComponent>();
 	ObjectMgr->AddObject(ObjectType::Player, player);
-
-	//ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
-	//ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));
-
-	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::UI, Cursor::Create(ObjectMgr, ObjectType::UI));
 	/*----------------------------------------------------------------------------------------------*/
 }
 
 void TestScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
+	EventSys->Update();
+
+	/*-------------ī�޶� ��ȯ �׽�Ʈ �ڵ�-------------*/
+	auto Input = EngineCore::GetInstance()->GetInputSystem();
+	if (Input->IsKeyPressed(NUM1))
+		CameraMgr->SetMainCamera(L"First_Camera");
+	if (Input->IsKeyPressed(NUM2))
+		CameraMgr->SetMainCamera(L"Third_Camera");
+
+	/*-------------���� ��ŷ �׽�Ʈ �ڵ�--------------*/
 }
 
 void TestScene::Late_Update(float dt)
 {
 	ObjectMgr->Late_Update(dt);
+	CollisionSys->Late_Update();
 }
 
 void TestScene::Unload()
@@ -96,16 +118,59 @@ void TestScene::Unload()
 
 }
 
-void TestScene::ImGuiTestFunc()
+void TestScene::TestSceneImGui()
 {
-	/*ImGui::Begin("Simple Window");
-	ImGui::Text("Hello, ImGui!");
-	ImGui::End();*/
+	ImGui::Begin("Player Inspector", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+	_vec3 pos = player->GetComponent<TransformComponent>()->GetPosition();
+	_vec3 camPos = CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
+
+	if (ImGui::BeginTable("##PosTable", 2,
+		ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg))
+	{
+		ImGui::TableSetupColumn("Property", ImGuiTableColumnFlags_WidthFixed, 120.0f);
+		ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
+		ImGui::TableHeadersRow();
+
+		ImGui::TableNextRow();
+		ImGui::TableSetColumnIndex(0);
+		ImGui::TextUnformatted("Player Position");
+		ImGui::TableSetColumnIndex(1);
+		ImGui::Text("%.2f, %.2f, %.2f", pos.x, pos.y, pos.z);
+
+		ImGui::TableNextRow();
+		ImGui::TableSetColumnIndex(0);
+		ImGui::TextUnformatted("Camera Position");
+		ImGui::TableSetColumnIndex(1);
+		ImGui::Text("%.2f, %.2f, %.2f", camPos.x, camPos.y, camPos.z);
+
+		// ī�޶� ��ȯ ��ư
+		ImGui::TableNextRow();
+		ImGui::TableSetColumnIndex(0);
+		ImGui::TextUnformatted("Switch Camera");
+		ImGui::TableSetColumnIndex(1);
+		if (ImGui::Button("First")) {
+			CameraMgr->SetMainCamera(L"First_Camera");
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Third")) {
+			CameraMgr->SetMainCamera(L"Third_Camera");
+		}
+
+		ImGui::EndTable();
+	}
+
+	ImGui::End();
+
 }
 
 void TestScene::Free()
 {
 	Safe_Release(ObjectMgr);
+	Safe_Release(EventSys);
+	Safe_Release(CollisionSys);
+	Safe_Release(CameraMgr);
+
 	Scene::Free();
 }
 
@@ -134,6 +199,7 @@ void TestScene::LoadBlock()
 		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type);
 		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
 		ObjectMgr->AddObject(ObjectType::Block, block);
+
 		Blocks.push_back(newBlock);
 	}
 

@@ -17,6 +17,11 @@ HRESULT ObjectComponent::Ready_Component()
     return S_OK;
 }
 
+Object* ObjectComponent::GetOwner() const
+{
+    return owner;
+}
+
 void ObjectComponent::Free()
 {
 

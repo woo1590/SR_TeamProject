@@ -217,6 +217,7 @@
     <ClInclude Include="..\Header\BlackBoard.h" />
     <ClInclude Include="..\Header\BTNode.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
+    <ClInclude Include="..\Header\CameraManager.h" />
     <ClInclude Include="..\Header\CollisionComponent.h" />
     <ClInclude Include="..\Header\CollisionSystem.h" />
     <ClInclude Include="..\Header\CompositeNode.h" />
@@ -381,6 +382,7 @@
     <ClCompile Include="..\Code\TransformComponent.cpp" />
     <ClCompile Include="..\Code\IObserver.cpp" />
     <ClCompile Include="..\Code\UIRenderer.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\External\imgui\.editorconfig" />

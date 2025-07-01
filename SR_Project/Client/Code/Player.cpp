@@ -5,8 +5,14 @@
 #include "TransformComponent.h"
 #include "ObjectManager.h"
 #include "MeshRendererComponent.h"
-#include "EngineCore.h"
 #include "InputSystem.h"
+
+#include "CollisionSystem.h"
+#include "EngineCore.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "CameraComponent.h"
+#include "CameraManager.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType){}
 Player::~Player(){}
@@ -43,7 +49,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     
     SetMaterial(L"playerRightArm_Mtrl","RHand");
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale); 
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPosition(11.f * Scale, 0.f, 0.f);
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
@@ -72,6 +78,7 @@ void Player::Update(_float dt)
 {
     BaseCharacter::Update(dt);
 
+    PickingTerrain();
     KeyInput(dt);
     switch (m_eState) {
     case ePlayerState::IDLE:
@@ -93,6 +100,25 @@ void Player::Late_Update(_float dt)
 void Player::Free()
 {
     Object::Free();
+}
+
+void Player::PickingTerrain()
+{
+    auto Input = EngineCore::GetInstance()->GetInputSystem();
+    auto cam = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCameraManager()->GetMainCamera();
+    auto collision = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCollisionSystem();
+
+    if (Input->IsKeyPressed(LBUTTON))
+    {
+        Ray ray = cam->ScreenPointRay();
+        HitInfo hit = collision->Raycast(ray);
+        
+        if (hit.IsHit)
+        {
+            hit.Position.y += 3.f;
+            GetComponent<TransformComponent>()->SetPosition(hit.Position);
+        }
+    }
 }
 
 void Player::MovePlayer(_vec3 moveVec)
