@@ -129,7 +129,7 @@
     </Filter>
     <Filter Include="06. Object\Block">
       <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="07. Object Component\AIController">
       <UniqueIdentifier>{3fcffcda-7e73-4482-bb97-beac6473d08d}</UniqueIdentifier>
     </Filter>
@@ -330,9 +330,6 @@
     <ClCompile Include="..\Code\CollisionSystem.cpp">
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TestBlock.cpp">
-      <Filter>07. Object Component\Block</Filter>
-	</ClCompile>
     <ClCompile Include="..\Code\BTNode.cpp">
       <Filter>07. Object Component\AIController\BehaviorTree\BTNode</Filter>
     </ClCompile>
@@ -381,13 +378,14 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolcamComponent.cpp">
       <Filter>07. Object Component\Camera</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ProgressBar.cpp">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpComponent.cpp">
       <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\TestBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineCore.h">
@@ -558,9 +556,6 @@
     <ClInclude Include="..\Header\CollisionSystem.h">
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\TestBlock.h">
-      <Filter>07. Object Component\Block</Filter>
-	</ClInclude>
     <ClInclude Include="..\Header\BTNode.h">
       <Filter>07. Object Component\AIController\BehaviorTree\BTNode</Filter>
     </ClInclude>
@@ -609,13 +604,14 @@
     </ClInclude>
     <ClInclude Include="..\Header\ToolcamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ProgressBar.h">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpComponent.h">
       <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\TestBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Header\Math.inl">
