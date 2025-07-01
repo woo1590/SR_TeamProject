@@ -23,9 +23,13 @@ BTStatus AttackNode::Tick(float dt, BlackBoard* bb)
 
     if (!self || !target) return BTStatus::Failure;
 
-    static_cast<Monster*>(self)->Attack(target);
+     Monster* monster = static_cast<Monster*>(self);
+     monster->Attack(target);
 
-    return BTStatus::Success; 
+     if (monster->IsAttack()) return BTStatus::Running;
+     if (monster->IsAttackFinish()) return BTStatus::Success;
+
+     return BTStatus::Failure;
 }
 
 void AttackNode::Free()

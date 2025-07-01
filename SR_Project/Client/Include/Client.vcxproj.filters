@@ -72,7 +72,7 @@
     </Filter>
     <Filter Include="02. Object\UIObj\InventoryPanel">
       <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Monster">
       <UniqueIdentifier>{ecf0c0f9-ae92-4dc2-97c0-5d3da51e58da}</UniqueIdentifier>
     </Filter>
@@ -232,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
-	</ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Attack.cpp">
       <Filter>02. Object\Monster\BTNode</Filter>
@@ -253,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ThirdCam.cpp">
       <Filter>02. Object\CameraActor\ThirdCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
