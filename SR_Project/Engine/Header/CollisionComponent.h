@@ -14,6 +14,7 @@ private:
 public:
     static CollisionComponent* Create(Object* owner);
     HRESULT Ready_Component()override;
+    void Late_Update(_float dt)override;
 
     void SetOffset(_vec3 offset);
     void SetOffset(_float x, _float y, _float z);
@@ -29,6 +30,8 @@ public:
 
     _bool CheckAABBCollision(CollisionComponent* other);
     void ResolveAABBColiision(Object* other);
+
+    void Render();
 private:
 
     void Free()override;

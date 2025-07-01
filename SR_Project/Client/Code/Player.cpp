@@ -9,6 +9,7 @@
 #include "PlayerInfoComponent.h"
 
 #include "CollisionSystem.h"
+#include "CollisionComponent.h"
 #include "EngineCore.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -38,6 +39,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
     //components
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetSize(_vec3(2.f, 7.f, 2.f));
     auto info = AddComponent<PlayerInfoComponent>();
     //PlayerScale
     SetScale(1.f);

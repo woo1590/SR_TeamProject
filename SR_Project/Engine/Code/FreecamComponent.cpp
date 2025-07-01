@@ -84,7 +84,7 @@ void FreecamComponent::Update(_float dt)
         direction = { 0.f,-1.f,0.f };
 
     D3DXVec3Normalize(&direction, &direction);
-    Target->Translate(direction * 300.f * dt);
+    Target->Translate(direction * 50.f * dt);
 
     _vec2 offset = Input->GetMouseDelta() * Sensitivity;
 

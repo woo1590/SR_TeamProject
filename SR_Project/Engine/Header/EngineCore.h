@@ -41,10 +41,12 @@ public:
     RenderSystem*       GetRenderSystem()const;
     LightSystem*        GetLightSystem()const;
     InputSystem*        GetInputSystem()const;
-    EventSystem*        GetEventSystem()const;
-    CollisionSystem*    GetCollisionSystem()const;
 
     HWND GetWindowHandle()const;
+
+    /*-----Debug Mode------*/
+    void DebugSetting_IMGUI();
+    _bool IsDebugMode()const { return Debug_Mode; }
 private:
     TimerManager* TimerMgr;
     FrameManager* FrameMgr;
@@ -56,11 +58,10 @@ private:
     RenderSystem* RenderSys;
     LightSystem* LightSys;
     InputSystem* InputSys;
-    EventSystem* EventSys;
-    CollisionSystem* CollisionSys;
 
     HWND hWnd;
 
+    _bool Debug_Mode = true;
     void Free()override;
 };
 

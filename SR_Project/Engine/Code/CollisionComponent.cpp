@@ -1,11 +1,13 @@
 #include "EnginePCH.h"
 #include "CollisionComponent.h"
+
 #include "EngineCore.h"
 #include "SceneManager.h"
-#include "GraphicDevice.h"
+#include "RenderSystem.h"
 #include "CollisionSystem.h"
-#include "Object.h"
+#include "GraphicDevice.h"
 #include "Scene.h"
+#include "Object.h"
 
 //component
 #include "TransformComponent.h"
@@ -38,7 +40,18 @@ HRESULT CollisionComponent::Ready_Component()
 	BBType = BoundingBoxType::Box;
 
 	EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCollisionSystem()->RegisterCollision(this);
+
+	auto device = GraphicDevice::GetInstance()->GetDevice();
+	if (BoundingBox)
+		Safe_Release(BoundingBox);
+
+	D3DXCreateBox(device, 2.f, 2.f, 2.f, &BoundingBox, nullptr);
 	return S_OK;
+}
+
+void CollisionComponent::Late_Update(_float dt)
+{
+	EngineCore::GetInstance()->GetRenderSystem()->RegisterCollision(this);
 }
 
 void CollisionComponent::SetOffset(_vec3 offset)
@@ -68,6 +81,12 @@ void CollisionComponent::SetSize(_vec3 size)
 
 	LocalMin = -half;
 	LocalMax = half;
+
+	auto device = GraphicDevice::GetInstance()->GetDevice();
+	if (BoundingBox)
+		Safe_Release(BoundingBox);
+
+	D3DXCreateBox(device, size.x, size.y, size.z, &BoundingBox, nullptr);
 }
 
 _vec3 CollisionComponent::GetLocalMin() const
@@ -186,6 +205,15 @@ void CollisionComponent::ResolveAABBColiision(Object* other)
 		else if (overlapZ <= overlapX && overlapZ <= overlapY)
 			transform->Translate(0.f, 0.f, (aCenter.z >= bCenter.z) ? overlapZ : -overlapZ);
 	}
+}
+
+void CollisionComponent::Render()
+{
+	auto device = GraphicDevice::GetInstance()->GetDevice();
+	_matrix worldMat = owner->GetComponent<TransformComponent>()->GetTranslateMatrix();
+
+	device->SetTransform(D3DTS_WORLD, &worldMat);
+	BoundingBox->DrawSubset(0);
 }
 
 void CollisionComponent::Free()

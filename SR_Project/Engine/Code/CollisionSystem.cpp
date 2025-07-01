@@ -35,6 +35,13 @@ HRESULT CollisionSystem::Ready_CollisionSystem()
 
 void CollisionSystem::Late_Update()
 {
+	for (_uint i = 0; i < Collisions.size(); ++i)
+	{
+		for (_uint j = 0; j < Collisions.size(); ++j)
+		{
+
+		}
+	}
 }
 
 void CollisionSystem::RegisterCollision(CollisionComponent* collision)

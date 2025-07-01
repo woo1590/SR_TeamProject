@@ -3,6 +3,7 @@
 BEGIN(Engine)
 
 class RendererComponent;
+class CollisionComponent;
 class Object;
 class CameraComponent;
 class ENGINE_DLL RenderSystem : public Base
@@ -20,6 +21,7 @@ public:
     void Render_End();
 
     void RegisterRenderer(RENDER_ID layer, RendererComponent* renderer);
+    void RegisterCollision(CollisionComponent* collision);
     void SetCamera(Object* cam);
 
     ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
@@ -39,6 +41,8 @@ private:
    
     LPDIRECT3DDEVICE9 Device;
     ID3DXSprite* spriteBatch = nullptr;
+
+    std::list<CollisionComponent*> DebugRender; //디버그용
 };
 
 END
