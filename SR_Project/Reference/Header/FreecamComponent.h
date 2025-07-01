@@ -22,7 +22,7 @@ private:
 
     TransformComponent* Target = nullptr;
 
-    _float Sensitivity = 0.5f;
+    _float Sensitivity = 0.8f;
     _float Pitch = 0.f;
     _float Yaw = 0.f; 
     _float Roll = 0.f;
