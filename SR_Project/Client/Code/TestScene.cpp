@@ -13,7 +13,6 @@
 #include "CameraManager.h"
 
 //object
-#include "BasicTerrain.h"
 #include "TestObject.h"
 #include "SkyBox.h"
 #include "BaseCharacter.h"

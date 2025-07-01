@@ -242,6 +242,7 @@
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\HpComponent.h" />
+    <ClInclude Include="..\Header\PhysicsComponent.h" />
     <ClInclude Include="..\Header\PlayerInfoComponent.h" />
     <ClInclude Include="..\Header\InputSystem.h" />
     <ClInclude Include="..\Header\InverterDecorator.h" />
@@ -271,7 +272,6 @@
     <ClInclude Include="..\Header\Subject.h" />
     <ClInclude Include="..\Header\SucceederDecorator.h" />
     <ClInclude Include="..\Header\TerrainMesh.h" />
-    <ClInclude Include="..\Header\TerrainRenderer.h" />
     <ClInclude Include="..\Header\TestBlock.h" />
     <ClInclude Include="..\Header\ThirdcamComponent.h" />
     <ClInclude Include="..\Header\Timer.h" />
@@ -353,6 +353,7 @@
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\HpComponent.cpp" />
+    <ClCompile Include="..\Code\PhysicsComponent.cpp" />
     <ClCompile Include="..\Code\PlayerInfoComponent.cpp" />
     <ClCompile Include="..\Code\InputSystem.cpp" />
     <ClCompile Include="..\Code\InverterDecorator.cpp" />
@@ -381,7 +382,6 @@
     <ClCompile Include="..\Code\Subject.cpp" />
     <ClCompile Include="..\Code\SucceederDecorator.cpp" />
     <ClCompile Include="..\Code\TerrainMesh.cpp" />
-    <ClCompile Include="..\Code\TerrainRenderer.cpp" />
     <ClCompile Include="..\Code\TestBlock.cpp" />
     <ClCompile Include="..\Code\ThirdcamComponent.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />

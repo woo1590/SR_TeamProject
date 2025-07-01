@@ -28,9 +28,6 @@
     <Filter Include="02. Object\SkyBox">
       <UniqueIdentifier>{fa569c5c-5c68-4e03-9479-06d02a03255c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\BasicTerrain">
-      <UniqueIdentifier>{d7bd993e-a135-414f-a268-d250bb692d38}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\LoadingScene">
       <UniqueIdentifier>{52678876-79dc-41a1-baf8-7610b6c30f02}</UniqueIdentifier>
     </Filter>
@@ -81,7 +78,7 @@
     </Filter>
     <Filter Include="02. Object\CameraActor\RailCam">
       <UniqueIdentifier>{038db0cb-ea10-4b61-9f5a-3c46340a7892}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\UIDebugObj">
       <UniqueIdentifier>{82419094-d92a-4d7d-8f56-5b4d4c56fcfe}</UniqueIdentifier>
     </Filter>
@@ -128,9 +125,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\LogoScene.h">
       <Filter>01. Scene\LogoScene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\BasicTerrain.h">
-      <Filter>02. Object\BasicTerrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LoadingScene.h">
       <Filter>01. Scene\LoadingScene</Filter>
@@ -194,7 +188,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\ThirdCam.h">
       <Filter>02. Object\CameraActor\ThirdCam</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\UIDebugObj.h">
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClInclude>
@@ -232,9 +226,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. Object\SkyBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BasicTerrain.cpp">
-      <Filter>02. Object\BasicTerrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LoadingScene.cpp">
       <Filter>01. Scene\LoadingScene</Filter>
@@ -295,7 +286,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\Monster</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\UIDebugObj.cpp">
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClCompile>

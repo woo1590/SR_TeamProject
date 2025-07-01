@@ -26,9 +26,11 @@ public:
     std::list<Object*> GetObjectList(ObjectType objType);
 
 private:
+    void CleanDeadObject();
     void Free()override;
 
     std::vector<std::list<Object*>> Objects;
+    std::list<std::list<Object*>::iterator> DeadObjects;
     Scene* owner;
 };
 

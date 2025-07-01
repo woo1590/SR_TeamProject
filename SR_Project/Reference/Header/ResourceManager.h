@@ -16,7 +16,6 @@ public:
     HRESULT Ready_ResourceManager();
 
     /*----------�ܺ� ���� �ε� �Լ�----------------*/
-    void LoadTerrain(const std::wstring& filePath, const std::wstring& key, _float cellSpacing, _float heightScale);
     void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
 
     /*----------���� ���� �Լ�(�׽�Ʈ��)-------------*/
@@ -38,8 +37,6 @@ private:
     std::unordered_map<std::wstring, Mesh*> MeshContainer;
     std::unordered_map<std::wstring, Material*> MaterialContainer;
     std::unordered_map<std::wstring, LPDIRECT3DBASETEXTURE9> TextureContainer;
-
-    std::unordered_map<std::wstring, TerrainMesh*> TerrainContainer;
 
     unordered_map<wstring, int> uiLayerTable;
 };
