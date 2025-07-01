@@ -4,20 +4,20 @@
 #include "TransformComponent.h"
 #include "BaseCharacter.h"
 
-Chase::Chase()
+ChaseNode::ChaseNode()
 {
 }
 
-Chase::~Chase()
+ChaseNode::~ChaseNode()
 {
 }
 
-BTStatus Chase::Initialize(float dt)
+BTStatus ChaseNode::Initialize(float dt)
 {
 	return BTStatus::Running;
 }
 
-BTStatus Chase::Tick(float dt, BlackBoard* bb)
+BTStatus ChaseNode::Tick(float dt, BlackBoard* bb)
 {
 	if (bb == nullptr) return BTStatus::Failure;
 
@@ -39,7 +39,7 @@ BTStatus Chase::Tick(float dt, BlackBoard* bb)
 	return BTStatus::Running;
 }
 
-void Chase::Free()
+void ChaseNode::Free()
 {
 	ActionNode::Free();
 }

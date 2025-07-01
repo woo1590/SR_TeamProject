@@ -24,42 +24,14 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
 
     auto transform = AddComponent<TransformComponent>();
-    SetScale(0.1f);
 
     SetMaterial(L"playerBody_Mtrl","Body");
-    Bones["Body"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 12.f * Scale, 4.f * Scale);
-    Bones["Body"]->GetComponent<TransformComponent>()->SetPosition(0.f, 0.f, 0.f);
-
     SetMaterial(L"playerHead_Mtrl","Head");
-    Bones["Head"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 8.f * Scale, 8.f * Scale);
-    Bones["Head"]->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f * Scale, 0.f);
-    Bones["Head"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -8.f * Scale, 0.0f));
-    Bones["Head"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-
     SetMaterial(L"playerLeftArm_Mtrl","LHand");
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetPosition(-11.f * Scale, 0.f, 0.f);
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-    
     SetMaterial(L"playerRightArm_Mtrl","RHand");
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetPosition(11.f * Scale, 0.f, 0.f);
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-
     SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
-    Bones["LLeg"]->GetComponent<TransformComponent>()->SetScale(4.f * Scale, 12.f * Scale, 4.f * Scale);
-    Bones["LLeg"]->GetComponent<TransformComponent>()->SetPosition(-4.f * Scale, -24.f * Scale, 0.f);
-    Bones["LLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 12.f * Scale, 0.0f));
-    Bones["LLeg"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
-    Bones["RLeg"]->GetComponent<TransformComponent>()->SetScale(4.f * Scale, 12.f * Scale, 4.f * Scale);
-    Bones["RLeg"]->GetComponent<TransformComponent>()->SetPosition(4.f * Scale, -24.f * Scale, 0.f);
-    Bones["RLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 12.f * Scale, 0.0f));
-    Bones["RLeg"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-
+    
     for (auto& pair : Bones) {
         auto pBoneTransform = pair.second->GetComponent<TransformComponent>();
         pBoneTransform->SetParent(transform);

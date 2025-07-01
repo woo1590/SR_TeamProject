@@ -58,9 +58,8 @@ void TestScene::Load()
 	//ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
 	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
 	// ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
-	LoadBlock();
+	//LoadBlock();
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
-	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 
 	auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
 	auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);
@@ -70,9 +69,11 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Camera, camActor);
 	
 	/*------------------Load UI------------------------*/
-	player = Player::Create(ObjectMgr, ObjectType::Player);
+	player = Player::Create(ObjectMgr, ObjectType::Player);	
 	const auto& info = player->GetComponent<PlayerInfoComponent>();
 	ObjectMgr->AddObject(ObjectType::Player, player);
+
+	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 
 	//ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
 	//ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));

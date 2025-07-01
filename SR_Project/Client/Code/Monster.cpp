@@ -38,9 +38,13 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
 
-    auto transform = AddComponent<TransformComponent>();
+    Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 6.f * Scale, 0.0f));
+    Bones["Body"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
-    Chase* chase = new Chase();
+    auto transform = AddComponent<TransformComponent>();
+    transform->SetPosition(_vec3(-100.f, 0.f, 0.f));        //임의 설정
+    
+    ChaseNode* chase = new ChaseNode();
     AttackNode* attack = new AttackNode();
     IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(attack);
 
@@ -55,8 +59,8 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
-    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).front());
-    bb->SetValue("Distance", new float(0.1f));
+    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
+    bb->SetValue("Distance", new float(3.f));
 
     auto AI = AddComponent<AIController>(bt, bb);
 
@@ -86,6 +90,7 @@ void Monster::MoveTo(_vec3* dir)
 
     auto Transform = GetComponent<TransformComponent>();
     Transform->Translate((*dir) * Speed);
+    Transform->SetForward(*dir);
 }
 
 void Monster::Attack(Object* target)
@@ -97,6 +102,8 @@ void Monster::Attack(Object* target)
 
 void Monster::PlayAnimation(_float dt)
 {
+    if (IsAttackFinished) AttackDelay -= dt;
+
     switch (State)
     {
     case MonsterState::Idle:
@@ -106,7 +113,11 @@ void Monster::PlayAnimation(_float dt)
         PlayWalk(dt);
         break;
     case MonsterState::Attack:
+        if (AttackDelay > 0.f) 
+            break;
         PlayAttack(dt);
+        IsAttacking = true;
+        IsAttackFinished = false;
         break;
     }
 }
@@ -135,8 +146,25 @@ void Monster::PlayAttack(_float dt)
     AttackTime += dt;
 
     float Angle = sinf(AttackTime * 10.f);
-    SetRotation({ 180 - Angle, 0.f, 0.f }, "LHand");
-    SetRotation({ 180 - Angle, 0.f, 0.f }, "RHand");
+
+    //Body
+    SetRotation({ -Angle/2, 0.f, 0.f });
+    SetRotation({ -Angle/2, 0.f, 0.f }, "Head");
+
+    //Hand
+    SetRotation({ 180 - Angle*2, 0.f, 0.f }, "LHand");
+    SetRotation({ 180 - Angle*2, 0.f, 0.f }, "RHand");
+
+    //// 수정예정 - 다리고정
+    SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+    SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+
+    //if (AttackTime > 2.f)
+    //{
+    //    IsAttacking = false;
+    //    IsAttackFinished = true;
+    //    AttackDelay = 2.f;
+    //}
 }
 
 void Monster::PlayDie(_float dt)

@@ -63,7 +63,7 @@
     </Filter>
     <Filter Include="02. Object\CameraActor">
       <UniqueIdentifier>{787cf409-8411-4408-97c8-8ddd782499c4}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. Object\UIObj\LoadingUI">
       <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
     </Filter>
@@ -72,7 +72,7 @@
     </Filter>
     <Filter Include="02. Object\UIObj\InventoryPanel">
       <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Monster">
       <UniqueIdentifier>{ecf0c0f9-ae92-4dc2-97c0-5d3da51e58da}</UniqueIdentifier>
     </Filter>
@@ -131,7 +131,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\Player</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\LoadingUI.h">
       <Filter>02. Object\UIObj\LoadingUI</Filter>
     </ClInclude>
@@ -208,7 +208,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraActor.cpp">
       <Filter>02. Object\CameraActor</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\LoadingUI.cpp">
       <Filter>02. Object\UIObj\LoadingUI</Filter>
     </ClCompile>
@@ -217,9 +217,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
-	</ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Attack.cpp">
       <Filter>02. Object\Monster\BTNode</Filter>
@@ -232,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\IsTargetInDetectRange.cpp">
       <Filter>02. Object\Monster\BTNode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

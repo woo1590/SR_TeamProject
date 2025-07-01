@@ -1,11 +1,11 @@
 #pragma once
 #include "ActionNode.h"
-class Chase :
+class ChaseNode :
     public ActionNode
 {
 public:
-    explicit Chase();
-    virtual ~Chase();
+    explicit ChaseNode();
+    virtual ~ChaseNode();
 
 public:
     BTStatus Initialize(float dt) override;

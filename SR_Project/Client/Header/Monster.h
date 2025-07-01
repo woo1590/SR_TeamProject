@@ -18,6 +18,9 @@ public:
 public:
     void MoveTo(_vec3* dir) override;
     void Attack(Object* target) override;
+    
+    _bool IsAttack() { return IsAttacking; }
+    _bool IsAttackFinish() { return IsAttackFinished; }
 
 protected:
     virtual void PlayAnimation(_float dt);
@@ -36,5 +39,10 @@ protected:
     
     _float              WalkTime = 0.f;
     _float              AttackTime = 0.f;
+
+    _float              AttackDelay = 2.f;
+
+    _bool               IsAttacking = false;
+    _bool               IsAttackFinished = true;
 };
 
