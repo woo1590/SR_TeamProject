@@ -94,7 +94,7 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 
 	/*------------------Load UI------------------------*/
-	LoadUI();
+	//LoadUI();
 	/*----------------------------------------------------------------------------------------------*/
 }
 

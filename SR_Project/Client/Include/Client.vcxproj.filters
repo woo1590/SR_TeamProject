@@ -81,7 +81,7 @@
     </Filter>
     <Filter Include="02. Object\CameraActor\RailCam">
       <UniqueIdentifier>{038db0cb-ea10-4b61-9f5a-3c46340a7892}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\UIDebugObj">
       <UniqueIdentifier>{82419094-d92a-4d7d-8f56-5b4d4c56fcfe}</UniqueIdentifier>
     </Filter>
@@ -111,6 +111,9 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Emerald">
       <UniqueIdentifier>{b55a1429-2e13-414d-9c7a-24a3cf430b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\BTNode\Action">
+      <UniqueIdentifier>{039f5f30-0e5b-4c77-a75e-6c7120cc6b01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -177,12 +180,6 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02. Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Attack.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Chase.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\IsTargetInAttackRange.h">
       <Filter>02. Object\Monster\BTNode</Filter>
     </ClInclude>
@@ -194,7 +191,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\ThirdCam.h">
       <Filter>02. Object\CameraActor\ThirdCam</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\UIDebugObj.h">
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClInclude>
@@ -212,6 +209,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\Emerald.h">
       <Filter>02. Object\UIObj\Emerald</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsAlive.h">
+      <Filter>02. Object\Monster\BTNode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Chase.h">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Attack.h">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Die.h">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,12 +284,6 @@
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Attack.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Chase.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\IsTargetInAttackRange.cpp">
       <Filter>02. Object\Monster\BTNode</Filter>
     </ClCompile>
@@ -295,7 +298,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\Monster</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\UIDebugObj.cpp">
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClCompile>
@@ -313,6 +316,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Emerald.cpp">
       <Filter>02. Object\UIObj\Emerald</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsAlive.cpp">
+      <Filter>02. Object\Monster\BTNode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Attack.cpp">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Chase.cpp">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Die.cpp">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,8 +14,9 @@ public:
     void Late_Update(_float dt)override;
 
 public:
-    virtual void MoveTo(_vec3* dir);
+    virtual void MoveTo(_vec3* dir, _float dt);
     virtual void Attack(Object* target);
+    virtual void Die() {};
 
 protected:
     void SetMaterial(const std::wstring& mtrl, string str = "Body");

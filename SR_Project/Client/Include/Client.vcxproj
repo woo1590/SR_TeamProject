@@ -181,6 +181,7 @@
     <ClInclude Include="..\Header\Bone.h" />
     <ClInclude Include="..\Header\CameraActor.h" />
     <ClInclude Include="..\Header\Cursor.h" />
+    <ClInclude Include="..\Header\Die.h" />
     <ClInclude Include="..\Header\FirstCam.h" />
     <ClInclude Include="..\Header\DashUI.h" />
     <ClInclude Include="..\Header\Emerald.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="..\Header\HPBarFront.h" />
     <ClInclude Include="..\Header\InventoryPanel.h" />
     <ClInclude Include="..\Header\Chase.h" />
+    <ClInclude Include="..\Header\IsAlive.h" />
     <ClInclude Include="..\Header\IsTargetInAttackRange.h" />
     <ClInclude Include="..\Header\IsTargetInDetectRange.h" />
     <ClInclude Include="..\Header\Loader.h" />
@@ -216,6 +218,7 @@
     <ClCompile Include="..\Code\Bone.cpp" />
     <ClCompile Include="..\Code\CameraActor.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />
+    <ClCompile Include="..\Code\Die.cpp" />
     <ClCompile Include="..\Code\FirstCam.cpp" />
     <ClCompile Include="..\Code\DashUI.cpp" />
     <ClCompile Include="..\Code\Emerald.cpp" />
@@ -225,6 +228,7 @@
     <ClCompile Include="..\Code\HPBarFront.cpp" />
     <ClCompile Include="..\Code\InventoryPanel.cpp" />
     <ClCompile Include="..\Code\Chase.cpp" />
+    <ClCompile Include="..\Code\IsAlive.cpp" />
     <ClCompile Include="..\Code\IsTargetInAttackRange.cpp" />
     <ClCompile Include="..\Code\IsTargetInDetectRange.cpp" />
     <ClCompile Include="..\Code\Loader.cpp" />

@@ -140,8 +140,8 @@ void ResourceManager::Free()
             Safe_Release(pair.second);
         });
 
-    std::for_each(TerrainContainer.begin(), TerrainContainer.end(), [](auto& pair)
+   /* std::for_each(TerrainContainer.begin(), TerrainContainer.end(), [](auto& pair)
         {
             Safe_Release(pair.second);
-        });
+        });*/
 }

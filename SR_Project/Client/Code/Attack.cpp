@@ -26,7 +26,7 @@ BTStatus AttackNode::Tick(float dt, BlackBoard* bb)
      Monster* monster = static_cast<Monster*>(self);
      monster->Attack(target);
 
-     if (monster->IsAttack()) return BTStatus::Running;
+     if (monster->IsAttackStart()) return BTStatus::Running;
      if (monster->IsAttackFinish()) return BTStatus::Success;
 
      return BTStatus::Failure;
