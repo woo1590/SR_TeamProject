@@ -82,6 +82,11 @@ void ObjectManager::ClearList(ObjectType objType)
 	Objects[static_cast<int>(objType)].clear();
 }
 
+void ObjectManager::AddUIObject(Object* obj)
+{
+	Objects[static_cast<int>(ObjectType::UI)].push_back(obj);
+}
+
 Object* ObjectManager::GetFrontObject(ObjectType objType)
 {
 	return Objects[static_cast<int>(objType)].front();

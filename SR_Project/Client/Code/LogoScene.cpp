@@ -22,7 +22,7 @@ void LogoScene::Load()
 {
 	ObjectMgr = ObjectManager::Create(this);
 
-	ObjectMgr->AddObject(ObjectType::UI, LoadingUI::Create(ObjectMgr, ObjectType::UI));
+	ObjectMgr->AddObject(ObjectType::UI, LoadingUI::Create(ObjectMgr));
 }
 
 void LogoScene::Update(float dt)

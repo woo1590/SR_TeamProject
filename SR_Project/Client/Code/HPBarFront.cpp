@@ -4,24 +4,25 @@
 #include "HpComponent.h"
 #include "UIRenderer.h"
 
-HPBarFront* HPBarFront::Create(ObjectManager* owner, ObjectType type, PlayerInfoComponent* playerInfo)
+HPBarFront* HPBarFront::Create(ObjectManager* owner)
 {
-	auto* instance = new HPBarFront(owner, type);
+	auto* instance = new HPBarFront(owner);
 	
-	return (FAILED(instance->Ready_Object(playerInfo))) ? Safe_Release(instance), nullptr : instance;
+	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 }
 
-HRESULT HPBarFront::Ready_Object(PlayerInfoComponent* playerInfo)
+HRESULT HPBarFront::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
+	auto renderer  = AddComponent<UIRenderer>();
 	auto hpUI      = AddComponent<HpComponent>();
-	auto renderer  = GetComponent<UIRenderer>();
-
+	
+	renderer->SetTexture(L"hpbar_front");
+	renderer->SetPivot(UIPivot::Bottom);
 	renderer->SetScale(0.32f, 0.32f);
 	transform->SetPosition(WINCX * 0.5f, WINCY * 0.96f);
 
-	if (playerInfo)
-		hpUI->AttachPlayerInfo(playerInfo);
+	transform->SetPosition(WINCX * 0.5f, WINCY * 0.5f);
 
 	return S_OK;
 }

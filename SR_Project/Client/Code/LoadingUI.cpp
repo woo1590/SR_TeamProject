@@ -4,9 +4,9 @@
 #include "UIRenderer.h"
 
 
-LoadingUI* LoadingUI::Create(ObjectManager* owner, ObjectType type)
+LoadingUI* LoadingUI::Create(ObjectManager* owner)
 {
-	auto* instance = new LoadingUI(owner, type);
+	auto* instance = new LoadingUI(owner);
 	
 	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 }

@@ -5,12 +5,12 @@
 class Cursor : public Object
 {
 private:
-	Cursor(ObjectManager* owner, ObjectType type)
-		:Object(owner, type) {
+	Cursor(ObjectManager* owner)
+		:Object(owner, ObjectType::UI) {
 	}
 
 public:
-	static Cursor* Create(ObjectManager* owner, ObjectType type);
+	static Cursor* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
 
 	void Update(float dt) override;

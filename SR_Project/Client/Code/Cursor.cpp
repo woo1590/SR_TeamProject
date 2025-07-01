@@ -5,9 +5,9 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 
-Cursor* Cursor::Create(ObjectManager* owner, ObjectType type)
+Cursor* Cursor::Create(ObjectManager* owner)
 {
-	auto* instance = new Cursor(owner, type);
+	auto* instance = new Cursor(owner);
 	
 	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 }

@@ -32,11 +32,10 @@
 #include <memory>
 #include <optional>
 #include <random>
+#include <cassert>
 
 //Header
 #include "Base.h"
-
-
 
 #include "Engine_Enum.h"
 #include "Engine_Macro.h"

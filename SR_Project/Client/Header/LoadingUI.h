@@ -5,11 +5,11 @@
 class LoadingUI : public Object
 {
 private:
-	LoadingUI(ObjectManager* owner, ObjectType type)
-		:Object(owner, type) {}
+	LoadingUI(ObjectManager* owner)
+		:Object(owner, ObjectType::UI) {}
 
 public:
-	static LoadingUI* Create(ObjectManager* owner, ObjectType type);
+	static LoadingUI* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
 };
 

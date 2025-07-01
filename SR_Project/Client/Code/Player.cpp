@@ -6,6 +6,7 @@
 #include "ObjectManager.h"
 #include "MeshRendererComponent.h"
 #include "InputSystem.h"
+#include "PlayerInfoComponent.h"
 
 #include "CollisionSystem.h"
 #include "EngineCore.h"
@@ -40,6 +41,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     BaseCharacter::Ready_Object(owner, objType);
 
     auto transform = AddComponent<TransformComponent>();
+
+    auto info = AddComponent<PlayerInfoComponent>();
 
     SetScale(0.1f);
 

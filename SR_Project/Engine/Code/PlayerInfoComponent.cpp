@@ -10,20 +10,43 @@ PlayerInfoComponent* PlayerInfoComponent::Create(Object* owner)
 
 HRESULT PlayerInfoComponent::Ready_Component(Object* owner)
 {
-	info.level = 1;
-	info.maxHp = 100;
-	info.curHp = info.maxHp;
-	info.speed = 6.f;
-	info.maxExp = 10;
+	PlayerInitStat stat;
+
+	info.level = stat.level;
+	info.maxHp = stat.maxHp;
+	info.curHp = stat.maxHp;
+	info.speed = stat.speed;
+	info.maxExp = stat.maxExp;
 	info.curExp = 0;
 
 	return S_OK;
 }
+
 
 void PlayerInfoComponent::SetHp(int hp)
 {
 	info.curHp = clamp(hp, 0, info.maxHp);
 
 	NotifyEvent event{static_cast<int>(NotifyType::HP_Changed), &info};
+	Notify(event);
+}
+
+void PlayerInfoComponent::AddHp(int amount)
+{
+	SetHp(info.curHp + amount);
+}
+
+void PlayerInfoComponent::AddExp(int amount)
+{
+	info.curExp += amount;
+
+	while (info.curExp >= info.maxExp)
+	{
+		info.curExp -= info.maxExp;
+		info.level++;
+		info.maxExp += 5;
+	}
+
+	NotifyEvent event{static_cast<int>(NotifyType::EXP_Changed), &info};
 	Notify(event);
 }

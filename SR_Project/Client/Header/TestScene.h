@@ -19,6 +19,8 @@ public:
     void Late_Update(float dt) override;
     void Unload() override;
 
+    void LoadUI();
+
     /*---------ImGui Test---------*/
     void TestSceneImGui();
 private:

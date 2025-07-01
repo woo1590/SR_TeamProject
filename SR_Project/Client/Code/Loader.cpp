@@ -173,26 +173,37 @@ HRESULT Loader::Load_TestScene()
 
 HRESULT Loader::load_UIResources() // 제현 UI 전용함수
 {
+	const auto eUI = TEXTURE::Tex_Diffuse;
+
 	static const unordered_map<wstring, TEXTURE> uiTexture = {
-		{L"Shield",         TEXTURE::Tex_Diffuse},
-		{L"Logo",           TEXTURE::Tex_Diffuse},
-		{L"hpbar_front",    TEXTURE::Tex_Diffuse},
-		{L"hpbar_back",     TEXTURE::Tex_Diffuse},
-		{L"loadingscene",   TEXTURE::Tex_Diffuse},
-		{L"Cursor",         TEXTURE::Tex_Diffuse},
-		{L"InventoryPanel", TEXTURE::Tex_Diffuse},
+		{L"Shield",             eUI},
+		{L"Logo",               eUI},
+		{L"hpbar_front",        eUI},
+		{L"hpbar_back",         eUI},
+		{L"loadingscene",       eUI},
+		{L"Cursor",             eUI},
+		{L"InventoryPanel",     eUI},
+		{L"hotbar_back",        eUI},
+		{L"expbar_front",       eUI},
+		{L"slot",               eUI},
+		{L"icon_emerald",       eUI},
+		{}
 
 	};
 
 	// layer 낮을수록 먼저 그림
 	static const unordered_map<wstring, int> uiLayers = {
-		{L"hpbar_back", -1},
-		{L"hpbar_front", 0},
-		{L"Shield", 5},
-		{L"Logo", 100},
-		{L"loadingscene", -100},
-		{L"Cursor", 1000},
-		{L"InventoryPanel", -100}
+		{L"hpbar_back",         -1},
+		{L"hpbar_front",         0},
+		{L"Shield",              5},
+		{L"Logo",              100},
+		{L"loadingscene",     -100},
+		{L"Cursor",           1000},
+		{L"InventoryPanel",   -100},
+		{L"hotbar_back",       -10},
+		{L"expbar_front",        0},
+		{L"slot",                0},
+		{L"icon_emerald",        1}
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

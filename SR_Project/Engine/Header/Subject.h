@@ -7,30 +7,33 @@ BEGIN(Engine)
 class ENGINE_DLL Subject
 {
 public:
-	void Attach(IObserver* observer) { observers.push_back(observer); }
-	void Detach(IObserver* observer) { observers.remove(observer); }
-
-protected:
-	void Notify(const NotifyEvent& event) 
+	void Attach(IObserver* observer)
 	{
-		for (auto it = observers.begin(); it != observers.end();)
-		{
-			IObserver* observer = *it;
-			++it;
-			observer->OnNotify(event);
-		}
+		if (find(observers.begin(), observers.end(), observer) == observers.end())
+			observers.push_back(observer);
+	}
+	void Detach(IObserver* observer)
+	{
+		observers.erase(remove(observers.begin(), observers.end(), observer), observers.end());
 	}
 
-	void NotifyDestory() 
+protected:
+	void Notify(const NotifyEvent& event)
 	{
-		for (auto& observer : observers)
-			observer->OnDestory();
+		assert(!observers.empty() && "Subject::Notify - no observers registered");
+		for (auto* observer : observers)
+			observer->OnNotify(event);
+	}
 
+	void NotifyDestroy()
+	{
+		for (auto* observer : observers)
+			observer->OnDestory();
 		observers.clear();
 	}
 
 private:
-	list<IObserver*> observers;
+	vector<IObserver*> observers;
 };
 
 END

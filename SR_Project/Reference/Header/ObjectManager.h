@@ -20,6 +20,7 @@ public:
     void AddObject(ObjectType objType, Object* object);
     void RemoveObject(ObjectType objType, const _vec3& worldPosition);
     void ClearList(ObjectType objType);
+    void AddUIObject(Object* obj);
 
     Object* GetFrontObject(ObjectType objType);
     std::list<Object*> GetObjectList(ObjectType objType);

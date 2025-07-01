@@ -27,6 +27,11 @@
 #include "Monster.h"
 #include "FirstCam.h"
 #include "ThirdCam.h"
+#include "UIDebugObj.h"
+#include "HotBarBack.h"
+#include "ExpBarFront.h"
+#include "Slot.h"
+#include "Emerald.h"
 
 //component
 #include "TransformComponent.h"
@@ -35,6 +40,9 @@
 #include "ThirdcamComponent.h"
 #include "HpComponent.h"
 #include "TestBlock.h"
+#include "PlayerInfoComponent.h"
+#include "HpComponent.h"
+#include "ExpComponent.h"
 
 TestScene::TestScene()
 {
@@ -59,7 +67,7 @@ void TestScene::Load()
 	CameraMgr = CameraManager::Create(this);
 
 	/*----------------Load ImGui----------------------*/
-    EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
@@ -84,10 +92,9 @@ void TestScene::Load()
 	//LoadBlock();
 
 	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
-	
+
 	/*------------------Load UI------------------------*/
-	const auto& info = player->GetComponent<PlayerInfoComponent>();
-	ObjectMgr->AddObject(ObjectType::UI, Cursor::Create(ObjectMgr, ObjectType::UI));
+	LoadUI();
 	/*----------------------------------------------------------------------------------------------*/
 }
 
@@ -195,7 +202,7 @@ void TestScene::LoadBlock()
 		if (!ReadFile(hFile, &newBlock, sizeof(BlockData), &dwByte, nullptr)) return;
 		if (dwByte == 0) break;
 
-		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type,newBlock.Dir);
+		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type, newBlock.Dir);
 		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
 		ObjectMgr->AddObject(ObjectType::Block, block);
 
@@ -204,4 +211,28 @@ void TestScene::LoadBlock()
 
 	CloseHandle(hFile);
 	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
+}
+
+void TestScene::LoadUI()
+{
+	const auto& info = player->GetComponent<PlayerInfoComponent>();
+
+	auto hpBarFront = HPBarFront::Create(ObjectMgr);
+//	info->Attach(hpBarFront->GetComponent<HpComponent>());
+
+	ObjectMgr->AddUIObject(hpBarFront);
+
+	auto debugUI = UIDebugObj::Create(ObjectMgr);
+	ObjectMgr->AddUIObject(debugUI);
+	debugUI->SetPlayer(player);
+
+	ObjectMgr->AddUIObject(HotBarBack::Create(ObjectMgr));
+
+	auto expFront = ExpBarFront::Create(ObjectMgr);
+	info->Attach(expFront->GetComponent<ExpComponent>());
+
+	ObjectMgr->AddUIObject(expFront);
+	ObjectMgr->AddUIObject(Slot::Create(ObjectMgr));
+
+	ObjectMgr->AddUIObject(Emerald::Create(ObjectMgr));
 }

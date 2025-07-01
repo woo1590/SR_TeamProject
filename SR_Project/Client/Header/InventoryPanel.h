@@ -5,12 +5,12 @@
 class InventoryPanel : public Object
 {
 private:
-	InventoryPanel(ObjectManager* owner, ObjectType type)
-		:Object(owner, type) {
+	InventoryPanel(ObjectManager* owner)
+		:Object(owner, ObjectType::UI) {
 	}
 
 public:
-	static InventoryPanel* Create(ObjectManager* owner, ObjectType type);
+	static InventoryPanel* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
 };
 

@@ -178,7 +178,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
     AdjustWindowRect(&windowSize, WS_OVERLAPPEDWINDOW, FALSE);
 
-    // È­¸é ÇØ»óµµ Á¤º¸ 
+    // È­ï¿½ï¿½ ï¿½Ø»ï¿½ ï¿½ï¿½ï¿½ï¿½ 
     int screenWidth = GetSystemMetrics(SM_CXSCREEN);
     int screenHeight = GetSystemMetrics(SM_CYSCREEN);
     int windowWidth = windowSize.right - windowSize.left;
