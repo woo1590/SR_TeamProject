@@ -90,64 +90,21 @@ HRESULT Loader::Load_TestScene()
 
 	/*--------------Load File Resource-----------------*/
 	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadTexture(L"../Resource/Texture/SkyBox/burger3.dds", L"Basic_SkyBox", TEXTURE::Tex_Cube);
-	skyboxMtrl->SetTexture(L"Basic_SkyBox");
-	resource->LoadMaterial(L"SkyBox_Mtrl", skyboxMtrl);
-
+	resource->LoadResource(L"../Resource/Texture/SkyBox/burger3.dds", L"Basic_SkyBox", TEXTURE::Tex_Cube, L"SkyBox_Mtrl");
+	
 	//////////////////////////////////////////////////////////////////////////////////
-	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadTexture(L"../Resource/Asset/HY/Body2.dds", L"Body", TEXTURE::Tex_Cube);
-	auto zombieMtrl = Material::Create();
-	zombieMtrl->SetTexture(L"Body");
-	resource->LoadMaterial(L"ZombieBody_Mtrl", zombieMtrl);
-
-	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadTexture(L"../Resource/Asset/HY/ZombieHead.dds", L"Head", TEXTURE::Tex_Cube);
-	zombieMtrl = Material::Create();
-	zombieMtrl->SetTexture(L"Head");
-	resource->LoadMaterial(L"ZombieHead_Mtrl", zombieMtrl);
-
-	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadTexture(L"../Resource/Asset/HY/Arm.dds", L"Arm", TEXTURE::Tex_Cube);
-	zombieMtrl = Material::Create();
-	zombieMtrl->SetTexture(L"Arm");
-	resource->LoadMaterial(L"ZombieArm_Mtrl", zombieMtrl);
-
-	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadTexture(L"../Resource/Asset/HY/Leg.dds", L"Leg", TEXTURE::Tex_Cube);
-	zombieMtrl = Material::Create();
-	zombieMtrl->SetTexture(L"Leg");
-	resource->LoadMaterial(L"ZombieLeg_Mtrl", zombieMtrl);
+	resource->LoadResource(L"../Resource/Asset/HY/Body2.dds", L"Body", TEXTURE::Tex_Cube, L"ZombieBody_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/ZombieHead.dds", L"Head", TEXTURE::Tex_Cube, L"ZombieHead_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/Arm.dds", L"Arm", TEXTURE::Tex_Cube, L"ZombieArm_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/Leg.dds", L"Leg", TEXTURE::Tex_Cube, L"ZombieLeg_Mtrl");
+	
 	//////////////////////////////////////////////////////////////////////////////////
-	resource->LoadTexture(L"../Resource/Texture/Player/playerHead.dds", L"playerHead", TEXTURE::Tex_Cube);
-	auto playerHeadMtrl = Material::Create();
-	playerHeadMtrl->SetTexture(L"playerHead");
-	resource->LoadMaterial(L"playerHead_Mtrl", playerHeadMtrl);
-
-	resource->LoadTexture(L"../Resource/Texture/Player/playerBody.dds", L"playerBody", TEXTURE::Tex_Cube);
-	auto playerBodyMtrl = Material::Create();
-	playerBodyMtrl->SetTexture(L"playerBody");
-	resource->LoadMaterial(L"playerBody_Mtrl", playerBodyMtrl);
-
-	resource->LoadTexture(L"../Resource/Texture/Player/playerRightArm.dds", L"playerRightArm", TEXTURE::Tex_Cube);
-	auto playerRightArmMtrl = Material::Create();
-	playerRightArmMtrl->SetTexture(L"playerRightArm");
-	resource->LoadMaterial(L"playerRightArm_Mtrl", playerRightArmMtrl);
-
-	resource->LoadTexture(L"../Resource/Texture/Player/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube);
-	auto playerLeftArmMtrl = Material::Create();
-	playerLeftArmMtrl->SetTexture(L"playerLeftArm");
-	resource->LoadMaterial(L"playerLeftArm_Mtrl", playerLeftArmMtrl);
-
-	resource->LoadTexture(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube);
-	auto playerRightLegMtrl = Material::Create();
-	playerRightLegMtrl->SetTexture(L"playerRightLeg");
-	resource->LoadMaterial(L"playerRightLeg_Mtrl", playerRightLegMtrl);
-
-	resource->LoadTexture(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLeg", TEXTURE::Tex_Cube);
-	auto playerLeftLegMtrl = Material::Create();
-	playerLeftLegMtrl->SetTexture(L"playerLeftLeg");
-	resource->LoadMaterial(L"playerLeftLeg_Mtrl", playerLeftLegMtrl);
+	resource->LoadResource(L"../Resource/Texture/Player/playerHead.dds", L"playerHead", TEXTURE::Tex_Cube, L"playerHead_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/playerBody.dds", L"playerBody", TEXTURE::Tex_Cube, L"playerBody_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/playerRightArm.dds", L"playerRightArm", TEXTURE::Tex_Cube, L"playerRightArm_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube, L"playerLeftArm_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
 
 	resource->LoadTexture(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"DirtBlock", cube);

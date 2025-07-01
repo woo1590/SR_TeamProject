@@ -41,7 +41,7 @@ HRESULT TestBlock::Ready_Object()
     switch (m_eType)
     {
     case Dirt:
-        renderer->SetMesh(L"DirtBlock");
+        renderer->SetMesh(L"Cube_Mesh");
         renderer->SetMaterial(L"DirtBlock_Mtrl");
         break;
     case GrassDirt:
