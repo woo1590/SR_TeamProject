@@ -98,6 +98,8 @@ namespace Engine
 		default:                return D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 		}
 	}
-	enum BlockType { Dirt, GrassDirt };
+
+	enum BlockType { Dirt, GrassDirt, Wood, WoodPlank, TypeEnd };
+	enum BlockDir { BlockX, BlockY, BlockZ, DirEnd };
 }
 #endif // Engine_Enum_h__

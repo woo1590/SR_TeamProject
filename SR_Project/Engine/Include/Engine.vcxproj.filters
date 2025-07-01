@@ -373,6 +373,9 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>05. Scene Component\CameraManager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ToolcamComponent.cpp">
+      <Filter>07. Object Component\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineCore.h">
@@ -591,6 +594,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CameraManager.h">
       <Filter>05. Scene Component\CameraManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolcamComponent.h">
+      <Filter>07. Object Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

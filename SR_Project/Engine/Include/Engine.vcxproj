@@ -272,6 +272,7 @@
     <ClInclude Include="..\Header\ThirdcamComponent.h" />
     <ClInclude Include="..\Header\Timer.h" />
     <ClInclude Include="..\Header\TimerManager.h" />
+    <ClInclude Include="..\Header\ToolcamComponent.h" />
     <ClInclude Include="..\Header\TransformComponent.h" />
     <ClInclude Include="..\Header\IObserver.h" />
     <ClInclude Include="..\Header\UIRenderer.h" />
@@ -379,6 +380,7 @@
     <ClCompile Include="..\Code\ThirdcamComponent.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerManager.cpp" />
+    <ClCompile Include="..\Code\ToolcamComponent.cpp" />
     <ClCompile Include="..\Code\TransformComponent.cpp" />
     <ClCompile Include="..\Code\IObserver.cpp" />
     <ClCompile Include="..\Code\UIRenderer.cpp" />

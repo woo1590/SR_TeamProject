@@ -7,7 +7,8 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
-TestBlock::TestBlock(ObjectManager* owner, ObjectType objType, BlockType blockType) : Object(owner, objType), m_eType(blockType)
+TestBlock::TestBlock(ObjectManager* owner, ObjectType objType, BlockType blockType, BlockDir blockDir)
+    : Object(owner, objType), m_eDir(blockDir), m_eType(blockType)
 {
 }
 
@@ -15,9 +16,9 @@ TestBlock::~TestBlock()
 {
 }
 
-TestBlock* TestBlock::Create(ObjectManager* owner, ObjectType objType, BlockType blockType)
+TestBlock* TestBlock::Create(ObjectManager* owner, ObjectType objType, BlockType blockType, BlockDir blockDir)
 {
-    TestBlock* Instance = new TestBlock(owner, objType, blockType);
+    TestBlock* Instance = new TestBlock(owner, objType, blockType, blockDir);
 
     if (FAILED(Instance->Ready_Object()))
     {
@@ -37,17 +38,36 @@ HRESULT TestBlock::Ready_Object()
     auto collision = AddComponent<CollisionComponent>();
     
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-
     switch (m_eType)
     {
     case Dirt:
         renderer->SetMesh(L"DirtBlock");
         renderer->SetMaterial(L"DirtBlock_Mtrl");
         break;
-
     case GrassDirt:
         renderer->SetMesh(L"GrassBlock");
         renderer->SetMaterial(L"GrassBlock_Mtrl");
+        break;
+    case Wood:
+        renderer->SetMesh(L"WoodBlock");
+        renderer->SetMaterial(L"WoodBlock_Mtrl");
+        break;
+    case WoodPlank:
+        renderer->SetMesh(L"WoodPlank");
+        renderer->SetMaterial(L"WoodPlank_Mtrl");
+        break;
+    }
+    
+    switch (m_eDir)
+    {
+    case BlockDir::BlockX:
+        transform->SetRotate({ 0.f, 0.f, D3DXToRadian(90.f) });
+        break;
+    case BlockDir::BlockY:
+        transform->SetRotate({ 0.f, 0.f, 0.f });
+        break;
+    case BlockDir::BlockZ:
+        transform->SetRotate({ D3DXToRadian(-90.f), 0.f, 0.f });
         break;
     }
 
