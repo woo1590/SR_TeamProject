@@ -378,12 +378,14 @@
     <ClCompile Include="..\Code\ExpComponent.cpp">
       <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TestBlock.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp">
       <Filter>07. Object Component\Physics</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AIController.cpp">
       <Filter>07. Object Component\AIController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestBlock.cpp">
+      <Filter>06. Object\Block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -603,12 +605,14 @@
     <ClInclude Include="..\Header\ExpComponent.h">
       <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\TestBlock.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h">
       <Filter>07. Object Component\Physics</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BehaviorTree.h">
       <Filter>07. Object Component\AIController\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestBlock.h">
+      <Filter>06. Object\Block</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
