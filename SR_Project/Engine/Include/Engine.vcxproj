@@ -153,10 +153,11 @@
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,10 +182,11 @@
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -221,6 +223,7 @@
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\Engine_UIStruct.h" />
+    <ClInclude Include="..\Header\ExpComponent.h" />
     <ClInclude Include="..\Header\FontComponent.h" />
     <ClInclude Include="..\Header\Frame.h" />
     <ClInclude Include="..\Header\FrameManager.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="..\Header\Object.h" />
     <ClInclude Include="..\Header\ObjectComponent.h" />
     <ClInclude Include="..\Header\ObjectManager.h" />
+    <ClInclude Include="..\Header\ProgressBar.h" />
     <ClInclude Include="..\Header\RendererComponent.h" />
     <ClInclude Include="..\Header\RenderSystem.h" />
     <ClInclude Include="..\Header\ResourceManager.h" />
@@ -311,6 +315,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\Code\ExpComponent.cpp" />
     <ClCompile Include="..\Code\FontComponent.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameManager.cpp" />
@@ -328,6 +333,7 @@
     <ClCompile Include="..\Code\Object.cpp" />
     <ClCompile Include="..\Code\ObjectComponent.cpp" />
     <ClCompile Include="..\Code\ObjectManager.cpp" />
+    <ClCompile Include="..\Code\ProgressBar.cpp" />
     <ClCompile Include="..\Code\RendererComponent.cpp" />
     <ClCompile Include="..\Code\RenderSystem.cpp" />
     <ClCompile Include="..\Code\ResourceManager.cpp" />

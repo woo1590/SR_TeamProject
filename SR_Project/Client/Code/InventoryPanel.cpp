@@ -3,9 +3,9 @@
 #include "UIRenderer.h"
 #include "TransformComponent.h"
 
-InventoryPanel* InventoryPanel::Create(ObjectManager* owner, ObjectType type)
+InventoryPanel* InventoryPanel::Create(ObjectManager* owner)
 {
-	auto* instance = new InventoryPanel(owner, type);
+	auto* instance = new InventoryPanel(owner);
 
 	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 }

@@ -33,11 +33,15 @@ namespace Engine
 
 	enum class NotifyType
 	{
+		None, 
 		HP_Changed,
-
+		EXP_Changed,
+		Player_Damaged
 	};
 
-	enum class UIPivot {Center, Bottom, LeftTop};
+	enum class BarDirection {Vertical, Horizontal};
+
+	enum class UIPivot {Center, Bottom, LeftTop, Left, Right};
 
 	enum class Color
 	{

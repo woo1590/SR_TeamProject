@@ -112,14 +112,20 @@
     <Filter Include="08. UI\01. Subject">
       <UniqueIdentifier>{be3b91ac-2cbb-4378-8c76-6997283b589b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\UIComponent\02. PlayerInfoComponent">
-      <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\UIComponent\00. HPBarComponent">
-      <UniqueIdentifier>{fa3ce7a5-cee8-45dd-89c8-5945d6e9c277}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Object Component\Font">
       <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\00. ProgressBarComponent">
+      <UniqueIdentifier>{afd873d1-0d6c-462b-bcd2-f62c0aa01196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\01. PlayerInfoComponent">
+      <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\02. HPComponent">
+      <UniqueIdentifier>{fa3ce7a5-cee8-45dd-89c8-5945d6e9c277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\03. ExpComponent">
+      <UniqueIdentifier>{adbc67f2-5ebb-4e0a-a1d3-5b42d0d6687f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,13 +256,19 @@
       <Filter>08. UI\01. Subject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerInfoComponent.cpp">
-      <Filter>07. Object Component\UIComponent\02. PlayerInfoComponent</Filter>
+      <Filter>07. Object Component\UIComponent\01. PlayerInfoComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HpComponent.cpp">
-      <Filter>07. Object Component\UIComponent\00. HPBarComponent</Filter>
+      <Filter>07. Object Component\UIComponent\02. HPComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp">
       <Filter>07. Object Component\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ProgressBar.cpp">
+      <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpComponent.cpp">
+      <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -411,13 +423,19 @@
       <Filter>99. Etc\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerInfoComponent.h">
-      <Filter>07. Object Component\UIComponent\02. PlayerInfoComponent</Filter>
+      <Filter>07. Object Component\UIComponent\01. PlayerInfoComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HpComponent.h">
-      <Filter>07. Object Component\UIComponent\00. HPBarComponent</Filter>
+      <Filter>07. Object Component\UIComponent\02. HPComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FontComponent.h">
       <Filter>07. Object Component\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ProgressBar.h">
+      <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpComponent.h">
+      <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

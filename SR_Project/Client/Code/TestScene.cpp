@@ -21,6 +21,11 @@
 #include "LoadingUI.h"
 #include "Cursor.h"
 #include "InventoryPanel.h"
+#include "UIDebugObj.h"
+#include "HotBarBack.h"
+#include "ExpBarFront.h"
+#include "Slot.h"
+#include "Emerald.h"
 
 //component
 #include "TransformComponent.h"
@@ -28,6 +33,9 @@
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
 #include "HpComponent.h"
+#include "PlayerInfoComponent.h"
+#include "HpComponent.h"
+#include "ExpComponent.h"
 
 TestScene::TestScene()
 {
@@ -47,32 +55,22 @@ TestScene* TestScene::Create()
 void TestScene::Load()
 {
 	ObjectMgr = ObjectManager::Create(this);
-
 	/*----------------Load ImGui----------------------*/
     EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->ImGuiTestFunc();});
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	//ObjectMgr->AddObject(ObjectType::Terrain, BasicTerrain::Create(ObjectMgr, ObjectType::Terrain));
-	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
 
 	auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
 	auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);
-	//camActor->GetComponent<ThirdcamComponent>()->SetFollowTarget(testObj);
 
 	ObjectMgr->AddObject(ObjectType::Player, testObj);
 	ObjectMgr->AddObject(ObjectType::Camera, camActor);
-	
-	/*------------------Load UI------------------------*/
+
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	const auto& info = player->GetComponent<PlayerInfoComponent>();
 	ObjectMgr->AddObject(ObjectType::Player, player);
-
-	//ObjectMgr->AddObject(ObjectType::UI, HPBarFront::Create(ObjectMgr, ObjectType::UI, info));
-	//ObjectMgr->AddObject(ObjectType::UI, HPBarBack::Create(ObjectMgr, ObjectType::UI));
-
-	//ObjectMgr->AddObject(ObjectType::Monster, BaseCharacter::Create(ObjectMgr, ObjectType::Monster));
-	/*----------------------------------------------------------------------------------------------*/
+	
+	LoadUI();
 }
 
 void TestScene::Update(float dt)
@@ -101,4 +99,28 @@ void TestScene::Free()
 {
 	Safe_Release(ObjectMgr);
 	Scene::Free();
+}
+
+void TestScene::LoadUI()
+{
+	const auto& info = player->GetComponent<PlayerInfoComponent>();
+	
+	auto hpBarFront = HPBarFront::Create(ObjectMgr);
+	info->Attach(hpBarFront->GetComponent<HpComponent>());
+	
+	ObjectMgr->AddUIObject(hpBarFront);
+
+	auto debugUI = UIDebugObj::Create(ObjectMgr);
+	ObjectMgr->AddUIObject(debugUI);
+	debugUI->SetPlayer(player);
+
+	ObjectMgr->AddUIObject(HotBarBack::Create(ObjectMgr));
+	
+	auto expFront = ExpBarFront::Create(ObjectMgr);
+	info->Attach(expFront->GetComponent<ExpComponent>());
+	
+	ObjectMgr->AddUIObject(expFront);
+	ObjectMgr->AddUIObject(Slot::Create(ObjectMgr));
+
+	ObjectMgr->AddUIObject(Emerald::Create(ObjectMgr));
 }

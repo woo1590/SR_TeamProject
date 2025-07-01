@@ -57,6 +57,11 @@ void ObjectManager::AddObject(ObjectType objType, Object* object)
 	Objects[static_cast<int>(objType)].push_back(object);
 }
 
+void ObjectManager::AddUIObject(Object* obj)
+{
+	Objects[static_cast<int>(ObjectType::UI)].push_back(obj);
+}
+
 Object* ObjectManager::GetFrontObject(ObjectType objType)
 {
 	return Objects[static_cast<int>(objType)].front();

@@ -7,6 +7,7 @@
 #include "MeshRendererComponent.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
+#include "PlayerInfoComponent.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType){}
 Player::~Player(){}
@@ -24,6 +25,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
 
     auto transform = AddComponent<TransformComponent>();
+    auto info = AddComponent<PlayerInfoComponent>();
+
     SetScale(1.f);
 
     SetMaterial(L"playerBody_Mtrl","Body");

@@ -14,7 +14,8 @@ public:
 	HRESULT Ready_Component(Object* owner);
 
 	void SetHp(int hp);
-	void AddHp(int amount) { SetHp(info.curHp + amount); }
+	void AddHp(int amount);
+	void AddExp(int amount);
 
 	const PlayerInfo& GetInfo() const { return info; }
 

@@ -139,8 +139,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/imgui</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,8 +161,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/imgui</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -178,6 +180,10 @@
     <ClInclude Include="..\Header\Bone.h" />
     <ClInclude Include="..\Header\CameraActor.h" />
     <ClInclude Include="..\Header\Cursor.h" />
+    <ClInclude Include="..\Header\DashUI.h" />
+    <ClInclude Include="..\Header\Emerald.h" />
+    <ClInclude Include="..\Header\ExpBarFront.h" />
+    <ClInclude Include="..\Header\HotBarBack.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
     <ClInclude Include="..\Header\InventoryPanel.h" />
@@ -188,8 +194,10 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
+    <ClInclude Include="..\Header\Slot.h" />
     <ClInclude Include="..\Header\TestObject.h" />
     <ClInclude Include="..\Header\TestScene.h" />
+    <ClInclude Include="..\Header\UIDebugObj.h" />
     <ClInclude Include="Client_Defines.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -200,6 +208,10 @@
     <ClCompile Include="..\Code\Bone.cpp" />
     <ClCompile Include="..\Code\CameraActor.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />
+    <ClCompile Include="..\Code\DashUI.cpp" />
+    <ClCompile Include="..\Code\Emerald.cpp" />
+    <ClCompile Include="..\Code\ExpBarFront.cpp" />
+    <ClCompile Include="..\Code\HotBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />
     <ClCompile Include="..\Code\InventoryPanel.cpp" />
@@ -210,8 +222,10 @@
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
+    <ClCompile Include="..\Code\Slot.cpp" />
     <ClCompile Include="..\Code\TestObject.cpp" />
     <ClCompile Include="..\Code\TestScene.cpp" />
+    <ClCompile Include="..\Code\UIDebugObj.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -52,18 +52,12 @@
     <Filter Include="02. Object\BaseCharacter\Bone">
       <UniqueIdentifier>{842e4533-b8b5-4f6a-95b3-74c679d50293}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\HPBarFront">
-      <UniqueIdentifier>{f48f0958-d4af-4bfd-a97b-e2af1b555b5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HPBarBack">
-      <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Player">
       <UniqueIdentifier>{6ffcf943-49b9-49bf-8352-399ad641cdbd}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\CameraActor">
       <UniqueIdentifier>{787cf409-8411-4408-97c8-8ddd782499c4}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="02. Object\UIObj\LoadingUI">
       <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
     </Filter>
@@ -72,6 +66,36 @@
     </Filter>
     <Filter Include="02. Object\UIObj\InventoryPanel">
       <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIDebugObj">
+      <UniqueIdentifier>{82419094-d92a-4d7d-8f56-5b4d4c56fcfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HotBar">
+      <UniqueIdentifier>{4c6908b3-1f5b-46ac-b116-07162d908392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HotBar\HotBarBack">
+      <UniqueIdentifier>{ff32a50f-0cee-4a9e-9413-9fa0992313bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ExpBar">
+      <UniqueIdentifier>{16799f8c-2f47-4ef2-a16b-c70cfaa1aabe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HpBar">
+      <UniqueIdentifier>{7f8466f6-7329-46f7-a639-08e72bf16f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HpBar\HPBarBack">
+      <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HpBar\HPBarFront">
+      <UniqueIdentifier>{f48f0958-d4af-4bfd-a97b-e2af1b555b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Slot">
+      <UniqueIdentifier>{eaed2440-bd7f-4420-8fde-f3ffe8ab7a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Dash">
+      <UniqueIdentifier>{eb00f7b4-9125-4f29-9595-578ffdc8f4bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Emerald">
+      <UniqueIdentifier>{b55a1429-2e13-414d-9c7a-24a3cf430b44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,17 +139,17 @@
       <Filter>02. Object\BaseCharacter\Bone</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HPBarFront.h">
-      <Filter>02. Object\UIObj\HPBarFront</Filter>
+      <Filter>02. Object\UIObj\HpBar\HPBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HPBarBack.h">
-      <Filter>02. Object\UIObj\HPBarBack</Filter>
+      <Filter>02. Object\UIObj\HpBar\HPBarBack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CameraActor.h">
       <Filter>02. Object\CameraActor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\Player</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\LoadingUI.h">
       <Filter>02. Object\UIObj\LoadingUI</Filter>
     </ClInclude>
@@ -134,6 +158,24 @@
     </ClInclude>
     <ClInclude Include="..\Header\InventoryPanel.h">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UIDebugObj.h">
+      <Filter>02. Object\UIObj\UIDebugObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HotBarBack.h">
+      <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarFront.h">
+      <Filter>02. Object\UIObj\ExpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Slot.h">
+      <Filter>02. Object\UIObj\Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DashUI.h">
+      <Filter>02. Object\UIObj\Dash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Emerald.h">
+      <Filter>02. Object\UIObj\Emerald</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,17 +219,17 @@
       <Filter>02. Object\BaseCharacter\Bone</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HPBarFront.cpp">
-      <Filter>02. Object\UIObj\HPBarFront</Filter>
+      <Filter>02. Object\UIObj\HpBar\HPBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HPBarBack.cpp">
-      <Filter>02. Object\UIObj\HPBarBack</Filter>
+      <Filter>02. Object\UIObj\HpBar\HPBarBack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CameraActor.cpp">
       <Filter>02. Object\CameraActor</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\LoadingUI.cpp">
       <Filter>02. Object\UIObj\LoadingUI</Filter>
     </ClCompile>
@@ -196,6 +238,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UIDebugObj.cpp">
+      <Filter>02. Object\UIObj\UIDebugObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HotBarBack.cpp">
+      <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarFront.cpp">
+      <Filter>02. Object\UIObj\ExpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Slot.cpp">
+      <Filter>02. Object\UIObj\Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DashUI.cpp">
+      <Filter>02. Object\UIObj\Dash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Emerald.cpp">
+      <Filter>02. Object\UIObj\Emerald</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -72,14 +72,16 @@ void MainApp::Run()
         Core->GetTimerManager()->Set_DeltaTime(L"Timer_Immediate");
 
         _float Immediate_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_Immediate");
-        if (Core->GetFrameManager()->IsPermitCall(L"Frame60", Immediate_DT))
-        {
-            Core->GetTimerManager()->Set_DeltaTime(L"Timer_FPS");
+        //if (Core->GetFrameManager()->IsPermitCall(L"Frame60", Immediate_DT))
+        //{
+        //   
+        //}
 
-            _float FPS_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
+        Core->GetTimerManager()->Set_DeltaTime(L"Timer_FPS");
 
-            Core->Tick(FPS_DT);
-        }
+        _float FPS_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
+
+        Core->Tick(FPS_DT);
     }
 }
 
