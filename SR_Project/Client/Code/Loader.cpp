@@ -118,6 +118,12 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadTexture(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"WoodPlank", cube);
 
+	resource->LoadTexture(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube);
+	resource->LoadMesh(L"WoodBlock", cube);
+
+	resource->LoadTexture(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube);
+	resource->LoadMesh(L"WoodPlank", cube);
+
 	auto dirtBlockMtrl = Material::Create();
 	dirtBlockMtrl->SetTexture(L"DirtBlock");
 	resource->LoadMaterial(L"DirtBlock_Mtrl", dirtBlockMtrl);

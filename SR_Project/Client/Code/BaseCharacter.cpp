@@ -53,13 +53,13 @@ HRESULT BaseCharacter::Ready_Object(ObjectManager* owner, ObjectType objType)
     Bones["LHand"] = Bone::Create(owner, objType, _vec3(Scale /2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieArm_Mtrl");
     Bones["LHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPosition(-11.f * Scale, 0.f, 0.f);
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
+    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(11.0f * Scale, -8.f * Scale, 0.0f));
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
     Bones["RHand"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieArm_Mtrl");
     Bones["RHand"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPosition(11.f * Scale, 0.f, 0.f);
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -6.f * Scale, 0.0f));
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(-11.0f * Scale, -8.f * Scale, 0.0f));
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
     Bones["LLeg"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieLeg_Mtrl");

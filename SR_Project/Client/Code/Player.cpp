@@ -18,11 +18,9 @@
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType)
 {
 }
-
 Player::~Player()
 {
 }
-
 Player* Player::Create(ObjectManager* owner, ObjectType objType)
 {
     Player* Instance = new Player(owner, objType);
@@ -39,24 +37,20 @@ Player* Player::Create(ObjectManager* owner, ObjectType objType)
 HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
-
-    auto transform = AddComponent<TransformComponent>();
-
+    //components
     auto info = AddComponent<PlayerInfoComponent>();
-
-    SetScale(0.1f);
-
+    //PlayerScale
+    SetScale(1.f);
+    //PlayerTexture
     SetMaterial(L"playerBody_Mtrl","Body");
     SetMaterial(L"playerHead_Mtrl","Head");
     SetMaterial(L"playerLeftArm_Mtrl","LHand");
     SetMaterial(L"playerRightArm_Mtrl","RHand");
     SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
-    
-    for (auto& pair : Bones) {
-        auto pBoneTransform = pair.second->GetComponent<TransformComponent>();
-        pBoneTransform->SetParent(transform);
-    }
+
+    auto transform = AddComponent<TransformComponent>();
+    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     return S_OK;
 }
@@ -65,8 +59,8 @@ void Player::Update(_float dt)
     BaseCharacter::Update(dt);
 
     PickingTerrain();
-    KeyInput(dt);
-    switch (m_eState) {
+    KeyInput(dt); // Set State by key
+    switch (State) { // Update by State
     case ePlayerState::IDLE:
         UpdateIdle(dt);
         break;
@@ -80,7 +74,6 @@ void Player::Update(_float dt)
         UpdateAttack(dt);
         break;
     }
-    //FixCursorToCenter();
 }
 void Player::Late_Update(_float dt)
 {
@@ -90,67 +83,73 @@ void Player::Free()
 {
     Object::Free();
 }
-
 void Player::PickingTerrain()
 {
-    auto Input = EngineCore::GetInstance()->GetInputSystem();
-    auto cam = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCameraManager()->GetMainCamera();
-    auto collision = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCollisionSystem();
+    auto input = EngineCore::GetInstance()->GetInputSystem();
+    auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
+    auto mainCam = curScene->GetCameraManager()->GetMainCamera();
+    auto collision = curScene->GetCollisionSystem();
+    const float yOffset = 3.7f;
 
-    if (Input->IsKeyPressed(LBUTTON))
+    if (input->IsKeyPressed(RBUTTON))
     {
-        Ray ray = cam->ScreenPointRay();
+        Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
         
         if (hit.IsHit)
         {
-            hit.Position.y += 3.f;
-            GetComponent<TransformComponent>()->SetPosition(hit.Position);
+            if (State == ePlayerState::IDLE) {
+                State = ePlayerState::WALK;
+                WalkTime = 0.f;
+            }
+            auto transform = GetComponent<TransformComponent>();
+            auto curPos = transform->GetPosition();
+            destinationPos = hit.Position;
+            destinationPos.y += yOffset;
+            PlayerDirection = destinationPos - curPos;
         }
     }
 }
-
 void Player::MovePlayer(_vec3 moveVec)
 {
+    //move player with move Value Vector
     auto transform = GetComponent<TransformComponent>();
     transform->SetPosition(transform->GetPosition()+moveVec);
 }
 void Player::RotatePlayer(_vec3 rotateVec)
 {
+    //rotate player with rotate Value Vector
     auto transform = GetComponent<TransformComponent>();
     transform->SetRotate(transform->GetRotate()+rotateVec);
 }
 void Player::SaveStartRotation()
 {
-    m_mapStartRotations["Player"] = GetComponent<TransformComponent>()->GetRotate();
-    m_mapStartRotations["Body"] = Bones["Body"]->GetComponent<TransformComponent>()->GetRotate();
-    m_mapStartRotations["Head"] = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
-    m_mapStartRotations["LHand"] = Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate();
-    m_mapStartRotations["RHand"] = Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate();
-    m_mapStartRotations["LLeg"] = Bones["LLeg"]->GetComponent<TransformComponent>()->GetRotate();
-    m_mapStartRotations["RLeg"] = Bones["RLeg"]->GetComponent<TransformComponent>()->GetRotate();
+    //save all bones rotation value
+    StartRotations["Player"] = GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["Body"] = Bones["Body"]->GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["Head"] = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["LHand"] = Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["RHand"] = Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["LLeg"] = Bones["LLeg"]->GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["RLeg"] = Bones["RLeg"]->GetComponent<TransformComponent>()->GetRotate();
 }
 void Player::FixCursorToCenter()
 {
+    //get window handle
     HWND hWnd = EngineCore::GetInstance()->GetWindowHandle();
-
-    // 클라이언트 중앙 좌표 계산
+    // get center
     RECT rcClient;
     GetClientRect(hWnd, &rcClient);
-
     POINT ptCenter;
     ptCenter.x = (rcClient.right - rcClient.left) / 2;
     ptCenter.y = (rcClient.bottom - rcClient.top) / 2;
-
-    // 클라이언트 좌표를 화면 좌표로 변환
+    // client to screen
     ClientToScreen(hWnd, &ptCenter);
-
-    // 현재 마우스 위치
+    // current cursor position
     POINT ptMouse;
     GetCursorPos(&ptMouse);
-
-    // 일정 거리 이상 벗어나면 중앙으로 강제 이동
-    const int iThreshold = 5; // 임계 거리 (픽셀)
+    // distance > limit -> move cursor to center
+    const int iThreshold = 5; // limit distance
     if (abs(ptMouse.x - ptCenter.x) > iThreshold || abs(ptMouse.y - ptCenter.y) > iThreshold) {
         SetCursorPos(ptCenter.x, ptCenter.y);
     }
@@ -160,7 +159,7 @@ void Player::UpdateIdle(_float dt)
     auto SmoothReset = [dt](TransformComponent* pTransform) {
         _vec3 vCurrentRot = pTransform->GetRotate();
         _vec3 vTargetRot = { 0.f, 0.f, 0.f };
-        float fSpeed = 5.f; // 회복 속도 조절용
+        float fSpeed = 5.f; // speed to target rotation;
 
         _vec3 vLerpedRot = vCurrentRot + (vTargetRot - vCurrentRot) * dt * fSpeed;
         pTransform->SetRotate(vLerpedRot);
@@ -172,43 +171,66 @@ void Player::UpdateIdle(_float dt)
     SmoothReset(Bones["LHand"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["RHand"]->GetComponent<TransformComponent>());
 }
-void Player::UpdateWalk(_float dt)
-{
-    m_fWalkTime += dt;
-
-    float fAngle = sinf(m_fWalkTime*10.f);
-    SetRotation( { fAngle, 0.f, 0.f }, "LLeg" );
-    SetRotation( { -fAngle, 0.f, 0.f }, "RLeg");
-
-    SetRotation( { -fAngle, 0.f, 0.f }, "LHand");
-    SetRotation( { fAngle, 0.f, 0.f }, "RHand");
-
-    _vec3 dirVec;
-    D3DXVec3Normalize(&dirVec, &m_playerDirection);
-    _vec3 moveVec = { dirVec.x * m_fSpeed * Scale * dt, dirVec.y * m_fSpeed * Scale * dt, dirVec.z * m_fSpeed * Scale * dt };
+void Player::UpdateWalk(_float dt) {
+    //walk time
+    WalkTime += dt;
+    //walk speed
+    float walkSpeed = 10.f;
+    //walk angle
+    float fAngle = sinf(WalkTime * walkSpeed);
+    SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
+    SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
+    SetRotation({ -fAngle, 0.f, 0.f }, "LHand");
+    SetRotation({ fAngle, 0.f, 0.f }, "RHand");
+    //normalize direction vector
+    _vec3 vDir;
+    D3DXVec3Normalize(&vDir, &PlayerDirection);
+    // move
+    _vec3 moveVec = {
+        vDir.x * Speed * Scale * dt,
+        0,
+        vDir.z * Speed * Scale * dt
+    };
     MovePlayer(moveVec);
-
-    const float changeDirDuration = 0.05f;
-    float fTargetYawRad = atan2f(dirVec.x, dirVec.z);
+    // rotate duration
+    const float fRotateDuration = 0.05f;
+    // direction to angle
+    float TargetAngle = atan2f(vDir.x, vDir.z);
+    // current direction
     _vec3 vCurRot = GetComponent<TransformComponent>()->GetRotate();
-    float fCurYaw = vCurRot.y;
-    float fDeltaYaw = fTargetYawRad - fCurYaw;
-    if (fDeltaYaw > D3DX_PI)
-        fDeltaYaw -= D3DX_PI * 2.f;
-    else if (fDeltaYaw < -D3DX_PI)
-        fDeltaYaw += D3DX_PI * 2.f;
-    float fYawStep = fDeltaYaw * (dt / changeDirDuration);
-    _vec3 rotateVec = { 0.f, fYawStep, 0.f };
-    RotatePlayer(rotateVec);
+    //angle normalize for fast spin
+    auto NormalizeAngle = [](float angle) {
+        while (angle > D3DX_PI) angle -= D3DX_PI * 2.f;
+        while (angle < -D3DX_PI) angle += D3DX_PI * 2.f;
+        return angle;
+    };
+    float curAngle = NormalizeAngle(vCurRot.y);
+    float deltaAngle = NormalizeAngle(TargetAngle - curAngle);
+    //get rotation value
+    float rotValue = deltaAngle * (dt / fRotateDuration);
+    //do rotate
+    RotatePlayer({ 0.f, rotValue, 0.f });
+
+    auto transform = GetComponent<TransformComponent>();
+    auto curPos = transform->GetPosition();
+    auto posGap = curPos - destinationPos;
+    auto distance = sqrtf(posGap.x * posGap.x + posGap.z * posGap.z);
+    if (distance < 1.f) {
+        State = ePlayerState::IDLE;
+        transform->SetPosition(curPos.x, destinationPos.y, curPos.z);
+    }
 }
 void Player::UpdateRoll(_float dt)
 {
+    //roll duration
     const float fRollDuration = 0.5f;
-    m_fRollTime += dt;
-
-    float fProgress = m_fRollTime / fRollDuration;
+    //roll time
+    RollTime += dt;
+    //roll progress
+    float fProgress = RollTime / fRollDuration;
+    //progress value clamping
     fProgress = std::clamp(fProgress, 0.f, 1.f);
-
+    //set lerp ratio
     float fLerpRatio = 0.f;
     if (fProgress <= 0.2f) {
         fLerpRatio = fProgress / 0.2f;
@@ -219,35 +241,35 @@ void Player::UpdateRoll(_float dt)
     else {
         fLerpRatio = 1.f;
     }
-
+    //lerp rotate value
     auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
         return start + offset * ratio;
     };
-
-    SetRotation(LerpRot(m_mapStartRotations["Head"], { 1.f, 0.f, 0.f }, fLerpRatio), "Head");
-    SetRotation(LerpRot(m_mapStartRotations["LLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "LLeg");
-    SetRotation(LerpRot(m_mapStartRotations["RLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "RLeg");
-    SetRotation(LerpRot(m_mapStartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
-    SetRotation(LerpRot(m_mapStartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
-
+    //set rotate
+    SetRotation(LerpRot(StartRotations["Head"], { 1.f, 0.f, 0.f }, fLerpRatio), "Head");
+    SetRotation(LerpRot(StartRotations["LLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "LLeg");
+    SetRotation(LerpRot(StartRotations["RLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "RLeg");
+    SetRotation(LerpRot(StartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
+    SetRotation(LerpRot(StartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
+    //set current angle with duration
     float fTotalRollAngle = D3DX_PI * 2.f;
     float fCurrentAngle = fTotalRollAngle * dt / fRollDuration;
-
+    //control y value while rolling
     float fYOffset = sinf(fProgress * D3DX_PI) * -15.f;
     auto transform = GetComponent<TransformComponent>();
     _vec3 vCurPos = transform->GetPosition();
     vCurPos.y = fYOffset;
     transform->SetPosition(vCurPos);
-
-    _vec3 moveVec = { 0.f, 0.f, 2 * m_fSpeed * Scale * dt };
+    //
+    _vec3 moveVec = { 0.f, 0.f, 2 * Speed * Scale * dt };
     MovePlayer(moveVec);
 
     _vec3 rotateVec = { fCurrentAngle, 0.f, 0.f };
     RotatePlayer(rotateVec);
 
-    if (m_fRollTime >= fRollDuration) {
-        m_fRollTime = 0.f;
-        m_eState = ePlayerState::WALK;
+    if (RollTime >= fRollDuration) {
+        RollTime = 0.f;
+        State = ePlayerState::WALK;
 
         _vec3 vCurRot = transform->GetRotate();
         vCurRot.x = 0.f;
@@ -259,27 +281,23 @@ void Player::UpdateAttack(_float dt) {
     // Rot : x- back / x+ front /  z- left / z+ right / y- lookRight / y+ lookLeft
     //AttackDelay
     const float fAttackDuration = 0.4f;
-    m_fAttackTime += dt;
-    float fProgress = m_fAttackTime / fAttackDuration;
+    AttackTime += dt;
+    float fProgress = AttackTime / fAttackDuration;
     fProgress = std::clamp(fProgress, 0.f, 1.f);
-    //change angle
-    auto DegreeToRadian = [](float deg) {
-        return deg * D3DX_PI / 180.f;
-    };
     //lerp
     auto Lerp = [](const _vec3& a, const _vec3& b, float t) {
         return a + (b - a) * t;
     };
     auto LerpRot = [&](const _vec3& startDeg, const _vec3& endDeg, float ratio) {
         _vec3 startRad = {
-            DegreeToRadian(startDeg.x),
-            DegreeToRadian(startDeg.y),
-            DegreeToRadian(startDeg.z)
+            D3DXToRadian(startDeg.x),
+            D3DXToRadian(startDeg.y),
+            D3DXToRadian(startDeg.z)
         };
         _vec3 endRad = {
-            DegreeToRadian(endDeg.x),
-            DegreeToRadian(endDeg.y),
-            DegreeToRadian(endDeg.z)
+            D3DXToRadian(endDeg.x),
+            D3DXToRadian(endDeg.y),
+            D3DXToRadian(endDeg.z)
         };
         return Lerp(startRad, endRad, ratio);
     };
@@ -317,29 +335,29 @@ void Player::UpdateAttack(_float dt) {
     };
     //rotateBones
     ApplyPhasedRotation("RHand",
-        m_mapStartRotations["RHand"],
+        StartRotations["RHand"],
         { -210.f, 10.f, -30.f },
-        { -150.f, 0.f, -30.f },
-        { -60.f, -10.f, 60.f }
+        { -150.f, 10.f, -30.f },
+        { -60.f, 10.f, 60.f }
     );
     ApplyPhasedRotation("LHand",
-        m_mapStartRotations["LHand"],
+        StartRotations["LHand"],
         { -30.f, 10.f, -10.f },
         { 0.f, 0.f, -10.f },
         { 30.f, -10.f, -10.f }
     );
-    ApplyPhasedRotation("LLeg", m_mapStartRotations["LLeg"],
+    ApplyPhasedRotation("LLeg", StartRotations["LLeg"],
         { -10.f, 0.f, 0.f },
         { 0.f, 0.f, -5.f },
         { 10.f, 0.f, 0.f }
     );
-    ApplyPhasedRotation("RLeg", m_mapStartRotations["RLeg"],
+    ApplyPhasedRotation("RLeg", StartRotations["RLeg"],
         { 10.f, 0.f, 0.f },
         { 0.f, 0.f, 5.f },
         { -10.f, 0.f, 0.f }
     );
     //rotatePlayer
-    _vec3 vPlayerStartRot = m_mapStartRotations["Player"];
+    _vec3 vPlayerStartRot = StartRotations["Player"];
     _vec3 vTwist1 = { 0.f, 30.f, 0.f };
     _vec3 vTwist2 = { 0.f, 0.f, 0.f };
     _vec3 vTwist3 = { 0.f, -60.f, 0.f };
@@ -361,20 +379,18 @@ void Player::UpdateAttack(_float dt) {
     }
     GetComponent<TransformComponent>()->SetRotate(vCurrentRot);
     //Exit State
-    if (m_fAttackTime >= fAttackDuration) {
-        m_fAttackTime = 0.f;
-        m_eState = ePlayerState::WALK;
+    if (AttackTime >= fAttackDuration) {
+        AttackTime = 0.f;
+        State = ePlayerState::WALK;
     }
 }
-
 void Player::KeyInput(_float dt)
 {
     CheckStateAttack(dt);
     CheckStateRoll(dt);
-    CheckStateWalk(dt);
-    CheckStateIdle(dt);
+    //CheckStateWalk(dt);
+    //CheckStateIdle(dt);
 }
-
 void Player::CheckStateAttack(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
@@ -382,16 +398,15 @@ void Player::CheckStateAttack(_float dt)
 
     //PRESS LBUTTON -> ATTACK
     if (input->IsKeyPressed(keyAttack)) {
-        switch (m_eState) {
+        switch (State) {
         case ePlayerState::IDLE: case ePlayerState::WALK:
-            m_eState = ePlayerState::ATTACK;
-            m_fAttackTime = 0.f;
+            State = ePlayerState::ATTACK;
+            AttackTime = 0.f;
             SaveStartRotation();
             break;
         }
     }
 }
-
 void Player::CheckStateWalk(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
@@ -404,39 +419,39 @@ void Player::CheckStateWalk(_float dt)
         input->IsKeyDown(keyWalkBack) ||
         input->IsKeyDown(keyWalkLeft) ||
         input->IsKeyDown(keyWalkRight)) {
-        switch (m_eState) {
+        switch (State) {
         case ePlayerState::IDLE:
-            m_eState = ePlayerState::WALK;
+            WalkTime = 0.f;
+            State = ePlayerState::WALK;
             break;
         }
     }
     if (input->IsKeyPressed(keyWalkFront)) {
-        m_playerDirection += { 0.f,0.f,1.f };
+        PlayerDirection += { 0.f,0.f,1.f };
     }
     if (input->IsKeyPressed(keyWalkBack)) {
-        m_playerDirection += { 0.f, 0.f, -1.f };
+        PlayerDirection += { 0.f, 0.f, -1.f };
     }
     if (input->IsKeyPressed(keyWalkLeft)) {
-        m_playerDirection += { -1.f, 0.f, 0.f };
+        PlayerDirection += { -1.f, 0.f, 0.f };
     }
     if (input->IsKeyPressed(keyWalkRight)) {
-        m_playerDirection += { 1.f, 0.f, 0.f };
+        PlayerDirection += { 1.f, 0.f, 0.f };
     }
 
     if (input->IsKeyRelease(keyWalkFront)) {
-        m_playerDirection -= { 0.f, 0.f, 1.f };
+        PlayerDirection -= { 0.f, 0.f, 1.f };
     }
     if (input->IsKeyRelease(keyWalkBack)) {
-        m_playerDirection -= { 0.f, 0.f, -1.f };
+        PlayerDirection -= { 0.f, 0.f, -1.f };
     }
     if (input->IsKeyRelease(keyWalkLeft)) {
-        m_playerDirection -= { -1.f, 0.f, 0.f };
+        PlayerDirection -= { -1.f, 0.f, 0.f };
     }
     if (input->IsKeyRelease(keyWalkRight)) {
-        m_playerDirection -= { 1.f, 0.f, 0.f };
+        PlayerDirection -= { 1.f, 0.f, 0.f };
     }
 }
-
 void Player::CheckStateRoll(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
@@ -444,14 +459,13 @@ void Player::CheckStateRoll(_float dt)
 
     //ISMOVING TRUE && PRESS SPACE -> ROLL
     if (input->IsKeyPressed(keyRoll)) {
-        switch (m_eState) {
+        switch (State) {
         case ePlayerState::WALK:
-            m_eState = ePlayerState::ROLL;
+            State = ePlayerState::ROLL;
             break;
         }
     }
 }
-
 void Player::CheckStateIdle(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
@@ -464,11 +478,10 @@ void Player::CheckStateIdle(_float dt)
         input->IsKeyRelease(keyWalkBack)  &&
         input->IsKeyRelease(keyWalkLeft)  &&
         input->IsKeyRelease(keyWalkRight) ) {
-        switch (m_eState) {
+        switch (State) {
         case ePlayerState::WALK:
-            m_eState = ePlayerState::IDLE;
-            m_playerDirection = { 0.f,0.f,0.f };
-            SaveStartRotation();
+            State = ePlayerState::IDLE;
+            PlayerDirection = { 0.f,0.f,0.f };
             break;
         }
     }
