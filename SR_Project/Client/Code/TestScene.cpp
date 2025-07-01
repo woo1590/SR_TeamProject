@@ -89,12 +89,12 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	//LoadBlock();
+	LoadBlock();
 
 	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 
 	/*------------------Load UI------------------------*/
-	LoadUI();
+	//LoadUI();
 	/*----------------------------------------------------------------------------------------------*/
 }
 

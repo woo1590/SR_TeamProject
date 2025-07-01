@@ -2,27 +2,23 @@
 #include "BaseCharacter.h"
 class Player : public BaseCharacter
 {   
+    //playerState
     enum class ePlayerState {
         IDLE,
         WALK,
         ROLL,
         ATTACK
     };
-public:
+public: //basic func
     static Player* Create(ObjectManager* owner, ObjectType objType);
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
-    
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
     void Free()override;
-
-private:
-    //�켮 �׽�Ʈ �ڵ�
-    void PickingTerrain();
-
+private: //func
     void KeyInput(_float dt);
     
     void CheckStateAttack(_float dt);
@@ -40,14 +36,17 @@ private:
     void SaveStartRotation();
 
     void FixCursorToCenter();
-private:
-    ePlayerState m_eState = ePlayerState::IDLE;
-    float m_fWalkTime = 0.f;
-    float m_fRollTime = 0.f;
-    float m_fAttackTime = 0.f;
+    void PickingTerrain();
 
-    std::unordered_map<std::string, _vec3> m_mapStartRotations;
-    float m_fSpeed = 100.f;
+private: //member variable
+    ePlayerState State = ePlayerState::IDLE;
+    float WalkTime = 0.f;
+    float RollTime = 0.f;
+    float AttackTime = 0.f;
 
-    _vec3 m_playerDirection = { 0.f, 0.f , 0.f };
+    std::unordered_map<std::string, _vec3> StartRotations;
+    float Speed = 10.f;
+
+    _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
+    _vec3 destinationPos = { 0.f, 0.f, 0.f };
 };
