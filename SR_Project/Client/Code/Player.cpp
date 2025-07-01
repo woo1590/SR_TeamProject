@@ -39,7 +39,7 @@ Player* Player::Create(ObjectManager* owner, ObjectType objType)
 HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
-
+    //abcd
     auto transform = AddComponent<TransformComponent>();
 
     auto info = AddComponent<PlayerInfoComponent>();
