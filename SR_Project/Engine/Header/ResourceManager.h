@@ -15,17 +15,16 @@ public:
     static ResourceManager* Create();
     HRESULT Ready_ResourceManager();
 
-    /*----------�ܺ� ���� �ε� �Լ�----------------*/
-    void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
+    /*----------File Load----------------*/
+    void LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey);
 
-    /*----------���� ���� �Լ�(�׽�Ʈ��)-------------*/
+    void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
     void LoadMesh(const std::wstring& key, Mesh* mesh);
     void LoadMaterial(const std::wstring& key, Material* mtrl);
 
     Mesh*           GetMesh(const std::wstring& key);
     Material*       GetMaterial(const std::wstring& key);
     LPDIRECT3DBASETEXTURE9 GetTexture(const std::wstring& key);
-    TerrainMesh*    GetTerrain(const std::wstring& key);
 
     void RegisterUILayer(const wstring& tag, int layer);
     optional<int> GetUILayer(const wstring& tag) const;

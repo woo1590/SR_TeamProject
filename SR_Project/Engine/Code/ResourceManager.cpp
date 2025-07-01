@@ -34,6 +34,14 @@ HRESULT ResourceManager::Ready_ResourceManager()
     return S_OK;
 }
 
+void ResourceManager::LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey)
+{
+    LoadTexture(texPath, texKey, texType);
+    auto mtrl = Material::Create();
+    mtrl->SetTexture(texKey);
+    LoadMaterial(mtrlKey, mtrl);
+}
+
 void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
 {
     LPDIRECT3DBASETEXTURE9 tex = nullptr;
