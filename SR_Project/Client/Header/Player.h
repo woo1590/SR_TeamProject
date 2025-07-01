@@ -21,6 +21,9 @@ private:
     void Free()override;
 
 private:
+    //우석 테스트 코드
+    void PickingTerrain();
+
     void MovePlayer(_vec3 moveVec);
     void RotatePlayer(_vec3 rotateVec);
     void KeyInput(_float dt);
@@ -34,6 +37,6 @@ private:
     float m_fRollTime = 0.f;
 
     std::unordered_map<std::string, _vec3> m_mapStartRotations;
-    float m_fSpeed = 0.f;
+    float m_fSpeed = 100.f;
 };
     

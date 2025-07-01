@@ -1,8 +1,11 @@
 #include "EnginePCH.h"
 #include "CollisionComponent.h"
+#include "EngineCore.h"
+#include "SceneManager.h"
 #include "GraphicDevice.h"
 #include "CollisionSystem.h"
 #include "Object.h"
+#include "Scene.h"
 
 //component
 #include "TransformComponent.h"
@@ -34,7 +37,7 @@ HRESULT CollisionComponent::Ready_Component()
 {
 	BBType = BoundingBoxType::Box;
 
-
+	EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCollisionSystem()->RegisterCollision(this);
 	return S_OK;
 }
 
@@ -95,7 +98,7 @@ bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)
 	tmax = (std::min)(tmax, tymax);
 
 	_float tzmin = (worldMin.z - ray.Origin.z) / ray.Direction.z;
-	_float tzmax = (worldMin.z - ray.Origin.z) / ray.Direction.z;
+	_float tzmax = (worldMax.z - ray.Origin.z) / ray.Direction.z;
 	if (tzmin > tzmax)
 		std::swap(tzmin, tzmax);
 
@@ -109,6 +112,7 @@ bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)
 
 	if (distance < hit.Distance)
 	{
+		hit.IsHit = true;
 		hit.Distance = (tmin >= 0.f) ? tmin : tmax;
 		hit.Position = ray.Origin + ray.Direction * hit.Distance;
 		hit.Component = this;

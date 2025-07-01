@@ -2,8 +2,10 @@
 #include "TestBlock.h"
 #include "UIRenderer.h"
 
+//component
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
+#include "CollisionComponent.h"
 
 TestBlock::TestBlock(ObjectManager* owner, ObjectType objType, BlockType blockType) : Object(owner, objType), m_eType(blockType)
 {
@@ -32,6 +34,8 @@ HRESULT TestBlock::Ready_Object()
     auto transform = AddComponent<TransformComponent>();
     transform->SetScale(1.f, 1.f, 1.f);
 
+    auto collision = AddComponent<CollisionComponent>();
+    
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
 
     switch (m_eType)

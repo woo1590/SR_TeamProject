@@ -4,6 +4,8 @@
 #include "CameraComponent.h"
 #include "EngineCore.h"
 #include "RenderSystem.h"
+#include "Scene.h"
+#include "EventSystem.h"
 
 CameraManager::CameraManager(Scene* owner)
 	:owner(owner)
@@ -46,8 +48,8 @@ bool CameraManager::SetMainCamera(const std::wstring& key)
 	if (iter != CameraMap.end())
 	{
 		MainCamera = iter->second;
-		EngineCore::GetInstance()->GetRenderSystem()->SetCamera(MainCamera);
 
+		EngineCore::GetInstance()->GetRenderSystem()->SetCamera(MainCamera);
 		return true;
 	}
 	else

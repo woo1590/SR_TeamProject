@@ -73,13 +73,13 @@ void MainApp::Run()
         Core->GetTimerManager()->Set_DeltaTime(L"Timer_Immediate");
 
         _float Immediate_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_Immediate");
-        if (Core->GetFrameManager()->IsPermitCall(L"Frame60", Immediate_DT))
+        if (true/*Core->GetFrameManager()->IsPermitCall(L"Frame60", Immediate_DT)*/)
         {
-            Core->GetTimerManager()->Set_DeltaTime(L"Timer_FPS");
+            //Core->GetTimerManager()->Set_DeltaTime(L"Timer_FPS");
 
-            _float FPS_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
+            //_float FPS_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
 
-            Core->Tick(FPS_DT);
+            Core->Tick(Immediate_DT);
         }
     }
 }
@@ -220,7 +220,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
     //ClipCursor(&clipRect);
 
-    ShowCursor(FALSE);
+    //ShowCursor(FALSE);
 
    /*--------------Raw Input---------------*/
    RAWINPUTDEVICE rid{};

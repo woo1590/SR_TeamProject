@@ -124,9 +124,6 @@
     <Filter Include="07. Object Component\Collision">
       <UniqueIdentifier>{1fabb508-3f70-42f6-9b54-e5dfa2c38cc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\Block">
-      <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05. Scene Component\EventSystem">
       <UniqueIdentifier>{f87e9172-c4cc-4273-a6d7-876226c23b74}</UniqueIdentifier>
     </Filter>
@@ -135,6 +132,9 @@
     </Filter>
     <Filter Include="05. Scene Component\CameraManager">
       <UniqueIdentifier>{16e084cc-28e0-42e1-ad97-7d1a4ad213c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\Block">
+      <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -283,7 +283,7 @@
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestBlock.cpp">
-      <Filter>07. Object Component\Block</Filter>
+      <Filter>06. Object\Block</Filter>
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>05. Scene Component\CameraManager</Filter>
@@ -459,7 +459,7 @@
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TestBlock.h">
-      <Filter>07. Object Component\Block</Filter>
+      <Filter>06. Object\Block</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CameraManager.h">
       <Filter>05. Scene Component\CameraManager</Filter>

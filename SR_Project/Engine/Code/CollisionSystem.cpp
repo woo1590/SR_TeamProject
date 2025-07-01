@@ -33,7 +33,7 @@ HRESULT CollisionSystem::Ready_CollisionSystem()
 	return S_OK;
 }
 
-void CollisionSystem::Update()
+void CollisionSystem::Late_Update()
 {
 }
 

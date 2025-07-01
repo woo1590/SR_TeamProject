@@ -58,10 +58,11 @@ void TestScene::Load()
 	CameraMgr = CameraManager::Create(this);
 
 	/*----------------Load ImGui----------------------*/
-    EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->PlayerInspector();});
+    EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
+	player->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 0.f);
 
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
@@ -69,7 +70,9 @@ void TestScene::Load()
 	CameraMgr->AddCamera(L"First_Camera", fCam);
 	CameraMgr->AddCamera(L"Third_Camera", tCam);
 	tCam->SetTarget(player);
+
 	CameraMgr->SetMainCamera(L"First_Camera");
+	EventSys->SetCamera();
 
 	ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
@@ -90,7 +93,6 @@ void TestScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
 	EventSys->Update();
-	CollisionSys->Update();
 
 	/*-------------카메라 전환 테스트 코드-------------*/
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -98,11 +100,14 @@ void TestScene::Update(float dt)
 		CameraMgr->SetMainCamera(L"First_Camera");
 	if (Input->IsKeyPressed(NUM2))
 		CameraMgr->SetMainCamera(L"Third_Camera");
+
+	/*-------------지형 픽킹 테스트 코드--------------*/
 }
 
 void TestScene::Late_Update(float dt)
 {
 	ObjectMgr->Late_Update(dt);
+	CollisionSys->Late_Update();
 }
 
 void TestScene::Unload()
@@ -110,7 +115,7 @@ void TestScene::Unload()
 
 }
 
-void TestScene::PlayerInspector()
+void TestScene::TestSceneImGui()
 {
 	ImGui::Begin("Player Inspector", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
@@ -191,6 +196,7 @@ void TestScene::LoadBlock()
 		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type);
 		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
 		ObjectMgr->AddObject(ObjectType::Block, block);
+
 		Blocks.push_back(newBlock);
 	}
 

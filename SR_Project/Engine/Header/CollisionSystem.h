@@ -7,6 +7,7 @@ class CollisionComponent;
 class Scene;
 typedef struct tagHitInfo
 {
+    _bool IsHit = false;
     CollisionComponent* Component = nullptr;
     _float              Distance = FLT_MAX;
     _vec3               Position{ 0.f,0.f,0.f };
@@ -23,10 +24,10 @@ private:
 public:
     static CollisionSystem* Create(Scene* owner);
     HRESULT Ready_CollisionSystem();
-    void Update();
+    void Late_Update();
     void RegisterCollision(CollisionComponent* collision);
 
-    HitInfo Raycast(Ray ray);   //���콺 ��ŷ ���� ó��
+    HitInfo Raycast(Ray ray);
 
 private:
     void Free()override;

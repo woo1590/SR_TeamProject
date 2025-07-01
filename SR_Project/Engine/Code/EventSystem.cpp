@@ -3,6 +3,8 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "CollisionSystem.h"
+#include "CameraManager.h"
+
 #include "Scene.h"
 
 //component
@@ -33,7 +35,7 @@ EventSystem* EventSystem::Create(Scene* owner)
 
 HRESULT EventSystem::Ready_EventSystem()
 {
-	
+
 	return S_OK;
 }
 
@@ -50,13 +52,14 @@ void EventSystem::Update()
 
 			hit = collision->Raycast(ray);
 
+
 		}
 	}
 }
 
-void EventSystem::SetCamera(CameraComponent* cam)
+void EventSystem::SetCamera()
 {
-	Camera = cam;
+	Camera = owner->GetCameraManager()->GetMainCamera();
 }
 
 void EventSystem::Free()

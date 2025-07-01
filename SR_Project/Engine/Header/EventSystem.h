@@ -17,7 +17,7 @@ public:
     HRESULT Ready_EventSystem();
     void Update();
 
-    void SetCamera(CameraComponent* cam);
+    void SetCamera();
 private:
     void Free()override;
 
