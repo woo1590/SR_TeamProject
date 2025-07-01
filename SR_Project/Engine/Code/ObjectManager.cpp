@@ -46,11 +46,16 @@ void ObjectManager::Late_Update(float dt)
 {
 	for (int type = 0; type < static_cast<int>(ObjectType::Count); ++type)
 	{
- 		for (const auto& object : Objects[type])
+		for (auto iter = Objects[type].begin(); iter != Objects[type].end();++iter)
 		{
-			object->Late_Update(dt);
+			(*iter)->Late_Update(dt);
+
+			if ((*iter)->IsDead())
+				DeadObjects.push_back(iter);
 		}
 	}
+
+	CleanDeadObject();
 }
 
 void ObjectManager::AddObject(ObjectType objType, Object* object)
@@ -95,6 +100,17 @@ Object* ObjectManager::GetFrontObject(ObjectType objType)
 std::list<Object*> ObjectManager::GetObjectList(ObjectType objType)
 {
 	return Objects[static_cast<int>(objType)];
+}
+
+void ObjectManager::CleanDeadObject()
+{
+	std::for_each(DeadObjects.begin(), DeadObjects.end(), 
+		[](std::list<Object*>::iterator iter) 
+		{
+			Safe_Release((*iter));
+		});
+
+	DeadObjects.clear();
 }
 
 void ObjectManager::Free()

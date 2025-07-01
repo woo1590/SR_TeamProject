@@ -38,6 +38,16 @@ void Object::Late_Update(float dt)
 	}
 }
 
+void Object::SetDead()
+{
+	Is_Dead = true;
+}
+
+_bool Object::IsDead() const
+{
+	return Is_Dead;
+}
+
 void Object::Free()
 {
 	std::for_each(Components.begin(), Components.end(), [](ObjectComponent* comp)

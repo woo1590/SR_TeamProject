@@ -21,8 +21,14 @@ public:
     void SetBoudingBox(BoundingBoxType bbType);
     void SetSize(_vec3 size);
 
+    _vec3 GetLocalMin()const;
+    _vec3 GetLocalMax()const;
+
     /*----------------Collision-----------------*/
-    bool RayIntersectAABB(Ray ray, HitInfo& hit);
+    _bool RayIntersectAABB(Ray ray, HitInfo& hit);
+
+    _bool CheckAABBCollision(CollisionComponent* other);
+    void ResolveAABBColiision(Object* other);
 private:
 
     void Free()override;

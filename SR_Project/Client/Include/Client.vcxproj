@@ -177,7 +177,6 @@
   <ItemGroup>
     <ClInclude Include="..\Header\Attack.h" />
     <ClInclude Include="..\Header\BaseCharacter.h" />
-    <ClInclude Include="..\Header\BasicTerrain.h" />
     <ClInclude Include="..\Header\Bone.h" />
     <ClInclude Include="..\Header\CameraActor.h" />
     <ClInclude Include="..\Header\Cursor.h" />
@@ -212,7 +211,6 @@
   <ItemGroup>
     <ClCompile Include="..\Code\Attack.cpp" />
     <ClCompile Include="..\Code\BaseCharacter.cpp" />
-    <ClCompile Include="..\Code\BasicTerrain.cpp" />
     <ClCompile Include="..\Code\Bone.cpp" />
     <ClCompile Include="..\Code\CameraActor.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />

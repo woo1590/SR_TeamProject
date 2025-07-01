@@ -70,7 +70,17 @@ void CollisionComponent::SetSize(_vec3 size)
 	LocalMax = half;
 }
 
-bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)
+_vec3 CollisionComponent::GetLocalMin() const
+{
+	return LocalMin;
+}
+
+_vec3 CollisionComponent::GetLocalMax() const
+{
+	return LocalMax;
+}
+
+_bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)
 {
 	auto transform = owner->GetComponent<TransformComponent>();
 	_matrix worldmat = transform->GetTranslateMatrix();	//스케일, 회전 적용 x
@@ -121,7 +131,62 @@ bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)
 	return true;
 }
 
+_bool CollisionComponent::CheckAABBCollision(CollisionComponent* other)
+{
+	_matrix worldMat = owner->GetComponent<TransformComponent>()->GetTranslateMatrix();
+	_matrix otherMat = other->GetOwner()->GetComponent<TransformComponent>()->GetTranslateMatrix();
 
+	_vec3 aMin, aMax;
+	_vec3 bMin, bMax;
+
+	D3DXVec3TransformCoord(&aMin, &LocalMin, &worldMat);
+	D3DXVec3TransformCoord(&aMax, &LocalMin, &worldMat);
+	D3DXVec3TransformCoord(&bMin, &other->LocalMin, &otherMat);
+	D3DXVec3TransformCoord(&bMax, &other->LocalMax, &otherMat);
+
+	if (aMin.x > bMax.x || aMax.x < bMin.x) return false;
+	if (aMin.y > bMax.y || aMax.y < bMin.y) return false;
+	if (aMin.z > bMax.z || aMax.z < bMin.z) return false;
+
+	return true;
+}
+
+void CollisionComponent::ResolveAABBColiision(Object* other)
+{
+	auto transform = owner->GetComponent<TransformComponent>();
+	auto otherTransform = other->GetComponent<TransformComponent>();
+
+	_matrix worldMat = transform->GetTranslateMatrix();
+	_matrix otherMat = otherTransform->GetTranslateMatrix();
+
+	_vec3 aCenter = transform->GetPosition();
+	_vec3 bCenter = otherTransform->GetPosition();
+
+	_vec3 aMin, aMax;
+	_vec3 bMin = other->GetComponent<CollisionComponent>()->GetLocalMin();
+	_vec3 bMax = other->GetComponent<CollisionComponent>()->GetLocalMax();
+
+	D3DXVec3TransformCoord(&aMin, &LocalMin, &worldMat);
+	D3DXVec3TransformCoord(&aMax, &LocalMin, &worldMat);
+	D3DXVec3TransformCoord(&bMin, &bMin, &worldMat);
+	D3DXVec3TransformCoord(&bMax, &bMax, &worldMat);
+
+	_float overlapX = (std::min)(aMax.x, bMax.x) - (std::max)(aMin.x, bMin.x);
+	_float overlapY = (std::min)(aMax.y, bMax.y) - (std::max)(aMin.y, bMin.y);
+	_float overlapZ = (std::min)(aMax.z, bMax.z) - (std::max)(aMin.z, bMin.z);
+
+	if (overlapX >= 0.f && overlapY >= 0.f && overlapZ >= 0.f)
+	{
+		if (overlapX <= overlapY && overlapX <= overlapZ)
+			transform->Translate((aCenter.x >= bCenter.x) ? overlapX : -overlapX, 0.f, 0.f);
+
+		else if (overlapY <= overlapX && overlapY <= overlapZ)
+			transform->Translate(0.f, (aCenter.y >= bCenter.y) ? overlapY : -overlapY, 0.f);
+
+		else if (overlapZ <= overlapX && overlapZ <= overlapY)
+			transform->Translate(0.f, 0.f, (aCenter.z >= bCenter.z) ? overlapZ : -overlapZ);
+	}
+}
 
 void CollisionComponent::Free()
 {

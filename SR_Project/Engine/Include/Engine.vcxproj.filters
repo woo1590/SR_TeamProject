@@ -76,9 +76,6 @@
     <Filter Include="07. Object Component\Renderer\MeshRenderer">
       <UniqueIdentifier>{b394fbd1-9893-426c-81d3-d988c2ed667c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\Renderer\TerrainRenderer">
-      <UniqueIdentifier>{353f7508-ec6b-4b56-a980-69e9dd7aa074}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Object Component\Camera">
       <UniqueIdentifier>{0668d1df-b002-4063-a884-894f195425e2}</UniqueIdentifier>
     </Filter>
@@ -129,7 +126,7 @@
     </Filter>
     <Filter Include="06. Object\Block">
       <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="07. Object Component\AIController">
       <UniqueIdentifier>{3fcffcda-7e73-4482-bb97-beac6473d08d}</UniqueIdentifier>
     </Filter>
@@ -183,6 +180,9 @@
     </Filter>
     <Filter Include="07. Object Component\UIComponent\03. ExpComponent">
       <UniqueIdentifier>{adbc67f2-5ebb-4e0a-a1d3-5b42d0d6687f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Physics">
+      <UniqueIdentifier>{ec25a13a-0b6f-4356-a096-1f9c8ab19d28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +242,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\FreecamComponent.cpp">
       <Filter>07. Object Component\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TerrainRenderer.cpp">
-      <Filter>07. Object Component\Renderer\TerrainRenderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputSystem.cpp">
       <Filter>01. Engine Component\InputSystem</Filter>
@@ -330,9 +327,6 @@
     <ClCompile Include="..\Code\CollisionSystem.cpp">
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TestBlock.cpp">
-      <Filter>07. Object Component\Block</Filter>
-	</ClCompile>
     <ClCompile Include="..\Code\BTNode.cpp">
       <Filter>07. Object Component\AIController\BehaviorTree\BTNode</Filter>
     </ClCompile>
@@ -372,21 +366,24 @@
     <ClCompile Include="..\Code\BehaviorTree.cpp">
       <Filter>07. Object Component\AIController\BehaviorTree</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\AIController.cpp">
-      <Filter>07. Object Component\AIController</Filter>
-      <Filter>06. Object\Block</Filter>
-    </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>05. Scene Component\CameraManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolcamComponent.cpp">
       <Filter>07. Object Component\Camera</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ProgressBar.cpp">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpComponent.cpp">
       <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestBlock.cpp" />
+    <ClCompile Include="..\Code\PhysicsComponent.cpp">
+      <Filter>07. Object Component\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AIController.cpp">
+      <Filter>07. Object Component\AIController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -464,9 +461,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\FreecamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TerrainRenderer.h">
-      <Filter>07. Object Component\Renderer\TerrainRenderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InputSystem.h">
       <Filter>01. Engine Component\InputSystem</Filter>
@@ -558,9 +552,6 @@
     <ClInclude Include="..\Header\CollisionSystem.h">
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\TestBlock.h">
-      <Filter>07. Object Component\Block</Filter>
-	</ClInclude>
     <ClInclude Include="..\Header\BTNode.h">
       <Filter>07. Object Component\AIController\BehaviorTree\BTNode</Filter>
     </ClInclude>
@@ -600,21 +591,24 @@
     <ClInclude Include="..\Header\AIController.h">
       <Filter>07. Object Component\AIController</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BehaviorTree.h">
-      <Filter>07. Object Component\AIController\BehaviorTree</Filter>
-      <Filter>06. Object\Block</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CameraManager.h">
       <Filter>05. Scene Component\CameraManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolcamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ProgressBar.h">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpComponent.h">
       <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestBlock.h" />
+    <ClInclude Include="..\Header\PhysicsComponent.h">
+      <Filter>07. Object Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BehaviorTree.h">
+      <Filter>07. Object Component\AIController\BehaviorTree</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

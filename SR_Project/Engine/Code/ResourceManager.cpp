@@ -34,14 +34,6 @@ HRESULT ResourceManager::Ready_ResourceManager()
     return S_OK;
 }
 
-void ResourceManager::LoadTerrain(const std::wstring& filePath, const std::wstring& key, _float cellSpacing, _float heightScale)
-{
-	auto terrain = TerrainMesh::Create();
-	terrain->LoadTerrain(filePath,cellSpacing,heightScale);
-
-	TerrainContainer[key] = terrain;
-}
-
 void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
 {
     LPDIRECT3DBASETEXTURE9 tex = nullptr;
@@ -102,16 +94,6 @@ LPDIRECT3DBASETEXTURE9 ResourceManager::GetTexture(const std::wstring& key)
         return nullptr;
 }
 
-TerrainMesh* ResourceManager::GetTerrain(const std::wstring& key)
-{
-	auto iter = TerrainContainer.find(key);
-
-	if (iter != TerrainContainer.end())
-		return iter->second;
-	else
-		return nullptr;
-}
-
 void ResourceManager::RegisterUILayer(const wstring& tag, int layer)
 {
     uiLayerTable.emplace(tag, layer);
@@ -136,11 +118,6 @@ void ResourceManager::Free()
         });
 
     std::for_each(TextureContainer.begin(), TextureContainer.end(), [](auto& pair)
-        {
-            Safe_Release(pair.second);
-        });
-
-    std::for_each(TerrainContainer.begin(), TerrainContainer.end(), [](auto& pair)
         {
             Safe_Release(pair.second);
         });
