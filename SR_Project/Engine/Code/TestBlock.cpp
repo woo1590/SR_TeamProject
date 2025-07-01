@@ -44,6 +44,14 @@ HRESULT TestBlock::Ready_Object()
         renderer->SetMesh(L"GrassBlock");
         renderer->SetMaterial(L"GrassBlock_Mtrl");
         break;
+    case Wood:
+        renderer->SetMesh(L"WoodBlock");
+        renderer->SetMaterial(L"WoodBlock_Mtrl");
+        break;
+    case WoodPlank:
+        renderer->SetMesh(L"WoodPlank");
+        renderer->SetMaterial(L"WoodPlank_Mtrl");
+        break;
     }
     
     switch (m_eDir)

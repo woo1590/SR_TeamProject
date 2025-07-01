@@ -49,6 +49,12 @@ void EditScene::Load()
 
 	resource->LoadTexture(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"GrassBlock", cube);
+
+	resource->LoadTexture(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube);
+	resource->LoadMesh(L"WoodBlock", cube);
+
+	resource->LoadTexture(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube);
+	resource->LoadMesh(L"WoodPlank", cube);
 	
 	auto dirtBlockMtrl = Material::Create();
 	dirtBlockMtrl->SetTexture(L"DirtBlock");
@@ -57,6 +63,14 @@ void EditScene::Load()
 	auto grassBlockMtrl = Material::Create();
 	grassBlockMtrl->SetTexture(L"GrassBlock");
 	resource->LoadMaterial(L"GrassBlock_Mtrl", grassBlockMtrl);
+
+	auto woodBlockMtrl = Material::Create();
+	woodBlockMtrl->SetTexture(L"WoodBlock");
+	resource->LoadMaterial(L"WoodBlock_Mtrl", woodBlockMtrl);
+
+	auto woodPlankMtrl = Material::Create();
+	woodPlankMtrl->SetTexture(L"WoodPlank");
+	resource->LoadMaterial(L"WoodPlank_Mtrl", woodPlankMtrl);
 
 	BlockData baseBlock{ {0, 0, 0}, BlockType::GrassDirt, BlockDir::BlockY };
 	Blocks.push_back(baseBlock);
@@ -112,7 +126,7 @@ void EditScene::ImGuiTest()
 	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
 	if (ImGui::Button("LOAD")) LoadBlock(load);
 
-	const char* blockTypeNames[] = { "Dirt", "GrassDirt" };
+	const char* blockTypeNames[] = { "Dirt", "GrassDirt", "Wood", "WoodPlank"};
 	if (ImGui::Combo("<- Type", &selectedBlockType, blockTypeNames, IM_ARRAYSIZE(blockTypeNames)))
 		blockType = static_cast<BlockType>(selectedBlockType);
 

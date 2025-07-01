@@ -38,6 +38,7 @@ HRESULT Camera::Ready_Object()
     auto transform = AddComponent<TransformComponent>();
     auto tCam = AddComponent<ToolcamComponent>();
     auto cam = AddComponent<CameraComponent>();
+    cam->SetMinMaxZ(1.f, 500.f);
     EngineCore::GetInstance()->GetRenderSystem()->SetCamera(cam);
 
     _vec3 Pos{ -10.f, 10.f, -10.f };

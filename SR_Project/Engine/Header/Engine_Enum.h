@@ -99,7 +99,7 @@ namespace Engine
 		}
 	}
 
-	enum BlockType { Dirt, GrassDirt, TypeEnd };
+	enum BlockType { Dirt, GrassDirt, Wood, WoodPlank, TypeEnd };
 	enum BlockDir { BlockX, BlockY, BlockZ, DirEnd };
 }
 #endif // Engine_Enum_h__
