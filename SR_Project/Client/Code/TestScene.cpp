@@ -64,6 +64,7 @@ void TestScene::Load()
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 0.f);
+	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
@@ -82,12 +83,10 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	//LoadBlock();
 
-	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 	
 	/*------------------Load UI------------------------*/
 	const auto& info = player->GetComponent<PlayerInfoComponent>();
-	ObjectMgr->AddObject(ObjectType::Player, player);
 	ObjectMgr->AddObject(ObjectType::UI, Cursor::Create(ObjectMgr, ObjectType::UI));
 	/*----------------------------------------------------------------------------------------------*/
 }
