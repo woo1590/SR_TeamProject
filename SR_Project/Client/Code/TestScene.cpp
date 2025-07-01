@@ -80,7 +80,7 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	LoadBlock();
+	//LoadBlock();
 
 	ObjectMgr->AddObject(ObjectType::Player, TestObject::Create(ObjectMgr, ObjectType::Player));
 	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
@@ -196,7 +196,7 @@ void TestScene::LoadBlock()
 		if (!ReadFile(hFile, &newBlock, sizeof(BlockData), &dwByte, nullptr)) return;
 		if (dwByte == 0) break;
 
-		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type);
+		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type,newBlock.Dir);
 		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
 		ObjectMgr->AddObject(ObjectType::Block, block);
 
