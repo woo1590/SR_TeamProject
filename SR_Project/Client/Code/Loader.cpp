@@ -134,6 +134,7 @@ HRESULT Loader::Load_TestScene()
 	woodPlankMtrl->SetTexture(L"WoodPlank");
 	resource->LoadMaterial(L"WoodPlank_Mtrl", woodPlankMtrl);
 
+	//merge
 	return S_OK;
 }
 
