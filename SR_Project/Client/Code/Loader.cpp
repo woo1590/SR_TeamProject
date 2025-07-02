@@ -154,6 +154,7 @@ HRESULT Loader::Load_TestScene()
 	playerLeftLegMtrl->SetTexture(L"playerLeftLeg");
 	resource->LoadMaterial(L"playerLeftLeg_Mtrl", playerLeftLegMtrl);
 
+	//merge
 	return S_OK;
 }
 
