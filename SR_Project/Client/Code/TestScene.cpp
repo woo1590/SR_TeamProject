@@ -98,8 +98,6 @@ void TestScene::Load()
 	//ObjectMgr->AddObject(ObjectType::Player, testObj);
 	//ObjectMgr->AddObject(ObjectType::Camera, camActor);
 	//
-	player = Player::Create(ObjectMgr, ObjectType::Player);
-	ObjectMgr->AddObject(ObjectType::Player, player);
 	
 	UILoader loader;
 	loader.LoadUI(ObjectMgr, player);
