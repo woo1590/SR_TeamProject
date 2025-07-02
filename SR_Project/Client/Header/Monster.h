@@ -58,7 +58,7 @@ protected:
 
 protected:
     MonsterState        State = MonsterState::Idle;
-    _float              Speed = 10.f;
+    _float              Speed = 7.f;
     
     Animation           WalkAnim;
     Animation           AttackAnim;

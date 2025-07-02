@@ -370,9 +370,11 @@
       <Filter>06. Object\Block</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp" />
-    <ClCompile Include="..\Code\ObjectComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp">
       <Filter>99. Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObjectComponent.cpp">
+      <Filter>07. Object Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -590,7 +592,9 @@
       <Filter>06. Object\Block</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InfoComponent.h" />
-    <ClInclude Include="..\Header\ObjectComponent.h" />
+    <ClInclude Include="..\Header\ObjectComponent.h">
+      <Filter>07. Object Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Header\Math.inl">
