@@ -74,7 +74,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    bb->SetValue("Distance", new float(10.f));
+    bb->SetValue("Distance", new float(3.f));
 
     auto AI = AddComponent<AIController>(bt, bb);
 
@@ -130,7 +130,8 @@ void Monster::InitAnimation()
     //WalkAnim.Start = ;
 
     //Attack
-    AttackAnim.TotalTime = 1.f;
+    AttackAnim.TotalTime = 0.7f;
+    AttackAnim.DelayTime = 0.f;
 
     //Die
     DieAnim.Start = 0;                  //start angle
@@ -180,6 +181,9 @@ void Monster::PlayWalk(_float dt)
 void Monster::PlayAttack(_float dt)
 {
     //attack animation
+    AttackAnim.DelayTime -= dt;
+    if (AttackAnim.DelayTime > 0.f) return;
+
     AttackAnim.ElapsedTime += dt;
 
     float Angle = sinf(AttackAnim.ElapsedTime/ AttackAnim.TotalTime * D3DX_PI * 2);
@@ -199,7 +203,11 @@ void Monster::PlayAttack(_float dt)
     if (AttackAnim.ElapsedTime > AttackAnim.TotalTime)
     {
         AttackAnim.IsEnd = true;
-        //AttackAnim.TotalTime = 0.f;
+        AttackAnim.ElapsedTime = 0.f;
+        AttackAnim.DelayTime = 2.f;
+
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LHand");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RHand");
     }
 }
 
