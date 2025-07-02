@@ -22,6 +22,7 @@ HRESULT UIDebugObj::Ready_Object()
 	auto renderer  = AddComponent<UIRenderer>();
 	auto font      = AddComponent<FontComponent>();
 
+	font->SetFontType(FontType::Title);
 
 	return S_OK;
 }
@@ -33,7 +34,7 @@ void UIDebugObj::Update(float dt)
 	auto font = GetComponent<FontComponent>();
 
 	font->ClearText();
-	font->AddText(L"Lv: " + to_wstring(info.level), {650,650,850,770},Color::Cyan);
+	//font->AddText(L"Lv: " + to_wstring(info.level), {650,650,850,770},Color::Cyan);
 
 	accTime += dt;
 	++frameCount;
@@ -44,6 +45,8 @@ void UIDebugObj::Update(float dt)
 		accTime = 0.f;
 		frameCount = 0;
 	}
+
+	font->AddText(L"Lv: " + to_wstring((int)fps), { 650,450,850,650 }, Color::Cyan);
 	
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::LBUTTON))

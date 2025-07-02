@@ -106,6 +106,11 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
 
+	/////////////////////////////////////////////////////////////////////////////////
+	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Body.dds", L"SkeletonBody", TEXTURE::Tex_Cube, L"SkeletonBody_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Face.dds", L"SkeletonFace", TEXTURE::Tex_Cube, L"SkeletonFace_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
+
 	resource->LoadTexture(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"DirtBlock", cube);
 

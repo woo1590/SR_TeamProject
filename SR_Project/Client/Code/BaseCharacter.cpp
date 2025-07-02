@@ -99,16 +99,33 @@ void BaseCharacter::Attack(Object* target)
 {
 }
 
+void BaseCharacter::Add_Bone(string str, ObjectType objType, Object* parent, const wstring& mtrl)
+{
+    Bones[str] = Bone::Create(owner, objType, _vec3(1.f, 1.f, 1.f), parent, mtrl);
+
+    owner->AddObject(objType, Bones[str]);
+    //scale position 따로 설정하셈
+}
+
 void BaseCharacter::Free()
 {
     Object::Free();
 }
 
-void BaseCharacter::SetMaterial(const std::wstring& mtrl, string str)
+void BaseCharacter::SetMaterial(const std::wstring& mtrl, string str, RENDER_ID id)
 {
     if (Bones[str] != nullptr)
     {
         Bones[str]->GetComponent<MeshRenderer>()->SetMaterial(mtrl);
+        Bones[str]->GetComponent<MeshRenderer>()->SetRenderID(id);
+    }
+}
+
+void BaseCharacter::SetScale(_vec3 scale, string str)
+{
+    if (Bones[str] != nullptr)
+    {
+        Bones[str]->GetComponent<TransformComponent>()->SetScale(scale);
     }
 }
 
