@@ -63,11 +63,13 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!InputSys)
 		return E_FAIL;
 
+#ifdef USE_IMGUI
 	ImGuiMgr = ImGuiManager::Create(hWnd);
 	if (!ImGuiMgr)
 		return E_FAIL;
 
 	ImGuiMgr->RegisterWindow(L"Debug", [this]() {this->DebugSetting_IMGUI();});
+#endif
 
 	return S_OK;
 }
@@ -75,7 +77,10 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 void EngineCore::Tick(float dt)
 {
 	InputSys->BeginFrame();
+
+#ifdef USE_IMGUI
 	ImGuiMgr->BeginFrame();
+#endif
 
 	SceneMgr->Update(dt);
 	SceneMgr->Late_Update(dt);
@@ -84,9 +89,12 @@ void EngineCore::Tick(float dt)
 
 	RenderSys->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 	RenderSys->Render();
-	ImGuiMgr->Render();
-	RenderSys->Render_End();
 
+#ifdef USE_IMGUI
+	ImGuiMgr->Render();
+#endif
+
+	RenderSys->Render_End();
 	InputSys->EndFrame();
 }
 
@@ -120,10 +128,12 @@ SoundManager* EngineCore::GetSoundManager() const
 	return SoundMgr;
 }
 
+#ifdef USE_IMGUI
 ImGuiManager* EngineCore::GetImGuiManager() const
 {
 	return ImGuiMgr;
 }
+#endif
 
 RenderSystem* EngineCore::GetRenderSystem() const
 {
@@ -145,6 +155,7 @@ HWND EngineCore::GetWindowHandle() const
 	return hWnd;
 }
 
+#ifdef USE_IMGUI
 void EngineCore::DebugSetting_IMGUI()
 {
 	ImGui::Begin("Debug Settings");
@@ -161,6 +172,7 @@ void EngineCore::DebugSetting_IMGUI()
 
 	ImGui::End();
 }
+#endif
 
 void EngineCore::Free()
 {
@@ -172,7 +184,9 @@ void EngineCore::Free()
 	Safe_Release(RenderSys);
 	Safe_Release(LightSys);
 	Safe_Release(InputSys);
-	Safe_Release(ImGuiMgr);
 
+#ifdef USE_IMGUI	
+	Safe_Release(ImGuiMgr);
+#endif
 	GraphicDevice::GetInstance()->DestroyInstance();
 }

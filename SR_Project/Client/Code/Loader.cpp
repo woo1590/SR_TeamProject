@@ -187,15 +187,15 @@ HRESULT Loader::load_UIResources()
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();
 	const wstring basePath = L"../Resource/Jehyun/";
-
+	
 	for (auto const [key, type] : uiTexture)
 	{
 		rm->LoadTexture(basePath + key + L".png", key, type);
-
+	
 		if (auto it = uiLayers.find(key); it != uiLayers.end())
 			rm->RegisterUILayer(key, it->second);
 	}
-
+	
 	return S_OK;
 }
 

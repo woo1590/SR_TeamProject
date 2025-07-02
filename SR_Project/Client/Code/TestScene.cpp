@@ -60,9 +60,11 @@ void TestScene::Load()
 	CollisionSys = CollisionSystem::Create(this);
 	CameraMgr = CameraManager::Create(this);
 
+#ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
 
+#endif
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 0.f);
@@ -77,6 +79,9 @@ void TestScene::Load()
 	
 	CameraMgr->SetMainCamera(L"First_Camera");
 	EventSys->SetCamera();
+
+	ObjectMgr->AddObject(ObjectType::Camera, fCam);
+	ObjectMgr->AddObject(ObjectType::Camera, tCam);
 	
 	//ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	//ObjectMgr->AddObject(ObjectType::Camera, tCam);
@@ -90,13 +95,6 @@ void TestScene::Load()
 	/*------------------Load UI------------------------*/
 	//LoadUI();
 	/*----------------------------------------------------------------------------------------------*/
-	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-
-	//auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
-	//auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);
-	
-	//ObjectMgr->AddObject(ObjectType::Player, testObj);
-	//ObjectMgr->AddObject(ObjectType::Camera, camActor);
 	
 	UILoader loader;
 	loader.LoadUI(ObjectMgr, player);
@@ -128,6 +126,7 @@ void TestScene::Unload()
 
 }
 
+#ifdef USE_IMGUI
 void TestScene::TestSceneImGui()
 {
 	ImGui::Begin("Player Inspector", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
@@ -173,6 +172,7 @@ void TestScene::TestSceneImGui()
 	ImGui::End();
 
 }
+#endif
 
 void TestScene::Free()
 {

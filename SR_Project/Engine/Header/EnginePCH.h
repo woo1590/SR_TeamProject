@@ -8,7 +8,6 @@
 #include <malloc.h>
 #include <memory.h>
 
-
 //DirectX
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -49,11 +48,10 @@
 #include <fmod.hpp>
 
 #ifdef _DEBUG
-#define USE_IMGUI
+//#define USE_IMGUI
 #endif
 
 #ifndef USE_IMGUI
-
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC

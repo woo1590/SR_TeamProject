@@ -36,7 +36,10 @@ public:
     SceneManager*       GetSceneManager()const;
     ResourceManager*    GetResourceManager()const;
     SoundManager*       GetSoundManager()const;
+
+#ifdef USE_IMGUI
     ImGuiManager*       GetImGuiManager()const;
+#endif
 
     RenderSystem*       GetRenderSystem()const;
     LightSystem*        GetLightSystem()const;
@@ -44,8 +47,10 @@ public:
 
     HWND GetWindowHandle()const;
 
+#ifdef USE_IMGUI
     /*-----Debug Mode------*/
     void DebugSetting_IMGUI();
+#endif
     _bool IsDebugMode()const { return Debug_Mode; }
 private:
     TimerManager* TimerMgr;
@@ -53,7 +58,10 @@ private:
     SceneManager* SceneMgr;
     ResourceManager* ResourceMgr;
     SoundManager* SoundMgr;
+
+#ifdef USE_IMGUI
     ImGuiManager* ImGuiMgr;
+#endif
 
     RenderSystem* RenderSys;
     LightSystem* LightSys;
