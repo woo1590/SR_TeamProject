@@ -270,13 +270,30 @@ void Player::UpdateRoll(_float dt)
     //set current angle with duration
     float fTotalRollAngle = D3DX_PI * 2.f ;
     float fCurrentAngle = fTotalRollAngle * dt / fRollDuration;
-    //rotate vector
+    //rotate vector before
+    //RotatePlayer({ fCurrentAngle, 0.f, 0.f });
+    
+    //rotate vector with cross
     D3DXVec3Normalize(&moveVec, &moveVec);
     _vec3 vUp = { 0.f, 1.f, 0.f };
     _vec3 vAxis;
     D3DXVec3Cross(&vAxis, &vUp, &moveVec);
     _vec3 rotateVec = { vAxis.x * fCurrentAngle , vAxis.y * fCurrentAngle , vAxis.z * fCurrentAngle };
     RotatePlayer(rotateVec);
+    
+    //rotate vector with dot
+    //D3DXVec3Normalize(&moveVec, &moveVec);
+    //_vec3 vStdDir = { 0.f, 0.f, 1.f };
+    //float fDot = D3DXVec3Dot(&vStdDir, &vDir);
+    //fDot = std::clamp(fDot, -1.f, 1.f);
+    //float fYaw = acosf(fDot);
+    //_vec3 vCross;
+    //D3DXVec3Cross(&vCross, &vStdDir, &vDir);
+    //if (vCross.y < 0.f) fYaw = -fYaw; 
+    //_vec3 vOrigRot = transform->GetRotate();
+    //RotatePlayer(_vec3(0.f, -fYaw, 0.f));
+    //RotatePlayer({ fCurrentAngle, 0.f, 0.f });
+    //RotatePlayer(_vec3(0.f, fYaw, 0.f));
     //finish roll
     if (RollTime >= fRollDuration) {
         RollTime = 0.f;
@@ -284,6 +301,8 @@ void Player::UpdateRoll(_float dt)
 
         _vec3 vCurRot = transform->GetRotate();
         vCurRot.x = 0.f;
+
+
         vCurRot.z = 0.f;
         transform->SetRotate(vCurRot);
     }
