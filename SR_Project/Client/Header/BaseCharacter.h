@@ -25,6 +25,7 @@ protected:
     void SetScale(float scale);
     void SetPosition(_vec3 position, string str = "Body");
     void SetRotation(_vec3 rotation, string str = "Body");
+    void SetTranslate(_vec3 translate, string str = "Body");
 
 protected:
     void Free() override;

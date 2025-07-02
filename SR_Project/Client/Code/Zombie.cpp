@@ -41,6 +41,7 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
 
+    //InitTransform
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 6.f * Scale, 0.0f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
@@ -50,11 +51,12 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto transform = AddComponent<TransformComponent>();
 
     auto collision = AddComponent<CollisionComponent>();
-    collision->SetSize(_vec3(2.f, 7.f, 2.f));
+    collision->SetSize(_vec3(3.5f, 7.f, 2.5f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
-    transform->SetPosition(_vec3(-30.f, 30.f, 0.f));        //???? ????
+    transform->SetPosition(_vec3(-30.f, 0.f, 0.f));
 
+    //Create BT
     ChaseNode* chase = new ChaseNode();
     AttackNode* attack = new AttackNode();
     IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(attack);
@@ -88,21 +90,20 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void Zombie::Update(_float dt)
 {
-    BaseCharacter::Update(dt);
+    Monster::Update(dt);
     PlayAnimation(dt);
     //Hp -= 0.05f;
 }
 
 void Zombie::Late_Update(_float dt)
 {
-    BaseCharacter::Late_Update(dt);
+    Monster::Late_Update(dt);
 }
 
 void Zombie::MoveTo(_vec3* dir, _float dt)
 {
-    if (State != MonsterState::Walk) State = MonsterState::Walk;
-
     auto Transform = GetComponent<TransformComponent>();
+    if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
     Transform->Translate(*dir * dt * Speed);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
@@ -110,7 +111,14 @@ void Zombie::MoveTo(_vec3* dir, _float dt)
 
 void Zombie::Attack(Object* target)
 {
-    if (State != MonsterState::Attack) State = MonsterState::Attack;
+    if (State != MonsterState::Attack)
+    {
+        State = MonsterState::Attack;
+        AttackAnim.DelayTime = 0.f;
+        AttackAnim.ElapsedTime = 0;
+        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+    }
     //?תפ?
 }
 
@@ -121,8 +129,8 @@ void Zombie::Die()
         State = MonsterState::Die;
 
         DieAnim.ElapsedTime = 0;
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LHand");
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RHand");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
     }
@@ -162,6 +170,11 @@ void Zombie::PlayAnimation(_float dt)
         PlayDie(dt);
         break;
     }
+    if (State != MonsterState::Attack)
+    {
+        auto Transform = GetComponent<TransformComponent>();
+        SetRotation(_vec3(Transform->GetRotate().x, 0.f, Transform->GetRotate().z), "Body");
+    }   //modify
 }
 
 void Zombie::PlayIdle(_float dt)
@@ -178,8 +191,8 @@ void Zombie::PlayWalk(_float dt)
     SetRotation({ Angle, 0.f, 0.f }, "LLeg");
     SetRotation({ -Angle, 0.f, 0.f }, "RLeg");
 
-    SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LHand");
-    SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RHand");
+    SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+    SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
 }
 
 void Zombie::PlayAttack(_float dt)
@@ -197,8 +210,8 @@ void Zombie::PlayAttack(_float dt)
     SetRotation({ -Angle / 2,0.f, 0.f });
 
     //Hand 
-    SetRotation({ 180 - Angle * 2, 0.f, 0.f }, "LHand");
-    SetRotation({ 180 - Angle * 2, 0.f, 0.f }, "RHand");
+    SetRotation({ 180 - Angle * 2, 0.f, 0.f }, "LArm");
+    SetRotation({ 180 - Angle * 2, 0.f, 0.f }, "RArm");
 
     // Leg
     SetRotation({ Angle / 2, 0.f, 0.f }, "LLeg");
@@ -210,8 +223,8 @@ void Zombie::PlayAttack(_float dt)
         AttackAnim.ElapsedTime = 0.f;
         AttackAnim.DelayTime = 2.f;
 
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LHand");
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RHand");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
     }
 }
 
