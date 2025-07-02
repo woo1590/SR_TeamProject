@@ -67,6 +67,7 @@ void TestScene::Load()
 
 #endif
 	/*----------------Load Camera---------------------*/
+	LoadBlock();
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 0.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
@@ -89,14 +90,13 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	LoadBlock();
-
 	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
+	
 
 	/*------------------Load UI------------------------*/
 	//LoadUI();
-	/*----------------------------------------------------------------------------------------------*/
+	/*-------------------------------------------------*/
 	
 	UILoader loader;
 	loader.LoadUI(ObjectMgr, player);
