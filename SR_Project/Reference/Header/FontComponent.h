@@ -22,19 +22,16 @@ public:
 	static FontComponent* Create(Object* owner);
 
 	void AddText(const wstring& text, const RECT& rect, Color color = Color::White, DWORD format = DT_LEFT | DT_TOP);
-
-	void ClearText() { entries.clear(); }
-
 	void SetFontType(FontType type);
 	void Render();
-	
+
+	void ClearText() { entries.clear(); }
 
 private:
 	HRESULT CreateFontResource();
 
 private:
 	ID3DXFont* font = nullptr;
-	
 	vector<TextEntry> entries;
 };
 

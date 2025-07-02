@@ -51,6 +51,8 @@ namespace Engine
 
 	enum class UIPivot {Center, Bottom, LeftTop, Left, Right};
 
+	enum class SlotSize {Small, Default, Large};
+
 	enum class Color
 	{
 		White,

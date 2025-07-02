@@ -143,7 +143,7 @@ HRESULT Loader::Load_TestScene()
 	return S_OK;
 }
 
-HRESULT Loader::load_UIResources() // ���� UI �����Լ�
+HRESULT Loader::load_UIResources()
 {
 	const auto eUI = TEXTURE::Tex_Diffuse;
 
@@ -157,12 +157,16 @@ HRESULT Loader::load_UIResources() // ���� UI �����Լ�
 		{L"InventoryPanel",     eUI},
 		{L"hotbar_back",        eUI},
 		{L"expbar_front",       eUI},
-		{L"slot",               eUI},
+		{L"quickslot",          eUI},
 		{L"icon_emerald",       eUI},
 		{L"expbar_back",        eUI},
+		{L"arrow_slot",         eUI},
+		{L"quickslot_highlight",eUI},
+
+
 	};
 
-	// layer �������� ���� �׸�
+
 	static const unordered_map<wstring, int> uiLayers = {
 		{L"hpbar_back",         -1},
 		{L"hpbar_front",         0},
@@ -173,9 +177,12 @@ HRESULT Loader::load_UIResources() // ���� UI �����Լ�
 		{L"InventoryPanel",   -100},
 		{L"hotbar_back",       -10},
 		{L"expbar_front",        0},
-		{L"slot",                0},
+		{L"quickslot",           0},
 		{L"icon_emerald",        1},
 		{L"expbar_back",        -1},
+		{L"arrow_slot",          0},
+		{L"quickslot_highlight", 1},
+
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

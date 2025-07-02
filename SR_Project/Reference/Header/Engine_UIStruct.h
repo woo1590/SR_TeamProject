@@ -34,4 +34,9 @@ namespace Engine
 		UIEventType type;
 		T info;
 	};
+
+	enum class SlotType
+	{
+		Inventory, Equipment, Quick, Storage, Count
+	};
 }

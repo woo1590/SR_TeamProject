@@ -15,9 +15,9 @@ HRESULT Emerald::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	transform->SetPosition(WINCX * 0.5f, WINCY * 0.7f);
+	transform->SetPosition(1025.f, 675.f);
 	
-	//renderer->SetScale(0.5f, 0.5f);
+	renderer->SetScale(0.5f, 0.4f);
 	renderer->SetTexture(L"icon_emerald");
 
 	return S_OK;

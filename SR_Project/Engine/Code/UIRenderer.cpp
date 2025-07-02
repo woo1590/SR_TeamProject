@@ -86,7 +86,7 @@ void UIRenderer::UpdateCenter()
 
 void UIRenderer::Render()
 {
-    if (tex2D)
+    if (isVisible && tex2D)
     {
         auto sprite = EngineCore::GetInstance()->GetRenderSystem()->GetSpriteBatch();
         assert(sprite && "UIRenderer::Render - sprite is null");

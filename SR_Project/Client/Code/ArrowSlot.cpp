@@ -1,22 +1,25 @@
 #include "pch.h"
-#include "Slot.h"
+#include "ArrowSlot.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
+#include "FontComponent.h"
 
-Slot* Slot::Create(ObjectManager* owner)
+#include "InputSystem.h"
+
+ArrowSlot* ArrowSlot::Create(ObjectManager* owner)
 {
-	auto* instance = new Slot(owner);
+	auto* instance = new ArrowSlot(owner);
 
 	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 }
 
-HRESULT Slot::Ready_Object()
+HRESULT ArrowSlot::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	renderer->SetScale(0.3f, 0.3f);
-	renderer->SetTexture(L"slot");
+	renderer->SetScale(0.25f, 0.3f);
+	renderer->SetTexture(L"arrow_slot");
 
 	return S_OK;
 }

@@ -109,9 +109,6 @@
     <Filter Include="08. UI\01. Subject">
       <UniqueIdentifier>{be3b91ac-2cbb-4378-8c76-6997283b589b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\Font">
-      <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Object Component\Collision">
       <UniqueIdentifier>{1fabb508-3f70-42f6-9b54-e5dfa2c38cc5}</UniqueIdentifier>
     </Filter>
@@ -178,8 +175,14 @@
     <Filter Include="07. Object Component\UIComponent\00. ProgressBarComponent">
       <UniqueIdentifier>{afd873d1-0d6c-462b-bcd2-f62c0aa01196}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\UIComponent\01. PlayerInfoComponent">
-      <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
+    <Filter Include="07. Object Component\UIComponent\01. InfoComponent">
+      <UniqueIdentifier>{44c535ea-8106-4472-b161-399e04a99eeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\02. FontComponent">
+      <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\03. SlotComponent">
+      <UniqueIdentifier>{831fcf2a-d37c-4de7-80dc-6d4d937e081a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -370,8 +373,15 @@
       <Filter>06. Object\Block</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp" />
+    <ClCompile Include="..\Code\ObjectComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp">
-      <Filter>99. Etc</Filter>
+      <Filter>07. Object Component\UIComponent\01. InfoComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FontComponent.cpp">
+      <Filter>07. Object Component\UIComponent\02. FontComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SlotComponent.cpp">
+      <Filter>07. Object Component\UIComponent\03. SlotComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ObjectComponent.cpp">
       <Filter>07. Object Component</Filter>
@@ -523,7 +533,7 @@
       <Filter>99. Etc\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FontComponent.h">
-      <Filter>07. Object Component\Font</Filter>
+      <Filter>07. Object Component\UIComponent\02. FontComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CollisionComponent.h">
       <Filter>07. Object Component\Collision</Filter>
@@ -591,9 +601,12 @@
     <ClInclude Include="..\Header\TestBlock.h">
       <Filter>06. Object\Block</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\InfoComponent.h" />
-    <ClInclude Include="..\Header\ObjectComponent.h">
-      <Filter>07. Object Component</Filter>
+    <ClInclude Include="..\Header\ObjectComponent.h" />
+    <ClInclude Include="..\Header\InfoComponent.h">
+      <Filter>07. Object Component\UIComponent\01. InfoComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SlotComponent.h">
+      <Filter>07. Object Component\UIComponent\03. SlotComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
