@@ -113,6 +113,24 @@ void Player::PickingTerrain()
             PlayerDirection = destinationPos - curPos;
         }
     }
+
+    if (input->IsKeyPressed(LBUTTON)) {
+        Ray ray = mainCam->ScreenPointRay();
+        HitInfo hit = collision->Raycast(ray);
+        if (hit.IsHit)
+        {
+            if (State == ePlayerState::IDLE || State == ePlayerState::WALK) {
+                State = ePlayerState::ATTACK;
+                AttackTime = 0.f;
+                SaveStartRotation();
+            }
+            auto transform = GetComponent<TransformComponent>();
+            auto curPos = transform->GetPosition();
+            auto attackPos = hit.Position;
+            attackPos.y += yOffset;
+            AttackDirection = attackPos - curPos;
+        }
+    }
 }
 void Player::MovePlayer(_vec3 moveVec)
 {
@@ -218,17 +236,18 @@ void Player::UpdateWalk(_float dt) {
     auto curPos = transform->GetPosition();
     auto posGap = curPos - destinationPos;
     auto distance = sqrtf(posGap.x * posGap.x + posGap.z * posGap.z);
-    if (distance < 1.f) {
+    if (distance < 0.5f) {
         State = ePlayerState::IDLE;
         transform->SetPosition(curPos.x, destinationPos.y, curPos.z);
     }
 }
 void Player::UpdateRoll(_float dt)
 {
+    auto transform = GetComponent<TransformComponent>();
     //roll duration
-    const float fRollDuration = 10.f;
+    const float fRollDuration = 0.5f;
     //roll speed value
-    const float fRollSpeed = Speed * 0.1;
+    const float fRollSpeed = Speed * 2.f;
     //roll time
     RollTime += dt;
     //roll progress
@@ -260,11 +279,27 @@ void Player::UpdateRoll(_float dt)
     SetRotation(LerpRot(StartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
     SetRotation(LerpRot(StartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
     //control y value while rolling
-    //float fYOffset = sinf(fProgress * D3DX_PI) * -15.f;
-    //_vec3 vCurPos = transform->GetPosition();
-    //vCurPos.y = fYOffset * Scale;
-    //transform->SetPosition(vCurPos);
-    auto transform = GetComponent<TransformComponent>();
+    static float fStartY = 0.f;
+    if (RollTime == dt)
+        fStartY = transform->GetPosition().y;
+
+    const float fAmplitudePhase1 = 0.2f * Scale;
+    const float fAmplitudePhase2 = 2.8f * Scale;
+    float t = fProgress;
+    float fYOffset = 0.f;
+
+    if (t <= 0.3f) {
+        float fLocalT = t / 0.3f; // 0~1
+        fYOffset = sinf(fLocalT * D3DX_PI) * fAmplitudePhase1; // 0 ~ π
+    }
+    else {
+        float fLocalT = (t - 0.3f) / 0.7f; // 0~1
+        fYOffset = sinf(D3DX_PI + fLocalT * D3DX_PI) * fAmplitudePhase2; // π ~ 2π
+    }
+    _vec3 vCurPos = transform->GetPosition();
+    vCurPos.y = fStartY + fYOffset;
+    transform->SetPosition(vCurPos);
+    //movePlayer
     _vec3 moveVec = {
         vDir.x * fRollSpeed * Scale * dt,
         0,
@@ -273,40 +308,21 @@ void Player::UpdateRoll(_float dt)
     MovePlayer(moveVec);
     //set current angle with duration
     float fTotalRollAngle = D3DX_PI * 2.f ;
-    float fCurrentAngle = fTotalRollAngle * dt / fRollDuration;
-    //rotate vector before
-    //RotatePlayer({ fCurrentAngle, 0.f, 0.f });
-    
-    //rotate vector with cross
+    float fCurrentAngle = fTotalRollAngle * RollTime / fRollDuration;
+    //rotate with right vector
     D3DXVec3Normalize(&moveVec, &moveVec);
-    _vec3 vUp = { 0.f, 1.f, 0.f };
-    _vec3 vAxis;
-    D3DXVec3Cross(&vAxis, &vUp, &moveVec);
-    _vec3 rotateVec = { vAxis.x * fCurrentAngle , vAxis.y * fCurrentAngle , vAxis.z * fCurrentAngle };
+    transform->SetForward(moveVec);
+    _vec3 vAxis = transform->GetRight();
+    _matrix matRot;
+    D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
+    _vec3 rotateVec = MatrixToEulerAngles(matRot);
     RotatePlayer(rotateVec);
-    
-    //rotate vector with dot
-    //D3DXVec3Normalize(&moveVec, &moveVec);
-    //_vec3 vStdDir = { 0.f, 0.f, 1.f };
-    //float fDot = D3DXVec3Dot(&vStdDir, &vDir);
-    //fDot = std::clamp(fDot, -1.f, 1.f);
-    //float fYaw = acosf(fDot);
-    //_vec3 vCross;
-    //D3DXVec3Cross(&vCross, &vStdDir, &vDir);
-    //if (vCross.y < 0.f) fYaw = -fYaw; 
-    //_vec3 vOrigRot = transform->GetRotate();
-    //RotatePlayer(_vec3(0.f, -fYaw, 0.f));
-    //RotatePlayer({ fCurrentAngle, 0.f, 0.f });
-    //RotatePlayer(_vec3(0.f, fYaw, 0.f));
     //finish roll
     if (RollTime >= fRollDuration) {
         RollTime = 0.f;
         State = ePlayerState::WALK;
-
         _vec3 vCurRot = transform->GetRotate();
         vCurRot.x = 0.f;
-
-
         vCurRot.z = 0.f;
         transform->SetRotate(vCurRot);
     }
@@ -381,14 +397,14 @@ void Player::UpdateAttack(_float dt) {
         { 30.f, -10.f, -10.f }
     );
     ApplyPhasedRotation("LLeg", StartRotations["LLeg"],
-        { -10.f, 0.f, 0.f },
+        { 10.f, 0.f, 0.f },
         { 0.f, 0.f, -5.f },
-        { 10.f, 0.f, 0.f }
+        { -10.f, 0.f, 0.f }
     );
     ApplyPhasedRotation("RLeg", StartRotations["RLeg"],
-        { 10.f, 0.f, 0.f },
+        { -10.f, 0.f, 0.f },
         { 0.f, 0.f, 5.f },
-        { -10.f, 0.f, 0.f }
+        { 10.f, 0.f, 0.f }
     );
     //rotatePlayer
     _vec3 vPlayerStartRot = StartRotations["Player"];
@@ -411,7 +427,18 @@ void Player::UpdateAttack(_float dt) {
         t = (fProgress - fPhase3) / (fPhase4 - fPhase3);
         vCurrentRot = LerpRot(vTwist3, vPlayerStartRot, t);
     }
-    GetComponent<TransformComponent>()->SetRotate(vCurrentRot);
+    float fCurrentAngle = D3DXToRadian(vCurrentRot.y);
+    //rotate with up vector
+    auto transform = GetComponent<TransformComponent>();
+    _vec3 attackVec = AttackDirection;
+    attackVec.y = 0.f;
+    D3DXVec3Normalize(&attackVec, &attackVec);
+    transform->SetForward(attackVec);
+    _vec3 vAxis = transform->GetUp();
+    _matrix matRot;
+    D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
+    _vec3 rotateVec = MatrixToEulerAngles(matRot);
+    RotatePlayer(rotateVec);
     //Exit State
     if (AttackTime >= fAttackDuration) {
         AttackTime = 0.f;
@@ -420,7 +447,7 @@ void Player::UpdateAttack(_float dt) {
 }
 void Player::KeyInput(_float dt)
 {
-    CheckStateAttack(dt);
+    //CheckStateAttack(dt);
     CheckStateRoll(dt);
     //CheckStateWalk(dt);
     //CheckStateIdle(dt);
@@ -519,4 +546,29 @@ void Player::CheckStateIdle(_float dt)
             break;
         }
     }
+}
+
+_vec3 Player::MatrixToEulerAngles(const _matrix& mat) {
+    _vec3 vAngles = { 0.f, 0.f, 0.f };
+
+    // Pitch (X축 회전)
+    vAngles.x = asinf(-mat._32);
+
+    // Cosine of pitch
+    float cosPitch = cosf(vAngles.x);
+
+    // 작은 수로 나눠지는 경우 처리
+    if (fabs(cosPitch) > 0.0001f) {
+        // Yaw (Y축 회전)
+        vAngles.y = -atan2f(mat._31, mat._33);
+        // Roll (Z축 회전)
+        vAngles.z = atan2f(mat._12, mat._22);
+    }
+    else {
+        // Gimbal lock 발생 시 (pitch = +-90도)
+        vAngles.y = -atan2f(-mat._13, mat._11);
+        vAngles.z = 0.f;
+    }
+
+    return vAngles;
 }

@@ -37,7 +37,7 @@ private: //func
 
     void FixCursorToCenter();
     void PickingTerrain();
-
+    _vec3 MatrixToEulerAngles(const _matrix& mat);
 private: //member variable
     ePlayerState State = ePlayerState::IDLE;
     float WalkTime = 0.f;
@@ -49,4 +49,5 @@ private: //member variable
 
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };
+    _vec3 AttackDirection = { 0.f, 0.f, 0.f };
 };
