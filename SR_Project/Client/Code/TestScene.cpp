@@ -21,7 +21,7 @@
 #include "LoadingUI.h"
 #include "Cursor.h"
 #include "InventoryPanel.h"
-#include "Monster.h"
+#include "Zombie.h"
 #include "FirstCam.h"
 #include "ThirdCam.h"
 #include "UIDebugObj.h"
@@ -31,6 +31,7 @@
 #include "Emerald.h"
 #include "TestBlock.h"
 #include "UILoader.h"
+#include "Skeleton.h"
 
 //component
 #include "TransformComponent.h"
@@ -86,11 +87,12 @@ void TestScene::Load()
 	//ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	//ObjectMgr->AddObject(ObjectType::Camera, tCam);
 
-	//------------------------------------------------*
-	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	//LoadBlock();
-	
-	//ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
+	/*------------------------------------------------*/
+	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+	LoadBlock();
+
+	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
 
 	/*------------------Load UI------------------------*/
 	//LoadUI();

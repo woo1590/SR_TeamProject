@@ -25,7 +25,6 @@ protected:
     virtual ~Monster();
 
 public:
-    static Monster* Create(ObjectManager* owner, ObjectType objType);
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
@@ -59,7 +58,7 @@ protected:
 protected:
     MonsterState        State = MonsterState::Idle;
     _float              Speed = 7.f;
-    
+
     Animation           WalkAnim;
     Animation           AttackAnim;
     Animation           DieAnim;

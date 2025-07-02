@@ -46,8 +46,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     //PlayerTexture
     SetMaterial(L"playerBody_Mtrl","Body");
     SetMaterial(L"playerHead_Mtrl","Head");
-    SetMaterial(L"playerLeftArm_Mtrl","LHand");
-    SetMaterial(L"playerRightArm_Mtrl","RHand");
+    SetMaterial(L"playerLeftArm_Mtrl","LArm");
+    SetMaterial(L"playerRightArm_Mtrl","RArm");
     SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
 
@@ -132,8 +132,8 @@ void Player::SaveStartRotation()
     StartRotations["Player"] = GetComponent<TransformComponent>()->GetRotate();
     StartRotations["Body"] = Bones["Body"]->GetComponent<TransformComponent>()->GetRotate();
     StartRotations["Head"] = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
-    StartRotations["LHand"] = Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate();
-    StartRotations["RHand"] = Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["LArm"] = Bones["LArm"]->GetComponent<TransformComponent>()->GetRotate();
+    StartRotations["RArm"] = Bones["RArm"]->GetComponent<TransformComponent>()->GetRotate();
     StartRotations["LLeg"] = Bones["LLeg"]->GetComponent<TransformComponent>()->GetRotate();
     StartRotations["RLeg"] = Bones["RLeg"]->GetComponent<TransformComponent>()->GetRotate();
 }
@@ -171,8 +171,8 @@ void Player::UpdateIdle(_float dt)
 
     SmoothReset(Bones["LLeg"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["RLeg"]->GetComponent<TransformComponent>());
-    SmoothReset(Bones["LHand"]->GetComponent<TransformComponent>());
-    SmoothReset(Bones["RHand"]->GetComponent<TransformComponent>());
+    SmoothReset(Bones["LArm"]->GetComponent<TransformComponent>());
+    SmoothReset(Bones["RArm"]->GetComponent<TransformComponent>());
 }
 void Player::UpdateWalk(_float dt) {
     //walk time
@@ -183,8 +183,8 @@ void Player::UpdateWalk(_float dt) {
     float fAngle = sinf(WalkTime * walkSpeed);
     SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
     SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
-    SetRotation({ -fAngle, 0.f, 0.f }, "LHand");
-    SetRotation({ fAngle, 0.f, 0.f }, "RHand");
+    SetRotation({ -fAngle, 0.f, 0.f }, "LArm");
+    SetRotation({ fAngle, 0.f, 0.f }, "RArm");
     //normalize direction vector
     _vec3 vDir;
     D3DXVec3Normalize(&vDir, &PlayerDirection);
@@ -257,8 +257,8 @@ void Player::UpdateRoll(_float dt)
     SetRotation(LerpRot(StartRotations["Head"], { 1, 0.f, 0.f }, fLerpRatio), "Head");
     SetRotation(LerpRot(StartRotations["LLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "LLeg");
     SetRotation(LerpRot(StartRotations["RLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "RLeg");
-    SetRotation(LerpRot(StartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
-    SetRotation(LerpRot(StartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
+    SetRotation(LerpRot(StartRotations["LArm"], { -2.f, 0.f, 0.f }, fLerpRatio), "LArm");
+    SetRotation(LerpRot(StartRotations["RArm"], { -2.f, 0.f, 0.f }, fLerpRatio), "RArm");
     //control y value while rolling
     //float fYOffset = sinf(fProgress * D3DX_PI) * -15.f;
     //_vec3 vCurPos = transform->GetPosition();
@@ -368,14 +368,14 @@ void Player::UpdateAttack(_float dt) {
             SetRotation(vCurrentRot, name);
     };
     //rotateBones
-    ApplyPhasedRotation("RHand",
-        StartRotations["RHand"],
+    ApplyPhasedRotation("RArm",
+        StartRotations["RArm"],
         { -210.f, 10.f, -30.f },
         { -150.f, 10.f, -30.f },
         { -60.f, 10.f, 60.f }
     );
-    ApplyPhasedRotation("LHand",
-        StartRotations["LHand"],
+    ApplyPhasedRotation("LArm",
+        StartRotations["LArm"],
         { -30.f, 10.f, -10.f },
         { 0.f, 0.f, -10.f },
         { 30.f, -10.f, -10.f }

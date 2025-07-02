@@ -53,6 +53,8 @@ void UIDebugObj::Update(float dt)
 		accTime = 0.f;
 		frameCount = 0;
 	}
+
+	font->AddText(L"Lv: " + to_wstring((int)fps), { 650,450,850,650 }, Color::Cyan);
 	
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::LBUTTON))
