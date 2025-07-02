@@ -1,9 +1,6 @@
 #include "EnginePCH.h"
 #include "ImGuiManager.h"
 #include "GraphicDevice.h"
-#include "imgui_impl_win32.h"
-
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 ImGuiManager::ImGuiManager()
 {
@@ -67,11 +64,6 @@ void ImGuiManager::RegisterWindow(const std::wstring& key, GuiWindow window)
 void ImGuiManager::UnRegisterWindow(const std::wstring& key)
 {
 	Gui_WindowMap.erase(key);
-}
-
-_bool ImGuiManager::WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	return ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam) != 0;
 }
 
 

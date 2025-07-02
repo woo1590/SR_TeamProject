@@ -214,34 +214,6 @@ _matrix TransformComponent::GetLocalMatrix() const
     return localMat;
 }
 
-_matrix TransformComponent::GetTranslateMatrix() const
-{
-    _matrix transMat;
-    D3DXMatrixTranslation(&transMat, Position.x, Position.y, Position.z);
-
-    return transMat;
-}
-
-_matrix TransformComponent::GetRotationMatrix() const
-{
-    _matrix rotX;
-    _matrix rotY;
-    _matrix rotZ;
-    D3DXMatrixRotationX(&rotX, Rotation.x);
-    D3DXMatrixRotationY(&rotY, Rotation.y);
-    D3DXMatrixRotationZ(&rotZ, Rotation.z);
-
-    return rotY * rotX * rotZ;
-}
-
-_matrix TransformComponent::GetScaleMatrix() const
-{
-    _matrix scaleMat;
-    D3DXMatrixScaling(&scaleMat, Scale.x, Scale.y, Scale.z);
-
-    return scaleMat;
-}
-
 void TransformComponent::Free()
 {
     //

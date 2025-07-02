@@ -15,9 +15,6 @@ public:
     virtual void Update(float dt);
     virtual void Late_Update(float dt);
 
-    virtual void SetDead();
-    _bool IsDead()const;
-
     template<typename T,typename... Args>
     T* AddComponent(Args&&... args)
     {
@@ -44,7 +41,6 @@ public:
 protected:
     void Free()override;
 
-    _bool Is_Dead = false;
     ObjectManager* owner;
     ObjectType ObjType;
 

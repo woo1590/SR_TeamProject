@@ -28,6 +28,9 @@
     <Filter Include="02. Object\SkyBox">
       <UniqueIdentifier>{fa569c5c-5c68-4e03-9479-06d02a03255c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\BasicTerrain">
+      <UniqueIdentifier>{d7bd993e-a135-414f-a268-d250bb692d38}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\LoadingScene">
       <UniqueIdentifier>{52678876-79dc-41a1-baf8-7610b6c30f02}</UniqueIdentifier>
     </Filter>
@@ -64,21 +67,6 @@
     <Filter Include="02. Object\UIObj\InventoryPanel">
       <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Monster">
-      <UniqueIdentifier>{ecf0c0f9-ae92-4dc2-97c0-5d3da51e58da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Monster\BTNode">
-      <UniqueIdentifier>{1e90669f-62da-497b-a3cd-f0157c6d020c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\CameraActor\FirstCam">
-      <UniqueIdentifier>{39a1611e-d6dd-4459-af2d-a4063cc80494}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\CameraActor\ThirdCam">
-      <UniqueIdentifier>{e6d8228b-fc52-4916-970b-cf19b1283649}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\CameraActor\RailCam">
-      <UniqueIdentifier>{038db0cb-ea10-4b61-9f5a-3c46340a7892}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\UIDebugObj">
       <UniqueIdentifier>{82419094-d92a-4d7d-8f56-5b4d4c56fcfe}</UniqueIdentifier>
     </Filter>
@@ -109,6 +97,15 @@
     <Filter Include="02. Object\UIObj\Emerald">
       <UniqueIdentifier>{b55a1429-2e13-414d-9c7a-24a3cf430b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UILoader">
+      <UniqueIdentifier>{ec1854eb-50ce-458e-bccb-91ce40f888d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ExpBar\ExpBarBack">
+      <UniqueIdentifier>{1775174d-adba-4545-96c2-743069a39dab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ExpBar\ExpBarFront">
+      <UniqueIdentifier>{5515acd8-81a5-47da-952c-104d006748bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -125,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\LogoScene.h">
       <Filter>01. Scene\LogoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BasicTerrain.h">
+      <Filter>02. Object\BasicTerrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LoadingScene.h">
       <Filter>01. Scene\LoadingScene</Filter>
@@ -168,35 +168,11 @@
     <ClInclude Include="..\Header\InventoryPanel.h">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Monster.h">
-      <Filter>02. Object\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Attack.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Chase.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\IsTargetInAttackRange.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\IsTargetInDetectRange.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\FirstCam.h">
-      <Filter>02. Object\CameraActor\FirstCam</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ThirdCam.h">
-      <Filter>02. Object\CameraActor\ThirdCam</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UIDebugObj.h">
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HotBarBack.h">
       <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ExpBarFront.h">
-      <Filter>02. Object\UIObj\ExpBar</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Slot.h">
       <Filter>02. Object\UIObj\Slot</Filter>
@@ -207,6 +183,15 @@
     <ClInclude Include="..\Header\Emerald.h">
       <Filter>02. Object\UIObj\Emerald</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UILoader.h">
+      <Filter>02. Object\UILoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarFront.h">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarBack.h">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -214,9 +199,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>99. Etc\pch</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>100. Executable</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestScene.cpp">
       <Filter>01. Scene\TestScene</Filter>
@@ -226,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. Object\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BasicTerrain.cpp">
+      <Filter>02. Object\BasicTerrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LoadingScene.cpp">
       <Filter>01. Scene\LoadingScene</Filter>
@@ -266,35 +251,11 @@
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\InventoryPanel</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Attack.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Chase.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\IsTargetInAttackRange.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\IsTargetInDetectRange.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\FirstCam.cpp">
-      <Filter>02. Object\CameraActor\FirstCam</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ThirdCam.cpp">
-      <Filter>02. Object\CameraActor\ThirdCam</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. Object\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UIDebugObj.cpp">
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HotBarBack.cpp">
       <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ExpBarFront.cpp">
-      <Filter>02. Object\UIObj\ExpBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Slot.cpp">
       <Filter>02. Object\UIObj\Slot</Filter>
@@ -304,6 +265,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Emerald.cpp">
       <Filter>02. Object\UIObj\Emerald</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>100. Executable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UILoader.cpp">
+      <Filter>02. Object\UILoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarFront.cpp">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarBack.cpp">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

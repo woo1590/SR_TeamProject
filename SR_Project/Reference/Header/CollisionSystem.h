@@ -4,35 +4,30 @@
 BEGIN(Engine)
 
 class CollisionComponent;
-class Scene;
-typedef struct tagHitInfo
-{
-    _bool IsHit = false;
-    CollisionComponent* Component = nullptr;
-    _float              Distance = FLT_MAX;
-    _vec3               Position{ 0.f,0.f,0.f };
-
-}HitInfo;
-
 class ENGINE_DLL CollisionSystem :
     public Base
 {
+public:
+    typedef struct tagHitInfo
+    {
+        _bool Hit
+    }HitInfo;
+
 private:
-    CollisionSystem(Scene* owner);
+    CollisionSystem();
     virtual ~CollisionSystem();
 
 public:
-    static CollisionSystem* Create(Scene* owner);
+    static CollisionSystem* Create();
     HRESULT Ready_CollisionSystem();
-    void Late_Update();
+    void Update();
     void RegisterCollision(CollisionComponent* collision);
 
-    HitInfo Raycast(Ray ray);
+    void Raycast(Ray ray);   //마우스 픽킹 통합 처리
 
 private:
     void Free()override;
     std::list<CollisionComponent*> Collisions;
-    Scene* owner = nullptr;
 };
 
 END

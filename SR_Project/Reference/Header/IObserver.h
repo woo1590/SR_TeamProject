@@ -2,11 +2,11 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL IObserver
+template<typename EventT>
+class IObserver
 {
 public:
-	virtual void OnNotify(const NotifyEvent& event) = 0;
-	virtual void OnDestory() {}
+	virtual void OnNotify(const EventT& event) = 0;
 };
 
 END

@@ -76,6 +76,9 @@
     <Filter Include="07. Object Component\Renderer\MeshRenderer">
       <UniqueIdentifier>{b394fbd1-9893-426c-81d3-d988c2ed667c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\Renderer\TerrainRenderer">
+      <UniqueIdentifier>{353f7508-ec6b-4b56-a980-69e9dd7aa074}</UniqueIdentifier>
+    </Filter>
     <Filter Include="07. Object Component\Camera">
       <UniqueIdentifier>{0668d1df-b002-4063-a884-894f195425e2}</UniqueIdentifier>
     </Filter>
@@ -112,77 +115,11 @@
     <Filter Include="07. Object Component\Font">
       <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\Collision">
-      <UniqueIdentifier>{1fabb508-3f70-42f6-9b54-e5dfa2c38cc5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Scene Component\EventSystem">
-      <UniqueIdentifier>{f87e9172-c4cc-4273-a6d7-876226c23b74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Scene Component\CollisionSystem">
-      <UniqueIdentifier>{6a1dc87a-3470-4343-855c-be7100afd809}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Scene Component\CameraManager">
-      <UniqueIdentifier>{16e084cc-28e0-42e1-ad97-7d1a4ad213c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Object\Block">
-      <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController">
-      <UniqueIdentifier>{3fcffcda-7e73-4482-bb97-beac6473d08d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree">
-      <UniqueIdentifier>{0b3501f4-9868-4bfc-a2e9-255dec0a765d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode">
-      <UniqueIdentifier>{4ff99d72-de73-46bc-996b-21e220b7a1ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode">
-      <UniqueIdentifier>{a4acbe83-6809-4a90-87ff-f9d4d57682b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Sequence">
-      <UniqueIdentifier>{c1350241-1f97-428f-b948-f55a26e682cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Selector">
-      <UniqueIdentifier>{603c4125-03a6-4fdd-a4a6-19d20d9189cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\RandomSelector">
-      <UniqueIdentifier>{e318d539-b753-44fb-bc43-992d387d9fe1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Parallel">
-      <UniqueIdentifier>{b01fa434-e235-4193-acc7-9014b2345cf8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode">
-      <UniqueIdentifier>{f1f36253-16ee-4f74-93b0-3b55785895f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Inverter">
-      <UniqueIdentifier>{e46cf2c2-513a-49fa-8dab-6d2af338ab3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Repeat">
-      <UniqueIdentifier>{fc44961b-f1ad-44bd-942f-84925df56548}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Succeeder">
-      <UniqueIdentifier>{a504344e-7476-4b37-b3a9-933abf964fa7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BlackBoard">
-      <UniqueIdentifier>{9445595e-5cf9-42f8-8b59-e5155b3fedea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\AIController\BehaviorTree\BTNode\ActionNode">
-      <UniqueIdentifier>{ba61da6b-8e9f-4358-aef1-1e0d98ce07bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Object Component\UIComponent\00. ProgressBarComponent">
       <UniqueIdentifier>{afd873d1-0d6c-462b-bcd2-f62c0aa01196}</UniqueIdentifier>
     </Filter>
     <Filter Include="07. Object Component\UIComponent\01. PlayerInfoComponent">
       <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\UIComponent\02. HPComponent">
-      <UniqueIdentifier>{fa3ce7a5-cee8-45dd-89c8-5945d6e9c277}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\UIComponent\03. ExpComponent">
-      <UniqueIdentifier>{adbc67f2-5ebb-4e0a-a1d3-5b42d0d6687f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\Physics">
-      <UniqueIdentifier>{ec25a13a-0b6f-4356-a096-1f9c8ab19d28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +150,6 @@
     <ClCompile Include="..\Code\Object.cpp">
       <Filter>06. Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ObjectComponent.cpp">
-      <Filter>07. Object Component</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\TransformComponent.cpp">
       <Filter>07. Object Component\Transform</Filter>
     </ClCompile>
@@ -242,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FreecamComponent.cpp">
       <Filter>07. Object Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainRenderer.cpp">
+      <Filter>07. Object Component\Renderer\TerrainRenderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputSystem.cpp">
       <Filter>01. Engine Component\InputSystem</Filter>
@@ -309,83 +246,17 @@
     <ClCompile Include="..\Code\Subject.cpp">
       <Filter>08. UI\01. Subject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PlayerInfoComponent.cpp">
-      <Filter>07. Object Component\UIComponent\01. PlayerInfoComponent</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\HpComponent.cpp">
-      <Filter>07. Object Component\UIComponent\02. HPComponent</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp">
       <Filter>07. Object Component\Font</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CollisionComponent.cpp">
-      <Filter>07. Object Component\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\EventSystem.cpp">
-      <Filter>05. Scene Component\EventSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CollisionSystem.cpp">
-      <Filter>05. Scene Component\CollisionSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BTNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CompositeNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ParallelNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Parallel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\RandomSelectorNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\RandomSelector</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SelectorNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Selector</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SequenceNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Sequence</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ActionNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\ActionNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\InverterDecorator.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Inverter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\RepeatDecorator.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Repeat</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SucceederDecorator.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Succeeder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DecoratorNode.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BlackBoard.cpp">
-      <Filter>07. Object Component\AIController\BlackBoard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BehaviorTree.cpp">
-      <Filter>07. Object Component\AIController\BehaviorTree</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraManager.cpp">
-      <Filter>05. Scene Component\CameraManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolcamComponent.cpp">
-      <Filter>07. Object Component\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ProgressBar.cpp">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ExpComponent.cpp">
-      <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
+    <ClCompile Include="..\Code\ObjectComponent.cpp">
+      <Filter>07. Object Component</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PhysicsComponent.cpp">
-      <Filter>07. Object Component\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\AIController.cpp">
-      <Filter>07. Object Component\AIController</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TestBlock.cpp">
-      <Filter>06. Object\Block</Filter>
+    <ClCompile Include="..\Code\InfoComponent.cpp">
+      <Filter>07. Object Component\UIComponent\01. PlayerInfoComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,9 +302,6 @@
     <ClInclude Include="..\Header\Object.h">
       <Filter>06. Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ObjectComponent.h">
-      <Filter>07. Object Component</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\TransformComponent.h">
       <Filter>07. Object Component\Transform</Filter>
     </ClInclude>
@@ -463,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\FreecamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TerrainRenderer.h">
+      <Filter>07. Object Component\Renderer\TerrainRenderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InputSystem.h">
       <Filter>01. Engine Component\InputSystem</Filter>
@@ -536,83 +407,17 @@
     <ClInclude Include="..\Header\Engine_UIStruct.h">
       <Filter>99. Etc\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerInfoComponent.h">
+    <ClInclude Include="..\Header\InfoComponent.h">
       <Filter>07. Object Component\UIComponent\01. PlayerInfoComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\HpComponent.h">
-      <Filter>07. Object Component\UIComponent\02. HPComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FontComponent.h">
       <Filter>07. Object Component\Font</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CollisionComponent.h">
-      <Filter>07. Object Component\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\EventSystem.h">
-      <Filter>05. Scene Component\EventSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CollisionSystem.h">
-      <Filter>05. Scene Component\CollisionSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\BTNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CompositeNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ParallelNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\RandomSelectorNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\RandomSelector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SelectorNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Selector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SequenceNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\CompositeNode\Sequence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ActionNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\ActionNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\InverterDecorator.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Inverter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\RepeatDecorator.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Repeat</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SucceederDecorator.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode\Succeeder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\DecoratorNode.h">
-      <Filter>07. Object Component\AIController\BehaviorTree\BTNode\DecoratorNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\BlackBoard.h">
-      <Filter>07. Object Component\AIController\BlackBoard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\AIController.h">
-      <Filter>07. Object Component\AIController</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CameraManager.h">
-      <Filter>05. Scene Component\CameraManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolcamComponent.h">
-      <Filter>07. Object Component\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ProgressBar.h">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ExpComponent.h">
-      <Filter>07. Object Component\UIComponent\03. ExpComponent</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PhysicsComponent.h">
-      <Filter>07. Object Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\BehaviorTree.h">
-      <Filter>07. Object Component\AIController\BehaviorTree</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TestBlock.h">
-      <Filter>06. Object\Block</Filter>
+    <ClInclude Include="..\Header\ObjectComponent.h">
+      <Filter>07. Object Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

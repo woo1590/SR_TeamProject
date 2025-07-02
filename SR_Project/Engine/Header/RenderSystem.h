@@ -3,7 +3,6 @@
 BEGIN(Engine)
 
 class RendererComponent;
-class Object;
 class CameraComponent;
 class ENGINE_DLL RenderSystem : public Base
 {
@@ -20,7 +19,7 @@ public:
     void Render_End();
 
     void RegisterRenderer(RENDER_ID layer, RendererComponent* renderer);
-    void SetCamera(Object* cam);
+    void SetCamera(CameraComponent* cam);
 
     ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
 
@@ -29,7 +28,6 @@ private:
     void NonAlphaPass();
     void AlphaPass();
     void UIPass();
-    void DebugPass();
     void Reset();
 
     void Free()override;

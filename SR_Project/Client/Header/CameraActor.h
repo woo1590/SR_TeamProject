@@ -4,14 +4,17 @@
 class CameraActor :
     public Object
 {
-protected:
-    CameraActor(ObjectManager* owner, ObjectType objType = ObjectType::Camera);
+private:
+    CameraActor(ObjectManager* owner, ObjectType objType);
     virtual ~CameraActor();
 
 public:
+    static CameraActor* Create(ObjectManager* owner, ObjectType objType);
     HRESULT Ready_Object()override;
+    void Update(_float dt)override;
+    void Late_Update(_float dt)override;
 
-protected:
+private:
     void Free()override;
 };
 

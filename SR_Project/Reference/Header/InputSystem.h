@@ -53,9 +53,7 @@ public:
 	bool IsKeyDown(KEY _ekey);			//누르고 있는 동안 계속 true 반환
 	bool IsKeyRelease(KEY _ekey);		//누르고 키를 떼면 true 반환
 
-	void SetMousePos()const;			//커서 위치 고정용
-	_vec3 GetMousePos()const;
-
+	_vec2 GetMousePos()const;
 	_vec2 GetMouseDelta()const;
 	void SetMouseDelta(_vec2 delta);
 
@@ -66,9 +64,9 @@ private:
 
 	std::vector<KEYINFO> m_vecKey;
 
-	_vec3 MousePos{0.f,0.f,0.f};
-	_vec3 LastMousePos{ 0.f,0.f,0.f };
-	_vec3 CenterMousePos{ 0.f,0.f,0.f };
+	_vec2 MousePos{0.f,0.f};
+	_vec2 LastMousePos{ 0.f,0.f };
+	_vec2 CenterMousePos{ 0.f,0.f };
 	_vec2 MouseDelta{ 0.f,0.f };
 
 	bool Is_KeyWork = true;
