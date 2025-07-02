@@ -2,6 +2,7 @@
 
 namespace Engine
 {
+
 	struct PlayerInfo
 	{
 		int level = 1;
@@ -22,6 +23,8 @@ namespace Engine
 		float speed;
 	};
 
+	// --------- Info -------------------------------
+
 	enum class UIEventType
 	{
 		HP_Changed,
@@ -34,4 +37,20 @@ namespace Engine
 		UIEventType type;
 		T info;
 	};
+
+	// ----------- UIEvent -------------------------------------------
+
+	enum class ItemType
+	{
+		Consumable, Equippable
+	};
+
+	struct ItemData
+	{
+		std::wstring name;
+		ItemType type;
+		int value;
+	};
+
+	// ---------------- ItemEvent ---------------------------------------
 }

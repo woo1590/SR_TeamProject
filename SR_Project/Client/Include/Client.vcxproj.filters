@@ -106,6 +106,9 @@
     <Filter Include="02. Object\UIObj\ExpBar\ExpBarFront">
       <UniqueIdentifier>{5515acd8-81a5-47da-952c-104d006748bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\Slot\ArrowSlot">
+      <UniqueIdentifier>{1e8a0dcd-d0d0-455a-8499-8c0fc77ecf3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -192,6 +195,9 @@
     <ClInclude Include="..\Header\ExpBarBack.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ArrowSlot.h">
+      <Filter>02. Object\UIObj\Slot\ArrowSlot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -277,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarBack.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ArrowSlot.cpp">
+      <Filter>02. Object\UIObj\Slot\ArrowSlot</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

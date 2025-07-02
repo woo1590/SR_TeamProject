@@ -174,6 +174,8 @@ HRESULT Loader::load_UIResources() // 제현 UI 전용함수
 		{L"slot",               eUI},
 		{L"icon_emerald",       eUI},
 		{L"expbar_back",        eUI},
+		{L"arrow_slot",         eUI},
+
 	};
 
 	// layer 낮을수록 먼저 그림
@@ -189,7 +191,8 @@ HRESULT Loader::load_UIResources() // 제현 UI 전용함수
 		{L"expbar_front",        0},
 		{L"slot",                0},
 		{L"icon_emerald",        1},
-		{L"expbar_back",        -1},
+		{L"expbar_back",       -10},
+		{L"arrow_slot",          0}
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

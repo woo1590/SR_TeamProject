@@ -112,14 +112,14 @@
     <Filter Include="08. UI\01. Subject">
       <UniqueIdentifier>{be3b91ac-2cbb-4378-8c76-6997283b589b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\Font">
-      <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Object Component\UIComponent\00. ProgressBarComponent">
       <UniqueIdentifier>{afd873d1-0d6c-462b-bcd2-f62c0aa01196}</UniqueIdentifier>
     </Filter>
     <Filter Include="07. Object Component\UIComponent\01. PlayerInfoComponent">
       <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\Font">
+      <UniqueIdentifier>{2a0cce25-ff36-4597-9605-14d5c79dbc28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -247,7 +247,7 @@
       <Filter>08. UI\01. Subject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp">
-      <Filter>07. Object Component\Font</Filter>
+      <Filter>07. Object Component\UIComponent\Font</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ProgressBar.cpp">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>
@@ -411,7 +411,7 @@
       <Filter>07. Object Component\UIComponent\01. PlayerInfoComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FontComponent.h">
-      <Filter>07. Object Component\Font</Filter>
+      <Filter>07. Object Component\UIComponent\Font</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ProgressBar.h">
       <Filter>07. Object Component\UIComponent\00. ProgressBarComponent</Filter>

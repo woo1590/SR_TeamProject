@@ -194,6 +194,7 @@
     <ClInclude Include="..\Header\LogoScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\ArrowSlot.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Slot.h" />
     <ClInclude Include="..\Header\TestObject.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="..\Code\LogoScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\ArrowSlot.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Slot.cpp" />
     <ClCompile Include="..\Code\TestObject.cpp" />

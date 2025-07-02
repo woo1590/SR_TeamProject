@@ -15,7 +15,7 @@ HRESULT Slot::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	renderer->SetScale(0.3f, 0.3f);
+	renderer->SetScale(0.25f, 0.25f);
 	renderer->SetTexture(L"slot");
 
 	return S_OK;

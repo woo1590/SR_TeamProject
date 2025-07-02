@@ -22,8 +22,7 @@ HRESULT UIDebugObj::Ready_Object()
 	auto renderer  = AddComponent<UIRenderer>();
 	auto font      = AddComponent<FontComponent>();
 
-	auto rm = EngineCore::GetInstance()->GetResourceManager();
-	rm->RegisterUILayer(L"UIDebugObj", 1000);
+	font->SetFontType(FontType::Title);
 
 	return S_OK;
 }
@@ -35,7 +34,15 @@ void UIDebugObj::Update(float dt)
 	auto font = GetComponent<FontComponent>();
 
 	font->ClearText();
-	font->AddText(L"Lv: " + to_wstring(info.level), {650,650,850,770},Color::Cyan);
+	font->AddText(L"Lv: " + to_wstring(info.level), {600, 650, 800, 770}, Color::Cyan);
+
+	RECT debugRect = {1000, 400, 1400, 650};
+
+	font->AddText(
+		L"Hp: " + to_wstring(info.curHp) + L"/" + to_wstring(info.maxHp) + 
+		L"\nExp: " + to_wstring(info.curExp) + L"/" + to_wstring(info.maxExp) +
+		L"\nspeed: " + to_wstring((int)info.speed),
+		debugRect, Color::Cyan);
 
 	accTime += dt;
 	++frameCount;
@@ -50,7 +57,7 @@ void UIDebugObj::Update(float dt)
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::LBUTTON))
 	{
-		playerInfo->AddExp(5);
-		playerInfo->AddHp(-10);
+	//	playerInfo->AddExp(5);
+	//	playerInfo->AddHp(-10);
 	}
 }
