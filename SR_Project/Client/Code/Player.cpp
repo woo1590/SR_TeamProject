@@ -169,7 +169,6 @@ void Player::UpdateIdle(_float dt)
         pTransform->SetRotate(vLerpedRot);
     };
 
-    SmoothReset(Bones["Head"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["LLeg"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["RLeg"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["LHand"]->GetComponent<TransformComponent>());
@@ -227,7 +226,9 @@ void Player::UpdateWalk(_float dt) {
 void Player::UpdateRoll(_float dt)
 {
     //roll duration
-    const float fRollDuration = 0.5f;
+    const float fRollDuration = 10.f;
+    //roll speed value
+    const float fRollSpeed = Speed * 0.1;
     //roll time
     RollTime += dt;
     //roll progress
@@ -249,34 +250,63 @@ void Player::UpdateRoll(_float dt)
     auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
         return start + offset * ratio;
     };
+    //direction vector
+    _vec3 vDir;
+    D3DXVec3Normalize(&vDir, &PlayerDirection);
     //set rotate
-    SetRotation(LerpRot(StartRotations["Head"], { 1.f, 0.f, 0.f }, fLerpRatio), "Head");
+    SetRotation(LerpRot(StartRotations["Head"], { 1, 0.f, 0.f }, fLerpRatio), "Head");
     SetRotation(LerpRot(StartRotations["LLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "LLeg");
     SetRotation(LerpRot(StartRotations["RLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "RLeg");
     SetRotation(LerpRot(StartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
     SetRotation(LerpRot(StartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
-    //set current angle with duration
-    float fTotalRollAngle = D3DX_PI * 2.f;
-    float fCurrentAngle = fTotalRollAngle * dt / fRollDuration;
     //control y value while rolling
-    float fYOffset = sinf(fProgress * D3DX_PI) * -15.f;
+    //float fYOffset = sinf(fProgress * D3DX_PI) * -15.f;
+    //_vec3 vCurPos = transform->GetPosition();
+    //vCurPos.y = fYOffset * Scale;
+    //transform->SetPosition(vCurPos);
     auto transform = GetComponent<TransformComponent>();
-    _vec3 vCurPos = transform->GetPosition();
-    vCurPos.y = fYOffset;
-    transform->SetPosition(vCurPos);
-    //
-    _vec3 moveVec = { 0.f, 0.f, 2 * Speed * Scale * dt };
+    _vec3 moveVec = {
+        vDir.x * fRollSpeed * Scale * dt,
+        0,
+        vDir.z * fRollSpeed* Scale * dt
+    };
     MovePlayer(moveVec);
-
-    _vec3 rotateVec = { fCurrentAngle, 0.f, 0.f };
+    //set current angle with duration
+    float fTotalRollAngle = D3DX_PI * 2.f ;
+    float fCurrentAngle = fTotalRollAngle * dt / fRollDuration;
+    //rotate vector before
+    //RotatePlayer({ fCurrentAngle, 0.f, 0.f });
+    
+    //rotate vector with cross
+    D3DXVec3Normalize(&moveVec, &moveVec);
+    _vec3 vUp = { 0.f, 1.f, 0.f };
+    _vec3 vAxis;
+    D3DXVec3Cross(&vAxis, &vUp, &moveVec);
+    _vec3 rotateVec = { vAxis.x * fCurrentAngle , vAxis.y * fCurrentAngle , vAxis.z * fCurrentAngle };
     RotatePlayer(rotateVec);
-
+    
+    //rotate vector with dot
+    //D3DXVec3Normalize(&moveVec, &moveVec);
+    //_vec3 vStdDir = { 0.f, 0.f, 1.f };
+    //float fDot = D3DXVec3Dot(&vStdDir, &vDir);
+    //fDot = std::clamp(fDot, -1.f, 1.f);
+    //float fYaw = acosf(fDot);
+    //_vec3 vCross;
+    //D3DXVec3Cross(&vCross, &vStdDir, &vDir);
+    //if (vCross.y < 0.f) fYaw = -fYaw; 
+    //_vec3 vOrigRot = transform->GetRotate();
+    //RotatePlayer(_vec3(0.f, -fYaw, 0.f));
+    //RotatePlayer({ fCurrentAngle, 0.f, 0.f });
+    //RotatePlayer(_vec3(0.f, fYaw, 0.f));
+    //finish roll
     if (RollTime >= fRollDuration) {
         RollTime = 0.f;
         State = ePlayerState::WALK;
 
         _vec3 vCurRot = transform->GetRotate();
         vCurRot.x = 0.f;
+
+
         vCurRot.z = 0.f;
         transform->SetRotate(vCurRot);
     }
