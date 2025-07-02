@@ -38,6 +38,11 @@ void Object::Late_Update(float dt)
 	}
 }
 
+ObjectType Object::GetObjectType() const
+{
+	return ObjType;
+}
+
 void Object::SetDead()
 {
 	Is_Dead = true;

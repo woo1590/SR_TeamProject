@@ -38,6 +38,9 @@ private: //func
     void FixCursorToCenter();
     void PickingTerrain();
 
+    /*--------------Collision-------------*/
+    void OnCollisionStay(Object* other);
+
 private: //member variable
     ePlayerState State = ePlayerState::IDLE;
     float WalkTime = 0.f;

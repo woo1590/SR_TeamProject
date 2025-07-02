@@ -36,6 +36,8 @@ HRESULT TestBlock::Ready_Object()
     transform->SetScale(1.f, 1.f, 1.f);
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_DEFAULT);
+    collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_ENEMY);
     
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     switch (m_eType)

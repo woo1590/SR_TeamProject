@@ -15,6 +15,7 @@ public:
     virtual void Update(float dt);
     virtual void Late_Update(float dt);
 
+    ObjectType GetObjectType()const;
     virtual void SetDead();
     _bool IsDead()const;
 

@@ -40,7 +40,11 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     BaseCharacter::Ready_Object(owner, objType);
     //components
     auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_DEFAULT);
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
+    collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
+
     //PlayerScale
     SetScale(1.f);
     //PlayerTexture
@@ -114,6 +118,24 @@ void Player::PickingTerrain()
         }
     }
 }
+
+void Player::OnCollisionStay(Object* other)
+{
+    ObjectType otherType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+
+    switch (otherType)
+    {
+    case Engine::ObjectType::Monster:
+        break;
+    case Engine::ObjectType::Block:
+        collision->ResolveAABBColiision(other);
+        break;
+    default:
+        break;
+    }
+}
+
 void Player::MovePlayer(_vec3 moveVec)
 {
     //move player with move Value Vector

@@ -2,6 +2,8 @@
 #include "Object.h"
 #include "TransformComponent.h"
 
+BEGIN(Engine)
+
 class ENGINE_DLL TestBlock  : public Object
 {
     friend class Object;
@@ -25,3 +27,5 @@ private:
     BlockDir m_eDir;
     BlockType m_eType;
 };
+
+END
