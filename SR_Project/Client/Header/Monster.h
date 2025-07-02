@@ -2,6 +2,21 @@
 #include "BaseCharacter.h"
 
 enum MonsterState { Idle, Walk, Attack, Die, };
+
+struct Animation
+{
+    _float Start;       //start angle;
+    _float End;         //end angle;
+
+    _float TotalTime;   //total time
+    _float ElapsedTime; //elapsed time
+
+    _float DelayTime;   //delay time;
+
+    _bool IsRunning;
+    _bool IsEnd;        //animation end
+};
+
 class Monster :
     public BaseCharacter
 {
@@ -16,13 +31,21 @@ public:
     void Late_Update(_float dt)override;
 
 public:
-    void MoveTo(_vec3* dir) override;
+    void MoveTo(_vec3* dir, _float dt) override;
+    _vec3 RotateTo(_vec3* dir, float dt);
     void Attack(Object* target) override;
+    void Die() override;
     
-    _bool IsAttack() { return IsAttacking; }
-    _bool IsAttackFinish() { return IsAttackFinished; }
+    _bool IsAttackStart() const { return AttackAnim.IsRunning; }
+    _bool IsAttackFinish() const { return AttackAnim.IsEnd; }
+
+    _bool IsDeadStart() const { return DieAnim.IsRunning; }
+    _bool IsDeadFinish() const { return DieAnim.IsEnd; }
+
+    _float GetHp() const { return Hp; }           //modify
 
 protected:
+    virtual void InitAnimation();
     virtual void PlayAnimation(_float dt);
 
     virtual void PlayIdle(_float dt);
@@ -35,14 +58,12 @@ protected:
 
 protected:
     MonsterState        State = MonsterState::Idle;
-    _float              Speed = 0.2f;
+    _float              Speed = 10.f;
     
-    _float              WalkTime = 0.f;
-    _float              AttackTime = 0.f;
+    Animation           WalkAnim;
+    Animation           AttackAnim;
+    Animation           DieAnim;
 
-    _float              AttackDelay = 2.f;
-
-    _bool               IsAttacking = false;
-    _bool               IsAttackFinished = true;
+    _float              Hp = 100.f;
 };
 

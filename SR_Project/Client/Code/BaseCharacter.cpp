@@ -90,7 +90,7 @@ void BaseCharacter::Late_Update(_float dt)
     Object::Late_Update(dt);
 }
 
-void BaseCharacter::MoveTo(_vec3* dir)
+void BaseCharacter::MoveTo(_vec3* dir,_float dt)
 {
     GetComponent<TransformComponent>()->Translate((*dir)* 0.1f);
 }

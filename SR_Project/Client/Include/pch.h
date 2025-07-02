@@ -17,6 +17,7 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <cmath>
 
 #include "Resource.h"
 
@@ -24,7 +25,6 @@
 //DirectX
 #include <d3d9.h>
 #include <d3dx9.h>
-
 #include <process.h>
 
 //MyHeader
