@@ -31,7 +31,7 @@ public:
 
 private:
     void Free()override;
-    std::list<CollisionComponent*> Collisions;
+    std::vector<CollisionComponent*> Collisions;
     Scene* owner = nullptr;
 };
 

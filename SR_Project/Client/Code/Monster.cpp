@@ -9,6 +9,7 @@
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
 #include "TransformComponent.h"
+#include "CollisionComponent.h"
 #include "AIController.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
@@ -43,6 +44,9 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto transform = AddComponent<TransformComponent>();
     transform->SetPosition(_vec3(-100.f, 0.f, 0.f));        //임의 설정
+
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetSize(_vec3(2.f, 7.f, 2.f));
     
     ChaseNode* chase = new ChaseNode();
     AttackNode* attack = new AttackNode();
