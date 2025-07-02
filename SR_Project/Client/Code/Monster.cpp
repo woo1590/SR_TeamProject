@@ -74,7 +74,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    bb->SetValue("Distance", new float(3.f));
+    bb->SetValue("Distance", new float(10.f));
 
     auto AI = AddComponent<AIController>(bt, bb);
 
@@ -99,8 +99,9 @@ void Monster::MoveTo(_vec3* dir, _float dt)
     if (State != MonsterState::Walk) State = MonsterState::Walk;
 
     auto Transform = GetComponent<TransformComponent>();
-    Transform->Translate((*dir) * dt * Speed);
-    //Transform->SetForward(*dir);
+    D3DXVec3Normalize(dir, dir);
+    Transform->Translate(*dir * dt * Speed);
+    Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
 void Monster::Attack(Object* target)
@@ -129,6 +130,7 @@ void Monster::InitAnimation()
     //WalkAnim.Start = ;
 
     //Attack
+    AttackAnim.TotalTime = 1.f;
 
     //Die
     DieAnim.Start = 0;                  //start angle
@@ -180,10 +182,11 @@ void Monster::PlayAttack(_float dt)
     //attack animation
     AttackAnim.ElapsedTime += dt;
 
-    float Angle = sinf(AttackAnim.ElapsedTime * 1.f);
+    float Angle = sinf(AttackAnim.ElapsedTime/ AttackAnim.TotalTime * D3DX_PI * 2);
 
+    auto Transform = GetComponent<TransformComponent>();
     //Body
-    SetRotation({ -Angle/2, 0.f, 0.f });
+    SetRotation({ - Angle / 2,0.f, 0.f});
 
     //Hand 
     SetRotation({ 180 - Angle*2, 0.f, 0.f }, "LHand");
@@ -192,6 +195,12 @@ void Monster::PlayAttack(_float dt)
     // Leg
     SetRotation({ Angle / 2, 0.f, 0.f }, "LLeg");
     SetRotation({ Angle / 2, 0.f, 0.f }, "RLeg");
+
+    if (AttackAnim.ElapsedTime > AttackAnim.TotalTime)
+    {
+        AttackAnim.IsEnd = true;
+        //AttackAnim.TotalTime = 0.f;
+    }
 }
 
 void Monster::PlayDie(_float dt)
