@@ -14,12 +14,8 @@ ObjectComponent::~ObjectComponent()
 
 HRESULT ObjectComponent::Ready_Component()
 {
-    return S_OK;
-}
 
-Object* ObjectComponent::GetOwner() const
-{
-    return owner;
+    return S_OK;
 }
 
 void ObjectComponent::Free()

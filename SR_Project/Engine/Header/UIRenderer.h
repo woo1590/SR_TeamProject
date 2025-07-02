@@ -7,7 +7,8 @@ BEGIN(Engine)
 class ENGINE_DLL UIRenderer : public RendererComponent
 {
 public:
-	explicit UIRenderer(Object* owner);
+	explicit UIRenderer(Object* owner)
+		:RendererComponent(owner, RENDER_ID::Render_UI) {}
 	virtual ~UIRenderer() = default;
 
 public:
@@ -17,7 +18,7 @@ public:
 	void Render() override;
 
 	void SetRatio(float _ratio) { targetRatio = clamp(_ratio, 0.f, 1.f); }
-	void ApplyRatio(float _ratio);
+	void ApplyRatioVertical(float _ratio);
 	void ApplyRatioHorizontal(float _ratio);
 
 	void SetLayer(int idx) { layerIdx = idx; }

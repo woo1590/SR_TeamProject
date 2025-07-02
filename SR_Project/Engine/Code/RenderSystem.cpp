@@ -3,10 +3,9 @@
 #include "GraphicDevice.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
-#include "Object.h"
+#include "UIRenderer.h"
 
 //component
-#include "UIRenderer.h"
 #include "RendererComponent.h"
 #include "CameraComponent.h"
 #include "MeshRendererComponent.h"
@@ -84,9 +83,9 @@ void RenderSystem::RegisterRenderer(RENDER_ID layer, RendererComponent* renderer
 	RenderList[(int)layer].push_back(renderer);
 }
 
-void RenderSystem::SetCamera(Object* cam)
+void RenderSystem::SetCamera(CameraComponent* cam)
 {
-	Camera = cam->GetComponent<CameraComponent>();
+	Camera = cam;
 }
 
 void RenderSystem::PriorityPass()
@@ -146,21 +145,14 @@ void RenderSystem::UIPass()
 
 	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
 
-	for (auto& ui : uiList)
-		ui->Render();
+	for (auto& uiRenderer : uiList)
+		uiRenderer->Render();
 
 	spriteBatch->End();
 
 	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	Device->SetTransform(D3DTS_PROJECTION, &originProj);
-}
-
-void RenderSystem::DebugPass()
-{
-	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 }
 
 void RenderSystem::AlphaPass()

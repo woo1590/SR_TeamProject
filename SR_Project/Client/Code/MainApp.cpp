@@ -7,7 +7,6 @@
 #include "TimerManager.h"
 #include "FrameManager.h"
 #include "SceneManager.h"
-#include "ImGuiManager.h"
 
 //scene
 #include "LoadingScene.h"
@@ -73,14 +72,16 @@ void MainApp::Run()
         Core->GetTimerManager()->Set_DeltaTime(L"Timer_Immediate");
 
         _float Immediate_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_Immediate");
-        if (true/*Core->GetFrameManager()->IsPermitCall(L"Frame60", Immediate_DT)*/)
-        {
-            //Core->GetTimerManager()->Set_DeltaTime(L"Timer_FPS");
+        //if (Core->GetFrameManager()->IsPermitCall(L"Frame60", Immediate_DT))
+        //{
+        //   
+        //}
 
-            //_float FPS_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
+        Core->GetTimerManager()->Set_DeltaTime(L"Timer_FPS");
 
-            Core->Tick(Immediate_DT);
-        }
+        _float FPS_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
+
+        Core->Tick(FPS_DT);
     }
 }
 
@@ -100,9 +101,6 @@ MainApp* MainApp::Create(HINSTANCE hInst, int nCmdShow)
 
 LRESULT MainApp::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    if (EngineCore::GetInstance()->GetImGuiManager()->WndProcHandler(hWnd, msg, wParam, lParam))
-        return true;
-
     switch (msg)
     {
     case WM_INPUT:
@@ -178,7 +176,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
     AdjustWindowRect(&windowSize, WS_OVERLAPPEDWINDOW, FALSE);
 
-    // È­ï¿½ï¿½ ï¿½Ø»ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+    // È­¸é ÇØ»óµµ Á¤º¸ 
     int screenWidth = GetSystemMetrics(SM_CXSCREEN);
     int screenHeight = GetSystemMetrics(SM_CYSCREEN);
     int windowWidth = windowSize.right - windowSize.left;
@@ -220,7 +218,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
     //ClipCursor(&clipRect);
 
-    //ShowCursor(FALSE);
+    ShowCursor(FALSE);
 
    /*--------------Raw Input---------------*/
    RAWINPUTDEVICE rid{};

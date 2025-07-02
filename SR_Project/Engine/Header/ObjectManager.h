@@ -18,19 +18,15 @@ public:
     void Late_Update(float dt);
 
     void AddObject(ObjectType objType, Object* object);
-    void RemoveObject(ObjectType objType, const _vec3& worldPosition);
-    void ClearList(ObjectType objType);
     void AddUIObject(Object* obj);
 
     Object* GetFrontObject(ObjectType objType);
     std::list<Object*> GetObjectList(ObjectType objType);
 
 private:
-    void CleanDeadObject();
     void Free()override;
 
     std::vector<std::list<Object*>> Objects;
-    std::list<std::list<Object*>::iterator> DeadObjects;
     Scene* owner;
 };
 

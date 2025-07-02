@@ -3,9 +3,6 @@
 BEGIN(Engine)
 
 class ObjectManager;
-class EventSystem;
-class CollisionSystem;
-class CameraManager;
 class Object;
 class ENGINE_DLL Scene : public Base
 {
@@ -35,17 +32,11 @@ public:
     virtual void Late_Update(float dt)PURE;
     virtual void Unload()PURE;
 
-    ObjectManager*      GetObjectManager()const;
-    EventSystem*        GetEventSystem()const;
-    CollisionSystem*    GetCollisionSystem()const;
-    CameraManager*      GetCameraManager()const;
 protected:
     void Free()override;
 
-    ObjectManager* ObjectMgr = nullptr;
-    EventSystem* EventSys = nullptr;
-    CollisionSystem* CollisionSys = nullptr;
-    CameraManager* CameraMgr = nullptr; 
+    ObjectManager* ObjectMgr;
+    Object* Camera;
 };
 
 END

@@ -23,8 +23,6 @@ public:
 
     void RegisterWindow(const std::wstring& key, GuiWindow window);
     void UnRegisterWindow(const std::wstring& key);
-
-    _bool WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 private:
     void Free()override;
 

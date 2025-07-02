@@ -48,10 +48,7 @@ public:
 
     _matrix GetWorldMatrix()const;
     _matrix GetLocalMatrix()const;
-
-    _matrix GetTranslateMatrix()const;
-    _matrix GetRotationMatrix()const;
-    _matrix GetScaleMatrix()const;
+    _matrix GetParentMatrix()const;
 
 private:
     void Free()override;

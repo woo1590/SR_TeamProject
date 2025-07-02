@@ -22,14 +22,11 @@ public:
     void LoadUI();
 
     /*---------ImGui Test---------*/
-    void TestSceneImGui();
+    void ImGuiTestFunc();
 private:
     void Free() override;
 
 private:
     Player* player;
-    void LoadBlock();
-
-    std::vector<BlockData> Blocks;
 };
 

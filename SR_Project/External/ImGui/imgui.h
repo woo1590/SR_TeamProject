@@ -88,10 +88,8 @@ Index of this file:
 #define IMGUI_API __declspec(dllimport)
 #endif
 
-#ifdef ENGINE_EXPORTS
-#define IMGUI_IMPL_API __declspec(dllexport)
-#else
-#define IMGUI_IMPL_API __declspec(dllimport)
+#ifndef IMGUI_IMPL_API
+#define IMGUI_IMPL_API              IMGUI_API
 #endif
 
 // Helper Macros

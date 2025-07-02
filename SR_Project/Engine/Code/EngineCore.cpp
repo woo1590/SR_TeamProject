@@ -10,8 +10,6 @@
 #include "InputSystem.h"
 #include "SoundManager.h"
 #include "ImGuiManager.h"
-#include "EventSystem.h"
-#include "CollisionSystem.h"
 
 #include "Mesh.h"
 #include "Material.h"
@@ -137,16 +135,6 @@ LightSystem* EngineCore::GetLightSystem() const
 InputSystem* EngineCore::GetInputSystem() const
 {
 	return InputSys;
-}
-
-EventSystem* EngineCore::GetEventSystem() const
-{
-	return EventSys;
-}
-
-CollisionSystem* EngineCore::GetCollisionSystem() const
-{
-	return CollisionSys;
 }
 
 HWND EngineCore::GetWindowHandle() const
