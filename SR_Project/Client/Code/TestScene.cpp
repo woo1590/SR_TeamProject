@@ -65,7 +65,7 @@ void TestScene::Load()
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 0.f);
+	player->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, -20.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	auto fCam = FirstCam::Create(ObjectMgr);

@@ -102,6 +102,11 @@ std::list<Object*> ObjectManager::GetObjectList(ObjectType objType)
 	return Objects[static_cast<int>(objType)];
 }
 
+Scene* ObjectManager::GetOwner() const
+{
+	return owner;
+}
+
 void ObjectManager::CleanDeadObject()
 {
 	std::for_each(DeadObjects.begin(), DeadObjects.end(), 

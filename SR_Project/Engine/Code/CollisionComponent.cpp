@@ -111,6 +111,8 @@ _vec3 CollisionComponent::GetLocalMax() const
 
 _bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)
 {
+	if (Collision_Layer & LAYER_PLAYER) return false;
+
 	auto transform = owner->GetComponent<TransformComponent>();
 	_matrix worldmat = transform->GetTranslateMatrix();	//스케일, 회전 적용 x
 	

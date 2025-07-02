@@ -181,6 +181,9 @@
     <Filter Include="07. Object Component\UIComponent\01. PlayerInfoComponent">
       <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Scene Component\PhysicsSystem">
+      <UniqueIdentifier>{6342d716-998f-4933-862a-73043b0598c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">

@@ -25,6 +25,7 @@ public:
     Object* GetFrontObject(ObjectType objType);
     std::list<Object*> GetObjectList(ObjectType objType);
 
+    Scene* GetOwner()const;
 private:
     void CleanDeadObject();
     void Free()override;
