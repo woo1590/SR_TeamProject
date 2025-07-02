@@ -204,15 +204,9 @@
     <ClInclude Include="..\Header\Emerald.h">
       <Filter>02. Object\UIObj\Emerald</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UILoader.h">
-      <Filter>02. Object\UILoader</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ExpBarBack.h">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
-    </ClInclude>  
     <ClInclude Include="..\Header\IsAlive.h">
       <Filter>02. Object\Monster\BTNode</Filter>
     </ClInclude>
@@ -225,6 +219,8 @@
     <ClInclude Include="..\Header\Die.h">
       <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ExpBarBack.h" />
+    <ClInclude Include="..\Header\UILoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -317,15 +313,9 @@
     <ClCompile Include="Client.cpp">
       <Filter>100. Executable</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UILoader.cpp">
-      <Filter>02. Object\UILoader</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ExpBarBack.cpp">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
-    </ClCompile>  
     <ClCompile Include="..\Code\IsAlive.cpp">
       <Filter>02. Object\Monster\BTNode</Filter>
     </ClCompile>
@@ -338,5 +328,7 @@
     <ClCompile Include="..\Code\Die.cpp">
       <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ExpBarBack.cpp" />
+    <ClCompile Include="..\Code\UILoader.cpp" />
   </ItemGroup>
 </Project>
