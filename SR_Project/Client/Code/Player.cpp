@@ -5,6 +5,11 @@
 #include "TransformComponent.h"
 #include "ObjectManager.h"
 #include "MeshRendererComponent.h"
+#include "InputSystem.h"
+#include "PlayerInfoComponent.h"
+
+#include "CollisionSystem.h"
+#include "CollisionComponent.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "InfoComponent.h"
@@ -23,6 +28,19 @@ Player* Player::Create(ObjectManager* owner, ObjectType objType){
 
 HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
+    //components
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetSize(_vec3(2.f, 7.f, 2.f));
+    auto info = AddComponent<PlayerInfoComponent>();
+    //PlayerScale
+    SetScale(1.f);
+    //PlayerTexture
+    SetMaterial(L"playerBody_Mtrl","Body");
+    SetMaterial(L"playerHead_Mtrl","Head");
+    SetMaterial(L"playerLeftArm_Mtrl","LHand");
+    SetMaterial(L"playerRightArm_Mtrl","RHand");
+    SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
+    SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
 
     auto transform = AddComponent<TransformComponent>();
     auto playerInfo = AddComponent<InfoComponent<PlayerInfo>>();

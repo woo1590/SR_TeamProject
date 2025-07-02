@@ -9,6 +9,7 @@
 #include "RendererComponent.h"
 #include "CameraComponent.h"
 #include "MeshRendererComponent.h"
+#include "CollisionComponent.h"
 
 RenderSystem::RenderSystem()
 {
@@ -69,6 +70,9 @@ void RenderSystem::Render()
 		PriorityPass();
 		NonAlphaPass();
 		AlphaPass();
+
+		if(EngineCore::GetInstance()->IsDebugMode())
+			DebugPass();
 	}
 
 	UIPass();
@@ -76,6 +80,8 @@ void RenderSystem::Render()
 	Reset();
 	for (auto& list : RenderList)
 		list.clear();
+
+	DebugRender.clear();
 }
 
 void RenderSystem::RegisterRenderer(RENDER_ID layer, RendererComponent* renderer)
@@ -83,7 +89,12 @@ void RenderSystem::RegisterRenderer(RENDER_ID layer, RendererComponent* renderer
 	RenderList[(int)layer].push_back(renderer);
 }
 
-void RenderSystem::SetCamera(CameraComponent* cam)
+void RenderSystem::RegisterCollision(CollisionComponent* collision)
+{
+	DebugRender.push_back(collision);
+}
+
+void RenderSystem::SetCamera(Object* cam)
 {
 	Camera = cam;
 }
@@ -155,6 +166,22 @@ void RenderSystem::UIPass()
 	Device->SetTransform(D3DTS_PROJECTION, &originProj);
 }
 
+void RenderSystem::DebugPass()
+{
+	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	_matrix view = Camera->GetViewMatrix();
+	_matrix proj = Camera->GetProjMatrix();
+
+	Device->SetTransform(D3DTS_VIEW, &view);
+	Device->SetTransform(D3DTS_PROJECTION, &proj);
+
+	for (const auto& collision : DebugRender)
+		collision->Render();
+}
+
 void RenderSystem::AlphaPass()
 {
 
@@ -166,6 +193,8 @@ void RenderSystem::Reset()
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	Device->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+
+	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void RenderSystem::Render_Begin(D3DXCOLOR color)

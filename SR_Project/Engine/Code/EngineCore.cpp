@@ -65,6 +65,8 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 	if (!ImGuiMgr)
 		return E_FAIL;
 
+	ImGuiMgr->RegisterWindow(L"Debug", [this]() {this->DebugSetting_IMGUI();});
+
 	return S_OK;
 }
 
@@ -75,7 +77,6 @@ void EngineCore::Tick(float dt)
 
 	SceneMgr->Update(dt);
 	SceneMgr->Late_Update(dt);
-
 
 	LightSys->ApplyLight();
 
@@ -140,6 +141,23 @@ InputSystem* EngineCore::GetInputSystem() const
 HWND EngineCore::GetWindowHandle() const
 {
 	return hWnd;
+}
+
+void EngineCore::DebugSetting_IMGUI()
+{
+	ImGui::Begin("Debug Settings");
+
+	if (ImGui::Button("Activate Debug Mode"))
+		Debug_Mode = true;
+
+	ImGui::SameLine();
+	if (ImGui::Button("Deactivate Debug Mode"))
+		Debug_Mode = false;
+
+	// 현재 상태 표시
+	ImGui::Text("Debug Mode is %s", Debug_Mode ? "ON" : "OFF");
+
+	ImGui::End();
 }
 
 void EngineCore::Free()

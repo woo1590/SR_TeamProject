@@ -23,11 +23,12 @@ public:
     void Update();
     void RegisterCollision(CollisionComponent* collision);
 
-    void Raycast(Ray ray);   //¸¶¿ì½º ÇÈÅ· ÅëÇÕ Ã³¸®
+    void Raycast(Ray ray);   //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 
 private:
     void Free()override;
-    std::list<CollisionComponent*> Collisions;
+    std::vector<CollisionComponent*> Collisions;
+    Scene* owner = nullptr;
 };
 
 END

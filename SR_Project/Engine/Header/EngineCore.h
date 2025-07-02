@@ -42,6 +42,10 @@ public:
     InputSystem*        GetInputSystem()const;
 
     HWND GetWindowHandle()const;
+
+    /*-----Debug Mode------*/
+    void DebugSetting_IMGUI();
+    _bool IsDebugMode()const { return Debug_Mode; }
 private:
     TimerManager* TimerMgr;
     FrameManager* FrameMgr;
@@ -54,9 +58,9 @@ private:
     LightSystem* LightSys;
     InputSystem* InputSys;
 
-
     HWND hWnd;
 
+    _bool Debug_Mode = true;
     void Free()override;
 };
 
