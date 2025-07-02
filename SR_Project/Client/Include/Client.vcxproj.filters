@@ -109,6 +109,24 @@
     <Filter Include="02. Object\UIObj\Emerald">
       <UniqueIdentifier>{b55a1429-2e13-414d-9c7a-24a3cf430b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\Slot\ArrowSlot">
+      <UniqueIdentifier>{d32685e0-1474-41ae-a3c4-64252e815624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ExpBar\ExpBarFront">
+      <UniqueIdentifier>{993abded-2230-4bec-9061-b762825a580f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ExpBar\ExpBarBack">
+      <UniqueIdentifier>{b273c10f-7d6f-4c1f-bd24-49fd9bf361dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UILoader">
+      <UniqueIdentifier>{782f7a20-b6f3-44db-94e8-12e7eb8b2021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Slot\QuickSlot">
+      <UniqueIdentifier>{5f79b9a4-77fb-4a3c-9d72-515676a39030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\GreenIcon">
+      <UniqueIdentifier>{bfa92b8d-b4a3-46d8-9aba-bd2007295012}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -195,26 +213,29 @@
     <ClInclude Include="..\Header\HotBarBack.h">
       <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ExpBarFront.h">
-      <Filter>02. Object\UIObj\ExpBar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Slot.h">
-      <Filter>02. Object\UIObj\Slot</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\DashUI.h">
       <Filter>02. Object\UIObj\Dash</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Emerald.h">
       <Filter>02. Object\UIObj\Emerald</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UILoader.h">
-      <Filter>02. Object\UILoader</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarBack.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarFront.h">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UILoader.h">
+      <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ArrowSlot.h">
+      <Filter>02. Object\UIObj\Slot\ArrowSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuickSlot.h">
+      <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,17 +314,8 @@
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. Object\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UIDebugObj.cpp">
-      <Filter>02. Object\UIObj\UIDebugObj</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\HotBarBack.cpp">
       <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ExpBarFront.cpp">
-      <Filter>02. Object\UIObj\ExpBar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Slot.cpp">
-      <Filter>02. Object\UIObj\Slot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DashUI.cpp">
       <Filter>02. Object\UIObj\Dash</Filter>
@@ -314,14 +326,26 @@
     <ClCompile Include="Client.cpp">
       <Filter>100. Executable</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UILoader.cpp">
-      <Filter>02. Object\UILoader</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarBack.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarFront.cpp">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UILoader.cpp">
+      <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ArrowSlot.cpp">
+      <Filter>02. Object\UIObj\Slot\ArrowSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UIDebugObj.cpp">
+      <Filter>02. Object\UIObj\UIDebugObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuickSlot.cpp">
+      <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

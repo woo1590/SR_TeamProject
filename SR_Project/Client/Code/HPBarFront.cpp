@@ -20,7 +20,7 @@ HRESULT HPBarFront::Ready_Object()
 	renderer->SetTexture(L"hpbar_front");
 	renderer->SetPivot(UIPivot::Bottom);
 	renderer->SetScale(0.35f, 0.32f);
-	transform->SetPosition(WINCX * 0.5f, WINCY * 0.97f);
+	transform->SetPosition(610.f, 690.f);
 
 	return S_OK;
 }

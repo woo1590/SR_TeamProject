@@ -27,7 +27,7 @@
 #include "UIDebugObj.h"
 #include "HotBarBack.h"
 #include "ExpBarFront.h"
-#include "Slot.h"
+#include "QuickSlot.h"
 #include "Emerald.h"
 #include "TestBlock.h"
 #include "UILoader.h"
@@ -70,22 +70,22 @@ void TestScene::Load()
 
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
-
+	
 	CameraMgr->AddCamera(L"First_Camera", fCam);
 	CameraMgr->AddCamera(L"Third_Camera", tCam);
 	tCam->SetTarget(player);
-
+	
 	CameraMgr->SetMainCamera(L"First_Camera");
 	EventSys->SetCamera();
+	
+	//ObjectMgr->AddObject(ObjectType::Camera, fCam);
+	//ObjectMgr->AddObject(ObjectType::Camera, tCam);
 
-	ObjectMgr->AddObject(ObjectType::Camera, fCam);
-	ObjectMgr->AddObject(ObjectType::Camera, tCam);
-
-	/*------------------------------------------------*/
-	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	LoadBlock();
-
-	ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
+	//------------------------------------------------*
+	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+	//LoadBlock();
+	
+	//ObjectMgr->AddObject(ObjectType::Monster, Monster::Create(ObjectMgr, ObjectType::Monster));
 
 	/*------------------Load UI------------------------*/
 	//LoadUI();
@@ -94,10 +94,9 @@ void TestScene::Load()
 
 	//auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
 	//auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);
-	//
+	
 	//ObjectMgr->AddObject(ObjectType::Player, testObj);
 	//ObjectMgr->AddObject(ObjectType::Camera, camActor);
-	//
 	
 	UILoader loader;
 	loader.LoadUI(ObjectMgr, player);

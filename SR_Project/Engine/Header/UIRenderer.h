@@ -28,6 +28,13 @@ public:
 	void UpdateCenter();
 
 	void SetScale(float x, float y) { scale = {x, y}; }
+	
+	_vec2 GetScale() const { return scale; }
+	LONG GetFullWidth() const { return fullWidth; }
+	LONG GetFullHeight() const { return fullHeight; }
+
+	void SetVisible(bool visible) { isVisible = visible; }
+	bool IsVisible() const { return isVisible; }
 
 private:
 	LPDIRECT3DBASETEXTURE9 texture = nullptr;
@@ -43,6 +50,8 @@ private:
 
 	UIPivot pivot = UIPivot::Center;
 	_vec2 scale = {1.f, 1.f};
+
+	bool isVisible = true;
 };
 
 END
