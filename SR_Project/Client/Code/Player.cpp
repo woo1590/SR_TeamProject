@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Player.h"
 #include "Player.h"
 #include "Bone.h"
@@ -62,8 +62,10 @@ void Player::Update(_float dt)
 {
     BaseCharacter::Update(dt);
 
+    
     PickingTerrain();
     KeyInput(dt); // Set State by key
+    CheckDead();
     switch (State) { // Update by State
     case ePlayerState::IDLE:
         UpdateIdle(dt);
@@ -76,6 +78,12 @@ void Player::Update(_float dt)
         break;
     case ePlayerState::ATTACK:
         UpdateAttack(dt);
+        break;
+    case ePlayerState::SHOOT:
+        UpdateShoot(dt);
+        break;
+    case ePlayerState::DEAD:
+        UpdateDead(dt);
         break;
     }
 }
@@ -114,13 +122,31 @@ void Player::PickingTerrain()
         }
     }
 
-    if (input->IsKeyPressed(LBUTTON)) {
+    if (input->IsKeyPressed(Z)) {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
         if (hit.IsHit)
         {
             if (State == ePlayerState::IDLE || State == ePlayerState::WALK) {
                 State = ePlayerState::ATTACK;
+                AttackTime = 0.f;
+                SaveStartRotation();
+            }
+            auto transform = GetComponent<TransformComponent>();
+            auto curPos = transform->GetPosition();
+            auto attackPos = hit.Position;
+            attackPos.y += yOffset;
+            AttackDirection = attackPos - curPos;
+        }
+    }
+
+    if (input->IsKeyPressed(X)) {
+        Ray ray = mainCam->ScreenPointRay();
+        HitInfo hit = collision->Raycast(ray);
+        if (hit.IsHit)
+        {
+            if (State == ePlayerState::IDLE || State == ePlayerState::WALK) {
+                State = ePlayerState::SHOOT;
                 AttackTime = 0.f;
                 SaveStartRotation();
             }
@@ -196,9 +222,9 @@ void Player::UpdateWalk(_float dt) {
     //walk time
     WalkTime += dt;
     //walk speed
-    float walkSpeed = 10.f;
+    float walkSwingSpeed = 10.f;
     //walk angle
-    float fAngle = sinf(WalkTime * walkSpeed);
+    float fAngle = sinf(WalkTime * walkSwingSpeed);
     SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
     SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
     SetRotation({ -fAngle, 0.f, 0.f }, "LHand");
@@ -207,6 +233,7 @@ void Player::UpdateWalk(_float dt) {
     _vec3 vDir;
     D3DXVec3Normalize(&vDir, &PlayerDirection);
     // move
+    float Speed = GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().speed;
     _vec3 moveVec = {
         vDir.x * Speed * Scale * dt,
         0,
@@ -290,11 +317,11 @@ void Player::UpdateRoll(_float dt)
 
     if (t <= 0.3f) {
         float fLocalT = t / 0.3f; // 0~1
-        fYOffset = sinf(fLocalT * D3DX_PI) * fAmplitudePhase1; // 0 ~ ��
+        fYOffset = sinf(fLocalT * D3DX_PI) * fAmplitudePhase1; // 0 ~ π
     }
     else {
         float fLocalT = (t - 0.3f) / 0.7f; // 0~1
-        fYOffset = sinf(D3DX_PI + fLocalT * D3DX_PI) * fAmplitudePhase2; // �� ~ 2��
+        fYOffset = sinf(D3DX_PI + fLocalT * D3DX_PI) * fAmplitudePhase2; // π ~ 2π
     }
     _vec3 vCurPos = transform->GetPosition();
     vCurPos.y = fStartY + fYOffset;
@@ -445,6 +472,179 @@ void Player::UpdateAttack(_float dt) {
         State = ePlayerState::WALK;
     }
 }
+void Player::UpdateShoot(_float dt) {
+    const float fAttackDuration = 0.6f;
+    AttackTime += dt;
+    float fProgress = AttackTime / fAttackDuration;
+    fProgress = std::clamp(fProgress, 0.f, 1.f);
+
+    auto Lerp = [](const _vec3& a, const _vec3& b, float t) {
+        return a + (b - a) * t;
+    };
+    auto LerpRot = [&](const _vec3& startDeg, const _vec3& endDeg, float ratio) {
+        _vec3 startRad = {
+            D3DXToRadian(startDeg.x),
+            D3DXToRadian(startDeg.y),
+            D3DXToRadian(startDeg.z)
+        };
+        _vec3 endRad = {
+            D3DXToRadian(endDeg.x),
+            D3DXToRadian(endDeg.y),
+            D3DXToRadian(endDeg.z)
+        };
+        return Lerp(startRad, endRad, ratio);
+    };
+
+    float fPhase1 = 0.15f;
+    float fPhase2 = 0.4f;
+    float fPhase3 = 0.9f;
+    float fPhase4 = 1.0f;
+    float t = 0.f;
+    _vec3 vCurrentRot;
+
+    auto ApplyPhasedRotation = [&](const std::string& name,
+        _vec3 vStart,
+        _vec3 vKey1,
+        _vec3 vKey2,
+        _vec3 vKey3) {
+            if (fProgress < fPhase1) {
+                t = fProgress / fPhase1;
+                vCurrentRot = LerpRot(vStart, vKey1, t);
+            }
+            else if (fProgress < fPhase2) {
+                t = (fProgress - fPhase1) / (fPhase2 - fPhase1);
+                vCurrentRot = LerpRot(vKey1, vKey2, t);
+            }
+            else if (fProgress < fPhase3) {
+                t = (fProgress - fPhase2) / (fPhase3 - fPhase2);
+                vCurrentRot = LerpRot(vKey2, vKey3, t);
+            }
+            else {
+                t = (fProgress - fPhase3) / (fPhase4 - fPhase3);
+                vCurrentRot = LerpRot(vKey3, vStart, t);
+            }
+
+            SetRotation(vCurrentRot, name);
+    };
+
+    // 🎯 활 쏘는 모션 구성
+    ApplyPhasedRotation("LHand",
+        StartRotations["LHand"],
+        { -90.f, 30.f, 0.f },
+        { -90.f, 30.f, 0.f },
+        { -0.f, 0.f, 0.f }
+    );
+    ApplyPhasedRotation("RHand",
+        StartRotations["RHand"],
+        { -90.f, -60.f, 0.f },
+        { -90.f, -60.f, 0.f },
+        { -0.f, 0.f, 0.f }
+    );
+    ApplyPhasedRotation("Player",
+        StartRotations["Player"],
+        { 0.f, 10.f, 0.f },
+        { 0.f, 15.f, 0.f },
+        { 0.f, 20.f, 0.f }
+    );
+    ApplyPhasedRotation("LLeg", StartRotations["LLeg"],
+        { 0.f, 0.f, 0.f },
+        { 0.f, 0.f, 0.f },
+        { 0.f, 0.f, 0.f }
+    );
+    ApplyPhasedRotation("RLeg", StartRotations["RLeg"],
+        { 0.f, 0.f, 0.f },
+        { 0.f, 0.f, 0.f },
+        { 0.f, 0.f, 0.f }
+    );
+
+    // 🎯 시선 방향 고정 + 트위스트 회전
+    auto transform = GetComponent<TransformComponent>();
+    _vec3 vStartRot = StartRotations["Player"];
+    _vec3 vTwist1 = { 0.f, 10.f, 0.f };
+    _vec3 vTwist2 = { 0.f, 0.f, 0.f };
+    _vec3 vTwist3 = { 0.f, -10.f, 0.f };
+
+    if (fProgress < fPhase1) {
+        t = fProgress / fPhase1;
+        vCurrentRot = LerpRot(vStartRot, vTwist1, t);
+    }
+    else if (fProgress < fPhase2) {
+        t = (fProgress - fPhase1) / (fPhase2 - fPhase1);
+        vCurrentRot = LerpRot(vTwist1, vTwist2, t);
+    }
+    else if (fProgress < fPhase3) {
+        t = (fProgress - fPhase2) / (fPhase3 - fPhase2);
+        vCurrentRot = LerpRot(vTwist2, vTwist3, t);
+    }
+    else {
+        t = (fProgress - fPhase3) / (fPhase4 - fPhase3);
+        vCurrentRot = LerpRot(vTwist3, vStartRot, t);
+    }
+
+    float fCurrentAngle = D3DXToRadian(vCurrentRot.y);
+    _vec3 vForward = AttackDirection;
+    vForward.y = 0.f;
+    D3DXVec3Normalize(&vForward, &vForward);
+    transform->SetForward(vForward);
+    _matrix matRot;
+    _vec3 vAxis = transform->GetUp();
+    D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
+    _vec3 rotateVec = MatrixToEulerAngles(matRot);
+    RotatePlayer(rotateVec);
+
+    // 🎯 종료 조건
+    if (AttackTime >= fAttackDuration) {
+        AttackTime = 0.f;
+        State = ePlayerState::WALK;
+    }
+}
+void Player::UpdateDead(_float dt) {
+    auto transform = GetComponent<TransformComponent>();
+
+    const float fDeadDuration = 1.0f; // 사망 모션 전체 시간
+    DeadTime += dt;
+    float fProgress = std::clamp(DeadTime / fDeadDuration, 0.f, 1.f);
+
+    // 회전 각도는 뒤로 90도만 (x축 기준)
+    float fMaxDeathAngle = D3DXToRadian(90.f);
+    float fCurrentAngle = fMaxDeathAngle * fProgress;
+
+    // 트랜스폼 회전 적용: 뒤로 누움 (x축 회전만)
+    _vec3 vAxis = transform->GetRight(); // x축
+    _matrix matRot;
+    D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
+    _vec3 rotateVec = MatrixToEulerAngles(matRot);
+    RotatePlayer(rotateVec);
+
+    // 모션 곡선 비율
+    float fLerpRatio = 0.f;
+    if (fProgress <= 0.3f) {
+        fLerpRatio = fProgress / 0.3f; // 숙이기
+    }
+    else {
+        fLerpRatio = 1.f - ((fProgress - 0.3f) / 0.7f); // 펴기
+    }
+    fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
+
+    // Lerp 함수
+    auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
+        return start + offset * ratio;
+    };
+
+    // 몸 각 부위 포즈 적용
+    SetRotation(LerpRot(StartRotations["Head"], { -1.f, 0.f, 0.f }, fLerpRatio), "Head");
+    SetRotation(LerpRot(StartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
+    SetRotation(LerpRot(StartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
+    SetRotation(LerpRot(StartRotations["LLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "LLeg");
+    SetRotation(LerpRot(StartRotations["RLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "RLeg");
+
+    // 누운 상태에서 종료 (모션 유지)
+    if (DeadTime >= fDeadDuration) {
+        DeadTime = fDeadDuration; // 시간 고정
+        State = ePlayerState::DEAD; // DEAD 상태 유지
+    }
+}
+
 void Player::KeyInput(_float dt)
 {
     //CheckStateAttack(dt);
@@ -516,7 +716,7 @@ void Player::CheckStateWalk(_float dt)
 void Player::CheckStateRoll(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
-    static KEY keyRoll = B;
+    static KEY keyRoll = SPACE;
 
     //ISMOVING TRUE && PRESS SPACE -> ROLL
     if (input->IsKeyPressed(keyRoll)) {
@@ -548,24 +748,31 @@ void Player::CheckStateIdle(_float dt)
     }
 }
 
+void Player::CheckDead()
+{
+    auto input = EngineCore::GetInstance()->GetInputSystem();
+    if (input->IsKeyPressed(C) || (GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().curHp <= 0.f && DeadTime == 0))
+        State = ePlayerState::DEAD;
+}
+
 _vec3 Player::MatrixToEulerAngles(const _matrix& mat) {
     _vec3 vAngles = { 0.f, 0.f, 0.f };
 
-    // Pitch (X�� ȸ��)
+    // Pitch (X축 회전)
     vAngles.x = asinf(-mat._32);
 
     // Cosine of pitch
     float cosPitch = cosf(vAngles.x);
 
-    // ���� ���� �������� ��� ó��
+    // 작은 수로 나눠지는 경우 처리
     if (fabs(cosPitch) > 0.0001f) {
-        // Yaw (Y�� ȸ��)
+        // Yaw (Y축 회전)
         vAngles.y = -atan2f(mat._31, mat._33);
-        // Roll (Z�� ȸ��)
+        // Roll (Z축 회전)
         vAngles.z = atan2f(mat._12, mat._22);
     }
     else {
-        // Gimbal lock �߻� �� (pitch = +-90��)
+        // Gimbal lock 발생 시 (pitch = +-90도)
         vAngles.y = -atan2f(-mat._13, mat._11);
         vAngles.z = 0.f;
     }
