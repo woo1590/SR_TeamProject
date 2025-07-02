@@ -16,9 +16,7 @@
 #include "TestObject.h"
 #include "SkyBox.h"
 #include "BaseCharacter.h"
-#include "HPBarFront.h"
 #include "Player.h"
-#include "HPBarBack.h"
 #include "CameraActor.h"
 #include "LoadingUI.h"
 #include "Cursor.h"
@@ -31,17 +29,14 @@
 #include "ExpBarFront.h"
 #include "Slot.h"
 #include "Emerald.h"
+#include "TestBlock.h"
+#include "UILoader.h"
 
 //component
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
-#include "HpComponent.h"
-#include "TestBlock.h"
-#include "PlayerInfoComponent.h"
-#include "HpComponent.h"
-#include "ExpComponent.h"
 
 TestScene::TestScene()
 {
@@ -95,6 +90,19 @@ void TestScene::Load()
 	/*------------------Load UI------------------------*/
 	//LoadUI();
 	/*----------------------------------------------------------------------------------------------*/
+	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+
+	//auto testObj = TestObject::Create(ObjectMgr, ObjectType::Player);
+	//auto camActor = CameraActor::Create(ObjectMgr, ObjectType::Camera);
+	//
+	//ObjectMgr->AddObject(ObjectType::Player, testObj);
+	//ObjectMgr->AddObject(ObjectType::Camera, camActor);
+	//
+	player = Player::Create(ObjectMgr, ObjectType::Player);
+	ObjectMgr->AddObject(ObjectType::Player, player);
+	
+	UILoader loader;
+	loader.LoadUI(ObjectMgr, player);
 }
 
 void TestScene::Update(float dt)
@@ -210,28 +218,4 @@ void TestScene::LoadBlock()
 
 	CloseHandle(hFile);
 	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
-}
-
-void TestScene::LoadUI()
-{
-	const auto& info = player->GetComponent<PlayerInfoComponent>();
-
-	auto hpBarFront = HPBarFront::Create(ObjectMgr);
-//	info->Attach(hpBarFront->GetComponent<HpComponent>());
-
-	ObjectMgr->AddUIObject(hpBarFront);
-
-	auto debugUI = UIDebugObj::Create(ObjectMgr);
-	ObjectMgr->AddUIObject(debugUI);
-	debugUI->SetPlayer(player);
-
-	ObjectMgr->AddUIObject(HotBarBack::Create(ObjectMgr));
-
-	auto expFront = ExpBarFront::Create(ObjectMgr);
-	info->Attach(expFront->GetComponent<ExpComponent>());
-
-	ObjectMgr->AddUIObject(expFront);
-	ObjectMgr->AddUIObject(Slot::Create(ObjectMgr));
-
-	ObjectMgr->AddUIObject(Emerald::Create(ObjectMgr));
 }

@@ -207,6 +207,15 @@
     <ClInclude Include="..\Header\Emerald.h">
       <Filter>02. Object\UIObj\Emerald</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UILoader.h">
+      <Filter>02. Object\UILoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarFront.h">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarBack.h">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -214,9 +223,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>99. Etc\pch</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>100. Executable</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestScene.cpp">
       <Filter>01. Scene\TestScene</Filter>
@@ -304,6 +310,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Emerald.cpp">
       <Filter>02. Object\UIObj\Emerald</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>100. Executable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UILoader.cpp">
+      <Filter>02. Object\UILoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarFront.cpp">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarBack.cpp">
+      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

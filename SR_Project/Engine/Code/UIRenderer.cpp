@@ -7,9 +7,6 @@
 #include "FontComponent.h"
 #include "Object.h"
 
-UIRenderer::UIRenderer(Object* owner)
-	:RendererComponent(owner,RENDER_ID::Render_UI){}
-
 UIRenderer* UIRenderer::Create(Object* owner)
 {
 	auto* instance = new UIRenderer(owner);
@@ -48,7 +45,7 @@ void UIRenderer::SetTexture(const wstring& key)
     UpdateCenter();
 }
 
-void UIRenderer::ApplyRatio(float _ratio)
+void UIRenderer::ApplyRatioVertical(float _ratio)
 {
     LONG visible = static_cast<LONG>(fullHeight * _ratio);
     srcRect.top = fullHeight - visible;
@@ -115,5 +112,5 @@ void UIRenderer::Render()
     auto font = owner->GetComponent<FontComponent>();
 
     if (font)
-        font->Render();
+        font->Render(); 
 }

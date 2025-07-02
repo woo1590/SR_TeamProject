@@ -153,11 +153,11 @@
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -182,11 +182,11 @@
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -233,7 +233,6 @@
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\Engine_UIStruct.h" />
-    <ClInclude Include="..\Header\ExpComponent.h" />
     <ClInclude Include="..\Header\FontComponent.h" />
     <ClInclude Include="..\Header\EventSystem.h" />
     <ClInclude Include="..\Header\Frame.h" />
@@ -241,9 +240,8 @@
     <ClInclude Include="..\Header\FreecamComponent.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
-    <ClInclude Include="..\Header\HpComponent.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h" />
-    <ClInclude Include="..\Header\PlayerInfoComponent.h" />
+    <ClInclude Include="..\Header\InfoComponent.h" />
     <ClInclude Include="..\Header\InputSystem.h" />
     <ClInclude Include="..\Header\InverterDecorator.h" />
     <ClInclude Include="..\Header\LightComponent.h" />
@@ -344,7 +342,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\Code\ExpComponent.cpp" />
     <ClCompile Include="..\Code\FontComponent.cpp" />
     <ClCompile Include="..\Code\EventSystem.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
@@ -352,9 +349,8 @@
     <ClCompile Include="..\Code\FreecamComponent.cpp" />
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
-    <ClCompile Include="..\Code\HpComponent.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp" />
-    <ClCompile Include="..\Code\PlayerInfoComponent.cpp" />
+    <ClCompile Include="..\Code\InfoComponent.cpp" />
     <ClCompile Include="..\Code\InputSystem.cpp" />
     <ClCompile Include="..\Code\InverterDecorator.cpp" />
     <ClCompile Include="..\Code\LightComponent.cpp" />

@@ -6,7 +6,7 @@
 #include "ObjectManager.h"
 #include "MeshRendererComponent.h"
 #include "InputSystem.h"
-#include "PlayerInfoComponent.h"
+#include "InfoComponent.h"
 
 #include "CollisionSystem.h"
 #include "CollisionComponent.h"
@@ -41,7 +41,6 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     //components
     auto collision = AddComponent<CollisionComponent>();
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
-    auto info = AddComponent<PlayerInfoComponent>();
     //PlayerScale
     SetScale(1.f);
     //PlayerTexture
@@ -54,6 +53,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
+
+    auto playerInfo = AddComponent<InfoComponent<PlayerInfo>>();
 
     return S_OK;
 }

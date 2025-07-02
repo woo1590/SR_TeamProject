@@ -157,8 +157,8 @@ void RenderSystem::UIPass()
 
 	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
 
-	for (auto& ui : uiList)
-		ui->Render();
+	for (auto& uiRenderer : uiList)
+		uiRenderer->Render();
 
 	spriteBatch->End();
 

@@ -139,9 +139,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/imgui</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -161,9 +161,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/imgui</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\FirstCam.h" />
     <ClInclude Include="..\Header\DashUI.h" />
     <ClInclude Include="..\Header\Emerald.h" />
+    <ClInclude Include="..\Header\ExpBarBack.h" />
     <ClInclude Include="..\Header\ExpBarFront.h" />
     <ClInclude Include="..\Header\HotBarBack.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\Header\TestScene.h" />
     <ClInclude Include="..\Header\ThirdCam.h" />
     <ClInclude Include="..\Header\UIDebugObj.h" />
+    <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="Client_Defines.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -217,6 +219,7 @@
     <ClCompile Include="..\Code\FirstCam.cpp" />
     <ClCompile Include="..\Code\DashUI.cpp" />
     <ClCompile Include="..\Code\Emerald.cpp" />
+    <ClCompile Include="..\Code\ExpBarBack.cpp" />
     <ClCompile Include="..\Code\ExpBarFront.cpp" />
     <ClCompile Include="..\Code\HotBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
@@ -238,6 +241,7 @@
     <ClCompile Include="..\Code\TestScene.cpp" />
     <ClCompile Include="..\Code\ThirdCam.cpp" />
     <ClCompile Include="..\Code\UIDebugObj.cpp" />
+    <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

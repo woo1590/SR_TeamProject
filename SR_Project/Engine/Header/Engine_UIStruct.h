@@ -2,25 +2,36 @@
 
 namespace Engine
 {
-	struct NotifyEvent
-	{
-		int type;
-		void* data;
-	};
-
-	struct PlayerInitStat
+	struct PlayerInfo
 	{
 		int level = 1;
+		int curHp = 100;
 		int maxHp = 100;
+		int curExp = 0;
 		int maxExp = 10;
 		float speed = 6.f;
 	};
 
-	struct PlayerInfo
+	struct EnemyInfo
 	{
 		int level;
-		int curHp, maxHp;
-		int curExp, maxExp;
+		int curHp;
+		int maxHp;
+		int power;
+		float attackDelay;
 		float speed;
+	};
+
+	enum class UIEventType
+	{
+		HP_Changed,
+		EXP_Changed
+	};
+
+	template<typename T>
+	struct UIEvent
+	{
+		UIEventType type;
+		T info;
 	};
 }

@@ -3,8 +3,9 @@
 #include "FontComponent.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
+#include "InfoComponent.h"
 
-#include "PlayerInfoComponent.h"
+#include "ResourceManager.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
 
@@ -21,17 +22,18 @@ HRESULT UIDebugObj::Ready_Object()
 	auto renderer  = AddComponent<UIRenderer>();
 	auto font      = AddComponent<FontComponent>();
 
-	font->SetColor(Color::Cyan);
-	font->SetFontType(FontType::Title);
-	font->SetRect({50, 50, 500, 500});
 
 	return S_OK;
 }
 
 void UIDebugObj::Update(float dt)
 {
+	const auto& playerInfo = player->GetComponent<InfoComponent<PlayerInfo>>();
+	const auto& info = playerInfo->GetInfo();
 	auto font = GetComponent<FontComponent>();
-	const auto& info = player->GetComponent<PlayerInfoComponent>()->GetInfo();
+
+	font->ClearText();
+	font->AddText(L"Lv: " + to_wstring(info.level), {650,650,850,770},Color::Cyan);
 
 	accTime += dt;
 	++frameCount;
@@ -43,17 +45,10 @@ void UIDebugObj::Update(float dt)
 		frameCount = 0;
 	}
 	
-	wchar_t buffer[128];
-	swprintf_s(buffer, L"FPS: %.f\nLevel: %d\ncurHp: %d\nmaxHp: %d\ncurExp: %d/maxExp: %d\nspeed: %.1f",
-		fps, info.level, info.curHp, info.maxHp, info.curExp, info.maxExp, info.speed);
-	
-	font->SetText(buffer);
-
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
-	auto comp = player->GetComponent<PlayerInfoComponent>();
 	if (input->IsKeyPressed(KEY::LBUTTON))
 	{
-		comp->AddHp(-10);
-		comp->AddExp(5);
+		playerInfo->AddExp(5);
+		playerInfo->AddHp(-10);
 	}
 }

@@ -47,7 +47,7 @@ namespace Engine
 		Player_Damaged
 	};
 
-	enum class BarDirection {Vertical, Horizontal};
+	enum class BarDirection {Vertical, Horizontal, ClockWise16};
 
 	enum class UIPivot {Center, Bottom, LeftTop, Left, Right};
 

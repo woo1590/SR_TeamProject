@@ -4,6 +4,14 @@
 
 BEGIN(Engine)
 
+struct ENGINE_DLL TextEntry
+{
+	wstring text;
+	RECT rect;
+	DWORD format = DT_LEFT | DT_TOP;
+	D3DXCOLOR color = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+};
+
 class ENGINE_DLL FontComponent: public ObjectComponent
 {
 public:
@@ -13,24 +21,21 @@ public:
 public:
 	static FontComponent* Create(Object* owner);
 
-	void SetText(const wstring& text) { this->text = text; }
-	void SetColor(Color color) { this->color = ToD3DXColor(color); }
+	void AddText(const wstring& text, const RECT& rect, Color color = Color::White, DWORD format = DT_LEFT | DT_TOP);
+
+	void ClearText() { entries.clear(); }
+
 	void SetFontType(FontType type);
-
-	void SetRect(const RECT& rect) { this->rect = rect; }
-	void SetAlign(DWORD format) { this->format = format;}
-
 	void Render();
+	
 
 private:
 	HRESULT CreateFontResource();
 
 private:
 	ID3DXFont* font = nullptr;
-	wstring text;
-	D3DXCOLOR color;
-	RECT rect = {0, 0, 100, 100};
-	DWORD format = DT_LEFT | DT_TOP;
+	
+	vector<TextEntry> entries;
 };
 
 END

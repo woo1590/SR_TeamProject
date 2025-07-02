@@ -184,6 +184,12 @@
     <Filter Include="07. Object Component\Physics">
       <UniqueIdentifier>{ec25a13a-0b6f-4356-a096-1f9c8ab19d28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\UIComponent\00. ProgressBarComponent">
+      <UniqueIdentifier>{afd873d1-0d6c-462b-bcd2-f62c0aa01196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\01. PlayerInfoComponent">
+      <UniqueIdentifier>{b968eed2-361f-4cb1-913e-eb7d704d6c50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -212,9 +218,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Object.cpp">
       <Filter>06. Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ObjectComponent.cpp">
-      <Filter>07. Object Component</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TransformComponent.cpp">
       <Filter>07. Object Component\Transform</Filter>
@@ -315,8 +318,8 @@
     <ClCompile Include="..\Code\HpComponent.cpp">
       <Filter>07. Object Component\UIComponent\02. HPComponent</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FontComponent.cpp">
-      <Filter>07. Object Component\Font</Filter>
+    <ClCompile Include="..\Code\InfoComponent.cpp">
+      <Filter>07. Object Component\UIComponent\01. PlayerInfoComponent</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CollisionComponent.cpp">
       <Filter>07. Object Component\Collision</Filter>
@@ -430,9 +433,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Object.h">
       <Filter>06. Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ObjectComponent.h">
-      <Filter>07. Object Component</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TransformComponent.h">
       <Filter>07. Object Component\Transform</Filter>
