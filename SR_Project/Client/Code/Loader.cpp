@@ -143,7 +143,7 @@ HRESULT Loader::Load_TestScene()
 	return S_OK;
 }
 
-HRESULT Loader::load_UIResources() // Á¦Çö UI Àü¿ëÇÔ¼ö
+HRESULT Loader::load_UIResources() // ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
 {
 	const auto eUI = TEXTURE::Tex_Diffuse;
 
@@ -162,7 +162,7 @@ HRESULT Loader::load_UIResources() // Á¦Çö UI Àü¿ëÇÔ¼ö
 		{L"expbar_back",        eUI},
 	};
 
-	// layer ³·À»¼ö·Ï ¸ÕÀú ±×¸²
+	// layer ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½
 	static const unordered_map<wstring, int> uiLayers = {
 		{L"hpbar_back",         -1},
 		{L"hpbar_front",         0},
