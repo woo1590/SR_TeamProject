@@ -23,20 +23,27 @@ private:
     void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);              // 좌클릭
     void OnRightClick(_vec3& rayOrigin, _vec3& rayDir);             // 우클릭
     
-    bool RayIntersectsAABB(const _vec3& rayOrigin, const _vec3& rayDir, const _vec3& boxMin, const _vec3& boxMax, float& outDistance);  // 광선 박스 충돌
-    _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax);    // 충돌한 면의 법선 반환
-    void PlaceBlock(const _vec3& position, BlockType type, BlockDir dir);                                 // 블럭 설치
+    bool RayIntersectsAABB(const _vec3& rayOrigin, const _vec3& rayDir, const _vec3& boxMin, const _vec3& boxMax, float& outDistance); // 광선 박스 충돌
+    _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax); // 충돌한 면의 법선 반환
+    void Place(const _vec3& position); // 블럭 설치
 
-    void SaveBlock(const char* saveStage);   // 맵 저장
-    void LoadBlock(const char* loadStage);   // 맵 로드
+    void SaveStage(const char* saveStage);   // 맵 저장
+    void LoadStage(const char* loadStage);   // 맵 로드
 
 private:
     void Free() override;
 
 private:
-    int selectedBlockType = 0;
-    int selectedBlockDir = 1;
-    BlockDir blockDir = BlockDir::BlockY;
-    BlockType blockType = BlockType::Dirt;
-    std::vector<BlockData> Blocks;
+    int selectedSBlockDir = 1;
+    int selectedSBlockType = 0;
+    int selectedDBlockType = 0;
+
+    StaticBlockDir staticBlockDir = StaticBlockDir::BlockY;
+    StaticBlockType staticBlockType = StaticBlockType::Dirt;
+
+    DynamicBlockDir dynamicBlockDir = DynamicBlockDir::DBEnd;
+    DynamicBlockType dynamicBlockType = DynamicBlockType::LeverSwitch;
+
+    std::vector<SB> staticBlocks;
+    std::vector<DB> dynamicBlocks;
 };

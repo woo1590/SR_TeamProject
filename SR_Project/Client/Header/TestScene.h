@@ -30,6 +30,6 @@ private:
     Player* player;
     void LoadBlock();
 
-    std::vector<BlockData> Blocks;
+    std::vector<SB> staticBlocks;
 };
 

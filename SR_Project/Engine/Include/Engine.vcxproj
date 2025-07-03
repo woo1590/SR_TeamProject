@@ -220,11 +220,13 @@
     <ClInclude Include="..\Header\BTNode.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
     <ClInclude Include="..\Header\CameraManager.h" />
+    <ClInclude Include="..\Header\Chest.h" />
     <ClInclude Include="..\Header\CollisionComponent.h" />
     <ClInclude Include="..\Header\CollisionSystem.h" />
     <ClInclude Include="..\Header\CompositeNode.h" />
     <ClInclude Include="..\Header\CubeMesh.h" />
     <ClInclude Include="..\Header\DecoratorNode.h" />
+    <ClInclude Include="..\Header\DynamicBlock.h" />
     <ClInclude Include="..\Header\EngineCore.h" />
     <ClInclude Include="..\Header\EnginePCH.h" />
     <ClInclude Include="..\Header\Engine_Enum.h" />
@@ -242,6 +244,8 @@
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\HpComponent.h" />
+    <ClInclude Include="..\Header\Lever.h" />
+    <ClInclude Include="..\Header\Part.h" />
     <ClInclude Include="..\Header\PlayerInfoComponent.h" />
     <ClInclude Include="..\Header\InputSystem.h" />
     <ClInclude Include="..\Header\InverterDecorator.h" />
@@ -272,7 +276,7 @@
     <ClInclude Include="..\Header\SucceederDecorator.h" />
     <ClInclude Include="..\Header\TerrainMesh.h" />
     <ClInclude Include="..\Header\TerrainRenderer.h" />
-    <ClInclude Include="..\Header\TestBlock.h" />
+    <ClInclude Include="..\Header\StaticBlock.h" />
     <ClInclude Include="..\Header\ThirdcamComponent.h" />
     <ClInclude Include="..\Header\Timer.h" />
     <ClInclude Include="..\Header\TimerManager.h" />
@@ -330,11 +334,13 @@
     <ClCompile Include="..\Code\BlackBoard.cpp" />
     <ClCompile Include="..\Code\BTNode.cpp" />
     <ClCompile Include="..\Code\CameraComponent.cpp" />
+    <ClCompile Include="..\Code\Chest.cpp" />
     <ClCompile Include="..\Code\CollisionComponent.cpp" />
     <ClCompile Include="..\Code\CollisionSystem.cpp" />
     <ClCompile Include="..\Code\CompositeNode.cpp" />
     <ClCompile Include="..\Code\CubeMesh.cpp" />
     <ClCompile Include="..\Code\DecoratorNode.cpp" />
+    <ClCompile Include="..\Code\DynamicBlock.cpp" />
     <ClCompile Include="..\Code\EngineCore.cpp" />
     <ClCompile Include="..\Code\EnginePCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -353,6 +359,8 @@
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\HpComponent.cpp" />
+    <ClCompile Include="..\Code\Lever.cpp" />
+    <ClCompile Include="..\Code\Part.cpp" />
     <ClCompile Include="..\Code\PlayerInfoComponent.cpp" />
     <ClCompile Include="..\Code\InputSystem.cpp" />
     <ClCompile Include="..\Code\InverterDecorator.cpp" />
@@ -382,7 +390,7 @@
     <ClCompile Include="..\Code\SucceederDecorator.cpp" />
     <ClCompile Include="..\Code\TerrainMesh.cpp" />
     <ClCompile Include="..\Code\TerrainRenderer.cpp" />
-    <ClCompile Include="..\Code\TestBlock.cpp" />
+    <ClCompile Include="..\Code\StaticBlock.cpp" />
     <ClCompile Include="..\Code\ThirdcamComponent.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerManager.cpp" />

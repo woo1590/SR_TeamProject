@@ -28,7 +28,8 @@ namespace Engine
 		SkyBox,
 		Camera,
 		UI,
-		Block,
+		StaticBlock,
+		DynamicBlock,
 		Count
 	};
 
@@ -103,7 +104,10 @@ namespace Engine
 		}
 	}
 
-	enum BlockType { Dirt, GrassDirt, Wood, WoodPlank, TypeEnd };
-	enum BlockDir { BlockX, BlockY, BlockZ, DirEnd };
+	enum StaticBlockDir { BlockX, BlockY, BlockZ, BDEnd };
+	enum StaticBlockType { Dirt, GrassDirt, Wood, WoodPlank, Stone, CobbleStone, SBlockNone };
+
+	enum DynamicBlockDir { XP, XM, ZP, ZM, DBEnd };
+	enum DynamicBlockType { LeverSwitch, BasicChest, DBlockNone };
 }
 #endif // Engine_Enum_h__

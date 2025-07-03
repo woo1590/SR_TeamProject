@@ -1513,8 +1513,8 @@ static void DemoWindowWidgetsDataTypes()
 
 static void DemoWindowWidgetsDisableBlocks(ImGuiDemoWindowData* demo_data)
 {
-    IMGUI_DEMO_MARKER("Widgets/Disable Blocks");
-    if (ImGui::TreeNode("Disable Blocks"))
+    IMGUI_DEMO_MARKER("Widgets/Disable staticBlocks");
+    if (ImGui::TreeNode("Disable staticBlocks"))
     {
         ImGui::Checkbox("Disable entire section above", &demo_data->DisableSections);
         ImGui::SameLine(); HelpMarker("Demonstrate using BeginDisabled()/EndDisabled() across other sections.");

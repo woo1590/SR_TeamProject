@@ -154,10 +154,10 @@ HRESULT Loader::Load_TestScene()
 	playerLeftLegMtrl->SetTexture(L"playerLeftLeg");
 	resource->LoadMaterial(L"playerLeftLeg_Mtrl", playerLeftLegMtrl);
 
-	resource->LoadTexture(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
+	resource->LoadTexture(L"../Resource/Texture/StaticBlock/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"DirtBlock", cube);
 
-	resource->LoadTexture(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
+	resource->LoadTexture(L"../Resource/Texture/StaticBlock/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"GrassBlock", cube);
 
 	auto dirtBlockMtrl = Material::Create();
