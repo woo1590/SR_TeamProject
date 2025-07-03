@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Monster.h"
+#include "CollisionComponent.h"
+#include "PhysicsComponent.h"
+#include "InfoComponent.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -12,6 +15,18 @@ Monster::~Monster()
 
 HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
+    BaseCharacter::Ready_Object(owner, objType);
+
+    //stat component;
+    auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
+
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_ENEMY);
+    collision->SetMask(CollisionComponent::LAYER_PLAYER);
+    collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
+    
+    auto physics = AddComponent<PhysicsComponent>();
+    physics->SetMass(1.f);
     return S_OK;
 }
 
@@ -66,6 +81,15 @@ void Monster::PlayAttack(_float dt)
 
 void Monster::PlayDie(_float dt)
 {
+}
+
+void Monster::OnCollisionStay(Object* other)
+{
+    ObjectType objType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+
+    if (objType == ObjectType::StaticBlock)
+        collision->ResolveAABBColiision(other);
 }
 
 void Monster::Free()

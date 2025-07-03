@@ -41,16 +41,17 @@ Skeleton* Skeleton::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Skeleton::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    BaseCharacter::Ready_Object(owner, objType);
-
-    //stat component;
-    auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
+    Monster::Ready_Object(owner, objType);
 
     //InitTransform
-
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
     InitTransform(objType);
+
+    //Init Collision
+    auto collision = GetComponent<CollisionComponent>();
+    collision->SetSize(_vec3(2.f, 7.f, 2.f));
+
     //Create BT
     InitTree();
 
@@ -114,7 +115,7 @@ void Skeleton::InitTransform(ObjectType objType)
 {
     auto transform = GetComponent<TransformComponent>();
 
-    transform->SetPosition(_vec3(-20.f, 0.f, 0.f));
+    transform->SetPosition(_vec3(30.f, 0.f, -40.f));
     SetMaterial(L"SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial(L"SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
     SetMaterial(L"SkeletonBone_Mtrl", "LArm");
@@ -284,6 +285,10 @@ void Skeleton::PlayAttack(_float dt)
 void Skeleton::PlayDie(_float dt)
 {
     //bone detach
+}
+
+void Skeleton::OnCollisionStay(Object* other)
+{
 }
 
 void Skeleton::Free()

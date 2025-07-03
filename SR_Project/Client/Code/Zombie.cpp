@@ -8,6 +8,8 @@
 #include "ObjectManager.h"
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
+#include "InfoComponent.h"
+#include "Player.h"
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
 #include "AIController.h"
@@ -39,7 +41,7 @@ Zombie* Zombie::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    BaseCharacter::Ready_Object(owner, objType);
+    Monster::Ready_Object(owner, objType);
 
     //InitTransform
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 6.f * Scale, 0.0f));
@@ -50,11 +52,11 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto transform = AddComponent<TransformComponent>();
 
-    auto collision = AddComponent<CollisionComponent>();
+    auto collision = GetComponent<CollisionComponent>();
     collision->SetSize(_vec3(3.5f, 7.f, 2.5f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
-    transform->SetPosition(_vec3(-30.f, 0.f, 0.f));
+    transform->SetPosition(_vec3(30.f, 0.f, -30.f));
 
     //Create BT
     ChaseNode* chase = new ChaseNode();
@@ -93,7 +95,6 @@ void Zombie::Update(_float dt)
 {
     Monster::Update(dt);
     PlayAnimation(dt);
-    //Hp -= 0.03f;
 }
 
 void Zombie::Late_Update(_float dt)
@@ -249,6 +250,23 @@ void Zombie::PlayDie(_float dt)
     if (t >= 1.f)
     {
         DieAnim.IsEnd = true;
+    }
+}
+
+void Zombie::OnCollisionStay(Object* other)
+{
+    ObjectType objType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+    auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
+
+    if (objType == ObjectType::Player)
+    {
+        auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
+        if (State == MonsterState::Attack)
+        {
+            playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
+            collision->ResolveAABBColiision(other);
+        }
     }
 }
 

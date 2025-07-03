@@ -37,7 +37,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
 
     auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_DEFAULT);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT);
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
 

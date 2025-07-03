@@ -30,6 +30,8 @@ protected:
     void PlayAttack(_float dt) override;
     void PlayDie(_float dt)override;
 
+    void OnCollisionStay(Object* other) override;
+
 protected:
     void Free() override;
 };

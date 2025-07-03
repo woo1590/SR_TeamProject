@@ -52,6 +52,8 @@ protected:
     virtual void PlayAttack(_float dt);
     virtual void PlayDie(_float dt);
 
+    virtual void OnCollisionStay(Object* other);
+
 protected:
     void Free() override;
 

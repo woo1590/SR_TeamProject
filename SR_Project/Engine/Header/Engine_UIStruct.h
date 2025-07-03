@@ -17,9 +17,9 @@ namespace Engine
 		int level;
 		int curHp;
 		int maxHp;
-		int power;
+		int power = 10;
 		float attackDelay;
-		float speed;
+		float speed = 5.f;
 	};
 
 	enum class UIEventType
