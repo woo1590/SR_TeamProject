@@ -9,7 +9,7 @@
 
 UIRenderer* UIRenderer::Create(Object* owner)
 {
-	auto* instance = new UIRenderer(owner);
+    auto* instance = new UIRenderer(owner);
 	
     if (FAILED(instance->Ready_Component()))
         return Safe_Release(instance), nullptr;

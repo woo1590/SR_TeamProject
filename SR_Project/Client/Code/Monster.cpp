@@ -29,6 +29,10 @@ void Monster::MoveTo(_vec3* dir, _float dt)
 {
 }
 
+void Monster::RotateTo(_vec3* dir, float dt)
+{
+}
+
 void Monster::Attack(Object* target)
 {
 }
@@ -66,5 +70,6 @@ void Monster::PlayDie(_float dt)
 
 void Monster::Free()
 {
+    Safe_Delete(Distance);
     BaseCharacter::Free();
 }

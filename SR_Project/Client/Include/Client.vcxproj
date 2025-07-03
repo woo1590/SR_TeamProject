@@ -207,6 +207,7 @@
     <ClInclude Include="..\Header\MouseRightUI.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\Monster.h" />
+    <ClInclude Include="..\Header\Rotate.h" />
     <ClInclude Include="..\Header\Skeleton.h" />
     <ClInclude Include="..\Header\QuickSlotPlus.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
@@ -254,6 +255,7 @@
     <ClCompile Include="..\Code\MouseRightUI.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
+    <ClCompile Include="..\Code\Rotate.cpp" />
     <ClCompile Include="..\Code\Skeleton.cpp" />
     <ClCompile Include="..\Code\QuickSlotPlus.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />

@@ -31,7 +31,7 @@ public:
 
 public:
     void MoveTo(_vec3* dir, _float dt) override;
-    _vec3 RotateTo(_vec3* dir, float dt);
+    virtual void RotateTo(_vec3* dir, float dt);
     void Attack(Object* target) override;
     void Die() override;
     
@@ -57,7 +57,8 @@ protected:
 
 protected:
     MonsterState        State = MonsterState::Idle;
-    _float              Speed = 7.f;
+    _float              Speed = 5.f;
+    _float*             Distance = nullptr;
 
     Animation           WalkAnim;
     Animation           AttackAnim;

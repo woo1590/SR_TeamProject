@@ -26,6 +26,7 @@ protected:
     void SetPosition(_vec3 position, string str = "Body");
     void SetRotation(_vec3 rotation, string str = "Body");
     void SetTranslate(_vec3 translate, string str = "Body");
+    void SetWeapon(Object* parent,ObjectType objType, const wstring& mtrl);
 
 protected:
     void Free() override;
@@ -33,4 +34,6 @@ protected:
 protected:
     std::unordered_map<string, Object*> Bones;
     float                               Scale = 0.75f; // 1 -> 0.75
+
+    Object*                             Weapon = nullptr;
 };

@@ -80,7 +80,8 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    bb->SetValue("Distance", new float(3.f));
+    Distance = new float(3.f);
+    bb->SetValue("Distance", Distance);
 
     auto AI = AddComponent<AIController>(bt, bb);
 
@@ -92,7 +93,7 @@ void Zombie::Update(_float dt)
 {
     Monster::Update(dt);
     PlayAnimation(dt);
-    //Hp -= 0.05f;
+    //Hp -= 0.03f;
 }
 
 void Zombie::Late_Update(_float dt)
@@ -107,6 +108,10 @@ void Zombie::MoveTo(_vec3* dir, _float dt)
     D3DXVec3Normalize(dir, dir);
     Transform->Translate(*dir * dt * Speed);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
+}
+
+void Zombie::RotateTo(_vec3* dir, float dt)
+{
 }
 
 void Zombie::Attack(Object* target)
@@ -139,15 +144,17 @@ void Zombie::Die()
 void Zombie::InitAnimation()
 {
     //Walk
-    //WalkAnim.Start = ;
+    WalkAnim.ElapsedTime = 0.f;
 
     //Attack
+    AttackAnim.ElapsedTime = 0.f;
     AttackAnim.TotalTime = 0.7f;
     AttackAnim.DelayTime = 0.f;
 
     //Die
     DieAnim.Start = 0;                  //start angle
     DieAnim.End = 270.f;                //end angle
+    AttackAnim.ElapsedTime = 0.f;
     DieAnim.TotalTime = 0.5f;          //play animation total time
 }
 
@@ -187,7 +194,8 @@ void Zombie::PlayWalk(_float dt)
     //walk animation
     WalkAnim.ElapsedTime += dt;
 
-    float Angle = sinf(WalkAnim.ElapsedTime * 10.f);
+    float Angle = sinf(WalkAnim.ElapsedTime * Speed);
+
     SetRotation({ Angle, 0.f, 0.f }, "LLeg");
     SetRotation({ -Angle, 0.f, 0.f }, "RLeg");
 

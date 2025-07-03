@@ -157,3 +157,11 @@ void BaseCharacter::SetTranslate(_vec3 translate, string str)
         Bones[str]->GetComponent<TransformComponent>()->Translate(translate);
     }
 }
+
+void BaseCharacter::SetWeapon(Object* parent, ObjectType objType, const wstring& mtrl)
+{
+    if (parent == nullptr) return;
+    Bones["Weapon"] = Bone::Create(owner, objType, _vec3(0.1f, 1.5f, 1.5f), parent, mtrl);
+    Bones["Weapon"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+    owner->AddObject(objType, Bones["Weapon"]);
+}

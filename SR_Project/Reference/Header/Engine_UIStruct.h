@@ -19,7 +19,7 @@ namespace Engine
 		int maxHp;
 		int power;
 		float attackDelay;
-		float speed;
+		float speed = 5.f;
 	};
 
 	enum class UIEventType
