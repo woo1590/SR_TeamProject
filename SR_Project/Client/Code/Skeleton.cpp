@@ -47,84 +47,14 @@ HRESULT Skeleton::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
 
     //InitTransform
-    SetMaterial(L"SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
-    SetMaterial(L"SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
-    SetMaterial(L"SkeletonBone_Mtrl", "LArm");
-    SetMaterial(L"SkeletonBone_Mtrl", "RArm");
-    SetMaterial(L"SkeletonBone_Mtrl", "LLeg");
-    SetMaterial(L"SkeletonBone_Mtrl", "RLeg");
 
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
-    transform->SetPosition(_vec3(-20.f, 0.f, 0.f));
-
-    //head
-    SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
-    SetPosition(_vec3(0.f, 17.5f * Scale, 0.f), "Head");
-
-    //body
-    SetScale(_vec3(8.f * Scale, 12.f * Scale, 2.f * Scale), "Body");
-
-    //arm
-    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "LArm");
-    SetPosition(_vec3(-9.f * Scale, 5.f * Scale, 0.f), "LArm");
-    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "RArm");
-    SetPosition(_vec3(9.f * Scale, 5.f * Scale, 0.f), "RArm");
-
-    //leg
-    SetScale(_vec3(2.f * Scale, 12.f * Scale, 2.f * Scale), "LLeg");
-    SetScale(_vec3(2.f * Scale, 12.f * Scale, 2.f * Scale), "RLeg");
-    
-    //hand
-    Add_Bone("LHand", objType, Bones["LArm"], L"SkeletonBone_Mtrl");
-    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "LHand");
-    SetPosition(_vec3(0.f, -10 * Scale, 0.f), "LHand");
-    
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 5.f * Scale, 0.0f));
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-
-    Add_Bone("RHand", objType, Bones["RArm"], L"SkeletonBone_Mtrl");
-    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "RHand");
-    SetPosition(_vec3(0.f, -10 * Scale, 0.f), "RHand");
-
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 5.f * Scale, 0.0f));
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-   
-    SetWeapon(Bones["LArm"], objType, L"Bow_Mtrl");
-    SetPosition(_vec3(0.f, -13 * Scale, 1.f * Scale), "Weapon");
-    SetRotation(_vec3(-90.f, 0.f, 0.f), "Weapon");
-
+    InitTransform(objType);
     //Create BT
-    ChaseNode* chase = new ChaseNode();
-    AttackNode* attack = new AttackNode();
-    RotateNode* rotate = new RotateNode();
+    InitTree();
 
-    IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(attack);
-
-    SequenceNode* attackSequence = new SequenceNode();
-    attackSequence->AddChild(attackCheck);
-    attackSequence->AddChild(rotate);
-
-    SelectorNode* BehaviorNode = new SelectorNode();
-    BehaviorNode->AddChild(attackSequence);
-    BehaviorNode->AddChild(chase);
-
-    IsAliveNode* IsAlive = new IsAliveNode(BehaviorNode);
-    DieNode* die = new DieNode();
-
-    SelectorNode* root = new SelectorNode();
-    root->AddChild(IsAlive);
-    root->AddChild(die);
-
-    BehaviorTree* bt = BehaviorTree::Create(root);
-
-    BlackBoard* bb = BlackBoard::Create();
-    bb->SetValue("Self", this);
-    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(15.f);
-    bb->SetValue("Distance", Distance);
-
-    auto AI = AddComponent<AIController>(bt, bb);
+    //Animation
     InitAnimation();
 	return S_OK;
 }
@@ -178,6 +108,87 @@ void Skeleton::Die()
 
         DieAnim.ElapsedTime = 0;
     }
+}
+
+void Skeleton::InitTransform(ObjectType objType)
+{
+    auto transform = GetComponent<TransformComponent>();
+
+    transform->SetPosition(_vec3(-20.f, 0.f, 0.f));
+    SetMaterial(L"SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
+    SetMaterial(L"SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
+    SetMaterial(L"SkeletonBone_Mtrl", "LArm");
+    SetMaterial(L"SkeletonBone_Mtrl", "RArm");
+    SetMaterial(L"SkeletonBone_Mtrl", "LLeg");
+    SetMaterial(L"SkeletonBone_Mtrl", "RLeg");
+
+    //head
+    SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
+    SetPosition(_vec3(0.f, 17.5f * Scale, 0.f), "Head");
+
+    //body
+    SetScale(_vec3(8.f * Scale, 12.f * Scale, 2.f * Scale), "Body");
+
+    //arm
+    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "LArm");
+    SetPosition(_vec3(-9.f * Scale, 5.f * Scale, 0.f), "LArm");
+    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "RArm");
+    SetPosition(_vec3(9.f * Scale, 5.f * Scale, 0.f), "RArm");
+
+    //leg
+    SetScale(_vec3(2.f * Scale, 12.f * Scale, 2.f * Scale), "LLeg");
+    SetScale(_vec3(2.f * Scale, 12.f * Scale, 2.f * Scale), "RLeg");
+
+    //hand
+    Add_Bone("LHand", objType, Bones["LArm"], L"SkeletonBone_Mtrl");
+    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "LHand");
+    SetPosition(_vec3(0.f, -10 * Scale, 0.f), "LHand");
+
+    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 5.f * Scale, 0.0f));
+    Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+
+    Add_Bone("RHand", objType, Bones["RArm"], L"SkeletonBone_Mtrl");
+    SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "RHand");
+    SetPosition(_vec3(0.f, -10 * Scale, 0.f), "RHand");
+
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 5.f * Scale, 0.0f));
+    Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+
+    SetWeapon(Bones["LArm"], objType, L"Bow_Mtrl");
+    SetPosition(_vec3(0.f, -13 * Scale, 1.f * Scale), "Weapon");
+    SetRotation(_vec3(-90.f, 0.f, 0.f), "Weapon");
+}
+
+void Skeleton::InitTree()
+{
+    ChaseNode* chase = new ChaseNode();
+
+    SequenceNode* rotateThenAttack = new SequenceNode();
+    rotateThenAttack->AddChild(new RotateNode());
+    rotateThenAttack->AddChild(new AttackNode());
+
+    IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(rotateThenAttack);
+
+    SelectorNode* attackBehavior = new SelectorNode();
+    attackBehavior->AddChild(attackCheck);
+    attackBehavior->AddChild(chase);
+
+    IsAliveNode* isAlive = new IsAliveNode(attackBehavior);
+    DieNode* die = new DieNode();
+
+    SelectorNode* root = new SelectorNode();
+    root->AddChild(isAlive);
+    root->AddChild(die);
+
+    BehaviorTree* bt = BehaviorTree::Create(root);
+
+    BlackBoard* bb = BlackBoard::Create();
+    bb->SetValue("Self", this);
+    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
+    Distance = new float(15.f);
+    bb->SetValue("Distance", Distance);
+
+    auto AI = AddComponent<AIController>(bt, bb);
 }
 
 void Skeleton::InitAnimation()
@@ -256,6 +267,7 @@ void Skeleton::PlayAttack(_float dt)
 
     if (AttackAnim.ElapsedTime > AttackAnim.TotalTime)
     {
+        AttackAnim.IsRunning = false;
         AttackAnim.IsEnd = true;
         AttackAnim.ElapsedTime = 0.f;
         AttackAnim.DelayTime = 1.5f;

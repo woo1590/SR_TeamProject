@@ -20,6 +20,8 @@ public:
     void Die() override;
 
 protected:
+    void InitTransform(ObjectType objType);
+    void InitTree();
     void InitAnimation() override;
     void PlayAnimation(_float dt) override;
 

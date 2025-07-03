@@ -29,22 +29,21 @@ BTStatus RotateNode::Tick(float dt, BlackBoard* bb)
 	_vec3 TargetPos = target->GetComponent<TransformComponent>()->GetPosition();
 	_vec3 SelfPos = self->GetComponent<TransformComponent>()->GetPosition();
 
-	_vec3 Dir = TargetPos - SelfPos;
+	_vec3 Dir = _vec3(TargetPos.x - SelfPos.x, 0.f, TargetPos.z - SelfPos.z);
 
 	Monster* monster = static_cast<Monster*>(self);
 	D3DXVec3Normalize(&Dir, &Dir);
 
-	_vec3 forward = self->GetComponent<TransformComponent>()->GetFoward();
+	_vec3 forward = _vec3 (self->GetComponent<TransformComponent>()->GetFoward().x, 0.f, self->GetComponent<TransformComponent>()->GetFoward().z);
 	D3DXVec3Normalize(&forward, &forward);
-	float dot = D3DXVec3Dot(&Dir, &forward); // 둘 다 정규화된 상태여야 함
-	if (dot > 0.99f) // 약 8도 이하
+ 	float dot = D3DXVec3Dot(&Dir, &forward);
+
+	if (dot > 0.99f) 
 		return BTStatus::Success;
 
-	else
-		monster->RotateTo(&Dir, dt);
+	else monster->RotateTo(&Dir, dt);
 
 	return BTStatus::Running;
-
 }
 
 void RotateNode::Free()
