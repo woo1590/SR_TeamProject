@@ -19,7 +19,7 @@ public:
 private:
 
 #ifdef USE_IMGUI
-    void ImGuiTest(); // ImGUI 작성
+    void ImGuiTest(); // ImGUI 작성SetIsBlock
 #endif
 
     void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);     // 광선 위치와 방향 초기화
@@ -38,14 +38,18 @@ private:
 
 private:
     int selectedSBlockDir = 1;
-    int selectedSBlockType = 0;
-    int selectedDBlockType = 0;
+    int selectedSBlockType = static_cast<int>(StaticBlockType::SBlockNone);
+
+    int selectedDBlockDir = 0;
+    int selectedDBlockType = static_cast<int>(DynamicBlockType::DBlockNone);
+
+    int Count = 0;
 
     StaticBlockDir staticBlockDir = StaticBlockDir::BlockY;
-    StaticBlockType staticBlockType = StaticBlockType::Dirt;
+    StaticBlockType staticBlockType = StaticBlockType::SBlockNone;
 
     DynamicBlockDir dynamicBlockDir = DynamicBlockDir::DBEnd;
-    DynamicBlockType dynamicBlockType = DynamicBlockType::LeverSwitch;
+    DynamicBlockType dynamicBlockType = DynamicBlockType::DBlockNone;
 
     std::vector<SB> staticBlocks;
     std::vector<DB> dynamicBlocks;

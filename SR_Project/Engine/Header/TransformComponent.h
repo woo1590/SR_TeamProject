@@ -36,6 +36,10 @@ public:
     void SetParent(Object* parent);
     void SetParent(TransformComponent* parent);
 
+    ///////////////////////////////// 07.03
+    void SetIsBlock() { IsBlock = true; }
+    ///////////////////////////////// ¿Ã¡ˆ»∆
+
     void Translate(_vec3 velocity);
     void Translate(float x, float y, float z);
 
@@ -66,6 +70,7 @@ private:
 
     _vec3 Pivot{ 0.f, 0.f, 0.f };
     _bool IsPivotEnabled = false;
+    _bool IsBlock = false;
 
     TransformComponent* Parent = nullptr;
 };

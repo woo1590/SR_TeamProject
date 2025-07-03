@@ -75,6 +75,9 @@ namespace Engine
 		_vec3 Pos;
 		DynamicBlockType Type;
 		DynamicBlockDir Dir;
+
+		// int LinkedID = -1;												// 링크한 객체의 ID
+		// DynamicBlockType LinkedType = DynamicBlockType::DBlockNone;		// 링크한 객체의 Type
 	} DB;
 }
 

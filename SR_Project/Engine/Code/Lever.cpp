@@ -16,7 +16,7 @@
 #include "CollisionComponent.h"
 
 Lever::Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir)
-    : Object(owner, objType), Dir(DynamicBlockDir), Type(DynamicBlockType)
+    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockDir, Count)
 {
 }
 
@@ -48,6 +48,8 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     Parts["Handle"] = Part::Create(owner, objType, _vec3(0.5f, 0.1f, 0.1f), Parts["Base"], L"Lever_Mtrl");
     auto handleTransform = Parts["Handle"]->GetComponent<TransformComponent>();
+
+    handleTransform->SetIsBlock();
 
     switch (Dir)
     {

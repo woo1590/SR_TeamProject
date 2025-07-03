@@ -37,30 +37,25 @@ HRESULT StaticBlock::Ready_Object()
     transform->SetScale(1.f, 1.f, 1.f);
     
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
+    renderer->SetMesh(L"Cube_Mesh");
     switch (Type)
     {
     case StaticBlockType::Dirt:
-        renderer->SetMesh(L"DirtBlock");
         renderer->SetMaterial(L"DirtBlock_Mtrl");
         break;
     case StaticBlockType::GrassDirt:
-        renderer->SetMesh(L"GrassBlock");
         renderer->SetMaterial(L"GrassBlock_Mtrl");
         break;
     case StaticBlockType::Wood:
-        renderer->SetMesh(L"WoodBlock");
         renderer->SetMaterial(L"WoodBlock_Mtrl");
         break;
     case StaticBlockType::WoodPlank:
-        renderer->SetMesh(L"WoodPlank");
         renderer->SetMaterial(L"WoodPlank_Mtrl");
         break;
     case StaticBlockType::Stone:
-        renderer->SetMesh(L"Stone");
         renderer->SetMaterial(L"Stone_Mtrl");
         break;
     case StaticBlockType::CobbleStone:
-        renderer->SetMesh(L"CobbleStone");
         renderer->SetMaterial(L"CobbleStone_Mtrl");
         break;
     }

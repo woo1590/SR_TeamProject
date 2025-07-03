@@ -12,10 +12,9 @@
 #include "CollisionSystem.h"
 
 //object
-#include "Lever.h"
-#include "Chest.h"
 #include "Camera.h"
 #include "StaticBlock.h"
+#include "DynamicBlock.h"
 
 //component
 #include "TransformComponent.h"
@@ -53,85 +52,25 @@ void EditScene::Load()
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 	
 	resource->LoadMesh(L"Cube_Mesh", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"DirtBlock", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"GrassBlock", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"WoodBlock", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"WoodPlank", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/Stone.dds", L"Stone", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"Stone", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/CobbleStone.dds", L"CobbleStone", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"CobbleStone", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"Lever", cube);
+	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube, L"WoodPlank_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/Stone.dds", L"Stone", TEXTURE::Tex_Cube, L"Stone_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone.dds", L"CobbleStone", TEXTURE::Tex_Cube, L"CobbleStone_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube, L"Lever_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube, L"ChestDown_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube, L"ChestUp_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
 	
-	resource->LoadTexture(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"ChestDown", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"ChestUp", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"ChestLock", cube);
-
-	auto dirtBlockMtrl = Material::Create();
-	dirtBlockMtrl->SetTexture(L"DirtBlock");
-	resource->LoadMaterial(L"DirtBlock_Mtrl", dirtBlockMtrl);
-
-	auto grassBlockMtrl = Material::Create();
-	grassBlockMtrl->SetTexture(L"GrassBlock");
-	resource->LoadMaterial(L"GrassBlock_Mtrl", grassBlockMtrl);
-
-	auto woodBlockMtrl = Material::Create();
-	woodBlockMtrl->SetTexture(L"WoodBlock");
-	resource->LoadMaterial(L"WoodBlock_Mtrl", woodBlockMtrl);
-
-	auto woodPlankMtrl = Material::Create();
-	woodPlankMtrl->SetTexture(L"WoodPlank");
-	resource->LoadMaterial(L"WoodPlank_Mtrl", woodPlankMtrl);
-
-	auto stoneMtrl = Material::Create();
-	stoneMtrl->SetTexture(L"Stone");
-	resource->LoadMaterial(L"Stone_Mtrl", stoneMtrl);
-
-	auto cobbleStoneMtrl = Material::Create();
-	cobbleStoneMtrl->SetTexture(L"CobbleStone");
-	resource->LoadMaterial(L"CobbleStone_Mtrl", cobbleStoneMtrl);
-
-	auto leverMtrl = Material::Create();
-	leverMtrl->SetTexture(L"Lever");
-	resource->LoadMaterial(L"Lever_Mtrl", leverMtrl);
-
-	auto chestUpMtrl = Material::Create();
-	chestUpMtrl->SetTexture(L"ChestUp");
-	resource->LoadMaterial(L"ChestUp_Mtrl", chestUpMtrl);
-
-	auto chestDownMtrl = Material::Create();
-	chestDownMtrl->SetTexture(L"ChestDown");
-	resource->LoadMaterial(L"ChestDown_Mtrl", chestDownMtrl);
-
-	auto chestLockMtrl = Material::Create();
-	chestLockMtrl->SetTexture(L"ChestLock");
-	resource->LoadMaterial(L"ChestLock_Mtrl", chestLockMtrl);
-
-
-	SB baseBlock{ {0, 0, 0}, staticBlockType, staticBlockDir };
+	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockDir::BlockY };
 	staticBlocks.push_back(baseBlock);
 
 	ObjectMgr = ObjectManager::Create(this);
 	auto cam = Camera::Create(ObjectMgr, ObjectType::Camera);
 	ObjectMgr->AddObject(ObjectType::Camera, cam);
-	ObjectMgr->AddObject(ObjectType::StaticBlock, StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockDir));
+	ObjectMgr->AddObject(ObjectType::StaticBlock, StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, StaticBlockType::Dirt, StaticBlockDir::BlockY));
 
 	CameraMgr = CameraManager::Create(this);
 	CameraMgr->AddCamera(L"ToolCam", cam);
@@ -184,13 +123,13 @@ void EditScene::ImGuiTest()
 	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
 	if (ImGui::Button("LOAD")) LoadStage(load);
 
-	const char* staticBlockNames[] = { "Dirt", "GrassDirt", "Wood", "WoodPlank", "Stone", "CobbleStone", "None"};
+	const char* staticBlockNames[] = { "Dirt", "GrassDirt", "Wood", "WoodPlank", "Stone", "CobbleStone", "None" };
 	if (ImGui::Combo("<- Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
 		staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
 
 	if (staticBlockType == StaticBlockType::SBlockNone)
 	{
-		const char* dynamicBlockNames[] = { "Lever", "Chest", "None" };
+		const char* dynamicBlockNames[] = { "Lever", "Chest", "IronCage", "None" };
 		if (ImGui::Combo("<- Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
 			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
 	}
@@ -199,11 +138,32 @@ void EditScene::ImGuiTest()
 
 	ImGui::SetNextWindowPos({ 0.f, 300.f });
 	ImGui::SetNextWindowSize({ 200.f, 200.f });
-	ImGui::Begin("==== BLOCK IMG ====");
+	ImGui::Begin("==== BLOCK DIR ====");
 
-	const char* blockDirNames[] = { "X", "Y", "Z" };
-	if (ImGui::Combo("<- Dir", &selectedSBlockDir, blockDirNames, IM_ARRAYSIZE(blockDirNames)))
-		staticBlockDir = static_cast<StaticBlockDir>(selectedSBlockDir);
+	if (staticBlockType != StaticBlockType::SBlockNone)
+	{
+		const char* staticDirNames[] = { "X", "Y", "Z" };
+		if (ImGui::Combo("<- SDir", &selectedSBlockDir, staticDirNames, IM_ARRAYSIZE(staticDirNames)))
+			staticBlockDir = static_cast<StaticBlockDir>(selectedSBlockDir);
+	}
+	else
+	{
+		const char* dynamicDirNames[] = { "+Z", "-Z", "+X", "-X" };
+		switch (dynamicBlockType)
+		{
+		case DynamicBlockType::DBlockNone: case DynamicBlockType::LeverSwitch:
+			break;
+		case DynamicBlockType::IronCages:
+			ImGui::InputInt("Count", &Count);
+			if (ImGui::Combo("<- DDir", &selectedDBlockDir, dynamicDirNames, IM_ARRAYSIZE(dynamicDirNames)))
+				dynamicBlockDir = static_cast<DynamicBlockDir>(selectedDBlockDir);
+			break;
+		default:
+			if (ImGui::Combo("<- DDir", &selectedDBlockDir, dynamicDirNames, IM_ARRAYSIZE(dynamicDirNames)))
+				dynamicBlockDir = static_cast<DynamicBlockDir>(selectedDBlockDir);
+			break;
+		}
+	}
 
 	ImGui::End();
 }
@@ -342,34 +302,34 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 {
 	if (fabs(hitPoint.x - boxMin.x) < 0.01f)
 	{
-		dynamicBlockDir = DynamicBlockDir::XM;
+		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::XM;
 		return _vec3(-1, 0, 0);
 	}
 	if (fabs(hitPoint.x - boxMax.x) < 0.01f)
 	{
-		dynamicBlockDir = DynamicBlockDir::XP;
+		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::XP;
 		return _vec3(1, 0, 0);
 	}
 
 	if (fabs(hitPoint.y - boxMin.y) < 0.01f)
 	{
-		dynamicBlockDir = DynamicBlockDir::DBEnd;
+		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::DBEnd;
 		return _vec3(0, -1, 0);
 	}
 	if (fabs(hitPoint.y - boxMax.y) < 0.01f)
 	{
-		dynamicBlockDir = DynamicBlockDir::DBEnd;
+		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::DBEnd;
 		return _vec3(0, 1, 0);
 	}
 
 	if (fabs(hitPoint.z - boxMin.z) < 0.01f)
 	{
-		dynamicBlockDir = DynamicBlockDir::ZM;
+		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::ZM;
 		return _vec3(0, 0, -1);
 	}
 	if (fabs(hitPoint.z - boxMax.z) < 0.01f)
 	{
-		dynamicBlockDir = DynamicBlockDir::ZP;
+		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::ZP;
 		return _vec3(0, 0, 1);
 	}
 	
@@ -378,10 +338,8 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 
 void EditScene::Place(const _vec3& position)
 {
-	for (const auto& block : staticBlocks)
-		if (block.Pos == position && staticBlockType != StaticBlockType::SBlockNone) return;
-	for (const auto& block : dynamicBlocks)
-		if (block.Pos == position) return;
+	for (const auto& block : staticBlocks) if (block.Pos == position) return;
+	for (const auto& block : dynamicBlocks) if (block.Pos == position) return;
 
 	if (staticBlockType != StaticBlockType::SBlockNone)
 	{
@@ -391,21 +349,11 @@ void EditScene::Place(const _vec3& position)
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 	}
-	else
+	else if (dynamicBlockType != DynamicBlockType::DBlockNone)
 	{
-		if (dynamicBlockDir == DynamicBlockDir::DBEnd) return;
-
 		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockDir });
-		Object* newBlockObj(nullptr);
-		switch (dynamicBlockType)
-		{
-		case LeverSwitch:
-			newBlockObj = Lever::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockDir);
-			break;
-		case BasicChest:
-			newBlockObj = Chest::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockDir);
-			break;
-		}
+
+		Object* newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockDir, Count);
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, newBlockObj);
 	}
@@ -482,7 +430,7 @@ void EditScene::LoadStage(const char* loadStage)
 	{
 		if (!ReadFile(hFile, &newDBlock, sizeof(DB), &dwByte, nullptr)) return;
 
-		auto dBlock = Lever::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir);
+		auto dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, Count);
 		dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
 
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, dBlock);

@@ -110,7 +110,7 @@ namespace Engine
 	enum StaticBlockDir { BlockX, BlockY, BlockZ, BDEnd };
 	enum StaticBlockType { Dirt, GrassDirt, Wood, WoodPlank, Stone, CobbleStone, SBlockNone };
 
-	enum DynamicBlockDir { XP, XM, ZP, ZM, DBEnd };
-	enum DynamicBlockType { LeverSwitch, BasicChest, DBlockNone };
+	enum DynamicBlockDir { ZP, ZM, XP, XM, DBEnd };
+	enum DynamicBlockType { LeverSwitch, BasicChest, IronCages, DBlockNone };
 }
 #endif // Engine_Enum_h__

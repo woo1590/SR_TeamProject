@@ -1,14 +1,20 @@
 #include "EnginePCH.h"
 #include "DynamicBlock.h"
-#include "UIRenderer.h"
 
-//component
+// Components
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
-DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType dynamicBlockType, DynamicBlockDir dynamicBlockDir)
-    : Object(owner, objType), Dir(dynamicBlockDir), Type(dynamicBlockType)
+// Concrete blocks
+#include "Lever.h"
+#include "Chest.h"
+#include "IronCage.h"
+
+USING(Engine)
+
+DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockDir dir, int Count)
+    : Object(owner, objType), Type(type), Dir(dir), Count(Count)
 {
 }
 
@@ -16,18 +22,27 @@ DynamicBlock::~DynamicBlock()
 {
 }
 
-DynamicBlock* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType dynamicBlockType, DynamicBlockDir dynamicBlockDir)
+Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockDir dir, int Count)
 {
-    DynamicBlock* Instance = new DynamicBlock(owner, objType, dynamicBlockType, dynamicBlockDir);
+    Object* block = nullptr;
 
-    if (FAILED(Instance->Ready_Object()))
+    switch (type)
     {
-        Safe_Release(Instance);
-        MessageBoxW(nullptr, L"DynamicBlock Created Failed", L"Fail", MB_OK);
-        Instance = nullptr;
+    case DynamicBlockType::LeverSwitch:
+        block = Lever::Create(owner, ObjectType::DynamicBlock, type, dir);
+        break;
+    case DynamicBlockType::BasicChest:
+        block = Chest::Create(owner, ObjectType::DynamicBlock, type, dir);
+        break;
+    case DynamicBlockType::IronCages:
+        block = IronCage::Create(owner, ObjectType::DynamicBlock, type, dir, Count);
+        break;
+    default:
+        MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"DynamicBlock::Create Error", MB_OK);
+        break;
     }
 
-    return Instance;
+    return block;
 }
 
 HRESULT DynamicBlock::Ready_Object()
@@ -37,25 +52,6 @@ HRESULT DynamicBlock::Ready_Object()
     transform->SetScale(1.f, 1.f, 1.f);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-    switch (Type)
-    {
-    case DynamicBlockType::LeverSwitch:
-
-        break;
-    }
-
-    switch (Dir)
-    {
-    case StaticBlockDir::BlockX:
-        transform->SetRotate({ 0.f, 0.f, D3DXToRadian(90.f) });
-        break;
-    case StaticBlockDir::BlockY:
-        transform->SetRotate({ 0.f, 0.f, 0.f });
-        break;
-    case StaticBlockDir::BlockZ:
-        transform->SetRotate({ D3DXToRadian(-90.f), 0.f, 0.f });
-        break;
-    }
 
     return S_OK;
 }

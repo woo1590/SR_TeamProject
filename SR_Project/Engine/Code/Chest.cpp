@@ -16,7 +16,7 @@
 #include "CollisionComponent.h"
 
 Chest::Chest(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir)
-    : Object(owner, objType), Dir(DynamicBlockDir), Type(DynamicBlockType)
+    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockDir, Count)
 {
 }
 
@@ -46,18 +46,33 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
     Parts["ChestDown"] = Part::Create(owner, objType, _vec3(1.f, 0.7f, 1.f), this, L"ChestDown_Mtrl");
     auto downTrans = Parts["ChestDown"]->GetComponent<TransformComponent>();
 
-    Parts["ChestUp"] = Part::Create(owner, objType, _vec3(1.f, 0.3f, 1.f), this, L"ChestUp_Mtrl");
+    Parts["ChestUp"] = Part::Create(owner, objType, _vec3(1.f, 0.3f, 1.f), Parts["ChestDown"], L"ChestUp_Mtrl");
     auto upTrans = Parts["ChestUp"]->GetComponent<TransformComponent>();
 
     Parts["ChestLock"] = Part::Create(owner, objType, _vec3(0.125f, 0.2f, 0.1f), Parts["ChestUp"], L"ChestLock_Mtrl");
     auto lockTrans = Parts["ChestLock"]->GetComponent<TransformComponent>();
 
+    upTrans->SetIsBlock();
+
     Angle = 0.f;
     downTrans->Translate(0.f, -0.3f, 0.f);
     upTrans->SetPivotEnable(true);
     upTrans->SetPivot(_vec3(0.f, -0.3f, 1.f));
-    upTrans->Translate(0.f, 0.7f, 0.f);
+    upTrans->Translate(0.f, 1.f, 0.f);
     lockTrans->Translate(0.f, -0.2f, -1.f);
+
+    switch (Dir)
+    {
+    case DynamicBlockDir::XP:
+        downTrans->SetRotate(0.f, D3DXToRadian(90.f), 0.f);
+        break;
+    case DynamicBlockDir::XM:
+        downTrans->SetRotate(0.f, D3DXToRadian(270.f), 0.f);
+        break;
+    case DynamicBlockDir::ZM:
+        downTrans->SetRotate(0.f, D3DXToRadian(180.f), 0.f);
+        break;
+    }
 
     for (auto& part : Parts)
         owner->AddObject(objType, part.second);
