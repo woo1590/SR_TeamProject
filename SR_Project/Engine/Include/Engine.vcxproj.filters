@@ -379,6 +379,7 @@
     <ClCompile Include="..\Code\ObjectComponent.cpp">
       <Filter>07. Object Component</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineCore.h">
@@ -598,6 +599,7 @@
     <ClInclude Include="..\Header\ObjectComponent.h">
       <Filter>07. Object Component</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PhysicsSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Header\Math.inl">

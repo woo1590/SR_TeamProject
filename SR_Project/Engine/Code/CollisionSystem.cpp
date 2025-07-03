@@ -37,6 +37,7 @@ void CollisionSystem::Late_Update()
 {
 	CurrCollision.clear();
 
+	//Check Collision
 	for (_uint i = 0; i < Collisions.size(); ++i)
 	{
 		CollisionComponent* a = Collisions[i];
@@ -55,12 +56,14 @@ void CollisionSystem::Late_Update()
 		}
 	}
 
+	//Collision Enter
 	for (const auto& currPair : CurrCollision)
 	{
 		currPair.first->OnCollisionEnter(currPair.second);
 		currPair.second->OnCollisionEnter(currPair.first);
 	}
 
+	//Collision Stay
 	for (const auto& prevPair : PrevCollision)
 	{
 		for (const auto& currPair : CurrCollision)
@@ -74,6 +77,7 @@ void CollisionSystem::Late_Update()
 		}
 	}
 
+	//Collision Exit
 	for (const auto& prevPair : PrevCollision)
 	{
 		for (const auto& currPair : CurrCollision)
