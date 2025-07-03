@@ -97,6 +97,7 @@ void Player::Free()
 }
 void Player::PickingTerrain()
 {
+    if (State == ePlayerState::DEAD || State == ePlayerState::ATTACK || State == ePlayerState::SHOOT) return;
     auto input = EngineCore::GetInstance()->GetInputSystem();
     auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
     auto mainCam = curScene->GetCameraManager()->GetMainCamera();
@@ -530,14 +531,14 @@ void Player::UpdateShoot(_float dt) {
     // 🎯 활 쏘는 모션 구성
     ApplyPhasedRotation("LHand",
         StartRotations["LHand"],
-        { -90.f, 30.f, 0.f },
-        { -90.f, 30.f, 0.f },
+        { -90.f, 0.f, 30.f },
+        { -90.f, 0.f, 30.f },
         { -0.f, 0.f, 0.f }
     );
     ApplyPhasedRotation("RHand",
         StartRotations["RHand"],
-        { -90.f, -60.f, 0.f },
-        { -90.f, -60.f, 0.f },
+        { -90.f, 0.f, -60.f },
+        { -90.f, 0.f, -30.f },
         { -0.f, 0.f, 0.f }
     );
     ApplyPhasedRotation("Player",
@@ -599,58 +600,71 @@ void Player::UpdateShoot(_float dt) {
     }
 }
 void Player::UpdateDead(_float dt) {
-    auto transform = GetComponent<TransformComponent>();
-
     const float fDeadDuration = 1.0f; // 사망 모션 전체 시간
     DeadTime += dt;
-    float fProgress = std::clamp(DeadTime / fDeadDuration, 0.f, 1.f);
-
-    // 회전 각도는 뒤로 90도만 (x축 기준)
-    float fMaxDeathAngle = D3DXToRadian(90.f);
-    float fCurrentAngle = fMaxDeathAngle * fProgress;
-
-    // 트랜스폼 회전 적용: 뒤로 누움 (x축 회전만)
-    _vec3 vAxis = transform->GetRight(); // x축
-    _matrix matRot;
-    D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
-    _vec3 rotateVec = MatrixToEulerAngles(matRot);
-    RotatePlayer(rotateVec);
-
-    // 모션 곡선 비율
-    float fLerpRatio = 0.f;
-    if (fProgress <= 0.3f) {
-        fLerpRatio = fProgress / 0.3f; // 숙이기
-    }
-    else {
-        fLerpRatio = 1.f - ((fProgress - 0.3f) / 0.7f); // 펴기
-    }
-    fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
-
-    // Lerp 함수
-    auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
-        return start + offset * ratio;
-    };
-
-    // 몸 각 부위 포즈 적용
-    SetRotation(LerpRot(StartRotations["Head"], { -1.f, 0.f, 0.f }, fLerpRatio), "Head");
-    SetRotation(LerpRot(StartRotations["LHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "LHand");
-    SetRotation(LerpRot(StartRotations["RHand"], { -2.f, 0.f, 0.f }, fLerpRatio), "RHand");
-    SetRotation(LerpRot(StartRotations["LLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "LLeg");
-    SetRotation(LerpRot(StartRotations["RLeg"], { -1.5f, 0.f, 0.f }, fLerpRatio), "RLeg");
-
     // 누운 상태에서 종료 (모션 유지)
     if (DeadTime >= fDeadDuration) {
         DeadTime = fDeadDuration; // 시간 고정
         State = ePlayerState::DEAD; // DEAD 상태 유지
     }
+    auto transform = GetComponent<TransformComponent>();
+    float fProgress = std::clamp(DeadTime / fDeadDuration, 0.f, 1.f);
+    // 회전 각도는 뒤로 90도만 (x축 기준)
+    float fMaxDeathAngle = D3DXToRadian(90.f);
+    float fCurrentAngle = fMaxDeathAngle * fProgress;
+    _vec3 moveVec = PlayerDirection;
+    moveVec.y = 0.f;
+    D3DXVec3Normalize(&moveVec, &moveVec);
+    transform->SetForward(moveVec);
+    // 트랜스폼 회전 적용: 뒤로 누움 (x축 회전만)
+    _vec3 vAxis = transform->GetRight(); // x축
+    _matrix matRot;
+    D3DXMatrixRotationAxis(&matRot, &vAxis, -fCurrentAngle);
+    _vec3 rotateVec = MatrixToEulerAngles(matRot);
+    RotatePlayer(rotateVec);
+
+    // Lerp 함수
+    auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
+        return start + offset * ratio;
+    };
+    //각도값 지정
+    _vec3 rot_HeadFolded = _vec3(1.f, 0.f, 0.f);
+    _vec3 rot_LHandFolded = _vec3(-1.5f, 0.f, 0.f);
+    _vec3 rot_RHandFolded = _vec3(-1.5f, 0.f, 0.f);
+    _vec3 rot_LLegFolded = _vec3(-2.f, 0.f, 0.f);
+    _vec3 rot_RLegFolded = _vec3(-2.f, 0.f, 0.f);
+
+    _vec3 rot_HeadFlat = _vec3(-1.f, 0.f, 0.f);
+    _vec3 rot_LHandFlat = _vec3(1.5f, 0.f, -1.5f);
+    _vec3 rot_RHandFlat = _vec3(1.5f, 0.f, 1.5f);
+    _vec3 rot_LLegFlat = _vec3(2.f, 0.f, -0.2f);
+    _vec3 rot_RLegFlat = _vec3(2.f, 0.f, 0.2f);
+
+    // 모션 곡선 비율
+    float fLerpRatio = 0.f;
+    if (fProgress <= 0.3f) {
+        fLerpRatio = fProgress / 0.3f; // 숙이기
+        fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
+        SetRotation(LerpRot(StartRotations["Head"], rot_HeadFolded, fLerpRatio), "Head");
+        SetRotation(LerpRot(StartRotations["LHand"], rot_LHandFolded, fLerpRatio), "LHand");
+        SetRotation(LerpRot(StartRotations["RHand"], rot_RHandFolded, fLerpRatio), "RHand");
+        SetRotation(LerpRot(StartRotations["LLeg"], rot_LLegFolded, fLerpRatio), "LLeg");
+        SetRotation(LerpRot(StartRotations["RLeg"], rot_RLegFolded, fLerpRatio), "RLeg");
+    }
+    else {
+        fLerpRatio = (fProgress - 0.3f) / 0.7f; // 펴기
+        fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
+        SetRotation(LerpRot(rot_HeadFolded, rot_HeadFlat, fLerpRatio), "Head");
+        SetRotation(LerpRot(rot_LHandFolded, rot_LHandFlat, fLerpRatio), "LHand");
+        SetRotation(LerpRot(rot_RHandFolded, rot_RHandFlat, fLerpRatio), "RHand");
+        SetRotation(LerpRot(rot_LLegFolded, rot_LLegFlat, fLerpRatio), "LLeg");
+        SetRotation(LerpRot(rot_RLegFolded, rot_RLegFlat, fLerpRatio), "RLeg");
+    }
 }
 
 void Player::KeyInput(_float dt)
 {
-    //CheckStateAttack(dt);
     CheckStateRoll(dt);
-    //CheckStateWalk(dt);
-    //CheckStateIdle(dt);
 }
 void Player::CheckStateAttack(_float dt)
 {
@@ -668,51 +682,6 @@ void Player::CheckStateAttack(_float dt)
         }
     }
 }
-void Player::CheckStateWalk(_float dt)
-{
-    auto input = EngineCore::GetInstance()->GetInputSystem();
-    static KEY keyWalkFront = UP;
-    static KEY keyWalkBack = DOWN;
-    static KEY keyWalkLeft = LEFT;
-    static KEY keyWalkRight = RIGHT;
-
-    if (input->IsKeyDown(keyWalkFront) ||
-        input->IsKeyDown(keyWalkBack) ||
-        input->IsKeyDown(keyWalkLeft) ||
-        input->IsKeyDown(keyWalkRight)) {
-        switch (State) {
-        case ePlayerState::IDLE:
-            WalkTime = 0.f;
-            State = ePlayerState::WALK;
-            break;
-        }
-    }
-    if (input->IsKeyPressed(keyWalkFront)) {
-        PlayerDirection += { 0.f,0.f,1.f };
-    }
-    if (input->IsKeyPressed(keyWalkBack)) {
-        PlayerDirection += { 0.f, 0.f, -1.f };
-    }
-    if (input->IsKeyPressed(keyWalkLeft)) {
-        PlayerDirection += { -1.f, 0.f, 0.f };
-    }
-    if (input->IsKeyPressed(keyWalkRight)) {
-        PlayerDirection += { 1.f, 0.f, 0.f };
-    }
-
-    if (input->IsKeyRelease(keyWalkFront)) {
-        PlayerDirection -= { 0.f, 0.f, 1.f };
-    }
-    if (input->IsKeyRelease(keyWalkBack)) {
-        PlayerDirection -= { 0.f, 0.f, -1.f };
-    }
-    if (input->IsKeyRelease(keyWalkLeft)) {
-        PlayerDirection -= { -1.f, 0.f, 0.f };
-    }
-    if (input->IsKeyRelease(keyWalkRight)) {
-        PlayerDirection -= { 1.f, 0.f, 0.f };
-    }
-}
 void Player::CheckStateRoll(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
@@ -723,36 +692,18 @@ void Player::CheckStateRoll(_float dt)
         switch (State) {
         case ePlayerState::WALK:
             State = ePlayerState::ROLL;
+            SaveStartRotation();
             break;
         }
     }
 }
-void Player::CheckStateIdle(_float dt)
-{
-    auto input = EngineCore::GetInstance()->GetInputSystem();
-    static KEY keyWalkFront = UP;
-    static KEY keyWalkBack = DOWN;
-    static KEY keyWalkLeft = LEFT;
-    static KEY keyWalkRight = RIGHT;
-
-    if (input->IsKeyRelease(keyWalkFront) &&
-        input->IsKeyRelease(keyWalkBack)  &&
-        input->IsKeyRelease(keyWalkLeft)  &&
-        input->IsKeyRelease(keyWalkRight) ) {
-        switch (State) {
-        case ePlayerState::WALK:
-            State = ePlayerState::IDLE;
-            PlayerDirection = { 0.f,0.f,0.f };
-            break;
-        }
-    }
-}
-
 void Player::CheckDead()
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
-    if (input->IsKeyPressed(C) || (GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().curHp <= 0.f && DeadTime == 0))
+    if (input->IsKeyPressed(C) || (GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().curHp <= 0.f && DeadTime == 0)) {
         State = ePlayerState::DEAD;
+        SaveStartRotation();
+    }
 }
 
 _vec3 Player::MatrixToEulerAngles(const _matrix& mat) {
