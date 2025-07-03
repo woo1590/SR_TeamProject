@@ -99,7 +99,7 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void Lever::Update(_float dt)
 {
-    if (!Activate && !Trigger)
+    if (Activate && !Trigger)
         Operate();
 
     Object::Update(dt);
