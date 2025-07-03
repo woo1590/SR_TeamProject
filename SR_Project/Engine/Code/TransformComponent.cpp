@@ -207,8 +207,8 @@ _matrix TransformComponent::GetLocalMatrix() const
     D3DXMatrixRotationZ(&rotZ, Rotation.z);
     D3DXMatrixScaling(&scaleMat, Scale.x, Scale.y, Scale.z);
 
-    if (IsPivotEnabled) localMat = scaleMat * transMat * pivotMat * rotY * rotX * rotZ * reverseMat;
-
+    if (IsPivotEnabled) localMat = scaleMat * reverseMat * rotY * rotX * rotZ * pivotMat * transMat;
+    
     else localMat = scaleMat * rotY * rotX * rotZ * transMat;
 
     return localMat;
@@ -244,5 +244,5 @@ _matrix TransformComponent::GetScaleMatrix() const
 
 void TransformComponent::Free()
 {
-    //
+
 }

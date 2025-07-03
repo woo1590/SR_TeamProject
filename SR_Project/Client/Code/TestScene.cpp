@@ -38,6 +38,7 @@
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
+#include "StaticBlock.h"
 
 TestScene::TestScene()
 {
@@ -197,22 +198,22 @@ void TestScene::LoadBlock()
 		return;
 	}
 
-	ObjectMgr->ClearList(ObjectType::Block);
-	Blocks.clear();
-	Blocks.shrink_to_fit();
+	ObjectMgr->ClearList(ObjectType::StaticBlock);
+	staticBlocks.clear();
+	staticBlocks.shrink_to_fit();
 
 	DWORD dwByte(0);
-	BlockData newBlock;
+	SB newBlock;
 	while (TRUE)
 	{
-		if (!ReadFile(hFile, &newBlock, sizeof(BlockData), &dwByte, nullptr)) return;
+		if (!ReadFile(hFile, &newBlock, sizeof(SB), &dwByte, nullptr)) return;
 		if (dwByte == 0) break;
 
-		auto block = TestBlock::Create(ObjectMgr, ObjectType::Block, newBlock.Type, newBlock.Dir);
+		auto block = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, newBlock.Type, newBlock.Dir);
 		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
-		ObjectMgr->AddObject(ObjectType::Block, block);
+		ObjectMgr->AddObject(ObjectType::StaticBlock, block);
 
-		Blocks.push_back(newBlock);
+		staticBlocks.push_back(newBlock);
 	}
 
 	CloseHandle(hFile);

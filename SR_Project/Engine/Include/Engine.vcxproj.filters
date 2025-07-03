@@ -184,6 +184,30 @@
     <Filter Include="07. Object Component\UIComponent\03. SlotComponent">
       <UniqueIdentifier>{831fcf2a-d37c-4de7-80dc-6d4d937e081a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Object\StaticBlock">
+      <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\DynamicBlock">
+      <UniqueIdentifier>{f70839ee-bc53-45ee-884e-c96eb4549b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\CubeMesh">
+      <UniqueIdentifier>{33fc44ac-feb9-43a1-8722-1ceacdff2df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\StaticMesh">
+      <UniqueIdentifier>{97c95a83-caff-4410-93fa-1caf7e6b84d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\TerrainMesh">
+      <UniqueIdentifier>{42374a5c-87a0-4814-8237-cc8a44c0359b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\DynamicBlock\Lever">
+      <UniqueIdentifier>{53b62e63-5598-4ba3-a495-27ee499e9405}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\DynamicBlock\Chest">
+      <UniqueIdentifier>{f7afe70f-0ab2-4267-bae3-d88524793da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\Parts">
+      <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -246,20 +270,8 @@
     <ClCompile Include="..\Code\ResourceManager.cpp">
       <Filter>01. Engine Component\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Mesh.cpp">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\StaticMesh.cpp">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Material.cpp">
       <Filter>01. Engine Component\ResourceManager\Material</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TerrainMesh.cpp">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CubeMesh.cpp">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Shader.cpp">
       <Filter>01. Engine Component\ResourceManager\Shader</Filter>
@@ -386,6 +398,36 @@
     <ClCompile Include="..\Code\ObjectComponent.cpp">
       <Filter>07. Object Component</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\StaticBlock.cpp">
+      <Filter>06. Object\StaticBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AIController.cpp">
+      <Filter>07. Object Component\AIController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\CubeMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\TerrainMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Part.cpp">
+      <Filter>06. Object\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Lever.cpp">
+      <Filter>06. Object\DynamicBlock\Lever</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Chest.cpp">
+      <Filter>06. Object\DynamicBlock\Chest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicBlock.cpp">
+      <Filter>06. Object\DynamicBlock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineCore.h">
@@ -466,20 +508,8 @@
     <ClInclude Include="..\Header\ResourceManager.h">
       <Filter>01. Engine Component\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Mesh.h">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\StaticMesh.h">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Material.h">
       <Filter>01. Engine Component\ResourceManager\Material</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TerrainMesh.h">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CubeMesh.h">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Shader.h">
       <Filter>01. Engine Component\ResourceManager\Shader</Filter>
@@ -607,6 +637,36 @@
     </ClInclude>
     <ClInclude Include="..\Header\SlotComponent.h">
       <Filter>07. Object Component\UIComponent\03. SlotComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticBlock.h">
+      <Filter>06. Object\StaticBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BehaviorTree.h">
+      <Filter>07. Object Component\AIController\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\CubeMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TerrainMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\TerrainMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Part.h">
+      <Filter>06. Object\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Lever.h">
+      <Filter>06. Object\DynamicBlock\Lever</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Chest.h">
+      <Filter>06. Object\DynamicBlock\Chest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DynamicBlock.h">
+      <Filter>06. Object\DynamicBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -111,10 +111,10 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Face.dds", L"SkeletonFace", TEXTURE::Tex_Cube, L"SkeletonFace_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
 
-	resource->LoadTexture(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
+	resource->LoadTexture(L"../Resource/Texture/StaticBlock/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"DirtBlock", cube);
 
-	resource->LoadTexture(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
+	resource->LoadTexture(L"../Resource/Texture/StaticBlock/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
 	resource->LoadMesh(L"GrassBlock", cube);
 	
 	resource->LoadTexture(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube);

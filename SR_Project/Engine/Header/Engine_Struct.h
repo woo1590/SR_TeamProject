@@ -63,13 +63,19 @@ namespace Engine
 		_vec3 Direction;
 	}Ray;
 
-	
-	typedef struct BlockData
+	typedef struct StaticBlockData
 	{
 		_vec3 Pos;
-		BlockType Type;
-		BlockDir Dir;
-	} BLOCK;
+		StaticBlockType Type;
+		StaticBlockDir Dir;
+	} SB;
+
+	typedef struct DynamicBlockData
+	{
+		_vec3 Pos;
+		DynamicBlockType Type;
+		DynamicBlockDir Dir;
+	} DB;
 }
 
 #endif // Engine_Struct_h__

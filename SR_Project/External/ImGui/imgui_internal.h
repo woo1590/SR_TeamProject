@@ -704,12 +704,12 @@ struct ImStableVector
 {
     int                 Size = 0;
     int                 Capacity = 0;
-    ImVector<T*>        Blocks;
+    ImVector<T*>        staticBlocks;
 
     // Functions
-    inline ~ImStableVector()                        { for (T* block : Blocks) IM_FREE(block); }
+    inline ~ImStableVector()                        { for (T* block : staticBlocks) IM_FREE(block); }
 
-    inline void         clear()                     { Size = Capacity = 0; Blocks.clear_delete(); }
+    inline void         clear()                     { Size = Capacity = 0; staticBlocks.clear_delete(); }
     inline void         resize(int new_size)        { if (new_size > Capacity) reserve(new_size); Size = new_size; }
     inline void         reserve(int new_cap)
     {
@@ -718,14 +718,14 @@ struct ImStableVector
         int new_count = new_cap / BLOCK_SIZE;
         if (new_count <= old_count)
             return;
-        Blocks.resize(new_count);
+        staticBlocks.resize(new_count);
         for (int n = old_count; n < new_count; n++)
-            Blocks[n] = (T*)IM_ALLOC(sizeof(T) * BLOCK_SIZE);
+            staticBlocks[n] = (T*)IM_ALLOC(sizeof(T) * BLOCK_SIZE);
         Capacity = new_cap;
     }
-    inline T&           operator[](int i)           { IM_ASSERT(i >= 0 && i < Size); return Blocks[i / BLOCK_SIZE][i % BLOCK_SIZE]; }
-    inline const T&     operator[](int i) const     { IM_ASSERT(i >= 0 && i < Size); return Blocks[i / BLOCK_SIZE][i % BLOCK_SIZE]; }
-    inline T*           push_back(const T& v)       { int i = Size; IM_ASSERT(i >= 0); if (Size == Capacity) reserve(Capacity + BLOCK_SIZE); void* ptr = &Blocks[i / BLOCK_SIZE][i % BLOCK_SIZE]; memcpy(ptr, &v, sizeof(v)); Size++; return (T*)ptr; }
+    inline T&           operator[](int i)           { IM_ASSERT(i >= 0 && i < Size); return staticBlocks[i / BLOCK_SIZE][i % BLOCK_SIZE]; }
+    inline const T&     operator[](int i) const     { IM_ASSERT(i >= 0 && i < Size); return staticBlocks[i / BLOCK_SIZE][i % BLOCK_SIZE]; }
+    inline T*           push_back(const T& v)       { int i = Size; IM_ASSERT(i >= 0); if (Size == Capacity) reserve(Capacity + BLOCK_SIZE); void* ptr = &staticBlocks[i / BLOCK_SIZE][i % BLOCK_SIZE]; memcpy(ptr, &v, sizeof(v)); Size++; return (T*)ptr; }
 };
 
 // Helper: ImPool<>
