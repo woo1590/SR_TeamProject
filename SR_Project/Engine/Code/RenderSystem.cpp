@@ -46,10 +46,10 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	/*---------------Light Setting---------------------*/
-	Device->SetRenderState(D3DRS_LIGHTING, TRUE);
-	Device->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(20,20,20));
+	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//Device->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(20,20,20));
 	Device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
-	Device->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
+	Device->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 
 	/*---------------Blend Setting---------------*/
 	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -59,6 +59,10 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
 	Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
 	Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+
+	Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	Device->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
 
 	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))
 		return E_FAIL;
@@ -70,7 +74,7 @@ void RenderSystem::Render()
 {
 	if (Camera)
 	{
-		PriorityPass();
+		//PriorityPass();
 		NonAlphaPass();
 		AlphaPass();
 
@@ -199,6 +203,7 @@ void RenderSystem::AlphaPass()
 
 void RenderSystem::Reset()
 {
+	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	Device->SetRenderState(D3DRS_STENCILENABLE, false);
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	Device->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
