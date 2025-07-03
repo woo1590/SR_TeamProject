@@ -56,10 +56,10 @@ TestScene* TestScene::Create()
 
 void TestScene::Load()
 {
-	ObjectMgr = ObjectManager::Create(this);
-	EventSys = EventSystem::Create(this);
-	CollisionSys = CollisionSystem::Create(this);
-	CameraMgr = CameraManager::Create(this);
+	ObjectMgr		= ObjectManager::Create(this);
+	EventSys		= EventSystem::Create(this);
+	CollisionSys	= CollisionSystem::Create(this);
+	CameraMgr		= CameraManager::Create(this);
 
 #ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
