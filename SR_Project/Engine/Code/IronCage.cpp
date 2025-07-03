@@ -75,7 +75,24 @@ HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void IronCage::Update(_float dt)
 {
-    if (!On)
+    if (First)
+    {
+        DynamicBlock::LoadLink();
+        First = false;
+    }
+
+    bool allTriggered = !LinkedObject.empty();
+    for (auto& Dst : LinkedObject)
+    {
+        if (!Dst || !static_cast<DynamicBlock*>(Dst)->GetTrigger())
+        {
+            allTriggered = false;
+            break;
+        }
+    }
+    Activate = allTriggered;
+
+    if (Activate && !Trigger)
         Operate();
 
     Object::Update(dt);
@@ -116,7 +133,7 @@ void IronCage::Operate()
     totTrans += Speed * EngineCore::GetInstance()->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
     ironParTrans->Translate(0.f, -Speed * EngineCore::GetInstance()->GetTimerManager()->Get_DeltaTime(L"Timer_FPS"), 0.f);
 
-    if (totTrans >= 7.9f) On = true;
+    if (totTrans >= 7.9f) Trigger = true;
 }
 
 void IronCage::Free()

@@ -24,6 +24,8 @@
 #include "CubeMesh.h"
 #include "Material.h"
 #include "GraphicDevice.h"
+#include "Lever.h"
+#include "IronCage.h"
 
 EditScene::EditScene()
 {
@@ -43,7 +45,9 @@ EditScene* EditScene::Create()
 void EditScene::Load()
 {
 #ifdef USE_IMGUI
+
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapToolTest", [this]() {this->ImGuiTest();});
+
 #endif
 
 	CollisionSys = CollisionSystem::Create(this);
@@ -166,6 +170,129 @@ void EditScene::ImGuiTest()
 	}
 
 	ImGui::End();
+
+	ImGui::Begin("Linking IronCages with Levers");
+
+	static int selectedCageIndex = -1;
+	static int selectedLeverIndex = -1;
+
+	// 1. 철창 리스트 출력
+	ImGui::Text("Iron Cages:");
+	for (int i = 0; i < dynamicBlocks.size(); ++i)
+	{
+		if (dynamicBlocks[i].Type == DynamicBlockType::IronCages)
+		{
+			char buf[64];
+			snprintf(buf, sizeof(buf), "Cage %d (Pos: %.1f, %.1f, %.1f)", i,
+				dynamicBlocks[i].Pos.x, dynamicBlocks[i].Pos.y, dynamicBlocks[i].Pos.z);
+			if (ImGui::Selectable(buf, selectedCageIndex == i))
+				selectedCageIndex = i;
+		}
+	}
+
+	// === 철창의 연결된 레버 ID 출력 ===
+	if (selectedCageIndex != -1)
+	{
+		Object* cageObj = nullptr;
+		_vec3 cagePos = dynamicBlocks[selectedCageIndex].Pos;
+
+		for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			if (obj->GetComponent<TransformComponent>()->GetPosition() == cagePos)
+			{
+				cageObj = obj;
+				break;
+			}
+		}
+
+		if (cageObj)
+		{
+			auto* cage = static_cast<DynamicBlock*>(cageObj);
+			const auto& ids = cage->GetIDVec();
+
+			ImGui::Separator();
+			ImGui::Text("Linked Lever IDs:");
+			if (!ids.empty())
+			{
+				for (int id : ids)
+				{
+					ImGui::BulletText("Lever ID: %d", id);
+				}
+			}
+			else
+			{
+				ImGui::TextColored(ImVec4(1, 0.5f, 0.5f, 1), "None linked.");
+			}
+		}
+	}
+
+	// 2. 레버 리스트 출력 및 선택 (ID 추출 필요)
+	ImGui::Separator();
+	ImGui::Text("Levers:");
+	std::vector<int> leverIDs;
+	std::vector<std::string> leverLabels;
+	for (int i = 0; i < dynamicBlocks.size(); ++i)
+	{
+		if (dynamicBlocks[i].Type == DynamicBlockType::LeverSwitch)
+		{
+			Object* leverObj = nullptr;
+			// ObjectMgr에서 위치 기반으로 오브젝트 찾기 (또는 dynamicBlocks에 Object* 있다면 바로 사용)
+			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+			{
+				if (obj->GetComponent<TransformComponent>()->GetPosition() == dynamicBlocks[i].Pos)
+				{
+					leverObj = obj;
+					break;
+				}
+			}
+			if (leverObj)
+			{
+				int leverID = static_cast<DynamicBlock*>(leverObj)->GetID();
+				leverIDs.push_back(leverID);
+				leverLabels.push_back("Lever ID " + std::to_string(leverID));
+			}
+		}
+	}
+
+	static int leverComboIdx = 0;
+	if (!leverLabels.empty())
+	{
+		ImGui::Combo("Select Lever ID", &leverComboIdx, [](void* data, int idx, const char** out_text)
+			{
+				auto& labels = *static_cast<std::vector<std::string>*>(data);
+				*out_text = labels[idx].c_str();
+				return true;
+			}, &leverLabels, leverLabels.size());
+	}
+
+	// 3. 버튼으로 연결 처리
+	if (ImGui::Button("Link Lever to Cage") && selectedCageIndex != -1 && !leverIDs.empty())
+	{
+		int cageIndex = selectedCageIndex;
+		int leverID = leverIDs[leverComboIdx];
+
+		Object* cageObj = nullptr;
+		for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			if (obj->GetComponent<TransformComponent>()->GetPosition() == dynamicBlocks[cageIndex].Pos)
+			{
+				cageObj = obj;
+				break;
+			}
+		}
+
+		if (cageObj)
+		{
+			DynamicBlock* cage = static_cast<DynamicBlock*>(cageObj);
+			auto idVec = cage->GetIDVec();
+			if (std::find(idVec.begin(), idVec.end(), leverID) == idVec.end())
+			{
+				cage->AddID(leverID);
+			}
+		}
+	}
+
+	ImGui::End();
 }
 #endif
 
@@ -228,7 +355,7 @@ void EditScene::OnLeftClick(_vec3& rayOrigin, _vec3& rayDir)
 				found = true;
 			}
 		}
-	}
+	}	
 
 	if (!found) return;
 
@@ -261,10 +388,12 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 		}
 	}
 
-	if (!found) return;
-
-	ObjectMgr->RemoveObject(ObjectType::StaticBlock, (staticBlocks.begin() + targetIndex)->Pos);
-	staticBlocks.erase(staticBlocks.begin() + targetIndex);
+	if (found)
+	{
+		ObjectMgr->RemoveObject(ObjectType::StaticBlock, (staticBlocks.begin() + targetIndex)->Pos);
+		staticBlocks.erase(staticBlocks.begin() + targetIndex);
+		return;
+	}
 }
 
 bool EditScene::RayIntersectsAABB(const _vec3& rayOrigin, const _vec3& rayDir, const _vec3& boxMin, const _vec3& boxMax, float& outDistance)
@@ -318,7 +447,7 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 	}
 	if (fabs(hitPoint.y - boxMax.y) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::DBEnd;
+		if (dynamicBlockType == DynamicBlockType::IronCages) dynamicBlockDir = DynamicBlockDir::YP;
 		return _vec3(0, 1, 0);
 	}
 
@@ -343,19 +472,21 @@ void EditScene::Place(const _vec3& position)
 
 	if (staticBlockType != StaticBlockType::SBlockNone)
 	{
-		staticBlocks.push_back({ position, staticBlockType, staticBlockDir });
-
 		auto newBlockObj = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockDir);
+		if (!newBlockObj) return;
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
+
+		staticBlocks.push_back({ position, staticBlockType, staticBlockDir });
 	}
 	else if (dynamicBlockType != DynamicBlockType::DBlockNone)
 	{
-		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockDir });
-
 		Object* newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockDir, Count);
+		if (!newBlockObj) return;
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, newBlockObj);
+
+		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockDir });
 	}
 }
 
@@ -382,8 +513,49 @@ void EditScene::SaveStage(const char* saveStage)
 	WriteFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr);
 	WriteFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr);
 	for (auto& block : staticBlocks) WriteFile(hFile, &block, sizeof(SB), &dwByte, nullptr);
-	for (auto& block : dynamicBlocks) WriteFile(hFile, &block, sizeof(DB), &dwByte, nullptr);
+	for (auto& block : dynamicBlocks)
+	{
+		WriteFile(hFile, &block, sizeof(DB), &dwByte, nullptr);
 
+		switch (block.Type)
+		{
+		case DynamicBlockType::LeverSwitch:
+		{
+			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+			{
+				if (obj->GetComponent<TransformComponent>()->GetPosition() == block.Pos)
+				{
+					int id = static_cast<DynamicBlock*>(obj)->GetID();
+					WriteFile(hFile, &id, sizeof(int), &dwByte, nullptr);
+					break;
+				}
+			}
+			break;
+		}
+		case DynamicBlockType::IronCages:
+		{
+			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+			{
+				if (obj->GetComponent<TransformComponent>()->GetPosition() == block.Pos)
+				{
+					auto dyn = static_cast<DynamicBlock*>(obj);
+
+					int count = dyn->GetCount();
+					WriteFile(hFile, &count, sizeof(int), &dwByte, nullptr);
+
+					auto ids = dyn->GetIDVec();
+					int size = static_cast<int>(ids.size());
+					WriteFile(hFile, &size, sizeof(int), &dwByte, nullptr);
+					if (size > 0)
+						WriteFile(hFile, ids.data(), sizeof(int) * size, &dwByte, nullptr);
+					break;
+				}
+			}
+			break;
+		}
+		}
+	}
+		
 	CloseHandle(hFile);
 	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Success", _T("Success"), MB_OK);
 }
@@ -430,8 +602,38 @@ void EditScene::LoadStage(const char* loadStage)
 	{
 		if (!ReadFile(hFile, &newDBlock, sizeof(DB), &dwByte, nullptr)) return;
 
-		auto dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, Count);
-		dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
+		Object* dBlock = nullptr;
+
+		if (newDBlock.Type == DynamicBlockType::IronCages)
+		{
+			int count = 0;
+			ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr);
+
+			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, count);
+			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
+
+			int vecSize = 0;
+			ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr);
+			if (vecSize > 0)
+			{
+				std::vector<int> ids(vecSize);
+				ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr);
+				for (int id : ids)
+					static_cast<DynamicBlock*>(dBlock)->AddID(id);
+			}
+		}
+		else
+		{
+			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, Count);
+			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
+
+			if (newDBlock.Type == DynamicBlockType::LeverSwitch)
+			{
+				int id = 0;
+				ReadFile(hFile, &id, sizeof(int), &dwByte, nullptr);
+				static_cast<DynamicBlock*>(dBlock)->SetID(id);
+			}
+		}
 
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, dBlock);
 		dynamicBlocks.push_back(newDBlock);

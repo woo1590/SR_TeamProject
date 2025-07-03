@@ -82,7 +82,7 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void Chest::Update(_float dt)
 {
-    if (!On)
+    if (Activate && !Trigger)
         Operate();
 
     Object::Update(dt);
@@ -124,7 +124,7 @@ void Chest::Operate()
     Angle += rotSpeed;
     upTrans->SetRotate(D3DXToRadian(Angle), 0.f, 0.f);
 
-    if (totAngle >= 90.f) On = true;
+    if (totAngle >= 90.f) Trigger = true;
 }
 
 void Chest::Free()

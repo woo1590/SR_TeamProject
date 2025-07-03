@@ -217,6 +217,9 @@
     <Filter Include="06. Object\DynamicBlock\IronCage">
       <UniqueIdentifier>{737313a0-01ca-42c8-92d5-f2e601ad1e4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Scene Component\BlockManager">
+      <UniqueIdentifier>{a6cc0320-bb0a-4c0a-a0f8-774f741fd8d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -445,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\IronCage.cpp">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BlockManager.cpp">
+      <Filter>05. Scene Component\BlockManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -694,6 +700,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\IronCage.h">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BlockManager.h">
+      <Filter>05. Scene Component\BlockManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

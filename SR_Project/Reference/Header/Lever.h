@@ -21,15 +21,17 @@ private:
     void SetScale(float scale);
     void SetPosition(_vec3 position, string str);
     void SetRotation(_vec3 rotation, string str);
+    static void ResetID() { totID = 0; }
 
 public:
-    void SetOn() { On = true; }
     void Operate();
 
 private:
     void Free() override;
 
 private:
+    static int totID;
+
     float Angle = 0.f;
     float totAngle = 0.f;
     float rotSpeed = 5.f;

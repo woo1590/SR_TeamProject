@@ -1,5 +1,6 @@
 #include "EnginePCH.h"
 #include "DynamicBlock.h"
+#include "ObjectManager.h"
 
 // Components
 #include "TransformComponent.h"
@@ -24,25 +25,27 @@ DynamicBlock::~DynamicBlock()
 
 Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockDir dir, int Count)
 {
-    Object* block = nullptr;
+    Object* Instance(nullptr);
 
     switch (type)
     {
     case DynamicBlockType::LeverSwitch:
-        block = Lever::Create(owner, ObjectType::DynamicBlock, type, dir);
+        if (dir != DynamicBlockDir::DBEnd)
+            Instance = Lever::Create(owner, ObjectType::DynamicBlock, type, dir);
         break;
     case DynamicBlockType::BasicChest:
-        block = Chest::Create(owner, ObjectType::DynamicBlock, type, dir);
+        Instance = Chest::Create(owner, ObjectType::DynamicBlock, type, dir);
         break;
     case DynamicBlockType::IronCages:
-        block = IronCage::Create(owner, ObjectType::DynamicBlock, type, dir, Count);
+        if (dir == DynamicBlockDir::YP)
+            Instance = IronCage::Create(owner, ObjectType::DynamicBlock, type, dir, Count);
         break;
     default:
         MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"DynamicBlock::Create Error", MB_OK);
         break;
     }
 
-    return block;
+    return Instance;
 }
 
 HRESULT DynamicBlock::Ready_Object()
@@ -64,6 +67,15 @@ void DynamicBlock::Update(_float dt)
 void DynamicBlock::Late_Update(_float dt)
 {
     Object::Late_Update(dt);
+}
+
+void DynamicBlock::LoadLink()
+{
+    for (auto& Dst : owner->GetObjectList(ObjectType::DynamicBlock))
+    {
+        if (find(LinkedID.begin(), LinkedID.end(), static_cast<DynamicBlock*>(Dst)->ID) != LinkedID.end())
+            LinkedObject.push_back(Dst);
+    }
 }
 
 void DynamicBlock::Free()

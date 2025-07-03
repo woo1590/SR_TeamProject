@@ -23,7 +23,6 @@ private:
     void SetRotation(_vec3 rotation, string str);
 
 public:
-    void SetOn() { On = true; }
     void Operate();
 
 private:

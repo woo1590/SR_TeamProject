@@ -23,13 +23,13 @@ private:
     void SetRotation(_vec3 rotation, string str);
 
 public:
-    void SetOn() { On = true; }
     void Operate();
 
 private:
     void Free() override;
 
 private:
+    bool First = true;
     float totTrans = 0.f;
     float Speed = 5.f;
 };
