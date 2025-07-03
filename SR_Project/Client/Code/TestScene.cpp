@@ -73,7 +73,7 @@ void TestScene::Load()
 	/*----------------Load Camera---------------------*/
 	LoadBlock();
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, -20.f);
+	player->GetComponent<TransformComponent>()->SetPosition(-5.f, 100.f, -5.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	auto fCam = FirstCam::Create(ObjectMgr);
@@ -203,7 +203,7 @@ void TestScene::Free()
 void TestScene::LoadBlock()
 {
 	HANDLE hFile(nullptr);
-	hFile = CreateFile(L"../../Reference/MapData/TestScene.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	hFile = CreateFile(L"../../Reference/MapData/MapV1.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
