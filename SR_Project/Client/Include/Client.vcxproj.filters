@@ -135,7 +135,7 @@
     </Filter>
     <Filter Include="02. Object\Monster\Skeleton">
       <UniqueIdentifier>{d76c092f-c541-47a0-8c8a-5013da963e4d}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\MouseUI">
       <UniqueIdentifier>{96f0d89b-7188-4aaf-b15b-f705b662d974}</UniqueIdentifier>
     </Filter>
@@ -162,6 +162,15 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Button\ExitBtn">
       <UniqueIdentifier>{73be3795-72c4-441c-ad32-9c2d137288f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Light">
+      <UniqueIdentifier>{a3b6591f-d5b9-4ba1-a441-1924837c5e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Light\Direction">
+      <UniqueIdentifier>{72107362-0f4f-47d3-b6a9-b3b4f6a3e567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Light\Point">
+      <UniqueIdentifier>{7c81f8d6-d1d8-495a-8d5e-274119b37ab2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +314,9 @@
     <ClInclude Include="..\Header\Rotate.h">
       <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DirectionLight.h">
+      <Filter>02. Object\Light\Direction</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -446,6 +458,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Rotate.cpp">
       <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DirectionLight.cpp">
+      <Filter>02. Object\Light\Direction</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -26,11 +26,12 @@ namespace Engine
 	typedef struct tagVertexCubeTexture
 	{
 		_vec3	vPosition;
+		_vec3	vNormal;
 		_vec3	vTexUV;
 
 	}VTXCUBE;
 
-	constexpr _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
+	constexpr _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
 
 	typedef struct tagIndex16
 	{

@@ -74,6 +74,34 @@ HRESULT CubeMesh::CreateBuffer()
 	{
 		vertex.vTexUV = vertex.vPosition;
 	}
+	/*-------------------Compute Normal------------------*/
+	for (auto& vertex : Vertices)
+		vertex.vNormal = { 0.f,0.f,0.f };
+
+	for (auto& tri : Indices)
+	{
+		_vec3 p0 = Vertices[tri._0].vPosition;
+		_vec3 p1 = Vertices[tri._1].vPosition;
+		_vec3 p2 = Vertices[tri._2].vPosition;
+
+		_vec3 u = p1 - p0;
+		_vec3 v = p2 - p0;
+		_vec3 normal;
+
+		D3DXVec3Normalize(&u, &u);
+		D3DXVec3Normalize(&v, &v);
+
+		D3DXVec3Cross(&normal, &u, &v);
+		D3DXVec3Normalize(&normal, &normal);
+
+		Vertices[tri._0].vNormal += normal;
+		Vertices[tri._1].vNormal += normal;
+		Vertices[tri._2].vNormal += normal;
+	}
+
+	for (auto& vertex : Vertices)
+		D3DXVec3Normalize(&vertex.vNormal, &vertex.vNormal);
+	/*--------------------------------------------------------*/
 
 	//Vertex Buffer
 	Device->CreateVertexBuffer(VertexCnt * sizeof(VTXCUBE),

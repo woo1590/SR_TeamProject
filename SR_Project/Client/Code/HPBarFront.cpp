@@ -3,6 +3,12 @@
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 #include "ProgressBar.h"
+#include "EngineCore.h"
+#include "InputSystem.h"
+
+#include "ObjectManager.h"
+#include "InfoComponent.h"
+#include "Player.h"
 
 HPBarFront* HPBarFront::Create(ObjectManager* owner)
 {

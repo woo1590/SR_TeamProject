@@ -46,9 +46,10 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	/*---------------Light Setting---------------------*/
-	Device->SetRenderState(D3DRS_LIGHTING, false);
-	Device->SetRenderState(D3DRS_NORMALIZENORMALS, true);
-	Device->SetRenderState(D3DRS_SPECULARENABLE, true);
+	Device->SetRenderState(D3DRS_LIGHTING, TRUE);
+	Device->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(20,20,20));
+	Device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+	Device->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
 
 	/*---------------Blend Setting---------------*/
 	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
