@@ -106,7 +106,6 @@ void Player::Update(_float dt){
 
     Ray downRay{ transform->GetPosition(),_vec3(0.f,-1.f,0.f) };
     HitInfo hit = GetScene()->GetCollisionSystem()->Raycast(downRay);
-
     if (hit.IsHit && hit.Distance <= 4.f)
     {
         physics->SetGround(true);
@@ -139,7 +138,8 @@ void Player::PickingTerrain(){
             auto transform = GetComponent<TransformComponent>();
             auto curPos = transform->GetPosition();
             destinationPos = hit.Position;
-            //destinationPos.y += yOffset;
+            destinationPos.y = 0.f;
+            curPos.y = 0.f;
             PlayerDirection = destinationPos - curPos;
         }
     }
@@ -156,7 +156,6 @@ void Player::PickingTerrain(){
             auto transform = GetComponent<TransformComponent>();
             auto curPos = transform->GetPosition();
             auto attackPos = hit.Position;
-            attackPos.y += yOffset;
             AttackDirection = attackPos - curPos;
         }
     }
@@ -173,7 +172,6 @@ void Player::PickingTerrain(){
             auto transform = GetComponent<TransformComponent>();
             auto curPos = transform->GetPosition();
             auto attackPos = hit.Position;
-            attackPos.y += yOffset;
             AttackDirection = attackPos - curPos;
         }
     }
@@ -252,7 +250,6 @@ void Player::UpdateWalk(_float dt) {
     if (distance < 0.5f) {
         State = ePlayerState::IDLE;
         WalkTime = 0.f;
-        transform->SetPosition(curPos.x, destinationPos.y, curPos.z);
     }
 }
 void Player::UpdateRoll(_float dt)
@@ -449,7 +446,7 @@ void Player::UpdateAttack(_float dt) {
     //Exit State
     if (AttackTime >= fAttackDuration) {
         AttackTime = 0.f;
-        if (WalkTime = 0.f) State = ePlayerState::IDLE;
+        if (WalkTime == 0.f) State = ePlayerState::IDLE;
         else {
             WalkTime = 0.f;
             State = ePlayerState::WALK;
@@ -585,51 +582,60 @@ void Player::UpdateShoot(_float dt) {
 }
 void Player::UpdateDead(_float dt) {
     auto transform = GetComponent<TransformComponent>();
+
     const float fDeadDuration = 1.0f; // 사망 모션 전체 시간
     DeadTime += dt;
+
     // 누운 상태에서 종료 (모션 유지)
     if (DeadTime >= fDeadDuration) {
         DeadTime = fDeadDuration; // 시간 고정
         State = ePlayerState::DEAD; // DEAD 상태 유지
     }
+
     float fProgress = std::clamp(DeadTime / fDeadDuration, 0.f, 1.f);
+
     // 회전 각도는 뒤로 90도만 (x축 기준)
     float fMaxDeathAngle = D3DXToRadian(90.f);
     float fCurrentAngle = fMaxDeathAngle * fProgress;
+
+    // 전방 벡터 정규화
     _vec3 moveVec = PlayerDirection;
     moveVec.y = 0.f;
     D3DXVec3Normalize(&moveVec, &moveVec);
     transform->SetForward(moveVec);
-    // 트랜스폼 회전 적용: 뒤로 누움 (x축 회전만)
+
+    // 회전 적용: 뒤로 눕기
     _vec3 vAxis = transform->GetRight(); // x축
     _matrix matRot;
     D3DXMatrixRotationAxis(&matRot, &vAxis, -fCurrentAngle);
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
-
     transform->SetRotate(transform->GetRotate() + rotateVec);
 
     // Lerp 함수
-    auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
-        return start + offset * ratio;
+    auto LerpRot = [](const _vec3& from, const _vec3& to, float ratio) {
+        return from + (to - from) * ratio;
     };
-    //각도값 지정
-    _vec3 rot_HeadFolded = _vec3(1.f, 0.f, 0.f);
-    _vec3 rot_LHandFolded = _vec3(-1.5f, 0.f, 0.f);
-    _vec3 rot_RHandFolded = _vec3(-1.5f, 0.f, 0.f);
-    _vec3 rot_LLegFolded = _vec3(-2.f, 0.f, 0.f);
-    _vec3 rot_RLegFolded = _vec3(-2.f, 0.f, 0.f);
 
-    _vec3 rot_HeadFlat = _vec3(-1.f, 0.f, 0.f);
-    _vec3 rot_LHandFlat = _vec3(1.5f, 0.f, -1.5f);
-    _vec3 rot_RHandFlat = _vec3(1.5f, 0.f, 1.5f);
-    _vec3 rot_LLegFlat = _vec3(2.f, 0.f, -0.2f);
-    _vec3 rot_RLegFlat = _vec3(2.f, 0.f, 0.2f);
+    // Folded 상태 (0.3초까지): 숙인 자세
+    _vec3 rot_HeadFolded = { 1.f, 0.f, 0.f };
+    _vec3 rot_LHandFolded = { -1.5f, 0.f, 0.f };
+    _vec3 rot_RHandFolded = { -1.5f, 0.f, 0.f };
+    _vec3 rot_LLegFolded = { -2.f, 0.f, 0.f };
+    _vec3 rot_RLegFolded = { -2.f, 0.f, 0.f };
 
-    // 모션 곡선 비율
+    // Flat 상태: 완전히 펼친 자세
+    _vec3 rot_HeadFlat = { 0.f, 0.f, 0.f };
+    _vec3 rot_LHandFlat = { 0.f, 0.f, -1.5f };
+    _vec3 rot_RHandFlat = { 0.f, 0.f, 1.5f };
+    _vec3 rot_LLegFlat = { 0.f, 0.f, -0.2f };
+    _vec3 rot_RLegFlat = { 0.f, 0.f, 0.2f };
+
     float fLerpRatio = 0.f;
+
     if (fProgress <= 0.3f) {
-        fLerpRatio = fProgress / 0.3f; // 숙이기
+        fLerpRatio = fProgress / 0.3f;
         fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
+
         SetRotation(LerpRot(StartRotations["Head"], rot_HeadFolded, fLerpRatio), "Head");
         SetRotation(LerpRot(StartRotations["LHand"], rot_LHandFolded, fLerpRatio), "LHand");
         SetRotation(LerpRot(StartRotations["RHand"], rot_RHandFolded, fLerpRatio), "RHand");
@@ -637,8 +643,9 @@ void Player::UpdateDead(_float dt) {
         SetRotation(LerpRot(StartRotations["RLeg"], rot_RLegFolded, fLerpRatio), "RLeg");
     }
     else {
-        fLerpRatio = (fProgress - 0.3f) / 0.7f; // 펴기
+        fLerpRatio = (fProgress - 0.3f) / 0.7f;
         fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
+
         SetRotation(LerpRot(rot_HeadFolded, rot_HeadFlat, fLerpRatio), "Head");
         SetRotation(LerpRot(rot_LHandFolded, rot_LHandFlat, fLerpRatio), "LHand");
         SetRotation(LerpRot(rot_RHandFolded, rot_RHandFlat, fLerpRatio), "RHand");
@@ -646,6 +653,7 @@ void Player::UpdateDead(_float dt) {
         SetRotation(LerpRot(rot_RLegFolded, rot_RLegFlat, fLerpRatio), "RLeg");
     }
 }
+
 void Player::KeyInput(_float dt)
 {
     PickingTerrain();
