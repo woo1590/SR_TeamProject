@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Loader.h"
 #include "EngineCore.h"
 #include "ResourceManager.h"
@@ -105,6 +105,8 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Texture/Player/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube, L"playerLeftArm_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
 
 	/////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Body.dds", L"SkeletonBody", TEXTURE::Tex_Cube, L"SkeletonBody_Mtrl");

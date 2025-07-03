@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "BaseCharacter.h"
 
 //system
@@ -104,7 +104,7 @@ void BaseCharacter::Add_Bone(string str, ObjectType objType, Object* parent, con
     Bones[str] = Bone::Create(owner, objType, _vec3(1.f, 1.f, 1.f), parent, mtrl);
 
     owner->AddObject(objType, Bones[str]);
-    //scale position µû·Î ¼³Á¤ÇÏ¼À
+    //scale position ë”°ë¡œ ì„¤ì •í•˜ì…ˆ
 }
 
 void BaseCharacter::Free()

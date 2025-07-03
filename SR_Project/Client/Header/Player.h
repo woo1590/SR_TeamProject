@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "BaseCharacter.h"
 class Player : public BaseCharacter
 {   
@@ -23,10 +23,7 @@ private:
 private: //func
     void KeyInput(_float dt);
     
-    void CheckStateAttack(_float dt);
-    void CheckStateWalk(_float dt);
     void CheckStateRoll(_float dt);
-    void CheckStateIdle(_float dt);
     void CheckDead();
 
     void UpdateIdle(_float dt);
@@ -36,11 +33,7 @@ private: //func
     void UpdateShoot(_float dt);
     void UpdateDead(_float dt);
 
-    void MovePlayer(_vec3 moveVec);
-    void RotatePlayer(_vec3 rotateVec);
     void SaveStartRotation();
-
-    void FixCursorToCenter();
     void PickingTerrain();
     _vec3 MatrixToEulerAngles(const _matrix& mat);
 
@@ -56,6 +49,7 @@ private: //member variable
 
     std::unordered_map<std::string, _vec3> StartRotations;
     float Speed = 10.f;
+    float yOffset = 3.7f;
 
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };
