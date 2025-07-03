@@ -36,8 +36,8 @@ void PhysicsSystem::Update(_float dt)
 {
 	ApplyGravity(dt);
 	BroadPhase();
-	SolvePosition();
 	ApplyVelocity(dt);
+	SolvePosition();
 	CollisionEvent();
 }
 

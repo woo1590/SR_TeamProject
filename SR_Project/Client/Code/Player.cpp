@@ -139,8 +139,10 @@ void Player::PickingTerrain(){
             auto transform = GetComponent<TransformComponent>();
             auto curPos = transform->GetPosition();
             destinationPos = hit.Position;
-            //destinationPos.y += yOffset;
-            PlayerDirection = destinationPos - curPos;
+
+            destinationPos.y = 0.f;
+            curPos.y = 0.f;
+            PlayerDirection = destinationPos - curPos; 
         }
     }
 
@@ -252,8 +254,7 @@ void Player::UpdateWalk(_float dt) {
     if (distance < 0.5f) {
         State = ePlayerState::IDLE;
         WalkTime = 0.f;
-        transform->SetPosition(curPos.x, destinationPos.y, curPos.z);
-    }
+    } 
 }
 void Player::UpdateRoll(_float dt)
 {
@@ -277,7 +278,7 @@ void Player::UpdateRoll(_float dt)
         fLerpRatio = (1.f - fProgress) / 0.2f;
     }
     else {
-        fLerpRatio = 1.f;
+        fLerpRatio = 1.f; 
     }
     //lerp rotate value
     auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
