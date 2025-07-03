@@ -24,9 +24,9 @@ public:
 private:
     void Free()override;
 
-    _bool Is_Ground;
+    _bool Is_Ground = false;
     _vec3 Velocity{ 0.f,0.f,0.f };
-    static constexpr _float GRAVITY = 1000.f;
+    static constexpr _float GRAVITY = 30.f;
 };
 
 END

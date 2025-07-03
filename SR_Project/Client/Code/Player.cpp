@@ -10,6 +10,7 @@
 
 #include "CollisionSystem.h"
 #include "CollisionComponent.h"
+#include "PhysicsComponent.h"
 #include "EngineCore.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -40,7 +41,13 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     BaseCharacter::Ready_Object(owner, objType);
     //components
     auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_DEFAULT);
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
+    collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
+
+    auto physics = AddComponent<PhysicsComponent>();
+
     //PlayerScale
     SetScale(1.f);
     //PlayerTexture
@@ -86,6 +93,24 @@ void Player::Update(_float dt)
         UpdateDead(dt);
         break;
     }
+
+    //Phyisics Test
+    auto transform = GetComponent<TransformComponent>();
+    auto physics = GetComponent<PhysicsComponent>();
+
+    Ray downRay{ transform->GetPosition(),_vec3(0.f,-1.f,0.f) };
+    HitInfo hit = GetScene()->GetCollisionSystem()->Raycast(downRay);
+
+    if (hit.IsHit && hit.Distance <= 4.f)
+    {
+        physics->SetGround(true);
+    }
+    else
+    {
+        _vec3 velocity = physics->GetVelocity();
+        transform->Translate(velocity * dt);
+    }
+    ///////////////////////////////////////////////////////////////////////////
 }
 void Player::Late_Update(_float dt)
 {
@@ -158,6 +183,24 @@ void Player::PickingTerrain()
         }
     }
 }
+
+void Player::OnCollisionStay(Object* other)
+{
+    ObjectType otherType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+
+    switch (otherType)
+    {
+    case Engine::ObjectType::Monster:
+        break;
+    case Engine::ObjectType::Block:
+        collision->ResolveAABBColiision(other);
+        break;
+    default:
+        break;
+    }
+}
+
 void Player::MovePlayer(_vec3 moveVec)
 {
     //move player with move Value Vector

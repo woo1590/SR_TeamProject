@@ -2,6 +2,8 @@
 #include "Object.h"
 #include "ObjectManager.h"
 #include "ObjectComponent.h"
+#include "EngineCore.h"
+#include "SceneManager.h"
 
 Object::Object(ObjectManager* owner, ObjectType objType)
 	:owner(owner),ObjType(objType)
@@ -38,6 +40,11 @@ void Object::Late_Update(float dt)
 	}
 }
 
+ObjectType Object::GetObjectType() const
+{
+	return ObjType;
+}
+
 void Object::SetDead()
 {
 	Is_Dead = true;
@@ -46,6 +53,16 @@ void Object::SetDead()
 _bool Object::IsDead() const
 {
 	return Is_Dead;
+}
+
+ObjectManager* Object::GetOwner() const
+{
+	return owner;
+}
+
+Scene* Object::GetScene() const
+{
+	return owner->GetOwner();
 }
 
 void Object::Free()

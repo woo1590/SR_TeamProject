@@ -217,6 +217,9 @@
     <Filter Include="07. Object Component\UIComponent\06. PanelComponent">
       <UniqueIdentifier>{35d7b608-ca8c-4029-b555-183aff9cf74a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Scene Component\PhysicsSystem">
+      <UniqueIdentifier>{6342d716-998f-4933-862a-73043b0598c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -446,6 +449,7 @@
     <ClCompile Include="..\Code\PanelComponent.cpp">
       <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineCore.h">
@@ -695,6 +699,7 @@
     <ClInclude Include="..\Header\PanelComponent.h">
       <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PhysicsSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Header\Math.inl">

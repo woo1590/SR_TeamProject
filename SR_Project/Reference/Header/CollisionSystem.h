@@ -5,6 +5,7 @@ BEGIN(Engine)
 
 class CollisionComponent;
 class Scene;
+
 typedef struct tagHitInfo
 {
     _bool IsHit = false;
@@ -13,6 +14,8 @@ typedef struct tagHitInfo
     _vec3               Position{ 0.f,0.f,0.f };
 
 }HitInfo;
+
+
 
 class ENGINE_DLL CollisionSystem :
     public Base
@@ -32,6 +35,9 @@ public:
 private:
     void Free()override;
     std::vector<CollisionComponent*> Collisions;
+
+    std::vector<std::pair<CollisionComponent*, CollisionComponent*>> CurrCollision;
+    std::vector<std::pair<CollisionComponent*, CollisionComponent*>> PrevCollision;
     Scene* owner = nullptr;
 };
 

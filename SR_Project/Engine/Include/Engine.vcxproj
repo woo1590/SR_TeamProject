@@ -261,6 +261,7 @@
     <ClInclude Include="..\Header\ObjectComponent.h" />
     <ClInclude Include="..\Header\ObjectManager.h" />
     <ClInclude Include="..\Header\ParallelNode.h" />
+    <ClInclude Include="..\Header\PhysicsSystem.h" />
     <ClInclude Include="..\Header\RandomSelectorNode.h" />
     <ClInclude Include="..\Header\ProgressBar.h" />
     <ClInclude Include="..\Header\RendererComponent.h" />
@@ -377,6 +378,7 @@
     <ClCompile Include="..\Code\ObjectComponent.cpp" />
     <ClCompile Include="..\Code\ObjectManager.cpp" />
     <ClCompile Include="..\Code\ParallelNode.cpp" />
+    <ClCompile Include="..\Code\PhysicsSystem.cpp" />
     <ClCompile Include="..\Code\RandomSelectorNode.cpp" />
     <ClCompile Include="..\Code\ProgressBar.cpp" />
     <ClCompile Include="..\Code\RendererComponent.cpp" />

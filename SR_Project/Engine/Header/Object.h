@@ -4,6 +4,7 @@ BEGIN(Engine)
 
 class ObjectComponent;
 class ObjectManager;
+class Scene;
 class ENGINE_DLL Object :  public Base
 {
 protected:
@@ -15,8 +16,11 @@ public:
     virtual void Update(float dt);
     virtual void Late_Update(float dt);
 
+    ObjectType GetObjectType()const;
     virtual void SetDead();
     _bool IsDead()const;
+    ObjectManager* GetOwner()const;
+    Scene* GetScene()const;
 
     template<typename T,typename... Args>
     T* AddComponent(Args&&... args)

@@ -43,6 +43,10 @@ private: //func
     void FixCursorToCenter();
     void PickingTerrain();
     _vec3 MatrixToEulerAngles(const _matrix& mat);
+
+    /*--------------Collision-------------*/
+    void OnCollisionStay(Object* other);
+
 private: //member variable
     ePlayerState State = ePlayerState::IDLE;
     float WalkTime = 0.f;
