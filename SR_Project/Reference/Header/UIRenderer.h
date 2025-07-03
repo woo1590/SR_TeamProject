@@ -9,7 +9,14 @@ class ENGINE_DLL UIRenderer : public RendererComponent
 public:
 	explicit UIRenderer(Object* owner)
 		:RendererComponent(owner, RENDER_ID::Render_UI) {}
-	virtual ~UIRenderer() = default;
+	virtual ~UIRenderer()
+	{
+		if (tex2D)
+			tex2D->Release();
+
+		if (texture)
+			texture->Release();
+	}
 
 public:
 	static UIRenderer* Create(Object* owner);
@@ -37,6 +44,8 @@ public:
 	bool IsVisible() const { return isVisible; }
 
 private:
+	void Free()override{}
+
 	LPDIRECT3DBASETEXTURE9 texture = nullptr;
 	IDirect3DTexture9* tex2D = nullptr;
 	RECT  srcRect{};

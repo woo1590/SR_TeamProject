@@ -17,7 +17,10 @@ public:
     void Unload() override;
 
 private:
+
+#ifdef USE_IMGUI
     void ImGuiTest(); // ImGUI 작성
+#endif
 
     void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);     // 광선 위치와 방향 초기화
     void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);              // 좌클릭

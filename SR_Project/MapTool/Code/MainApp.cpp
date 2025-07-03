@@ -99,9 +99,10 @@ MainApp* MainApp::Create(HINSTANCE hInst, int nCmdShow)
 
 LRESULT MainApp::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+#ifdef USE_IMGUI
     if (EngineCore::GetInstance()->GetImGuiManager()->WndProcHandler(hWnd,msg,wParam,lParam))
         return true;
-
+#endif
     switch (msg)
     {
     case WM_INPUT:

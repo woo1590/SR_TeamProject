@@ -29,7 +29,6 @@
 #include "ExpBarFront.h"
 #include "QuickSlot.h"
 #include "Emerald.h"
-#include "TestBlock.h"
 #include "UILoader.h"
 #include "Skeleton.h"
 

@@ -43,7 +43,10 @@ EditScene* EditScene::Create()
 
 void EditScene::Load()
 {
+#ifdef USE_IMGUI
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapToolTest", [this]() {this->ImGuiTest();});
+#endif
+
 	CollisionSys = CollisionSystem::Create(this);
 
 	auto cube = CubeMesh::Create();
@@ -167,6 +170,7 @@ void EditScene::Unload()
 {
 }
 
+#ifdef USE_IMGUI
 void EditScene::ImGuiTest()
 {
 	ImGui::SetNextWindowPos({ 0.f, 0.f });
@@ -203,6 +207,7 @@ void EditScene::ImGuiTest()
 
 	ImGui::End();
 }
+#endif
 
 void EditScene::MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir)
 {
