@@ -51,6 +51,26 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
 
+    Bones["Sword"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["RArm"], L"sword_Mtrl");
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 1.5f * Scale, 1.5f * Scale);
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetPosition(2.f, 0.f, 0.f);
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f * Scale, -2.f * Scale, 0.0f));
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+    SetMaterial(L"sword_Mtrl", "Sword", Engine::RENDER_ID::Render_Alpha);
+    owner->AddObject(objType, Bones["Sword"]);
+
+    Bones["GrapSide1"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Sword"], L"swordGrapSide_Mtrl");
+    Bones["GrapSide1"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 0.1f * Scale, 0.1f * Scale);
+    Bones["GrapSide1"]->GetComponent<TransformComponent>()->SetPosition(0.f, -1.f, -1.f);
+    SetMaterial(L"swordGrapSide_Mtrl", "GrapSide1", Engine::RENDER_ID::Render_NonAlpha);
+    owner->AddObject(objType, Bones["GrapSide1"]);
+
+    Bones["SteelSide1"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Sword"], L"swordSteelSide_Mtrl");
+    Bones["SteelSide1"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 0.1f * Scale, 0.1f * Scale);
+    Bones["SteelSide1"]->GetComponent<TransformComponent>()->SetPosition(0.f, 1.f, 1.f);
+    SetMaterial(L"swordSteelSide_Mtrl", "SteelSide1", Engine::RENDER_ID::Render_NonAlpha);
+    owner->AddObject(objType, Bones["SteelSide1"]);
+
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
