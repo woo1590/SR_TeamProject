@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "BaseCharacter.h"
 class Player : public BaseCharacter
 {   
@@ -23,10 +23,7 @@ private:
 private: //func
     void KeyInput(_float dt);
     
-    void CheckStateAttack(_float dt);
-    void CheckStateWalk(_float dt);
     void CheckStateRoll(_float dt);
-    void CheckStateIdle(_float dt);
     void CheckDead();
 
     void UpdateIdle(_float dt);

@@ -666,22 +666,6 @@ void Player::KeyInput(_float dt)
 {
     CheckStateRoll(dt);
 }
-void Player::CheckStateAttack(_float dt)
-{
-    auto input = EngineCore::GetInstance()->GetInputSystem();
-    static KEY keyAttack = LBUTTON;
-
-    //PRESS LBUTTON -> ATTACK
-    if (input->IsKeyPressed(keyAttack)) {
-        switch (State) {
-        case ePlayerState::IDLE: case ePlayerState::WALK:
-            State = ePlayerState::ATTACK;
-            AttackTime = 0.f;
-            SaveStartRotation();
-            break;
-        }
-    }
-}
 void Player::CheckStateRoll(_float dt)
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
