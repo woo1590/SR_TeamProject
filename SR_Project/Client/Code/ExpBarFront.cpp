@@ -19,8 +19,9 @@ HRESULT ExpBarFront::Ready_Object()
 	
 	exp->SetBarDirection(BarDirection::Horizontal);
 
-	transform->SetPosition(700.f, 717.f);
-	
+	transform->SetPosition(670.f, 717.f);
+
+	renderer->SetScale(0.8f, 1.f);
 	renderer->SetPivot(UIPivot::Left);
 	renderer->SetTexture(L"expbar_front");
 

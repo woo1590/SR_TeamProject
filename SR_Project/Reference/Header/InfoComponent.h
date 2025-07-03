@@ -21,6 +21,7 @@ public:
 
 	const T& GetInfo() const { return info; }
 
+
 private:
 	T info{};
 };

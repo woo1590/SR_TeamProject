@@ -12,10 +12,5 @@ private:
 public:
 	static ExitBtn* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
-
-	void SetTargetPanel(PanelComponent* panel) { targetPanel = panel; }
-
-private:
-	PanelComponent* targetPanel = nullptr;
 };
 

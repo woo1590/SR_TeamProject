@@ -5,6 +5,7 @@
 BEGIN(Engine)
 
 using HoverCallBack = function<void(bool)>;
+using HoverUpdateCallBack = function<void(bool isHovered)>;
 
 class ENGINE_DLL HoverComponent : public ObjectComponent 
 {
@@ -17,10 +18,12 @@ public:
 	void Update(float dt) override;
 
 	void SetCallBack(HoverCallBack _callback) { callBack = move(_callback); }
+	void SetUpdateCallBack(HoverUpdateCallBack _callBack) { updateCallBack = move(_callBack); }
 
 private:
 	bool isHovered = false;
 	HoverCallBack callBack;
+	HoverUpdateCallBack updateCallBack;
 };
 
 END

@@ -38,15 +38,18 @@ void SlotComponent::ApplySlotSize()
 
 void SlotComponent::OnClick()
 {
+	auto transform = owner->GetComponent<TransformComponent>();
+
 	if (slotType == SlotType::Quick)
 	{
-		auto transform = owner->GetComponent<TransformComponent>();
-		assert(transform && "SlotComponent::OnClick - TransformComponent is missing");
-
 		originalY = transform->GetPosition().y;
 		shakeTime = 0.f;
 		shakeDuration = 0.05f;
 		isShaking = true;
+	}
+	else if (slotType == SlotType::Gear)
+	{
+		isSelected = true;
 	}
 }
 
@@ -90,11 +93,14 @@ void SlotComponent::Update(float dt)
 void SlotComponent::OnHoverEnter()
 {
 	isHovered = true;
+
 	highlight->SetVisible(true);
 }
 
 void SlotComponent::OnHoverExit()
 {
 	isHovered = false;
-	highlight->SetVisible(false);
+
+	//if (!isSelected)
+		highlight->SetVisible(false);
 }

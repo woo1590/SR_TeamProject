@@ -175,6 +175,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\ArmorFilter.h" />
+    <ClInclude Include="..\Header\ArrowFilter.h" />
+    <ClInclude Include="..\Header\CostumeFilter.h" />
+    <ClInclude Include="..\Header\EnchantFilter.h" />
+    <ClInclude Include="..\Header\Filter.h" />
     <ClInclude Include="..\Header\ArrowSlot.h" />
     <ClInclude Include="..\Header\Attack.h" />
     <ClInclude Include="..\Header\BaseCharacter.h" />
@@ -182,21 +187,29 @@
     <ClInclude Include="..\Header\CameraActor.h" />
     <ClInclude Include="..\Header\Cursor.h" />
     <ClInclude Include="..\Header\Die.h" />
+    <ClInclude Include="..\Header\EmeraldSword.h" />
     <ClInclude Include="..\Header\ExitBtn.h" />
     <ClInclude Include="..\Header\FirstCam.h" />
     <ClInclude Include="..\Header\DashUI.h" />
     <ClInclude Include="..\Header\Emerald.h" />
     <ClInclude Include="..\Header\ExpBarBack.h" />
     <ClInclude Include="..\Header\ExpBarFront.h" />
+    <ClInclude Include="..\Header\GearSlot.h" />
+    <ClInclude Include="..\Header\GearSlotPlus.h" />
+    <ClInclude Include="..\Header\GearStrength.h" />
+    <ClInclude Include="..\Header\GearStrengthBack.h" />
     <ClInclude Include="..\Header\HotBarBack.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
+    <ClInclude Include="..\Header\HP_Potion.h" />
     <ClInclude Include="..\Header\InventoryBtn.h" />
     <ClInclude Include="..\Header\InventoryPanel.h" />
     <ClInclude Include="..\Header\Chase.h" />
+    <ClInclude Include="..\Header\InventorySlot.h" />
     <ClInclude Include="..\Header\IsAlive.h" />
     <ClInclude Include="..\Header\IsTargetInAttackRange.h" />
     <ClInclude Include="..\Header\IsTargetInDetectRange.h" />
+    <ClInclude Include="..\Header\LevelFront.h" />
     <ClInclude Include="..\Header\Loader.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\LoadingUI.h" />
@@ -207,10 +220,12 @@
     <ClInclude Include="..\Header\MouseRightUI.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\Monster.h" />
+    <ClInclude Include="..\Header\PotionFilter.h" />
     <ClInclude Include="..\Header\Skeleton.h" />
     <ClInclude Include="..\Header\QuickSlotPlus.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\QuickSlot.h" />
+    <ClInclude Include="..\Header\SwordFilter.h" />
     <ClInclude Include="..\Header\TestObject.h" />
     <ClInclude Include="..\Header\TestScene.h" />
     <ClInclude Include="..\Header\ThirdCam.h" />
@@ -222,6 +237,11 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\ArmorFilter.cpp" />
+    <ClCompile Include="..\Code\ArrowFilter.cpp" />
+    <ClCompile Include="..\Code\CostumeFilter.cpp" />
+    <ClCompile Include="..\Code\EnchantFilter.cpp" />
+    <ClCompile Include="..\Code\Filter.cpp" />
     <ClCompile Include="..\Code\ArrowSlot.cpp" />
     <ClCompile Include="..\Code\Attack.cpp" />
     <ClCompile Include="..\Code\BaseCharacter.cpp" />
@@ -229,21 +249,29 @@
     <ClCompile Include="..\Code\CameraActor.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />
     <ClCompile Include="..\Code\Die.cpp" />
+    <ClCompile Include="..\Code\EmeraldSword.cpp" />
     <ClCompile Include="..\Code\ExitBtn.cpp" />
     <ClCompile Include="..\Code\FirstCam.cpp" />
     <ClCompile Include="..\Code\DashUI.cpp" />
     <ClCompile Include="..\Code\Emerald.cpp" />
     <ClCompile Include="..\Code\ExpBarBack.cpp" />
     <ClCompile Include="..\Code\ExpBarFront.cpp" />
+    <ClCompile Include="..\Code\GearSlot.cpp" />
+    <ClCompile Include="..\Code\GearSlotPlus.cpp" />
+    <ClCompile Include="..\Code\GearStrength.cpp" />
+    <ClCompile Include="..\Code\GearStrengthBack.cpp" />
     <ClCompile Include="..\Code\HotBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />
+    <ClCompile Include="..\Code\HP_Potion.cpp" />
     <ClCompile Include="..\Code\InventoryBtn.cpp" />
     <ClCompile Include="..\Code\InventoryPanel.cpp" />
     <ClCompile Include="..\Code\Chase.cpp" />
+    <ClCompile Include="..\Code\InventorySlot.cpp" />
     <ClCompile Include="..\Code\IsAlive.cpp" />
     <ClCompile Include="..\Code\IsTargetInAttackRange.cpp" />
     <ClCompile Include="..\Code\IsTargetInDetectRange.cpp" />
+    <ClCompile Include="..\Code\LevelFront.cpp" />
     <ClCompile Include="..\Code\Loader.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\LoadingUI.cpp" />
@@ -254,10 +282,12 @@
     <ClCompile Include="..\Code\MouseRightUI.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
+    <ClCompile Include="..\Code\PotionFilter.cpp" />
     <ClCompile Include="..\Code\Skeleton.cpp" />
     <ClCompile Include="..\Code\QuickSlotPlus.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\QuickSlot.cpp" />
+    <ClCompile Include="..\Code\SwordFilter.cpp" />
     <ClCompile Include="..\Code\TestObject.cpp" />
     <ClCompile Include="..\Code\TestScene.cpp" />
     <ClCompile Include="..\Code\ThirdCam.cpp" />

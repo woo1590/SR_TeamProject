@@ -9,6 +9,9 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 
+#include "ObjectManager.h"
+#include "Player.h"
+
 UIDebugObj* UIDebugObj::Create(ObjectManager* owner)
 {
 	auto* instance = new UIDebugObj(owner);
@@ -34,7 +37,7 @@ void UIDebugObj::Update(float dt)
 	auto font = GetComponent<FontComponent>();
 
 	font->ClearText();
-	font->AddText(L"Lv: " + to_wstring(info.level), {600, 600, 800, 700}, Color::Cyan);
+	//font->AddText(L"Lv: " + to_wstring(info.level), {600, 600, 800, 700}, Color::Cyan);
 
 	RECT debugRect = {1000, 400, 1400, 650};
 
@@ -54,7 +57,7 @@ void UIDebugObj::Update(float dt)
 		frameCount = 0;
 	}
 
-	font->AddText(L"Lv: " + to_wstring((int)fps), { 650,450,850,650 }, Color::Cyan);
+	font->AddText(L"FPS: " + to_wstring((int)fps), { 1000,250,1150,450 }, Color::Cyan);
 	
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::LBUTTON))
@@ -62,4 +65,14 @@ void UIDebugObj::Update(float dt)
 		playerInfo->AddExp(1);
 		playerInfo->AddHp(-2);
 	}
+
+	//auto player2 = owner->GetLastObject(ObjectType::Player);
+	//auto playerInfo2 = player2->GetComponent<InfoComponent<PlayerInfo>>();
+
+	auto playerList = owner->GetObjectList(ObjectType::Player);
+
+	int i = playerList.size();
+	i = 2;
+	//playerInfo2->AddHp(-5);
+	//assert(info && "InfoComponent<PlayerInfo> not found");
 }

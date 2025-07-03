@@ -61,37 +61,44 @@ void TestScene::Load()
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
 
+	
 #ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
 
 #endif
 	/*----------------Load Camera---------------------*/
-	LoadBlock();
+	//LoadBlock();
+
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 0.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
-	auto fCam = FirstCam::Create(ObjectMgr);
-	auto tCam = ThirdCam::Create(ObjectMgr);
-	
-	CameraMgr->AddCamera(L"First_Camera", fCam);
-	CameraMgr->AddCamera(L"Third_Camera", tCam);
-	tCam->SetTarget(player);
-	
-	CameraMgr->SetMainCamera(L"First_Camera");
-	EventSys->SetCamera();
-
-	ObjectMgr->AddObject(ObjectType::Camera, fCam);
-	ObjectMgr->AddObject(ObjectType::Camera, tCam);
+	//auto fCam = FirstCam::Create(ObjectMgr);
+	//auto tCam = ThirdCam::Create(ObjectMgr);
+	//
+	//CameraMgr->AddCamera(L"First_Camera", fCam);
+	//CameraMgr->AddCamera(L"Third_Camera", tCam);
+	//tCam->SetTarget(player);
+	//
+	//CameraMgr->SetMainCamera(L"First_Camera");
+	//EventSys->SetCamera();
+	//
+	//ObjectMgr->AddObject(ObjectType::Camera, fCam);
+	//ObjectMgr->AddObject(ObjectType::Camera, tCam);
 	
 	//ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	//ObjectMgr->AddObject(ObjectType::Camera, tCam);
 
 	/*------------------------------------------------*/
-	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
-	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
+
+	auto monster = ObjectMgr->GetObjectList(ObjectType::Monster);
+	int size = monster.size();
+	size = 2;
+
+	//ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
 	
 
 	/*------------------Load UI------------------------*/

@@ -225,6 +225,7 @@
     <ClInclude Include="..\Header\CollisionComponent.h" />
     <ClInclude Include="..\Header\CollisionSystem.h" />
     <ClInclude Include="..\Header\CompositeNode.h" />
+    <ClInclude Include="..\Header\CoolDownComponent.h" />
     <ClInclude Include="..\Header\CubeMesh.h" />
     <ClInclude Include="..\Header\DecoratorNode.h" />
     <ClInclude Include="..\Header\DynamicBlock.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="..\Code\CollisionComponent.cpp" />
     <ClCompile Include="..\Code\CollisionSystem.cpp" />
     <ClCompile Include="..\Code\CompositeNode.cpp" />
+    <ClCompile Include="..\Code\CoolDownComponent.cpp" />
     <ClCompile Include="..\Code\CubeMesh.cpp" />
     <ClCompile Include="..\Code\DecoratorNode.cpp" />
     <ClCompile Include="..\Code\DynamicBlock.cpp" />

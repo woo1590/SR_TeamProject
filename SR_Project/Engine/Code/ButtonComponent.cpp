@@ -3,13 +3,11 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "Object.h"
-#include "TransformComponent.h"
 #include "HoverComponent.h"
 
 ButtonComponent* ButtonComponent::Create(Object* owner)
 {
 	auto* instance = new ButtonComponent(owner);
-
 	return (FAILED(instance->Ready_Component())) ? Safe_Release(instance), nullptr : instance;
 }
 
@@ -21,15 +19,21 @@ HRESULT ButtonComponent::Ready_Component()
 	hover->SetCallBack([this](bool over)
 		{
 			isHovered = over;
-			if (highlight)
-				highlight->SetVisible(over);
 		});
 
 	return S_OK;
 }
 
+void ButtonComponent::UpdateHighlight()
+{
+	if (!highlight) return;
+	highlight->SetVisible(isHovered);
+}
+
 void ButtonComponent::Update(float dt)
 {
+	UpdateHighlight();
+
 	if (!isHovered) return;
 
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();

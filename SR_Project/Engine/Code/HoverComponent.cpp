@@ -48,4 +48,7 @@ void HoverComponent::Update(float dt)
 		if (auto slot = owner->GetComponent<SlotComponent>())
 			slot->OnClick();
 	}
+
+	if (updateCallBack)
+		updateCallBack(isHovered);
 }

@@ -204,7 +204,7 @@
     </Filter>
     <Filter Include="06. Object\Parts">
       <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="08. UI\00. IObserver">
       <UniqueIdentifier>{dda7e1e7-6eb9-42b7-b7ab-f24d1bdf40ae}</UniqueIdentifier>
     </Filter>
@@ -215,7 +215,10 @@
       <UniqueIdentifier>{63737373-313a-408d-86ee-26b7ebd88852}</UniqueIdentifier>
     </Filter>
     <Filter Include="07. Object Component\UIComponent\06. PanelComponent">
-      <UniqueIdentifier>{35d7b608-ca8c-4029-b555-183aff9cf74a}</UniqueIdentifier>
+      <UniqueIdentifier>{91cf33f5-663a-4071-bdc4-d960d8b5757d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\07. CoolDownComponent">
+      <UniqueIdentifier>{d8f90db7-fdfa-46e7-9678-1b261f621df3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -390,9 +393,6 @@
     <ClCompile Include="..\Code\AIController.cpp">
       <Filter>07. Object Component\AIController</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TestBlock.cpp">
-      <Filter>06. Object\Block</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp" />
     <ClCompile Include="..\Code\ObjectComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp">
@@ -436,7 +436,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\DynamicBlock.cpp">
       <Filter>06. Object\DynamicBlock</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\HoverComponent.cpp">
       <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
     </ClCompile>
@@ -445,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PanelComponent.cpp">
       <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CoolDownComponent.cpp">
+      <Filter>07. Object Component\UIComponent\07. CoolDownComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -646,9 +649,6 @@
     <ClInclude Include="..\Header\BehaviorTree.h">
       <Filter>07. Object Component\AIController\BehaviorTree</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\TestBlock.h">
-      <Filter>06. Object\Block</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ObjectComponent.h" />
     <ClInclude Include="..\Header\InfoComponent.h">
       <Filter>07. Object Component\UIComponent\01. InfoComponent</Filter>
@@ -685,7 +685,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\DynamicBlock.h">
       <Filter>06. Object\DynamicBlock</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\HoverComponent.h">
       <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
     </ClInclude>
@@ -694,6 +694,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\PanelComponent.h">
       <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CoolDownComponent.h">
+      <Filter>07. Object Component\UIComponent\07. CoolDownComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

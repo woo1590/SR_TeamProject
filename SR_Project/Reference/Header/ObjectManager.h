@@ -25,6 +25,8 @@ public:
     Object* GetFrontObject(ObjectType objType);
     std::list<Object*> GetObjectList(ObjectType objType);
 
+    Object* GetLastObject(ObjectType objType);
+
 private:
     void CleanDeadObject();
     void Free()override;

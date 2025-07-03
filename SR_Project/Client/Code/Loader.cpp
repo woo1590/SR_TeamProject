@@ -176,13 +176,38 @@ HRESULT Loader::load_UIResources()
 		{L"quickslot_plus",     eUI},
 		{L"exitbtn",            eUI},
 		{L"exitbtn_hover",      eUI},
+		{L"emerald_sword",      eUI},
+		{L"gearslot_plus",      eUI},
+		{L"gearslot",           eUI},
+		{L"gearslot_hover",     eUI},
+		{L"gearslot_highlight", eUI},
+		{L"hp_potion",          eUI},
+		{L"gearstrength",       eUI},
+		{L"gearstrength_back",  eUI},
+		{L"level_back",         eUI},
+		{L"level_front",        eUI},
+		{L"filter",             eUI},
+		{L"filter_hover",       eUI},
+		{L"swordfilter",        eUI},
+		{L"swordfilter_hover",  eUI},
+		{L"arrowfilter",        eUI},
+		{L"arrowfilter_hover",  eUI},
+		{L"armorfilter",        eUI},
+		{L"armorfilter_hover",  eUI},
+		{L"potionfilter",       eUI},
+		{L"potionfilter_hover", eUI},
+		{L"enchantfilter",      eUI},
+		{L"enchantfilter_hover",eUI},
+		{L"costumefilter",      eUI},
+		{L"costumefilter_hover",eUI},
+		{L"inventoryslot",      eUI},
 
 	};
 
 	static const unordered_map<wstring, int> uiLayers = {
 		{L"Logo",               -1},
 		{L"loadingscene",       -1},
-		{L"InventoryPanel",     -1},
+
 		{L"hotbar_back",         0},
 		{L"hpbar_back",          1},
 		{L"expbar_back",         1},
@@ -200,13 +225,45 @@ HRESULT Loader::load_UIResources()
 		{L"Shield",              5},
 		{L"inventorybtn",        5},
 		{L"mapbtn",              5},
-		{L"exitbtn",             5},
-		{L"exitbtn_hover",       5},
-		{L"Cursor",             10},
+		{L"hp_potion",           5},
+		
+		{L"gearslot_highlight", 15},
+		{L"gearslot",           15},
+		{L"gearslot_plus",      16},
+		{L"gearslot_hover",     16},
+		
+		{L"emerald_sword",      10},
+
+		{L"InventoryPanel",     -1},
+		{L"exitbtn",           101},
+		{L"exitbtn_hover",     101},
+
+		{L"gearstrength_back",   0},
+		{L"gearstrength",        1},
+		{L"level_front",         1},
+		{L"level_back",          0},
+		{L"filter",              1},
+		{L"filter_hover",        1},
+		{L"swordfilter",         1},
+		{L"swordfilter_hover",   1},
+		{L"arrowfilter",         1},
+		{L"arrowfilter_hover",   1},
+		{L"armorfilter",         1},
+		{L"armorfilter_hover",   1},
+		{L"potionfilter",        1},
+		{L"potionfilter_hover",  1},
+		{L"enchantfilter",       1},
+		{L"enchantfilter_hover", 1},
+		{L"costumefilter",       1},
+		{L"costumefilter_hover", 1},
+		{L"inventoryslot",       1},
+
+		{L"Cursor",           1000},
+
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();
-	const wstring basePath = L"../Resource/Jehyun/";
+	const wstring basePath = L"../Resource/Asset/Jehyun/";
 	
 	for (auto const [key, type] : uiTexture)
 	{

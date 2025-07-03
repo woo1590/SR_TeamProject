@@ -17,7 +17,7 @@ public:
 	static ProgressBar* Create(Object* owner);
 	HRESULT Ready_Component();
 	
-	void SetTrackType(UIEventType type) { trackType = type; }
+	void SetEventType(UIEventType type) { eventType = type; }
 	void SetBarDirection(BarDirection _dir) { barDir = _dir; }
 
 	void Update(float dt) override;
@@ -25,6 +25,7 @@ public:
 
 private:
 	void ApplyRatio(float ratio);
+
 
 protected:
 	UIRenderer* renderer = nullptr;
@@ -36,7 +37,7 @@ protected:
 	float curRatio = 1.f;
 	const float speed = 8.f;
 
-	UIEventType trackType = UIEventType::HP_Changed;
+	UIEventType eventType = UIEventType::HP_Changed;
 	BarDirection barDir = BarDirection::Vertical;
 };
 
@@ -60,7 +61,7 @@ inline HRESULT ProgressBar<T>::Ready_Component()
 template<typename T>
 void ProgressBar<T>::OnNotify(const UIEvent<T>& event)
 {
-	if (event.type != trackType)
+	if (event.type != eventType)
 		return;
 
 	switch (event.type)
