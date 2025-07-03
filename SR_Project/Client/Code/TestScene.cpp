@@ -120,7 +120,7 @@ void TestScene::Update(float dt)
 void TestScene::Late_Update(float dt)
 {
 	ObjectMgr->Late_Update(dt);
-	CollisionSys->Late_Update();
+	//CollisionSys->Late_Update();
 }
 
 void TestScene::Unload()

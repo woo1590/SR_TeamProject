@@ -193,7 +193,7 @@ void Player::OnCollisionStay(Object* other)
     {
     case Engine::ObjectType::Monster:
         break;
-    case Engine::ObjectType::Block:
+    case Engine::ObjectType::StaticBlock:
         collision->ResolveAABBColiision(other);
         break;
     default:

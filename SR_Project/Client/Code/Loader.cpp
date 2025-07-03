@@ -206,7 +206,7 @@ HRESULT Loader::load_UIResources()
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();
-	const wstring basePath = L"../Resource/Jehyun/";
+	const wstring basePath = L"../Resource/Asset/Jehyun/";
 	
 	for (auto const [key, type] : uiTexture)
 	{
