@@ -182,6 +182,7 @@
     <ClInclude Include="..\Header\CameraActor.h" />
     <ClInclude Include="..\Header\Cursor.h" />
     <ClInclude Include="..\Header\Die.h" />
+    <ClInclude Include="..\Header\DirectionLight.h" />
     <ClInclude Include="..\Header\ExitBtn.h" />
     <ClInclude Include="..\Header\FirstCam.h" />
     <ClInclude Include="..\Header\DashUI.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="..\Code\CameraActor.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />
     <ClCompile Include="..\Code\Die.cpp" />
+    <ClCompile Include="..\Code\DirectionLight.cpp" />
     <ClCompile Include="..\Code\ExitBtn.cpp" />
     <ClCompile Include="..\Code\FirstCam.cpp" />
     <ClCompile Include="..\Code\DashUI.cpp" />

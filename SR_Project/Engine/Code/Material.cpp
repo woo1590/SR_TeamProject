@@ -30,7 +30,7 @@ Material* Material::Create()
 HRESULT Material::Ready_Material()
 {   
     //Default Material
-    Mtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+    Mtrl.Ambient = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
     Mtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
     Mtrl.Specular = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
     Mtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);

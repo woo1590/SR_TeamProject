@@ -31,6 +31,7 @@
 #include "QuickSlot.h"
 #include "Emerald.h"
 #include "UILoader.h"
+#include "DirectionLight.h"
 #include "Skeleton.h"
 
 //component
@@ -74,6 +75,7 @@ void TestScene::Load()
 	player->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, -20.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
+	ObjectMgr->AddObject(ObjectType::Light, DirectionLight::Create(ObjectMgr, ObjectType::Light));
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
 	
