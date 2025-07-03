@@ -40,6 +40,7 @@
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
 #include "StaticBlock.h"
+#include "DynamicBlock.h"
 
 TestScene::TestScene()
 {
@@ -202,22 +203,66 @@ void TestScene::LoadBlock()
 		return;
 	}
 
-	ObjectMgr->ClearList(ObjectType::StaticBlock);
-	staticBlocks.clear();
-	staticBlocks.shrink_to_fit();
+	ObjectMgr->ClearList(ObjectType::StaticBlock); staticBlocks.clear(); staticBlocks.shrink_to_fit();
+	ObjectMgr->ClearList(ObjectType::DynamicBlock); dynamicBlocks.clear(); dynamicBlocks.shrink_to_fit();
 
-	DWORD dwByte(0);
-	SB newBlock;
-	while (TRUE)
+	DWORD dwByte(0), dwSBTot(0), dwDBTot(0);
+	DWORD SBSize(0), DBSize(0);
+	SB newSBlock; DB newDBlock;
+
+	if (!ReadFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr)) return;
+	if (!ReadFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr)) return;
+
+	for (DWORD i = 0; i < SBSize; ++i)
 	{
-		if (!ReadFile(hFile, &newBlock, sizeof(SB), &dwByte, nullptr)) return;
-		if (dwByte == 0) break;
+		if (!ReadFile(hFile, &newSBlock, sizeof(SB), &dwByte, nullptr)) return;
 
-		auto block = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, newBlock.Type, newBlock.Dir);
-		block->GetComponent<TransformComponent>()->SetPosition(newBlock.Pos);
-		ObjectMgr->AddObject(ObjectType::StaticBlock, block);
+		auto sBlock = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, newSBlock.Type, newSBlock.Dir);
+		sBlock->GetComponent<TransformComponent>()->SetPosition(newSBlock.Pos);
 
-		staticBlocks.push_back(newBlock);
+		ObjectMgr->AddObject(ObjectType::StaticBlock, sBlock);
+		staticBlocks.push_back(newSBlock);
+	}
+
+	for (DWORD i = 0; i < DBSize; ++i)
+	{
+		if (!ReadFile(hFile, &newDBlock, sizeof(DB), &dwByte, nullptr)) return;
+
+		Object* dBlock = nullptr;
+
+		if (newDBlock.Type == DynamicBlockType::IronCages)
+		{
+			int count = 0;
+			ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr);
+
+			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, count);
+			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
+
+			int vecSize = 0;
+			ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr);
+			if (vecSize > 0)
+			{
+				std::vector<int> ids(vecSize);
+				ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr);
+				for (int id : ids)
+					static_cast<DynamicBlock*>(dBlock)->AddID(id);
+			}
+		}
+		else
+		{
+			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, Count);
+			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
+
+			if (newDBlock.Type == DynamicBlockType::LeverSwitch)
+			{
+				int id = 0;
+				ReadFile(hFile, &id, sizeof(int), &dwByte, nullptr);
+				static_cast<DynamicBlock*>(dBlock)->SetID(id);
+			}
+		}
+
+		ObjectMgr->AddObject(ObjectType::DynamicBlock, dBlock);
+		dynamicBlocks.push_back(newDBlock);
 	}
 
 	CloseHandle(hFile);

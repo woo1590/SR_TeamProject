@@ -3,15 +3,15 @@
 #include "TransformComponent.h"
 
 BEGIN(Engine)
-class ENGINE_DLL Chest : public DynamicBlock
+class ENGINE_DLL IronCage : public DynamicBlock
 {
     friend class DynamicBlock;
 private:
-    Chest(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir);
-    virtual ~Chest();
+    IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count);
+    virtual ~IronCage();
 
 public:
-    static Chest* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir);
+    static IronCage* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count);
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
@@ -29,8 +29,8 @@ private:
     void Free() override;
 
 private:
-    float Angle = 0.f;
-    float totAngle = 0.f;
-    float rotSpeed = 5.f;
+    bool First = true;
+    float totTrans = 0.f;
+    float Speed = 5.f;
 };
 END

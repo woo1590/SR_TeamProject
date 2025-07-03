@@ -1,11 +1,11 @@
 #pragma once
-#include "Object.h"
+#include "DynamicBlock.h"
 #include "TransformComponent.h"
 
 BEGIN(Engine)
-class ENGINE_DLL Lever : public Object
+class ENGINE_DLL Lever : public DynamicBlock
 {
-    friend class Object;
+    friend class DynamicBlock;
 private:
     Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir);
     virtual ~Lever();
@@ -21,22 +21,19 @@ private:
     void SetScale(float scale);
     void SetPosition(_vec3 position, string str);
     void SetRotation(_vec3 rotation, string str);
+    static void ResetID() { totID = 0; }
 
 public:
-    void SetOn() { On = true; }
     void Operate();
 
 private:
     void Free() override;
 
 private:
-    bool On = false;
-    float Scale = 1.f;
+    static int totID;
+
     float Angle = 0.f;
     float totAngle = 0.f;
     float rotSpeed = 5.f;
-    DynamicBlockDir Dir;
-    DynamicBlockType Type;
-    std::unordered_map<string, Object*> Parts;
 };
 END

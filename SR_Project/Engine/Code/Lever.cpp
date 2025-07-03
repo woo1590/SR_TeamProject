@@ -15,9 +15,12 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
+int Lever::totID = 0;
+
 Lever::Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir)
-    : Object(owner, objType), Dir(DynamicBlockDir), Type(DynamicBlockType)
+    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockDir, Count)
 {
+    ID = totID++;
 }
 
 Lever::~Lever()
@@ -48,6 +51,8 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     Parts["Handle"] = Part::Create(owner, objType, _vec3(0.5f, 0.1f, 0.1f), Parts["Base"], L"Lever_Mtrl");
     auto handleTransform = Parts["Handle"]->GetComponent<TransformComponent>();
+
+    handleTransform->SetIsBlock();
 
     switch (Dir)
     {
@@ -94,7 +99,7 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void Lever::Update(_float dt)
 {
-    if (!On)
+    if (!Activate && !Trigger)
         Operate();
 
     Object::Update(dt);
@@ -157,7 +162,7 @@ void Lever::Operate()
         break;
     }
 
-    if (totAngle >= 90.f) On = true;
+    if (totAngle >= 90.f) Trigger = true;
 }
 
 void Lever::Free()

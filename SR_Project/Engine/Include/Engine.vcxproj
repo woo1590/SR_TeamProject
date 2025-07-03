@@ -217,6 +217,7 @@
     <ClInclude Include="..\Header\AIController.h" />
     <ClInclude Include="..\Header\BehaviorTree.h" />
     <ClInclude Include="..\Header\BlackBoard.h" />
+    <ClInclude Include="..\Header\BlockManager.h" />
     <ClInclude Include="..\Header\BTNode.h" />
     <ClInclude Include="..\Header\ButtonComponent.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
@@ -244,6 +245,7 @@
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\HoverComponent.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
+    <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h" />
     <ClInclude Include="..\Header\InfoComponent.h" />
@@ -335,6 +337,7 @@
     <ClCompile Include="..\Code\AIController.cpp" />
     <ClCompile Include="..\Code\BehaviorTree.cpp" />
     <ClCompile Include="..\Code\BlackBoard.cpp" />
+    <ClCompile Include="..\Code\BlockManager.cpp" />
     <ClCompile Include="..\Code\BTNode.cpp" />
     <ClCompile Include="..\Code\ButtonComponent.cpp" />
     <ClCompile Include="..\Code\CameraComponent.cpp" />
@@ -362,6 +365,7 @@
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\HoverComponent.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
+    <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp" />

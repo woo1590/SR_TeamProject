@@ -114,39 +114,10 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/bow.dds", L"bow", TEXTURE::Tex_Cube, L"Bow_Mtrl");
 
-	resource->LoadTexture(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"DirtBlock", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"GrassBlock", cube);
-	
-	resource->LoadTexture(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"WoodBlock", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"WoodPlank", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"WoodBlock", cube);
-
-	resource->LoadTexture(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube);
-	resource->LoadMesh(L"WoodPlank", cube);
-
-	auto dirtBlockMtrl = Material::Create();
-	dirtBlockMtrl->SetTexture(L"DirtBlock");
-	resource->LoadMaterial(L"DirtBlock_Mtrl", dirtBlockMtrl);
-
-	auto grassBlockMtrl = Material::Create();
-	grassBlockMtrl->SetTexture(L"GrassBlock");
-	resource->LoadMaterial(L"GrassBlock_Mtrl", grassBlockMtrl);
-
-	auto woodBlockMtrl = Material::Create();
-	woodBlockMtrl->SetTexture(L"WoodBlock");
-	resource->LoadMaterial(L"WoodBlock_Mtrl", woodBlockMtrl);
-
-	auto woodPlankMtrl = Material::Create();
-	woodPlankMtrl->SetTexture(L"WoodPlank");
-	resource->LoadMaterial(L"WoodPlank_Mtrl", woodPlankMtrl);
+	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube, L"WoodPlank_Mtrl");
 
 	return S_OK;
 }
