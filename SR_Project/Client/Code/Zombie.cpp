@@ -80,7 +80,8 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    bb->SetValue("Distance", new float(3.f));
+    Distance = new float(3.f);
+    bb->SetValue("Distance", Distance);
 
     auto AI = AddComponent<AIController>(bt, bb);
 

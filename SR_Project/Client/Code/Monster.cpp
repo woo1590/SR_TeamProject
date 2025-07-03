@@ -66,5 +66,6 @@ void Monster::PlayDie(_float dt)
 
 void Monster::Free()
 {
+    Safe_Delete(Distance);
     BaseCharacter::Free();
 }
