@@ -47,6 +47,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
 
     auto physics = AddComponent<PhysicsComponent>();
+    physics->SetMass(1.f);
 
     //PlayerScale
     SetScale(1.f);
@@ -94,23 +95,6 @@ void Player::Update(_float dt)
         break;
     }
 
-    //Phyisics Test
-    auto transform = GetComponent<TransformComponent>();
-    auto physics = GetComponent<PhysicsComponent>();
-
-    Ray downRay{ transform->GetPosition(),_vec3(0.f,-1.f,0.f) };
-    HitInfo hit = GetScene()->GetCollisionSystem()->Raycast(downRay);
-
-    if (hit.IsHit && hit.Distance <= 4.f)
-    {
-        physics->SetGround(true);
-    }
-    else
-    {
-        _vec3 velocity = physics->GetVelocity();
-        transform->Translate(velocity * dt);
-    }
-    ///////////////////////////////////////////////////////////////////////////
 }
 void Player::Late_Update(_float dt)
 {
@@ -142,7 +126,7 @@ void Player::PickingTerrain()
             auto transform = GetComponent<TransformComponent>();
             auto curPos = transform->GetPosition();
             destinationPos = hit.Position;
-            destinationPos.y += yOffset;
+            //destinationPos.y += yOffset;
             PlayerDirection = destinationPos - curPos;
         }
     }
@@ -189,23 +173,17 @@ void Player::OnCollisionStay(Object* other)
     ObjectType otherType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
 
-    switch (otherType)
-    {
-    case Engine::ObjectType::Monster:
-        break;
-    case Engine::ObjectType::StaticBlock:
-        collision->ResolveAABBColiision(other);
-        break;
-    default:
-        break;
-    }
 }
 
 void Player::MovePlayer(_vec3 moveVec)
 {
     //move player with move Value Vector
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetPosition(transform->GetPosition()+moveVec);
+    //auto transform = GetComponent<TransformComponent>();
+    //transform->SetPosition(transform->GetPosition()+moveVec);
+
+    ///Physics test
+    auto physics = GetComponent<PhysicsComponent>();
+    physics->SetVelocity(moveVec);
 }
 void Player::RotatePlayer(_vec3 rotateVec)
 {

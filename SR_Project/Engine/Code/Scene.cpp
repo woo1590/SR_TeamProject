@@ -29,6 +29,11 @@ CollisionSystem* Scene::GetCollisionSystem() const
 	return CollisionSys;
 }
 
+PhysicsSystem* Scene::GetPhysicsStstem() const
+{
+	return PhysicsSys;
+}
+
 CameraManager* Scene::GetCameraManager() const
 {
 	return CameraMgr;

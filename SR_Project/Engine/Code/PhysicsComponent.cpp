@@ -1,5 +1,9 @@
 #include "EnginePCH.h"
 #include "PhysicsComponent.h"
+#include "Object.h"
+#include "TransformComponent.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
 
 PhysicsComponent::PhysicsComponent(Object* owner)
 	:ObjectComponent(owner)
@@ -24,12 +28,11 @@ PhysicsComponent* PhysicsComponent::Create(Object* owner)
 	return Instance;
 }
 
-void PhysicsComponent::Update(_float dt)
+HRESULT PhysicsComponent::Ready_Component()
 {
-	if (Is_Ground)
-		Velocity = { 0.f,0.f,0.f };
-	else
-		Velocity.y -= GRAVITY * dt;
+	owner->GetScene()->GetPhysicsStstem()->RegisterBody(this);
+
+	return S_OK;
 }
 
 void PhysicsComponent::SetVelocity(_vec3 velocity)
