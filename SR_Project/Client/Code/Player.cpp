@@ -32,6 +32,9 @@ Player* Player::Create(ObjectManager* owner, ObjectType objType){
 HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
     //components
+    auto transform = AddComponent<TransformComponent>();
+    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
+
     auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_DEFAULT);
@@ -40,6 +43,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
 
     auto physics = AddComponent<PhysicsComponent>();
     physics->SetMass(1.f);
+
+    auto playerInfo = AddComponent<InfoComponent<PlayerInfo>>();
 
     //PlayerScale
     SetScale(1.f);
@@ -95,6 +100,24 @@ void Player::Update(_float dt){
         break;
     }
 
+    //Physics
+    auto transform = GetComponent<TransformComponent>();
+    auto physics = GetComponent<PhysicsComponent>();
+
+    Ray downRay{ transform->GetPosition(),_vec3(0.f,-1.f,0.f) };
+    HitInfo hit = GetScene()->GetCollisionSystem()->Raycast(downRay);
+
+    if (hit.IsHit && hit.Distance <= 4.f)
+    {
+        physics->SetGround(true);
+    }
+    else
+    {
+        physics->SetGround(false);
+        _vec3 velocity = physics->GetVelocity();
+        transform->Translate(velocity * dt);
+    }
+    
 }
 void Player::Late_Update(_float dt){ BaseCharacter::Late_Update(dt); }
 void Player::Free() { Object::Free(); }
@@ -665,4 +688,13 @@ _vec3 Player::MatrixToEulerAngles(const _matrix& mat) {
         vAngles.z = 0.f;
     }
     return vAngles;
+}
+
+void Player::OnCollisionStay(Object* other)
+{
+    ObjectType objType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+
+    if (objType == ObjectType::StaticBlock)
+        collision->ResolveAABBColiision(other);
 }

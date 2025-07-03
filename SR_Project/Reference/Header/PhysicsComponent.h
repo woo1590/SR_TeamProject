@@ -13,6 +13,7 @@ private:
 public:
     static PhysicsComponent* Create(Object* owner);
     HRESULT Ready_Component()override;
+    void Update(_float dt)override;
 
     void SetVelocity(_vec3 velocity);
     void SetVelocity(_float x, _float y, _float z);
