@@ -19,6 +19,7 @@ public:
 public:
     void LoadLink();
     void AddID(int addID) { LinkedID.push_back(addID); }
+    void SetActivate() { Activate = true; }
     void SetLinkedID(vector<int> IDs) { LinkedID = IDs; }
 
     int GetID() { return ID; }

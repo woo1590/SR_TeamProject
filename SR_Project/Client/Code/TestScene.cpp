@@ -116,6 +116,15 @@ void TestScene::Update(float dt)
 		CameraMgr->SetMainCamera(L"Third_Camera");
 
 	/*-------------���� ��ŷ �׽�Ʈ �ڵ�--------------*/
+
+	if (Input->IsKeyPressed(Q))
+	{
+		for (auto& Dst : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			if (static_cast<DynamicBlock*>(Dst)->GetType() == LeverSwitch)
+				static_cast<DynamicBlock*>(Dst)->SetActivate();
+		}
+	}
 }
 
 void TestScene::Late_Update(float dt)

@@ -86,7 +86,7 @@ void EditScene::Update(float dt)
 	ObjectMgr->Update(dt);
 
 	wchar_t title[128];
-	swprintf_s(title, L"staticBlocks : %d", (int)staticBlocks.size());
+	swprintf_s(title, L"Blocks : %d", (int)staticBlocks.size());
 	SetWindowText(EngineCore::GetInstance()->GetWindowHandle(), title);
 
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -101,6 +101,14 @@ void EditScene::Update(float dt)
 		_vec3 rayOrigin, rayDir;
 		MakePickingRay(rayOrigin, rayDir);
 		OnRightClick(rayOrigin, rayDir);
+	}
+	if (Input->IsKeyPressed(Q))
+	{
+		for (auto& Dst : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			if (static_cast<DynamicBlock*>(Dst)->GetType() == LeverSwitch)
+				static_cast<DynamicBlock*>(Dst)->SetActivate();
+		}
 	}
 }
 
@@ -176,7 +184,6 @@ void EditScene::ImGuiTest()
 	static int selectedCageIndex = -1;
 	static int selectedLeverIndex = -1;
 
-	// 1. 철창 리스트 출력
 	ImGui::Text("Iron Cages:");
 	for (int i = 0; i < dynamicBlocks.size(); ++i)
 	{
@@ -190,7 +197,6 @@ void EditScene::ImGuiTest()
 		}
 	}
 
-	// === 철창의 연결된 레버 ID 출력 ===
 	if (selectedCageIndex != -1)
 	{
 		Object* cageObj = nullptr;
@@ -226,7 +232,6 @@ void EditScene::ImGuiTest()
 		}
 	}
 
-	// 2. 레버 리스트 출력 및 선택 (ID 추출 필요)
 	ImGui::Separator();
 	ImGui::Text("Levers:");
 	std::vector<int> leverIDs;
@@ -236,7 +241,6 @@ void EditScene::ImGuiTest()
 		if (dynamicBlocks[i].Type == DynamicBlockType::LeverSwitch)
 		{
 			Object* leverObj = nullptr;
-			// ObjectMgr에서 위치 기반으로 오브젝트 찾기 (또는 dynamicBlocks에 Object* 있다면 바로 사용)
 			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
 			{
 				if (obj->GetComponent<TransformComponent>()->GetPosition() == dynamicBlocks[i].Pos)
@@ -265,7 +269,6 @@ void EditScene::ImGuiTest()
 			}, &leverLabels, leverLabels.size());
 	}
 
-	// 3. 버튼으로 연결 처리
 	if (ImGui::Button("Link Lever to Cage") && selectedCageIndex != -1 && !leverIDs.empty())
 	{
 		int cageIndex = selectedCageIndex;
