@@ -10,8 +10,10 @@
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
 #include "CollisionComponent.h"
+#include "InfoComponent.h"
 #include "AIController.h"
 #include "IsAlive.h"
+#include "Rotate.h"
 #include "Die.h"
 
 Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
@@ -40,6 +42,9 @@ Skeleton* Skeleton::Create(ObjectManager* owner, ObjectType objType)
 HRESULT Skeleton::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
+
+    //stat component;
+    auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
 
     //InitTransform
     SetMaterial(L"SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
@@ -85,13 +90,20 @@ HRESULT Skeleton::Ready_Object(ObjectManager* owner, ObjectType objType)
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 5.f * Scale, 0.0f));
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
    
+    SetWeapon(Bones["LArm"], objType, L"Bow_Mtrl");
+    SetPosition(_vec3(0.f, -13 * Scale, 1.f * Scale), "Weapon");
+    SetRotation(_vec3(-90.f, 0.f, 0.f), "Weapon");
+
     //Create BT
     ChaseNode* chase = new ChaseNode();
     AttackNode* attack = new AttackNode();
+    RotateNode* rotate = new RotateNode();
+
     IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(attack);
 
     SequenceNode* attackSequence = new SequenceNode();
     attackSequence->AddChild(attackCheck);
+    attackSequence->AddChild(rotate);
 
     SelectorNode* BehaviorNode = new SelectorNode();
     BehaviorNode->AddChild(attackSequence);
@@ -131,15 +143,18 @@ void Skeleton::Late_Update(_float dt)
 void Skeleton::MoveTo(_vec3* dir, _float dt)
 {
     auto Transform = GetComponent<TransformComponent>();
+    auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
+
     if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
-    Transform->Translate(*dir * dt * Speed);
+    Transform->Translate(*dir * dt * Stat->GetInfo().speed);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
-_vec3 Skeleton::RotateTo(_vec3* dir, float dt)
+void Skeleton::RotateTo(_vec3* dir, float dt)
 {
-    return _vec3();
+    auto Transform = GetComponent<TransformComponent>();
+    Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
 void Skeleton::Attack(Object* target)
@@ -149,6 +164,7 @@ void Skeleton::Attack(Object* target)
         State = MonsterState::Attack;
         AttackAnim.DelayTime = 0.f;
         AttackAnim.ElapsedTime = 0;
+        SetPosition(_vec3(9.f * Scale, 5.f * Scale, 5.f * Scale), "RArm");
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
     }
@@ -167,15 +183,17 @@ void Skeleton::Die()
 void Skeleton::InitAnimation()
 {
     //Walk
-    //WalkAnim.Start = ;
+    WalkAnim.ElapsedTime = 0.f;
 
     //Attack
     AttackAnim.TotalTime = 1.5f;
+    AttackAnim.ElapsedTime = 0.f;
     AttackAnim.DelayTime = 0.f;
 
     //Die
     DieAnim.Start = 0;                  //start angle
     DieAnim.End = 270.f;                //end angle
+    DieAnim.ElapsedTime = 0.f;
     DieAnim.TotalTime = 0.5f;          //play animation total time
 }
 
@@ -231,7 +249,7 @@ void Skeleton::PlayAttack(_float dt)
 
     float pullAngle = lerp(0.f, D3DXToRadian(-120.f), t); 
     SetRotation({ D3DXToRadian(-20.f), D3DXToRadian(0.f), 0.f }, "RArm"); 
-    SetPosition(_vec3(9.f * Scale, 5.f * Scale, - 0.5f * t),"RArm");
+    SetPosition(_vec3(9.f * Scale, 5.f * Scale, 5.f * Scale - 0.5f * t),"RArm");
     SetRotation({ pullAngle, 0.f, 0.f }, "RHand"); 
 
     SetRotation({ D3DXToRadian(angle * 5.f), 0.f, 0.f }, "Head");

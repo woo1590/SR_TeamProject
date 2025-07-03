@@ -129,7 +129,7 @@
     </Filter>
     <Filter Include="02. Object\UIObj\GreenIcon">
       <UniqueIdentifier>{bfa92b8d-b4a3-46d8-9aba-bd2007295012}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Monster\Zombie">
       <UniqueIdentifier>{29a25081-9fe3-41d0-8766-63fd5707b964}</UniqueIdentifier>
     </Filter>
@@ -248,7 +248,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\QuickSlot.h">
       <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ExpBarBack.h" />
     <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="..\Header\Skeleton.h">
@@ -256,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\Zombie.h">
       <Filter>02. Object\Monster\Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Rotate.h">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -369,7 +372,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\QuickSlot.cpp">
       <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ExpBarBack.cpp" />
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\Skeleton.cpp">
@@ -377,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Zombie.cpp">
       <Filter>02. Object\Monster\Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rotate.cpp">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
