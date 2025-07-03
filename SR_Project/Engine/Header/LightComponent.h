@@ -26,7 +26,7 @@ private:
 
     D3DLIGHT9 LightData{};
     LightType Type;
-    bool Is_Enabled;
+    bool Is_Enabled = true;
 };
 
 END
