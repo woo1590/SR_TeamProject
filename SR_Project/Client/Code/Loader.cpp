@@ -106,8 +106,7 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Player/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/grapSide.dds", L"swordGrapSide", TEXTURE::Tex_Cube, L"swordGrapSide_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/steelSide.dds", L"swordSteelSide", TEXTURE::Tex_Cube, L"swordSteelSide_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Player/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
 
 	/////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Body.dds", L"SkeletonBody", TEXTURE::Tex_Cube, L"SkeletonBody_Mtrl");

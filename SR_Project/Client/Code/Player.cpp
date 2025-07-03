@@ -16,31 +16,26 @@
 #include "CameraComponent.h"
 #include "CameraManager.h"
 
-Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType)
-{
-}
-Player::~Player()
-{
-}
-Player* Player::Create(ObjectManager* owner, ObjectType objType)
-{
+#include "MyMath.h"
+
+Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) {}
+Player::~Player() {}
+Player* Player::Create(ObjectManager* owner, ObjectType objType){
     Player* Instance = new Player(owner, objType);
-
-    if (FAILED(Instance->Ready_Object(owner, objType)))
-    {
+    if (FAILED(Instance->Ready_Object(owner, objType))){
         Safe_Release(Instance);
-
         Instance = nullptr;
     }
-
     return Instance;
 }
-HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
-{
+HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     BaseCharacter::Ready_Object(owner, objType);
     //components
     auto collision = AddComponent<CollisionComponent>();
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
+    auto transform = AddComponent<TransformComponent>();
+    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
+    auto playerInfo = AddComponent<InfoComponent<PlayerInfo>>();
     //PlayerScale
     SetScale(1.f);
     //PlayerTexture
@@ -50,43 +45,31 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     SetMaterial(L"playerRightArm_Mtrl","RArm");
     SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
-
+     
     Bones["Sword"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["RArm"], L"sword_Mtrl");
-    Bones["Sword"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 1.5f * Scale, 1.5f * Scale);
-    Bones["Sword"]->GetComponent<TransformComponent>()->SetPosition(2.f, 0.f, 0.f);
-    Bones["Sword"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f * Scale, -2.f * Scale, 0.0f));
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 2.f * Scale, 2.f * Scale);
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetPosition(0.f, 0.2f, 1.f * Scale);
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f * Scale, 0.8f * Scale, 0.f * Scale));
     Bones["Sword"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+    Bones["Sword"]->GetComponent<TransformComponent>()->SetRotate({ 0.8f,0.f,0.f });
     SetMaterial(L"sword_Mtrl", "Sword", Engine::RENDER_ID::Render_Alpha);
     owner->AddObject(objType, Bones["Sword"]);
 
-    Bones["GrapSide1"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Sword"], L"swordGrapSide_Mtrl");
-    Bones["GrapSide1"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 0.1f * Scale, 0.1f * Scale);
-    Bones["GrapSide1"]->GetComponent<TransformComponent>()->SetPosition(0.f, -1.f, -1.f);
-    SetMaterial(L"swordGrapSide_Mtrl", "GrapSide1", Engine::RENDER_ID::Render_NonAlpha);
-    owner->AddObject(objType, Bones["GrapSide1"]);
-
-    Bones["SteelSide1"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Sword"], L"swordSteelSide_Mtrl");
-    Bones["SteelSide1"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 0.1f * Scale, 0.1f * Scale);
-    Bones["SteelSide1"]->GetComponent<TransformComponent>()->SetPosition(0.f, 1.f, 1.f);
-    SetMaterial(L"swordSteelSide_Mtrl", "SteelSide1", Engine::RENDER_ID::Render_NonAlpha);
-    owner->AddObject(objType, Bones["SteelSide1"]);
-
-    auto transform = AddComponent<TransformComponent>();
-    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
-
-    auto playerInfo = AddComponent<InfoComponent<PlayerInfo>>();
+    Bones["Bow"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["LArm"], L"bow_Mtrl");
+    Bones["Bow"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 1.f * Scale, 1.f * Scale);
+    Bones["Bow"]->GetComponent<TransformComponent>()->SetPosition(0.f, -1.2f * Scale, -0.2f * Scale);
+    Bones["Bow"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f * Scale, 0.8f * Scale, -0.2f * Scale));
+    Bones["Bow"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+    Bones["Bow"]->GetComponent<TransformComponent>()->SetRotate({ 2.2f,0.f,0.f });
+    SetMaterial(L"bow_Mtrl", "Bow", Engine::RENDER_ID::Render_Alpha);
+    owner->AddObject(objType, Bones["Bow"]);
 
     return S_OK;
 }
-void Player::Update(_float dt)
-{
+void Player::Update(_float dt){
     BaseCharacter::Update(dt);
-
-    
-    PickingTerrain();
-    KeyInput(dt); // Set State by key
-    CheckDead();
-    switch (State) { // Update by State
+    KeyInput(dt);
+    switch (State) {
     case ePlayerState::IDLE:
         UpdateIdle(dt);
         break;
@@ -107,30 +90,19 @@ void Player::Update(_float dt)
         break;
     }
 }
-void Player::Late_Update(_float dt)
-{
-    BaseCharacter::Late_Update(dt);
-}
-void Player::Free()
-{
-    Object::Free();
-}
-void Player::PickingTerrain()
-{
+void Player::Late_Update(_float dt){ BaseCharacter::Late_Update(dt); }
+void Player::Free() { Object::Free(); }
+void Player::PickingTerrain(){
     if (State == ePlayerState::DEAD || State == ePlayerState::ATTACK || State == ePlayerState::SHOOT) return;
     auto input = EngineCore::GetInstance()->GetInputSystem();
     auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
     auto mainCam = curScene->GetCameraManager()->GetMainCamera();
     auto collision = curScene->GetCollisionSystem();
-    const float yOffset = 3.7f;
 
-    if (input->IsKeyPressed(RBUTTON))
-    {
+    if (input->IsKeyPressed(RBUTTON)){
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
-        
-        if (hit.IsHit)
-        {
+        if (hit.IsHit){
             if (State == ePlayerState::IDLE) {
                 State = ePlayerState::WALK;
                 WalkTime = 0.f;
@@ -143,11 +115,10 @@ void Player::PickingTerrain()
         }
     }
 
-    if (input->IsKeyPressed(Z)) {
+    if (State != ePlayerState::ATTACK && input->IsKeyPressed(Z)) {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
-        if (hit.IsHit)
-        {
+        if (hit.IsHit){
             if (State == ePlayerState::IDLE || State == ePlayerState::WALK) {
                 State = ePlayerState::ATTACK;
                 AttackTime = 0.f;
@@ -161,11 +132,10 @@ void Player::PickingTerrain()
         }
     }
 
-    if (input->IsKeyPressed(X)) {
+    if (State != ePlayerState::SHOOT && input->IsKeyPressed(X)) {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
-        if (hit.IsHit)
-        {
+        if (hit.IsHit){
             if (State == ePlayerState::IDLE || State == ePlayerState::WALK) {
                 State = ePlayerState::SHOOT;
                 AttackTime = 0.f;
@@ -179,18 +149,6 @@ void Player::PickingTerrain()
         }
     }
 }
-void Player::MovePlayer(_vec3 moveVec)
-{
-    //move player with move Value Vector
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetPosition(transform->GetPosition()+moveVec);
-}
-void Player::RotatePlayer(_vec3 rotateVec)
-{
-    //rotate player with rotate Value Vector
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetRotate(transform->GetRotate()+rotateVec);
-}
 void Player::SaveStartRotation()
 {
     //save all bones rotation value
@@ -202,27 +160,6 @@ void Player::SaveStartRotation()
     StartRotations["LLeg"] = Bones["LLeg"]->GetComponent<TransformComponent>()->GetRotate();
     StartRotations["RLeg"] = Bones["RLeg"]->GetComponent<TransformComponent>()->GetRotate();
 }
-void Player::FixCursorToCenter()
-{
-    //get window handle
-    HWND hWnd = EngineCore::GetInstance()->GetWindowHandle();
-    // get center
-    RECT rcClient;
-    GetClientRect(hWnd, &rcClient);
-    POINT ptCenter;
-    ptCenter.x = (rcClient.right - rcClient.left) / 2;
-    ptCenter.y = (rcClient.bottom - rcClient.top) / 2;
-    // client to screen
-    ClientToScreen(hWnd, &ptCenter);
-    // current cursor position
-    POINT ptMouse;
-    GetCursorPos(&ptMouse);
-    // distance > limit -> move cursor to center
-    const int iThreshold = 5; // limit distance
-    if (abs(ptMouse.x - ptCenter.x) > iThreshold || abs(ptMouse.y - ptCenter.y) > iThreshold) {
-        SetCursorPos(ptCenter.x, ptCenter.y);
-    }
-}
 void Player::UpdateIdle(_float dt)
 {
     auto SmoothReset = [dt](TransformComponent* pTransform) {
@@ -233,13 +170,14 @@ void Player::UpdateIdle(_float dt)
         _vec3 vLerpedRot = vCurrentRot + (vTargetRot - vCurrentRot) * dt * fSpeed;
         pTransform->SetRotate(vLerpedRot);
     };
-
+    SmoothReset(Bones["Head"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["LLeg"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["RLeg"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["LArm"]->GetComponent<TransformComponent>());
     SmoothReset(Bones["RArm"]->GetComponent<TransformComponent>());
 }
 void Player::UpdateWalk(_float dt) {
+    auto transform = GetComponent<TransformComponent>();
     //walk time
     WalkTime += dt;
     //walk speed
@@ -260,7 +198,7 @@ void Player::UpdateWalk(_float dt) {
         0,
         vDir.z * Speed * Scale * dt
     };
-    MovePlayer(moveVec);
+    transform->SetPosition(transform->GetPosition() + moveVec);
     // rotate duration
     const float fRotateDuration = 0.05f;
     // direction to angle
@@ -278,14 +216,13 @@ void Player::UpdateWalk(_float dt) {
     //get rotation value
     float rotValue = deltaAngle * (dt / fRotateDuration);
     //do rotate
-    RotatePlayer({ 0.f, rotValue, 0.f });
-
-    auto transform = GetComponent<TransformComponent>();
+    transform->SetRotate(transform->GetRotate() + _vec3{ 0.f, rotValue, 0.f });
     auto curPos = transform->GetPosition();
     auto posGap = curPos - destinationPos;
     auto distance = sqrtf(posGap.x * posGap.x + posGap.z * posGap.z);
     if (distance < 0.5f) {
         State = ePlayerState::IDLE;
+        WalkTime = 0.f;
         transform->SetPosition(curPos.x, destinationPos.y, curPos.z);
     }
 }
@@ -353,7 +290,7 @@ void Player::UpdateRoll(_float dt)
         0,
         vDir.z * fRollSpeed* Scale * dt
     };
-    MovePlayer(moveVec);
+    transform->SetPosition(transform->GetPosition() + moveVec);
     //set current angle with duration
     float fTotalRollAngle = D3DX_PI * 2.f ;
     float fCurrentAngle = fTotalRollAngle * RollTime / fRollDuration;
@@ -364,7 +301,8 @@ void Player::UpdateRoll(_float dt)
     _matrix matRot;
     D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
-    RotatePlayer(rotateVec);
+
+    transform->SetRotate(transform->GetRotate() + rotateVec);
     //finish roll
     if (RollTime >= fRollDuration) {
         RollTime = 0.f;
@@ -376,13 +314,10 @@ void Player::UpdateRoll(_float dt)
     }
 }
 void Player::UpdateAttack(_float dt) {
-    // Rot : x- back / x+ front /  z- left / z+ right / y- lookRight / y+ lookLeft
-    //AttackDelay
     const float fAttackDuration = 0.4f;
     AttackTime += dt;
     float fProgress = AttackTime / fAttackDuration;
     fProgress = std::clamp(fProgress, 0.f, 1.f);
-    //lerp
     auto Lerp = [](const _vec3& a, const _vec3& b, float t) {
         return a + (b - a) * t;
     };
@@ -436,7 +371,7 @@ void Player::UpdateAttack(_float dt) {
         StartRotations["RArm"],
         { -210.f, 10.f, -30.f },
         { -150.f, 10.f, -30.f },
-        { -60.f, 10.f, 60.f }
+        { -60.f, 10.f,-30.f }
     );
     ApplyPhasedRotation("LArm",
         StartRotations["LArm"],
@@ -445,52 +380,51 @@ void Player::UpdateAttack(_float dt) {
         { 30.f, -10.f, -10.f }
     );
     ApplyPhasedRotation("LLeg", StartRotations["LLeg"],
-        { 10.f, 0.f, 0.f },
+        { -10.f, 0.f, 0.f },
         { 0.f, 0.f, -5.f },
-        { -10.f, 0.f, 0.f }
+        { 10.f, 0.f, 0.f }
     );
     ApplyPhasedRotation("RLeg", StartRotations["RLeg"],
-        { -10.f, 0.f, 0.f },
+        { 10.f, 0.f, 0.f },
         { 0.f, 0.f, 5.f },
-        { 10.f, 0.f, 0.f }
+        { -10.f, 0.f, 0.f }
     );
     //rotatePlayer
     _vec3 vPlayerStartRot = StartRotations["Player"];
-    _vec3 vTwist1 = { 0.f, 30.f, 0.f };
-    _vec3 vTwist2 = { 0.f, 0.f, 0.f };
-    _vec3 vTwist3 = { 0.f, -60.f, 0.f };
+
+    // 키프레임 절대값으로 변경
+    _vec3 vKey1 = vPlayerStartRot + _vec3(0.f, 30.f, 0.f);
+    _vec3 vKey2 = vPlayerStartRot + _vec3(0.f, 0.f, 0.f);
+    _vec3 vKey3 = vPlayerStartRot + _vec3(0.f, -60.f, 0.f);
+
     if (fProgress < fPhase1) {
         t = fProgress / fPhase1;
-        vCurrentRot = LerpRot(vPlayerStartRot, vTwist1, t);
+        vCurrentRot = LerpRot(vPlayerStartRot, vKey1, t);
     }
     else if (fProgress < fPhase2) {
         t = (fProgress - fPhase1) / (fPhase2 - fPhase1);
-        vCurrentRot = LerpRot(vTwist1, vTwist2, t);
+        vCurrentRot = LerpRot(vKey1, vKey2, t);
     }
     else if (fProgress < fPhase3) {
         t = (fProgress - fPhase2) / (fPhase3 - fPhase2);
-        vCurrentRot = LerpRot(vTwist2, vTwist3, t);
+        vCurrentRot = LerpRot(vKey2, vKey3, t);
     }
     else {
         t = (fProgress - fPhase3) / (fPhase4 - fPhase3);
-        vCurrentRot = LerpRot(vTwist3, vPlayerStartRot, t);
+        vCurrentRot = LerpRot(vKey3, vPlayerStartRot, t);
     }
-    float fCurrentAngle = D3DXToRadian(vCurrentRot.y);
-    //rotate with up vector
+
+    _vec3 vDeltaRot = vCurrentRot - vPlayerStartRot;
     auto transform = GetComponent<TransformComponent>();
-    _vec3 attackVec = AttackDirection;
-    attackVec.y = 0.f;
-    D3DXVec3Normalize(&attackVec, &attackVec);
-    transform->SetForward(attackVec);
-    _vec3 vAxis = transform->GetUp();
-    _matrix matRot;
-    D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
-    _vec3 rotateVec = MatrixToEulerAngles(matRot);
-    RotatePlayer(rotateVec);
+    transform->SetRotate(vDeltaRot);
     //Exit State
     if (AttackTime >= fAttackDuration) {
         AttackTime = 0.f;
-        State = ePlayerState::WALK;
+        if (WalkTime = 0.f) State = ePlayerState::IDLE;
+        else {
+            WalkTime = 0.f;
+            State = ePlayerState::WALK;
+        }
     }
 }
 void Player::UpdateShoot(_float dt) {
@@ -611,7 +545,8 @@ void Player::UpdateShoot(_float dt) {
     _vec3 vAxis = transform->GetUp();
     D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
-    RotatePlayer(rotateVec);
+
+    transform->SetRotate(transform->GetRotate() + rotateVec);
 
     // 🎯 종료 조건
     if (AttackTime >= fAttackDuration) {
@@ -620,6 +555,7 @@ void Player::UpdateShoot(_float dt) {
     }
 }
 void Player::UpdateDead(_float dt) {
+    auto transform = GetComponent<TransformComponent>();
     const float fDeadDuration = 1.0f; // 사망 모션 전체 시간
     DeadTime += dt;
     // 누운 상태에서 종료 (모션 유지)
@@ -627,7 +563,6 @@ void Player::UpdateDead(_float dt) {
         DeadTime = fDeadDuration; // 시간 고정
         State = ePlayerState::DEAD; // DEAD 상태 유지
     }
-    auto transform = GetComponent<TransformComponent>();
     float fProgress = std::clamp(DeadTime / fDeadDuration, 0.f, 1.f);
     // 회전 각도는 뒤로 90도만 (x축 기준)
     float fMaxDeathAngle = D3DXToRadian(90.f);
@@ -641,7 +576,8 @@ void Player::UpdateDead(_float dt) {
     _matrix matRot;
     D3DXMatrixRotationAxis(&matRot, &vAxis, -fCurrentAngle);
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
-    RotatePlayer(rotateVec);
+
+    transform->SetRotate(transform->GetRotate() + rotateVec);
 
     // Lerp 함수
     auto LerpRot = [](const _vec3& start, const _vec3& offset, float ratio) {
@@ -681,10 +617,11 @@ void Player::UpdateDead(_float dt) {
         SetRotation(LerpRot(rot_RLegFolded, rot_RLegFlat, fLerpRatio), "RLeg");
     }
 }
-
 void Player::KeyInput(_float dt)
 {
+    PickingTerrain();
     CheckStateRoll(dt);
+    CheckDead();
 }
 void Player::CheckStateRoll(_float dt)
 {
@@ -709,28 +646,17 @@ void Player::CheckDead()
         SaveStartRotation();
     }
 }
-
 _vec3 Player::MatrixToEulerAngles(const _matrix& mat) {
     _vec3 vAngles = { 0.f, 0.f, 0.f };
-
-    // Pitch (X축 회전)
-    vAngles.x = asinf(-mat._32);
-
-    // Cosine of pitch
-    float cosPitch = cosf(vAngles.x);
-
-    // 작은 수로 나눠지는 경우 처리
+    vAngles.x = asinf(-mat._32); // Pitch (X rot)
+    float cosPitch = cosf(vAngles.x); // Cosine of pitch
     if (fabs(cosPitch) > 0.0001f) {
-        // Yaw (Y축 회전)
-        vAngles.y = -atan2f(mat._31, mat._33);
-        // Roll (Z축 회전)
-        vAngles.z = atan2f(mat._12, mat._22);
+        vAngles.y = -atan2f(mat._31, mat._33); // Yaw (Y rot)
+        vAngles.z = atan2f(mat._12, mat._22); // Roll (Z rot)
     }
     else {
-        // Gimbal lock 발생 시 (pitch = +-90도)
-        vAngles.y = -atan2f(-mat._13, mat._11);
+        vAngles.y = -atan2f(-mat._13, mat._11); // Gimbal lock (pitch = +-90)
         vAngles.z = 0.f;
     }
-
     return vAngles;
 }
