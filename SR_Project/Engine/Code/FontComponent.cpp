@@ -62,6 +62,8 @@ void FontComponent::AddText(const wstring& text, const RECT& rect, Color color, 
 	entry.format = format;
 	entry.color = ToD3DXColor(color);
 
+	assert(!text.empty() && "FontComponent::AddText - empty text string");
+
 	entries.push_back(move(entry));
 }
 

@@ -34,7 +34,7 @@ void UIDebugObj::Update(float dt)
 	auto font = GetComponent<FontComponent>();
 
 	font->ClearText();
-	font->AddText(L"Lv: " + to_wstring(info.level), {600, 650, 800, 770}, Color::Cyan);
+	font->AddText(L"Lv: " + to_wstring(info.level), {600, 600, 800, 700}, Color::Cyan);
 
 	RECT debugRect = {1000, 400, 1400, 650};
 
@@ -59,7 +59,7 @@ void UIDebugObj::Update(float dt)
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::LBUTTON))
 	{
-	//	playerInfo->AddExp(5);
-	//	playerInfo->AddHp(-10);
+		playerInfo->AddExp(1);
+		playerInfo->AddHp(-2);
 	}
 }

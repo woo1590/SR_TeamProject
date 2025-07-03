@@ -2,14 +2,14 @@
 
 #include "Object.h"
 
-class DashUI : public Object
+class MouseLeftUI : public Object
 {
 private:
-	DashUI(ObjectManager* owner)
+	MouseLeftUI(ObjectManager* owner)
 		:Object(owner, ObjectType::UI) {}
 
 public:
-	static DashUI* Create(ObjectManager* owner);
+	static MouseLeftUI* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
 };
 

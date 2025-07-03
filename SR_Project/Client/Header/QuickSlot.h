@@ -12,12 +12,8 @@ private:
 public:
 	static QuickSlot* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
-	void Update(float dt) override;
 
 private:
 	bool isHovered = false;
-
-	wstring baseTex = L"quickslot";
-	wstring highlightTex = L"quickslot_highlight";
 };
 

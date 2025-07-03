@@ -2,14 +2,14 @@
 
 #include "Object.h"
 
-class DashUI : public Object
+class MapBtn : public Object
 {
 private:
-	DashUI(ObjectManager* owner)
+	MapBtn(ObjectManager* owner)
 		:Object(owner, ObjectType::UI) {}
 
 public:
-	static DashUI* Create(ObjectManager* owner);
+	static MapBtn* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
 };
 

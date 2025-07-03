@@ -1,24 +1,24 @@
 #include "pch.h"
-#include "DashUI.h"
+#include "MouseRightUI.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 
-DashUI* DashUI::Create(ObjectManager* owner)
+MouseRightUI* MouseRightUI::Create(ObjectManager* owner)
 {
-	auto* instance = new DashUI(owner);
+	auto* instance = new MouseRightUI(owner);
 
 	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 }
 
-HRESULT DashUI::Ready_Object()
+HRESULT MouseRightUI::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	transform->SetPosition(840.f, 670.f);
-	
-	renderer->SetScale(0.4f, 0.55f);
-	renderer->SetTexture(L"dash_icon");
+	transform->SetPosition(965.f, 680.f);
+
+	renderer->SetScale(0.5f, 0.5f);
+	renderer->SetTexture(L"mouse_right");
 
 	return S_OK;
 }

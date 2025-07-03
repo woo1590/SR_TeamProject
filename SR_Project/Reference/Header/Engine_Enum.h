@@ -45,6 +45,7 @@ namespace Engine
 		None, 
 		HP_Changed,
 		EXP_Changed,
+		Speed_Changed,
 		Player_Damaged
 	};
 

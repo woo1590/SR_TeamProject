@@ -17,6 +17,7 @@ public:
 	void SetHp(int hp);
 	void AddHp(int amount);
 	void AddExp(int amount);
+	void SetSpeed(int amount);
 
 	const T& GetInfo() const { return info; }
 
@@ -44,6 +45,13 @@ inline void InfoComponent<T>::SetHp(int hp)
 {
 	info.curHp = clamp(hp, 0, info.maxHp);
 	this->Notify({UIEventType::HP_Changed, info});
+}
+
+template<typename T>
+inline void InfoComponent<T>::SetSpeed(int amount)
+{
+	info.speed = amount;
+	this->Notify({UIEventType::Speed_Changed, info});
 }
 
 template<typename T>

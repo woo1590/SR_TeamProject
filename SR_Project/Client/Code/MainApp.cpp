@@ -222,7 +222,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
     //ClipCursor(&clipRect);
 
-    //ShowCursor(FALSE);
+    ShowCursor(FALSE);
 
    /*--------------Raw Input---------------*/
    RAWINPUTDEVICE rid{};
