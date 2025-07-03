@@ -5,6 +5,7 @@
 //component
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
+#include "PhysicsComponent.h"
 #include "CollisionComponent.h"
 
 StaticBlock::StaticBlock(ObjectManager* owner, ObjectType objType, StaticBlockType staticBlockType, StaticBlockDir staticBlockDir)
@@ -32,7 +33,13 @@ StaticBlock* StaticBlock::Create(ObjectManager* owner, ObjectType objType, Stati
 
 HRESULT StaticBlock::Ready_Object()
 {
+    /////////////////////////////
     auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_DEFAULT);
+    collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_ENEMY);
+
+    auto physics = AddComponent<PhysicsComponent>();
+    ///////////////////////////////
     auto transform = AddComponent<TransformComponent>();
     transform->SetScale(1.f, 1.f, 1.f);
     

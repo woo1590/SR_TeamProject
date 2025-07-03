@@ -5,6 +5,7 @@ BEGIN(Engine)
 class ObjectManager;
 class EventSystem;
 class CollisionSystem;
+class PhysicsSystem;
 class CameraManager;
 class Object;
 class ENGINE_DLL Scene : public Base
@@ -38,6 +39,7 @@ public:
     ObjectManager*      GetObjectManager()const;
     EventSystem*        GetEventSystem()const;
     CollisionSystem*    GetCollisionSystem()const;
+    PhysicsSystem*      GetPhysicsStstem()const;
     CameraManager*      GetCameraManager()const;
 protected:
     void Free()override;
@@ -45,6 +47,7 @@ protected:
     ObjectManager* ObjectMgr = nullptr;
     EventSystem* EventSys = nullptr;
     CollisionSystem* CollisionSys = nullptr;
+    PhysicsSystem* PhysicsSys = nullptr;
     CameraManager* CameraMgr = nullptr; 
 };
 

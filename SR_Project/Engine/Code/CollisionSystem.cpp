@@ -42,7 +42,7 @@ void CollisionSystem::Late_Update()
 	{
 		CollisionComponent* a = Collisions[i];
 
-		for (_uint j = 0; j < Collisions.size(); ++j)
+		for (_uint j = i+1; j < Collisions.size(); ++j)
 		{
 			CollisionComponent* b = Collisions[j];
 

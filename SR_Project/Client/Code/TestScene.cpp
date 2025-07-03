@@ -11,6 +11,7 @@
 #include "EventSystem.h"
 #include "CollisionSystem.h"
 #include "CameraManager.h"
+#include "PhysicsSystem.h"
 
 //object
 #include "TestObject.h"
@@ -60,6 +61,7 @@ void TestScene::Load()
 	EventSys		= EventSystem::Create(this);
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
+	PhysicsSys		= PhysicsSystem::Create(this);
 
 #ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
@@ -90,8 +92,8 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
-	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
 	
 
 	/*------------------Load UI------------------------*/
@@ -105,7 +107,7 @@ void TestScene::Load()
 void TestScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
-	EventSys->Update();
+	PhysicsSys->Update(dt);
 
 	/*-------------ī�޶� ��ȯ �׽�Ʈ �ڵ�-------------*/
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -120,7 +122,6 @@ void TestScene::Update(float dt)
 void TestScene::Late_Update(float dt)
 {
 	ObjectMgr->Late_Update(dt);
-	//CollisionSys->Late_Update();
 }
 
 void TestScene::Unload()
@@ -182,6 +183,7 @@ void TestScene::Free()
 	Safe_Release(EventSys);
 	Safe_Release(CollisionSys);
 	Safe_Release(CameraMgr);
+	Safe_Release(PhysicsSys);
 
 	Scene::Free();
 }

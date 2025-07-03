@@ -204,7 +204,7 @@
     </Filter>
     <Filter Include="06. Object\Parts">
       <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="08. UI\00. IObserver">
       <UniqueIdentifier>{dda7e1e7-6eb9-42b7-b7ab-f24d1bdf40ae}</UniqueIdentifier>
     </Filter>
@@ -393,9 +393,6 @@
     <ClCompile Include="..\Code\AIController.cpp">
       <Filter>07. Object Component\AIController</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TestBlock.cpp">
-      <Filter>06. Object\Block</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp" />
     <ClCompile Include="..\Code\ObjectComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp">
@@ -439,7 +436,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\DynamicBlock.cpp">
       <Filter>06. Object\DynamicBlock</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\HoverComponent.cpp">
       <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
     </ClCompile>
@@ -449,7 +446,9 @@
     <ClCompile Include="..\Code\PanelComponent.cpp">
       <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PhysicsSystem.cpp" />
+    <ClCompile Include="..\Code\PhysicsSystem.cpp">
+      <Filter>05. Scene Component\PhysicsSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineCore.h">
@@ -650,9 +649,6 @@
     <ClInclude Include="..\Header\BehaviorTree.h">
       <Filter>07. Object Component\AIController\BehaviorTree</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\TestBlock.h">
-      <Filter>06. Object\Block</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ObjectComponent.h" />
     <ClInclude Include="..\Header\InfoComponent.h">
       <Filter>07. Object Component\UIComponent\01. InfoComponent</Filter>
@@ -689,7 +685,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\DynamicBlock.h">
       <Filter>06. Object\DynamicBlock</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\HoverComponent.h">
       <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
     </ClInclude>
@@ -699,7 +695,9 @@
     <ClInclude Include="..\Header\PanelComponent.h">
       <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PhysicsSystem.h" />
+    <ClInclude Include="..\Header\PhysicsSystem.h">
+      <Filter>05. Scene Component\PhysicsSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Header\Math.inl">

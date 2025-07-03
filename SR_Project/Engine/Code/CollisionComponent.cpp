@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "RenderSystem.h"
 #include "CollisionSystem.h"
+#include "PhysicsSystem.h"
 #include "GraphicDevice.h"
 #include "Scene.h"
 #include "Object.h"
@@ -39,7 +40,8 @@ HRESULT CollisionComponent::Ready_Component()
 {
 	BBType = BoundingBoxType::Box;
 
-	EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCollisionSystem()->RegisterCollision(this);
+	owner->GetScene()->GetPhysicsStstem()->RegisterCollision(this);
+	owner->GetScene()->GetCollisionSystem()->RegisterCollision(this);
 
 	auto device = GraphicDevice::GetInstance()->GetDevice();
 	if (BoundingBox)
@@ -47,11 +49,6 @@ HRESULT CollisionComponent::Ready_Component()
 
 	D3DXCreateBox(device, 2.f, 2.f, 2.f, &BoundingBox, nullptr);
 	return S_OK;
-}
-
-void CollisionComponent::Late_Update(_float dt)
-{
-	EngineCore::GetInstance()->GetRenderSystem()->RegisterCollision(this);
 }
 
 void CollisionComponent::SetOffset(_vec3 offset)
@@ -107,6 +104,27 @@ _vec3 CollisionComponent::GetLocalMin() const
 _vec3 CollisionComponent::GetLocalMax() const
 {
 	return LocalMax;
+}
+
+void CollisionComponent::GetWorldAABB(_vec3* worldMin, _vec3* worldMax)
+{
+	auto transform = owner->GetComponent<TransformComponent>();
+
+	_vec3 pos = transform->GetPosition() + Offset;
+	_matrix worldMat;
+	D3DXMatrixTranslation(&worldMat, pos.x, pos.y, pos.z);
+
+	D3DXVec3TransformCoord(worldMin, &LocalMin, &worldMat);
+	D3DXVec3TransformCoord(worldMax, &LocalMax, &worldMat);
+}
+
+void CollisionComponent::GetWorldAABB(_vec3* worldMin, _vec3* worldMax, _vec3 pos)
+{
+	_matrix worldMat;
+	D3DXMatrixTranslation(&worldMat, pos.x, pos.y, pos.z);
+
+	D3DXVec3TransformCoord(worldMin, &LocalMin, &worldMat);
+	D3DXVec3TransformCoord(worldMax, &LocalMax, &worldMat);
 }
 
 _bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)
@@ -181,7 +199,7 @@ _bool CollisionComponent::CheckAABBCollision(CollisionComponent* other)
 	_vec3 bMin, bMax;
 
 	D3DXVec3TransformCoord(&aMin, &LocalMin, &aTransMat);
-	D3DXVec3TransformCoord(&aMax, &LocalMin, &aTransMat);
+	D3DXVec3TransformCoord(&aMax, &LocalMax, &aTransMat);
 	D3DXVec3TransformCoord(&bMin, &other->LocalMin, &bTransMat);
 	D3DXVec3TransformCoord(&bMax, &other->LocalMax, &bTransMat);
 
