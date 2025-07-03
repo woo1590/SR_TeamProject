@@ -218,6 +218,7 @@
     <ClInclude Include="..\Header\BehaviorTree.h" />
     <ClInclude Include="..\Header\BlackBoard.h" />
     <ClInclude Include="..\Header\BTNode.h" />
+    <ClInclude Include="..\Header\ButtonComponent.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
     <ClInclude Include="..\Header\CameraManager.h" />
     <ClInclude Include="..\Header\CollisionComponent.h" />
@@ -239,7 +240,9 @@
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\FreecamComponent.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
+    <ClInclude Include="..\Header\HoverComponent.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
+    <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h" />
     <ClInclude Include="..\Header\InfoComponent.h" />
     <ClInclude Include="..\Header\InputSystem.h" />
@@ -328,6 +331,7 @@
     <ClCompile Include="..\Code\BehaviorTree.cpp" />
     <ClCompile Include="..\Code\BlackBoard.cpp" />
     <ClCompile Include="..\Code\BTNode.cpp" />
+    <ClCompile Include="..\Code\ButtonComponent.cpp" />
     <ClCompile Include="..\Code\CameraComponent.cpp" />
     <ClCompile Include="..\Code\CollisionComponent.cpp" />
     <ClCompile Include="..\Code\CollisionSystem.cpp" />
@@ -349,7 +353,9 @@
     <ClCompile Include="..\Code\FrameManager.cpp" />
     <ClCompile Include="..\Code\FreecamComponent.cpp" />
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
+    <ClCompile Include="..\Code\HoverComponent.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
+    <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp" />
     <ClCompile Include="..\Code\InputSystem.cpp" />

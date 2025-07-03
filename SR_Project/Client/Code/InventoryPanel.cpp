@@ -2,6 +2,7 @@
 #include "InventoryPanel.h"
 #include "UIRenderer.h"
 #include "TransformComponent.h"
+#include "PanelComponent.h"
 
 InventoryPanel* InventoryPanel::Create(ObjectManager* owner)
 {
@@ -14,10 +15,13 @@ HRESULT InventoryPanel::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
+	auto panel = AddComponent<PanelComponent>();
+
+	panel->SetVisible(false);
 
 	transform->SetPosition(WINCX * 0.5f, WINCY * 0.5f);
+
 	renderer->SetTexture(L"InventoryPanel");
-	//renderer->SetScale(0.25f, 0.125f);
-	
+
 	return S_OK;
 }

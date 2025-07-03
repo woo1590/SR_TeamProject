@@ -100,9 +100,6 @@
     <Filter Include="08. UI">
       <UniqueIdentifier>{957a43f5-ea90-4336-bc62-0d6265e7717b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="08. UI\00. UIObserver">
-      <UniqueIdentifier>{dda7e1e7-6eb9-42b7-b7ab-f24d1bdf40ae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Object Component\UIComponent">
       <UniqueIdentifier>{39a382c5-ba13-41a5-9ef4-3b535a9afeef}</UniqueIdentifier>
     </Filter>
@@ -183,6 +180,18 @@
     </Filter>
     <Filter Include="07. Object Component\UIComponent\03. SlotComponent">
       <UniqueIdentifier>{831fcf2a-d37c-4de7-80dc-6d4d937e081a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. UI\00. IObserver">
+      <UniqueIdentifier>{dda7e1e7-6eb9-42b7-b7ab-f24d1bdf40ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\04. HoverComponent">
+      <UniqueIdentifier>{c80cbc8d-eada-4da8-a13e-8b442765bedf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\05. ButtonComponent">
+      <UniqueIdentifier>{63737373-313a-408d-86ee-26b7ebd88852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\06. PanelComponent">
+      <UniqueIdentifier>{35d7b608-ca8c-4029-b555-183aff9cf74a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,7 +310,7 @@
       <Filter>99. Etc\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\IObserver.cpp">
-      <Filter>08. UI\00. UIObserver</Filter>
+      <Filter>08. UI\00. IObserver</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Subject.cpp">
       <Filter>08. UI\01. Subject</Filter>
@@ -381,6 +390,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\SlotComponent.cpp">
       <Filter>07. Object Component\UIComponent\03. SlotComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HoverComponent.cpp">
+      <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ButtonComponent.cpp">
+      <Filter>07. Object Component\UIComponent\05. ButtonComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PanelComponent.cpp">
+      <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -520,7 +538,7 @@
       <Filter>99. Etc\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\IObserver.h">
-      <Filter>08. UI\00. UIObserver</Filter>
+      <Filter>08. UI\00. IObserver</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Subject.h">
       <Filter>08. UI\01. Subject</Filter>
@@ -603,6 +621,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\SlotComponent.h">
       <Filter>07. Object Component\UIComponent\03. SlotComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HoverComponent.h">
+      <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ButtonComponent.h">
+      <Filter>07. Object Component\UIComponent\05. ButtonComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PanelComponent.h">
+      <Filter>07. Object Component\UIComponent\06. PanelComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

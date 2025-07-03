@@ -11,6 +11,7 @@
 #include "CameraComponent.h"
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
+#include "ObjectComponent.h"
 
 RenderSystem::RenderSystem()
 {
@@ -157,8 +158,8 @@ void RenderSystem::UIPass()
 
 	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
 
-	for (auto& uiRenderer : uiList)
-		uiRenderer->Render();
+	for (auto& ui : uiList)
+		ui->Render();
 
 	spriteBatch->End();
 

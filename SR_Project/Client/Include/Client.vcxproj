@@ -181,6 +181,7 @@
     <ClInclude Include="..\Header\Bone.h" />
     <ClInclude Include="..\Header\CameraActor.h" />
     <ClInclude Include="..\Header\Cursor.h" />
+    <ClInclude Include="..\Header\ExitBtn.h" />
     <ClInclude Include="..\Header\FirstCam.h" />
     <ClInclude Include="..\Header\DashUI.h" />
     <ClInclude Include="..\Header\Emerald.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="..\Header\HotBarBack.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
+    <ClInclude Include="..\Header\InventoryBtn.h" />
     <ClInclude Include="..\Header\InventoryPanel.h" />
     <ClInclude Include="..\Header\Chase.h" />
     <ClInclude Include="..\Header\IsTargetInAttackRange.h" />
@@ -198,8 +200,12 @@
     <ClInclude Include="..\Header\LoadingUI.h" />
     <ClInclude Include="..\Header\LogoScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\MapBtn.h" />
+    <ClInclude Include="..\Header\MouseLeftUI.h" />
+    <ClInclude Include="..\Header\MouseRightUI.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\Monster.h" />
+    <ClInclude Include="..\Header\QuickSlotPlus.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\QuickSlot.h" />
     <ClInclude Include="..\Header\TestObject.h" />
@@ -218,6 +224,7 @@
     <ClCompile Include="..\Code\Bone.cpp" />
     <ClCompile Include="..\Code\CameraActor.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />
+    <ClCompile Include="..\Code\ExitBtn.cpp" />
     <ClCompile Include="..\Code\FirstCam.cpp" />
     <ClCompile Include="..\Code\DashUI.cpp" />
     <ClCompile Include="..\Code\Emerald.cpp" />
@@ -226,6 +233,7 @@
     <ClCompile Include="..\Code\HotBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />
+    <ClCompile Include="..\Code\InventoryBtn.cpp" />
     <ClCompile Include="..\Code\InventoryPanel.cpp" />
     <ClCompile Include="..\Code\Chase.cpp" />
     <ClCompile Include="..\Code\IsTargetInAttackRange.cpp" />
@@ -235,8 +243,12 @@
     <ClCompile Include="..\Code\LoadingUI.cpp" />
     <ClCompile Include="..\Code\LogoScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\MapBtn.cpp" />
+    <ClCompile Include="..\Code\MouseLeftUI.cpp" />
+    <ClCompile Include="..\Code\MouseRightUI.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
+    <ClCompile Include="..\Code\QuickSlotPlus.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\QuickSlot.cpp" />
     <ClCompile Include="..\Code\TestObject.cpp" />

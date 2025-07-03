@@ -22,9 +22,12 @@ public:
 	SlotSize GetSlotSize() const { return slotSize; }
 
 	void OnClick();
-	void OnHover(bool over);
-
 	void BindRenderers(UIRenderer* _base, UIRenderer* _highlight);
+
+	void Update(float dt) override;
+
+	void OnHoverEnter();
+	void OnHoverExit();
 
 private:
 	void ApplySlotSize();
@@ -44,6 +47,7 @@ private:
 	float shakeTime = 0.f;
 	float shakePower = 4.f;
 	bool  isShaking = false;
+	float originalY = 0.f;
 };
 
 END

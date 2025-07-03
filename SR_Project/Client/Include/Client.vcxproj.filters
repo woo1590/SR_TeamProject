@@ -124,8 +124,32 @@
     <Filter Include="02. Object\UIObj\Slot\QuickSlot">
       <UniqueIdentifier>{5f79b9a4-77fb-4a3c-9d72-515676a39030}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\GreenIcon">
-      <UniqueIdentifier>{bfa92b8d-b4a3-46d8-9aba-bd2007295012}</UniqueIdentifier>
+    <Filter Include="02. Object\UIObj\MouseUI">
+      <UniqueIdentifier>{96f0d89b-7188-4aaf-b15b-f705b662d974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\MouseUI\MouseLeft">
+      <UniqueIdentifier>{e92ad393-db1a-42ca-8663-10f08e54878a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\MouseUI\MouseRight">
+      <UniqueIdentifier>{1493f90a-9921-45e5-9e59-33bacb915c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Slot\QuickSlotPlus">
+      <UniqueIdentifier>{7e9c9aed-302b-4824-8e55-68e7f95e92f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button">
+      <UniqueIdentifier>{073d1e37-323a-41f4-b127-9bd0965346fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Panel">
+      <UniqueIdentifier>{1f7c4e3f-0c7e-4901-be40-d26d94e1d709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\InventoryBtn">
+      <UniqueIdentifier>{145e7493-1b5b-42f0-9e61-dcc44989f99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\MapBtn">
+      <UniqueIdentifier>{d1e970cc-bed0-4970-813d-43e8a3431f66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\ExitBtn">
+      <UniqueIdentifier>{73be3795-72c4-441c-ad32-9c2d137288f7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +261,24 @@
     <ClInclude Include="..\Header\QuickSlot.h">
       <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\InventoryBtn.h">
+      <Filter>02. Object\UIObj\Button\InventoryBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MapBtn.h">
+      <Filter>02. Object\UIObj\Button\MapBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MouseLeftUI.h">
+      <Filter>02. Object\UIObj\MouseUI\MouseLeft</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MouseRightUI.h">
+      <Filter>02. Object\UIObj\MouseUI\MouseRight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuickSlotPlus.h">
+      <Filter>02. Object\UIObj\Slot\QuickSlotPlus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExitBtn.h">
+      <Filter>02. Object\UIObj\Button\ExitBtn</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -346,6 +388,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\QuickSlot.cpp">
       <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryBtn.cpp">
+      <Filter>02. Object\UIObj\Button\InventoryBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MapBtn.cpp">
+      <Filter>02. Object\UIObj\Button\MapBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MouseLeftUI.cpp">
+      <Filter>02. Object\UIObj\MouseUI\MouseLeft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MouseRightUI.cpp">
+      <Filter>02. Object\UIObj\MouseUI\MouseRight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuickSlotPlus.cpp">
+      <Filter>02. Object\UIObj\Slot\QuickSlotPlus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExitBtn.cpp">
+      <Filter>02. Object\UIObj\Button\ExitBtn</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

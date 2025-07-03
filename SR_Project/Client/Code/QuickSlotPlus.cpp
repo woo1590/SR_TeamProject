@@ -1,24 +1,22 @@
 #include "pch.h"
-#include "DashUI.h"
+#include "QuickSlotPlus.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 
-DashUI* DashUI::Create(ObjectManager* owner)
+QuickSlotPlus* QuickSlotPlus::Create(ObjectManager* owner)
 {
-	auto* instance = new DashUI(owner);
+	auto* instance = new QuickSlotPlus(owner);
 
 	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 }
 
-HRESULT DashUI::Ready_Object()
+HRESULT QuickSlotPlus::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	transform->SetPosition(840.f, 670.f);
-	
-	renderer->SetScale(0.4f, 0.55f);
-	renderer->SetTexture(L"dash_icon");
+	renderer->SetScale(0.4f, 0.4f);
+	renderer->SetTexture(L"quickslot_plus");
 
 	return S_OK;
 }

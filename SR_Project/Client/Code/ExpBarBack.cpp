@@ -16,6 +16,8 @@ HRESULT ExpBarBack::Ready_Object()
 	auto renderer = AddComponent<UIRenderer>();
 
 	transform->SetPosition(700.f,717.f);
+	
+	renderer->SetPivot(UIPivot::Left);
 	renderer->SetTexture(L"expbar_back");
 
 	return S_OK;
