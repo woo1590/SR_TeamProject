@@ -5,11 +5,11 @@ BEGIN(Engine)
 class ENGINE_DLL Shader : public Base
 {
 private:
-    Shader();
+    Shader(LPDIRECT3DVERTEXSHADER9 vs, LPDIRECT3DPIXELSHADER9 ps);
     virtual ~Shader() {}
 
 public:
-    static Shader* Create();
+    static Shader* Create(LPDIRECT3DVERTEXSHADER9 vs, LPDIRECT3DPIXELSHADER9 ps);
     HRESULT Ready_Shader() { return S_OK; }
 
     void Apply();

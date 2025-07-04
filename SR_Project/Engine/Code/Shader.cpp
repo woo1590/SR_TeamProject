@@ -2,13 +2,13 @@
 #include "Shader.h"
 #include "GraphicDevice.h"
 
-Shader::Shader(LPDIRECT3DVERTEXSHADER9* vs, LPDIRECT3DPIXELSHADER9* ps)
+Shader::Shader(LPDIRECT3DVERTEXSHADER9 vs, LPDIRECT3DPIXELSHADER9 ps)
 	:Device(GraphicDevice::GetInstance()->GetDevice()),VS(vs),PS(ps)
 {
 	Device->AddRef();
 }
 
-Shader* Shader::Create(LPDIRECT3DVERTEXSHADER9* vs, LPDIRECT3DPIXELSHADER9* ps)
+Shader* Shader::Create(LPDIRECT3DVERTEXSHADER9 vs, LPDIRECT3DPIXELSHADER9 ps)
 {
 	Shader* Instance = new Shader(vs,ps);
 
