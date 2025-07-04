@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "Bow.h"
 
+#include "ObjectManager.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
@@ -24,25 +25,26 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     ItemInfo i;
-    i.visible = true;
     i.size = 1.f;
     i.scale = _vec3{ 0.1f, 1.f, 1.f };
     i.position = _vec3{ 0.25f, -1.2f, -0.2f };
     i.pivotEnable = true;
     i.pivot = _vec3{ -0.25f, 0.8f, -0.2f };
     i.rotation = _vec3{ 2.2f, 0.f, 0.f };
+    i.meshType = L"Cube_Mesh";
     i.material = L"bow_Mtrl";
-    i.renderId = Engine::RENDER_ID::Render_Alpha;
+    i.renderId = Engine::RENDER_ID::Render_None;
     info->SetInfo(i);
     
     auto transform = GetComponent<TransformComponent>();
     transform->SetScale(i.scale.x * i.size, i.scale.y * i.size, i.scale.z * i.size);
     transform->SetPosition(i.position.x * i.size, i.position.y * i.size, i.position.z * i.size);
     transform->SetPivot(_vec3(i.pivot.x * i.size, i.pivot.y * i.size, i.pivot.z * i.size));
-    transform->SetPivotEnable(true);
+    transform->SetPivotEnable(i.pivotEnable);
     transform->SetRotate({ i.rotation.x ,i.rotation.y ,i.rotation.z });
 
     auto mesh = GetComponent<MeshRenderer>();
+    mesh->SetMesh(i.meshType);
     mesh->SetMaterial(i.material);
     mesh->SetRenderID(i.renderId);
 
