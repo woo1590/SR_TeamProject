@@ -126,7 +126,7 @@ void Player::Update(_float dt){
 void Player::Late_Update(_float dt){ BaseCharacter::Late_Update(dt); }
 void Player::Free() { BaseCharacter::Free(); }
 void Player::PickingTerrain(){
-    if (State == ePlayerState::DEAD || State == ePlayerState::ATTACK || State == ePlayerState::SHOOT) return;
+    if (State == ePlayerState::DEAD || State == ePlayerState::ROLL || State == ePlayerState::ATTACK || State == ePlayerState::SHOOT) return;
     auto input = EngineCore::GetInstance()->GetInputSystem();
     auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
     auto mainCam = curScene->GetCameraManager()->GetMainCamera();
