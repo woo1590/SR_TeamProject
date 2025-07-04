@@ -78,7 +78,7 @@ void PhysicsSystem::ApplyVelocity(_float dt)
 }
 void PhysicsSystem::BroadPhase()
 {
-	CurrCollision.clear();
+	CurrCollisions.clear();
 
 	for (_uint i = 0; i < Collisions.size(); ++i)
 	{
@@ -92,7 +92,7 @@ void PhysicsSystem::BroadPhase()
 			{
 				if (a->CheckAABBCollision(b))
 				{
-					CurrCollision.push_back(std::pair<CollisionComponent*, CollisionComponent*>(a, b));
+					CurrCollisions.emplace(a, b);
 				}
 			}
 		}
@@ -101,10 +101,10 @@ void PhysicsSystem::BroadPhase()
 
 void PhysicsSystem::SolvePosition()
 {
-	for (auto& pair : CurrCollision)
+	for (auto& pair : CurrCollisions)
 	{
-		CollisionComponent* a = pair.first;
-		CollisionComponent* b = pair.second;
+		CollisionComponent* a = pair.a;
+		CollisionComponent* b = pair.b;
 
 		_vec3 aMin, aMax, bMin, bMax;
 
@@ -172,41 +172,36 @@ void PhysicsSystem::SolvePosition()
 void PhysicsSystem::CollisionEvent()
 {
 	//Collision Enter
-	for (const auto& currPair : CurrCollision)
+	for (const auto& pair : CurrCollisions)
 	{
-		//currPair.first->OnCollisionEnter(currPair.second);
-		//currPair.second->OnCollisionEnter(currPair.first);
+		if (!PrevCollisions.count(pair))
+		{
+			pair.a->OnCollisionEnter(pair.b);
+			pair.b->OnCollisionEnter(pair.a);
+		}
 	}
 
 	//Collision Stay
-	for (const auto& prevPair : PrevCollision)
+	for (const auto& pair : CurrCollisions)
 	{
-		for (const auto& currPair : CurrCollision)
+		if (PrevCollisions.count(pair))
 		{
-			auto it = std::find(PrevCollision.begin(), PrevCollision.end(), currPair);
-			if (it != PrevCollision.end())
-			{
-				//currPair.first->OnCollisionStay(currPair.second);
-				//currPair.second->OnCollisionStay(currPair.first);
-			}
+			pair.a->OnCollisionStay(pair.b);
+			pair.b->OnCollisionStay(pair.a);
 		}
 	}
 
 	//Collision Exit
-	for (const auto& prevPair : PrevCollision)
+	for (const auto& pair : PrevCollisions)
 	{
-		for (const auto& currPair : CurrCollision)
+		if (!CurrCollisions.count(pair))
 		{
-			auto it = std::find(PrevCollision.begin(), PrevCollision.end(), currPair);
-			if (it != PrevCollision.end())
-			{
-				currPair.first->OnCollisionExit(currPair.second);
-				currPair.second->OnCollisionExit(currPair.first);
-			}
+			pair.a->OnCollisionExit(pair.b);
+			pair.b->OnCollisionExit(pair.a);
 		}
 	}
 
-	PrevCollision.swap(CurrCollision);
+	PrevCollisions.swap(CurrCollisions);
 }
 
 void PhysicsSystem::Free()

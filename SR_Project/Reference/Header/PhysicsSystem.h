@@ -9,6 +9,33 @@ class PhysicsComponent;
 class ENGINE_DLL PhysicsSystem :
     public Base
 {
+    typedef struct CollisionPair
+    {
+        CollisionComponent* a;
+        CollisionComponent* b;
+
+        CollisionPair(CollisionComponent* a, CollisionComponent* b)
+        {
+            if (a < b)
+            {
+                this->a = a;
+                this->b = b;
+            }
+            else
+            {
+                this->a = b;
+                this->b = a;
+            }
+        }
+
+        bool operator<(const CollisionPair& other) const
+        {
+            if (a != other.a)
+                return a < other.a;
+            else
+                return b < other.b;
+        }
+    };
 private:
     PhysicsSystem(Scene* owner);
     virtual ~PhysicsSystem();
@@ -33,8 +60,8 @@ private:
     std::vector<CollisionComponent*> Collisions;
     std::vector<PhysicsComponent*> Bodies;
 
-    std::vector<std::pair<CollisionComponent*, CollisionComponent*>> CurrCollision;
-    std::vector<std::pair<CollisionComponent*, CollisionComponent*>> PrevCollision;
+    std::set<CollisionPair> CurrCollisions;
+    std::set<CollisionPair> PrevCollisions;
     Scene* owner = nullptr;
 };
 
