@@ -46,7 +46,7 @@ void BlockManager::SaveStage(const char* saveStage)
 	WriteFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr);
 	WriteFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr);
 	for (auto& block : owner->GetStaticBlocks()) WriteFile(hFile, &block, sizeof(SB), &dwByte, nullptr);
-	for (auto& block : owner->GetStaticBlocks())
+	for (auto& block : owner->GetDynamicBlocks())
 	{
 		WriteFile(hFile, &block, sizeof(DB), &dwByte, nullptr);
 
@@ -140,17 +140,17 @@ void BlockManager::LoadStage(const char* loadStage)
 		if (newDBlock.Type == DynamicBlockType::IronCages)
 		{
 			int count = 0;
-			ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr);
+			if (!ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr)) return;
 
 			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, count);
 			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
 
 			int vecSize = 0;
-			ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr);
+			if (!ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr)) return;
 			if (vecSize > 0)
 			{
 				std::vector<int> ids(vecSize);
-				ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr);
+				if (!ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr)) return;
 				for (int id : ids)
 					static_cast<DynamicBlock*>(dBlock)->AddID(id);
 			}
@@ -163,7 +163,7 @@ void BlockManager::LoadStage(const char* loadStage)
 			if (newDBlock.Type == DynamicBlockType::LeverSwitch)
 			{
 				int id = 0;
-				ReadFile(hFile, &id, sizeof(int), &dwByte, nullptr);
+				if (!ReadFile(hFile, &id, sizeof(int), &dwByte, nullptr)) return;
 				static_cast<DynamicBlock*>(dBlock)->SetID(id);
 			}
 		}
