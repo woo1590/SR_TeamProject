@@ -35,8 +35,8 @@ HRESULT PhysicsSystem::Ready_PhysicsSystem()
 void PhysicsSystem::Update(_float dt)
 {
 	ApplyGravity(dt);
-	BroadPhase();
 	ApplyVelocity(dt);
+	BroadPhase();
 	SolvePosition();
 	CollisionEvent();
 }
@@ -68,9 +68,17 @@ void PhysicsSystem::ApplyGravity(_float dt)
 	}
 }
 
+void PhysicsSystem::ApplyVelocity(_float dt)
+{
+	for (auto& body : Bodies)
+	{
+		_vec3 velocity = body->GetVelocity();
+		body->GetOwner()->GetComponent<TransformComponent>()->Translate(velocity * dt);
+	}
+}
 void PhysicsSystem::BroadPhase()
 {
-	CurrCollision.clear();
+	CurrCollisions.clear();
 
 	for (_uint i = 0; i < Collisions.size(); ++i)
 	{
@@ -84,7 +92,7 @@ void PhysicsSystem::BroadPhase()
 			{
 				if (a->CheckAABBCollision(b))
 				{
-					CurrCollision.push_back(std::pair<CollisionComponent*, CollisionComponent*>(a, b));
+					CurrCollisions.emplace(a, b);
 				}
 			}
 		}
@@ -93,10 +101,10 @@ void PhysicsSystem::BroadPhase()
 
 void PhysicsSystem::SolvePosition()
 {
-	for (auto& pair : CurrCollision)
+	for (auto& pair : CurrCollisions)
 	{
-		CollisionComponent* a = pair.first;
-		CollisionComponent* b = pair.second;
+		CollisionComponent* a = pair.a;
+		CollisionComponent* b = pair.b;
 
 		_vec3 aMin, aMax, bMin, bMax;
 
@@ -128,83 +136,72 @@ void PhysicsSystem::SolvePosition()
 
 		_vec3 mtv = normal * pen;
 
-		_float invA = a->GetOwner()->GetComponent<PhysicsComponent>()->GetMass();
-		_float invB = b->GetOwner()->GetComponent<PhysicsComponent>()->GetMass();
+		_float invA = a->GetOwner()->GetComponent<PhysicsComponent>()->GetInvMass();
+		_float invB = b->GetOwner()->GetComponent<PhysicsComponent>()->GetInvMass();
 		_float sum = invA + invB;
 
 		if (!sum) continue;
 
-		a->GetOwner()->GetComponent<TransformComponent>()->Translate(-mtv * (invA / sum));
-		b->GetOwner()->GetComponent<TransformComponent>()->Translate(mtv * (invB / sum));
+		a->GetOwner()->GetComponent<TransformComponent>()->Translate(mtv * (invA / sum));
+		b->GetOwner()->GetComponent<TransformComponent>()->Translate(-mtv * (invB / sum));
+
+		auto physicsA = a->GetOwner()->GetComponent<PhysicsComponent>();
+		auto physicsB = b->GetOwner()->GetComponent<PhysicsComponent>();
+
+		physicsA->SetGround(false);
+		physicsB->SetGround(false);
 
 		if (normal.y > 0.7f)
 		{
-			auto physics = a->GetOwner()->GetComponent<PhysicsComponent>();
-
-			_vec3 velocity = physics->GetVelocity();
+			_vec3 velocity = physicsA->GetVelocity();
 			velocity.y = 0.f;
-			physics->SetVelocity(velocity);
-			physics->SetGround(true);
+			physicsA->SetVelocity(velocity);
+			physicsA->SetGround(true);
 		}
 		else if (normal.y < -0.7f)
 		{
-			auto physics = b->GetOwner()->GetComponent<PhysicsComponent>();
-
-			_vec3 velocity = physics->GetVelocity();
+			_vec3 velocity = physicsB->GetVelocity();
 			velocity.y = 0.f;
-			physics->SetVelocity(velocity);
-			physics->SetGround(true);
+			physicsB->SetVelocity(velocity);
+			physicsB->SetGround(true);
 		}
 	}
 }
 
-void PhysicsSystem::ApplyVelocity(_float dt)
-{
-	for (auto& body : Bodies)
-	{
-		_vec3 velocity = body->GetVelocity();
-		body->GetOwner()->GetComponent<TransformComponent>()->Translate(velocity * dt);
-	}
-}
 
 void PhysicsSystem::CollisionEvent()
 {
 	//Collision Enter
-	for (const auto& currPair : CurrCollision)
+	for (const auto& pair : CurrCollisions)
 	{
-		currPair.first->OnCollisionEnter(currPair.second);
-		currPair.second->OnCollisionEnter(currPair.first);
+		if (!PrevCollisions.count(pair))
+		{
+			pair.a->OnCollisionEnter(pair.b);
+			pair.b->OnCollisionEnter(pair.a);
+		}
 	}
 
 	//Collision Stay
-	for (const auto& prevPair : PrevCollision)
+	for (const auto& pair : CurrCollisions)
 	{
-		for (const auto& currPair : CurrCollision)
+		if (PrevCollisions.count(pair))
 		{
-			auto it = std::find(PrevCollision.begin(), PrevCollision.end(), currPair);
-			if (it != PrevCollision.end())
-			{
-				currPair.first->OnCollisionStay(currPair.second);
-				currPair.second->OnCollisionStay(currPair.first);
-			}
+			pair.a->OnCollisionStay(pair.b);
+			pair.b->OnCollisionStay(pair.a);
 		}
 	}
 
 	//Collision Exit
-	for (const auto& prevPair : PrevCollision)
+	for (const auto& pair : PrevCollisions)
 	{
-		for (const auto& currPair : CurrCollision)
+		if (!CurrCollisions.count(pair))
 		{
-			auto it = std::find(PrevCollision.begin(), PrevCollision.end(), currPair);
-			if (it != PrevCollision.end())
-			{
-				currPair.first->OnCollisionExit(currPair.second);
-				currPair.second->OnCollisionExit(currPair.first);
-			}
+			pair.a->OnCollisionExit(pair.b);
+			pair.b->OnCollisionExit(pair.a);
 		}
 	}
 
-	PrevCollision.swap(CurrCollision);
+	PrevCollisions.swap(CurrCollisions);
 }
 
 void PhysicsSystem::Free()

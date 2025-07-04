@@ -21,6 +21,7 @@ public:
 
     void SetMass(_float mass) { Mass = mass; }
     _float GetMass()const { return Mass; }
+    _float GetInvMass()const { return Mass ? 1.f / Mass : 0.f; }
 
     void SetGround(_bool ground);
     _bool IsGrounded()const;

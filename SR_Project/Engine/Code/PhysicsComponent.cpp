@@ -30,18 +30,18 @@ PhysicsComponent* PhysicsComponent::Create(Object* owner)
 
 HRESULT PhysicsComponent::Ready_Component()
 {
-	//owner->GetScene()->GetPhysicsStstem()->RegisterBody(this);
+	owner->GetScene()->GetPhysicsStstem()->RegisterBody(this);
 
 	return S_OK;
 }
 
 void PhysicsComponent::Update(_float dt)
 {
-	if (Is_Ground)
-		Velocity.y = 0.f;
-	else
-		Velocity.y -= 30.f * dt;
-}
+	//if (Is_Ground)
+	//	Velocity.y = 0.f;
+	//else
+	//	Velocity.y -= 30.f * dt;
+}	
 
 void PhysicsComponent::SetVelocity(_vec3 velocity)
 {

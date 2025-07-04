@@ -24,6 +24,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <set>
 #include <algorithm>
 #include <functional>
 #include <string>
@@ -48,7 +49,7 @@
 #include <fmod.hpp>
 
 #ifdef _DEBUG
-//#define USE_IMGUI
+#define USE_IMGUI
 #endif
 
 #ifndef USE_IMGUI

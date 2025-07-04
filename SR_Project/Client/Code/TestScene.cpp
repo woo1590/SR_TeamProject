@@ -91,7 +91,6 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
 
-
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
@@ -114,7 +113,7 @@ void TestScene::Load()
 void TestScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
-	//PhysicsSys->Update(dt);
+	PhysicsSys->Update(dt);
 
 	/*-------------ī�޶� ��ȯ �׽�Ʈ �ڵ�-------------*/
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -138,7 +137,7 @@ void TestScene::Update(float dt)
 void TestScene::Late_Update(float dt)
 {
 	ObjectMgr->Late_Update(dt);
-	CollisionSys->Late_Update();
+	//CollisionSys->Late_Update();
 }
 
 void TestScene::Unload()
