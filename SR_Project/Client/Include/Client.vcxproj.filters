@@ -323,6 +323,9 @@
     <ClInclude Include="..\Header\Creeper.h">
       <Filter>02. Object\Monster\Creeper</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Hit.h">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -470,6 +473,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Creeper.cpp">
       <Filter>02. Object\Monster\Creeper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Hit.cpp">
+      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

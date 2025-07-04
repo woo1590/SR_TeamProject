@@ -245,6 +245,7 @@
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\HoverComponent.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
+    <ClInclude Include="..\Header\InfoDetector.h" />
     <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h" />
@@ -365,6 +366,7 @@
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\HoverComponent.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
+    <ClCompile Include="..\Code\InfoDetector.cpp" />
     <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp" />

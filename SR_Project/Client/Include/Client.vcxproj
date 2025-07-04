@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\Emerald.h" />
     <ClInclude Include="..\Header\ExpBarBack.h" />
     <ClInclude Include="..\Header\ExpBarFront.h" />
+    <ClInclude Include="..\Header\Hit.h" />
     <ClInclude Include="..\Header\HotBarBack.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="..\Code\Emerald.cpp" />
     <ClCompile Include="..\Code\ExpBarBack.cpp" />
     <ClCompile Include="..\Code\ExpBarFront.cpp" />
+    <ClCompile Include="..\Code\Hit.cpp" />
     <ClCompile Include="..\Code\HotBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />

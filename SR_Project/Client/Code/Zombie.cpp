@@ -14,7 +14,9 @@
 #include "CollisionComponent.h"
 #include "AIController.h"
 #include "IsAlive.h"
+#include "Hit.h"
 #include "Die.h"
+#include "InfoDetector.h"
 
 Zombie::Zombie(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -59,6 +61,14 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
     transform->SetPosition(_vec3(30.f, 0.f, -30.f));
 
     //Create BT
+    BlackBoard* bb = BlackBoard::Create();
+    bb->SetValue("Self", this);
+    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
+    Distance = new float(3.f);
+    bb->SetValue("Distance", Distance);
+    PrevHp = new float(100.f);
+    bb->SetValue("PrevHp", PrevHp);
+
     ChaseNode* chase = new ChaseNode();
     AttackNode* attack = new AttackNode();
     IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(attack);
@@ -70,7 +80,11 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
     BehaviorNode->AddChild(attackSequence);
     BehaviorNode->AddChild(chase);
 
-    IsAliveNode* IsAlive = new IsAliveNode(BehaviorNode);
+    SelectorNode* a = new SelectorNode();
+    a->AddChild(new HitNode());
+    a->AddChild(BehaviorNode);
+
+    IsAliveNode* IsAlive = new IsAliveNode(a);
     DieNode* die = new DieNode();
 
     SelectorNode* root = new SelectorNode();
@@ -78,13 +92,7 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
     root->AddChild(die);
 
     BehaviorTree* bt = BehaviorTree::Create(root);
-
-    BlackBoard* bb = BlackBoard::Create();
-    bb->SetValue("Self", this);
-    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(3.f);
-    bb->SetValue("Distance", Distance);
-
+    
     auto AI = AddComponent<AIController>(bt, bb);
 
     InitAnimation();
@@ -105,10 +113,11 @@ void Zombie::Late_Update(_float dt)
 void Zombie::MoveTo(_vec3* dir, _float dt)
 {
     auto Transform = GetComponent<TransformComponent>();
-    if (State != MonsterState::Walk) State = MonsterState::Walk;
+    auto stat = GetComponent<InfoComponent<EnemyInfo>>();
+    //if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
-    Transform->Translate(*dir * dt * Speed);
-    Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
+    Transform->Translate(*dir * dt * stat->GetInfo().speed);
+   // Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
 void Zombie::RotateTo(_vec3* dir, float dt)
@@ -142,6 +151,23 @@ void Zombie::Die()
     }
 }
 
+void Zombie::Hit(_vec3 dir, _float power, _float dt)
+{
+    if(State != MonsterState::Hit)
+    {
+        State = MonsterState::Hit;
+
+        HitAnim.IsRunning = true;
+        HitAnim.ElapsedTime = 0.f;
+        HitAnim.DelayTime = 0.f;
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
+        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+    }
+    PlayKnockBack(dir, power, dt);
+}
+
 void Zombie::InitAnimation()
 {
     //Walk
@@ -152,10 +178,16 @@ void Zombie::InitAnimation()
     AttackAnim.TotalTime = 0.7f;
     AttackAnim.DelayTime = 0.f;
 
+    //Hit
+    HitAnim.Start = 0;
+    HitAnim.End = 30.f;
+    HitAnim.ElapsedTime = 0.f;
+    HitAnim.TotalTime = 2.5f;
+    HitAnim.DelayTime = 0.f;
+
     //Die
     DieAnim.Start = 0;                  //start angle
     DieAnim.End = 270.f;                //end angle
-    AttackAnim.ElapsedTime = 0.f;
     DieAnim.TotalTime = 0.5f;          //play animation total time
 }
 
@@ -176,6 +208,10 @@ void Zombie::PlayAnimation(_float dt)
     case MonsterState::Die:
         if (!DieAnim.IsRunning) DieAnim.IsRunning = true;
         PlayDie(dt);
+        break;
+    case MonsterState::Hit:
+        if (!HitAnim.IsRunning) HitAnim.IsRunning = true;
+        PlayHit(dt);
         break;
     }
     if (State != MonsterState::Attack)
@@ -228,6 +264,7 @@ void Zombie::PlayAttack(_float dt)
 
     if (AttackAnim.ElapsedTime > AttackAnim.TotalTime)
     {
+        AttackAnim.IsRunning = false;
         AttackAnim.IsEnd = true;
         AttackAnim.ElapsedTime = 0.f;
         AttackAnim.DelayTime = 2.f;
@@ -253,19 +290,50 @@ void Zombie::PlayDie(_float dt)
     }
 }
 
+void Zombie::PlayHit(_float dt)
+{
+    HitAnim.ElapsedTime += dt;
+
+    _float t = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
+
+    _float Angle = lerp(HitAnim.Start, HitAnim.End, t);
+
+    SetRotation({ -D3DXToRadian(Angle/3), 0.f, 0.f }, "Head");
+    SetRotation({ 0.f, 0.f, -D3DXToRadian(Angle) }, "LArm");
+    SetRotation({ 0.f, 0.f, D3DXToRadian(Angle) }, "RArm");
+    SetRotation({ 0.f, D3DXToRadian(Angle), D3DXToRadian(Angle/ 2) }, "RLeg");
+
+    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
+    {
+        HitAnim.IsRunning = false;
+        HitAnim.IsEnd = true;
+        HitAnim.ElapsedTime = 0.f;
+
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
+        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+    }
+}
+
 void Zombie::OnCollisionStay(Object* other)
 {
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
     auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
+    auto transform = GetComponent<TransformComponent>();
 
     if (objType == ObjectType::Player)
     {
         auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
+        auto playertransform = other->GetComponent<TransformComponent>();
         if (State == MonsterState::Attack)
         {
-            playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
-            collision->ResolveAABBColiision(other);
+            //playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
+            Stat->SetHp(Stat->GetInfo().curHp - Stat->GetInfo().power);
+            //static_cast<Player*>(other)->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
+
+            //collision->ResolveAABBColiision(other);
         }
     }
 }

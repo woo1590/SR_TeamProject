@@ -18,14 +18,7 @@ public:
     void RotateTo(_vec3* dir, float dt) override;
     void Attack(Object* target) override;
     void Die() override;
-
-    _bool IsAttackStart() const { return AttackAnim.IsRunning; }
-    _bool IsAttackFinish() const { return AttackAnim.IsEnd; }
-
-    _bool IsDeadStart() const { return DieAnim.IsRunning; }
-    _bool IsDeadFinish() const { return DieAnim.IsEnd; }
-
-    _float GetHp() const { return Hp; }           //modify
+    void Hit(_vec3 dir, _float power, _float dt) override;
 
 protected:
     void InitAnimation() override;
@@ -34,7 +27,8 @@ protected:
     void PlayIdle(_float dt) override;
     void PlayWalk(_float dt) override;
     void PlayAttack(_float dt) override;
-    void PlayDie(_float dt)override;
+    void PlayDie(_float dt) override;
+    void PlayHit(_float dt) override;
 
     void OnCollisionStay(Object* other) override;
 

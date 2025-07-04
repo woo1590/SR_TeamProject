@@ -16,7 +16,6 @@ public:
 public:
     void MoveTo(_vec3* dir, _float dt) override;
     void RotateTo(_vec3* dir, float dt) override;
-    void Attack(Object* target) override;
     void Die() override;
 
 protected:

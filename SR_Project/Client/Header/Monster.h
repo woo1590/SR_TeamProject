@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseCharacter.h"
 
-enum MonsterState { Idle, Walk, Attack, Die, };
+enum MonsterState { Idle, Walk, AttackReady, Attack, Hit, Die, };
 
 struct Animation
 {
@@ -13,8 +13,8 @@ struct Animation
 
     _float DelayTime;   //delay time;
 
-    _bool IsRunning;
-    _bool IsEnd;        //animation end
+    _bool IsRunning = false;
+    _bool IsEnd = false;        //animation end
 };
 
 class Monster :
@@ -34,6 +34,7 @@ public:
     virtual void RotateTo(_vec3* dir, float dt);
     void Attack(Object* target) override;
     void Die() override;
+    virtual void Hit(_vec3 dir, _float power, _float dt);
     
     _bool IsAttackStart() const { return AttackAnim.IsRunning; }
     _bool IsAttackFinish() const { return AttackAnim.IsEnd; }
@@ -41,7 +42,10 @@ public:
     _bool IsDeadStart() const { return DieAnim.IsRunning; }
     _bool IsDeadFinish() const { return DieAnim.IsEnd; }
 
-    _float GetHp() const { return Hp; }           //modify
+    _bool IsHitStart() const { return HitAnim.IsRunning; }
+    _bool IsHitFinish() const { return HitAnim.IsEnd; }
+
+    virtual _float GetHp();
 
 protected:
     virtual void InitAnimation();
@@ -51,6 +55,7 @@ protected:
     virtual void PlayWalk(_float dt);
     virtual void PlayAttack(_float dt);
     virtual void PlayDie(_float dt);
+    virtual void PlayHit(_float dt);
 
     virtual void OnCollisionStay(Object* other);
 
@@ -61,11 +66,11 @@ protected:
     MonsterState        State = MonsterState::Idle;
     _float              Speed = 5.f;
     _float*             Distance = nullptr;
+    _float*             PrevHp = nullptr;
 
     Animation           WalkAnim;
     Animation           AttackAnim;
     Animation           DieAnim;
-
-    _float              Hp = 100.f;
+    Animation           HitAnim;
 };
 

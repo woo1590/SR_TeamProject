@@ -223,6 +223,9 @@
     <Filter Include="05. Scene Component\BlockManager">
       <UniqueIdentifier>{a6cc0320-bb0a-4c0a-a0f8-774f741fd8d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\UIComponent\09. InfoDetector">
+      <UniqueIdentifier>{cea1dd51-900c-41e5-87ec-2b922ce7b780}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -451,12 +454,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\PhysicsSystem.cpp">
       <Filter>05. Scene Component\PhysicsSystem</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\IronCage.cpp">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BlockManager.cpp">
       <Filter>05. Scene Component\BlockManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InfoDetector.cpp">
+      <Filter>07. Object Component\UIComponent\09. InfoDetector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -706,12 +712,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\PhysicsSystem.h">
       <Filter>05. Scene Component\PhysicsSystem</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\IronCage.h">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InfoDetector.h">
+      <Filter>07. Object Component\UIComponent\09. InfoDetector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

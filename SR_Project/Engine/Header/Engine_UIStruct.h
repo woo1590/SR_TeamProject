@@ -9,14 +9,15 @@ namespace Engine
 		int maxHp = 100;
 		int curExp = 0;
 		int maxExp = 10;
+		int power = 10;
 		float speed = 6.f;
 	};
 
 	struct EnemyInfo
 	{
 		int level;
-		int curHp;
-		int maxHp;
+		int curHp = 100;
+		int maxHp = 100;
 		int power = 10;
 		float attackDelay;
 		float speed = 5.f;
@@ -25,7 +26,7 @@ namespace Engine
 	enum class UIEventType
 	{
 		HP_Changed,
-		EXP_Changed
+		EXP_Changed,
 	};
 
 	template<typename T>

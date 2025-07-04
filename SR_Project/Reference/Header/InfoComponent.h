@@ -19,9 +19,10 @@ public:
 	void AddExp(int amount);
 	void SetSpeed(int amount);
 
+	void SetInfo(T& _info) { info = _info; };
 	const T& GetInfo() const { return info; }
 
-private:
+public:
 	T info{};
 };
 

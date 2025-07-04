@@ -2,6 +2,7 @@
 #include "Emerald.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
+#include "InfoDetector.h"
 
 Emerald* Emerald::Create(ObjectManager* owner)
 {
@@ -14,6 +15,7 @@ HRESULT Emerald::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
+	AddComponent<InfoDetector<EnemyInfo>>();
 
 	transform->SetPosition(1025.f, 675.f);
 	

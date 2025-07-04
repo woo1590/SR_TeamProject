@@ -107,6 +107,19 @@ void BaseCharacter::Add_Bone(string str, ObjectType objType, Object* parent, con
     //scale position 따로 설정하셈
 }
 
+void BaseCharacter::PlayKnockBack(_vec3 dir, _float attack, _float dt)
+{
+    _float length = sqrt(dir.x * dir.x + dir.z * dir.z);
+    if (length == 0) length = 1;
+
+    _vec3 knockback;
+    knockback.x = (dir.x / length) * attack;
+    knockback.y = 0.1 * attack;
+    knockback.z = (dir.z / length) * attack;
+
+    MoveTo(&knockback, dt);
+}
+
 void BaseCharacter::Free()
 {
     Object::Free();
