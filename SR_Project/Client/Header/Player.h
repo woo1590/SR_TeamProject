@@ -2,7 +2,6 @@
 #include "BaseCharacter.h"
 class Player : public BaseCharacter
 {   
-    //playerState
     enum class ePlayerState {
         IDLE,
         WALK,
@@ -11,7 +10,7 @@ class Player : public BaseCharacter
         SHOOT,
         DEAD
     };
-public: //basic func
+public:
     static Player* Create(ObjectManager* owner, ObjectType objType);
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
@@ -20,9 +19,10 @@ private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
     void Free()override;
-private: //func
+
     void KeyInput(_float dt);
-    
+
+    void PickingTerrain();
     void CheckStateRoll(_float dt);
     void CheckDead();
 
@@ -34,13 +34,15 @@ private: //func
     void UpdateDead(_float dt);
 
     void SaveStartRotation();
-    void PickingTerrain();
     _vec3 MatrixToEulerAngles(const _matrix& mat);
-
-    /*--------------Collision-------------*/
     void OnCollisionStay(Object* other);
-
-private: //member variable
+    void IdleSmoothing(_float dt, std::string bone);
+    float NormalizeAngle(_float angle);
+    _vec3 OffsetLerp(const _vec3& start, const _vec3& offset, float ratio);
+    _vec3 DegToRadLerp(const _vec3& startDeg, const _vec3& endDeg, float ratio);
+    _vec3 GetPhasedRotation(float fProgress, vector<float>& phaseVec, vector<_vec3>& destinations);
+    void ApplyPhasedRotation(const std::string& name, float fProgress, vector<float>& phaseVec, vector<_vec3>& destinations);
+private:
     ePlayerState State = ePlayerState::IDLE;
     float WalkTime = 0.f;
     float RollTime = 0.f;
@@ -48,8 +50,6 @@ private: //member variable
     float DeadTime = 0.f;
 
     std::unordered_map<std::string, _vec3> StartRotations;
-    float Speed = 10.f;
-
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };

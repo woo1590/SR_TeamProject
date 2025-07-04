@@ -168,7 +168,7 @@
     </Filter>
     <Filter Include="02. Object\Light\Point">
       <UniqueIdentifier>{7c81f8d6-d1d8-495a-8d5e-274119b37ab2}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Item">
       <UniqueIdentifier>{00b083ae-f5c0-476a-8bf8-75a57fc8a812}</UniqueIdentifier>
     </Filter>
@@ -177,7 +177,7 @@
     </Filter>
     <Filter Include="02. Object\Item\Bow">
       <UniqueIdentifier>{e8969dd1-2bc7-497b-add4-2cb1bc657a17}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\Panel\InventoryPanel">
       <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
     </Filter>
@@ -228,6 +228,12 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Slot\InventorySlot">
       <UniqueIdentifier>{d914f399-5087-4522-bc85-0f2b25e7eb73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Projectile">
+      <UniqueIdentifier>{bc8f7338-ea94-4763-98f5-c417edf4ac5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Projectile\Arrow">
+      <UniqueIdentifier>{b861eb2a-a167-4e65-b55a-8c9a9a02755a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -370,7 +376,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\DirectionLight.h">
       <Filter>02. Object\Light\Direction</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\Item.h">
       <Filter>02. Object\Item</Filter>
     </ClInclude>
@@ -379,7 +385,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Bow.h">
       <Filter>02. Object\Item\Bow</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\UILoader.h">
       <Filter>02. Object\UIObj\UILoader</Filter>
     </ClInclude>
@@ -430,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\InventorySlot.h">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Projectile.h">
+      <Filter>02. Object\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Arrow.h">
+      <Filter>02. Object\Projectile\Arrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -572,7 +584,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\DirectionLight.cpp">
       <Filter>02. Object\Light\Direction</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\Item.cpp">
       <Filter>02. Object\Item</Filter>
     </ClCompile>
@@ -581,7 +593,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bow.cpp">
       <Filter>02. Object\Item\Bow</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp">
       <Filter>02. Object\UIObj\UILoader</Filter>
     </ClCompile>
@@ -632,6 +644,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventorySlot.cpp">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Projectile.cpp">
+      <Filter>02. Object\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Arrow.cpp">
+      <Filter>02. Object\Projectile\Arrow</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

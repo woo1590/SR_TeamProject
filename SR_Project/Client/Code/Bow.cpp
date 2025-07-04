@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "Bow.h"
 
+#include "ObjectManager.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
@@ -20,19 +21,32 @@ Bow* Bow::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Item::Ready_Object(owner, objType);
+    if (FAILED(Item::Ready_Object(owner, objType)))
+        return E_FAIL;
+    auto info = GetComponent<InfoComponent<ItemInfo>>();
+    ItemInfo i;
+    i.size = 1.f;
+    i.scale = _vec3{ 0.1f, 1.f, 1.f };
+    i.position = _vec3{ 0.25f, -1.2f, -0.2f };
+    i.pivotEnable = true;
+    i.pivot = _vec3{ -0.25f, 0.8f, -0.2f };
+    i.rotation = _vec3{ 2.2f, 0.f, 0.f };
+    i.meshType = L"Cube_Mesh";
+    i.material = L"bow_Mtrl";
+    i.renderId = Engine::RENDER_ID::Render_None;
+    info->SetInfo(i);
+    
     auto transform = GetComponent<TransformComponent>();
-    auto mesh = GetComponent<MeshRenderer>();
-    auto info = GetComponent<InfoComponent<ItemInfo>>();PlayerInfo;
-    float Scale = 1.f;
-    transform->SetScale(0.1f * Scale, 1.f * Scale, 1.f * Scale);
-    transform->SetPosition(0.25f * Scale, -1.2f * Scale, -0.2f * Scale);
-    transform->SetPivot(_vec3(-0.25f * Scale, 0.8f * Scale, -0.2f * Scale));
-    transform->SetPivotEnable(true);
-    transform->SetRotate({ 2.2f,0.f,0.f });
+    transform->SetScale(i.scale.x * i.size, i.scale.y * i.size, i.scale.z * i.size);
+    transform->SetPosition(i.position.x * i.size, i.position.y * i.size, i.position.z * i.size);
+    transform->SetPivot(_vec3(i.pivot.x * i.size, i.pivot.y * i.size, i.pivot.z * i.size));
+    transform->SetPivotEnable(i.pivotEnable);
+    transform->SetRotate({ i.rotation.x ,i.rotation.y ,i.rotation.z });
 
-    mesh->SetMaterial(L"bow_Mtrl");
-    mesh->SetRenderID(Engine::RENDER_ID::Render_Alpha);
+    auto mesh = GetComponent<MeshRenderer>();
+    mesh->SetMesh(i.meshType);
+    mesh->SetMaterial(i.material);
+    mesh->SetRenderID(i.renderId);
 
     return S_OK;
 }

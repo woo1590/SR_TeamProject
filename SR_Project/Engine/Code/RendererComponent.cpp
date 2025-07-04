@@ -22,6 +22,7 @@ RendererComponent::~RendererComponent()
 
 void RendererComponent::Late_Update(float dt)
 {
+	if (Id == Engine::RENDER_ID::Render_None) return;
 	EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(Id,this);
 }
 

@@ -1,9 +1,11 @@
 ﻿#include "pch.h"
 #include "Sword.h"
 
+#include "ObjectManager.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
+#include "CollisionComponent.h"
 
 Sword::Sword(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
 
@@ -20,20 +22,39 @@ Sword* Sword::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Item::Ready_Object(owner, objType);
-    auto transform = GetComponent<TransformComponent>();
-    auto mesh = GetComponent<MeshRenderer>();
+    if (FAILED(Item::Ready_Object(owner, objType)))
+        return E_FAIL;
     auto info = GetComponent<InfoComponent<ItemInfo>>();
+    ItemInfo i;
+    i.size = 1.f;
+    i.scale = _vec3{ 0.1f, 2.f, 2.f };
+    i.position = _vec3{ 0.f, 0.2f, 1.f };
+    i.pivotEnable = true;
+    i.pivot = _vec3{ 0.f, 0.8f, 0.f };
+    i.rotation = _vec3{ 0.8f, 0.f, 0.f };
+    i.meshType = L"Cube_Mesh";
+    i.material = L"sword_Mtrl";
+    i.renderId = Engine::RENDER_ID::Render_Alpha;
+    info->SetInfo(i);
 
-    float Scale = 1.f;
-    transform->SetScale(0.1f * Scale, 2.f * Scale, 2.f * Scale);
-    transform->SetPosition(0.f, 0.2f, 1.f * Scale);
-    transform->SetPivot(_vec3(0.f * Scale, 0.8f * Scale, 0.f * Scale));
-    transform->SetPivotEnable(true);
-    transform->SetRotate({ 0.8f,0.f,0.f });
+    auto transform = GetComponent<TransformComponent>();
+    transform->SetScale(i.scale.x * i.size, i.scale.y * i.size, i.scale.z * i.size);
+    transform->SetPosition(i.position.x * i.size, i.position.y * i.size, i.position.z * i.size);
+    transform->SetPivot(_vec3(i.pivot.x * i.size, i.pivot.y * i.size, i.pivot.z * i.size));
+    transform->SetPivotEnable(i.pivotEnable);
+    transform->SetRotate({ i.rotation.x ,i.rotation.y ,i.rotation.z });
 
-    mesh->SetMaterial(L"sword_Mtrl");
-    mesh->SetRenderID(Engine::RENDER_ID::Render_Alpha);
+    auto mesh = GetComponent<MeshRenderer>();
+    mesh->SetMesh(i.meshType);
+    mesh->SetMaterial(i.material);
+    mesh->SetRenderID(i.renderId);
+
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY);
+    collision->SetSize(_vec3(1.f, 2.f, 1.f));
+    collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
+
     return S_OK;
 }
 
@@ -50,4 +71,16 @@ void Sword::Late_Update(_float dt)
 void Sword::Free()
 {
     Item::Free();
+}
+
+void Sword::SetCollisionEnter(Object* other)
+{
+    ObjectType objType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+
+    if (objType == ObjectType::Monster) {
+        float swordAttackDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().attackDamage;
+        other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
+        collision->ResolveAABBColiision(other);
+    }
 }
