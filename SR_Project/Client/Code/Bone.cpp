@@ -16,7 +16,7 @@ Bone::~Bone()
 
 Bone* Bone::Create(ObjectManager* owner, ObjectType objType, _vec3 scale, Object* parent, const std::wstring& mtrl)
 {
-    Bone* Instance = new Bone(owner, objType);
+    Bone* Instance = new Bone(owner, ObjectType::Bone);
 
     if (FAILED(Instance->Ready_Object(parent, scale, mtrl)))
     {

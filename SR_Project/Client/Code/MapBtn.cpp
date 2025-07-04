@@ -25,3 +25,8 @@ HRESULT MapBtn::Ready_Object()
 	return S_OK;
 
 }
+
+void MapBtn::Free()
+{
+	Object::Free();
+}

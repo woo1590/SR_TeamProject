@@ -11,5 +11,6 @@ private:
 public:
 	static MapBtn* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
+	void Free()override;
 };
 

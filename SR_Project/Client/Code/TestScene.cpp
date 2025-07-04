@@ -78,21 +78,19 @@ void TestScene::Load()
 	player->GetComponent<TransformComponent>()->SetPosition(-5.f, 100.f, -5.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
-	//auto fCam = FirstCam::Create(ObjectMgr);
-	//auto tCam = ThirdCam::Create(ObjectMgr);
-	//
-	//CameraMgr->AddCamera(L"First_Camera", fCam);
-	//CameraMgr->AddCamera(L"Third_Camera", tCam);
-	//tCam->SetTarget(player);
-	//
-	//CameraMgr->SetMainCamera(L"First_Camera");
-	//EventSys->SetCamera();
-	//
-	//ObjectMgr->AddObject(ObjectType::Camera, fCam);
-	//ObjectMgr->AddObject(ObjectType::Camera, tCam);
+	auto fCam = FirstCam::Create(ObjectMgr);
+	auto tCam = ThirdCam::Create(ObjectMgr);
 	
-	//ObjectMgr->AddObject(ObjectType::Camera, fCam);
-	//ObjectMgr->AddObject(ObjectType::Camera, tCam);
+	CameraMgr->AddCamera(L"First_Camera", fCam);
+	CameraMgr->AddCamera(L"Third_Camera", tCam);
+	tCam->SetTarget(player);
+	
+	CameraMgr->SetMainCamera(L"First_Camera");
+	EventSys->SetCamera();
+	
+	ObjectMgr->AddObject(ObjectType::Camera, fCam);
+	ObjectMgr->AddObject(ObjectType::Camera, tCam);
+
 
 	/*------------------------------------------------*/
 	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));

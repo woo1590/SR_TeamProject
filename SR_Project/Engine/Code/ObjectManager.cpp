@@ -98,11 +98,6 @@ Object* ObjectManager::GetFrontObject(ObjectType objType)
 	return Objects[static_cast<int>(objType)].front();
 }
 
-Object* ObjectManager::GetLastObject(ObjectType objType)
-{
-	return Objects[static_cast<int>(objType)].back();
-}
-
 std::list<Object*> ObjectManager::GetObjectList(ObjectType objType)
 {
 	return Objects[static_cast<int>(objType)];

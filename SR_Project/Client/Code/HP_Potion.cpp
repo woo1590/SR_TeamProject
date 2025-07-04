@@ -33,7 +33,7 @@ HRESULT HP_Potion::Ready_Object()
 			auto input = EngineCore::GetInstance()->GetInputSystem();
 			if (input->IsKeyPressed(KEY::LBUTTON))
 			{
-				auto player = owner->GetLastObject(ObjectType::Player);
+				auto player = owner->GetFrontObject(ObjectType::Player);
 				auto playerInfo = player->GetComponent<InfoComponent<PlayerInfo>>();
 
 				playerInfo->AddHp(10);

@@ -85,6 +85,12 @@ void UIRenderer::UpdateCenter()
     }
 }
 
+void UIRenderer::Free()
+{
+    Safe_Release(tex2D);
+    Safe_Release(texture);
+}
+
 void UIRenderer::Render()
 {
     if (isVisible && tex2D)

@@ -75,7 +75,7 @@ HRESULT BaseCharacter::Ready_Object(ObjectManager* owner, ObjectType objType)
     Bones["RLeg"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     
     for (auto& bone : Bones)
-        owner->AddObject(objType, bone.second);
+        owner->AddObject(ObjectType::Bone, bone.second);
 
     return S_OK;
 }

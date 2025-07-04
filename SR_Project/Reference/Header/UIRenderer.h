@@ -43,6 +43,7 @@ public:
 	static UIRenderType GetCurRenderType() { return curRenderType; }
 
 private:
+	void Free()override;
 	static UIRenderType curRenderType;
 	UIRenderType renderType = UIRenderType::MainGame;
 	LPDIRECT3DBASETEXTURE9 texture = nullptr;
