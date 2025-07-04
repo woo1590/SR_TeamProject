@@ -145,23 +145,25 @@ void PhysicsSystem::SolvePosition()
 		a->GetOwner()->GetComponent<TransformComponent>()->Translate(mtv * (invA / sum));
 		b->GetOwner()->GetComponent<TransformComponent>()->Translate(-mtv * (invB / sum));
 
+		auto physicsA = a->GetOwner()->GetComponent<PhysicsComponent>();
+		auto physicsB = b->GetOwner()->GetComponent<PhysicsComponent>();
+
+		physicsA->SetGround(false);
+		physicsB->SetGround(false);
+
 		if (normal.y > 0.7f)
 		{
-			auto physics = a->GetOwner()->GetComponent<PhysicsComponent>();
-
-			_vec3 velocity = physics->GetVelocity();
+			_vec3 velocity = physicsA->GetVelocity();
 			velocity.y = 0.f;
-			physics->SetVelocity(velocity);
-			physics->SetGround(true);
+			physicsA->SetVelocity(velocity);
+			physicsA->SetGround(true);
 		}
 		else if (normal.y < -0.7f)
 		{
-			auto physics = b->GetOwner()->GetComponent<PhysicsComponent>();
-
-			_vec3 velocity = physics->GetVelocity();
+			_vec3 velocity = physicsB->GetVelocity();
 			velocity.y = 0.f;
-			physics->SetVelocity(velocity);
-			physics->SetGround(true);
+			physicsB->SetVelocity(velocity);
+			physicsB->SetGround(true);
 		}
 	}
 }
