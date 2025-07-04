@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 namespace Engine
 {
@@ -10,6 +10,12 @@ namespace Engine
 		int curExp = 0;
 		int maxExp = 10;
 		float speed = 6.f;
+	};
+
+	struct ItemInfo
+	{
+		float Scale = 1.f;
+		Engine::RENDER_ID RenderId = Engine::RENDER_ID::Render_NonAlpha;
 	};
 
 	struct EnemyInfo

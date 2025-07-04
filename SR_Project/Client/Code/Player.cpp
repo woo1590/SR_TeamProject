@@ -19,6 +19,9 @@
 
 #include "MyMath.h"
 
+#include "Sword.h"
+#include "Bow.h"
+
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) {}
 Player::~Player() {}
 Player* Player::Create(ObjectManager* owner, ObjectType objType){
@@ -56,23 +59,25 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType){
     SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
      
-    Bones["Sword"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["RArm"], L"sword_Mtrl");
-    Bones["Sword"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 2.f * Scale, 2.f * Scale);
+    Bones["Sword"] = Bone::Create(owner, objType, _vec3(0.1f * Scale, 2.f * Scale, 2.f * Scale), Bones["RArm"], L"sword_Mtrl");
     Bones["Sword"]->GetComponent<TransformComponent>()->SetPosition(0.f, 0.2f, 1.f * Scale);
     Bones["Sword"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f * Scale, 0.8f * Scale, 0.f * Scale));
     Bones["Sword"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     Bones["Sword"]->GetComponent<TransformComponent>()->SetRotate({ 0.8f,0.f,0.f });
     SetMaterial(L"sword_Mtrl", "Sword", Engine::RENDER_ID::Render_Alpha);
     owner->AddObject(objType, Bones["Sword"]);
-
+    
     Bones["Bow"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["LArm"], L"bow_Mtrl");
     Bones["Bow"]->GetComponent<TransformComponent>()->SetScale(0.1f * Scale, 1.f * Scale, 1.f * Scale);
-    Bones["Bow"]->GetComponent<TransformComponent>()->SetPosition(0.f, -1.2f * Scale, -0.2f * Scale);
-    Bones["Bow"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f * Scale, 0.8f * Scale, -0.2f * Scale));
+    Bones["Bow"]->GetComponent<TransformComponent>()->SetPosition(0.25f * Scale, -1.2f * Scale, -0.2f * Scale);
+    Bones["Bow"]->GetComponent<TransformComponent>()->SetPivot(_vec3(-0.25f * Scale, 0.8f * Scale, -0.2f * Scale));
     Bones["Bow"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     Bones["Bow"]->GetComponent<TransformComponent>()->SetRotate({ 2.2f,0.f,0.f });
     SetMaterial(L"bow_Mtrl", "Bow", Engine::RENDER_ID::Render_Alpha);
     owner->AddObject(objType, Bones["Bow"]);
+
+    //Bones["Sword"] = Sword::Create(owner, ObjectType::Item);
+    //Bones["Bow"] = Bow::Create(owner, ObjectType::Item);
 
     return S_OK;
 }
@@ -119,7 +124,7 @@ void Player::Update(_float dt){
     
 }
 void Player::Late_Update(_float dt){ BaseCharacter::Late_Update(dt); }
-void Player::Free() { Object::Free(); }
+void Player::Free() { BaseCharacter::Free(); }
 void Player::PickingTerrain(){
     if (State == ePlayerState::DEAD || State == ePlayerState::ATTACK || State == ePlayerState::SHOOT) return;
     auto input = EngineCore::GetInstance()->GetInputSystem();
@@ -290,26 +295,26 @@ void Player::UpdateRoll(_float dt)
     SetRotation(LerpRot(StartRotations["LArm"], { -2.f, 0.f, 0.f }, fLerpRatio), "LArm");
     SetRotation(LerpRot(StartRotations["RArm"], { -2.f, 0.f, 0.f }, fLerpRatio), "RArm");
     //control y value while rolling
-    static float fStartY = 0.f;
-    if (RollTime == dt)
-        fStartY = transform->GetPosition().y;
-
-    const float fAmplitudePhase1 = 0.2f * Scale;
-    const float fAmplitudePhase2 = 2.8f * Scale;
-    float t = fProgress;
-    float fYOffset = 0.f;
-
-    if (t <= 0.3f) {
-        float fLocalT = t / 0.3f; // 0~1
-        fYOffset = sinf(fLocalT * D3DX_PI) * fAmplitudePhase1; // 0 ~ π
-    }
-    else {
-        float fLocalT = (t - 0.3f) / 0.7f; // 0~1
-        fYOffset = sinf(D3DX_PI + fLocalT * D3DX_PI) * fAmplitudePhase2; // π ~ 2π
-    }
-    _vec3 vCurPos = transform->GetPosition();
-    vCurPos.y = fStartY + fYOffset;
-    transform->SetPosition(vCurPos);
+    //static float fStartY = 0.f;
+    //if (RollTime == dt)
+    //    fStartY = transform->GetPosition().y;
+    //
+    //const float fAmplitudePhase1 = 0.2f * Scale;
+    //const float fAmplitudePhase2 = 2.8f * Scale;
+    //float t = fProgress;
+    //float fYOffset = 0.f;
+    //
+    //if (t <= 0.3f) {
+    //    float fLocalT = t / 0.3f; // 0~1
+    //    fYOffset = sinf(fLocalT * D3DX_PI) * fAmplitudePhase1; // 0 ~ π
+    //}
+    //else {
+    //    float fLocalT = (t - 0.3f) / 0.7f; // 0~1
+    //    fYOffset = sinf(D3DX_PI + fLocalT * D3DX_PI) * fAmplitudePhase2; // π ~ 2π
+    //}
+    //_vec3 vCurPos = transform->GetPosition();
+    //vCurPos.y = fStartY + fYOffset;
+    //transform->SetPosition(vCurPos);
     //movePlayer
     _vec3 moveVec = {
         vDir.x * fRollSpeed * Scale * dt,
@@ -395,9 +400,9 @@ void Player::UpdateAttack(_float dt) {
     //rotateBones
     ApplyPhasedRotation("RArm",
         StartRotations["RArm"],
-        { -210.f, 10.f, -30.f },
-        { -150.f, 10.f, -30.f },
-        { -60.f, 10.f,-30.f }
+        { -210.f, 10.f, -60.f },
+        { -150.f, 10.f, -60.f },
+        { -60.f, 10.f,-60.f }
     );
     ApplyPhasedRotation("LArm",
         StartRotations["LArm"],
@@ -416,8 +421,8 @@ void Player::UpdateAttack(_float dt) {
         { -10.f, 0.f, 0.f }
     );
     //rotatePlayer
-    _vec3 vPlayerStartRot = StartRotations["Player"];
-
+    _vec3 vPlayerStartRot = { 0.f,0.f,0.f };
+    vPlayerStartRot.y = atan2f(-AttackDirection.x, AttackDirection.z);
     // 키프레임 절대값으로 변경
     _vec3 vKey1 = vPlayerStartRot + _vec3(0.f, 30.f, 0.f);
     _vec3 vKey2 = vPlayerStartRot + _vec3(0.f, 0.f, 0.f);
@@ -454,14 +459,14 @@ void Player::UpdateAttack(_float dt) {
     }
 }
 void Player::UpdateShoot(_float dt) {
+    auto transform = GetComponent<TransformComponent>();
     const float fAttackDuration = 0.6f;
     AttackTime += dt;
-    float fProgress = AttackTime / fAttackDuration;
-    fProgress = std::clamp(fProgress, 0.f, 1.f);
+    float fProgress = std::clamp(AttackTime / fAttackDuration, 0.f, 1.f);
 
     auto Lerp = [](const _vec3& a, const _vec3& b, float t) {
         return a + (b - a) * t;
-    };
+        };
     auto LerpRot = [&](const _vec3& startDeg, const _vec3& endDeg, float ratio) {
         _vec3 startRad = {
             D3DXToRadian(startDeg.x),
@@ -474,12 +479,13 @@ void Player::UpdateShoot(_float dt) {
             D3DXToRadian(endDeg.z)
         };
         return Lerp(startRad, endRad, ratio);
-    };
+        };
 
     float fPhase1 = 0.15f;
     float fPhase2 = 0.4f;
     float fPhase3 = 0.9f;
     float fPhase4 = 1.0f;
+
     float t = 0.f;
     _vec3 vCurrentRot;
 
@@ -488,45 +494,36 @@ void Player::UpdateShoot(_float dt) {
         _vec3 vKey1,
         _vec3 vKey2,
         _vec3 vKey3) {
-            if (fProgress < fPhase1) {
-                t = fProgress / fPhase1;
+            if (fProgress < fPhase1)
+                t = fProgress / fPhase1,
                 vCurrentRot = LerpRot(vStart, vKey1, t);
-            }
-            else if (fProgress < fPhase2) {
-                t = (fProgress - fPhase1) / (fPhase2 - fPhase1);
+            else if (fProgress < fPhase2)
+                t = (fProgress - fPhase1) / (fPhase2 - fPhase1),
                 vCurrentRot = LerpRot(vKey1, vKey2, t);
-            }
-            else if (fProgress < fPhase3) {
-                t = (fProgress - fPhase2) / (fPhase3 - fPhase2);
+            else if (fProgress < fPhase3)
+                t = (fProgress - fPhase2) / (fPhase3 - fPhase2),
                 vCurrentRot = LerpRot(vKey2, vKey3, t);
-            }
-            else {
-                t = (fProgress - fPhase3) / (fPhase4 - fPhase3);
+            else
+                t = (fProgress - fPhase3) / (fPhase4 - fPhase3),
                 vCurrentRot = LerpRot(vKey3, vStart, t);
-            }
 
             SetRotation(vCurrentRot, name);
-    };
+        };
 
-    // 🎯 활 쏘는 모션 구성
-    ApplyPhasedRotation("LHand",
-        StartRotations["LHand"],
-        { -90.f, 0.f, 30.f },
-        { -90.f, 0.f, 30.f },
-        { -0.f, 0.f, 0.f }
+    ApplyPhasedRotation("LArm",
+        StartRotations["LArm"],
+        { -100.f, 0.f, -30.f },  // 앞으로 뻗고 약간 안쪽으로 회전 (Z축 음수)
+        { -100.f, 0.f, -30.f },
+        { 0.f, 0.f, 0.f }
     );
-    ApplyPhasedRotation("RHand",
-        StartRotations["RHand"],
-        { -90.f, 0.f, -60.f },
-        { -90.f, 0.f, -30.f },
-        { -0.f, 0.f, 0.f }
+
+    ApplyPhasedRotation("RArm",
+        StartRotations["RArm"],
+        { -100.f, 0.f, 60.f },   // 앞으로 뻗고 약간 안쪽으로 회전 (Z축 양수)
+        { -100.f, 0.f, 60.f },
+        { 0.f, 0.f, 0.f }
     );
-    ApplyPhasedRotation("Player",
-        StartRotations["Player"],
-        { 0.f, 10.f, 0.f },
-        { 0.f, 15.f, 0.f },
-        { 0.f, 20.f, 0.f }
-    );
+
     ApplyPhasedRotation("LLeg", StartRotations["LLeg"],
         { 0.f, 0.f, 0.f },
         { 0.f, 0.f, 0.f },
@@ -538,46 +535,45 @@ void Player::UpdateShoot(_float dt) {
         { 0.f, 0.f, 0.f }
     );
 
-    // 🎯 시선 방향 고정 + 트위스트 회전
-    auto transform = GetComponent<TransformComponent>();
-    _vec3 vStartRot = StartRotations["Player"];
+    // 🔁 본체 회전은 별도로 처리 (시선 고정 + 트위스트)
+    _vec3 vStartRot = transform->GetRotate();
     _vec3 vTwist1 = { 0.f, 10.f, 0.f };
     _vec3 vTwist2 = { 0.f, 0.f, 0.f };
     _vec3 vTwist3 = { 0.f, -10.f, 0.f };
 
-    if (fProgress < fPhase1) {
-        t = fProgress / fPhase1;
+    if (fProgress < fPhase1)
+        t = fProgress / fPhase1,
         vCurrentRot = LerpRot(vStartRot, vTwist1, t);
-    }
-    else if (fProgress < fPhase2) {
-        t = (fProgress - fPhase1) / (fPhase2 - fPhase1);
+    else if (fProgress < fPhase2)
+        t = (fProgress - fPhase1) / (fPhase2 - fPhase1),
         vCurrentRot = LerpRot(vTwist1, vTwist2, t);
-    }
-    else if (fProgress < fPhase3) {
-        t = (fProgress - fPhase2) / (fPhase3 - fPhase2);
+    else if (fProgress < fPhase3)
+        t = (fProgress - fPhase2) / (fPhase3 - fPhase2),
         vCurrentRot = LerpRot(vTwist2, vTwist3, t);
-    }
-    else {
-        t = (fProgress - fPhase3) / (fPhase4 - fPhase3);
+    else
+        t = (fProgress - fPhase3) / (fPhase4 - fPhase3),
         vCurrentRot = LerpRot(vTwist3, vStartRot, t);
-    }
 
     float fCurrentAngle = D3DXToRadian(vCurrentRot.y);
     _vec3 vForward = AttackDirection;
     vForward.y = 0.f;
     D3DXVec3Normalize(&vForward, &vForward);
     transform->SetForward(vForward);
+
     _matrix matRot;
     _vec3 vAxis = transform->GetUp();
     D3DXMatrixRotationAxis(&matRot, &vAxis, fCurrentAngle);
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
-
     transform->SetRotate(transform->GetRotate() + rotateVec);
 
-    // 🎯 종료 조건
+    // 종료 조건
     if (AttackTime >= fAttackDuration) {
         AttackTime = 0.f;
-        State = ePlayerState::WALK;
+        if (WalkTime == 0.f) State = ePlayerState::IDLE;
+        else {
+            WalkTime = 0.f;
+            State = ePlayerState::WALK;
+        }
     }
 }
 void Player::UpdateDead(_float dt) {
@@ -637,8 +633,8 @@ void Player::UpdateDead(_float dt) {
         fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
 
         SetRotation(LerpRot(StartRotations["Head"], rot_HeadFolded, fLerpRatio), "Head");
-        SetRotation(LerpRot(StartRotations["LHand"], rot_LHandFolded, fLerpRatio), "LHand");
-        SetRotation(LerpRot(StartRotations["RHand"], rot_RHandFolded, fLerpRatio), "RHand");
+        SetRotation(LerpRot(StartRotations["LArm"], rot_LHandFolded, fLerpRatio), "LArm");
+        SetRotation(LerpRot(StartRotations["RArm"], rot_RHandFolded, fLerpRatio), "RArm");
         SetRotation(LerpRot(StartRotations["LLeg"], rot_LLegFolded, fLerpRatio), "LLeg");
         SetRotation(LerpRot(StartRotations["RLeg"], rot_RLegFolded, fLerpRatio), "RLeg");
     }
@@ -647,8 +643,8 @@ void Player::UpdateDead(_float dt) {
         fLerpRatio = std::clamp(fLerpRatio, 0.f, 1.f);
 
         SetRotation(LerpRot(rot_HeadFolded, rot_HeadFlat, fLerpRatio), "Head");
-        SetRotation(LerpRot(rot_LHandFolded, rot_LHandFlat, fLerpRatio), "LHand");
-        SetRotation(LerpRot(rot_RHandFolded, rot_RHandFlat, fLerpRatio), "RHand");
+        SetRotation(LerpRot(rot_LHandFolded, rot_LHandFlat, fLerpRatio), "LArm");
+        SetRotation(LerpRot(rot_RHandFolded, rot_RHandFlat, fLerpRatio), "RArm");
         SetRotation(LerpRot(rot_LLegFolded, rot_LLegFlat, fLerpRatio), "LLeg");
         SetRotation(LerpRot(rot_RLegFolded, rot_RLegFlat, fLerpRatio), "RLeg");
     }
