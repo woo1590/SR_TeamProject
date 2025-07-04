@@ -36,6 +36,12 @@ class ENGINE_DLL PhysicsSystem :
                 return b < other.b;
         }
     };
+
+    typedef struct AABBEntry
+    {
+        CollisionComponent* comp;
+        _float minX, maxX;
+    };
 private:
     PhysicsSystem(Scene* owner);
     virtual ~PhysicsSystem();
@@ -52,6 +58,7 @@ public:
 private:
     void ApplyGravity(_float dt);
     void ApplyVelocity(_float dt);
+    void SortAABBEntry();
     void BroadPhase();
     void SolvePosition();
     void CollisionEvent();
@@ -62,6 +69,7 @@ private:
 
     std::set<CollisionPair> CurrCollisions;
     std::set<CollisionPair> PrevCollisions;
+    std::vector<AABBEntry> AABBEntries;
     Scene* owner = nullptr;
 };
 

@@ -43,7 +43,7 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->AddRef();
 
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	/*---------------Light Setting---------------------*/
 	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -222,6 +222,7 @@ void RenderSystem::Reset()
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void RenderSystem::Render_Begin(D3DXCOLOR color)

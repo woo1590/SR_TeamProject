@@ -36,6 +36,7 @@ void PhysicsSystem::Update(_float dt)
 {
 	ApplyGravity(dt);
 	ApplyVelocity(dt);
+	SortAABBEntry();
 	BroadPhase();
 	SolvePosition();
 	CollisionEvent();
@@ -80,20 +81,20 @@ void PhysicsSystem::BroadPhase()
 {
 	CurrCollisions.clear();
 
-	for (_uint i = 0; i < Collisions.size(); ++i)
+	for (_uint i = 0; i < AABBEntries.size(); ++i)
 	{
-		CollisionComponent* a = Collisions[i];
-
-		for (_uint j = i + 1; j < Collisions.size(); ++j)
+		CollisionComponent* a = AABBEntries[i].comp;
+		for (_uint j = i + 1; j < AABBEntries.size();++j)
 		{
-			CollisionComponent* b = Collisions[j];
+			CollisionComponent* b = AABBEntries[j].comp;
+
+			if (AABBEntries[j].minX > AABBEntries[i].maxX)
+				break;
 
 			if (a->CanCollision(b) && b->CanCollision(a))
 			{
 				if (a->CheckAABBCollision(b))
-				{
 					CurrCollisions.emplace(a, b);
-				}
 			}
 		}
 	}
@@ -202,6 +203,24 @@ void PhysicsSystem::CollisionEvent()
 	}
 
 	PrevCollisions.swap(CurrCollisions);
+}
+
+void PhysicsSystem::SortAABBEntry()
+{
+	AABBEntries.clear();
+	AABBEntries.reserve(Collisions.size());
+
+	for (const auto& c : Collisions)
+	{
+		_vec3 min, max;
+		c->GetWorldAABB(&min, &max);
+
+		AABBEntries.emplace_back(AABBEntry{ c,min.x,max.x });
+	}
+
+	std::sort(AABBEntries.begin(), AABBEntries.end(), [](AABBEntry& a, AABBEntry& b) {
+		return a.minX < b.minX;
+		});
 }
 
 void PhysicsSystem::Free()

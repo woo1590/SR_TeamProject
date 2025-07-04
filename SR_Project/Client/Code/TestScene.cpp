@@ -75,7 +75,7 @@ void TestScene::Load()
 	LoadBlock();
 
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(-5.f, 100.f, -5.f);
+	player->GetComponent<TransformComponent>()->SetPosition(40.f, 100.f, 30.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	auto fCam = FirstCam::Create(ObjectMgr);
@@ -137,7 +137,6 @@ void TestScene::Update(float dt)
 void TestScene::Late_Update(float dt)
 {
 	ObjectMgr->Late_Update(dt);
-	//CollisionSys->Late_Update();
 }
 
 void TestScene::Unload()
@@ -207,7 +206,7 @@ void TestScene::Free()
 void TestScene::LoadBlock()
 {
 	HANDLE hFile(nullptr);
-	hFile = CreateFile(L"../../Reference/MapData/MapV1.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	hFile = CreateFile(L"../../Reference/MapData/TestScene.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
