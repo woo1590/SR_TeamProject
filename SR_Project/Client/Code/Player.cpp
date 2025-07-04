@@ -21,6 +21,7 @@
 
 #include "Sword.h"
 #include "Bow.h"
+#include "Arrow.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) {}
 Player::~Player() {}
@@ -414,11 +415,20 @@ void Player::UpdateAttack(_float dt) {
 void Player::UpdateShoot(_float dt) {
     AttackTime += dt;
 
-    //Rotate Bones
+    //shoot arrow
     const float fAttackDuration = 0.6f;
     float fProgress = std::clamp(AttackTime / fAttackDuration, 0.f, 1.f);
     vector<float> phaseVec = { 0.15f, 0.4f, 0.9f, 1.f };
 
+    static float prePhase = 0.f;
+    if (prePhase < phaseVec.at(0) && fProgress >= phaseVec.at(0)) {
+        auto shootDir = AttackDirection + GetComponent<TransformComponent>()->GetPosition() - Bones["LHand"]->GetComponent<TransformComponent>()->GetPosition();
+        D3DXVec3Normalize(&shootDir, &shootDir);
+        Arrow::Create(owner, ObjectType::Projectile, ObjectType::Player, shootDir);
+    }
+    prePhase = fProgress;
+
+    //Rotate Bones
     vector<_vec3> LArmRotVec =
     {
         StartRotations["LArm"],
@@ -485,6 +495,7 @@ void Player::UpdateShoot(_float dt) {
         }
         Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
         Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
+        prePhase = 0.f;
     }
 }
 void Player::UpdateDead(_float dt) {

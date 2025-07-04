@@ -1,17 +1,22 @@
-﻿#include "pch.h"
-#include "Item.h"
+#include "pch.h"
+#include "Projectile.h"
 
 #include "TransformComponent.h"
 #include "ObjectManager.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
 
-Item::Item(ObjectManager* owner, ObjectType objType) :Object(owner, objType) {}
-Item::~Item() {}
+Projectile::Projectile(ObjectManager* owner, ObjectType objType) : Object(owner, objType) {}
 
-Item* Item::Create(ObjectManager* owner, ObjectType objType)
+Projectile::~Projectile() {}
+
+void Projectile::Free()
 {
-    Item* Instance = new Item(owner, objType);
+	Object::Free();
+}
+Projectile* Projectile::Create(ObjectManager* owner, ObjectType objType)
+{
+    Projectile* Instance = new Projectile(owner, objType);
 
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {
@@ -21,29 +26,26 @@ Item* Item::Create(ObjectManager* owner, ObjectType objType)
     return Instance;
 }
 
-HRESULT Item::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT Projectile::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     if (FAILED(Object::Ready_Object()))
         return E_FAIL;
+
     auto transform = AddComponent<TransformComponent>();
-    auto info = AddComponent<InfoComponent<ItemInfo>>();
+    auto info = AddComponent<InfoComponent<ProjectileInfo>>();
     auto mesh = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     owner->AddObject(objType, this);
-    
+
     return S_OK;
 }
 
-void Item::Update(_float dt)
+void Projectile::Update(_float dt)
 {
     Object::Update(dt);
 }
 
-void Item::Late_Update(_float dt)
+void Projectile::Late_Update(_float dt)
 {
     Object::Late_Update(dt);
 }
 
-void Item::Free()
-{
-    Object::Free();
-}

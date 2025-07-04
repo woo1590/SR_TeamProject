@@ -21,8 +21,8 @@ Bow* Bow::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Item::Ready_Object(owner, objType);
-
+    if (FAILED(Item::Ready_Object(owner, objType)))
+        return E_FAIL;
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     ItemInfo i;
     i.size = 1.f;

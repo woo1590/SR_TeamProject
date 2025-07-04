@@ -26,6 +26,7 @@ namespace Engine
 		Item,
 		Light,
 		Bone,
+		Projectile,
 		SkyBox,
 		Camera,
 		UI,

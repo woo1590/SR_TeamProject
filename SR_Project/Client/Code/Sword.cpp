@@ -5,6 +5,7 @@
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
+#include "CollisionComponent.h"
 
 Sword::Sword(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
 
@@ -21,7 +22,8 @@ Sword* Sword::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Item::Ready_Object(owner, objType);
+    if (FAILED(Item::Ready_Object(owner, objType)))
+        return E_FAIL;
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     ItemInfo i;
     i.size = 1.f;
@@ -47,6 +49,12 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     mesh->SetMaterial(i.material);
     mesh->SetRenderID(i.renderId);
 
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY);
+    collision->SetSize(_vec3(1.f, 2.f, 1.f));
+    collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
+
     return S_OK;
 }
 
@@ -63,4 +71,16 @@ void Sword::Late_Update(_float dt)
 void Sword::Free()
 {
     Item::Free();
+}
+
+void Sword::SetCollisionEnter(Object* other)
+{
+    ObjectType objType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+
+    if (objType == ObjectType::Monster) {
+        float swordAttackDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().attackDamage;
+        other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
+        collision->ResolveAABBColiision(other);
+    }
 }
