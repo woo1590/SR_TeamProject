@@ -27,7 +27,7 @@ private:
     TransformComponent* Target = nullptr;
     TransformComponent* FollowTarget = nullptr;
 
-    _vec3 Offset{ 20.f,30.f,-20.f };
+    _vec3 Offset{ 15.f,25.f,-15.f };
     _vec3 Direction{ 0.f,0.f,0.f };
 };
 
