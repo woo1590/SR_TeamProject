@@ -74,7 +74,7 @@ void RenderSystem::Render()
 {
 	if (Camera)
 	{
-		//PriorityPass();
+		PriorityPass();
 		NonAlphaPass();
 		AlphaPass();
 

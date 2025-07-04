@@ -72,7 +72,7 @@ void TestScene::Load()
 
 #endif
 	/*----------------Load Camera---------------------*/
-	//LoadBlock();
+	LoadBlock();
 
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(-5.f, 100.f, -5.f);
@@ -93,7 +93,7 @@ void TestScene::Load()
 
 
 	/*------------------------------------------------*/
-	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 
 	auto monster = ObjectMgr->GetObjectList(ObjectType::Monster);
