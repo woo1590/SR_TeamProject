@@ -35,8 +35,8 @@ HRESULT PhysicsSystem::Ready_PhysicsSystem()
 void PhysicsSystem::Update(_float dt)
 {
 	ApplyGravity(dt);
-	BroadPhase();
 	ApplyVelocity(dt);
+	BroadPhase();
 	SolvePosition();
 	CollisionEvent();
 }
@@ -68,6 +68,14 @@ void PhysicsSystem::ApplyGravity(_float dt)
 	}
 }
 
+void PhysicsSystem::ApplyVelocity(_float dt)
+{
+	for (auto& body : Bodies)
+	{
+		_vec3 velocity = body->GetVelocity();
+		body->GetOwner()->GetComponent<TransformComponent>()->Translate(velocity * dt);
+	}
+}
 void PhysicsSystem::BroadPhase()
 {
 	CurrCollision.clear();
@@ -128,14 +136,14 @@ void PhysicsSystem::SolvePosition()
 
 		_vec3 mtv = normal * pen;
 
-		_float invA = a->GetOwner()->GetComponent<PhysicsComponent>()->GetMass();
-		_float invB = b->GetOwner()->GetComponent<PhysicsComponent>()->GetMass();
+		_float invA = a->GetOwner()->GetComponent<PhysicsComponent>()->GetInvMass();
+		_float invB = b->GetOwner()->GetComponent<PhysicsComponent>()->GetInvMass();
 		_float sum = invA + invB;
 
 		if (!sum) continue;
 
-		a->GetOwner()->GetComponent<TransformComponent>()->Translate(-mtv * (invA / sum));
-		b->GetOwner()->GetComponent<TransformComponent>()->Translate(mtv * (invB / sum));
+		a->GetOwner()->GetComponent<TransformComponent>()->Translate(mtv * (invA / sum));
+		b->GetOwner()->GetComponent<TransformComponent>()->Translate(-mtv * (invB / sum));
 
 		if (normal.y > 0.7f)
 		{
@@ -158,22 +166,14 @@ void PhysicsSystem::SolvePosition()
 	}
 }
 
-void PhysicsSystem::ApplyVelocity(_float dt)
-{
-	for (auto& body : Bodies)
-	{
-		_vec3 velocity = body->GetVelocity();
-		body->GetOwner()->GetComponent<TransformComponent>()->Translate(velocity * dt);
-	}
-}
 
 void PhysicsSystem::CollisionEvent()
 {
 	//Collision Enter
 	for (const auto& currPair : CurrCollision)
 	{
-		currPair.first->OnCollisionEnter(currPair.second);
-		currPair.second->OnCollisionEnter(currPair.first);
+		//currPair.first->OnCollisionEnter(currPair.second);
+		//currPair.second->OnCollisionEnter(currPair.first);
 	}
 
 	//Collision Stay
@@ -184,8 +184,8 @@ void PhysicsSystem::CollisionEvent()
 			auto it = std::find(PrevCollision.begin(), PrevCollision.end(), currPair);
 			if (it != PrevCollision.end())
 			{
-				currPair.first->OnCollisionStay(currPair.second);
-				currPair.second->OnCollisionStay(currPair.first);
+				//currPair.first->OnCollisionStay(currPair.second);
+				//currPair.second->OnCollisionStay(currPair.first);
 			}
 		}
 	}

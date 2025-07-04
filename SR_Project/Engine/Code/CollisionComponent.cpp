@@ -40,7 +40,7 @@ HRESULT CollisionComponent::Ready_Component()
 {
 	BBType = BoundingBoxType::Box;
 
-	//owner->GetScene()->GetPhysicsStstem()->RegisterCollision(this);
+	owner->GetScene()->GetPhysicsStstem()->RegisterCollision(this);
 	owner->GetScene()->GetCollisionSystem()->RegisterCollision(this);
 
 	auto device = GraphicDevice::GetInstance()->GetDevice();

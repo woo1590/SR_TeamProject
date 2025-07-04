@@ -105,23 +105,6 @@ void Player::Update(_float dt){
         break;
     }
 
-    //Physics
-    auto transform = GetComponent<TransformComponent>();
-    auto physics = GetComponent<PhysicsComponent>();
-
-    Ray downRay{ transform->GetPosition(),_vec3(0.f,-1.f,0.f) };
-    HitInfo hit = GetScene()->GetCollisionSystem()->Raycast(downRay);
-    if (hit.IsHit && hit.Distance <= 4.f)
-    {
-        physics->SetGround(true);
-    }
-    else
-    {
-        physics->SetGround(false);
-        _vec3 velocity = physics->GetVelocity();
-        transform->Translate(velocity * dt);
-    }
-    
 }
 void Player::Late_Update(_float dt){ BaseCharacter::Late_Update(dt); }
 void Player::Free() { BaseCharacter::Free(); }

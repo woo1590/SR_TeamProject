@@ -88,8 +88,8 @@ void Monster::OnCollisionStay(Object* other)
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
 
-    if (objType == ObjectType::StaticBlock)
-        collision->ResolveAABBColiision(other);
+    //if (objType == ObjectType::StaticBlock)
+    //    collision->ResolveAABBColiision(other);
 }
 
 void Monster::Free()

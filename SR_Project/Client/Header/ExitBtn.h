@@ -12,5 +12,6 @@ private:
 public:
 	static ExitBtn* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
+
 };
 

@@ -22,7 +22,7 @@ HRESULT ExitBtn::Ready_Object()
 
 	float scale = 0.3f;
 
-	auto base = AddComponent<UIRenderer>();
+ 	auto base = AddComponent<UIRenderer>();
 	base->SetTexture(L"exitbtn");
 	base->SetScale(scale, scale);
 	base->SetRenderType(UIRenderType::Inventory);

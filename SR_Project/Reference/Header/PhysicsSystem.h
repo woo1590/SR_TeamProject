@@ -24,8 +24,8 @@ public:
 
 private:
     void ApplyGravity(_float dt);
-    void BroadPhase();
     void ApplyVelocity(_float dt);
+    void BroadPhase();
     void SolvePosition();
     void CollisionEvent();
 

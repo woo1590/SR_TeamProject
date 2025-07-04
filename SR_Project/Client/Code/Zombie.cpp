@@ -56,7 +56,7 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
     collision->SetSize(_vec3(3.5f, 7.f, 2.5f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
-    transform->SetPosition(_vec3(30.f, 0.f, -30.f));
+    transform->SetPosition(_vec3(-5.f, 150.f, -5.f));
 
     //Create BT
     ChaseNode* chase = new ChaseNode();
