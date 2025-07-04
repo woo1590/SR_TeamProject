@@ -7,6 +7,8 @@
 #include "FontComponent.h"
 #include "Object.h"
 
+UIRenderType UIRenderer::curRenderType = UIRenderType::MainGame;
+
 UIRenderer* UIRenderer::Create(Object* owner)
 {
     auto* instance = new UIRenderer(owner);
@@ -14,7 +16,6 @@ UIRenderer* UIRenderer::Create(Object* owner)
     if (FAILED(instance->Ready_Component()))
         return Safe_Release(instance), nullptr;
 
-	EngineCore::GetInstance()->GetRenderSystem()->RegisterRenderer(RENDER_ID::Render_UI, instance);
 	return instance;
 }
 
@@ -106,11 +107,10 @@ void UIRenderer::Render()
 
         sprite->SetTransform(&newMatrix);
         sprite->Draw(tex2D, &srcRect, &center, &worldPos, D3DCOLOR_ARGB(255, 255, 255, 255));
-        sprite->SetTransform(&oldMatrix);
+        sprite->SetTransform(&oldMatrix); 
     }
-
     auto font = owner->GetComponent<FontComponent>();
 
     if (font)
-        font->Render(); 
+        font->Render();
 }

@@ -8,14 +8,7 @@ class ENGINE_DLL UIRenderer : public RendererComponent
 {
 public:
 	explicit UIRenderer(Object* owner)
-		:RendererComponent(owner, RENDER_ID::Render_UI) {}
-	virtual ~UIRenderer()
-	{
-		if (tex2D)
-			tex2D->Release();
-
-		if (texture)
-			texture->Release();
+		:RendererComponent(owner, RENDER_ID::Render_UI) {
 	}
 
 public:
@@ -35,20 +28,26 @@ public:
 	void UpdateCenter();
 
 	void SetScale(float x, float y) { scale = {x, y}; }
-	
 	_vec2 GetScale() const { return scale; }
+
 	LONG GetFullWidth() const { return fullWidth; }
 	LONG GetFullHeight() const { return fullHeight; }
 
 	void SetVisible(bool visible) { isVisible = visible; }
 	bool IsVisible() const { return isVisible; }
 
-private:
-	void Free()override{}
+	void SetRenderType(UIRenderType type) { renderType = type; }
+	UIRenderType GetRenderType() const { return renderType; }
 
+	static void SetCurRenderType(UIRenderType type) { curRenderType = type; }
+	static UIRenderType GetCurRenderType() { return curRenderType; }
+
+private:
+	static UIRenderType curRenderType;
+	UIRenderType renderType = UIRenderType::MainGame;
 	LPDIRECT3DBASETEXTURE9 texture = nullptr;
 	IDirect3DTexture9* tex2D = nullptr;
-	RECT  srcRect{};
+	RECT  srcRect{}; 
 	_vec3 center{}, pos{};
 
 	float curRatio = 1.f, targetRatio = 1.f;

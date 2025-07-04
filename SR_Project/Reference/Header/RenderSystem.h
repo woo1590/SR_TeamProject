@@ -6,6 +6,7 @@ class RendererComponent;
 class CollisionComponent;
 class Object;
 class CameraComponent;
+class UIRenderer;
 class ENGINE_DLL RenderSystem : public Base
 {
 private:
@@ -23,6 +24,7 @@ public:
     void RegisterRenderer(RENDER_ID layer, RendererComponent* renderer);
     void RegisterCollision(CollisionComponent* collision);
     void SetCamera(Object* cam);
+    void SetUIRenderState(UIRenderType newType);
 
     ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
 

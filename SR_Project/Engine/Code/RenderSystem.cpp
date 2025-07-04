@@ -106,6 +106,11 @@ void RenderSystem::SetCamera(Object* cam)
 	Camera = cam->GetComponent<CameraComponent>();
 }
 
+void RenderSystem::SetUIRenderState(UIRenderType newType)
+{
+	UIRenderer::SetCurRenderType(newType);
+}
+
 void RenderSystem::PriorityPass()
 {
 	_matrix view = Camera->GetViewMatrix();
@@ -163,8 +168,15 @@ void RenderSystem::UIPass()
 
 	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
 
-	for (auto& ui : uiList)
+	for (auto* renderer : uiList)
+	{
+		auto* ui = static_cast<UIRenderer*>(renderer);
+
+		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() &&  ui->GetRenderType() != UIRenderType::Always)
+			continue;
+
 		ui->Render();
+	}
 
 	spriteBatch->End();
 

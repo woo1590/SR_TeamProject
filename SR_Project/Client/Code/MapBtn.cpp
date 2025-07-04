@@ -16,8 +16,6 @@ HRESULT MapBtn::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
-	//auto hover = AddComponent<HoverComponent>();
-	//auto button = AddComponent<ButtonComponent>();
 
 	transform->SetPosition(780.f,665.f);
 

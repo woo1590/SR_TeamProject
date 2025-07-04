@@ -14,27 +14,25 @@ PanelComponent* PanelComponent::Create(Object* owner)
 
 HRESULT PanelComponent::Ready_Component()
 {
-	SetVisible(isVisible);
+	SetVisible(false);
 	return S_OK;
 }
 
 void PanelComponent::SetVisible(bool visible)
 {
-	isVisible = visible;
-
-	auto renderer = owner->GetComponent<UIRenderer>();
-	renderer->SetVisible(visible);
+	if (auto renderer = owner->GetComponent<UIRenderer>())
+		renderer->SetVisible(visible);
 }
 
 void PanelComponent::Toggle()
 {
-	SetVisible(!isVisible);
+	if (auto renderer = owner->GetComponent<UIRenderer>())
+		renderer->SetVisible(!renderer->IsVisible());
 }
 
-void PanelComponent::Update(float dt)
+bool PanelComponent::IsVisible() const
 {
-	const auto& input = EngineCore::GetInstance()->GetInputSystem();
-	
-	if (input->IsKeyPressed(KEY::I))
-		Toggle();
+	if (auto renderer = owner->GetComponent<UIRenderer>())
+		return renderer->IsVisible();
+	return false;
 }

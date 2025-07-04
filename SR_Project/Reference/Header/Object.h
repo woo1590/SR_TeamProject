@@ -45,6 +45,18 @@ public:
             return nullptr;
     }
 
+    template<typename T>
+    vector<T*> GetComponents()
+    {
+        vector<T*> result;
+        for (auto* component : Components)
+        {
+            if (auto* casted = dynamic_cast<T*>(component))
+                result.push_back(casted);
+        }
+        return result;
+    }
+
 protected:
     void Free()override;
 

@@ -19,7 +19,7 @@ HRESULT Cursor::Ready_Object()
 
 	renderer->SetTexture(L"Cursor");
 	renderer->SetPivot(UIPivot::LeftTop);
-
+	renderer->SetRenderType(UIRenderType::Always);
 	return S_OK;
 }
 

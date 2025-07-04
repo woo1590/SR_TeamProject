@@ -2,6 +2,7 @@
 #include "ObjectManager.h"
 #include "Object.h"
 #include "TransformComponent.h"
+#include "UIRenderer.h"
 
 ObjectManager::ObjectManager(Scene* owner)
 	:owner(owner)
@@ -95,6 +96,11 @@ void ObjectManager::AddUIObject(Object* obj)
 Object* ObjectManager::GetFrontObject(ObjectType objType)
 {
 	return Objects[static_cast<int>(objType)].front();
+}
+
+Object* ObjectManager::GetLastObject(ObjectType objType)
+{
+	return Objects[static_cast<int>(objType)].back();
 }
 
 std::list<Object*> ObjectManager::GetObjectList(ObjectType objType)

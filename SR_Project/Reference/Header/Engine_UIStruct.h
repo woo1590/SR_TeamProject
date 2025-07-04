@@ -24,6 +24,8 @@ namespace Engine
 		float speed = 5.f;
 	};
 
+
+
 	enum class UIEventType
 	{
 		HP_Changed,
@@ -39,6 +41,6 @@ namespace Engine
 
 	enum class SlotType
 	{
-		Inventory, Equipment, Quick, Storage, Count
+		Inventory, Equipment, Gear, Quick, Storage, Count
 	};
 }
