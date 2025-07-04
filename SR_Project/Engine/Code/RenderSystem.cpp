@@ -167,7 +167,8 @@ void RenderSystem::UIPass()
 	{
 		auto* ui = static_cast<UIRenderer*>(renderer);
 
-		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() &&  ui->GetRenderType() != UIRenderType::Always)
+		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() && 
+			ui->GetRenderType() != UIRenderType::Always)
 			continue;
 
 		ui->Render();

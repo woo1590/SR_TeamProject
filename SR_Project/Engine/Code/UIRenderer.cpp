@@ -114,3 +114,9 @@ void UIRenderer::Render()
     if (font)
         font->Render();
 }
+
+void UIRenderer::Free()
+{
+    Safe_Release(tex2D);
+    Safe_Release(texture);
+}

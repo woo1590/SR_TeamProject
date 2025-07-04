@@ -19,8 +19,10 @@ HP_Potion* HP_Potion::Create(ObjectManager* owner)
 HRESULT HP_Potion::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
-	auto renderer = AddComponent<UIRenderer>();
-	auto hover = AddComponent<HoverComponent>();
+	auto renderer  = AddComponent<UIRenderer>();
+	auto hover     = AddComponent<HoverComponent>();
+
+
 
 	transform->SetPosition(700.f, 700.f);
 	renderer->SetScale(0.8f, 0.8f);

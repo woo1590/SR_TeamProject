@@ -22,8 +22,6 @@ namespace Engine
 		float speed;
 	};
 
-
-
 	enum class UIEventType
 	{
 		HP_Changed,

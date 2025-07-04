@@ -42,6 +42,8 @@ public:
 	static void SetCurRenderType(UIRenderType type) { curRenderType = type; }
 	static UIRenderType GetCurRenderType() { return curRenderType; }
 
+	void Free() override;
+
 private:
 	static UIRenderType curRenderType;
 	UIRenderType renderType = UIRenderType::MainGame;

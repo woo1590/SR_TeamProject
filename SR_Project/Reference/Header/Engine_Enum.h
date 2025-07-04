@@ -40,14 +40,14 @@ namespace Engine
 		Count
 	};
 
-	enum class NotifyType
-	{
-		None, 
-		HP_Changed,
-		EXP_Changed,
-		Speed_Changed,
-		Player_Damaged
-	};
+	//enum class NotifyType
+	//{
+	//	None, 
+	//	HP_Changed,
+	//	EXP_Changed,
+	//	Speed_Changed,
+	//	Player_Damaged
+	//};
 
 	enum class BarDirection {Vertical, Horizontal, ClockWise16};
 
