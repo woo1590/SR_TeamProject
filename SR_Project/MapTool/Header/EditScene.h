@@ -22,8 +22,6 @@ private:
 #ifdef USE_IMGUI
     void ImGuiTest(); // ImGUI 작성SetIsBlock
 #endif
-    void SaveStage(const char* saveStage);   // 맵 저장
-    void LoadStage(const char* loadStage);   // 맵 로드
 
     void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);     // 광선 위치와 방향 초기화
     bool RayIntersectsAABB(const _vec3& rayOrigin, const _vec3& rayDir, const _vec3& boxMin, const _vec3& boxMax, float& outDistance); // 광선 박스 충돌
@@ -43,14 +41,9 @@ private:
     int selectedDBlockDir = 0;
     int selectedDBlockType = static_cast<int>(DynamicBlockType::DBlockNone);
 
-    int Count = -1;
-
     StaticBlockDir staticBlockDir = StaticBlockDir::BlockY;
     StaticBlockType staticBlockType = StaticBlockType::SBlockNone;
 
     DynamicBlockDir dynamicBlockDir = DynamicBlockDir::DBEnd;
     DynamicBlockType dynamicBlockType = DynamicBlockType::DBlockNone;
-
-    std::vector<SB> staticBlocks;
-    std::vector<DB> dynamicBlocks;
 };

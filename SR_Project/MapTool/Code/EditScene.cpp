@@ -10,6 +10,7 @@
 #include "ImGuiManager.h"
 #include "CameraManager.h"
 #include "CollisionSystem.h"
+#include "BlockManager.h"
 
 //object
 #include "Camera.h"
@@ -68,6 +69,7 @@ void EditScene::Load()
 	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
 	
+	BlockMgr = BlockManager::Create(this);
 	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockDir::BlockY };
 	staticBlocks.push_back(baseBlock);
 
@@ -129,11 +131,11 @@ void EditScene::ImGuiTest()
 
 	static char save[64]{};
 	ImGui::InputText("<- Save Stage Name", save, sizeof(save));
-	if (ImGui::Button("SAVE")) SaveStage(save);
+	if (ImGui::Button("SAVE")) BlockMgr->SaveStage(save);
 
 	static char load[64]{};
 	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
-	if (ImGui::Button("LOAD")) LoadStage(load);
+	if (ImGui::Button("LOAD")) BlockMgr->LoadStage(load);
 
 	const char* staticBlockNames[] = { "Dirt", "GrassDirt", "Wood", "WoodPlank", "Stone", "CobbleStone", "None" };
 	if (ImGui::Combo("<- Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
@@ -491,159 +493,6 @@ void EditScene::Place(const _vec3& position)
 
 		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockDir });
 	}
-}
-
-void EditScene::SaveStage(const char* saveStage)
-{
-	HANDLE hFile(nullptr);
-	string path = "../../Reference/MapData/"; path += saveStage; path += ".dat";
-
-	int len(MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, NULL, 0));
-	wstring wpath(len, 0);
-	MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, &wpath[0], len);
-
-	hFile = CreateFile(wpath.c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	if (hFile == INVALID_HANDLE_VALUE)
-	{
-		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Fail", _T("Fail"), MB_OK);
-		return;
-	}
-
-	DWORD dwByte(0);
-	DWORD SBSize(staticBlocks.size());
-	DWORD DBSize(dynamicBlocks.size());
-	WriteFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr);
-	WriteFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr);
-	for (auto& block : staticBlocks) WriteFile(hFile, &block, sizeof(SB), &dwByte, nullptr);
-	for (auto& block : dynamicBlocks)
-	{
-		WriteFile(hFile, &block, sizeof(DB), &dwByte, nullptr);
-
-		switch (block.Type)
-		{
-		case DynamicBlockType::LeverSwitch:
-		{
-			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
-			{
-				if (obj->GetComponent<TransformComponent>()->GetPosition() == block.Pos)
-				{
-					int id = static_cast<DynamicBlock*>(obj)->GetID();
-					WriteFile(hFile, &id, sizeof(int), &dwByte, nullptr);
-					break;
-				}
-			}
-			break;
-		}
-		case DynamicBlockType::IronCages:
-		{
-			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
-			{
-				if (obj->GetComponent<TransformComponent>()->GetPosition() == block.Pos)
-				{
-					auto dyn = static_cast<DynamicBlock*>(obj);
-
-					int count = dyn->GetCount();
-					WriteFile(hFile, &count, sizeof(int), &dwByte, nullptr);
-
-					auto ids = dyn->GetIDVec();
-					int size = static_cast<int>(ids.size());
-					WriteFile(hFile, &size, sizeof(int), &dwByte, nullptr);
-					if (size > 0)
-						WriteFile(hFile, ids.data(), sizeof(int) * size, &dwByte, nullptr);
-					break;
-				}
-			}
-			break;
-		}
-		}
-	}
-		
-	CloseHandle(hFile);
-	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Success", _T("Success"), MB_OK);
-}
-
-void EditScene::LoadStage(const char* loadStage)
-{
-	HANDLE hFile(nullptr);
-	string path = "../../Reference/MapData/"; path += loadStage; path += ".dat";
-
-	int len(MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, NULL, 0));
-	wstring wpath(len, 0);
-	MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, &wpath[0], len);
-
-	hFile = CreateFile(wpath.c_str(), GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	if (INVALID_HANDLE_VALUE == hFile)
-	{
-		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Fail", _T("Fail"), MB_OK);
-		return;
-	}
-	
-	ObjectMgr->ClearList(ObjectType::StaticBlock); staticBlocks.clear(); staticBlocks.shrink_to_fit();
-	ObjectMgr->ClearList(ObjectType::DynamicBlock); dynamicBlocks.clear(); dynamicBlocks.shrink_to_fit();
-
-	DWORD dwByte(0), dwSBTot(0), dwDBTot(0);
-	DWORD SBSize(0), DBSize(0);
-	SB newSBlock; DB newDBlock;
-
-	if (!ReadFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr)) return;
-	if (!ReadFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr)) return;
-
-	for (DWORD i = 0; i < SBSize; ++i)
-	{
-		if (!ReadFile(hFile, &newSBlock, sizeof(SB), &dwByte, nullptr)) return;
-
-		auto sBlock = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, newSBlock.Type, newSBlock.Dir);
-		sBlock->GetComponent<TransformComponent>()->SetPosition(newSBlock.Pos);
-
-		ObjectMgr->AddObject(ObjectType::StaticBlock, sBlock);
-		staticBlocks.push_back(newSBlock);
-	}
-
-	for (DWORD i = 0; i < DBSize; ++i)
-	{
-		if (!ReadFile(hFile, &newDBlock, sizeof(DB), &dwByte, nullptr)) return;
-
-		Object* dBlock = nullptr;
-
-		if (newDBlock.Type == DynamicBlockType::IronCages)
-		{
-			int count = 0;
-			ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr);
-
-			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, count);
-			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
-
-			int vecSize = 0;
-			ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr);
-			if (vecSize > 0)
-			{
-				std::vector<int> ids(vecSize);
-				ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr);
-				for (int id : ids)
-					static_cast<DynamicBlock*>(dBlock)->AddID(id);
-			}
-		}
-		else
-		{
-			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, Count);
-			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
-
-			if (newDBlock.Type == DynamicBlockType::LeverSwitch)
-			{
-				int id = 0;
-				ReadFile(hFile, &id, sizeof(int), &dwByte, nullptr);
-				static_cast<DynamicBlock*>(dBlock)->SetID(id);
-			}
-		}
-
-		ObjectMgr->AddObject(ObjectType::DynamicBlock, dBlock);
-		dynamicBlocks.push_back(newDBlock);
-	}
-
-	CloseHandle(hFile);
-	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
 }
 
 void EditScene::Free()

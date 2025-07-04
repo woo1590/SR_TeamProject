@@ -7,6 +7,7 @@ class EventSystem;
 class CollisionSystem;
 class PhysicsSystem;
 class CameraManager;
+class BlockManager;
 class Object;
 class ENGINE_DLL Scene : public Base
 {
@@ -41,6 +42,19 @@ public:
     CollisionSystem*    GetCollisionSystem()const;
     PhysicsSystem*      GetPhysicsStstem()const;
     CameraManager*      GetCameraManager()const;
+    BlockManager*      GetBlockManager()const;
+
+    ////////////////////////////////////////////// 0704
+public:
+    vector<SB>& GetStaticBlocks() { return staticBlocks; }
+    vector<DB>& GetDynamicBlocks() { return dynamicBlocks; }
+
+protected:
+    int Count = -1;
+    std::vector<SB> staticBlocks;
+    std::vector<DB> dynamicBlocks;
+    ////////////////////////////////////////////// 0704
+
 protected:
     void Free()override;
 
@@ -49,6 +63,8 @@ protected:
     CollisionSystem* CollisionSys = nullptr;
     PhysicsSystem* PhysicsSys = nullptr;
     CameraManager* CameraMgr = nullptr; 
+
+    BlockManager* BlockMgr = nullptr;
 };
 
 END

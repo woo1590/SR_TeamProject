@@ -39,6 +39,11 @@ CameraManager* Scene::GetCameraManager() const
 	return CameraMgr;
 }
 
+BlockManager* Scene::GetBlockManager() const
+{
+	return BlockMgr;
+}
+
 void Scene::Free()
 {
 
