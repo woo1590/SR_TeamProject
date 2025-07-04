@@ -42,6 +42,16 @@ void ResourceManager::LoadResource(const std::wstring& texPath, const std::wstri
     LoadMaterial(mtrlKey, mtrl);
 }
 
+void ResourceManager::LoadVertexShader(const std::wstring& filePath, const std::wstring& key)
+{
+
+}
+
+void ResourceManager::LoadFragmentShader(const std::wstring& filePath, const std::wstring& key)
+{
+
+}
+
 void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
 {
     LPDIRECT3DBASETEXTURE9 tex = nullptr;

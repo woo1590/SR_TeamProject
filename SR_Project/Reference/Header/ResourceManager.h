@@ -5,6 +5,7 @@ BEGIN(Engine)
 class Mesh;
 class TerrainMesh;
 class Material;
+class Shader;
 class ENGINE_DLL ResourceManager : public Base
 {
 private:
@@ -17,6 +18,8 @@ public:
 
     /*----------File Load----------------*/
     void LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey);
+    void LoadVertexShader(const std::wstring& filePath, const std::wstring& key);
+    void LoadFragmentShader(const std::wstring& filePath, const std::wstring& key);
 
     void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
     void LoadMesh(const std::wstring& key, Mesh* mesh);
@@ -36,6 +39,7 @@ private:
     std::unordered_map<std::wstring, Mesh*> MeshContainer;
     std::unordered_map<std::wstring, Material*> MaterialContainer;
     std::unordered_map<std::wstring, LPDIRECT3DBASETEXTURE9> TextureContainer;
+    std::unordered_map<std::wstring, Shader*> ShaderContainer;
 
     unordered_map<wstring, int> uiLayerTable;
 };

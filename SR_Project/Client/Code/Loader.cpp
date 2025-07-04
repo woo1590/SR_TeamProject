@@ -83,12 +83,10 @@ _uint __stdcall Loader::LoaderMain(void* arg)
 
 HRESULT Loader::Load_TestScene()
 {
-	auto cube = CubeMesh::Create();
-	auto skyboxMtrl = Material::Create();
-	auto terrainMtrl = Material::Create();
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 
 	/*--------------Load File Resource-----------------*/
+	auto cube = CubeMesh::Create();
 	resource->LoadMesh(L"Cube_Mesh", cube);
 	resource->LoadResource(L"../Resource/Texture/SkyBox/burger3.dds", L"Basic_SkyBox", TEXTURE::Tex_Cube, L"SkyBox_Mtrl");
 	
