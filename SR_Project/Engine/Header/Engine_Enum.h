@@ -24,7 +24,7 @@ namespace Engine
 		Player,
 		Monster,
 		Light,
-		Terrain,
+		Bone,
 		SkyBox,
 		Camera,
 		UI,

@@ -11,7 +11,9 @@ namespace Engine
 		int maxExp = 10;
 		float speed = 6.f;
 	};
+	struct ItemInfo {
 
+	};
 	struct EnemyInfo
 	{
 		int level;

@@ -23,7 +23,7 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
     Item::Ready_Object(owner, objType);
     auto transform = GetComponent<TransformComponent>();
     auto mesh = GetComponent<MeshRenderer>();
-    auto info = GetComponent<InfoComponent<ItemInfo>>();
+    auto info = GetComponent<InfoComponent<ItemInfo>>();PlayerInfo;
     float Scale = 1.f;
     transform->SetScale(0.1f * Scale, 1.f * Scale, 1.f * Scale);
     transform->SetPosition(0.25f * Scale, -1.2f * Scale, -0.2f * Scale);
