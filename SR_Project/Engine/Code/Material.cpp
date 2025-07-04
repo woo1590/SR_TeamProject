@@ -3,6 +3,7 @@
 #include "GraphicDevice.h"
 #include "EngineCore.h"
 #include "ResourceManager.h"
+#include "Shader.h"
 
 Material::Material()
     :Device(GraphicDevice::GetInstance()->GetDevice())
@@ -61,6 +62,43 @@ void Material::Apply()
 {
     Device->SetMaterial(&Mtrl);
     Device->SetTexture(0, Texture);
+    
+    if (shader)
+    {
+        shader->Apply();
+
+        for (const auto& [name, value] : IntParam)
+            shader->SetConstant(name, value);
+
+        for (const auto& [name, value] : FloatParam)
+            shader->SetConstant(name, value);
+
+        for (const auto& [name, value] : Vec3Param)
+            shader->SetConstant(name, value);
+
+        for (const auto& [name, value] : MatParam)
+            shader->SetConstant(name, value);
+    }
+}
+
+void Material::SetInt(const std::wstring& name, int value)
+{
+    IntParam[name] = value;
+}
+
+void Material::SetFloat(const std::wstring& name, float value)
+{
+    FloatParam[name] = value;
+}
+
+void Material::SetVec3(const std::wstring& name, _vec3 value)
+{
+    Vec3Param[name] = value;
+}
+
+void Material::SetMat(const std::wstring& name, _matrix value)
+{
+    MatParam[name] = value;
 }
 
 void Material::Free()
