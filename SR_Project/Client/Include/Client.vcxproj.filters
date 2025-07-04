@@ -172,6 +172,9 @@
     <Filter Include="02. Object\Light\Point">
       <UniqueIdentifier>{7c81f8d6-d1d8-495a-8d5e-274119b37ab2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\Creeper">
+      <UniqueIdentifier>{55568c30-c6cf-4688-ad2b-9ca5d546b10d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -317,6 +320,9 @@
     <ClInclude Include="..\Header\DirectionLight.h">
       <Filter>02. Object\Light\Direction</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Creeper.h">
+      <Filter>02. Object\Monster\Creeper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -461,6 +467,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DirectionLight.cpp">
       <Filter>02. Object\Light\Direction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Creeper.cpp">
+      <Filter>02. Object\Monster\Creeper</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

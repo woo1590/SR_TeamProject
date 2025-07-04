@@ -180,6 +180,7 @@
     <ClInclude Include="..\Header\BaseCharacter.h" />
     <ClInclude Include="..\Header\Bone.h" />
     <ClInclude Include="..\Header\CameraActor.h" />
+    <ClInclude Include="..\Header\Creeper.h" />
     <ClInclude Include="..\Header\Cursor.h" />
     <ClInclude Include="..\Header\Die.h" />
     <ClInclude Include="..\Header\DirectionLight.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="..\Code\BaseCharacter.cpp" />
     <ClCompile Include="..\Code\Bone.cpp" />
     <ClCompile Include="..\Code\CameraActor.cpp" />
+    <ClCompile Include="..\Code\Creeper.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />
     <ClCompile Include="..\Code\Die.cpp" />
     <ClCompile Include="..\Code\DirectionLight.cpp" />
