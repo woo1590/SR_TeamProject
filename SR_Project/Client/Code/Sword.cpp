@@ -21,19 +21,30 @@ Sword* Sword::Create(ObjectManager* owner, ObjectType objType)
 HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     Item::Ready_Object(owner, objType);
-    auto transform = GetComponent<TransformComponent>();
-    auto mesh = GetComponent<MeshRenderer>();
     auto info = GetComponent<InfoComponent<ItemInfo>>();
+    ItemInfo i;
+    i.visible = true;
+    i.size = 1.f;
+    i.scale = _vec3{ 0.1f, 2.f, 2.f };
+    i.position = _vec3{ 0.f, 0.2f, 1.f };
+    i.pivotEnable = true;
+    i.pivot = _vec3{ 0.f, 0.8f, 0.f };
+    i.rotation = _vec3{ 0.8f, 0.f, 0.f };
+    i.material = L"sword_Mtrl";
+    i.renderId = Engine::RENDER_ID::Render_Alpha;
+    info->SetInfo(i);
 
-    float Scale = 1.f;
-    transform->SetScale(0.1f * Scale, 2.f * Scale, 2.f * Scale);
-    transform->SetPosition(0.f, 0.2f, 1.f * Scale);
-    transform->SetPivot(_vec3(0.f * Scale, 0.8f * Scale, 0.f * Scale));
+    auto transform = GetComponent<TransformComponent>();
+    transform->SetScale(i.scale.x * i.size, i.scale.y * i.size, i.scale.z * i.size);
+    transform->SetPosition(i.position.x * i.size, i.position.y * i.size, i.position.z * i.size);
+    transform->SetPivot(_vec3(i.pivot.x * i.size, i.pivot.y * i.size, i.pivot.z * i.size));
     transform->SetPivotEnable(true);
-    transform->SetRotate({ 0.8f,0.f,0.f });
+    transform->SetRotate({ i.rotation.x ,i.rotation.y ,i.rotation.z });
 
-    mesh->SetMaterial(L"sword_Mtrl");
-    mesh->SetRenderID(Engine::RENDER_ID::Render_Alpha);
+    auto mesh = GetComponent<MeshRenderer>();
+    mesh->SetMaterial(i.material);
+    mesh->SetRenderID(i.renderId);
+
     return S_OK;
 }
 

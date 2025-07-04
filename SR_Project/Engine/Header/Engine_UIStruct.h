@@ -11,8 +11,17 @@ namespace Engine
 		int maxExp = 10;
 		float speed = 6.f;
 	};
-	struct ItemInfo {
-
+	struct ItemInfo 
+	{
+		bool visible = true;
+		float size = 1.f;
+		_vec3 scale = { 1.f, 1.f, 1.f };
+		_vec3 position = { 0.f, 0.f, 0.f };
+		bool pivotEnable = true;
+		_vec3 pivot = { 0.f, 0.f, 0.f };
+		_vec3 rotation = { 0.f, 0.f, 0.f };
+		std::wstring material;
+		Engine::RENDER_ID renderId = Engine::RENDER_ID::Render_NonAlpha;
 	};
 	struct EnemyInfo
 	{

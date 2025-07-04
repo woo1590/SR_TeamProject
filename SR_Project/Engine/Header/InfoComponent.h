@@ -20,7 +20,7 @@ public:
 	void SetSpeed(int amount);
 
 	const T& GetInfo() const { return info; }
-
+	void SetInfo(T& _info) { info = _info; }
 
 private:
 	T info{};
