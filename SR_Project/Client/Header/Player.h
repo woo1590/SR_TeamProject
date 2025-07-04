@@ -49,7 +49,6 @@ private: //member variable
 
     std::unordered_map<std::string, _vec3> StartRotations;
     float Speed = 10.f;
-    float yOffset = 3.7f;
 
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };

@@ -171,6 +171,15 @@
     </Filter>
     <Filter Include="02. Object\Light\Point">
       <UniqueIdentifier>{7c81f8d6-d1d8-495a-8d5e-274119b37ab2}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\Item">
+      <UniqueIdentifier>{00b083ae-f5c0-476a-8bf8-75a57fc8a812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Sword">
+      <UniqueIdentifier>{82ebb956-eec6-436a-b679-13ca99d03fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Bow">
+      <UniqueIdentifier>{e8969dd1-2bc7-497b-add4-2cb1bc657a17}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +325,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\DirectionLight.h">
       <Filter>02. Object\Light\Direction</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02. Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Sword.h">
+      <Filter>02. Object\Item\Sword</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bow.h">
+      <Filter>02. Object\Item\Bow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -461,6 +479,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\DirectionLight.cpp">
       <Filter>02. Object\Light\Direction</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\Item.cpp">
+      <Filter>02. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Sword.cpp">
+      <Filter>02. Object\Item\Sword</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bow.cpp">
+      <Filter>02. Object\Item\Bow</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
