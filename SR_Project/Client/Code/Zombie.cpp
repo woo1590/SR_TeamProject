@@ -114,10 +114,10 @@ void Zombie::MoveTo(_vec3* dir, _float dt)
 {
     auto Transform = GetComponent<TransformComponent>();
     auto stat = GetComponent<InfoComponent<EnemyInfo>>();
-    //if (State != MonsterState::Walk) State = MonsterState::Walk;
+    if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
     Transform->Translate(*dir * dt * stat->GetInfo().speed);
-   // Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
+    Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
 void Zombie::RotateTo(_vec3* dir, float dt)
@@ -182,7 +182,7 @@ void Zombie::InitAnimation()
     HitAnim.Start = 0;
     HitAnim.End = 30.f;
     HitAnim.ElapsedTime = 0.f;
-    HitAnim.TotalTime = 2.5f;
+    HitAnim.TotalTime = 0.3f;
     HitAnim.DelayTime = 0.f;
 
     //Die

@@ -10,7 +10,7 @@
 //component
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
-
+#include "InfoComponent.h"
 
 BaseCharacter::BaseCharacter(ObjectManager* owner, ObjectType objType)
 	:Object(owner,objType)
@@ -95,6 +95,13 @@ void BaseCharacter::MoveTo(_vec3* dir,_float dt)
     GetComponent<TransformComponent>()->Translate((*dir)* 0.1f);
 }
 
+void BaseCharacter::HitMoveTo(_vec3* dir, _float dt)
+{
+    auto Transform = GetComponent<TransformComponent>();
+    auto stat = GetComponent<InfoComponent<EnemyInfo>>();
+    Transform->Translate(*dir * dt);
+}
+
 void BaseCharacter::Attack(Object* target)
 {
 }
@@ -117,7 +124,7 @@ void BaseCharacter::PlayKnockBack(_vec3 dir, _float attack, _float dt)
     knockback.y = 0.1 * attack;
     knockback.z = (dir.z / length) * attack;
 
-    MoveTo(&knockback, dt);
+    HitMoveTo(&knockback, dt);
 }
 
 void BaseCharacter::Free()
