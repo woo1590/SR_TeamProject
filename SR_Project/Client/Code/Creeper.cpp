@@ -92,6 +92,9 @@ void Creeper::Die()
 
 void Creeper::InitTransform(ObjectType objType)
 {
+    auto transform = GetComponent<TransformComponent>();
+    transform->SetPosition(30.f, 100.f, 30.f);
+
     SetMaterial(L"CreeperFace_Mtrl", "Head");
     SetMaterial(L"CreeperBody_Mtrl", "Body");
     SetMaterial(L"CreeperLeg_Mtrl", "LArm");
@@ -149,7 +152,7 @@ void Creeper::InitTree()
 
 void Creeper::InitAnimation()
 {
-    WalkAnim.ElapsedTime = 0.f;
+    WalkAnim.ElapsedTime = 0.5f;
 }
 
 void Creeper::PlayAnimation(_float dt)

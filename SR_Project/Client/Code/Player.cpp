@@ -65,9 +65,9 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     Bones["RHand"] = Sword::Create(owner, ObjectType::Item);
     Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
-
-    Bones["LHand"] = Bow::Create(owner, ObjectType::Item);
-    Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
+    
+    //Bones["LHand"] = Bow::Create(owner, ObjectType::Item);
+    //Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
 
     return S_OK;
 }

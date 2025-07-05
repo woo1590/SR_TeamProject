@@ -137,17 +137,19 @@ void PhysicsSystem::SolvePosition()
 
 		_vec3 mtv = normal * pen;
 
-		_float invA = a->GetOwner()->GetComponent<PhysicsComponent>()->GetInvMass();
-		_float invB = b->GetOwner()->GetComponent<PhysicsComponent>()->GetInvMass();
+		auto physicsA = a->GetOwner()->GetComponent<PhysicsComponent>();
+		auto physicsB = b->GetOwner()->GetComponent<PhysicsComponent>();
+		if (!physicsA || !physicsB)
+			continue;
+
+		_float invA = physicsA->GetInvMass();
+		_float invB = physicsB->GetInvMass();
 		_float sum = invA + invB;
 
 		if (!sum) continue;
 
 		a->GetOwner()->GetComponent<TransformComponent>()->Translate(mtv * (invA / sum));
 		b->GetOwner()->GetComponent<TransformComponent>()->Translate(-mtv * (invB / sum));
-
-		auto physicsA = a->GetOwner()->GetComponent<PhysicsComponent>();
-		auto physicsB = b->GetOwner()->GetComponent<PhysicsComponent>();
 
 		physicsA->SetGround(false);
 		physicsB->SetGround(false);

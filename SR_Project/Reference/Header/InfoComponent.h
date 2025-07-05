@@ -21,7 +21,6 @@ public:
 
 	void SetInfo(T& _info) { info = _info; };
 	const T& GetInfo() const { return info; }
-	void SetInfo(T& _info) { info = _info; }
 
 public:
 	T info{};

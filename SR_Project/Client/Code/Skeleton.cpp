@@ -115,7 +115,7 @@ void Skeleton::InitTransform(ObjectType objType)
 {
     auto transform = GetComponent<TransformComponent>();
 
-    transform->SetPosition(_vec3(30.f, 0.f, -40.f));
+    transform->SetPosition(_vec3(30.f, 100.f, 40.f));
     SetMaterial(L"SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial(L"SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
     SetMaterial(L"SkeletonBone_Mtrl", "LArm");
