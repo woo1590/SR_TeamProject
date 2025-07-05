@@ -108,11 +108,18 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Texture/Player/arrow.dds", L"arrow", TEXTURE::Tex_Cube, L"arrow_Mtrl");
 
 	/////////////////////////////////////////////////////////////////////////////////
+	resource->LoadResource(L"../Resource/Asset/HY/Creeper_Face.dds", L"CreeperFace", TEXTURE::Tex_Cube, L"CreeperFace_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/Creeper_Body.dds", L"CreeperBody", TEXTURE::Tex_Cube, L"CreeperBody_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/Creeper_Leg.dds", L"CreeperLeg", TEXTURE::Tex_Cube, L"CreeperLeg_Mtrl");
+
+	/////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Body.dds", L"SkeletonBody", TEXTURE::Tex_Cube, L"SkeletonBody_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Face.dds", L"SkeletonFace", TEXTURE::Tex_Cube, L"SkeletonFace_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/bow.dds", L"bow", TEXTURE::Tex_Cube, L"Bow_Mtrl");
 
+	 
+	/////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");

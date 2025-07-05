@@ -22,7 +22,7 @@ public:
 protected:
 	void Notify(const EventT& event)
 	{
-		assert(!observers.empty() && "Subject::Notify - no observers registered");
+		//assert(!observers.empty() && "Subject::Notify - no observers registered");
 		for (auto* obs : observers)
 			obs->OnNotify(event);
 	}

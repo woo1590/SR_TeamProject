@@ -187,6 +187,7 @@
     <ClInclude Include="..\Header\Bone.h" />
     <ClInclude Include="..\Header\Bow.h" />
     <ClInclude Include="..\Header\CameraActor.h" />
+    <ClInclude Include="..\Header\Creeper.h" />
     <ClInclude Include="..\Header\Cursor.h" />
     <ClInclude Include="..\Header\Die.h" />
     <ClInclude Include="..\Header\DirectionLight.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="..\Header\GearSlotPlus.h" />
     <ClInclude Include="..\Header\GearStrength.h" />
     <ClInclude Include="..\Header\GearStrengthBack.h" />
+    <ClInclude Include="..\Header\Hit.h" />
     <ClInclude Include="..\Header\HotBarBack.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
@@ -256,6 +258,7 @@
     <ClCompile Include="..\Code\Bone.cpp" />
     <ClCompile Include="..\Code\Bow.cpp" />
     <ClCompile Include="..\Code\CameraActor.cpp" />
+    <ClCompile Include="..\Code\Creeper.cpp" />
     <ClCompile Include="..\Code\Cursor.cpp" />
     <ClCompile Include="..\Code\Die.cpp" />
     <ClCompile Include="..\Code\DirectionLight.cpp" />
@@ -270,6 +273,7 @@
     <ClCompile Include="..\Code\GearSlotPlus.cpp" />
     <ClCompile Include="..\Code\GearStrength.cpp" />
     <ClCompile Include="..\Code\GearStrengthBack.cpp" />
+    <ClCompile Include="..\Code\Hit.cpp" />
     <ClCompile Include="..\Code\HotBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />

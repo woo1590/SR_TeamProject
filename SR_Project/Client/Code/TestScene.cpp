@@ -33,7 +33,7 @@
 #include "UILoader.h"
 #include "DirectionLight.h"
 #include "Skeleton.h"
-
+#include "Creeper.h"
 //component
 #include "TransformComponent.h"
 #include "CameraComponent.h"
@@ -99,7 +99,8 @@ void TestScene::Load()
 	int size = monster.size();
 	size = 2;
 
-	//ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
 	
 
 	/*------------------Load UI------------------------*/

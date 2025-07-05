@@ -3,6 +3,7 @@
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
 #include "InfoComponent.h"
+#include "InfoDetector.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -17,7 +18,6 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
 
-    //stat component;
     auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
 
     auto collision = AddComponent<CollisionComponent>();
@@ -57,6 +57,16 @@ void Monster::Die()
 
 }
 
+void Monster::Hit(_vec3 dir, _float power, _float dt)
+{
+}
+
+_float Monster::GetHp()
+{
+    auto  statcomponent = GetComponent<InfoComponent<EnemyInfo>>();
+    return statcomponent->GetInfo().curHp;
+}
+
 void Monster::InitAnimation()
 {
    
@@ -80,6 +90,10 @@ void Monster::PlayAttack(_float dt)
 }
 
 void Monster::PlayDie(_float dt)
+{
+}
+
+void Monster::PlayHit(_float dt)
 {
 }
 

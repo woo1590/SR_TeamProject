@@ -26,7 +26,7 @@ BTStatus IsAliveNode::Tick(float dt, BlackBoard* bb)
 	if (self == nullptr) return BTStatus::Failure;
 
 	//statcomponent chuga ho modify yejeong
-	if (static_cast<Monster*>(self)->GetHp() > 0)
+	if (/*static_cast<Monster*>(self)->GetHp() > 0*/true)
 		return Child->Tick(dt, bb);
 	else
 		return BTStatus::Failure;

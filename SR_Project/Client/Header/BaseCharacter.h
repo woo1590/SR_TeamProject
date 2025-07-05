@@ -15,9 +15,11 @@ public:
 
 public:
     virtual void MoveTo(_vec3* dir, _float dt);
+    virtual void HitMoveTo(_vec3* dir, _float dt);
     virtual void Attack(Object* target);
     virtual void Die() {};
     virtual void Add_Bone(string str, ObjectType objType, Object* parent, const wstring& mtrl);
+    void PlayKnockBack(_vec3 dir, _float attack, _float dt);
 
 protected:
     void SetMaterial(const std::wstring& mtrl, string str = "Body", RENDER_ID id = RENDER_ID::Render_NonAlpha);
