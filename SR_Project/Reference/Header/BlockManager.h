@@ -12,8 +12,13 @@ private:
 public:
     static BlockManager* Create(Scene* owner);
 
+    void LoadTexture();
+
     void SaveStage(const char* saveStage);   // ¸Ê ÀúÀå
     void LoadStage(const char* loadStage);   // ¸Ê ·Îµå
+
+    void SaveChunk(const char* saveStage);
+    void LoadChunk(const char* loadStage);
 
     Scene* GetOwner()const;
 

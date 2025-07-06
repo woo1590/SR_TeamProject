@@ -18,12 +18,13 @@ private:
 
 public:
     static ChunkManager* Create(Scene* owner);
-    HRESULT Ready_ChunkManager();
 
 public:
     void Activate(int chunkX, int chunkY);          // 청크 렌더링 활성화
-    void LoadChunk(int chunkX, int chunkY);         // 메모리에 남아있는 청크 로드
     void UnLoadChunk(int chunkX, int chunkY);       // 메모리에 남아있는 청크 삭제
+
+    void SaveChunk(const std::wstring& saveStage);
+    void LoadChunk(const std::wstring& loadStage);
 
 private:
     void Free()override;

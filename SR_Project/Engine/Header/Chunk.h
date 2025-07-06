@@ -7,16 +7,15 @@ BEGIN(Engine)
 class ENGINE_DLL Chunk : public Base
 {
 private:
-    Chunk(CHUNK chunkData);
+    Chunk(int chunkX, int chunkZ);
     virtual ~Chunk();
 
-private:
-    HRESULT Ready_Object(CHUNK chunkData);
-
 public:
-    static Chunk* Create(CHUNK chunkData);
+    static Chunk* Create(int chunkX, int chunkZ);
     void AddBlock(ObjectManager* objectMgr, int Count);
 
+    void SetSB(SB sb) { CD.sBlocks.push_back(sb); }
+    void SetDB(DB db) { CD.dBlocks.push_back(db); }
     void SetRender(bool render) { CD.Render = render; }
 
     const CHUNK& GetChunkData() const { return CD; }

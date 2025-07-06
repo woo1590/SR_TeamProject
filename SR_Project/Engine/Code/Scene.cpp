@@ -44,6 +44,11 @@ BlockManager* Scene::GetBlockManager() const
 	return BlockMgr;
 }
 
+ChunkManager* Scene::GetChunkManager() const
+{
+	return ChunkMgr;
+}
+
 void Scene::Free()
 {
 

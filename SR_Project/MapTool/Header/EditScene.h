@@ -20,7 +20,11 @@ public:
 private:
 
 #ifdef USE_IMGUI
-    void ImGuiTest(); // ImGUI 작성SetIsBlock
+    void ImGui_Main();
+    void ImGui_SaveLoad();
+    void ImGui_SetBlockType();
+    void ImGui_SetBlockDir();
+    void ImGui_LinkLever();
 #endif
 
     void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);     // 광선 위치와 방향 초기화

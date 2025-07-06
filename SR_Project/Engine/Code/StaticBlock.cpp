@@ -65,6 +65,15 @@ HRESULT StaticBlock::Ready_Object()
     case StaticBlockType::CobbleStone:
         renderer->SetMaterial(L"CobbleStone_Mtrl");
         break;
+    case StaticBlockType::SmoothStone:
+        renderer->SetMaterial(L"SmoothStone_Mtrl");
+        break;
+    case StaticBlockType::StoneBrick:
+        renderer->SetMaterial(L"StoneBrick_Mtrl");
+        break;
+    case StaticBlockType::MossyStoneBrick:
+        renderer->SetMaterial(L"MossyStoneBrick_Mtrl");
+        break;
     }
     
     switch (Dir)

@@ -69,6 +69,7 @@ namespace Engine
 		_vec3 Pos;
 		StaticBlockType Type;
 		StaticBlockDir Dir;
+		StaticBlockUsage Usage;
 	} SB;
 
 	typedef struct DynamicBlockData

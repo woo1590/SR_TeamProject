@@ -11,6 +11,7 @@
 #include "CameraManager.h"
 #include "CollisionSystem.h"
 #include "BlockManager.h"
+#include "ChunkManager.h"
 
 //object
 #include "Camera.h"
@@ -26,6 +27,7 @@
 #include "Material.h"
 #include "GraphicDevice.h"
 #include "Lever.h"
+#include "Chunk.h"
 #include "IronCage.h"
 
 EditScene::EditScene()
@@ -47,29 +49,15 @@ void EditScene::Load()
 {
 #ifdef USE_IMGUI
 
-	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapToolTest", [this]() {this->ImGuiTest();});
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapTool", [this]() {this->ImGui_Main();});
 
 #endif
 
 	CollisionSys = CollisionSystem::Create(this);
-
-	auto cube = CubeMesh::Create();
-	auto resource = EngineCore::GetInstance()->GetResourceManager();
-	
-	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube, L"WoodPlank_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/Stone.dds", L"Stone", TEXTURE::Tex_Cube, L"Stone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone.dds", L"CobbleStone", TEXTURE::Tex_Cube, L"CobbleStone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube, L"Lever_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube, L"ChestDown_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube, L"ChestUp_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
-	
 	BlockMgr = BlockManager::Create(this);
+	ChunkMgr = ChunkManager::Create(this);
+
+	BlockMgr->LoadTexture();
 	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockDir::BlockY };
 	staticBlocks.push_back(baseBlock);
 
@@ -124,11 +112,27 @@ void EditScene::Unload()
 }
 
 #ifdef USE_IMGUI
-void EditScene::ImGuiTest()
+void EditScene::ImGui_Main()
 {
 	ImGui::SetNextWindowPos({ 0.f, 0.f });
 	ImGui::Begin("==== MineCraft Dungeon Map Editor ====", NULL, 0);
+	ImGui_SaveLoad();
+	ImGui_SetBlockType();
+	ImGui::End();
 
+	ImGui::SetNextWindowPos({ 0.f, 300.f });
+	ImGui::SetNextWindowSize({ 200.f, 200.f });
+	ImGui::Begin("==== BLOCK DIR ====");
+	ImGui_SetBlockDir();
+	ImGui::End();
+
+	ImGui::Begin("Linking IronCages with Levers");
+	ImGui_LinkLever();
+	ImGui::End();
+}
+
+void EditScene::ImGui_SaveLoad()
+{
 	static char save[64]{};
 	ImGui::InputText("<- Save Stage Name", save, sizeof(save));
 	if (ImGui::Button("SAVE")) BlockMgr->SaveStage(save);
@@ -136,8 +140,11 @@ void EditScene::ImGuiTest()
 	static char load[64]{};
 	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
 	if (ImGui::Button("LOAD")) BlockMgr->LoadStage(load);
+}
 
-	const char* staticBlockNames[] = { "Dirt", "GrassDirt", "Wood", "WoodPlank", "Stone", "CobbleStone", "None" };
+void EditScene::ImGui_SetBlockType()
+{
+	const char* staticBlockNames[] = { "Dirt", "GrassDirt", "Wood", "WoodPlank", "Stone", "CobbleStone", "SmoothStone", "StoneBrick", "MossyStoneBrick", "None" };
 	if (ImGui::Combo("<- Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
 		staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
 
@@ -147,13 +154,10 @@ void EditScene::ImGuiTest()
 		if (ImGui::Combo("<- Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
 			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
 	}
+}
 
-	ImGui::End();
-
-	ImGui::SetNextWindowPos({ 0.f, 300.f });
-	ImGui::SetNextWindowSize({ 200.f, 200.f });
-	ImGui::Begin("==== BLOCK DIR ====");
-
+void EditScene::ImGui_SetBlockDir()
+{
 	if (staticBlockType != StaticBlockType::SBlockNone)
 	{
 		const char* staticDirNames[] = { "X", "Y", "Z" };
@@ -178,11 +182,10 @@ void EditScene::ImGuiTest()
 			break;
 		}
 	}
+}
 
-	ImGui::End();
-
-	ImGui::Begin("Linking IronCages with Levers");
-
+void EditScene::ImGui_LinkLever()
+{
 	static int selectedCageIndex = -1;
 	static int selectedLeverIndex = -1;
 
@@ -296,8 +299,6 @@ void EditScene::ImGuiTest()
 			}
 		}
 	}
-
-	ImGui::End();
 }
 #endif
 
@@ -474,14 +475,14 @@ void EditScene::Place(const _vec3& position)
 {
 	for (const auto& block : staticBlocks) if (block.Pos == position) return;
 	for (const auto& block : dynamicBlocks) if (block.Pos == position) return;
-
+	
 	if (staticBlockType != StaticBlockType::SBlockNone)
 	{
 		auto newBlockObj = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockDir);
 		if (!newBlockObj) return;
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
-
+		
 		staticBlocks.push_back({ position, staticBlockType, staticBlockDir });
 	}
 	else if (dynamicBlockType != DynamicBlockType::DBlockNone)
@@ -490,7 +491,7 @@ void EditScene::Place(const _vec3& position)
 		if (!newBlockObj) return;
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, newBlockObj);
-
+	
 		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockDir });
 	}
 }
@@ -499,6 +500,8 @@ void EditScene::Free()
 {
 	Safe_Release(ObjectMgr);
 	Safe_Release(CameraMgr);
+	Safe_Release(BlockMgr);
+	Safe_Release(ChunkMgr);
 	Safe_Release(CollisionSys);
 	staticBlocks.clear();
 	staticBlocks.shrink_to_fit();

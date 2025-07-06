@@ -7,7 +7,7 @@
 #include "StaticBlock.h"
 #include "DynamicBlock.h"
 
-Chunk::Chunk(CHUNK chunkData) : CD(chunkData)
+Chunk::Chunk(int chunkX, int chunkZ) : CD(chunkX, chunkZ)
 {
 }
 
@@ -15,16 +15,9 @@ Chunk::~Chunk()
 {
 }
 
-Chunk* Chunk::Create(CHUNK chunkData)
+Chunk* Chunk::Create(int chunkX, int chunkZ)
 {
-    Chunk* Instance = new Chunk(chunkData);
-
-    if (FAILED(Instance->Ready_Object(chunkData)))
-    {
-        Safe_Release(Instance);
-        Instance = nullptr;
-    }
-
+    Chunk* Instance = new Chunk(chunkX, chunkZ);
     return Instance;
 }
 
@@ -32,9 +25,9 @@ void Chunk::AddBlock(ObjectManager* objectMgr, int Count)
 {
     for (const auto& sb : CD.sBlocks)
     {
-        Object* obj = StaticBlock::Create(objectMgr, ObjectType::StaticBlock, sb.Type, sb.Dir);
-        obj->GetComponent<TransformComponent>()->SetPosition(sb.Pos);
-        objectMgr->AddObject(ObjectType::StaticBlock, obj);
+        // Object* obj = StaticBlock::Create(objectMgr, ObjectType::StaticBlock, sb.Type, sb.Dir);
+        // obj->GetComponent<TransformComponent>()->SetPosition(sb.Pos);
+        // objectMgr->AddObject(ObjectType::StaticBlock, obj);
     }
 
     for (const auto& db : CD.dBlocks)
@@ -43,12 +36,6 @@ void Chunk::AddBlock(ObjectManager* objectMgr, int Count)
         obj->GetComponent<TransformComponent>()->SetPosition(db.Pos);
         objectMgr->AddObject(ObjectType::DynamicBlock, obj);
     }
-}
-
-HRESULT Chunk::Ready_Object(CHUNK chunkData)
-{
-    CD = chunkData;
-    return S_OK;
 }
 
 void Chunk::Free()

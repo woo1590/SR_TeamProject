@@ -114,12 +114,20 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/bow.dds", L"bow", TEXTURE::Tex_Cube, L"Bow_Mtrl");
 
+	resource->LoadMesh(L"Cube_Mesh", cube);
 	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube, L"WoodPlank_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank_Half.dds", L"WoodPlank_Half", TEXTURE::Tex_Cube, L"WoodPlank_Half_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/Stone.dds", L"Stone", TEXTURE::Tex_Cube, L"Stone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone.dds", L"CobbleStone", TEXTURE::Tex_Cube, L"CobbleStone_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/Stone_Half.dds", L"Stone_Half", TEXTURE::Tex_Cube, L"Stone_Half_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone_Half.dds", L"CobbleStone_Half", TEXTURE::Tex_Cube, L"CobbleStone_Half_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/SmoothStone.dds", L"SmoothStone", TEXTURE::Tex_Cube, L"SmoothStone_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/SmoothStone_Half.dds", L"SmoothStone_Half", TEXTURE::Tex_Cube, L"SmoothStone_Half_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/StoneBrick.dds", L"StoneBrick", TEXTURE::Tex_Cube, L"StoneBrick_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/MossyStoneBrick.dds", L"MossyStoneBrick", TEXTURE::Tex_Cube, L"MossyStoneBrick_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube, L"Lever_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube, L"ChestDown_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube, L"ChestUp_Mtrl");

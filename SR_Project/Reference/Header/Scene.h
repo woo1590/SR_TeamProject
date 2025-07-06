@@ -8,6 +8,7 @@ class CollisionSystem;
 class PhysicsSystem;
 class CameraManager;
 class BlockManager;
+class ChunkManager;
 class Object;
 class ENGINE_DLL Scene : public Base
 {
@@ -42,8 +43,8 @@ public:
     CollisionSystem*    GetCollisionSystem()const;
     PhysicsSystem*      GetPhysicsStstem()const;
     CameraManager*      GetCameraManager()const;
-    BlockManager*      GetBlockManager()const;
-
+    BlockManager*       GetBlockManager()const;
+    ChunkManager*       GetChunkManager()const;
     ////////////////////////////////////////////// 0704
 public:
     vector<SB>& GetStaticBlocks() { return staticBlocks; }
@@ -63,8 +64,8 @@ protected:
     CollisionSystem* CollisionSys = nullptr;
     PhysicsSystem* PhysicsSys = nullptr;
     CameraManager* CameraMgr = nullptr; 
-
     BlockManager* BlockMgr = nullptr;
+    ChunkManager* ChunkMgr = nullptr;
 };
 
 END
