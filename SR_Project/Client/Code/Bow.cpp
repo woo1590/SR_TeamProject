@@ -5,6 +5,7 @@
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
+#include "CollisionComponent.h"
 
 Bow::Bow(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
 Bow::~Bow(){}
@@ -47,6 +48,11 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
     mesh->SetMesh(i.meshType);
     mesh->SetMaterial(i.material);
     mesh->SetRenderID(i.renderId);
+
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY);
+    collision->SetSize(_vec3(5.f, 5.f, 5.f));
 
     return S_OK;
 }

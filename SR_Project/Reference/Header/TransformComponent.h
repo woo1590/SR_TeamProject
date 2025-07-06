@@ -44,6 +44,7 @@ public:
     void Translate(float x, float y, float z);
 
     _vec3 GetPosition()const;
+    _vec3 GetWorldPosition()const;
     _vec3 GetScale()const;
     _vec3 GetRotate()const;
     _vec3 GetFoward()const;

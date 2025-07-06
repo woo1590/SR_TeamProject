@@ -134,12 +134,18 @@ _vec3 TransformComponent::GetPosition() const
     return Position;
 }
 
+_vec3 TransformComponent::GetWorldPosition() const
+{
+    _matrix worldMat = GetWorldMatrix();
+    return _vec3(worldMat._41, worldMat._42, worldMat._43);
+}
+
 _vec3 TransformComponent::GetScale() const
 {
     return Scale;
 }
 
-_vec3 TransformComponent::GetRotate() const
+_vec3 TransformComponent::GetRotate() const     
 {
     return Rotation;
 }

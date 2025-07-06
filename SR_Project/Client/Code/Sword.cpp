@@ -52,7 +52,7 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_ENEMY);
-    collision->SetSize(_vec3(1.f, 2.f, 1.f));
+    collision->SetSize(_vec3(5.f, 5.f, 5.f));
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 
     return S_OK;

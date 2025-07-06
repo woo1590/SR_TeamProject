@@ -53,7 +53,6 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto playerInfo = AddComponent<InfoComponent<PlayerInfo>>();
 
-    
     SetScale(1.f);
     
     SetMaterial(L"playerBody_Mtrl","Body");
@@ -63,11 +62,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
 
-    Bones["RHand"] = Sword::Create(owner, ObjectType::Item);
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
-    
-    //Bones["LHand"] = Bow::Create(owner, ObjectType::Item);
-    //Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
+    Bones["LHand"] = nullptr;
+    Bones["RHand"] = nullptr;
 
     return S_OK;
 }
@@ -141,7 +137,7 @@ void Player::PickingTerrain()
         }
     }
 
-    if (State != ePlayerState::ATTACK && input->IsKeyPressed(Z)) 
+    if (State != ePlayerState::ATTACK && input->IsKeyPressed(Z) && Bones["RHand"] != nullptr)
     {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
@@ -161,7 +157,7 @@ void Player::PickingTerrain()
         }
     }
 
-    if (State != ePlayerState::SHOOT && input->IsKeyPressed(X)) 
+    if (State != ePlayerState::SHOOT && input->IsKeyPressed(X) && Bones["LHand"] != nullptr)
     {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
@@ -176,8 +172,8 @@ void Player::PickingTerrain()
                 Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
                 Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
             }
-            auto transform = GetComponent<TransformComponent>();
-            auto curPos = transform->GetPosition();
+            auto transform = Bones["LHand"]->GetComponent<TransformComponent>();
+            auto curPos = transform->GetWorldPosition();
             auto attackPos = hit.Position;
             AttackDirection = attackPos - curPos;
         }
@@ -195,6 +191,30 @@ void Player::SaveStartRotation()
 
     StartRotations["LLeg"] = Bones["LLeg"]->GetComponent<TransformComponent>()->GetRotate();
     StartRotations["RLeg"] = Bones["RLeg"]->GetComponent<TransformComponent>()->GetRotate();
+}
+void Player::EquipItem(Item::ItemType itemType)
+{
+    switch (itemType) {
+    case Item::ItemType::ITEM_BOW:
+        Bones["LHand"] = Bow::Create(owner, ObjectType::Item);
+        Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
+        break;
+    case Item::ItemType::ITEM_SWORD:
+        Bones["RHand"] = Sword::Create(owner, ObjectType::Item);
+        Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
+        break;
+    }
+}
+void Player::UnEquipItem(Item::ItemType itemType)
+{
+    switch (itemType) {
+    case Item::ItemType::ITEM_BOW:
+        Bones["LHand"] = nullptr;
+        break;
+    case Item::ItemType::ITEM_SWORD:
+        Bones["RHand"] = nullptr;
+        break;
+    }
 }
 void Player::UpdateIdle(_float dt)
 {
@@ -288,7 +308,7 @@ void Player::UpdateRoll(_float dt)
     SetRotation(OffsetLerp(StartRotations["RArm"], { -2.f, 0.f, 0.f }, fLerpRatio), "RArm");
 
     //Move Player
-    const float fRollSpeed = GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().speed * 2.f;
+    const float fRollSpeed = GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().speed * 3.f;
     _vec3 moveVec = 
     {
         vDir.x * fRollSpeed * Scale * dt,

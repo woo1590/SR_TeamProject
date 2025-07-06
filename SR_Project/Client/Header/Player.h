@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include "BaseCharacter.h"
+#include "Item.h"
 class Player : public BaseCharacter
 {   
+public:
     enum class ePlayerState {
         IDLE,
         WALK,
@@ -34,6 +36,9 @@ private:
     void UpdateDead(_float dt);
 
     void SaveStartRotation();
+    void EquipItem(Item::ItemType itemType);
+    void UnEquipItem(Item::ItemType itemType);
+
     _vec3 MatrixToEulerAngles(const _matrix& mat);
     void OnCollisionStay(Object* other);
     void IdleSmoothing(_float dt, std::string bone);
