@@ -57,7 +57,7 @@ void Monster::Die()
 
 }
 
-void Monster::Hit(_vec3 dir, _float power, _float dt)
+void Monster::Hit(_vec3 dir, _float power)
 {
 }
 

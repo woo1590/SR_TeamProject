@@ -137,7 +137,6 @@ void Creeper::InitTree()
 
     SelectorNode* root = new SelectorNode();
     root->AddChild(IsAlive);
-    //root->AddChild(new DieNode());
 
     BehaviorTree* bt = BehaviorTree::Create(root);
 
