@@ -278,6 +278,7 @@
     <ClInclude Include="..\Header\Shader.h" />
     <ClInclude Include="..\Header\SlotComponent.h" />
     <ClInclude Include="..\Header\SoundManager.h" />
+    <ClInclude Include="..\Header\StaticGrid.h" />
     <ClInclude Include="..\Header\StaticMesh.h" />
     <ClInclude Include="..\Header\Subject.h" />
     <ClInclude Include="..\Header\SucceederDecorator.h" />
@@ -398,6 +399,7 @@
     <ClCompile Include="..\Code\Shader.cpp" />
     <ClCompile Include="..\Code\SlotComponent.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp" />
+    <ClCompile Include="..\Code\StaticGrid.cpp" />
     <ClCompile Include="..\Code\StaticMesh.cpp" />
     <ClCompile Include="..\Code\Subject.cpp" />
     <ClCompile Include="..\Code\SucceederDecorator.cpp" />

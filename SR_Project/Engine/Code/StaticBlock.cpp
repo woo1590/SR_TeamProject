@@ -1,6 +1,8 @@
 #include "EnginePCH.h"
 #include "StaticBlock.h"
 #include "UIRenderer.h"
+#include "Scene.h"
+#include "CollisionSystem.h"
 
 //component
 #include "TransformComponent.h"
@@ -35,6 +37,7 @@ HRESULT StaticBlock::Ready_Object()
 {
     /////////////////////////////
     auto collision = AddComponent<CollisionComponent>();
+    GetScene()->GetCollisionSystem()->RegisterCollision(collision);
     collision->SetLayer(CollisionComponent::LAYER_DEFAULT);
     collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_ENEMY);
 

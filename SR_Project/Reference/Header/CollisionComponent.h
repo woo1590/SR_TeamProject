@@ -41,6 +41,7 @@ public:
     _vec3 GetLocalMax()const;
     void GetWorldAABB(_vec3* worldMin, _vec3* worldMax);
     void GetWorldAABB(_vec3* worldMin, _vec3* worldMax, _vec3 pos);
+    void GetWorldX(_float* minX, _float* maxX);
 
     /*----------------Collision-----------------*/
     _bool RayIntersectAABB(Ray ray, HitInfo& hit);

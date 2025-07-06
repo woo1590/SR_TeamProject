@@ -30,8 +30,6 @@ PhysicsComponent* PhysicsComponent::Create(Object* owner)
 
 HRESULT PhysicsComponent::Ready_Component()
 {
-	owner->GetScene()->GetPhysicsStstem()->RegisterBody(this);
-
 	return S_OK;
 }
 

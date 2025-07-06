@@ -34,6 +34,11 @@ CameraManager* Scene::GetCameraManager() const
 	return CameraMgr;
 }
 
+StaticGrid* Scene::GetStaticGrid() const
+{
+	return Grid;
+}
+
 void Scene::Free()
 {
 
