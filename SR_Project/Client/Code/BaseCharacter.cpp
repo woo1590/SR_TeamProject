@@ -121,7 +121,7 @@ void BaseCharacter::PlayKnockBack(_vec3 dir, _float attack, _float dt)
 
     _vec3 knockback;
     knockback.x = (dir.x / length) * attack;
-    knockback.y = 0.1 * attack;
+    knockback.y = 0.2 * attack;
     knockback.z = (dir.z / length) * attack;
 
     HitMoveTo(&knockback, dt);
@@ -184,4 +184,17 @@ void BaseCharacter::SetWeapon(Object* parent, ObjectType objType, const wstring&
     Bones["Weapon"] = Bone::Create(owner, objType, _vec3(0.1f, 1.5f, 1.5f), parent, mtrl);
     Bones["Weapon"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
     owner->AddObject(objType, Bones["Weapon"]);
+}
+
+void BaseCharacter::DetachParent(string str)
+{
+    auto it = Bones.find(str);
+    if (it != Bones.end() && it->second != nullptr)
+    {
+        auto transform = it->second->GetComponent<TransformComponent>();
+        if (transform && transform->GetParent() != nullptr)
+        {
+            transform->SetParent((Object*)nullptr);
+        }
+    }
 }

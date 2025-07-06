@@ -29,6 +29,7 @@ protected:
     void SetRotation(_vec3 rotation, string str = "Body");
     void SetTranslate(_vec3 translate, string str = "Body");
     void SetWeapon(Object* parent,ObjectType objType, const wstring& mtrl);
+    void DetachParent(string str = "Body");
 
 protected:
     void Free() override;

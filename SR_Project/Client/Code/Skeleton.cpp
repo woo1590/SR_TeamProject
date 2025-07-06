@@ -44,8 +44,6 @@ HRESULT Skeleton::Ready_Object(ObjectManager* owner, ObjectType objType)
     Monster::Ready_Object(owner, objType);
 
     //InitTransform
-    auto transform = AddComponent<TransformComponent>();
-    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
     InitTransform(objType);
 
     //Init Collision
@@ -111,9 +109,29 @@ void Skeleton::Die()
     }
 }
 
+
+void Skeleton::Hit(_vec3 dir, _float power)
+{
+    if (State != MonsterState::Hit)
+    {
+        State = MonsterState::Hit;
+
+        HitAnim.IsRunning = true;
+        HitAnim.IsEnd = false;
+        HitAnim.ElapsedTime = 0.f;
+        HitAnim.DelayTime = 0.f;
+        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+
+        HitDir = dir;
+        HitPower = power;
+    }
+}
+
 void Skeleton::InitTransform(ObjectType objType)
 {
-    auto transform = GetComponent<TransformComponent>();
+    auto transform = AddComponent<TransformComponent>();
+    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     transform->SetPosition(_vec3(30.f, 100.f, 40.f));
     SetMaterial(L"SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
@@ -162,7 +180,13 @@ void Skeleton::InitTransform(ObjectType objType)
 
 void Skeleton::InitTree()
 {
-    ChaseNode* chase = new ChaseNode();
+    BlackBoard* bb = BlackBoard::Create();
+    bb->SetValue("Self", this);
+    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
+    Distance = new float(15.f);
+    bb->SetValue("Distance", Distance);
+    IsHit = new _bool(false);
+    bb->SetValue("IsDamaged", IsHit);
 
     SequenceNode* rotateThenAttack = new SequenceNode();
     rotateThenAttack->AddChild(new RotateNode());
@@ -172,22 +196,15 @@ void Skeleton::InitTree()
 
     SelectorNode* attackBehavior = new SelectorNode();
     attackBehavior->AddChild(attackCheck);
-    attackBehavior->AddChild(chase);
+    attackBehavior->AddChild(new ChaseNode());
 
     IsAliveNode* isAlive = new IsAliveNode(attackBehavior);
-    DieNode* die = new DieNode();
 
     SelectorNode* root = new SelectorNode();
     root->AddChild(isAlive);
-    root->AddChild(die);
+    root->AddChild(new DieNode());
 
     BehaviorTree* bt = BehaviorTree::Create(root);
-
-    BlackBoard* bb = BlackBoard::Create();
-    bb->SetValue("Self", this);
-    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(15.f);
-    bb->SetValue("Distance", Distance);
 
     auto AI = AddComponent<AIController>(bt, bb);
 }
@@ -201,6 +218,13 @@ void Skeleton::InitAnimation()
     AttackAnim.TotalTime = 1.5f;
     AttackAnim.ElapsedTime = 0.f;
     AttackAnim.DelayTime = 0.f;
+
+    //Hit
+    HitAnim.Start = 0;
+    HitAnim.End = 30.f;
+    HitAnim.ElapsedTime = 0.f;
+    HitAnim.TotalTime = 0.3f;
+    HitAnim.DelayTime = 0.f;
 
     //Die
     DieAnim.Start = 0;                  //start angle
@@ -222,6 +246,10 @@ void Skeleton::PlayAnimation(_float dt)
     case MonsterState::Attack:
         if (!AttackAnim.IsRunning) AttackAnim.IsRunning = true;
         PlayAttack(dt);
+        break;
+    case MonsterState::Hit:
+        if (!HitAnim.IsRunning) HitAnim.IsRunning = true;
+        PlayHit(dt);
         break;
     case MonsterState::Die:
         if (!DieAnim.IsRunning) DieAnim.IsRunning = true;
@@ -282,13 +310,73 @@ void Skeleton::PlayAttack(_float dt)
     }
 }
 
+void Skeleton::PlayHit(float dt)
+{
+    HitAnim.ElapsedTime += dt;
+
+    _float t = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
+
+    _float Angle = lerp(HitAnim.Start, HitAnim.End, t);
+
+    SetRotation({ -D3DXToRadian(Angle / 3), 0.f, 0.f }, "Head");
+    SetRotation({ 0.f, 0.f, -D3DXToRadian(Angle) }, "LArm");
+    SetRotation({ 0.f, 0.f, -D3DXToRadian(Angle) }, "RArm");
+    SetRotation({ 0.f, D3DXToRadian(Angle), D3DXToRadian(Angle / 2) }, "RLeg");
+
+    PlayKnockBack(HitDir, HitPower, dt);
+
+    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
+    {
+        HitAnim.IsRunning = false;
+        HitAnim.IsEnd = true;
+        HitAnim.ElapsedTime = 0.f;
+
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
+        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+        *IsHit = false;
+    }
+}
+
 void Skeleton::PlayDie(_float dt)
 {
-    //bone detach
+    if (!DieAnim.IsEnd)
+    {
+        auto transform = GetComponent<TransformComponent>();
+        _vec3 pos = transform->GetPosition();
+        for (auto& bone : Bones)
+        {
+            DetachParent(bone.first);
+            bone.second->GetComponent< TransformComponent>()->SetPosition(pos);
+        }
+        DieAnim.IsEnd = true;
+        DieAnim.IsRunning = false;
+    }
 }
 
 void Skeleton::OnCollisionStay(Object* other)
 {
+    ObjectType objType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+    auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
+    auto transform = GetComponent<TransformComponent>();
+
+    if (objType == ObjectType::Player)
+    {
+        auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
+        auto playertransform = other->GetComponent<TransformComponent>();
+        /* if (State == MonsterState::Attack)
+         {*/
+         //playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
+        Stat->SetHp(Stat->GetInfo().curHp - Stat->GetInfo().power);
+        *IsHit = true;
+        Hit(transform->GetPosition() - playertransform->GetPosition(), playerStat->GetInfo().power);
+        //static_cast<Player*>(other)->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
+
+        //collision->ResolveAABBColiision(other);
+    //}
+    }
 }
 
 void Skeleton::Free()

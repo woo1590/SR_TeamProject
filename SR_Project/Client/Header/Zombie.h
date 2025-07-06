@@ -21,6 +21,8 @@ public:
     void Hit(_vec3 dir, _float power) override;
 
 protected:
+    void InitTransform(ObjectType objType);
+    void InitTree();
     void InitAnimation() override;
     void PlayAnimation(_float dt) override;
 

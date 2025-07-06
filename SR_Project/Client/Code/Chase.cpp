@@ -33,6 +33,7 @@ BTStatus ChaseNode::Tick(float dt, BlackBoard* bb)
 
 	if (D3DXVec3Length(&Dir) > *(static_cast<float*>(bb->GetValue("Distance"))))
 	{
+		//Dir.y = 0;
 		static_cast<BaseCharacter*>(self)->MoveTo(D3DXVec3Normalize(&Dir, &Dir), dt);
 		return BTStatus::Running;
 	}

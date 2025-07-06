@@ -46,52 +46,8 @@ HRESULT Zombie::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     Monster::Ready_Object(owner, objType);
 
-    //InitTransform
-    Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 6.f * Scale, 0.0f));
-    Bones["Body"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-
-    Bones["Head"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 8.f * Scale, 0.f));
-    Bones["Head"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
-
-    auto transform = AddComponent<TransformComponent>();
-
-    auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(3.f, 7.f, 2.5f));
-    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
-
-    transform->SetPosition(_vec3(-5.f, 150.f, -5.f));
-
-    //Create BT
-    BlackBoard* bb = BlackBoard::Create();
-    bb->SetValue("Self", this);
-    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(3.f);
-    bb->SetValue("Distance", Distance);
-    IsHit = new _bool(false);
-    bb->SetValue("IsDamaged", IsHit);
-
-    ChaseNode* chase = new ChaseNode();
-    AttackNode* attack = new AttackNode();
-    IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(attack);
-
-    SequenceNode* attackSequence = new SequenceNode();
-    attackSequence->AddChild(attackCheck);
-
-    SelectorNode* BehaviorNode = new SelectorNode();
-    BehaviorNode->AddChild(attackSequence);
-    BehaviorNode->AddChild(chase);
-
-    IsAliveNode* IsAlive = new IsAliveNode(BehaviorNode);
-    DieNode* die = new DieNode();
-
-    SelectorNode* root = new SelectorNode();
-    root->AddChild(IsAlive);
-    root->AddChild(die);
-
-    BehaviorTree* bt = BehaviorTree::Create(root);
-    
-    auto AI = AddComponent<AIController>(bt, bb);
-
+    InitTransform(objType);
+    InitTree();
     InitAnimation();
     return S_OK;
 }
@@ -168,6 +124,56 @@ void Zombie::Hit(_vec3 dir, _float power)
     }
 }
 
+void Zombie::InitTransform(ObjectType objType)
+{
+    Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 6.f * Scale, 0.0f));
+    Bones["Body"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+
+    Bones["Head"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 8.f * Scale, 0.f));
+    Bones["Head"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+
+    auto transform = AddComponent<TransformComponent>();
+
+    auto collision = GetComponent<CollisionComponent>();
+    collision->SetSize(_vec3(3.f, 7.f, 2.5f));
+    Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
+
+    transform->SetPosition(_vec3(-5.f, 150.f, -5.f));
+}
+
+void Zombie::InitTree()
+{
+    //blackboard Ãß°¡
+    BlackBoard* bb = BlackBoard::Create();
+    bb->SetValue("Self", this);
+    bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
+    Distance = new float(3.f);
+    bb->SetValue("Distance", Distance);
+    IsHit = new _bool(false);
+    bb->SetValue("IsDamaged", IsHit);
+
+    //BT
+    IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(new AttackNode());
+
+    SequenceNode* attackSequence = new SequenceNode();
+    attackSequence->AddChild(attackCheck);
+
+    SelectorNode* BehaviorNode = new SelectorNode();
+    BehaviorNode->AddChild(attackSequence);
+    BehaviorNode->AddChild(new ChaseNode());
+
+    IsAliveNode* IsAlive = new IsAliveNode(BehaviorNode);
+
+    SelectorNode* root = new SelectorNode();
+    root->AddChild(IsAlive);
+    root->AddChild(new DieNode());
+
+    BehaviorTree* bt = BehaviorTree::Create(root);
+
+    //AI
+    auto AI = AddComponent<AIController>(bt, bb);
+}
+
 void Zombie::InitAnimation()
 {
     //Walk
@@ -206,13 +212,13 @@ void Zombie::PlayAnimation(_float dt)
         if (!AttackAnim.IsRunning) AttackAnim.IsRunning = true;
         PlayAttack(dt);
         break;
-    case MonsterState::Die:
-        if (!DieAnim.IsRunning) DieAnim.IsRunning = true;
-        PlayDie(dt);
-        break;
     case MonsterState::Hit:
         if (!HitAnim.IsRunning) HitAnim.IsRunning = true;
         PlayHit(dt);
+        break;
+    case MonsterState::Die:
+        if (!DieAnim.IsRunning) DieAnim.IsRunning = true;
+        PlayDie(dt);
         break;
     }
     if (State != MonsterState::Attack  && State != MonsterState::Die)

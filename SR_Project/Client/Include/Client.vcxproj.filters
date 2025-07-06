@@ -238,9 +238,6 @@
     <Filter Include="02. Object\Monster\Creeper">
       <UniqueIdentifier>{55568c30-c6cf-4688-ad2b-9ca5d546b10d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Item\TNT">
-      <UniqueIdentifier>{8535c346-646e-462e-8c1f-e9d612f0e97f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">

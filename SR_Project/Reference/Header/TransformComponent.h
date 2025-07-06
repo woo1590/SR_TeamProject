@@ -49,6 +49,7 @@ public:
     _vec3 GetFoward()const;
     _vec3 GetRight()const;
     _vec3 GetUp()const;
+    TransformComponent* GetParent() const;
 
     _matrix GetWorldMatrix()const;
     _matrix GetLocalMatrix()const;

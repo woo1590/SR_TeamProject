@@ -34,7 +34,8 @@ BTStatus IsAliveNode::Tick(float dt, BlackBoard* bb)
 		if (IsHit == nullptr ||
 			(IsHit != nullptr && (*IsHit) == false))
 			return Child->Tick(dt, bb);
-		else return BTStatus::Running;
+		else 
+			return BTStatus::Running;
 	}
 	else
 		return BTStatus::Failure;
