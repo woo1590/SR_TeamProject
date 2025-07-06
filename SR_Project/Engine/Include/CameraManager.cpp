@@ -5,7 +5,6 @@
 #include "EngineCore.h"
 #include "RenderSystem.h"
 #include "Scene.h"
-#include "EventSystem.h"
 
 CameraManager::CameraManager(Scene* owner)
 	:owner(owner)

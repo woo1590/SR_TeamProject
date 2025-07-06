@@ -8,7 +8,6 @@
 #include "ResourceManager.h"
 #include "ImGuiManager.h"
 #include "InputSystem.h"
-#include "EventSystem.h"
 #include "CollisionSystem.h"
 #include "CameraManager.h"
 #include "PhysicsSystem.h"
@@ -60,12 +59,10 @@ TestScene* TestScene::Create()
 void TestScene::Load()
 {
 	ObjectMgr		= ObjectManager::Create(this);
-	EventSys		= EventSystem::Create(this);
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
 	PhysicsSys		= PhysicsSystem::Create(this);
 
-	
 #ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
@@ -86,7 +83,6 @@ void TestScene::Load()
 	tCam->SetTarget(player);
 	
 	CameraMgr->SetMainCamera(L"First_Camera");
-	EventSys->SetCamera();
 	
 	ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
@@ -186,16 +182,13 @@ void TestScene::TestSceneImGui()
 
 		ImGui::EndTable();
 	}
-
 	ImGui::End();
-
 }
 #endif
 
 void TestScene::Free()
 {
 	Safe_Release(ObjectMgr);
-	Safe_Release(EventSys);
 	Safe_Release(CollisionSys);
 	Safe_Release(CameraMgr);
 	Safe_Release(PhysicsSys);

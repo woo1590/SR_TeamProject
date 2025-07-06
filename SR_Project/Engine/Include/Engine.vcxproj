@@ -239,7 +239,6 @@
     <ClInclude Include="..\Header\Engine_Typedef.h" />
     <ClInclude Include="..\Header\Engine_UIStruct.h" />
     <ClInclude Include="..\Header\FontComponent.h" />
-    <ClInclude Include="..\Header\EventSystem.h" />
     <ClInclude Include="..\Header\Frame.h" />
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\FreecamComponent.h" />
@@ -360,7 +359,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\Code\FontComponent.cpp" />
-    <ClCompile Include="..\Code\EventSystem.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameManager.cpp" />
     <ClCompile Include="..\Code\FreecamComponent.cpp" />

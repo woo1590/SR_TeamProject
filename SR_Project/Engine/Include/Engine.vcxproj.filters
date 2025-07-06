@@ -109,9 +109,6 @@
     <Filter Include="07. Object Component\Collision">
       <UniqueIdentifier>{1fabb508-3f70-42f6-9b54-e5dfa2c38cc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Scene Component\EventSystem">
-      <UniqueIdentifier>{f87e9172-c4cc-4273-a6d7-876226c23b74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05. Scene Component\CollisionSystem">
       <UniqueIdentifier>{6a1dc87a-3470-4343-855c-be7100afd809}</UniqueIdentifier>
     </Filter>
@@ -339,9 +336,6 @@
     <ClCompile Include="..\Code\CollisionComponent.cpp">
       <Filter>07. Object Component\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\EventSystem.cpp">
-      <Filter>05. Scene Component\EventSystem</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CollisionSystem.cpp">
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClCompile>
@@ -454,13 +448,13 @@
     </ClCompile>
     <ClCompile Include="..\Code\PhysicsSystem.cpp">
       <Filter>05. Scene Component\PhysicsSystem</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\IronCage.cpp">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BlockManager.cpp">
       <Filter>05. Scene Component\BlockManager</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\CoolDownComponent.cpp">
       <Filter>07. Object Component\UIComponent\07. CoolDownComponent</Filter>
     </ClCompile>
@@ -604,9 +598,6 @@
     <ClInclude Include="..\Header\CollisionComponent.h">
       <Filter>07. Object Component\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\EventSystem.h">
-      <Filter>05. Scene Component\EventSystem</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CollisionSystem.h">
       <Filter>05. Scene Component\CollisionSystem</Filter>
     </ClInclude>
@@ -712,13 +703,13 @@
     </ClInclude>
     <ClInclude Include="..\Header\PhysicsSystem.h">
       <Filter>05. Scene Component\PhysicsSystem</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\IronCage.h">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\CoolDownComponent.h">
       <Filter>07. Object Component\UIComponent\07. CoolDownComponent</Filter>
     </ClInclude>

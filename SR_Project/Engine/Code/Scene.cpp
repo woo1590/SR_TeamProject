@@ -19,11 +19,6 @@ ObjectManager* Scene::GetObjectManager() const
 	return ObjectMgr;
 }
 
-EventSystem* Scene::GetEventSystem() const
-{
-	return EventSys;
-}
-
 CollisionSystem* Scene::GetCollisionSystem() const
 {
 	return CollisionSys;
