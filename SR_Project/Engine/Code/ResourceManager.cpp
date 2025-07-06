@@ -43,48 +43,21 @@ void ResourceManager::LoadResource(const std::wstring& texPath, const std::wstri
     LoadMaterial(mtrlKey, mtrl);
 }
 
-void ResourceManager::LoadVertexShader(const std::wstring& filePath, const std::string& vsEntry, const std::wstring& key)
+void ResourceManager::LoadShader(const std::wstring& filePath, const std::wstring& key)
 {
     auto device = GraphicDevice::GetInstance()->GetDevice();
 
-    LPD3DXBUFFER vsCode = nullptr;
+    LPD3DXEFFECT effect = nullptr;
     LPD3DXBUFFER error = nullptr;
+    D3DXCreateEffectFromFileW(device, filePath.c_str(), nullptr, nullptr, 0, nullptr, &effect, &error);
 
-    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, vsEntry.c_str(), "vs_3_0", 0, &vsCode, &error, nullptr);
-    error->Release();
+    if (error) {
+        OutputDebugStringA((char*)error->GetBufferPointer());
+        error->Release();
+    }
 
-    auto shader = Shader::Create(vsCode, nullptr);
-    ShaderContainer[key] = shader;
-}
+    auto shader = Shader::Create(effect);
 
-void ResourceManager::LoadPixelShader(const std::wstring& filePath, const std::string& psEntry, const std::wstring& key)
-{
-    auto device = GraphicDevice::GetInstance()->GetDevice();
-
-    LPD3DXBUFFER psCode = nullptr;
-    LPD3DXBUFFER error = nullptr;
-
-    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, psEntry.c_str(), "ps_3_0", 0, &psCode, &error, nullptr);
-    error->Release();
-
-    auto shader = Shader::Create(nullptr, psCode);
-    ShaderContainer[key] = shader;
-}
-
-void ResourceManager::LoadShader(const std::wstring& filePath, const std::string& vsEntry, const std::string& psEntry, const std::wstring& key)
-{
-    auto device = GraphicDevice::GetInstance()->GetDevice();
-
-    LPD3DXBUFFER vsCode = nullptr;
-    LPD3DXBUFFER psCode = nullptr;
-    LPD3DXBUFFER error = nullptr;
-
-    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, vsEntry.c_str(), "vs_3_0", 0, &vsCode, &error, nullptr);
-
-    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, psEntry.c_str(), "ps_3_0", 0, &psCode, &error, nullptr);
-    error->Release();
-
-    auto shader = Shader::Create(vsCode, psCode);
     ShaderContainer[key] = shader;
 }
 
@@ -133,6 +106,16 @@ Material* ResourceManager::GetMaterial(const std::wstring& key)
     auto iter = MaterialContainer.find(key);
 
     if (iter != MaterialContainer.end())
+        return iter->second;
+    else
+        return nullptr;
+}
+
+Shader* ResourceManager::GetShader(const std::wstring& key)
+{
+    auto iter = ShaderContainer.find(key);
+
+    if (iter != ShaderContainer.end())
         return iter->second;
     else
         return nullptr;

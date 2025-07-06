@@ -113,15 +113,11 @@ void RenderSystem::SetUIRenderState(UIRenderType newType)
 
 void RenderSystem::PriorityPass()
 {
-	_matrix view = Camera->GetViewMatrix();
-	_matrix skyboxView = view;
-	skyboxView._41 = 0.f;
-	skyboxView._42 = 0.f;
-	skyboxView._43 = 0.f;
-
-	_matrix proj = Camera->GetProjMatrix();
-	Device->SetTransform(D3DTS_VIEW, &skyboxView);
-	Device->SetTransform(D3DTS_PROJECTION, &proj);
+	CurrProj = Camera->GetProjMatrix();
+	CurrView = Camera->GetViewMatrix();
+	
+	//Device->SetTransform(D3DTS_VIEW, &CurrView);
+	//Device->SetTransform(D3DTS_PROJECTION, &CurrProj);
 
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -135,8 +131,8 @@ void RenderSystem::PriorityPass()
 
 void RenderSystem::NonAlphaPass()
 {
-	_matrix view = Camera->GetViewMatrix();
-	Device->SetTransform(D3DTS_VIEW, &view);
+	CurrView = Camera->GetViewMatrix();
+	Device->SetTransform(D3DTS_VIEW, &CurrView);
 
 	for (const auto& r : RenderList[(int)RENDER_ID::Render_NonAlpha])
 		r->Render();
@@ -191,11 +187,11 @@ void RenderSystem::DebugPass()
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	_matrix view = Camera->GetViewMatrix();
-	_matrix proj = Camera->GetProjMatrix();
+	CurrView = Camera->GetViewMatrix();
+	CurrProj = Camera->GetProjMatrix();
 
-	Device->SetTransform(D3DTS_VIEW, &view);
-	Device->SetTransform(D3DTS_PROJECTION, &proj);
+	Device->SetTransform(D3DTS_VIEW, &CurrView);
+	Device->SetTransform(D3DTS_PROJECTION, &CurrProj);
 
 	for (const auto& collision : DebugRender)
 		collision->Render();
@@ -203,6 +199,9 @@ void RenderSystem::DebugPass()
 
 void RenderSystem::AlphaPass()
 {
+	CurrView = Camera->GetViewMatrix();
+	CurrProj = Camera->GetProjMatrix();
+
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -220,7 +219,6 @@ void RenderSystem::Reset()
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	Device->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

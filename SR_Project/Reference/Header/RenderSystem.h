@@ -7,6 +7,7 @@ class CollisionComponent;
 class Object;
 class CameraComponent;
 class UIRenderer;
+class Shader;
 class ENGINE_DLL RenderSystem : public Base
 {
 private:
@@ -41,10 +42,14 @@ private:
     std::vector<std::list<RendererComponent*>> RenderList;
     CameraComponent* Camera;
    
-    LPDIRECT3DDEVICE9 Device;
     ID3DXSprite* spriteBatch = nullptr;
-
     std::list<CollisionComponent*> DebugRender; //디버그용
+
+    _matrix CurrView;
+    _matrix CurrProj;
+    Shader* CurrShader = nullptr;
+
+    LPDIRECT3DDEVICE9 Device;
 };
 
 END

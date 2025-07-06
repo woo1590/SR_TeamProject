@@ -18,16 +18,14 @@ public:
 
     /*----------File Load----------------*/
     void LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey);
-    void LoadVertexShader(const std::wstring& vsPath, const std::string& vsEntry, const std::wstring& key);
-    void LoadPixelShader(const std::wstring& psPath, const std::string& psEntry, const std::wstring& key);
-    void LoadShader(const std::wstring & filePath, const std::string& vsEntry, const std::string& psEntry, const std::wstring& key);
-
+    void LoadShader(const std::wstring & filePath,const std::wstring& key);
     void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
     void LoadMesh(const std::wstring& key, Mesh* mesh);
     void LoadMaterial(const std::wstring& key, Material* mtrl);
 
     Mesh*           GetMesh(const std::wstring& key);
     Material*       GetMaterial(const std::wstring& key);
+    Shader*         GetShader(const std::wstring& key);
     LPDIRECT3DBASETEXTURE9 GetTexture(const std::wstring& key);
 
     void RegisterUILayer(const wstring& tag, int layer);

@@ -21,6 +21,9 @@ public:
     void SetFloat(const std::string& name, float value);
     void SetVec3(const std::string& name, _vec3 value);
     void SetMat(const std::string& name, _matrix value);
+    void SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 value);
+    void SetShader(const std::wstring& key);
+    Shader* GetShader()const;
 
 private:
     void Free()override;
@@ -34,6 +37,7 @@ private:
     std::unordered_map<std::string, float> FloatParam;
     std::unordered_map<std::string, _vec3> Vec3Param;
     std::unordered_map<std::string, _matrix> MatParam;
+    std::unordered_map<std::string, LPDIRECT3DBASETEXTURE9> TexParam;
     /*------------------------------------*/
 
     LPDIRECT3DDEVICE9 Device = nullptr;

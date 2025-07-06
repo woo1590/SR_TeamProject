@@ -5,13 +5,17 @@
 #include "EngineCore.h"
 #include "ResourceManager.h"
 #include "RenderSystem.h"
+#include "CameraManager.h"
+#include "Scene.h"
 
 //component
 #include "TransformComponent.h"
+#include "CameraComponent.h"
 
 //model
 #include "Mesh.h"
 #include "Material.h"
+#include "Shader.h"
 
 MeshRenderer::MeshRenderer(Object* owner, RENDER_ID renderId)
 	:RendererComponent(owner,renderId)
@@ -42,39 +46,29 @@ void MeshRenderer::Late_Update(_float dt)
 
 void MeshRenderer::Render()
 {
-	/*auto mesh = owner->GetComponent<MeshComponent>();
-	auto material = owner->GetComponent<MaterialComponent>();
-	auto dxMesh = owner->GetComponent<DxMeshComponent>();
 	auto transform = owner->GetComponent<TransformComponent>();
-
-	if (!transform) return;
+	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
+	auto shader = mtrl->GetShader();
 
 	_matrix worldMat = transform->GetWorldMatrix();
+	_matrix viewMat = cam->GetViewMatrix();
+	_matrix projMat = cam->GetProjMatrix();
 
-	Device->SetTransform(D3DTS_WORLD, &worldMat);
+	//Device->SetTransform(D3DTS_WORLD,&worldMat);
 
-	if (mesh)
+	//Apply Constant (world, view, proj, wvp)
+	if (shader)
 	{
-		if (material)
-			material->Apply(0);
-		mesh->Draw();
+		shader->Begin(0);
+		shader->SetConstant("g_World", worldMat);
+		shader->SetConstant("g_View", viewMat);
+		shader->SetConstant("g_Proj", projMat);
 	}
-	else if (dxMesh)
-	{
-		
-		for (int i = 0; i < dxMesh->GetNumSubset(); ++i)
-		{
-			material->Apply(i);
-			dxMesh->DrawSubset(i);
-		}
-	}*/
-
-	auto transform = owner->GetComponent<TransformComponent>();
-	_matrix worldMat = transform->GetWorldMatrix();
-	Device->SetTransform(D3DTS_WORLD,&worldMat);
-
 	mtrl->Apply();
 	mesh->Draw();
+
+	if(shader)
+		shader->End();
 }
 
 void MeshRenderer::SetMesh(const std::wstring& key)

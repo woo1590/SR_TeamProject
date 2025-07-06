@@ -60,13 +60,8 @@ HRESULT Material::SetTexture(const std::wstring& key)
 
 void Material::Apply()
 {
-    Device->SetMaterial(&Mtrl);
-    Device->SetTexture(0, Texture);
-    
     if (shader)
     {
-        shader->Apply();
-
         for (const auto& [name, value] : IntParam)
             shader->SetConstant(name, value);
 
@@ -78,6 +73,12 @@ void Material::Apply()
 
         for (const auto& [name, value] : MatParam)
             shader->SetConstant(name, value);
+
+    }
+    else
+    {
+        Device->SetMaterial(&Mtrl);
+        Device->SetTexture(0, Texture);
     }
 }
 
@@ -99,6 +100,21 @@ void Material::SetVec3(const std::string& name, _vec3 value)
 void Material::SetMat(const std::string& name, _matrix value)
 {
     MatParam[name] = value;
+}
+
+void Material::SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 value)
+{
+    TexParam[name] = value;
+}
+
+void Material::SetShader(const std::wstring& key)
+{
+    shader = EngineCore::GetInstance()->GetResourceManager()->GetShader(key);
+}
+
+Shader* Material::GetShader() const
+{
+    return shader;
 }
 
 void Material::Free()

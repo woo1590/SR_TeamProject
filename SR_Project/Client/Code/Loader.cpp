@@ -118,7 +118,6 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/bow.dds", L"bow", TEXTURE::Tex_Cube, L"Bow_Mtrl");
 
-	 
 	/////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
@@ -131,6 +130,9 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube, L"ChestUp_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
+
+	/*--------------------Load Shader---------------------------------*/
+  	resource->LoadShader(L"../Resource/Shader/SkyBox.fx", L"SkyBox_Shader");
 
 	return S_OK;
 }
