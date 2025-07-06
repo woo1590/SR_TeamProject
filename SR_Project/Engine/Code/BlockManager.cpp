@@ -34,22 +34,29 @@ void BlockManager::LoadTexture()
 	resource->LoadMesh(L"Cube_Mesh", cube);
 	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube, L"WoodPlank_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank_Half.dds", L"WoodPlank_Half", TEXTURE::Tex_Cube, L"WoodPlank_Half_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/Stone.dds", L"Stone", TEXTURE::Tex_Cube, L"Stone_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/Stone_Half.dds", L"Stone_Half", TEXTURE::Tex_Cube, L"Stone_Half_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone.dds", L"CobbleStone", TEXTURE::Tex_Cube, L"CobbleStone_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone_Half.dds", L"CobbleStone_Half", TEXTURE::Tex_Cube, L"CobbleStone_Half_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/SmoothStone.dds", L"SmoothStone", TEXTURE::Tex_Cube, L"SmoothStone_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/SmoothStone_Half.dds", L"SmoothStone_Half", TEXTURE::Tex_Cube, L"SmoothStone_Half_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/StoneBrick.dds", L"StoneBrick", TEXTURE::Tex_Cube, L"StoneBrick_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/MossyStoneBrick.dds", L"MossyStoneBrick", TEXTURE::Tex_Cube, L"MossyStoneBrick_Mtrl");
 
 	resource->LoadResource(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube, L"Lever_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube, L"ChestDown_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube, L"ChestUp_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
 }
 
@@ -154,7 +161,7 @@ void BlockManager::LoadStage(const char* loadStage)
 	{
 		if (!ReadFile(hFile, &newSBlock, sizeof(SB), &dwByte, nullptr)) return;
 
-		auto sBlock = StaticBlock::Create(owner->GetObjectManager(), ObjectType::StaticBlock, newSBlock.Type, newSBlock.Dir);
+		auto sBlock = StaticBlock::Create(owner->GetObjectManager(), ObjectType::StaticBlock, newSBlock.Type, newSBlock.Axis, newSBlock.Rot, newSBlock.Usage);
 		sBlock->GetComponent<TransformComponent>()->SetPosition(newSBlock.Pos);
 
 		owner->GetObjectManager()->AddObject(ObjectType::StaticBlock, sBlock);
@@ -172,7 +179,7 @@ void BlockManager::LoadStage(const char* loadStage)
 			int count = 0;
 			if (!ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr)) return;
 
-			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, count);
+			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Axis, count);
 			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
 
 			int vecSize = 0;
@@ -187,7 +194,7 @@ void BlockManager::LoadStage(const char* loadStage)
 		}
 		else
 		{
-			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, -1);
+			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Axis, -1);
 			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
 
 			if (newDBlock.Type == DynamicBlockType::LeverSwitch)

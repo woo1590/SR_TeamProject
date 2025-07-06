@@ -15,8 +15,8 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
-Chest::Chest(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir)
-    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockDir, Count)
+Chest::Chest(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis)
+    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockAxis, Count)
 {
 }
 
@@ -24,9 +24,9 @@ Chest::~Chest()
 {
 }
 
-Chest* Chest::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir)
+Chest* Chest::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis)
 {
-    Chest* Instance = new Chest(owner, objType, DynamicBlockType, DynamicBlockDir);
+    Chest* Instance = new Chest(owner, objType, DynamicBlockType, DynamicBlockAxis);
 
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {
@@ -61,15 +61,15 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
     upTrans->Translate(0.f, 1.f, 0.f);
     lockTrans->Translate(0.f, -0.2f, -1.f);
 
-    switch (Dir)
+    switch (Axis)
     {
-    case DynamicBlockDir::XP:
+    case DynamicBlockAxis::dXP:
         downTrans->SetRotate(0.f, D3DXToRadian(90.f), 0.f);
         break;
-    case DynamicBlockDir::XM:
+    case DynamicBlockAxis::dXM:
         downTrans->SetRotate(0.f, D3DXToRadian(270.f), 0.f);
         break;
-    case DynamicBlockDir::ZM:
+    case DynamicBlockAxis::dZM:
         downTrans->SetRotate(0.f, D3DXToRadian(180.f), 0.f);
         break;
     }

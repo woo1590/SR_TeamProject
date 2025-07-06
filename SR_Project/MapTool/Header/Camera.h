@@ -13,6 +13,10 @@ public:
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 
+public:
+    void SetPosition(_vec3 pos);
+    void LookAt(_vec3 look);
+
 private:
     void Free()override;
 };

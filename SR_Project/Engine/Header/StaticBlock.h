@@ -6,12 +6,12 @@ BEGIN(Engine)
 class ENGINE_DLL StaticBlock : public Object
 {
     friend class Object;
-private:
-    StaticBlock(ObjectManager* owner, ObjectType objType, StaticBlockType staticBlockType, StaticBlockDir staticBlockDir);
+protected:
+    StaticBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
     virtual ~StaticBlock();
 
 public:
-    static StaticBlock* Create(ObjectManager* owner, ObjectType objType, StaticBlockType staticBlockType, StaticBlockDir staticBlockDir);
+    static Object* Create(ObjectManager* owner, ObjectType objType, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
     HRESULT Ready_Object()override;
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
@@ -22,8 +22,11 @@ public:
 private:
     void Free() override;
 
-private:
-    StaticBlockDir Dir;
+protected:
     StaticBlockType Type;
+    StaticBlockAxis Axis;
+    StaticBlockRot Rot;
+    StaticBlockUsage Usage;
+    std::unordered_map<string, Object*> Parts;
 };
 END

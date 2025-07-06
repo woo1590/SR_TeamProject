@@ -107,17 +107,23 @@ namespace Engine
 		}
 	}
 
-	enum StaticBlockDir { BlockX, BlockY, BlockZ, BDEnd };
-	enum StaticBlockRot { ZP, ZM, XP, XM };
+	enum StaticBlockAxis { sAX, sAY, sAZ, sAEnd };
+	enum StaticBlockRot { sZP, sZM, sXP, sXM, sREnd };
 	enum StaticBlockType
 	{
+		sBlockNone,
 		Dirt, GrassDirt, Wood, WoodPlank,
 		Stone, CobbleStone, SmoothStone, StoneBrick, MossyStoneBrick,
-		SBlockNone
+		sBlockEnd
 	};
 	enum StaticBlockUsage { Basic, Half, Stair, Fence };
 
-	enum DynamicBlockDir { ZP, ZM, XP, XM, YP, DBEnd };
-	enum DynamicBlockType { LeverSwitch, BasicChest, IronCages, DBlockNone };
+	enum DynamicBlockAxis { dZP, dZM, dXP, dXM, dYP, dAEnd };
+	enum DynamicBlockType
+	{
+		dBlockNone,
+		LeverSwitch, BasicChest, IronCages,
+		dBlockEnd
+	};
 }
 #endif // Engine_Enum_h__

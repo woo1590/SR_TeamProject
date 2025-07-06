@@ -7,11 +7,11 @@ class ENGINE_DLL DynamicBlock : public Object
 {
     friend class Object;
 protected:
-    DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType dynamicBlockType, DynamicBlockDir dynamicBlockDir, int Count);
+    DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType dynamicBlockType, DynamicBlockAxis dynamicBlockAxis, int Count);
     virtual ~DynamicBlock();
 
 public:
-    static Object* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType dynamicBlockType, DynamicBlockDir dynamicBlockDir, int Count);
+    static Object* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType dynamicBlockType, DynamicBlockAxis dynamicBlockAxis, int Count);
     HRESULT Ready_Object()override;
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
@@ -27,6 +27,7 @@ public:
     int GetCount() { return Count; }
     bool GetTrigger() { return Trigger; }
     vector<int> GetIDVec() { return LinkedID; }
+    unordered_map<string, Object*> GetParts() { return Parts; }
 
     void SetID(int id) { ID = id; }
     void SetCount(int count) { Count = count; }
@@ -40,7 +41,7 @@ protected:
     int Count = 0;
     float Scale = 1.f;
 
-    DynamicBlockDir Dir;
+    DynamicBlockAxis Axis;
     DynamicBlockType Type;
     std::unordered_map<string, Object*> Parts;
 

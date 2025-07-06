@@ -29,10 +29,10 @@ BTStatus ChaseNode::Tick(float dt, BlackBoard* bb)
 	_vec3 TargetPos = target->GetComponent<TransformComponent>()->GetPosition();
 	_vec3 SelfPos = self->GetComponent<TransformComponent>()->GetPosition();
 	
-	_vec3 Dir = TargetPos - SelfPos;
+	_vec3 Axis = TargetPos - SelfPos;
 
-	if (D3DXVec3Length(&Dir) > *(static_cast<float*>(bb->GetValue("Distance"))))
-		static_cast<BaseCharacter*>(self)->MoveTo(D3DXVec3Normalize(&Dir, &Dir), dt);
+	if (D3DXVec3Length(&Axis) > *(static_cast<float*>(bb->GetValue("Distance"))))
+		static_cast<BaseCharacter*>(self)->MoveTo(D3DXVec3Normalize(&Axis, &Axis), dt);
 	else
 		return BTStatus::Success;
 

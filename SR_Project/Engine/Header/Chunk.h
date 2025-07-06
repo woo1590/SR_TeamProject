@@ -15,8 +15,6 @@ public:
     void AddBlock(ObjectManager* objectMgr, int Count);
 
     void SetSB(SB sb) { CD.sBlocks.push_back(sb); }
-    void SetDB(DB db) { CD.dBlocks.push_back(db); }
-    void SetRender(bool render) { CD.Render = render; }
 
     const CHUNK& GetChunkData() const { return CD; }
 

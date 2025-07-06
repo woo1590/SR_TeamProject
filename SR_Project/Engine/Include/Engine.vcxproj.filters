@@ -229,17 +229,14 @@
     <Filter Include="06. Object\02. DynamicBlock\IronCage">
       <UniqueIdentifier>{737313a0-01ca-42c8-92d5-f2e601ad1e4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\01. StaticBlock\Basic">
+    <Filter Include="06. Object\01. StaticBlock\BasicBlock">
       <UniqueIdentifier>{feff293c-aa6c-4b44-bf9a-2db6a0eaac2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\01. StaticBlock\Stair">
-      <UniqueIdentifier>{33ab373c-7a1f-44af-8802-f6b8a2e7aed4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Object\01. StaticBlock\Half">
+    <Filter Include="06. Object\01. StaticBlock\HalfBlock">
       <UniqueIdentifier>{6cd616e6-27a0-437d-be38-b55c8f2c18cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\01. StaticBlock\Fence">
-      <UniqueIdentifier>{1e45f38b-817f-40f0-8717-6035ecf12b63}</UniqueIdentifier>
+    <Filter Include="06. Object\01. StaticBlock\StairBlock">
+      <UniqueIdentifier>{33ab373c-7a1f-44af-8802-f6b8a2e7aed4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -481,6 +478,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\BlockManager.cpp">
       <Filter>05. Scene Component\BlockManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BasicBlock.cpp">
+      <Filter>06. Object\01. StaticBlock\BasicBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HalfBlock.cpp">
+      <Filter>06. Object\01. StaticBlock\HalfBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StairBlock.cpp">
+      <Filter>06. Object\01. StaticBlock\StairBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -742,6 +748,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BasicBlock.h">
+      <Filter>06. Object\01. StaticBlock\BasicBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HalfBlock.h">
+      <Filter>06. Object\01. StaticBlock\HalfBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StairBlock.h">
+      <Filter>06. Object\01. StaticBlock\StairBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

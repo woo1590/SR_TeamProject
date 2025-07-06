@@ -7,8 +7,10 @@
 #include "StaticBlock.h"
 #include "DynamicBlock.h"
 
-Chunk::Chunk(int chunkX, int chunkZ) : CD(chunkX, chunkZ)
+Chunk::Chunk(int chunkX, int chunkZ)
 {
+    CD.chunkX = chunkX;
+    CD.chunkZ = chunkZ;
 }
 
 Chunk::~Chunk()
@@ -25,19 +27,13 @@ void Chunk::AddBlock(ObjectManager* objectMgr, int Count)
 {
     for (const auto& sb : CD.sBlocks)
     {
-        // Object* obj = StaticBlock::Create(objectMgr, ObjectType::StaticBlock, sb.Type, sb.Dir);
-        // obj->GetComponent<TransformComponent>()->SetPosition(sb.Pos);
-        // objectMgr->AddObject(ObjectType::StaticBlock, obj);
-    }
-
-    for (const auto& db : CD.dBlocks)
-    {
-        Object* obj = DynamicBlock::Create(objectMgr, ObjectType::DynamicBlock, db.Type, db.Dir, Count);
-        obj->GetComponent<TransformComponent>()->SetPosition(db.Pos);
-        objectMgr->AddObject(ObjectType::DynamicBlock, obj);
+        Object* obj = StaticBlock::Create(objectMgr, ObjectType::StaticBlock, sb.Type, sb.Axis, sb.Rot, sb.Usage);
+        obj->GetComponent<TransformComponent>()->SetPosition(sb.Pos);
+        objectMgr->AddObject(ObjectType::StaticBlock, obj);
     }
 }
 
 void Chunk::Free()
 {
+    CD.sBlocks.clear();
 }

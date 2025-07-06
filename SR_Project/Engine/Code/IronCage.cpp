@@ -16,8 +16,8 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
-IronCage::IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count)
-    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockDir, Count)
+IronCage::IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis, int Count)
+    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockAxis, Count)
 {
 }
 
@@ -25,9 +25,9 @@ IronCage::~IronCage()
 {
 }
 
-IronCage* IronCage::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count)
+IronCage* IronCage::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis, int Count)
 {
-    IronCage* Instance = new IronCage(owner, objType, DynamicBlockType, DynamicBlockDir, Count);
+    IronCage* Instance = new IronCage(owner, objType, DynamicBlockType, DynamicBlockAxis, Count);
 
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {

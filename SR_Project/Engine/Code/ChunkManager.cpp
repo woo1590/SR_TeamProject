@@ -155,9 +155,9 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
 			SB sb;
 			if (!ReadFile(hFile, &sb, sizeof(SB), &dwByte, nullptr)) break;
 
-			auto block = StaticBlock::Create(owner->GetObjectManager(), ObjectType::StaticBlock, sb.Type, sb.Dir);
-			block->GetComponent<TransformComponent>()->SetPosition(sb.Pos);
-			owner->GetObjectManager()->AddObject(ObjectType::StaticBlock, block);
+			//auto block = StaticBlock::Create(owner->GetObjectManager(), ObjectType::StaticBlock, sb.Type, sb.Axis, sb.Rot, sb.Usage);
+			// block->GetComponent<TransformComponent>()->SetPosition(sb.Pos);
+			// owner->GetObjectManager()->AddObject(ObjectType::StaticBlock, block);
 
 			chunkData.sBlocks.push_back(sb);
 		}
@@ -178,7 +178,7 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
 				int count = 0;
 				if (!ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr)) break;
 
-				dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, db.Type, db.Dir, count);
+				dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, db.Type, db.Axis, count);
 				dBlock->GetComponent<TransformComponent>()->SetPosition(db.Pos);
 
 				int vecSize = 0;
@@ -194,7 +194,7 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
 			}
 			else
 			{
-				dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, db.Type, db.Dir, -1);
+				dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, db.Type, db.Axis, -1);
 				dBlock->GetComponent<TransformComponent>()->SetPosition(db.Pos);
 
 				if (db.Type == DynamicBlockType::LeverSwitch)

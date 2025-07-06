@@ -68,14 +68,16 @@ namespace Engine
 	{
 		_vec3 Pos;
 		StaticBlockType Type;
-		StaticBlockDir Dir;
+		StaticBlockAxis Axis;
+		StaticBlockRot Rot;
+		StaticBlockUsage Usage;
 	} SB;
 
 	typedef struct DynamicBlockData
 	{
 		_vec3 Pos;
 		DynamicBlockType Type;
-		DynamicBlockDir Dir;
+		DynamicBlockAxis Axis;
 	} DB;
 
 	typedef struct ChunkData

@@ -15,7 +15,7 @@ public:
     void Load() override;
     void Update(float dt) override;
     void Late_Update(float dt) override;
-    void Unload() override;
+    void Unload() override {};
 
 private:
 
@@ -23,14 +23,16 @@ private:
     void ImGui_Main();
     void ImGui_SaveLoad();
     void ImGui_SetBlockType();
-    void ImGui_SetBlockDir();
+    void ImGui_SetBlockUsage();
+    void ImGui_SetBlockInfo();
     void ImGui_LinkLever();
+    void ImGui_RemoveBlock();
 #endif
 
     void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);     // 광선 위치와 방향 초기화
     bool RayIntersectsAABB(const _vec3& rayOrigin, const _vec3& rayDir, const _vec3& boxMin, const _vec3& boxMax, float& outDistance); // 광선 박스 충돌
     _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax); // 충돌한 면의 법선 반환
-    void Place(const _vec3& position); // 블럭 설치
+    void Place(_vec3& position); // 블럭 설치
 
     void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);              // 좌클릭
     void OnRightClick(_vec3& rayOrigin, _vec3& rayDir);             // 우클릭
@@ -39,15 +41,19 @@ private:
     void Free() override;
 
 private:
-    int selectedSBlockDir = 1;
-    int selectedSBlockType = static_cast<int>(StaticBlockType::SBlockNone);
+    int selectedSBlockUsage = 0;
+    int selectedSBlockAxis = 1;
+    int selectedSBlockRot = 0;
+    int selectedSBlockType = static_cast<int>(StaticBlockType::sBlockNone);
 
-    int selectedDBlockDir = 0;
-    int selectedDBlockType = static_cast<int>(DynamicBlockType::DBlockNone);
+    int selectedDBlockAxis = 0;
+    int selectedDBlockType = static_cast<int>(DynamicBlockType::dBlockNone);
 
-    StaticBlockDir staticBlockDir = StaticBlockDir::BlockY;
-    StaticBlockType staticBlockType = StaticBlockType::SBlockNone;
+    StaticBlockUsage staticBlockUsage = StaticBlockUsage::Basic;
+    StaticBlockType staticBlockType = StaticBlockType::sBlockNone;
+    StaticBlockAxis staticBlockAxis = StaticBlockAxis::sAY;
+    StaticBlockRot staticBlockRot = StaticBlockRot::sREnd;
 
-    DynamicBlockDir dynamicBlockDir = DynamicBlockDir::DBEnd;
-    DynamicBlockType dynamicBlockType = DynamicBlockType::DBlockNone;
+    DynamicBlockAxis dynamicBlockAxis = DynamicBlockAxis::dAEnd;
+    DynamicBlockType dynamicBlockType = DynamicBlockType::dBlockNone;
 };

@@ -14,8 +14,8 @@
 
 USING(Engine)
 
-DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockDir dir, int Count)
-    : Object(owner, objType), Type(type), Dir(dir), Count(Count)
+DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockAxis dir, int Count)
+    : Object(owner, objType), Type(type), Axis(dir), Count(Count)
 {
 }
 
@@ -23,25 +23,25 @@ DynamicBlock::~DynamicBlock()
 {
 }
 
-Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockDir dir, int Count)
+Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockAxis dir, int Count)
 {
     Object* Instance(nullptr);
 
     switch (type)
     {
     case DynamicBlockType::LeverSwitch:
-        if (dir != DynamicBlockDir::DBEnd)
+        if (dir != DynamicBlockAxis::dAEnd)
             Instance = Lever::Create(owner, ObjectType::DynamicBlock, type, dir);
         break;
     case DynamicBlockType::BasicChest:
         Instance = Chest::Create(owner, ObjectType::DynamicBlock, type, dir);
         break;
     case DynamicBlockType::IronCages:
-        if (dir == DynamicBlockDir::YP)
+        if (dir == DynamicBlockAxis::dYP)
             Instance = IronCage::Create(owner, ObjectType::DynamicBlock, type, dir, Count);
         break;
     default:
-        MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"DynamicBlock::Create Error", MB_OK);
+        MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"Error", MB_OK);
         break;
     }
 
@@ -52,10 +52,7 @@ HRESULT DynamicBlock::Ready_Object()
 {
     auto collision = AddComponent<CollisionComponent>();
     auto transform = AddComponent<TransformComponent>();
-    transform->SetScale(1.f, 1.f, 1.f);
-
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-
     return S_OK;
 }
 
