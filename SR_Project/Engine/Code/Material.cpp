@@ -81,22 +81,22 @@ void Material::Apply()
     }
 }
 
-void Material::SetInt(const std::wstring& name, int value)
+void Material::SetInt(const std::string& name, int value)
 {
     IntParam[name] = value;
 }
 
-void Material::SetFloat(const std::wstring& name, float value)
+void Material::SetFloat(const std::string& name, float value)
 {
     FloatParam[name] = value;
 }
 
-void Material::SetVec3(const std::wstring& name, _vec3 value)
+void Material::SetVec3(const std::string& name, _vec3 value)
 {
     Vec3Param[name] = value;
 }
 
-void Material::SetMat(const std::wstring& name, _matrix value)
+void Material::SetMat(const std::string& name, _matrix value)
 {
     MatParam[name] = value;
 }

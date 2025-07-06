@@ -43,65 +43,49 @@ void ResourceManager::LoadResource(const std::wstring& texPath, const std::wstri
     LoadMaterial(mtrlKey, mtrl);
 }
 
-void ResourceManager::LoadVertexShader(const std::wstring& vsPath, const std::string& vsEntry, const std::wstring& key)
+void ResourceManager::LoadVertexShader(const std::wstring& filePath, const std::string& vsEntry, const std::wstring& key)
 {
     auto device = GraphicDevice::GetInstance()->GetDevice();
 
-    LPD3DXBUFFER code = nullptr;
+    LPD3DXBUFFER vsCode = nullptr;
     LPD3DXBUFFER error = nullptr;
 
-    D3DXCompileShaderFromFileW(vsPath.c_str(), nullptr, nullptr, vsEntry.c_str(), "vs_3_0", 0, &code, &error, nullptr);
-
-    LPDIRECT3DVERTEXSHADER9 vs = nullptr;
-    device->CreateVertexShader((DWORD*)code->GetBufferPointer(), &vs);
-    code->Release();
+    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, vsEntry.c_str(), "vs_3_0", 0, &vsCode, &error, nullptr);
     error->Release();
 
-    auto shader = Shader::Create(vs, nullptr);
+    auto shader = Shader::Create(vsCode, nullptr);
     ShaderContainer[key] = shader;
 }
 
-void ResourceManager::LoadPixelShader(const std::wstring& psPath, const std::string& psEntry, const std::wstring& key)
+void ResourceManager::LoadPixelShader(const std::wstring& filePath, const std::string& psEntry, const std::wstring& key)
 {
     auto device = GraphicDevice::GetInstance()->GetDevice();
 
-    LPD3DXBUFFER code = nullptr;
+    LPD3DXBUFFER psCode = nullptr;
     LPD3DXBUFFER error = nullptr;
 
-    D3DXCompileShaderFromFileW(psPath.c_str(), nullptr, nullptr, psEntry.c_str(), "ps_3_0", 0, &code, &error, nullptr);
-
-    LPDIRECT3DPIXELSHADER9 ps = nullptr;
-    device->CreatePixelShader((DWORD*)code->GetBufferPointer(), &ps);
-    code->Release();
+    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, psEntry.c_str(), "ps_3_0", 0, &psCode, &error, nullptr);
     error->Release();
 
-    auto shader = Shader::Create(nullptr, ps);
+    auto shader = Shader::Create(nullptr, psCode);
     ShaderContainer[key] = shader;
 }
 
-void ResourceManager::LoadShader(const std::wstring& vsPath, const std::string& vsEntry, const std::wstring& psPath, const std::string& psEntry, const std::wstring& key)
+void ResourceManager::LoadShader(const std::wstring& filePath, const std::string& vsEntry, const std::string& psEntry, const std::wstring& key)
 {
     auto device = GraphicDevice::GetInstance()->GetDevice();
 
-    LPD3DXBUFFER code = nullptr;
+    LPD3DXBUFFER vsCode = nullptr;
+    LPD3DXBUFFER psCode = nullptr;
     LPD3DXBUFFER error = nullptr;
 
-    D3DXCompileShaderFromFileW(vsPath.c_str(), nullptr, nullptr, vsEntry.c_str(), "vs_3_0", 0, &code, &error, nullptr);
+    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, vsEntry.c_str(), "vs_3_0", 0, &vsCode, &error, nullptr);
 
-    LPDIRECT3DVERTEXSHADER9 vs = nullptr;
-    device->CreateVertexShader((DWORD*)code->GetBufferPointer(), &vs);
-    code->Release();
+    D3DXCompileShaderFromFileW(filePath.c_str(), nullptr, nullptr, psEntry.c_str(), "ps_3_0", 0, &psCode, &error, nullptr);
     error->Release();
 
-    D3DXCompileShaderFromFileW(psPath.c_str(), nullptr, nullptr, psEntry.c_str(), "ps_3_0", 0, &code, &error, nullptr);
-
-    LPDIRECT3DPIXELSHADER9 ps = nullptr;
-    device->CreatePixelShader((DWORD*)code->GetBufferPointer(), &ps);
-    code->Release();
-    error->Release();
-
-    auto shader = Shader::Create(vs, ps);
-    ShaderContainer[key] = shader;  
+    auto shader = Shader::Create(vsCode, psCode);
+    ShaderContainer[key] = shader;
 }
 
 void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)

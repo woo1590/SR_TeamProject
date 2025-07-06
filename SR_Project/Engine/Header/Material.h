@@ -17,10 +17,10 @@ public:
     void Apply();
 
     /*---------Shader-----------*/
-    void SetInt(const std::wstring& name, int value);
-    void SetFloat(const std::wstring& name, float value);
-    void SetVec3(const std::wstring& name, _vec3 value);
-    void SetMat(const std::wstring& name, _matrix value);
+    void SetInt(const std::string & name, int value);
+    void SetFloat(const std::string& name, float value);
+    void SetVec3(const std::string& name, _vec3 value);
+    void SetMat(const std::string& name, _matrix value);
 
 private:
     void Free()override;
@@ -30,10 +30,10 @@ private:
 
     /*---------------Shader---------------*/
     Shader* shader = nullptr;
-    std::unordered_map<std::wstring, int> IntParam;
-    std::unordered_map<std::wstring, float> FloatParam;
-    std::unordered_map<std::wstring, _vec3> Vec3Param;
-    std::unordered_map<std::wstring, _matrix> MatParam;
+    std::unordered_map<std::string, int> IntParam;
+    std::unordered_map<std::string, float> FloatParam;
+    std::unordered_map<std::string, _vec3> Vec3Param;
+    std::unordered_map<std::string, _matrix> MatParam;
     /*------------------------------------*/
 
     LPDIRECT3DDEVICE9 Device = nullptr;

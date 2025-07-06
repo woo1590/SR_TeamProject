@@ -3,7 +3,6 @@
 BEGIN(Engine)
 
 class ObjectManager;
-class EventSystem;
 class CollisionSystem;
 class PhysicsSystem;
 class CameraManager;
@@ -37,7 +36,6 @@ public:
     virtual void Unload()PURE;
 
     ObjectManager*      GetObjectManager()const;
-    EventSystem*        GetEventSystem()const;
     CollisionSystem*    GetCollisionSystem()const;
     PhysicsSystem*      GetPhysicsStstem()const;
     CameraManager*      GetCameraManager()const;
@@ -45,7 +43,6 @@ protected:
     void Free()override;
 
     ObjectManager* ObjectMgr = nullptr;
-    EventSystem* EventSys = nullptr;
     CollisionSystem* CollisionSys = nullptr;
     PhysicsSystem* PhysicsSys = nullptr;
     CameraManager* CameraMgr = nullptr; 
