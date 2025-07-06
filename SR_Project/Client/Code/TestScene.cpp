@@ -11,6 +11,7 @@
 #include "CollisionSystem.h"
 #include "CameraManager.h"
 #include "PhysicsSystem.h"
+#include "StaticGrid.h"
 
 //object
 #include "TestObject.h"
@@ -33,13 +34,15 @@
 #include "DirectionLight.h"
 #include "Skeleton.h"
 #include "Creeper.h"
+#include "StaticBlock.h"
+#include "DynamicBlock.h"
+
 //component
 #include "TransformComponent.h"
+#include "CollisionComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
-#include "StaticBlock.h"
-#include "DynamicBlock.h"
 
 TestScene::TestScene()
 {
@@ -58,6 +61,7 @@ TestScene* TestScene::Create()
 
 void TestScene::Load()
 {
+	Grid			= StaticGrid::Create();
 	ObjectMgr		= ObjectManager::Create(this);
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
@@ -193,6 +197,7 @@ void TestScene::Free()
 	Safe_Release(CollisionSys);
 	Safe_Release(CameraMgr);
 	Safe_Release(PhysicsSys);
+	Safe_Release(Grid);
 
 	Scene::Free();
 }
@@ -272,4 +277,21 @@ void TestScene::LoadBlock()
 
 	CloseHandle(hFile);
 	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
+
+	/*---------------StaticGrid-------------------*/
+
+	auto staticBlocks = ObjectMgr->GetObjectList(ObjectType::StaticBlock);
+
+	for (const auto& block : staticBlocks)
+	{
+		_vec3 pos = block->GetComponent<TransformComponent>()->GetPosition();
+		auto collision = block->GetComponent<CollisionComponent>();
+
+		int cx, cy, cz;
+		cx = Grid->WorldToCell(pos.x);
+		cy = Grid->WorldToCell(pos.y);
+		cz = Grid->WorldToCell(pos.z);
+
+		Grid->InsertBlock(cx, cy, cz, collision);
+	}
 }

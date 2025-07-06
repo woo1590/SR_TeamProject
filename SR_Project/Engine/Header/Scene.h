@@ -6,6 +6,7 @@ class ObjectManager;
 class CollisionSystem;
 class PhysicsSystem;
 class CameraManager;
+class StaticGrid;
 class Object;
 class ENGINE_DLL Scene : public Base
 {
@@ -39,9 +40,11 @@ public:
     CollisionSystem*    GetCollisionSystem()const;
     PhysicsSystem*      GetPhysicsStstem()const;
     CameraManager*      GetCameraManager()const;
+    StaticGrid*         GetStaticGrid()const;
 protected:
     void Free()override;
 
+    StaticGrid* Grid = nullptr;
     ObjectManager* ObjectMgr = nullptr;
     CollisionSystem* CollisionSys = nullptr;
     PhysicsSystem* PhysicsSys = nullptr;

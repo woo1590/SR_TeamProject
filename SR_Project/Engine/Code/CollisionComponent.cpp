@@ -40,9 +40,6 @@ HRESULT CollisionComponent::Ready_Component()
 {
 	BBType = BoundingBoxType::Box;
 
-	owner->GetScene()->GetPhysicsStstem()->RegisterCollision(this);
-	owner->GetScene()->GetCollisionSystem()->RegisterCollision(this);
-
 	auto device = GraphicDevice::GetInstance()->GetDevice();
 	if (BoundingBox)
 		Safe_Release(BoundingBox);
@@ -130,6 +127,15 @@ void CollisionComponent::GetWorldAABB(_vec3* worldMin, _vec3* worldMax, _vec3 po
 
 	D3DXVec3TransformCoord(worldMin, &LocalMin, &worldMat);
 	D3DXVec3TransformCoord(worldMax, &LocalMax, &worldMat);
+}
+
+void CollisionComponent::GetWorldX(_float* minX, _float* maxX)
+{
+	_vec3 min, max;
+	GetWorldAABB(&min, &max);
+
+	*minX = min.x;
+	*maxX = max.x;
 }
 
 _bool CollisionComponent::RayIntersectAABB(Ray ray, HitInfo& hit)

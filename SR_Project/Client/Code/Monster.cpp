@@ -1,5 +1,8 @@
 #include "pch.h"
+#include "Scene.h"
 #include "Monster.h"
+#include "CollisionSystem.h"
+#include "PhysicsSystem.h"
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
 #include "InfoComponent.h"
@@ -21,11 +24,13 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
 
     auto collision = AddComponent<CollisionComponent>();
+    GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(CollisionComponent::LAYER_ENEMY);
     collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_DEFAULT);
     collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
     
     auto physics = AddComponent<PhysicsComponent>();
+    GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
     physics->SetMass(1.f);
     return S_OK;
 }

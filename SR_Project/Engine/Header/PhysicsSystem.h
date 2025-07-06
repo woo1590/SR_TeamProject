@@ -6,6 +6,7 @@ BEGIN(Engine)
 class Scene;
 class CollisionComponent;
 class PhysicsComponent;
+class StaticGrid;
 class ENGINE_DLL PhysicsSystem :
     public Base
 {
@@ -53,23 +54,22 @@ public:
     void Update(_float dt);
 
     void RegisterBody(PhysicsComponent* body);
-    void RegisterCollision(CollisionComponent* collision);
 
 private:
     void ApplyGravity(_float dt);
     void ApplyVelocity(_float dt);
-    void SortAABBEntry();
+    void CollectBlocks();
     void BroadPhase();
     void SolvePosition();
     void CollisionEvent();
 
     void Free()override;
-    std::vector<CollisionComponent*> Collisions;
-    std::vector<PhysicsComponent*> Bodies;
+    std::vector<PhysicsComponent*> DynamicBodies;
+    std::vector<AABBEntry> AABBEntries;
+    StaticGrid* Grid = nullptr;
 
     std::set<CollisionPair> CurrCollisions;
     std::set<CollisionPair> PrevCollisions;
-    std::vector<AABBEntry> AABBEntries;
     Scene* owner = nullptr;
 };
 

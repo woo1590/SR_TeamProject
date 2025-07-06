@@ -8,6 +8,7 @@
 #include "InputSystem.h"
 #include "InfoComponent.h"
 
+#include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
@@ -43,12 +44,15 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     auto collision = AddComponent<CollisionComponent>();
+    GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
+
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT);
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
 
     auto physics = AddComponent<PhysicsComponent>();
+    GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
     physics->SetMass(1.f);
 
     auto playerInfo = AddComponent<InfoComponent<PlayerInfo>>();
