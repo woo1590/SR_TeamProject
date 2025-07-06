@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;$(ProjectDir)../Include;./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;$(ProjectDir)../Include;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -147,6 +147,7 @@
     <ClInclude Include="..\Header\Camera.h" />
     <ClInclude Include="..\Header\EditScene.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\TerrainCreater.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <ClCompile Include="..\Code\Camera.cpp" />
     <ClCompile Include="..\Code\EditScene.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\TerrainCreater.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>

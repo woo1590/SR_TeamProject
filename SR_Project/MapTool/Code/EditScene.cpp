@@ -23,12 +23,15 @@
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 
+//object
 #include "CubeMesh.h"
 #include "Material.h"
 #include "GraphicDevice.h"
 #include "Lever.h"
 #include "Chunk.h"
 #include "IronCage.h"
+
+#include "TerrainCreater.h"
 
 EditScene::EditScene()
 {
@@ -126,13 +129,33 @@ void EditScene::ImGui_Main()
 
 void EditScene::ImGui_SaveLoad()
 {
-	static char save[64]{};
-	ImGui::InputText("<- Save Stage Name", save, sizeof(save));
-	if (ImGui::Button("SAVE")) BlockMgr->SaveStage(save);
+	static char save[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : SAVE ST", save, sizeof(save)); ImGui::SameLine();
+	if (ImGui::Button("SV STAGE")) BlockMgr->SaveStage(save);
 
-	static char load[64]{};
-	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
-	if (ImGui::Button("LOAD")) BlockMgr->LoadStage(load);
+	static char load[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : LOAD ST", load, sizeof(load)); ImGui::SameLine();
+	if (ImGui::Button("LD STAGE")) BlockMgr->LoadStage(load);
+
+	static char saveHeight[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : SAVE HM", saveHeight, sizeof(saveHeight)); ImGui::SameLine();
+	if (ImGui::Button("SV HEIGHTMAP")) CreateTerrain(saveHeight);
+
+	static char loadHeight[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : LOAD HM", loadHeight, sizeof(loadHeight)); ImGui::SameLine();
+	if (ImGui::Button("LD HEIGHTMAP")) PlaceTerrainBlocks(loadHeight);
+
+	if (ImGui::Button("CLEAR TERRAIN"))
+	{
+		staticBlocks.clear();
+		dynamicBlocks.clear();
+
+		ObjectMgr->ClearList(ObjectType::StaticBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+
+		TerrainCreater terrain;
+		terrain.Free();
+	}
 }
 
 void EditScene::ImGui_SetBlockType()
@@ -490,6 +513,27 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 		ObjectMgr->RemoveObject(ObjectType::StaticBlock, (staticBlocks.begin() + targetIndex)->Pos);
 		staticBlocks.erase(staticBlocks.begin() + targetIndex);
 		return;
+	}
+}
+
+void EditScene::CreateTerrain(const std::string& filename)
+{
+	TerrainCreater terrain;
+	terrain.CreateHeightmap(16, 16, 0.03f);
+	terrain.SaveHeightmapAsImage(filename);
+}
+
+void EditScene::PlaceTerrainBlocks(const std::string& filename)
+{
+	TerrainCreater terrain;
+	if (!terrain.LoadHeightmapFromImage(filename))
+		return;
+	terrain.CreateBlockTerrain(10);
+
+	for (const auto& block : terrain.GetBlocks())
+	{
+		_vec3 position = { block.x * 2.0f, block.y * 2.0f, block.z * 2.0f };
+		Place(position);
 	}
 }
 

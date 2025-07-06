@@ -37,6 +37,9 @@ private:
     void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);              // 좌클릭
     void OnRightClick(_vec3& rayOrigin, _vec3& rayDir);             // 우클릭
 
+    void CreateTerrain(const std::string& filename);
+    void PlaceTerrainBlocks(const std::string& filename);
+
 private:
     void Free() override;
 
