@@ -27,8 +27,10 @@ BTStatus DieNode::Tick(float dt, BlackBoard* bb)
 	Monster* monster = static_cast<Monster*>(self);
 	monster->Die();
 
-	if (monster->IsDeadStart()) return BTStatus::Running;
-	if (monster->IsDeadFinish()) return BTStatus::Success;
+	if (monster->IsDeadFinish()) 
+		return BTStatus::Success;
+	if (monster->IsDeadStart() && !monster->IsDeadFinish())
+		return BTStatus::Running;
 
 	return BTStatus::Failure;
 }

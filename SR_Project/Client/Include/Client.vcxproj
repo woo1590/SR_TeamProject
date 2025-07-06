@@ -212,6 +212,7 @@
     <ClInclude Include="..\Header\Chase.h" />
     <ClInclude Include="..\Header\InventorySlot.h" />
     <ClInclude Include="..\Header\IsAlive.h" />
+    <ClInclude Include="..\Header\IsHit.h" />
     <ClInclude Include="..\Header\IsTargetInAttackRange.h" />
     <ClInclude Include="..\Header\IsTargetInDetectRange.h" />
     <ClInclude Include="..\Header\Item.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="..\Code\Chase.cpp" />
     <ClCompile Include="..\Code\InventorySlot.cpp" />
     <ClCompile Include="..\Code\IsAlive.cpp" />
+    <ClCompile Include="..\Code\IsHit.cpp" />
     <ClCompile Include="..\Code\IsTargetInAttackRange.cpp" />
     <ClCompile Include="..\Code\IsTargetInDetectRange.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />

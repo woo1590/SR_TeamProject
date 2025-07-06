@@ -111,7 +111,8 @@ void TransformComponent::SetPivotEnable(_bool enabled)
 
 void TransformComponent::SetParent(Object* parent)
 {
-    Parent = parent->GetComponent<TransformComponent>();
+    if (parent == nullptr) Parent = nullptr;
+    else Parent = parent->GetComponent<TransformComponent>();
 }
 
 void TransformComponent::SetParent(TransformComponent* parent)
@@ -163,6 +164,11 @@ _vec3 TransformComponent::GetRight() const
 _vec3 TransformComponent::GetUp() const
 {
     return Up;
+}
+
+TransformComponent* TransformComponent::GetParent() const
+{
+    return Parent;
 }
 
 _matrix TransformComponent::GetWorldMatrix() const

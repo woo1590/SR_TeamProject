@@ -28,12 +28,12 @@ BTStatus HitNode::Initialize(float dt)
 
 BTStatus HitNode::Tick(float dt, BlackBoard* bb)
 {
-	if (bb == nullptr) return BTStatus::Failure;
+	if (bb == nullptr)
+		return BTStatus::Failure;
 
 	Object* self = static_cast<Object*>(bb->GetValue("Self"));
 	Object* target = static_cast<Object*>(bb->GetValue("Target"));
-	_float* PrevHp = static_cast<_float*>(bb->GetValue("PrevHp"));
-
+	
 	if (self == nullptr) return BTStatus::Failure;
 	auto monster = static_cast<Monster*>(self);
 
@@ -45,20 +45,18 @@ BTStatus HitNode::Tick(float dt, BlackBoard* bb)
 
 	if (!monster->IsHitStart())
 	{
-		if (stat->GetInfo().curHp < *PrevHp)
-		{
-			monster->Hit(selfTransform->GetPosition() - playerTransform->GetPosition(), playerStat->GetInfo().power, dt);
-			*PrevHp = stat->GetInfo().curHp;
-			return BTStatus::Running;
-		}
+		//monster->Hit(selfTransform->GetPosition() - playerTransform->GetPosition(), playerStat->GetInfo().power, dt);
+		return BTStatus::Running;
 	}
 	if (monster->IsHitStart() && !monster->IsHitFinish())
 	{
-		monster->Hit(selfTransform->GetPosition() - playerTransform->GetPosition(), playerStat->GetInfo().power, dt);
+		//monster->Hit(selfTransform->GetPosition() - playerTransform->GetPosition(), playerStat->GetInfo().power, dt);
 		return BTStatus::Running;
 	}
-	else if(!monster->IsHitStart() && monster->IsHitFinish())
+	else if (!monster->IsHitStart() && monster->IsHitFinish())
+	{
 		return BTStatus::Success;
+	}
 	return BTStatus::Failure;
 }
 

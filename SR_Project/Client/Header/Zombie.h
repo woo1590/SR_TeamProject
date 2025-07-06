@@ -18,9 +18,11 @@ public:
     void RotateTo(_vec3* dir, float dt) override;
     void Attack(Object* target) override;
     void Die() override;
-    void Hit(_vec3 dir, _float power, _float dt) override;
+    void Hit(_vec3 dir, _float power) override;
 
 protected:
+    void InitTransform(ObjectType objType);
+    void InitTree();
     void InitAnimation() override;
     void PlayAnimation(_float dt) override;
 

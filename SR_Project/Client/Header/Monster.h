@@ -34,7 +34,7 @@ public:
     virtual void RotateTo(_vec3* dir, float dt);
     void Attack(Object* target) override;
     void Die() override;
-    virtual void Hit(_vec3 dir, _float power, _float dt);
+    virtual void Hit(_vec3 dir, _float power);
     
     _bool IsAttackStart() const { return AttackAnim.IsRunning; }
     _bool IsAttackFinish() const { return AttackAnim.IsEnd; }
@@ -66,11 +66,14 @@ protected:
     MonsterState        State = MonsterState::Idle;
     _float              Speed = 5.f;
     _float*             Distance = nullptr;
-    _float*             PrevHp = nullptr;
+    _bool*              IsHit = nullptr;
 
     Animation           WalkAnim;
     Animation           AttackAnim;
     Animation           DieAnim;
     Animation           HitAnim;
+
+    _vec3               HitDir;
+    _float              HitPower;
 };
 
