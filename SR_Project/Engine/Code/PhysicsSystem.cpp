@@ -43,7 +43,7 @@ void PhysicsSystem::Update(_float dt)
 {
 	ApplyGravity(dt);
 	ApplyVelocity(dt);
-	CollectBlocks();
+	CollectAABBEntry();
 	BroadPhase();
 	SolvePosition();
 	CollisionEvent();
@@ -80,10 +80,22 @@ void PhysicsSystem::ApplyVelocity(_float dt)
 	}
 }
 
-void PhysicsSystem::CollectBlocks()
+void PhysicsSystem::CollectAABBEntry()
 {
 	AABBEntries.clear();
+	std::set<CollisionComponent*> chache;
 
+	//Dynamic vs Dynamic
+	for (const auto& body : DynamicBodies)
+	{
+		auto collision = body->GetOwner()->GetComponent<CollisionComponent>();
+		_float minX, maxX;
+		collision->GetWorldX(&minX, &maxX);
+
+		AABBEntries.push_back({ collision,minX,maxX });
+	}
+
+	//Static vs Dynamic
 	for (const auto& body : DynamicBodies)
 	{
 		auto collision = body->GetOwner()->GetComponent<CollisionComponent>();
@@ -106,8 +118,10 @@ void PhysicsSystem::CollectBlocks()
 				for (int cx = minX; cx <= maxX; ++cx)
 				{
 					const auto& c = Grid->QueryCell(cx, cy, cz);
-					if (!c)
-						continue;
+					if (!c) continue;
+
+					if (!chache.insert(c).second) continue;	//Already Exist
+
 					_float min, max;
 					c->GetWorldX(&min, &max);
 

@@ -630,8 +630,8 @@ void Player::OnCollisionStay(Object* other)
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
 
-    if (objType == ObjectType::StaticBlock)
-        collision->ResolveAABBColiision(other);
+    /*if (objType == ObjectType::StaticBlock)
+        collision->ResolveAABBColiision(other);*/
 }
 
 void Player::IdleSmoothing(_float dt, std::string bone)

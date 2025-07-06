@@ -329,8 +329,8 @@ void Zombie::OnCollisionStay(Object* other)
         auto playertransform = other->GetComponent<TransformComponent>();
         if (State == MonsterState::Attack)
         {
-            //playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
             Stat->SetHp(Stat->GetInfo().curHp - Stat->GetInfo().power);
+            //playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
             //static_cast<Player*>(other)->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
 
             //collision->ResolveAABBColiision(other);

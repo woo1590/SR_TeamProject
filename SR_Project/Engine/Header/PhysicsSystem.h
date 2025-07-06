@@ -58,7 +58,7 @@ public:
 private:
     void ApplyGravity(_float dt);
     void ApplyVelocity(_float dt);
-    void CollectBlocks();
+    void CollectAABBEntry();
     void BroadPhase();
     void SolvePosition();
     void CollisionEvent();
