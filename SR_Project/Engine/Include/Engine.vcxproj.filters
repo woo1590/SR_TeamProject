@@ -238,6 +238,12 @@
     <Filter Include="06. Object\01. StaticBlock\StairBlock">
       <UniqueIdentifier>{33ab373c-7a1f-44af-8802-f6b8a2e7aed4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Object\02. DynamicBlock\Bridge">
+      <UniqueIdentifier>{2f87178e-b4b1-4dc2-b258-9f66e73005ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\01. StaticBlock\AlphaBlock">
+      <UniqueIdentifier>{aad07e88-6a31-48b7-bb95-cd4f6b63f1fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -487,6 +493,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\StairBlock.cpp">
       <Filter>06. Object\01. StaticBlock\StairBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bridge.cpp">
+      <Filter>06. Object\02. DynamicBlock\Bridge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AlphaBlock.cpp">
+      <Filter>06. Object\01. StaticBlock\AlphaBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -757,6 +769,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\StairBlock.h">
       <Filter>06. Object\01. StaticBlock\StairBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bridge.h">
+      <Filter>06. Object\02. DynamicBlock\Bridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AlphaBlock.h">
+      <Filter>06. Object\01. StaticBlock\AlphaBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

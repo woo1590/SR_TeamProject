@@ -77,15 +77,15 @@ namespace Engine
 	{
 		_vec3 Pos;
 		DynamicBlockType Type;
-		DynamicBlockAxis Axis;
+		DynamicBlockCol Col;
+		DynamicBlockRot Rot;
 	} DB;
 
 	typedef struct ChunkData
 	{
+		bool isActive = false;
 		int chunkX, chunkZ;			// 청크의 좌표 위치
 		std::vector<SB> sBlocks;	// 해당 청크에서 보관하는 Static Block
-		std::vector<DB> dBlocks;	// 해당 청크에서 보관하는 Dynamic Block
-		bool Render = false;		// 렌더링 수행 여부
 	} CHUNK;
 }
 

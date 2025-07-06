@@ -137,26 +137,28 @@ void EditScene::ImGui_SaveLoad()
 
 void EditScene::ImGui_SetBlockType()
 {
-	const char* staticBlockNames[] =
+	if (dynamicBlockType == DynamicBlockType::dBlockNone)
 	{
-		"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK",
-		"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK"
-	};
-	if (ImGui::Combo(" : Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
-	{
-		staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
-		staticBlockUsage = StaticBlockUsage::Basic; selectedSBlockUsage = 0;
-		staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
-		staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
+		const char* staticBlockNames[] =
+		{
+			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK",
+			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
+			"GLASS", "LEAF"
+		};
+		if (ImGui::Combo(" : Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
+		{
+			staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
+			staticBlockUsage = StaticBlockUsage::Basic; selectedSBlockUsage = 0;
+			staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
+			staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
+		}
 	}
 
 	if (staticBlockType == StaticBlockType::sBlockNone)
 	{
-		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE" };
+		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE"};
 		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
-		{
 			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
-		}
 	}
 }
 
@@ -171,14 +173,14 @@ void EditScene::ImGui_SetBlockUsage()
 	{
 	case StaticBlockType::Dirt: case StaticBlockType::GrassDirt: case StaticBlockType::Wood:
 	case StaticBlockType::StoneBrick: case StaticBlockType::MossyStoneBrick:
-		usageOptions = { "BASIC" };
-		usageEnums = { StaticBlockUsage::Basic };
+		return;
+	case StaticBlockType::WoodPlank: case StaticBlockType::Stone: case StaticBlockType::CobbleStone: case StaticBlockType::SmoothStone:
+		usageOptions = { "BASIC", "HALF", "STAIR" };
+		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair };
 		break;
-	case StaticBlockType::WoodPlank:
-	case StaticBlockType::Stone: case StaticBlockType::CobbleStone:	case StaticBlockType::SmoothStone:
-		usageOptions = { "BASIC", "HALF" };
-		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half };
-		break;
+	case StaticBlockType::Glass: case StaticBlockType::Leaf:
+		staticBlockUsage = StaticBlockUsage::Alpha;
+		return;
 	}
 
 	if (!usageOptions.empty())
@@ -216,19 +218,14 @@ void EditScene::ImGui_SetBlockInfo()
 	}
 	else
 	{
-		const char* dynamicDirNames[] = { "+Z", "-Z", "+X", "-X" };
+		const char* dynamicRotNames[] = { "+X", "-X", "+Z", "-Z" };
 		switch (dynamicBlockType)
 		{
-		case DynamicBlockType::dBlockNone: case DynamicBlockType::LeverSwitch:
-			break;
-		case DynamicBlockType::IronCages:
-			ImGui::InputInt(" : Count", &Count);
-			if (ImGui::Combo(" : Dir", &selectedDBlockAxis, dynamicDirNames, IM_ARRAYSIZE(dynamicDirNames)))
-				dynamicBlockAxis = static_cast<DynamicBlockAxis>(selectedDBlockAxis);
-			break;
-		default:
-			if (ImGui::Combo(" : Dir", &selectedDBlockAxis, dynamicDirNames, IM_ARRAYSIZE(dynamicDirNames)))
-				dynamicBlockAxis = static_cast<DynamicBlockAxis>(selectedDBlockAxis);
+		case DynamicBlockType::BasicChest: case DynamicBlockType::IronCages:
+			if (ImGui::Combo(" : Rotation", &selectedDBlockRot, dynamicRotNames, IM_ARRAYSIZE(dynamicRotNames)))
+				dynamicBlockRot = static_cast<DynamicBlockRot>(selectedDBlockRot);
+			if (dynamicBlockType == DynamicBlockType::IronCages)
+				ImGui::InputInt(" : Count", &Count);
 			break;
 		}
 	}
@@ -460,6 +457,7 @@ void EditScene::OnLeftClick(_vec3& rayOrigin, _vec3& rayDir)
 
 	_vec3 normal = GetHitNormal(closestHitPoint, selectedBlockPos - _vec3(1, 1, 1), selectedBlockPos + _vec3(1, 1, 1));
 	_vec3 newBlockPos = selectedBlockPos + normal * 2.0f;
+
 	Place(newBlockPos);
 }
 
@@ -530,34 +528,34 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 {
 	if (fabs(hitPoint.x - boxMin.x) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockAxis = DynamicBlockAxis::dXM;
+		dynamicBlockCol = DynamicBlockCol::dXM;
 		return _vec3(-1, 0, 0);
 	}
 	if (fabs(hitPoint.x - boxMax.x) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockAxis = DynamicBlockAxis::dXP;
+		dynamicBlockCol = DynamicBlockCol::dXP;
 		return _vec3(1, 0, 0);
 	}
 
 	if (fabs(hitPoint.y - boxMin.y) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockAxis = DynamicBlockAxis::dAEnd;
+		dynamicBlockCol = DynamicBlockCol::dAEnd;
 		return _vec3(0, -1, 0);
 	}
 	if (fabs(hitPoint.y - boxMax.y) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::IronCages) dynamicBlockAxis = DynamicBlockAxis::dYP;
+		dynamicBlockCol = DynamicBlockCol::dYP;
 		return _vec3(0, 1, 0);
 	}
 
 	if (fabs(hitPoint.z - boxMin.z) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockAxis = DynamicBlockAxis::dZM;
+		dynamicBlockCol = DynamicBlockCol::dZM;
 		return _vec3(0, 0, -1);
 	}
 	if (fabs(hitPoint.z - boxMax.z) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockAxis = DynamicBlockAxis::dZP;
+		dynamicBlockCol = DynamicBlockCol::dZP;
 		return _vec3(0, 0, 1);
 	}
 	
@@ -577,16 +575,21 @@ void EditScene::Place(_vec3& position)
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 		
+		// int chunkX = position.x / 16;
+		// int chunkY = position.z / 16;
+		// Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
+		// chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
+
 		staticBlocks.push_back({ position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage });
 	}
 	else if (dynamicBlockType != DynamicBlockType::dBlockNone)
 	{
-		Object* newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockAxis, Count);
+		Object* newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockCol,dynamicBlockRot, Count);
 		if (!newBlockObj) return;
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, newBlockObj);
 	
-		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockAxis });
+		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockCol, dynamicBlockRot });
 	}
 }
 

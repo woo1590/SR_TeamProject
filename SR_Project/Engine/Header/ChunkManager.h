@@ -20,16 +20,20 @@ public:
     static ChunkManager* Create(Scene* owner);
 
 public:
-    void Activate(int chunkX, int chunkY);          // 청크 렌더링 활성화
-    void UnLoadChunk(int chunkX, int chunkY);       // 메모리에 남아있는 청크 삭제
-
     void SaveChunk(const std::wstring& saveStage);
     void LoadChunk(const std::wstring& loadStage);
+    
+    Chunk* CreateChunk(int chunkX, int chunkY);
+    void RemoveChunk(int chunkX, int chunkY);
+
+    void UpdateChunk(const _vec3& playerPos);
+    void RenderChunk(const _vec3& playerPos);
 
 private:
     void Free()override;
 
 private:
+    int renderDistance = 5;
     Scene* owner = nullptr;
     std::unordered_map<std::pair<int, int>, Chunk*, PairHash> worldChunks;
 };

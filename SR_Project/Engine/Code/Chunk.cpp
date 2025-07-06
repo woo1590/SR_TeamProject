@@ -23,14 +23,20 @@ Chunk* Chunk::Create(int chunkX, int chunkZ)
     return Instance;
 }
 
-void Chunk::AddBlock(ObjectManager* objectMgr, int Count)
+void Chunk::AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
 {
-    for (const auto& sb : CD.sBlocks)
-    {
-        Object* obj = StaticBlock::Create(objectMgr, ObjectType::StaticBlock, sb.Type, sb.Axis, sb.Rot, sb.Usage);
-        obj->GetComponent<TransformComponent>()->SetPosition(sb.Pos);
-        objectMgr->AddObject(ObjectType::StaticBlock, obj);
-    }
+    SB block;
+    block.Pos = pos;
+    block.Type = type;
+    block.Axis = axis;
+    block.Rot = rot;
+    block.Usage = usage;
+    CD.sBlocks.push_back(block);
+}
+
+void Chunk::Render()
+{
+   
 }
 
 void Chunk::Free()

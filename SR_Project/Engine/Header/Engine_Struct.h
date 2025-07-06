@@ -77,7 +77,8 @@ namespace Engine
 	{
 		_vec3 Pos;
 		DynamicBlockType Type;
-		DynamicBlockAxis Axis;
+		DynamicBlockCol Col;
+		DynamicBlockRot Rot;
 	} DB;
 
 	typedef struct ChunkData

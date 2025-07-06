@@ -11,6 +11,8 @@
 //object
 #include "BasicBlock.h"
 #include "HalfBlock.h"
+#include "StairBlock.h"
+#include "AlphaBlock.h"
 
 StaticBlock::StaticBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
     : Object(owner, objType), Axis(axis), Type(type), Rot(rot), Usage(usage)
@@ -34,7 +36,10 @@ Object* StaticBlock::Create(ObjectManager* owner, ObjectType objType, StaticBloc
         Instance = HalfBlock::Create(owner, ObjectType::StaticBlock, type, axis, rot, usage);
         break;
     case StaticBlockUsage::Stair:
-        // Instance = StairBlock::Create(owner, ObjectType::StaticBlock, type, axis, rot, usage);
+        Instance = StairBlock::Create(owner, ObjectType::StaticBlock, type, axis, rot, usage);
+        break;
+    case StaticBlockUsage::Alpha:
+        Instance = AlphaBlock::Create(owner, ObjectType::StaticBlock, type, axis, rot, usage);
         break;
     default:
         MessageBoxW(nullptr, L"Invalid StaticBlockUsage", L"Error", MB_OK);

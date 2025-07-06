@@ -51,7 +51,7 @@ public:
     vector<DB>& GetDynamicBlocks() { return dynamicBlocks; }
 
 protected:
-    int Count = -1;
+    int Count = 0;
     std::vector<SB> staticBlocks;
     std::vector<DB> dynamicBlocks;
     ////////////////////////////////////////////// 0704

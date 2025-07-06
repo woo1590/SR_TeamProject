@@ -51,6 +51,9 @@ void BlockManager::LoadTexture()
 	resource->LoadResource(L"../Resource/Texture/Block/StoneBrick.dds", L"StoneBrick", TEXTURE::Tex_Cube, L"StoneBrick_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/MossyStoneBrick.dds", L"MossyStoneBrick", TEXTURE::Tex_Cube, L"MossyStoneBrick_Mtrl");
 
+	resource->LoadResource(L"../Resource/Texture/Block/Glass.dds", L"Glass", TEXTURE::Tex_Cube, L"Glass_Mtrl");
+	resource->LoadResource(L"../Resource/Texture/Block/Leaf.dds", L"Leaf", TEXTURE::Tex_Cube, L"Leaf_Mtrl");
+
 	resource->LoadResource(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube, L"Lever_Mtrl");
 
 	resource->LoadResource(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube, L"ChestDown_Mtrl");
@@ -179,7 +182,7 @@ void BlockManager::LoadStage(const char* loadStage)
 			int count = 0;
 			if (!ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr)) return;
 
-			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Axis, count);
+			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Col, newDBlock.Rot, count);
 			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
 
 			int vecSize = 0;
@@ -194,7 +197,7 @@ void BlockManager::LoadStage(const char* loadStage)
 		}
 		else
 		{
-			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Axis, -1);
+			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Col, newDBlock.Rot, -1);
 			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
 
 			if (newDBlock.Type == DynamicBlockType::LeverSwitch)

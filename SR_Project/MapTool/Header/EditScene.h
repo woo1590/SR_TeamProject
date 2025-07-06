@@ -47,6 +47,7 @@ private:
     int selectedSBlockType = static_cast<int>(StaticBlockType::sBlockNone);
 
     int selectedDBlockAxis = 0;
+    int selectedDBlockRot = 0;
     int selectedDBlockType = static_cast<int>(DynamicBlockType::dBlockNone);
 
     StaticBlockUsage staticBlockUsage = StaticBlockUsage::Basic;
@@ -54,6 +55,7 @@ private:
     StaticBlockAxis staticBlockAxis = StaticBlockAxis::sAY;
     StaticBlockRot staticBlockRot = StaticBlockRot::sREnd;
 
-    DynamicBlockAxis dynamicBlockAxis = DynamicBlockAxis::dAEnd;
+    DynamicBlockCol dynamicBlockCol = DynamicBlockCol::dAEnd;
+    DynamicBlockRot dynamicBlockRot = DynamicBlockRot::dREnd;
     DynamicBlockType dynamicBlockType = DynamicBlockType::dBlockNone;
 };

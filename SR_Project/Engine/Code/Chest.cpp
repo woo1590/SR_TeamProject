@@ -15,8 +15,8 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
-Chest::Chest(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis)
-    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockAxis, Count)
+Chest::Chest(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockRot rot)
+    : DynamicBlock(owner, objType, type, Col, rot, Count)
 {
 }
 
@@ -24,11 +24,11 @@ Chest::~Chest()
 {
 }
 
-Chest* Chest::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis)
+Chest* Chest::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockRot rot)
 {
-    Chest* Instance = new Chest(owner, objType, DynamicBlockType, DynamicBlockAxis);
+    Chest* Instance = new Chest(owner, objType, type, rot);
 
-    if (FAILED(Instance->Ready_Object(owner, objType)))
+    if (FAILED(Instance->Ready_Object(owner, objType, rot)))
     {
         Safe_Release(Instance);
         MessageBoxW(nullptr, L"Chest Created Failed", L"Fail", MB_OK);
@@ -38,7 +38,7 @@ Chest* Chest::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType 
     return Instance;
 }
 
-HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType, DynamicBlockRot rot)
 {
     Object::Ready_Object();
     auto transform = AddComponent<TransformComponent>();
@@ -49,8 +49,12 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
     Parts["ChestUp"] = Part::Create(owner, objType, _vec3(1.f, 0.3f, 1.f), Parts["ChestDown"], L"ChestUp_Mtrl");
     auto upTrans = Parts["ChestUp"]->GetComponent<TransformComponent>();
 
-    Parts["ChestLock"] = Part::Create(owner, objType, _vec3(0.125f, 0.2f, 0.1f), Parts["ChestUp"], L"ChestLock_Mtrl");
+    Parts["ChestLock"] = Part::Create(owner, objType, _vec3(0.2f, 0.25f, 0.1f), Parts["ChestUp"], L"ChestLock_Mtrl");
     auto lockTrans = Parts["ChestLock"]->GetComponent<TransformComponent>();
+
+    PartScales["ChestDown"] = _vec3(1.f, 0.7f, 1.f);
+    PartScales["ChestUp"] = _vec3(1.f, 0.3f, 1.f);
+    PartScales["ChestLock"] = _vec3(0.2f, 0.25f, 0.1f);
 
     upTrans->SetIsBlock();
 
@@ -61,15 +65,15 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
     upTrans->Translate(0.f, 1.f, 0.f);
     lockTrans->Translate(0.f, -0.2f, -1.f);
 
-    switch (Axis)
+    switch (rot)
     {
-    case DynamicBlockAxis::dXP:
+    case DynamicBlockRot::drXP:
+        downTrans->SetRotate(0.f, D3DXToRadian(-90.f), 0.f);
+        break;
+    case DynamicBlockRot::drXM:
         downTrans->SetRotate(0.f, D3DXToRadian(90.f), 0.f);
         break;
-    case DynamicBlockAxis::dXM:
-        downTrans->SetRotate(0.f, D3DXToRadian(270.f), 0.f);
-        break;
-    case DynamicBlockAxis::dZM:
+    case DynamicBlockRot::drZP:
         downTrans->SetRotate(0.f, D3DXToRadian(180.f), 0.f);
         break;
     }
@@ -82,6 +86,9 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void Chest::Update(_float dt)
 {
+    if (First)
+        Generate(dt);
+
     if (Activate && !Trigger)
         Operate();
 
@@ -114,6 +121,32 @@ void Chest::SetRotation(_vec3 rotation, string str)
 {
     if (Parts[str] != nullptr)
         Parts[str]->GetComponent<TransformComponent>()->SetRotate(rotation);
+}
+
+void Chest::Generate(_float dt)
+{
+    firstTime += dt;
+    float time = min(firstTime / 0.75f, 1.f);
+    float t = EaseOutBack(time);
+
+    for (auto& [name, part] : Parts)
+    {
+        auto transform = part->GetComponent<TransformComponent>();
+        _vec3 maxScale = PartScales[name];
+        _vec3 newScale = _vec3(maxScale.x * t, maxScale.y * t, maxScale.z * t);
+        transform->SetScale(newScale);
+    }
+
+    if (time >= 1.f)
+        First = false;
+}
+
+float Chest::EaseOutBack(float t)
+{
+    float c1 = 1.70158f;
+    float c3 = c1 + 1.f;
+
+    return 1.f + c3 * pow(t - 1, 3) + c1 * pow(t - 1, 2);
 }
 
 void Chest::Operate()

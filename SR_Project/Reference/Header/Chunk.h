@@ -12,11 +12,8 @@ private:
 
 public:
     static Chunk* Create(int chunkX, int chunkZ);
-    void AddBlock(ObjectManager* objectMgr, int Count);
-
-    void SetSB(SB sb) { CD.sBlocks.push_back(sb); }
-    void SetDB(DB db) { CD.dBlocks.push_back(db); }
-    void SetRender(bool render) { CD.Render = render; }
+    void AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
+    void Render();
 
     const CHUNK& GetChunkData() const { return CD; }
 

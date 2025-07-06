@@ -114,15 +114,17 @@ namespace Engine
 		sBlockNone,
 		Dirt, GrassDirt, Wood, WoodPlank,
 		Stone, CobbleStone, SmoothStone, StoneBrick, MossyStoneBrick,
+		Glass, Leaf,
 		sBlockEnd
 	};
-	enum StaticBlockUsage { Basic, Half, Stair, Fence };
+	enum StaticBlockUsage { Basic, Half, Stair, Alpha, Fence };
 
-	enum DynamicBlockAxis { dZP, dZM, dXP, dXM, dYP, dAEnd };
+	enum DynamicBlockCol { dZP, dZM, dXP, dXM, dYP, dAEnd };
+	enum DynamicBlockRot { drXP, drXM, drZP, drZM, dREnd };
 	enum DynamicBlockType
 	{
 		dBlockNone,
-		LeverSwitch, BasicChest, IronCages,
+		LeverSwitch, BasicChest, IronCages, WoodBridge,
 		dBlockEnd
 	};
 }

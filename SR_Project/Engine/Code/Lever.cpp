@@ -17,8 +17,8 @@
 
 int Lever::totID = 0;
 
-Lever::Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis)
-    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockAxis, Count)
+Lever::Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col)
+    : DynamicBlock(owner, objType, type, col, Rot, Count)
 {
     ID = totID++;
 }
@@ -27,9 +27,9 @@ Lever::~Lever()
 {
 }
 
-Lever* Lever::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockAxis DynamicBlockAxis)
+Lever* Lever::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col)
 {
-    Lever* Instance = new Lever(owner, objType, DynamicBlockType, DynamicBlockAxis);
+    Lever* Instance = new Lever(owner, objType, type, col);
 
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {
@@ -54,9 +54,9 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     handleTransform->SetIsBlock();
 
-    switch (Axis)
+    switch (Col)
     {
-    case DynamicBlockAxis::dXP:
+    case DynamicBlockCol::dXP:
         Angle = 40.f;
         baseTransform->SetPosition(-1.f, 0.f, 0.f);
         handleTransform->SetPivotEnable(true);
@@ -64,7 +64,7 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
         handleTransform->Translate(0.75f, 0.f, 0.f);
         handleTransform->SetRotate(0.f, 0.f, D3DXToRadian(Angle));
         break;
-    case DynamicBlockAxis::dXM:
+    case DynamicBlockCol::dXM:
         Angle = -40.f;
         baseTransform->SetPosition(1.f, 0.f, 0.f);
         handleTransform->SetPivotEnable(true);
@@ -73,7 +73,7 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
         handleTransform->SetRotate(0.f, 0.f, D3DXToRadian(Angle));
         break;
 
-    case DynamicBlockAxis::dZP:
+    case DynamicBlockCol::dZP:
         Angle = -40.f;
         baseTransform->SetPosition(0.f, 0.f, -1.f);
         handleTransform->SetPivotEnable(true);
@@ -81,7 +81,7 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
         handleTransform->Translate(0.5f, 0.f, 0.25f);
         handleTransform->SetRotate(D3DXToRadian(Angle), D3DXToRadian(-90.f), 0.f);
         break;
-    case DynamicBlockAxis::dZM:
+    case DynamicBlockCol::dZM:
         Angle = 40.f;
         baseTransform->SetPosition(0.f, 0.f, 1.f);
         handleTransform->SetPivotEnable(true);
@@ -137,27 +137,27 @@ void Lever::Operate()
 {
     auto handleTransform = Parts["Handle"]->GetComponent<TransformComponent>();
 
-    switch (Axis)
+    switch (Col)
     {
-    case DynamicBlockAxis::dXP: case DynamicBlockAxis::dZM:
+    case DynamicBlockCol::dXP: case DynamicBlockCol::dZM:
         totAngle += rotSpeed;
         Angle -= rotSpeed;
         break;
-    case DynamicBlockAxis::dZP: case DynamicBlockAxis::dXM:
+    case DynamicBlockCol::dZP: case DynamicBlockCol::dXM:
         totAngle += rotSpeed;
         Angle += rotSpeed;
         break;
     }
 
-    switch (Axis)
+    switch (Col)
     {
-    case DynamicBlockAxis::dXP: case DynamicBlockAxis::dXM:
+    case DynamicBlockCol::dXP: case DynamicBlockCol::dXM:
         handleTransform->SetRotate(0.f, 0.f, D3DXToRadian(Angle));
         break;
-    case DynamicBlockAxis::dZP:
+    case DynamicBlockCol::dZP:
         handleTransform->SetRotate(D3DXToRadian(Angle), D3DXToRadian(-90.f), 0.f);
         break;
-    case DynamicBlockAxis::dZM:
+    case DynamicBlockCol::dZM:
         handleTransform->SetRotate(D3DXToRadian(Angle), D3DXToRadian(90.f), 0.f);
         break;
     }

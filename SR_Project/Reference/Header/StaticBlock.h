@@ -27,6 +27,5 @@ protected:
     StaticBlockAxis Axis;
     StaticBlockRot Rot;
     StaticBlockUsage Usage;
-    std::unordered_map<string, Object*> Parts;
 };
 END
