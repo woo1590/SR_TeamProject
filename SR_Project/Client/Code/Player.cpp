@@ -151,7 +151,7 @@ void Player::PickingTerrain()
                 SaveStartRotation();
             }
             auto transform = GetComponent<TransformComponent>();
-            auto curPos = transform->GetPosition();
+            auto curPos = transform->GetWorldPosition();
             auto attackPos = hit.Position;
             AttackDirection = attackPos - curPos;
         }
@@ -173,6 +173,7 @@ void Player::PickingTerrain()
                 Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
             }
             auto transform = Bones["LHand"]->GetComponent<TransformComponent>();
+            auto collision = Bones["LHand"]->GetComponent<CollisionComponent>();
             auto curPos = transform->GetWorldPosition();
             auto attackPos = hit.Position;
             AttackDirection = attackPos - curPos;
@@ -209,9 +210,11 @@ void Player::UnEquipItem(Item::ItemType itemType)
 {
     switch (itemType) {
     case Item::ItemType::ITEM_BOW:
+        Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case Item::ItemType::ITEM_SWORD:
+        Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
     }
@@ -355,9 +358,9 @@ void Player::UpdateAttack(_float dt) {
     vector<_vec3> RArmRotVec =
     {
         StartRotations["RArm"],
-        { -210.f, 10.f, -60.f },
-        { -150.f, 10.f, -60.f },
-        { -60.f, 10.f,-60.f }
+        { -180.f, 10.f, -60.f },
+        { -120.f, 10.f, -60.f },
+        { -30.f, 10.f,-60.f }
     };
     vector<_vec3> LArmRotVec =
     {
@@ -425,9 +428,9 @@ void Player::UpdateShoot(_float dt) {
 
     static float prePhase = 0.f;
     if (prePhase < phaseVec.at(0) && fProgress >= phaseVec.at(0)) {
-        auto shootDir = AttackDirection + GetComponent<TransformComponent>()->GetPosition() - Bones["LHand"]->GetComponent<TransformComponent>()->GetPosition();
+        auto shootDir = AttackDirection;
         D3DXVec3Normalize(&shootDir, &shootDir);
-        Arrow::Create(owner, ObjectType::Projectile, ObjectType::Player, shootDir);
+        Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
     }
     prePhase = fProgress;
 

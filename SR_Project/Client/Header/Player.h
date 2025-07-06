@@ -17,6 +17,9 @@ public:
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
+
+    void EquipItem(Item::ItemType itemType);
+    void UnEquipItem(Item::ItemType itemType);
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -36,8 +39,6 @@ private:
     void UpdateDead(_float dt);
 
     void SaveStartRotation();
-    void EquipItem(Item::ItemType itemType);
-    void UnEquipItem(Item::ItemType itemType);
 
     _vec3 MatrixToEulerAngles(const _matrix& mat);
     void OnCollisionStay(Object* other);

@@ -5,10 +5,15 @@
 #include "ObjectManager.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
+#include "CollisionComponent.h"
 
 Item::Item(ObjectManager* owner, ObjectType objType) :Object(owner, objType) {}
 Item::~Item() {}
 
+void Item::Free()
+{
+    Object::Free();
+}
 Item* Item::Create(ObjectManager* owner, ObjectType objType)
 {
     Item* Instance = new Item(owner, objType);
@@ -28,6 +33,7 @@ HRESULT Item::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto transform = AddComponent<TransformComponent>();
     auto info = AddComponent<InfoComponent<ItemInfo>>();
     auto mesh = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
+    auto collision = AddComponent<CollisionComponent>();
     owner->AddObject(objType, this);
     
     return S_OK;
@@ -43,7 +49,83 @@ void Item::Late_Update(_float dt)
     Object::Late_Update(dt);
 }
 
-void Item::Free()
+void Item::SetScale(_float _scale)
 {
-    Object::Free();
+    itemScale = _scale;
 }
+
+void Item::SetScaleRatio(_vec3 _scaleRatio)
+{
+    itemScaleRatio = _scaleRatio;
+}
+
+void Item::SetPosition(_vec3 _position)
+{
+    itemPosition = _position;
+}
+
+void Item::SetPivot(bool _pivotEnable, _vec3 _pivotPosition)
+{
+    itemPivotEnable = _pivotEnable;
+    pivotPosition = _pivotPosition;
+}
+
+void Item::SetRotation(_vec3 _rotation)
+{
+    itemRotation = _rotation;
+}
+
+void Item::SetRenderId(Engine::RENDER_ID _renderId)
+{
+    renderId = _renderId;
+}
+
+void Item::SetOwnerObject(Object* _ownerObject)
+{
+    ownerObject = _ownerObject;
+}
+
+void Item::SetMesh(std::wstring _meshType)
+{
+    meshType = _meshType;
+}
+
+void Item::SetMaterial(std::wstring _material)
+{
+    material = _material;
+}
+
+void Item::ApplyComponents()
+{
+    auto transform = GetComponent<TransformComponent>();
+    if(ownerObject)
+        transform->SetParent(ownerObject->GetComponent<TransformComponent>());
+    transform->SetScale(itemScaleRatio.x * itemScale, itemScaleRatio.y * itemScale, itemScaleRatio.z * itemScale);
+    transform->SetPosition(itemPosition.x * itemScale, itemPosition.y * itemScale, itemPosition.z * itemScale);
+    transform->SetPivot(_vec3(pivotPosition.x * itemScale, pivotPosition.y * itemScale, pivotPosition.z * itemScale));
+    transform->SetPivotEnable(itemPivotEnable);
+    transform->SetRotate({ itemRotation.x ,itemRotation.y ,itemRotation.z });
+
+    auto mesh = GetComponent<MeshRenderer>();
+    mesh->SetMesh(meshType);
+    mesh->SetMaterial(material);
+    mesh->SetRenderID(renderId);
+
+    auto collision = GetComponent<CollisionComponent>();
+    collision->SetOffset(owner->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
+    collision->SetSize(_vec3(itemScaleRatio.x * itemScale, itemScaleRatio.y * itemScale, itemScaleRatio.z * itemScale));
+    if (ownerObject == nullptr) return;
+    switch (ownerObject->GetObjectType()) {
+    case ObjectType::Player:
+        collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+        collision->SetMask(CollisionComponent::LAYER_ENEMY);
+        break;
+    case ObjectType::Monster:
+        collision->SetLayer(CollisionComponent::LAYER_ENEMY);
+        collision->SetMask(CollisionComponent::LAYER_PLAYER);
+        break;
+    default:
+        break;
+    }
+}
+

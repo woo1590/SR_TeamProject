@@ -229,14 +229,11 @@
     <Filter Include="02. Object\UIObj\Slot\InventorySlot">
       <UniqueIdentifier>{d914f399-5087-4522-bc85-0f2b25e7eb73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Projectile">
-      <UniqueIdentifier>{bc8f7338-ea94-4763-98f5-c417edf4ac5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Projectile\Arrow">
-      <UniqueIdentifier>{b861eb2a-a167-4e65-b55a-8c9a9a02755a}</UniqueIdentifier>
-    </Filter>  
     <Filter Include="02. Object\Monster\Creeper">
       <UniqueIdentifier>{55568c30-c6cf-4688-ad2b-9ca5d546b10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Item\Arrow">
+      <UniqueIdentifier>{4d40d8dd-85fa-498a-aed9-2d68bd53ad62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -440,17 +437,14 @@
     <ClInclude Include="..\Header\InventorySlot.h">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Projectile.h">
-      <Filter>02. Object\Projectile</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Arrow.h">
-      <Filter>02. Object\Projectile\Arrow</Filter>
-    </ClInclude>  
     <ClInclude Include="..\Header\Creeper.h">
       <Filter>02. Object\Monster\Creeper</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Hit.h">
       <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Arrow.h">
+      <Filter>02. Object\Item\Arrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -654,17 +648,14 @@
     <ClCompile Include="..\Code\InventorySlot.cpp">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Projectile.cpp">
-      <Filter>02. Object\Projectile</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Arrow.cpp">
-      <Filter>02. Object\Projectile\Arrow</Filter>
-    </ClCompile>  
     <ClCompile Include="..\Code\Creeper.cpp">
       <Filter>02. Object\Monster\Creeper</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Hit.cpp">
       <Filter>02. Object\Monster\BTNode\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Arrow.cpp">
+      <Filter>02. Object\Item\Arrow</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

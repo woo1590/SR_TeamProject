@@ -51,6 +51,11 @@ HRESULT CollisionComponent::Ready_Component()
 	return S_OK;
 }
 
+void CollisionComponent::Update(_float dt)
+{
+	ObjectComponent::Update(dt);
+}
+
 void CollisionComponent::Late_Update(_float dt)
 {
 	EngineCore::GetInstance()->GetRenderSystem()->RegisterCollision(this);
@@ -64,6 +69,11 @@ void CollisionComponent::SetOffset(_vec3 offset)
 void CollisionComponent::SetOffset(_float x, _float y, _float z)
 {
 	SetOffset(_vec3(x, y, z));
+}
+
+_vec3 CollisionComponent::GetOffset()
+{
+	return Offset;
 }
 
 void CollisionComponent::SetBoudingBox(BoundingBoxType bbType)

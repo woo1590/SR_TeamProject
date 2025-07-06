@@ -7,16 +7,25 @@
 #include "InfoComponent.h"
 #include "CollisionComponent.h"
 
-Bow::Bow(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
-Bow::~Bow(){}
-
+Bow::Bow(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
+{
+}
+Bow::~Bow()
+{
+}
+void Bow::Free()
+{
+    Item::Free();
+}
 Bow* Bow::Create(ObjectManager* owner, ObjectType objType)
 {
     Bow* Instance = new Bow(owner, objType);
+
     if (FAILED(Instance->Ready_Object(owner, objType))) {
         Safe_Release(Instance);
         Instance = nullptr;
     }
+
     return Instance;
 }
 
@@ -24,35 +33,19 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     if (FAILED(Item::Ready_Object(owner, objType)))
         return E_FAIL;
+
     auto info = GetComponent<InfoComponent<ItemInfo>>();
-    ItemInfo i;
-    i.size = 1.f;
-    i.scale = _vec3{ 0.1f, 1.f, 1.f };
-    i.position = _vec3{ 0.25f, -1.2f, -0.2f };
-    i.pivotEnable = true;
-    i.pivot = _vec3{ -0.25f, 0.8f, -0.2f };
-    i.rotation = _vec3{ 2.2f, 0.f, 0.f };
-    i.meshType = L"Cube_Mesh";
-    i.material = L"bow_Mtrl";
-    i.renderId = Engine::RENDER_ID::Render_None;
+    auto i = info->GetInfo();
+    i.attackDamage = 10.f;
     info->SetInfo(i);
-    
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetScale(i.scale.x * i.size, i.scale.y * i.size, i.scale.z * i.size);
-    transform->SetPosition(i.position.x * i.size, i.position.y * i.size, i.position.z * i.size);
-    transform->SetPivot(_vec3(i.pivot.x * i.size, i.pivot.y * i.size, i.pivot.z * i.size));
-    transform->SetPivotEnable(i.pivotEnable);
-    transform->SetRotate({ i.rotation.x ,i.rotation.y ,i.rotation.z });
 
-    auto mesh = GetComponent<MeshRenderer>();
-    mesh->SetMesh(i.meshType);
-    mesh->SetMaterial(i.material);
-    mesh->SetRenderID(i.renderId);
+    SetMesh(L"Cube_Mesh");
+    SetMaterial(L"bow_Mtrl");
+    SetRenderId(renderId);
 
-    auto collision = AddComponent<CollisionComponent>();
-    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_ENEMY);
-    collision->SetSize(_vec3(5.f, 5.f, 5.f));
+    PlayerBowInfo();
+
+    ApplyComponents();
 
     return S_OK;
 }
@@ -60,6 +53,8 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Bow::Update(_float dt)
 {
     Item::Update(dt);
+    auto collision = GetComponent<CollisionComponent>();
+    collision->SetOffset(owner->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
 }
 
 void Bow::Late_Update(_float dt)
@@ -67,7 +62,13 @@ void Bow::Late_Update(_float dt)
     Item::Late_Update(dt);
 }
 
-void Bow::Free()
+void Bow::PlayerBowInfo()
 {
-    Item::Free();
+    SetScale(1.f);
+    SetScaleRatio(_vec3(0.1f, 1.f, 1.f));
+    SetPosition(_vec3(0.25, -1.2f, -0.2f));
+    SetPivot(true, _vec3(-0.25f, 0.8f, -0.2f));
+    SetRotation(_vec3(2.2f, 0.f, 0.f));
+    SetOwnerObject(owner->GetFrontObject(ObjectType::Player));
+    SetRenderId(Engine::RENDER_ID::Render_None);
 }
