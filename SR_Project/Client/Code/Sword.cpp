@@ -80,5 +80,7 @@ void Sword::PlayerSwordInfo()
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     auto collision = GetComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }

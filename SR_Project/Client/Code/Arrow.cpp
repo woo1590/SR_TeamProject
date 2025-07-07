@@ -109,25 +109,21 @@ void Arrow::ArrowRotateSet()
     transform->SetForward(arrowDirection);
 
     _vec3 right = transform->GetRight();
-    _vec3 vUp = { 0.f,1.f,0.f };
-
+    
     float angle = D3DXToRadian(45.f);
     if (arrowDirection.z < 0.f) angle *= -1.f;
     
-    _matrix rotX, rotY, rotMat;
-    D3DXMatrixRotationAxis(&rotX, &right, D3DXToRadian(45.f));
-    D3DXMatrixRotationAxis(&rotY, &vUp, D3DXToRadian(-45.f));
-
-    rotMat = rotX * rotY; 
-
+    _matrix rotMat;
+    D3DXMatrixRotationAxis(&rotMat, &right, angle);
+    
     _vec3 finalDir;
     D3DXVec3TransformNormal(&finalDir, &arrowDirection, &rotMat);
     D3DXVec3Normalize(&finalDir, &finalDir);
-
+    
     _float pitch = asinf(finalDir.y);
     _float yaw = atan2f(-finalDir.x, finalDir.z);
     _float roll = 0.f;
-    transform->SetRotate(pitch, -yaw, roll);
+    SetRotation(_vec3(pitch, -yaw, roll));
 }
 
 void Arrow::PlayerArrowInfo()
@@ -136,15 +132,16 @@ void Arrow::PlayerArrowInfo()
 
     SetScale(1.f);
     SetScaleRatio(_vec3(0.1f, 2.f, 2.f));
+    SetPosition(ownerObject->GetComponent<TransformComponent>()->GetWorldPosition());
     SetPivot(false);
-    SetRotation(_vec3(0.f, 0.f, 0.f));
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     ArrowRotateSet();
 
     auto collision = GetComponent<CollisionComponent>();
-    SetPosition(collision->GetOffset());
-    collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); }); 
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY);
+    collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }
 
 void Arrow::MonsterArrowInfo()
@@ -155,11 +152,12 @@ void Arrow::MonsterArrowInfo()
     SetScaleRatio(_vec3(0.1f, 2.f, 2.f));
     SetPosition(ownerObject->GetComponent<TransformComponent>()->GetWorldPosition());
     SetPivot(false);
-    SetRotation(_vec3(0.f, 0.f, 0.f));
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     ArrowRotateSet();
 
     auto collision = GetComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_ENEMY);
+    collision->SetMask(CollisionComponent::LAYER_PLAYER);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }

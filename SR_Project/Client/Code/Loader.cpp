@@ -97,15 +97,15 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Asset/HY/Leg.dds", L"Leg", TEXTURE::Tex_Cube, L"ZombieLeg_Mtrl");
 	
 	//////////////////////////////////////////////////////////////////////////////////
-	resource->LoadResource(L"../Resource/Texture/Player/playerHead.dds", L"playerHead", TEXTURE::Tex_Cube, L"playerHead_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/playerBody.dds", L"playerBody", TEXTURE::Tex_Cube, L"playerBody_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/playerRightArm.dds", L"playerRightArm", TEXTURE::Tex_Cube, L"playerRightArm_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube, L"playerLeftArm_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Player/arrow.dds", L"arrow", TEXTURE::Tex_Cube, L"arrow_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/playerHead.dds", L"playerHead", TEXTURE::Tex_Cube, L"playerHead_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/playerBody.dds", L"playerBody", TEXTURE::Tex_Cube, L"playerBody_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/playerRightArm.dds", L"playerRightArm", TEXTURE::Tex_Cube, L"playerRightArm_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube, L"playerLeftArm_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/JW/arrow.dds", L"arrow", TEXTURE::Tex_Cube, L"arrow_Mtrl");
 
 	/////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Asset/HY/Creeper_Face.dds", L"CreeperFace", TEXTURE::Tex_Cube, L"CreeperFace_Mtrl");

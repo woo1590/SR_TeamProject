@@ -172,8 +172,8 @@ void Player::PickingTerrain()
                 Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
                 Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
             }
-            auto transform = Bones["LHand"]->GetComponent<TransformComponent>();
-            auto collision = Bones["LHand"]->GetComponent<CollisionComponent>();
+            auto transform = GetComponent<TransformComponent>();
+            auto collision = GetComponent<CollisionComponent>();
             auto curPos = transform->GetWorldPosition();
             auto attackPos = hit.Position;
             AttackDirection = attackPos - curPos;
@@ -218,6 +218,10 @@ void Player::UnEquipItem(Item::ItemType itemType)
         Bones["RHand"] = nullptr;
         break;
     }
+}
+Object* Player::GetBone(std::string boneName)
+{
+    return Bones[boneName];
 }
 void Player::UpdateIdle(_float dt)
 {
@@ -428,7 +432,7 @@ void Player::UpdateShoot(_float dt) {
 
     static float prePhase = 0.f;
     if (prePhase < phaseVec.at(0) && fProgress >= phaseVec.at(0)) {
-        auto shootDir = AttackDirection;
+        auto shootDir = AttackDirection ;
         D3DXVec3Normalize(&shootDir, &shootDir);
         Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
     }

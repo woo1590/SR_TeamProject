@@ -98,8 +98,8 @@ void Item::SetMaterial(std::wstring _material)
 void Item::ApplyComponents()
 {
     auto transform = GetComponent<TransformComponent>();
-    if(ownerObject)
-        transform->SetParent(ownerObject->GetComponent<TransformComponent>());
+    //if(ownerObject)
+    //    transform->SetParent(ownerObject->GetComponent<TransformComponent>());
     transform->SetScale(itemScaleRatio.x * itemScale, itemScaleRatio.y * itemScale, itemScaleRatio.z * itemScale);
     transform->SetPosition(itemPosition.x * itemScale, itemPosition.y * itemScale, itemPosition.z * itemScale);
     transform->SetPivot(_vec3(pivotPosition.x * itemScale, pivotPosition.y * itemScale, pivotPosition.z * itemScale));
@@ -112,20 +112,6 @@ void Item::ApplyComponents()
     mesh->SetRenderID(renderId);
 
     auto collision = GetComponent<CollisionComponent>();
-    collision->SetOffset(owner->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
     collision->SetSize(_vec3(itemScaleRatio.x * itemScale, itemScaleRatio.y * itemScale, itemScaleRatio.z * itemScale));
-    if (ownerObject == nullptr) return;
-    switch (ownerObject->GetObjectType()) {
-    case ObjectType::Player:
-        collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-        collision->SetMask(CollisionComponent::LAYER_ENEMY);
-        break;
-    case ObjectType::Monster:
-        collision->SetLayer(CollisionComponent::LAYER_ENEMY);
-        collision->SetMask(CollisionComponent::LAYER_PLAYER);
-        break;
-    default:
-        break;
-    }
 }
 
