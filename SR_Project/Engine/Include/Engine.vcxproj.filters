@@ -755,9 +755,6 @@
     <ClInclude Include="..\Header\Chunk.h">
       <Filter>05. Scene Component\ChunkManager\Chunk</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ChunkManager.h">
-      <Filter>05. Scene Component\ChunkManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>
     </ClInclude>
@@ -775,6 +772,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\AlphaBlock.h">
       <Filter>06. Object\01. StaticBlock\AlphaBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ChunkManager.h">
+      <Filter>05. Scene Component\ChunkManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

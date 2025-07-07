@@ -22,7 +22,21 @@ ChunkManager* ChunkManager::Create(Scene* owner)
 
 void ChunkManager::SaveChunk(const std::wstring& saveStage)
 {
-	
+	HANDLE hFile(nullptr);
+	hFile = CreateFileW(saveStage.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Fail", _T("Fail"), MB_OK);
+		return;
+	}
+
+	DWORD dwByte(0);
+	for (auto iter = worldChunks.begin(); iter != worldChunks.end(); ++iter)
+		WriteFile(hFile, &iter, sizeof(CHUNK), &dwByte, nullptr);
+
+    CloseHandle(hFile);
+    MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", _T("Success"), MB_OK);
 }
 
 void ChunkManager::LoadChunk(const std::wstring& loadPath)

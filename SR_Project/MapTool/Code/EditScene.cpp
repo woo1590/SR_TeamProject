@@ -628,8 +628,8 @@ void EditScene::Place(_vec3& position)
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 		
-		int chunkX = position.x / 16;
-		int chunkY = position.z / 16;
+		int chunkX = position.x / CHUNK_SIZE;
+		int chunkY = position.z / CHUNK_SIZE;
 		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
 		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 
