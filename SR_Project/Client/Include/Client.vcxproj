@@ -203,6 +203,7 @@
     <ClInclude Include="..\Header\GearSlotPlus.h" />
     <ClInclude Include="..\Header\GearStrength.h" />
     <ClInclude Include="..\Header\GearStrengthBack.h" />
+    <ClInclude Include="..\Header\GolemProjectile.h" />
     <ClInclude Include="..\Header\HotBarBack.h" />
     <ClInclude Include="..\Header\HPBarBack.h" />
     <ClInclude Include="..\Header\HPBarFront.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="..\Code\GearSlotPlus.cpp" />
     <ClCompile Include="..\Code\GearStrength.cpp" />
     <ClCompile Include="..\Code\GearStrengthBack.cpp" />
+    <ClCompile Include="..\Code\GolemProjectile.cpp" />
     <ClCompile Include="..\Code\HotBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarBack.cpp" />
     <ClCompile Include="..\Code\HPBarFront.cpp" />

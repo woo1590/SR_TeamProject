@@ -34,7 +34,24 @@ protected:
 
     void OnCollisionStay(Object* other) override;
 
+private:
+    void PlayLeftAttack(_float dt);
+    void PlaySuperAttack(_float dt);
+    void PlaySuperAttackDelay(_float dt);
+
+    //Object Pool
+    void InitProjectile(ObjectType objType);
+
 protected:
     void Free() override;
+
+private:
+    Animation           LeftAttackAnim;
+    Animation           SuperAttackAnim;
+
+    vector<Object*>     BoxProjectile;
+
+    _float              SpawnTime = 0.f;
+    _int                Index = 0;
 };
 
