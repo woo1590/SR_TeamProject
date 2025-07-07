@@ -19,11 +19,13 @@ public:
 
 	void SetCallBack(HoverCallBack _callback) { callBack = move(_callback); }
 	void SetUpdateCallBack(HoverUpdateCallBack _callBack) { updateCallBack = move(_callBack); }
+	void SetRightClickCallBack(function<void()> callback) { onRightClick = move(callback); }
 
 private:
 	bool isHovered = false;
 	HoverCallBack callBack;
 	HoverUpdateCallBack updateCallBack;
+	function<void()> onRightClick;
 };
 
 END

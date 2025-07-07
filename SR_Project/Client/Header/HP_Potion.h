@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Object.h"
-#include "InfoComponent.h"
-
-class Player;
 
 class HP_Potion : public Object
 {

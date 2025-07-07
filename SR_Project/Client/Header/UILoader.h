@@ -8,4 +8,6 @@ class UILoader
 {
 public:
 	void LoadUI(ObjectManager* objMgr, Player* player);
+
+	void Update(float dt);
 };

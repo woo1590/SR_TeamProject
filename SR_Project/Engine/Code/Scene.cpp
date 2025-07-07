@@ -47,6 +47,10 @@ ChunkManager* Scene::GetChunkManager() const
 {
 	return ChunkMgr;
 }
+UIManager* Scene::GetUIManager() const
+{
+	return uiMgr;
+}
 
 void Scene::Free()
 {

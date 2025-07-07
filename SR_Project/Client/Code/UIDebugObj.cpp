@@ -25,8 +25,6 @@ HRESULT UIDebugObj::Ready_Object()
 	auto renderer  = AddComponent<UIRenderer>();
 	auto font      = AddComponent<FontComponent>();
 
-	font->SetFontType(FontType::Title);
-
 	return S_OK;
 }
 
@@ -37,15 +35,16 @@ void UIDebugObj::Update(float dt)
 	auto font = GetComponent<FontComponent>();
 
 	font->ClearText();
-	//font->AddText(L"Lv: " + to_wstring(info.level), {600, 600, 800, 700}, Color::Cyan);
 
-	RECT debugRect = {1000, 400, 1400, 650};
+	RECT debugRect = {900, 300, 1400, 650};
 
 	font->AddText(
 		L"Hp: " + to_wstring(info.curHp) + L"/" + to_wstring(info.maxHp) + 
 		L"\nExp: " + to_wstring(info.curExp) + L"/" + to_wstring(info.maxExp) +
 		L"\nspeed: " + to_wstring((int)info.speed),
-		debugRect, Color::Cyan);
+		debugRect, Color::Cyan, DT_LEFT, FontType::Title);
+
+	
 
 	accTime += dt;
 	++frameCount;
@@ -57,7 +56,7 @@ void UIDebugObj::Update(float dt)
 		frameCount = 0;
 	}
 
-	font->AddText(L"FPS: " + to_wstring((int)fps), { 1000,250,1150,450 }, Color::Cyan);
+	font->AddText(L"FPS: " + to_wstring((int)fps), { 900,250,1250,450 }, Color::Cyan,DT_LEFT, FontType::Title);
 	
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::LBUTTON))
@@ -66,13 +65,4 @@ void UIDebugObj::Update(float dt)
 		playerInfo->AddHp(-2);
 	}
 
-	//auto player2 = owner->GetLastObject(ObjectType::Player);
-	//auto playerInfo2 = player2->GetComponent<InfoComponent<PlayerInfo>>();
-
-	auto playerList = owner->GetObjectList(ObjectType::Player);
-
-	int i = playerList.size();
-	i = 2;
-	//playerInfo2->AddHp(-5);
-	//assert(info && "InfoComponent<PlayerInfo> not found");
 }

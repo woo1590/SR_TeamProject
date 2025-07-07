@@ -1,7 +1,7 @@
 #pragma once
 
 BEGIN(Engine)
-
+class UIManager;
 class ObjectManager;
 class CollisionSystem;
 class PhysicsSystem;
@@ -10,6 +10,7 @@ class StaticGrid;
 class BlockManager;
 class ChunkManager;
 class Object;
+
 class ENGINE_DLL Scene : public Base
 {
 protected:
@@ -45,7 +46,8 @@ public:
     StaticGrid*         GetStaticGrid()const;
     BlockManager*       GetBlockManager()const;
     ChunkManager*       GetChunkManager()const;
-    ////////////////////////////////////////////// 0704
+    UIManager*          GetUIManager()const;
+    
 public:
     vector<SB>& GetStaticBlocks() { return staticBlocks; }
     vector<DB>& GetDynamicBlocks() { return dynamicBlocks; }
@@ -54,7 +56,6 @@ protected:
     int Count = 0;
     std::vector<SB> staticBlocks;
     std::vector<DB> dynamicBlocks;
-    ////////////////////////////////////////////// 0704
 
 protected:
     void Free()override;
@@ -66,6 +67,7 @@ protected:
     CameraManager* CameraMgr = nullptr; 
     BlockManager* BlockMgr = nullptr;
     ChunkManager* ChunkMgr = nullptr;
+    UIManager* uiMgr = nullptr;
 };
 
 END

@@ -17,7 +17,7 @@ HRESULT MouseRightUI::Ready_Object()
 
 	transform->SetPosition(965.f, 680.f);
 
-	renderer->SetScale(0.5f, 0.5f);
+	transform->SetScale(0.5f, 0.5f);
 	renderer->SetTexture(L"mouse_right");
 
 	return S_OK;

@@ -19,7 +19,15 @@ void HoverComponent::Update(float dt)
 	assert(renderer && "HoverComponent::Update - UIRenderer is Missing");
 
 	_vec3 pos = transform->GetPosition();
-	_vec2 scale = renderer->GetScale();
+
+	_vec3 scale = transform->GetScale();
+	_vec2 overrideScale = renderer->GetScale();
+
+	if (overrideScale.x != 1.f || overrideScale.y != 1.f)
+	{
+		scale.x = overrideScale.x;
+		scale.y = overrideScale.y;
+	}
 	LONG width = LONG(scale.x * renderer->GetFullWidth());
 	LONG height = LONG(scale.y * renderer->GetFullHeight());
 
@@ -47,6 +55,12 @@ void HoverComponent::Update(float dt)
 	{
 		if (auto slot = owner->GetComponent<SlotComponent>())
 			slot->OnClick();
+	}
+
+	if (mouseOver && input->IsKeyPressed(KEY::RBUTTON))
+	{
+		if (onRightClick)
+			onRightClick();
 	}
 
 	if (updateCallBack)

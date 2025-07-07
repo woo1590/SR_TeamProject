@@ -16,7 +16,7 @@ HRESULT GearStrengthBack::Ready_Object()
 	auto renderer = AddComponent<UIRenderer>();
 
 	transform->SetPosition(470.f, 355.f);
-	renderer->SetScale(0.22f, 0.25f);
+	transform->SetScale(0.22f, 0.25f);
 	renderer->SetTexture(L"gearstrength_back");
 	renderer->SetRenderType(UIRenderType::Inventory);
 

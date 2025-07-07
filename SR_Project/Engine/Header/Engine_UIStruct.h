@@ -12,10 +12,29 @@ namespace Engine
 		int power = 10;
 		float speed = 6.f;
 	};
+
+	enum class ItemType{ Sword, Armor, Arrow, Potion };
+	enum class Rarity { Default, Rare};
+
+	enum class SlotItemType {Any, Sword, Armor, Arrow, Potion};
+
 	struct ItemInfo 
 	{
-		float attackDamage = 10.f;
+		std::wstring name;
+		std::wstring renderKey;
+		ItemType type;
+		Rarity rarity;
+		int value; 
+		std::wstring description;
 	};
+
+	struct QuestInfo
+	{
+		std::wstring title;
+		std::wstring desc;
+		bool isCompleted = false;
+	};
+
 	struct EnemyInfo
 	{
 		int level;
@@ -41,6 +60,8 @@ namespace Engine
 
 	enum class SlotType
 	{
-		Inventory, Equipment, Gear, Quick, Storage, Count
+		Inventory, Equip, Gear , Item , Quick, Storage, Count
 	};
+
+	
 }

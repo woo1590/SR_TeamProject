@@ -87,7 +87,9 @@ namespace Engine
 		Small,       // �۰�: 12pt, FW_NORMAL
 		Large,       // ũ��: 28pt, FW_NORMAL
 		Title,       // Ÿ��Ʋ��: 36pt, FW_BOLD
-		Custom       // ����� ���� (������ Ȯ���)
+		Custom,       // ����� ���� (������ Ȯ���)
+		QuestTitle,
+
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)

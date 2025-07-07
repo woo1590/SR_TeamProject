@@ -18,7 +18,7 @@ HRESULT ArrowSlot::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	renderer->SetScale(0.25f, 0.3f);
+	transform->SetScale(0.25f, 0.3f);
 	renderer->SetTexture(L"arrow_slot");
 
 	return S_OK;

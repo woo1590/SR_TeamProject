@@ -18,31 +18,38 @@ public:
 	void SetSlotType(SlotType type) { slotType = type; }
 	SlotType GetSlotType() const { return slotType; }
 
-	void SetSlotSize(SlotSize size);
-	SlotSize GetSlotSize() const { return slotSize; }
+	void SetItem(Object* obj) { itemObj = obj; }
+	void ClearItem() { itemObj = nullptr; }
+	bool HasItem() const { return itemObj != nullptr; }
+
+	Object* GetItem()const { return itemObj; }
+
+	void SetAllowedType(SlotItemType type) { allowedType = type; }
+	SlotItemType GetAllowedType() const { return allowedType; }
 
 	void OnClick();
 	void BindRenderers(UIRenderer* _base, UIRenderer* _highlight);
 
 	void Update(float dt) override;
 
-	void OnHoverEnter();
-	void OnHoverExit();
+	void OnHoverEnter() { isHovered = true; }
+	void OnHoverExit() { isHovered = false; }
 
-private:
-	void ApplySlotSize();
+	void Select() { isSelected = true; }
+	void Deselect() { isSelected = false; }
 
 private:
 	SlotType slotType = SlotType::Inventory;
-	SlotSize slotSize = SlotSize::Default;
+	SlotItemType allowedType = SlotItemType::Any;
 
-	UIRenderer* base = nullptr;      // base slot textrue
-	UIRenderer* highlight = nullptr; // hovered texture
+	UIRenderer* base = nullptr;
+	UIRenderer* highlight = nullptr; 
 
+	Object* itemObj = nullptr;
+	
 	bool isHovered = false;
 	bool isSelected = false;
 
-	// ------ effect ---------
 	float shakeDuration = 0.f;
 	float shakeTime = 0.f;
 	float shakePower = 4.f;

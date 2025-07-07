@@ -19,7 +19,7 @@ HRESULT MapBtn::Ready_Object()
 
 	transform->SetPosition(780.f,665.f);
 
-	renderer->SetScale(0.4f, 0.4f);
+	transform->SetScale(0.4f, 0.4f);
 	renderer->SetTexture(L"mapbtn");
 
 	return S_OK;

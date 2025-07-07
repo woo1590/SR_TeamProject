@@ -13,6 +13,7 @@
 #include "PhysicsSystem.h"
 #include "StaticGrid.h"
 #include "BlockManager.h"
+#include "UIManager.h"
 
 //object
 #include "TestObject.h"
@@ -72,6 +73,7 @@ void TestScene::Load()
 
 	BlockMgr->LoadStage("Create");
 	Grid->InsertBlock();
+	uiMgr           = UIManager::Create(this);
 
 #ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
@@ -79,6 +81,7 @@ void TestScene::Load()
 
 #endif
 	/*----------------Load Camera---------------------*/
+	LoadBlock();
 
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
@@ -97,14 +100,10 @@ void TestScene::Load()
 	
 	ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
-
+	
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	//ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
-
-	auto monster = ObjectMgr->GetObjectList(ObjectType::Monster);
-	int size = monster.size();
-	size = 2;
+	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 
 	ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
 	//ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
@@ -122,6 +121,7 @@ void TestScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
+	uiMgr->Update(dt);
 
 	/*-------------ī�޶� ��ȯ �׽�Ʈ �ڵ�-------------*/
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -206,6 +206,7 @@ void TestScene::Free()
 	Safe_Release(PhysicsSys);
 	Safe_Release(BlockMgr);
 	Safe_Release(Grid);
+	Safe_Release(uiMgr);
 
 	Scene::Free();
 }

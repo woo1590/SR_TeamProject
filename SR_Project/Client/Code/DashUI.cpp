@@ -17,7 +17,7 @@ HRESULT DashUI::Ready_Object()
 
 	transform->SetPosition(840.f, 670.f);
 	
-	renderer->SetScale(0.4f, 0.55f);
+	transform->SetScale(0.4f, 0.55f);
 	renderer->SetTexture(L"dash_icon");
 
 	return S_OK;

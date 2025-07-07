@@ -54,6 +54,11 @@ void TransformComponent::SetScale(_vec3 scale)
     Scale = scale;
 }
 
+void TransformComponent::SetScale(float cx, float cy)
+{
+    SetScale(_vec3(cx, cy, 0.f));
+}
+
 void TransformComponent::SetRotate(float pitch, float yaw, float roll)
 {
     SetRotate(_vec3(pitch, yaw, roll));
@@ -146,7 +151,12 @@ _vec3 TransformComponent::GetScale() const
     return Scale;
 }
 
-_vec3 TransformComponent::GetRotate() const     
+_vec2 TransformComponent::GetScale2D() const
+{
+    return _vec2(Scale.x, Scale.y);
+}
+
+_vec3 TransformComponent::GetRotate() const
 {
     return Rotation;
 }
@@ -178,7 +188,7 @@ _matrix TransformComponent::GetWorldMatrix() const
     if (Parent) {
         _matrix matParentWorld = Parent->GetWorldMatrix();
 
-        // ºÎ¸ðÀÇ ½ºÄÉÀÏ ¿ªÇà·Ä »ý¼º
+        // ï¿½Î¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _vec3 vParentScale = Parent->GetScale();
 
         _matrix matScaleInverse;
@@ -187,10 +197,10 @@ _matrix TransformComponent::GetWorldMatrix() const
             vParentScale.y != 0.f ? 1.f / vParentScale.y : 1.f,
             vParentScale.z != 0.f ? 1.f / vParentScale.z : 1.f);
 
-        // ½ºÄÉÀÏ Á¦°ÅµÈ ºÎ¸ð Çà·Ä = ºÎ¸ðÇà·Ä * ºÎ¸ð½ºÄÉÀÏÀÇ ¿ªÇà·Ä
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Åµï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ = ï¿½Î¸ï¿½ï¿½ï¿½ï¿½ * ï¿½Î¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         matParentWorld = matScaleInverse * matParentWorld;
 
-        // ÀÚ½ÄÀÇ ·ÎÄÃ Çà·Ä¿¡ °öÇÔ
+        // ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         worldMat *= matParentWorld;
     }
 

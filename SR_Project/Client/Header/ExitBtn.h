@@ -7,7 +7,7 @@ class ExitBtn : public Object
 {
 private:
 	ExitBtn(ObjectManager* owner)
-		:Object(owner, ObjectType::UI) {}
+		:Object(owner,ObjectType::UI) {}
 
 public:
 	static ExitBtn* Create(ObjectManager* owner);
