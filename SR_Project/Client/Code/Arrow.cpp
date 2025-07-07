@@ -81,6 +81,5 @@ void Arrow::SetCollisionEnter(Object* other)
     if (objType == ObjectType::Monster) {
         float arrowAttackDamage = GetComponent<InfoComponent<ProjectileInfo>>()->GetInfo().attackDamage;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
-        collision->ResolveAABBColiision(other);
     }
 }

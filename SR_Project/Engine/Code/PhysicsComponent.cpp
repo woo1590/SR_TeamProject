@@ -66,6 +66,16 @@ _bool PhysicsComponent::IsGrounded() const
 	return Is_Ground;
 }
 
+void PhysicsComponent::SetKinematic(_bool kinematic)
+{
+	Is_Kinematic = kinematic;
+}
+
+_bool PhysicsComponent::IsKinematic() const
+{
+	return Is_Kinematic;
+}
+
 void PhysicsComponent::Free()
 {
 	ObjectComponent::Free();

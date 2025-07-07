@@ -64,6 +64,9 @@ void PhysicsSystem::ApplyGravity(_float dt)
 		if (body->IsGrounded())
 			continue;
 
+		if (body->IsKinematic())
+			continue;
+
 		_vec3 velocity = body->GetVelocity();
 
 		velocity.y -= GRAVITY * dt;
@@ -198,7 +201,11 @@ void PhysicsSystem::SolvePosition()
 
 		auto physicsA = a->GetOwner()->GetComponent<PhysicsComponent>();
 		auto physicsB = b->GetOwner()->GetComponent<PhysicsComponent>();
+
 		if (!physicsA || !physicsB)
+			continue;
+
+		if (physicsA->IsKinematic() || physicsB->IsKinematic())
 			continue;
 
 		_float invA = physicsA->GetInvMass();
