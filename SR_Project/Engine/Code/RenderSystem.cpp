@@ -189,9 +189,6 @@ void RenderSystem::DebugPass()
 
 void RenderSystem::AlphaPass()
 {
-	CurrView = Camera->GetViewMatrix();
-	CurrProj = Camera->GetProjMatrix();
-
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
