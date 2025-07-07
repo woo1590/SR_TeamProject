@@ -1,12 +1,12 @@
-// SkyboxPriority.fx
+// BasicShader.fx
 
 // Cubemap texture and sampler
 texture CubeMap : register(t0);
 sampler CubeSampler = sampler_state
 {
     Texture = <CubeMap>;
-    MinFilter = Linear;
-    MagFilter = Linear;
+    MinFilter = Point;
+    MagFilter = Point;
     MipFilter = Linear;
     AddressU = Clamp;
     AddressV = Clamp;
@@ -31,16 +31,13 @@ struct VS_OUTPUT
 };
 
 
-VS_OUTPUT VS_Skybox(VS_INPUT input)
+VS_OUTPUT VS_Main(VS_INPUT input)
 {
     VS_OUTPUT output;
     
-    float4x4 viewNoTrans = g_View;
-    viewNoTrans[3].xyz = float3(0.f, 0.f, 0.f);
-    
     float4 worldPos = mul(float4(input.Position, 1.0f), g_World);
     
-    float4 viewPos = mul(worldPos, viewNoTrans);
+    float4 viewPos = mul(worldPos, g_View);
     output.Position = mul(viewPos, g_Proj);
     
     output.TexCoord = input.Position;
@@ -48,7 +45,7 @@ VS_OUTPUT VS_Skybox(VS_INPUT input)
 }
 
 // Pixel Shader: sample from cubemap
-float4 PS_Skybox(VS_OUTPUT input) : SV_Target
+float4 PS_Main(VS_OUTPUT input) : SV_Target
 {
     return texCUBE(CubeSampler, input.TexCoord);
 }
@@ -59,7 +56,7 @@ technique SkyboxPriority
     pass P0
     {
         // Compile and set shaders
-        VertexShader = compile vs_3_0 VS_Skybox();
-        PixelShader = compile ps_3_0 PS_Skybox();
+        VertexShader = compile vs_3_0 VS_Main();
+        PixelShader = compile ps_3_0 PS_Main();
     }
 }

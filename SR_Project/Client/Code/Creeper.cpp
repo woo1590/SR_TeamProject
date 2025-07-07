@@ -95,12 +95,12 @@ void Creeper::InitTransform(ObjectType objType)
     auto transform = GetComponent<TransformComponent>();
     transform->SetPosition(30.f, 100.f, 30.f);
 
-    SetMaterial(L"CreeperFace_Mtrl", "Head");
-    SetMaterial(L"CreeperBody_Mtrl", "Body");
-    SetMaterial(L"CreeperLeg_Mtrl", "LArm");
-    SetMaterial(L"CreeperLeg_Mtrl", "RArm");
-    SetMaterial(L"CreeperLeg_Mtrl", "LLeg");
-    SetMaterial(L"CreeperLeg_Mtrl", "RLeg");
+    SetMaterial("CreeperFace_Mtrl", "Head");
+    SetMaterial("CreeperBody_Mtrl", "Body");
+    SetMaterial("CreeperLeg_Mtrl", "LArm");
+    SetMaterial("CreeperLeg_Mtrl", "RArm");
+    SetMaterial("CreeperLeg_Mtrl", "LLeg");
+    SetMaterial("CreeperLeg_Mtrl", "RLeg");
 
     //body
     SetScale(_vec3(7.f * Scale, 16.f * Scale, 4.f * Scale), "Body");

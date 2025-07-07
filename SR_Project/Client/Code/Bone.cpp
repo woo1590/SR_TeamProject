@@ -14,7 +14,7 @@ Bone::~Bone()
 {
 }
 
-Bone* Bone::Create(ObjectManager* owner, ObjectType objType, _vec3 scale, Object* parent, const std::wstring& mtrl)
+Bone* Bone::Create(ObjectManager* owner, ObjectType objType, _vec3 scale, Object* parent, const std::string& mtrl)
 {
     Bone* Instance = new Bone(owner, ObjectType::Bone);
 
@@ -29,7 +29,7 @@ Bone* Bone::Create(ObjectManager* owner, ObjectType objType, _vec3 scale, Object
   
 }
 
-HRESULT Bone::Ready_Object(Object* Parent, _vec3 scale, const std::wstring& mtrl)
+HRESULT Bone::Ready_Object(Object* Parent, _vec3 scale, const std::string& mtrl)
 {
     Object::Ready_Object();
 
@@ -38,7 +38,7 @@ HRESULT Bone::Ready_Object(Object* Parent, _vec3 scale, const std::wstring& mtrl
     transform->SetScale(scale);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-    renderer->SetMesh(L"Cube_Mesh");
+    renderer->SetMesh("Cube_Mesh");
     renderer->SetMaterial(mtrl);
 
     return S_OK;

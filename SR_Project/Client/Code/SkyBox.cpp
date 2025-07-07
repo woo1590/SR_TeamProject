@@ -36,8 +36,8 @@ HRESULT SkyBox::Ready_Object()
     transform->SetScale(100.f, 100.f, 100.f);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_Priority);
-    renderer->SetMesh(L"Cube_Mesh");
-    renderer->SetMaterial(L"SkyBox_Mtrl");
+    renderer->SetMesh("Cube_Mesh");
+    renderer->SetMaterial("SkyBox_Mtrl");
 
     return S_OK;
 }

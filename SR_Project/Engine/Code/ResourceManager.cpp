@@ -93,7 +93,7 @@ void ResourceManager::LoadMesh(const std::string & key, Mesh* mesh)
     MeshContainer[key] = mesh;
 }
 
-void ResourceManager::LoadMaterial(const std::string& filePath)
+void ResourceManager::LoadMaterial(const std::string& key, const std::string& filePath)
 {
     auto mtrl = Material::Create();
 
@@ -115,7 +115,7 @@ void ResourceManager::LoadMaterial(const std::string& filePath)
     //Constant
     if (j.contains("constants"))
     {
-        auto& c = j["constant"];
+        auto& c = j["constants"];
 
         auto GetVec4 = [](const nlohmann::json& arr)->_vec4 {return _vec4(arr[0], arr[1], arr[2], arr[4]);};
 
@@ -143,7 +143,7 @@ void ResourceManager::LoadMaterial(const std::string& filePath)
         mtrl->SetFloat("g_EmissivePow", c.value("EmissivePow", 1.f));
     }
     
-    MaterialContainer[filePath] = mtrl;
+    MaterialContainer[key] = mtrl;
 }
 
 Shader* ResourceManager::LoadShader(const std::string& key)
@@ -173,6 +173,26 @@ Shader* ResourceManager::LoadShader(const std::string& key)
     }
 }
 
+void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
+{
+    LPDIRECT3DBASETEXTURE9 tex = nullptr;
+    auto device = GraphicDevice::GetInstance()->GetDevice();
+
+    switch (texType)
+    {
+    case Engine::TEXTURE::Tex_Diffuse:
+        D3DXCreateTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&tex);
+        break;
+    case Engine::TEXTURE::Tex_Cube:
+        D3DXCreateCubeTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&tex);
+        break;
+    default:
+        break;
+    }
+
+    UITextureContainer[key] = tex;
+}
+
 LPDIRECT3DBASETEXTURE9 ResourceManager::LoadTexture(const std::string& key, TEXTURE texType)
 {
     auto iter = TextureContainer.find(key);
@@ -195,6 +215,8 @@ LPDIRECT3DBASETEXTURE9 ResourceManager::LoadTexture(const std::string& key, TEXT
         default:
             break;
         }
+
+        TextureContainer[key] = tex;
 
         return tex;
     }

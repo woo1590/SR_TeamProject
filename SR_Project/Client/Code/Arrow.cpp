@@ -30,32 +30,7 @@ HRESULT Arrow::Ready_Object(ObjectManager* owner, ObjectType objType, ObjectType
     if (FAILED(Projectile::Ready_Object(owner,objType)))
         return E_FAIL;
 
-    auto info = GetComponent<InfoComponent<ProjectileInfo>>();
-    ProjectileInfo i;
-    i.speed = 30.f;
-    i.shooterType = shooterType;
-    i.size = 1.f;
-    i.attackDamage = 10.f;
-    i.scale = _vec3{ 0.1f, 1.f, 1.f };
-    i.direction = normalDirection;
-    i.meshType = L"Cube_Mesh";
-    i.material = L"arrow_Mtrl";
-    i.renderId = Engine::RENDER_ID::Render_Alpha;
-    info->SetInfo(i);
-
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetScale(i.scale.x * i.size, i.scale.y * i.size, i.scale.z * i.size);
-
-    auto mesh = GetComponent<MeshRenderer>();
-    mesh->SetMesh(i.meshType);
-    mesh->SetMaterial(i.material);
-    mesh->SetRenderID(i.renderId);
-
-    auto collision = AddComponent<CollisionComponent>();
-    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_ENEMY);
-    collision->SetSize(_vec3(1.f, 2.f, 1.f));
-    collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
+    
     return S_OK;
 }
 

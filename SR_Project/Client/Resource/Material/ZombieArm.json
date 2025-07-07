@@ -1,8 +1,8 @@
 {
-  "fx": "../Resource/Shader/SkyBox.fx",
+  "fx": "../Resource/Shader/BasicShader.fx",
 
   "textures": {
-    "CubeMap"  : "../Resource/Texture/SkyBox/burger3.dds"
+    "CubeMap"  : "../Resource/Asset/HY/Arm.dds"
   },
 
   "constants": {
