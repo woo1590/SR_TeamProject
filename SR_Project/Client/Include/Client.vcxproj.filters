@@ -241,6 +241,12 @@
     <Filter Include="02. Object\Item\Arrow">
       <UniqueIdentifier>{4d40d8dd-85fa-498a-aed9-2d68bd53ad62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\RedGolem">
+      <UniqueIdentifier>{f7c7a97f-8097-4846-804b-4d246800255f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\RedGolem\Projectile">
+      <UniqueIdentifier>{14456796-8f96-4088-a27a-aa13642bd049}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -446,11 +452,14 @@
     <ClInclude Include="..\Header\Creeper.h">
       <Filter>02. Object\Monster\Creeper</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Hit.h">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    <ClInclude Include="..\Header\Boss.h">
+      <Filter>02. Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\IsHit.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
+    <ClInclude Include="..\Header\RedGolem.h">
+      <Filter>02. Object\Monster\RedGolem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GolemProjectile.h">
+      <Filter>02. Object\Monster\RedGolem\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. Object\Item\Arrow</Filter>
@@ -663,11 +672,14 @@
     <ClCompile Include="..\Code\Creeper.cpp">
       <Filter>02. Object\Monster\Creeper</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Hit.cpp">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    <ClCompile Include="..\Code\Boss.cpp">
+      <Filter>02. Object\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\IsHit.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
+    <ClCompile Include="..\Code\RedGolem.cpp">
+      <Filter>02. Object\Monster\RedGolem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GolemProjectile.cpp">
+      <Filter>02. Object\Monster\RedGolem\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. Object\Item\Arrow</Filter>

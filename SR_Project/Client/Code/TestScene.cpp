@@ -37,6 +37,7 @@
 #include "Creeper.h"
 #include "StaticBlock.h"
 #include "DynamicBlock.h"
+#include "RedGolem.h"
 
 //component
 #include "TransformComponent.h"
@@ -99,14 +100,14 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 
 	auto monster = ObjectMgr->GetObjectList(ObjectType::Monster);
 	int size = monster.size();
 	size = 2;
 
-	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
-	ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
 	
 
 	/*------------------Load UI------------------------*/
