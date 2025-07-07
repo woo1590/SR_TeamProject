@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "SkyBox.h"
 #include "UIRenderer.h"
-
+#include "Material.h"
 
 //component
 #include "TransformComponent.h"

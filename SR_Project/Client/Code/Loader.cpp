@@ -85,10 +85,15 @@ HRESULT Loader::Load_TestScene()
 {
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 
-	/*--------------Load File Resource-----------------*/
 	auto cube = CubeMesh::Create();
 	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadResource(L"../Resource/Texture/SkyBox/burger3.dds", L"Basic_SkyBox", TEXTURE::Tex_Cube, L"SkyBox_Mtrl");
+	/*--------------------Load Shader---------------------------------*/
+	resource->LoadShader(L"../Resource/Shader/SkyBox.fx", L"SkyBox_Shader");
+	resource->LoadTexture(L"../Resource/Texture/SkyBox/burger3.dds", L"SkyBox_Tex",TEXTURE::Tex_Cube);
+	auto skyboxMtrl = Material::Create();
+	skyboxMtrl->SetShader(L"SkyBox_Shader");
+	skyboxMtrl->SetTexture("CubeMap", resource->GetTexture(L"SkyBox_Tex"));
+	resource->LoadMaterial(L"SkyBox_Mtrl", skyboxMtrl);
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Asset/HY/Body2.dds", L"Body", TEXTURE::Tex_Cube, L"ZombieBody_Mtrl");
@@ -131,8 +136,7 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
 
-	/*--------------------Load Shader---------------------------------*/
-  	resource->LoadShader(L"../Resource/Shader/SkyBox.fx", L"SkyBox_Shader");
+	
 
 	return S_OK;
 }

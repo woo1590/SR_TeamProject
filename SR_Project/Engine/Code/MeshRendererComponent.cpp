@@ -54,9 +54,6 @@ void MeshRenderer::Render()
 	_matrix viewMat = cam->GetViewMatrix();
 	_matrix projMat = cam->GetProjMatrix();
 
-	//Device->SetTransform(D3DTS_WORLD,&worldMat);
-
-	//Apply Constant (world, view, proj, wvp)
 	if (shader)
 	{
 		shader->Begin(0);

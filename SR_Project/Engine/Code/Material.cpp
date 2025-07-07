@@ -74,6 +74,8 @@ void Material::Apply()
         for (const auto& [name, value] : MatParam)
             shader->SetConstant(name, value);
 
+        for (const auto& [name, value] : TexParam)
+            shader->SetTexture(name, value);
     }
     else
     {

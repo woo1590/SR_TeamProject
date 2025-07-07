@@ -70,15 +70,16 @@ _matrix CameraComponent::GetViewMatrix() const
     _vec3 at = eye + Target->GetFoward();
     _vec3 up = Target->GetUp();
 
-    _matrix view = math::LookAtLH(eye, at, up);
+    _matrix view;
+    D3DXMatrixLookAtLH(&view, &eye, &at, &up);
 
     return view;
 }
 
 _matrix CameraComponent::GetProjMatrix() const
 {
-    _matrix proj = math::PerspectiveFovLH(FOV, Aspect, MinZ, MaxZ);
-    //D3DXMatrixPerspectiveFovLH(&proj,FOV, Aspect, MinZ, MaxZ);
+    _matrix proj;
+    D3DXMatrixPerspectiveFovLH(&proj,FOV, Aspect, MinZ, MaxZ);
     return proj;
 }
 

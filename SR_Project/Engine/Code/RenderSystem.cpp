@@ -47,7 +47,6 @@ HRESULT RenderSystem::Ready_RenderSystem()
 
 	/*---------------Light Setting---------------------*/
 	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//Device->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(20,20,20));
 	Device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	Device->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 
@@ -113,12 +112,6 @@ void RenderSystem::SetUIRenderState(UIRenderType newType)
 
 void RenderSystem::PriorityPass()
 {
-	CurrProj = Camera->GetProjMatrix();
-	CurrView = Camera->GetViewMatrix();
-	
-	//Device->SetTransform(D3DTS_VIEW, &CurrView);
-	//Device->SetTransform(D3DTS_PROJECTION, &CurrProj);
-
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
