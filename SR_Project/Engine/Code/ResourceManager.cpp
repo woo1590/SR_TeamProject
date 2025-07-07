@@ -36,81 +36,171 @@ HRESULT ResourceManager::Ready_ResourceManager()
     return S_OK;
 }
 
-void ResourceManager::LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey)
-{
-    LoadTexture(texPath, texKey, texType);
-    auto mtrl = Material::Create();
-    mtrl->SetTexture(texKey);
-    LoadMaterial(mtrlKey, mtrl);
-}
+//void ResourceManager::LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey)
+//{
+//    LoadTexture(texPath, texKey, texType);
+//    auto mtrl = Material::Create();
+//    mtrl->SetTexture(texKey);
+//    LoadMaterial(mtrlKey, mtrl);
+//}
 
-void ResourceManager::LoadShader(const std::wstring& filePath, const std::wstring& key)
-{
-    auto device = GraphicDevice::GetInstance()->GetDevice();
+//void ResourceManager::LoadShader(const std::wstring& filePath, const std::wstring& key)
+//{
+//    auto device = GraphicDevice::GetInstance()->GetDevice();
+//
+//    LPD3DXEFFECT effect = nullptr;
+//    LPD3DXBUFFER error = nullptr;
+//    D3DXCreateEffectFromFileW(device, filePath.c_str(), nullptr, nullptr, 0, nullptr, &effect, &error);
+//
+//    if (error) {
+//        OutputDebugStringA((char*)error->GetBufferPointer());
+//        error->Release();
+//    }
+//
+//    auto shader = Shader::Create(effect);
+//
+//    ShaderContainer[key] = shader;
+//}
+//
+//void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
+//{
+//    LPDIRECT3DBASETEXTURE9 tex = nullptr;
+//    auto device = GraphicDevice::GetInstance()->GetDevice();
+//
+//    switch (texType)
+//    {
+//    case Engine::TEXTURE::Tex_Diffuse:
+//        D3DXCreateTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&tex);
+//        break;
+//    case Engine::TEXTURE::Tex_Cube:
+//        D3DXCreateCubeTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&tex);
+//        break;
+//    default:
+//        break;
+//    }
+//
+//    TextureContainer[key] = tex;
+//}
+//
 
-    LPD3DXEFFECT effect = nullptr;
-    LPD3DXBUFFER error = nullptr;
-    D3DXCreateEffectFromFileW(device, filePath.c_str(), nullptr, nullptr, 0, nullptr, &effect, &error);
+//void ResourceManager::LoadMaterial(const std::wstring& key, Material* mtrl)
+//{
+//    MaterialContainer[key] = mtrl;
+//}
 
-    if (error) {
-        OutputDebugStringA((char*)error->GetBufferPointer());
-        error->Release();
-    }
-
-    auto shader = Shader::Create(effect);
-
-    ShaderContainer[key] = shader;
-}
-
-void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
-{
-    LPDIRECT3DBASETEXTURE9 tex = nullptr;
-    auto device = GraphicDevice::GetInstance()->GetDevice();
-
-    switch (texType)
-    {
-    case Engine::TEXTURE::Tex_Diffuse:
-        D3DXCreateTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&tex);
-        break;
-    case Engine::TEXTURE::Tex_Cube:
-        D3DXCreateCubeTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&tex);
-        break;
-    default:
-        break;
-    }
-
-    TextureContainer[key] = tex;
-}
-
-void ResourceManager::LoadMesh(const std::wstring& key, Mesh* mesh)
+void ResourceManager::LoadMesh(const std::string & key, Mesh* mesh)
 {
     MeshContainer[key] = mesh;
 }
 
-void ResourceManager::LoadMaterial(const std::wstring& key, Material* mtrl)
-{
-    MaterialContainer[key] = mtrl;
-}
-
-void ResourceManager::LoadMaterial(const std::wstring& filePath)
+void ResourceManager::LoadMaterial(const std::string& filePath)
 {
     auto mtrl = Material::Create();
 
     nlohmann::json j = nlohmann::json::parse(std::ifstream(filePath.c_str()));
 
+    //Shader
+    auto shader = LoadShader(j.value("fx", "Shaders/default.fx"));
+    mtrl->SetShader(shader);
 
+    //Texture
+    for (auto& [slot, p] : j["textures"].items())
+    {
+        auto tex = (slot == "CubeMap") ? LoadTexture(p.get<std::string>(), TEXTURE::Tex_Cube)
+                                       : LoadTexture(p.get<std::string>(), TEXTURE::Tex_Diffuse);
 
+        mtrl->SetTexture(slot, tex);
+    }
+
+    //Constant
+    if (j.contains("constants"))
+    {
+        auto& c = j["constant"];
+
+        auto GetVec4 = [](const nlohmann::json& arr)->_vec4 {return _vec4(arr[0], arr[1], arr[2], arr[4]);};
+
+        if (c.contains("Diffuse"))
+            mtrl->SetVec4("g_Diffuse", GetVec4(c["Diffuse"]));
+
+        if (c.contains("Ambient"))
+            mtrl->SetVec4("g_Ambient", _vec4(c["Ambient"][0], c["Ambient"][1], c["Ambient"][2], 1.f));
+        
+        if (c.contains("Specular"))
+            mtrl->SetVec4("g_Specular", _vec4(c["Specular"][0], c["Specular"][1], c["Specular"][2], 1.f));
+        mtrl->SetFloat("g_Shininess",c.value("Shininess", 0.f));
+
+        if (c.contains("AlphaCut"))
+            mtrl->SetFloat("g_AlphaCur", c.value("AlphaCut", 0.f));
+
+        if (c.contains("UVScale"))
+            mtrl->SetVec4("g_UVScale", _vec4(c["UVScale"][0], c["UVScale"][1], 0.f, 0.f));
+
+        if (c.contains("UVOffset"))
+            mtrl->SetVec4("g_UVOffset", _vec4(c["UVOffset"][0], c["UVOffset"][1], 0.f, 0.f));
+
+        if (c.contains("Emissive"))
+            mtrl->SetVec4("g_Emissive", _vec4(c["Emissive"][0], c["Emissive"][1], c["Emissive"][2], 1.f));
+        mtrl->SetFloat("g_EmissivePow", c.value("EmissivePow", 1.f));
+    }
+    
+    MaterialContainer[filePath] = mtrl;
 }
 
-void ResourceManager::LoadShader(const std::wstring& key)
+Shader* ResourceManager::LoadShader(const std::string& key)
 {
+    auto iter = ShaderContainer.find(key);
+
+    if (iter != ShaderContainer.end())
+        return iter->second;
+    else
+    {
+        auto device = GraphicDevice::GetInstance()->GetDevice();
+
+        LPD3DXEFFECT effect = nullptr;
+        LPD3DXBUFFER error = nullptr;
+        D3DXCreateEffectFromFile(device, key.c_str(), nullptr, nullptr, 0, nullptr, &effect, &error);
+
+        if (error) {
+            OutputDebugStringA((char*)error->GetBufferPointer());
+            error->Release();
+        }
+
+        auto shader = Shader::Create(effect);
+
+        ShaderContainer[key] = shader;
+
+        return shader;
+    }
 }
 
-void ResourceManager::LoadTexture(const std::wstring& key)
+LPDIRECT3DBASETEXTURE9 ResourceManager::LoadTexture(const std::string& key, TEXTURE texType)
 {
+    auto iter = TextureContainer.find(key);
+
+    if (iter != TextureContainer.end())
+        return iter->second;
+    else
+    {
+        LPDIRECT3DBASETEXTURE9 tex = nullptr;
+        auto device = GraphicDevice::GetInstance()->GetDevice();
+
+        switch (texType)
+        {
+        case Engine::TEXTURE::Tex_Diffuse:
+            D3DXCreateTextureFromFile(device, key.c_str(), (LPDIRECT3DTEXTURE9*)&tex);
+            break;
+        case Engine::TEXTURE::Tex_Cube:
+            D3DXCreateCubeTextureFromFile(device, key.c_str(), (LPDIRECT3DCUBETEXTURE9*)&tex);
+            break;
+        default:
+            break;
+        }
+
+        return tex;
+    }
 }
 
-Mesh* ResourceManager::GetMesh(const std::wstring& key)
+Mesh* ResourceManager::GetMesh(const std::string& key)
 {
     auto iter = MeshContainer.find(key);
 
@@ -120,7 +210,7 @@ Mesh* ResourceManager::GetMesh(const std::wstring& key)
         return nullptr;
 }
 
-Material* ResourceManager::GetMaterial(const std::wstring& key)
+Material* ResourceManager::GetMaterial(const std::string& key)
 {
     auto iter = MaterialContainer.find(key);
 
@@ -130,7 +220,7 @@ Material* ResourceManager::GetMaterial(const std::wstring& key)
         return nullptr;
 }
 
-Shader* ResourceManager::GetShader(const std::wstring& key)
+Shader* ResourceManager::GetShader(const std::string& key)
 {
     auto iter = ShaderContainer.find(key);
 
@@ -140,11 +230,21 @@ Shader* ResourceManager::GetShader(const std::wstring& key)
         return nullptr;
 }
 
-LPDIRECT3DBASETEXTURE9 ResourceManager::GetTexture(const std::wstring& key)
+LPDIRECT3DBASETEXTURE9 ResourceManager::GetTexture(const std::string& key)
 {
     auto iter = TextureContainer.find(key);
 
     if (iter != TextureContainer.end())
+        return iter->second;
+    else
+        return nullptr;
+}
+
+LPDIRECT3DBASETEXTURE9 ResourceManager::GetTexture(const std::wstring& key)
+{
+    auto iter = UITextureContainer.find(key);
+
+    if (iter != UITextureContainer.end())
         return iter->second;
     else
         return nullptr;

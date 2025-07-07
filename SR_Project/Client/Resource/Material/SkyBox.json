@@ -1,0 +1,22 @@
+{
+  "fx": "../Shaders/SkyBox.fx",
+
+  "textures": {
+    "CubeMap"  : "../Textures/SkyBox/burger3.dds"
+  },
+
+  "constants": {
+    "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],   
+    "MatAmbient"   : [0.2, 0.2, 0.2],        
+    "MatSpecular"  : [1.0, 1.0, 1.0],        
+    "Shininess"    : 32.0,                   
+
+    "Emissive"     : [0.0, 0.0, 0.0],        
+    "EmissivePow"  : 1.0,
+
+    "AlphaCut"     : 0.4,
+
+    "UVScale"      : [1.0, 1.0],             
+    "UVOffset"     : [0.0, 0.0]       
+  }
+}

@@ -68,12 +68,12 @@ void MeshRenderer::Render()
 		shader->End();
 }
 
-void MeshRenderer::SetMesh(const std::wstring& key)
+void MeshRenderer::SetMesh(const std::string& key)
 {
 	mesh = EngineCore::GetInstance()->GetResourceManager()->GetMesh(key);
 }
 
-void MeshRenderer::SetMaterial(const std::wstring& key)
+void MeshRenderer::SetMaterial(const std::string & key)
 {
 	mtrl = EngineCore::GetInstance()->GetResourceManager()->GetMaterial(key);
 }

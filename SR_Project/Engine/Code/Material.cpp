@@ -99,6 +99,11 @@ void Material::SetVec3(const std::string& name, _vec3 value)
     Vec3Param[name] = value;
 }
 
+void Material::SetVec4(const std::string& name, _vec4 value)
+{
+    Vec4Param[name] = value;
+}
+
 void Material::SetMat(const std::string& name, _matrix value)
 {
     MatParam[name] = value;
@@ -109,9 +114,9 @@ void Material::SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 value)
     TexParam[name] = value;
 }
 
-void Material::SetShader(const std::wstring& key)
+void Material::SetShader(Shader* shader)
 {
-    shader = EngineCore::GetInstance()->GetResourceManager()->GetShader(key);
+    this->shader = shader;  
 }
 
 Shader* Material::GetShader() const
