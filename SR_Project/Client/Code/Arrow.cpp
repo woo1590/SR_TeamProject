@@ -48,7 +48,8 @@ HRESULT Arrow::Ready_Object(ObjectManager* owner, ObjectType objType, Object* sh
     SetMaterial(L"arrow_Mtrl");
     SetRenderId(renderId);
 
-    switch (ownerObject->GetObjectType()) {
+    switch (ownerObject->GetObjectType()) 
+    {
     case ObjectType::Player:
         PlayerArrowInfo();
         break;
@@ -65,15 +66,24 @@ HRESULT Arrow::Ready_Object(ObjectManager* owner, ObjectType objType, Object* sh
 void Arrow::Update(_float dt)
 {
     Item::Update(dt);
-
+    
     auto transform = GetComponent<TransformComponent>();
     auto info = GetComponent<InfoComponent<ItemInfo>>()->GetInfo();
+
     if (hitObject == nullptr)
         transform->Translate(arrowDirection * arrowSpeed * dt);
-    else {
+
+    else 
+    {
+        hitTime += dt;
         _vec3 curPos = hitObject->GetComponent<TransformComponent>()->GetWorldPosition();
         transform->Translate(curPos - hitObjectPos);
         hitObjectPos = curPos;
+
+        if (hitTime > arrowPersistTime) 
+        {
+            SetDead();
+        }
     }
 }
 
@@ -92,7 +102,8 @@ void Arrow::SetCollisionEnter(Object* other)
     hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
     auto collision = GetComponent<CollisionComponent>();
     auto info = GetComponent<InfoComponent<ItemInfo>>();
-    switch (objType) {
+    switch (objType) 
+    {
     case ObjectType::Monster:
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(info->GetInfo().attackDamage);
         collision->ResolveAABBColiision(other);

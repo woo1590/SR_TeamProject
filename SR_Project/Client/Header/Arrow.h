@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Item.h"
 class Arrow : public Item
 {
@@ -24,5 +24,8 @@ protected:
 
     float arrowSpeed = 0.f;
     _vec3 arrowDirection = { 0.f,0.f,0.f };
+
+    float hitTime = 0.f;
+    float arrowPersistTime = 3.f;
 };
 
