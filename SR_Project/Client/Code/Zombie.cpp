@@ -14,10 +14,7 @@
 #include "CollisionComponent.h"
 #include "AIController.h"
 #include "IsAlive.h"
-#include "Hit.h"
 #include "Die.h"
-#include "InfoDetector.h"
-#include "IsHit.h"
 
 Zombie::Zombie(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)

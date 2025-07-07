@@ -238,6 +238,9 @@
     <Filter Include="02. Object\Monster\Creeper">
       <UniqueIdentifier>{55568c30-c6cf-4688-ad2b-9ca5d546b10d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\RedGolem">
+      <UniqueIdentifier>{f7c7a97f-8097-4846-804b-4d246800255f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -449,11 +452,11 @@
     <ClInclude Include="..\Header\Creeper.h">
       <Filter>02. Object\Monster\Creeper</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Hit.h">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    <ClInclude Include="..\Header\Boss.h">
+      <Filter>02. Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\IsHit.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
+    <ClInclude Include="..\Header\RedGolem.h">
+      <Filter>02. Object\Monster\RedGolem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -666,11 +669,11 @@
     <ClCompile Include="..\Code\Creeper.cpp">
       <Filter>02. Object\Monster\Creeper</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Hit.cpp">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
+    <ClCompile Include="..\Code\Boss.cpp">
+      <Filter>02. Object\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\IsHit.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
+    <ClCompile Include="..\Code\RedGolem.cpp">
+      <Filter>02. Object\Monster\RedGolem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

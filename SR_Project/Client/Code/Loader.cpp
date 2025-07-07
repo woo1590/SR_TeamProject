@@ -118,7 +118,15 @@ HRESULT Loader::Load_TestScene()
 	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
 	resource->LoadResource(L"../Resource/Asset/HY/bow.dds", L"bow", TEXTURE::Tex_Cube, L"Bow_Mtrl");
 
-	 
+	/////////////////////////////////////////////////////////////////////////////////
+	resource->LoadResource(L"../Resource/Asset/HY/redgolem_body.dds", L"RedGolem_Body", TEXTURE::Tex_Cube, L"RedGolemBody_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/redgolem_face.dds", L"RedGolem_Face", TEXTURE::Tex_Cube, L"RedGolemFace_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/redgolem_finger.dds", L"RedGolem_Finger", TEXTURE::Tex_Cube, L"RedGolemFinger_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/redgolem_foot.dds", L"RedGolem_Foot", TEXTURE::Tex_Cube, L"RedGolemFoot_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/redgolem_arm.dds", L"RedGolem_Arm", TEXTURE::Tex_Cube, L"RedGolemArm_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/redgolem_hand.dds", L"RedGolem_Hand", TEXTURE::Tex_Cube, L"RedGolemHand_Mtrl");
+	resource->LoadResource(L"../Resource/Asset/HY/redgolem_lightblock.dds", L"Redgolem_Lightblock", TEXTURE::Tex_Cube, L"RedgolemLightblock_Mtrl");
+
 	/////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
 	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
