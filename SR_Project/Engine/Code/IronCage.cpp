@@ -44,10 +44,10 @@ HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType)
     Object::Ready_Object();
     auto transform = AddComponent<TransformComponent>();
 
-    Parts["IronParCage"] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), this, L"IronCage_Mtrl");
+    Parts["IronParCage"] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), this, "IronCage_Mtrl");
     auto ironParTrans = Parts["IronParCage"]->GetComponent<TransformComponent>();
 
-    Parts["IronCage0"] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], L"IronCage_Mtrl");
+    Parts["IronCage0"] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], "IronCage_Mtrl");
     auto ironTrans = Parts["IronCage0"]->GetComponent<TransformComponent>();
 
     ironParTrans->Translate(-0.5f, 3.f, 0.f);
@@ -56,11 +56,11 @@ HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType)
     for (int i = 1; i < Count; ++i)
     {
         string fir = "IronCage_" + std::to_string(i) + "_1";
-        Parts[fir] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], L"IronCage_Mtrl");
+        Parts[fir] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], "IronCage_Mtrl");
         auto first = Parts[fir]->GetComponent<TransformComponent>();
 
         string sec = "IronCage_" + std::to_string(i) + "_2";
-        Parts[sec] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], L"IronCage_Mtrl");
+        Parts[sec] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], "IronCage_Mtrl");
         auto second = Parts[sec]->GetComponent<TransformComponent>();
 
         first->Translate(2.f * i, 0.f, 0.f);
@@ -103,7 +103,7 @@ void IronCage::Late_Update(_float dt)
     Object::Late_Update(dt);
 }
 
-void IronCage::SetMaterial(const std::wstring& mtrl, string str)
+void IronCage::SetMaterial(const std::string& mtrl, string str)
 {
     if (Parts[str] != nullptr)
         Parts[str]->GetComponent<MeshRenderer>()->SetMaterial(mtrl);

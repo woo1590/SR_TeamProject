@@ -17,7 +17,7 @@ public:
     void Late_Update(_float dt)override;
 
 private:
-    void SetMaterial(const std::wstring& mtrl, string str);
+    void SetMaterial(const std::string& mtrl, string str);
     void SetScale(float scale);
     void SetPosition(_vec3 position, string str);
     void SetRotation(_vec3 rotation, string str);

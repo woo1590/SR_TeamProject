@@ -43,13 +43,13 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType)
     Object::Ready_Object();
     auto transform = AddComponent<TransformComponent>();
 
-    Parts["ChestDown"] = Part::Create(owner, objType, _vec3(1.f, 0.7f, 1.f), this, L"ChestDown_Mtrl");
+    Parts["ChestDown"] = Part::Create(owner, objType, _vec3(1.f, 0.7f, 1.f), this, "ChestDown_Mtrl");
     auto downTrans = Parts["ChestDown"]->GetComponent<TransformComponent>();
 
-    Parts["ChestUp"] = Part::Create(owner, objType, _vec3(1.f, 0.3f, 1.f), Parts["ChestDown"], L"ChestUp_Mtrl");
+    Parts["ChestUp"] = Part::Create(owner, objType, _vec3(1.f, 0.3f, 1.f), Parts["ChestDown"], "ChestUp_Mtrl");
     auto upTrans = Parts["ChestUp"]->GetComponent<TransformComponent>();
 
-    Parts["ChestLock"] = Part::Create(owner, objType, _vec3(0.125f, 0.2f, 0.1f), Parts["ChestUp"], L"ChestLock_Mtrl");
+    Parts["ChestLock"] = Part::Create(owner, objType, _vec3(0.125f, 0.2f, 0.1f), Parts["ChestUp"], "ChestLock_Mtrl");
     auto lockTrans = Parts["ChestLock"]->GetComponent<TransformComponent>();
 
     upTrans->SetIsBlock();
@@ -93,7 +93,7 @@ void Chest::Late_Update(_float dt)
     Object::Late_Update(dt);
 }
 
-void Chest::SetMaterial(const std::wstring& mtrl, string str)
+void Chest::SetMaterial(const std::string& mtrl, string str)
 {
     if (Parts[str] != nullptr)
         Parts[str]->GetComponent<MeshRenderer>()->SetMaterial(mtrl);

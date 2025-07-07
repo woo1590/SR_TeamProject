@@ -88,12 +88,7 @@ HRESULT Loader::Load_TestScene()
 	auto cube = CubeMesh::Create();
 	resource->LoadMesh(L"Cube_Mesh", cube);
 	/*--------------------Load Shader---------------------------------*/
-	resource->LoadShader(L"../Resource/Shader/SkyBox.fx", L"SkyBox_Shader");
-	resource->LoadTexture(L"../Resource/Texture/SkyBox/burger3.dds", L"SkyBox_Tex",TEXTURE::Tex_Cube);
-	auto skyboxMtrl = Material::Create();
-	skyboxMtrl->SetShader(L"SkyBox_Shader");
-	skyboxMtrl->SetTexture("CubeMap", resource->GetTexture(L"SkyBox_Tex"));
-	resource->LoadMaterial(L"SkyBox_Mtrl", skyboxMtrl);
+	resource->LoadMaterial()
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	resource->LoadResource(L"../Resource/Asset/HY/Body2.dds", L"Body", TEXTURE::Tex_Cube, L"ZombieBody_Mtrl");

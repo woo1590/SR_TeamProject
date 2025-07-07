@@ -1,5 +1,5 @@
 {
-  "fx": "../Shaders/SkyBox.fx",
+  "fx": "../Shader/SkyBox.fx",
 
   "textures": {
     "CubeMap"  : "../Textures/SkyBox/burger3.dds"

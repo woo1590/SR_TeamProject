@@ -46,10 +46,10 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
     Object::Ready_Object();
     auto transform = AddComponent<TransformComponent>();
 
-    Parts["Base"] = Part::Create(owner, objType, _vec3(0.3, 0.4f, 0.3f), this, L"Stone_Mtrl");
+    Parts["Base"] = Part::Create(owner, objType, _vec3(0.3, 0.4f, 0.3f), this, "Stone_Mtrl");
     auto baseTransform = Parts["Base"]->GetComponent<TransformComponent>();
 
-    Parts["Handle"] = Part::Create(owner, objType, _vec3(0.5f, 0.1f, 0.1f), Parts["Base"], L"Lever_Mtrl");
+    Parts["Handle"] = Part::Create(owner, objType, _vec3(0.5f, 0.1f, 0.1f), Parts["Base"], "Lever_Mtrl");
     auto handleTransform = Parts["Handle"]->GetComponent<TransformComponent>();
 
     handleTransform->SetIsBlock();
@@ -112,8 +112,8 @@ void Lever::Late_Update(_float dt)
 
 void Lever::SetMaterial(const std::wstring& mtrl, string str)
 {
-    if (Parts[str] != nullptr)
-        Parts[str]->GetComponent<MeshRenderer>()->SetMaterial(mtrl);
+    /*if (Parts[str] != nullptr)
+        Parts[str]->GetComponent<MeshRenderer>()->SetMaterial(mtrl);*/
 }
 
 void Lever::SetScale(float scale)
