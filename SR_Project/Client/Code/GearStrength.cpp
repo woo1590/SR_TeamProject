@@ -20,7 +20,7 @@ HRESULT GearStrength::Ready_Object()
 	transform->SetPosition(470.f, 355.f);
 	renderer->SetTexture(L"gearstrength");
 	renderer->SetRenderType(UIRenderType::Inventory);
-	renderer->SetScale(0.36f, 0.42f);
+	transform->SetScale(0.36f, 0.42f);
 
 	return S_OK;
 }

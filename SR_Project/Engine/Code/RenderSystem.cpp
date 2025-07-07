@@ -4,6 +4,9 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "Object.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "ObjectManager.h"
 
 //component
 #include "UIRenderer.h"
@@ -12,6 +15,8 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 #include "ObjectComponent.h"
+#include "FontComponent.h"
+
 
 RenderSystem::RenderSystem()
 {
@@ -177,8 +182,16 @@ void RenderSystem::UIPass()
 
 		ui->Render();
 	}
-
 	spriteBatch->End();
+
+	for (auto* renderer : uiList)
+	{
+		auto* ui = static_cast<UIRenderer*>(renderer);
+		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() && ui->GetRenderType() != UIRenderType::Always)
+			continue;
+
+		ui->RenderFont();
+	}
 
 	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

@@ -93,30 +93,32 @@ void UIRenderer::Free()
 
 void UIRenderer::Render()
 {
-    if (isVisible && tex2D)
-    {
-        auto sprite = EngineCore::GetInstance()->GetRenderSystem()->GetSpriteBatch();
-        assert(sprite && "UIRenderer::Render - sprite is null");
+    if (!isVisible) return;
 
-        auto transform = owner->GetComponent<TransformComponent>();
-        assert(transform && "UIRenderer::Render - TransformComponent missing");
+    auto sprite = EngineCore::GetInstance()->GetRenderSystem()->GetSpriteBatch();
+    auto transform = owner->GetComponent<TransformComponent>();
+    assert(transform);
 
-        assert(scale.x > 0.f && scale.y > 0.f && "UIRenderer::Render - Invalid scale");
+    _vec3 worldPos = transform->GetPosition();
+    _vec2 scale2D = transform->GetScale2D();
+    if (scale.x != 1.f || scale.y != 1.f)
+        scale2D = scale;
 
-        _vec3 worldPos = transform->GetPosition();
+    _matrix oldMatrix, newMatrix;
+    sprite->GetTransform(&oldMatrix);
 
-        _matrix oldMatrix, newMatrix;
-        sprite->GetTransform(&oldMatrix);
+    _vec2 anchor = {worldPos.x, worldPos.y};
+    _vec2 pivot2D = {center.x, center.y};
 
-        _vec2 anchor = {worldPos.x, worldPos.y};
-        D3DXMatrixTransformation2D(&newMatrix, &anchor, 0.f, &scale, nullptr, 0.f, nullptr);
+    D3DXMatrixTransformation2D(&newMatrix, &anchor, 0.f, &scale2D, &pivot2D, 0.f, nullptr);
 
-        sprite->SetTransform(&newMatrix);
-        sprite->Draw(tex2D, &srcRect, &center, &worldPos, D3DCOLOR_ARGB(255, 255, 255, 255));
-        sprite->SetTransform(&oldMatrix); 
-    }
-    auto font = owner->GetComponent<FontComponent>();
+    sprite->SetTransform(&newMatrix);
+    sprite->Draw(tex2D, &srcRect, &center, &worldPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+    sprite->SetTransform(&oldMatrix);
+}
 
-    if (font)
+void UIRenderer::RenderFont()
+{
+    if (auto font = owner->GetComponent<FontComponent>())
         font->Render();
 }

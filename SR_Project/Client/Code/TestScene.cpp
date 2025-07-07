@@ -12,6 +12,7 @@
 #include "CollisionSystem.h"
 #include "CameraManager.h"
 #include "PhysicsSystem.h"
+#include "UIManager.h"
 
 //object
 #include "TestObject.h"
@@ -64,6 +65,7 @@ void TestScene::Load()
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
 	PhysicsSys		= PhysicsSystem::Create(this);
+	uiMgr           = UIManager::Create(this);
 
 	
 #ifdef USE_IMGUI
@@ -72,7 +74,7 @@ void TestScene::Load()
 
 #endif
 	/*----------------Load Camera---------------------*/
-	LoadBlock();
+	//LoadBlock();
 
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(40.f, 100.f, 30.f);
@@ -90,14 +92,10 @@ void TestScene::Load()
 	
 	ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
-
+	
 	/*------------------------------------------------*/
-	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
-
-	auto monster = ObjectMgr->GetObjectList(ObjectType::Monster);
-	int size = monster.size();
-	size = 2;
+	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+	//ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 
 	//ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
 	
@@ -114,6 +112,7 @@ void TestScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
+	uiMgr->Update(dt);
 
 	/*-------------ī�޶� ��ȯ �׽�Ʈ �ڵ�-------------*/
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -199,6 +198,7 @@ void TestScene::Free()
 	Safe_Release(CollisionSys);
 	Safe_Release(CameraMgr);
 	Safe_Release(PhysicsSys);
+	Safe_Release(uiMgr);
 
 	Scene::Free();
 }

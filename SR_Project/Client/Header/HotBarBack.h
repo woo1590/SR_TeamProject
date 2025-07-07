@@ -12,5 +12,7 @@ private:
 public:
 	static HotBarBack* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
+
+	void Update(float dt);
 };
 

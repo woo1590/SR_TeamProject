@@ -15,21 +15,21 @@ public:
 	static ButtonComponent* Create(Object* owner);
 	HRESULT Ready_Component();
 
-	void SetBase(UIRenderer* _base) { base = _base; }
-	void SetHighlight(UIRenderer* _highlight) { highlight = _highlight; }
+	void SetRenderer(UIRenderer* _r) { renderer = _r; }
+	void SetTextures(const wstring& _baseKey, const wstring& _hoverKey) { baseKey = _baseKey; hoverKey = _hoverKey; }
 
 	void SetOnClick(function<void()> _callback) { onClick = move(_callback); }
-
 	void Update(float dt) override;
 
 private:
-	void UpdateHighlight();
-	
+	void ApplyHover(bool over);
+
 private:
-	UIRenderer* base = nullptr;
-	UIRenderer* highlight = nullptr;
+	UIRenderer* renderer = nullptr;
 	function<void()> onClick;
+	wstring baseKey, hoverKey;
 	bool isHovered = false;
+	bool prevHover = false;
 };
 
 END

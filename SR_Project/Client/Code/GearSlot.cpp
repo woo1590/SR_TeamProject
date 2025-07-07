@@ -15,6 +15,8 @@ GearSlot* GearSlot::Create(ObjectManager* owner)
 HRESULT GearSlot::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
+	transform->SetScale(0.2f,0.2f);
+
 	auto base      = AddComponent<UIRenderer>();
 	auto highlight = AddComponent<UIRenderer>();
 
@@ -26,11 +28,12 @@ HRESULT GearSlot::Ready_Object()
 	
 	base->SetTexture(L"gearslot");
 	highlight->SetTexture(L"gearslot_hover");
+	highlight->SetScale(0.22f, 0.22f);
 
 	highlight->SetVisible(false);
 
-	slot->SetSlotType(SlotType::Gear);
 	slot->BindRenderers(base, highlight);
+	slot->SetSlotType(SlotType::Gear);
 
 	return S_OK;
 }

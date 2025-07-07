@@ -226,6 +226,21 @@
     <Filter Include="05. Scene Component\BlockManager">
       <UniqueIdentifier>{a6cc0320-bb0a-4c0a-a0f8-774f741fd8d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\UIComponent\08. ItemComponent">
+      <UniqueIdentifier>{85aa6cd2-1d0a-4a66-bca7-9623fd915366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\UIManager">
+      <UniqueIdentifier>{67205cd5-0fbb-4d4e-b413-e9715da91747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\UIManager\UIManager">
+      <UniqueIdentifier>{d82a4034-b3b1-423f-a8e8-6df6a5ed61fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\UIManager\InventoryManager">
+      <UniqueIdentifier>{002d124b-5246-4520-98cb-e5af2c1c8d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\UIManager\QuestSystem">
+      <UniqueIdentifier>{72d62749-4c58-4a7d-8624-ee1caf296f10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -454,15 +469,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\PhysicsSystem.cpp">
       <Filter>05. Scene Component\PhysicsSystem</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\IronCage.cpp">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BlockManager.cpp">
       <Filter>05. Scene Component\BlockManager</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\CoolDownComponent.cpp">
       <Filter>07. Object Component\UIComponent\07. CoolDownComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemComponent.cpp">
+      <Filter>07. Object Component\UIComponent\08. ItemComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryManager.cpp">
+      <Filter>05. Scene Component\UIManager\InventoryManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UIManager.cpp">
+      <Filter>05. Scene Component\UIManager\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuestSystem.cpp">
+      <Filter>05. Scene Component\UIManager\QuestSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -712,15 +739,28 @@
     </ClInclude>
     <ClInclude Include="..\Header\PhysicsSystem.h">
       <Filter>05. Scene Component\PhysicsSystem</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\IronCage.h">
       <Filter>06. Object\DynamicBlock\IronCage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\CoolDownComponent.h">
       <Filter>07. Object Component\UIComponent\07. CoolDownComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemComponent.h">
+      <Filter>07. Object Component\UIComponent\08. ItemComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\Header\InventoryManager.h">
+      <Filter>05. Scene Component\UIManager\InventoryManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UIManager.h">
+      <Filter>05. Scene Component\UIManager\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuestSystem.h">
+      <Filter>05. Scene Component\UIManager\QuestSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -730,5 +770,8 @@
     <None Include="..\..\External\imgui\.editorconfig">
       <Filter>99. Etc\ImGui</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
   </ItemGroup>
 </Project>

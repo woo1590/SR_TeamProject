@@ -15,23 +15,26 @@ InventorySlot* InventorySlot::Create(ObjectManager* owner)
 HRESULT InventorySlot::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
+	//transform->SetScale(0.7f, 0.7f);
+
 	auto base = AddComponent<UIRenderer>();
-	
+	base->SetScale(1.5f, 1.5f);
+
+	auto highlight = AddComponent<UIRenderer>();
+
 	base->SetTexture(L"inventoryslot");
 	base->SetRenderType(UIRenderType::Inventory);
-	base->SetScale(1.2f,1.2f);
-	
-	auto highlight = AddComponent<UIRenderer>();
+
 	highlight->SetTexture(L"gearslot_hover");
-	highlight->SetVisible(false);
-	highlight->SetScale(0.6f,0.6f);
 	highlight->SetRenderType(UIRenderType::Inventory);
+	highlight->SetVisible(false);
+	highlight->SetScale(0.22f, 0.22f);
 
 	auto hover = AddComponent<HoverComponent>();
 	auto slot = AddComponent<SlotComponent>();
 
-	slot->SetSlotType(SlotType::Inventory);
 	slot->BindRenderers(base, highlight);
+	slot->SetSlotType(SlotType::Inventory);
 
 	return S_OK;
 }

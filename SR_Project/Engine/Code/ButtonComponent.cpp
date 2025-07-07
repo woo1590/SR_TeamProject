@@ -14,25 +14,27 @@ ButtonComponent* ButtonComponent::Create(Object* owner)
 HRESULT ButtonComponent::Ready_Component()
 {
 	auto hover = owner->GetComponent<HoverComponent>();
-	assert(hover && "ButtonComponent::Ready_Component - HoverComponent is missing");
+	assert(hover && "HoverComponent missing");
 
-	hover->SetCallBack([this](bool over)
-		{
-			isHovered = over;
-		});
-
+	hover->SetCallBack([this](bool over){ isHovered = over;});
 	return S_OK;
 }
 
-void ButtonComponent::UpdateHighlight()
+void ButtonComponent::ApplyHover(bool over)
 {
-	if (!highlight) return;
-	highlight->SetVisible(isHovered);
+	if (!renderer || baseKey.empty() || hoverKey.empty()) return;
+
+	renderer->SetTexture(over ? hoverKey : baseKey);
 }
+
 
 void ButtonComponent::Update(float dt)
 {
-	UpdateHighlight();
+	if (prevHover != isHovered)
+	{
+		ApplyHover(isHovered);
+		prevHover = isHovered;
+	}
 
 	if (!isHovered) return;
 

@@ -5,6 +5,11 @@
 #include "UIRenderer.h"
 #include "HoverComponent.h"
 #include "ButtonComponent.h"
+#include "Scene.h"
+#include "SceneManager.h"
+#include "EngineCore.h"
+#include "UIManager.h"
+#include "InventoryManager.h"
 
 PotionFilter* PotionFilter::Create(ObjectManager* owner)
 {
@@ -17,20 +22,22 @@ HRESULT PotionFilter::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto base = AddComponent<UIRenderer>();
-	auto highlight = AddComponent<UIRenderer>();
+	base->SetTexture(L"potionfilter");
+
 	auto hover = AddComponent<HoverComponent>();
 	auto button = AddComponent<ButtonComponent>();
 
 	transform->SetPosition(840.f, 100.f);
 
-	base->SetTexture(L"potionfilter");
-	highlight->SetTexture(L"potionfilter_hover");
-
 	base->SetRenderType(UIRenderType::Inventory);
-	highlight->SetRenderType(UIRenderType::Inventory);
 
-	button->SetBase(base);
-	button->SetHighlight(highlight);
+	button->SetRenderer(base);
+	button->SetTextures(L"potionfilter", L"potionfilter_hover");
+
+	button->SetOnClick([]() {
+		auto* inv = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetUIManager()->GetInventory();
+		inv->ApplyFilter(ItemType::Potion);
+		});
 
 	return S_OK;
 }

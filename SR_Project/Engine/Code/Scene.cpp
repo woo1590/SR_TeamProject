@@ -39,6 +39,11 @@ CameraManager* Scene::GetCameraManager() const
 	return CameraMgr;
 }
 
+UIManager* Scene::GetUIManager() const
+{
+	return uiMgr;
+}
+
 void Scene::Free()
 {
 

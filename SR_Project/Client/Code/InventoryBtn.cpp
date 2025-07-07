@@ -6,6 +6,7 @@
 #include "HoverComponent.h"
 #include "EngineCore.h"
 #include "RenderSystem.h"
+#include "InputSystem.h"
 
 InventoryBtn* InventoryBtn::Create(ObjectManager* owner)
 {
@@ -21,15 +22,20 @@ HRESULT InventoryBtn::Ready_Object()
 	auto hover     = AddComponent<HoverComponent>();
 	auto button    = AddComponent<ButtonComponent>();
 
-	button->SetBase(renderer);
+	button->SetRenderer(renderer);
 
 	transform->SetPosition(300.f,655.f);
-	
-	renderer->SetScale(0.25f, 0.25f);
+	transform->SetScale(0.25f, 0.25f);
+
 	renderer->SetTexture(L"inventorybtn");
 
 	button->SetOnClick([]() {
 		EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::Inventory);
+		});
+
+	hover->SetUpdateCallBack([this](float dt) {
+		if (EngineCore::GetInstance()->GetInputSystem()->IsKeyPressed(KEY::I))
+			EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::Inventory);
 		});
 
 	return S_OK;

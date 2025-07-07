@@ -8,6 +8,7 @@
 #include "SlotComponent.h"
 #include "PanelComponent.h"
 #include "ButtonComponent.h"
+#include "UIRenderer.h"
 
 // Objects
 #include "HPBarFront.h"
@@ -42,16 +43,75 @@
 #include "EnchantFilter.h"
 #include "CostumeFilter.h"
 #include "InventorySlot.h"
+#include "Object.h"
+#include "ItemSlot.h"
+#include "Scene.h"
+#include "InventoryEmerald.h"
+#include "InventoryEnchant.h"
+#include "ScrollBack.h"
+#include "SwordItem.h"
+#include "BowItem.h"
+#include "WolfArmor.h"
+#include "RocketItem.h"
+#include "TooltipObj.h"
+#include "FishingItem.h"
+#include "QuestPanel.h"
+#include "QuestTextObj.h"
 
 #include "ArrowSlot.h"
+#include "UIManager.h"
+#include "InventoryUI.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "EngineCore.h"
+#include "InventoryManager.h"
+#include "InventoryUIBuilder.h"
+#include "QuestSystem.h"
 
 void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
 {
 	const auto& playerInfo = player->GetComponent<InfoComponent<PlayerInfo>>();
+	auto* scene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
+	auto* uiMgr = scene->GetUIManager();
+	auto* invMgr = uiMgr->GetInventory();
+
+	InventoryUIBuilder::BuildInventoryUI(objMgr, invMgr);
+	auto tooltip = TooltipObj::Create(objMgr);
+	tooltip->SetInventoryManager(invMgr);
+	objMgr->AddUIObject(tooltip);
+
+	auto questPanel = QuestPanel::Create(objMgr);
+	objMgr->AddUIObject(questPanel);
+
+	auto questTextObj = QuestTextObj::Create(objMgr);
+	objMgr->AddUIObject(questTextObj);
+
+	auto questSystem = objMgr->GetOwner()->GetUIManager()->GetQuestSystem();
+	questSystem->SetPanel(questPanel);
+	questSystem->SetTextObj(questTextObj);
+
+	auto swordItem = SwordItem::Create(objMgr);
+	objMgr->AddUIObject(swordItem);
+	invMgr->InsertItem(swordItem);
+
+	auto arrowItem = BowItem::Create(objMgr);
+	objMgr->AddUIObject(arrowItem);
+	invMgr->InsertItem(arrowItem);
+
+	auto armorItem = WolfArmor::Create(objMgr);
+	objMgr->AddUIObject(armorItem);
+	invMgr->InsertItem(armorItem);
+
+	auto rocketItem = RocketItem::Create(objMgr);
+	objMgr->AddUIObject(rocketItem);
+	invMgr->InsertItem(rocketItem);
+
+	auto fishingItem = FishingItem::Create(objMgr);
+	objMgr->AddUIObject(fishingItem);
+	invMgr->InsertItem(fishingItem);
 
 	auto hpBarFront = HPBarFront::Create(objMgr);
 	objMgr->AddUIObject(hpBarFront);
-
 	auto hpInfo = hpBarFront->GetComponent<ProgressBar<PlayerInfo>>();
 	playerInfo->Attach(hpInfo);
 	hpInfo->SetEventType(UIEventType::HP_Changed);
@@ -75,58 +135,53 @@ void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
 	objMgr->AddUIObject(HotBarBack::Create(objMgr));
 	//objMgr->AddUIObject(HPBarBack::Create(objMgr));
 
+	objMgr->AddUIObject(ScrollBack::Create(objMgr));
+
 	objMgr->AddUIObject(Cursor::Create(objMgr));
 
-	struct QuickSlotInfo { float x; float y; };
+	objMgr->AddUIObject(InventoryEmerald::Create(objMgr));
+	objMgr->AddUIObject(InventoryEnchant::Create(objMgr));
 
-	vector<QuickSlotInfo> slotPos = {
-		{380.f,650.f},
-		{450.f,650.f},
-		{520.f,650.f},
-		{700.f,650.f},
-	};
-
-	for (const auto& pos : slotPos)
-	{
-		auto plus = QuickSlotPlus::Create(objMgr);
-		plus->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
-		objMgr->AddUIObject(plus);
-
-		auto slot = QuickSlot::Create(objMgr);
-		slot->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
-		objMgr->AddUIObject(slot);
-	}
+	objMgr->AddUIObject(InventoryUI::Create(objMgr));
 
 	struct GearSlotInfo { float x; float y; };
 
 	vector<GearSlotInfo> gearSlotPos = {
-		{120.f,170.f},
-		{300.f,120.f},
-		{480.f,170.f},
-		{150.f,620.f},
-		{300.f,620.f},
-		{450.f,620.f},
+		{120.f, 170.f},
+		{300.f, 120.f},
+		{480.f, 170.f},
+		{150.f, 620.f},
+		{300.f, 620.f},
+		{450.f, 620.f},
 	};
 
-	for (const auto& pos : gearSlotPos)
+	vector<Object*> filters = {
+		SwordFilter::Create(objMgr),
+		ArmorFilter::Create(objMgr),
+		ArrowFilter::Create(objMgr),
+		PotionFilter::Create(objMgr),
+		PotionFilter::Create(objMgr),
+		PotionFilter::Create(objMgr),
+	};
+
+	for (size_t i = 0; i < filters.size(); ++i)
 	{
-		auto plus = GearSlotPlus::Create(objMgr);
-		plus->GetComponent<TransformComponent>()->SetPosition(pos.x + 5.f, pos.y + 5.f);
-		objMgr->AddUIObject(plus);
-	
-		auto slot = GearSlot::Create(objMgr);
-		slot->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
-		objMgr->AddUIObject(slot);
+		const auto& base = gearSlotPos[i];
+		filters[i]->GetComponent<TransformComponent>()->SetPosition(base.x + 35.f, base.y + 35.f);
+		filters[i]->GetComponent<UIRenderer>()->SetScale(0.8f, 0.8f);
+		objMgr->AddUIObject(filters[i]);
 	}
 
 	auto smallSlot1 = QuickSlot::Create(objMgr);
 	smallSlot1->GetComponent<TransformComponent>()->SetPosition(300.f, 655.f);
-	smallSlot1->GetComponent<SlotComponent>()->SetSlotSize(SlotSize::Small);
+	smallSlot1->GetComponent<TransformComponent>()->SetScale(0.2f,0.2f);
+	smallSlot1->GetComponent<UIRenderer>()->SetScale(1.6f, 1.6f);
 	objMgr->AddUIObject(smallSlot1);
 
 	auto smallSlot2 = QuickSlot::Create(objMgr);
 	smallSlot2->GetComponent<TransformComponent>()->SetPosition(770.f, 655.f);
-	smallSlot2->GetComponent<SlotComponent>()->SetSlotSize(SlotSize::Small);
+	smallSlot2->GetComponent<TransformComponent>()->SetScale(0.2f,0.2f);
+	smallSlot2->GetComponent<UIRenderer>()->SetScale(1.6f, 1.6f);
 	objMgr->AddUIObject(smallSlot2);
 
 	auto arrowSlot = ArrowSlot::Create(objMgr);
@@ -152,8 +207,6 @@ void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
 	objMgr->AddUIObject(debugUI);
 	debugUI->SetPlayer(player);
 
-	//objMgr->AddUIObject(EmeraldSword::Create(objMgr));
-
 	auto hpPotion = HP_Potion::Create(objMgr);
 	objMgr->AddUIObject(hpPotion);
 	hpPotion->GetComponent<TransformComponent>()->SetPosition(700.f,650.f);
@@ -170,22 +223,10 @@ void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
 	objMgr->AddUIObject(EnchantFilter::Create(objMgr));
 	objMgr->AddUIObject(CostumeFilter::Create(objMgr));
 
-	const _vec2 topLeft = {630.f, 200.f};
-	const float slotSpacingX = 80.f;
-	const float slotSpacingY = 100.f;
-	const int rows = 5;
-	const int cols = 4;
+	
+}
 
-	for (int y = 0; y < rows; ++y)
-	{
-		for (int x = 0; x < cols; ++x)
-		{
-			const float px = topLeft.x + x * slotSpacingX;
-			const float py = topLeft.y + y * slotSpacingY;
+void UILoader::Update(float dt)
+{
 
-			auto slot = InventorySlot::Create(objMgr);
-			slot->GetComponent<TransformComponent>()->SetPosition(px, py);
-			objMgr->AddUIObject(slot);
-		}
-	}
 }

@@ -38,7 +38,7 @@ void LoadingScene::Update(_float dt)
 		auto Input = EngineCore::GetInstance()->GetInputSystem();
 		Scene* nextScene = nullptr;	
 
-		if (Input->IsKeyPressed(SPACE))
+		if (Input->IsKeyPressed(TAB))
 		{
 			switch (nextSceneID)
 			{

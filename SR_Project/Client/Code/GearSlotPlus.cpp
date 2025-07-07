@@ -19,5 +19,7 @@ HRESULT GearSlotPlus::Ready_Object()
 	renderer->SetRenderType(UIRenderType::Inventory);
 	renderer->SetTexture(L"gearslot_plus");
 
+	transform->SetScale(0.3f, 0.3f);
+
 	return S_OK;
 }

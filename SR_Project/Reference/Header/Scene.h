@@ -1,13 +1,14 @@
 #pragma once
 
 BEGIN(Engine)
-
+class UIManager;
 class ObjectManager;
 class EventSystem;
 class CollisionSystem;
 class PhysicsSystem;
 class CameraManager;
 class Object;
+
 class ENGINE_DLL Scene : public Base
 {
 protected:
@@ -41,6 +42,8 @@ public:
     CollisionSystem*    GetCollisionSystem()const;
     PhysicsSystem*      GetPhysicsStstem()const;
     CameraManager*      GetCameraManager()const;
+    UIManager*          GetUIManager()const;
+
 protected:
     void Free()override;
 
@@ -49,6 +52,7 @@ protected:
     CollisionSystem* CollisionSys = nullptr;
     PhysicsSystem* PhysicsSys = nullptr;
     CameraManager* CameraMgr = nullptr; 
+    UIManager* uiMgr = nullptr;
 };
 
 END

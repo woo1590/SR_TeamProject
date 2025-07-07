@@ -2,6 +2,8 @@
 #include "EmeraldSword.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
+#include "InfoComponent.h"
+#include "ItemComponent.h"
 
 EmeraldSword* EmeraldSword::Create(ObjectManager* owner)
 {
@@ -14,6 +16,8 @@ HRESULT EmeraldSword::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
+	auto info = AddComponent<InfoComponent<ItemInfo>>();
+	auto item = AddComponent<ItemComponent>();
 
 	transform->SetPosition(500.f, 500.f);
 

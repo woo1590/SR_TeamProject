@@ -54,6 +54,11 @@ void TransformComponent::SetScale(_vec3 scale)
     Scale = scale;
 }
 
+void TransformComponent::SetScale(float cx, float cy)
+{
+    SetScale(_vec3(cx, cy, 0.f));
+}
+
 void TransformComponent::SetRotate(float pitch, float yaw, float roll)
 {
     SetRotate(_vec3(pitch, yaw, roll));
@@ -137,6 +142,11 @@ _vec3 TransformComponent::GetPosition() const
 _vec3 TransformComponent::GetScale() const
 {
     return Scale;
+}
+
+_vec2 TransformComponent::GetScale2D() const
+{
+    return _vec2(Scale.x, Scale.y);
 }
 
 _vec3 TransformComponent::GetRotate() const

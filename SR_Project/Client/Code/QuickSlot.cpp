@@ -19,21 +19,24 @@ QuickSlot* QuickSlot::Create(ObjectManager* owner)
 HRESULT QuickSlot::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
-	auto base = AddComponent<UIRenderer>();
-	
-	base->SetTexture(L"quickslot");
-	base->SetScale(0.25f, 0.25f);
+	transform->SetScale(0.25f, 0.25f);
 
+	auto base = AddComponent<UIRenderer>();
 	auto highlight = AddComponent<UIRenderer>();
-	highlight->SetTexture(L"quickslot_highlight");
+
+	base->SetTexture(L"quickslot");
+	base->SetRenderType(UIRenderType::MainGame);
+
+	highlight->SetTexture(L"quickslot_hover");
+	highlight->SetRenderType(UIRenderType::MainGame);
 	highlight->SetScale(2.f, 2.f);
 	highlight->SetVisible(false);
 
 	auto hover = AddComponent<HoverComponent>();
 	auto slot = AddComponent<SlotComponent>();
-	
-	slot->SetSlotType(SlotType::Quick);
+
 	slot->BindRenderers(base, highlight);
-	
+	slot->SetSlotType(SlotType::Quick);
+
 	return S_OK;
 }

@@ -11,9 +11,29 @@ namespace Engine
 		int maxExp = 10;
 		float speed = 6.f;
 	};
-	struct ItemInfo {
 
+	enum class ItemType{ Sword, Armor, Arrow, Potion };
+	enum class Rarity { Default, Rare};
+
+	enum class SlotItemType {Any, Sword, Armor, Arrow, Potion};
+
+	struct ItemInfo 
+	{
+		std::wstring name;
+		std::wstring renderKey;
+		ItemType type;
+		Rarity rarity;
+		int value; 
+		std::wstring description;
 	};
+
+	struct QuestInfo
+	{
+		std::wstring title;
+		std::wstring desc;
+		bool isCompleted = false;
+	};
+
 	struct EnemyInfo
 	{
 		int level;
@@ -23,8 +43,6 @@ namespace Engine
 		float attackDelay;
 		float speed = 5.f;
 	};
-
-
 
 	enum class UIEventType
 	{
@@ -41,6 +59,8 @@ namespace Engine
 
 	enum class SlotType
 	{
-		Inventory, Equipment, Gear, Quick, Storage, Count
+		Inventory, Equip, Gear , Item , Quick, Storage, Count
 	};
+
+	
 }

@@ -246,7 +246,9 @@
     <ClInclude Include="..\Header\GraphicDevice.h" />
     <ClInclude Include="..\Header\HoverComponent.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
+    <ClInclude Include="..\Header\InventoryManager.h" />
     <ClInclude Include="..\Header\IronCage.h" />
+    <ClInclude Include="..\Header\ItemComponent.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h" />
     <ClInclude Include="..\Header\InfoComponent.h" />
@@ -265,6 +267,7 @@
     <ClInclude Include="..\Header\ObjectManager.h" />
     <ClInclude Include="..\Header\ParallelNode.h" />
     <ClInclude Include="..\Header\PhysicsSystem.h" />
+    <ClInclude Include="..\Header\QuestSystem.h" />
     <ClInclude Include="..\Header\RandomSelectorNode.h" />
     <ClInclude Include="..\Header\ProgressBar.h" />
     <ClInclude Include="..\Header\RendererComponent.h" />
@@ -289,7 +292,9 @@
     <ClInclude Include="..\Header\ToolcamComponent.h" />
     <ClInclude Include="..\Header\TransformComponent.h" />
     <ClInclude Include="..\Header\IObserver.h" />
+    <ClInclude Include="..\Header\UIManager.h" />
     <ClInclude Include="..\Header\UIRenderer.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\External\imgui\backends\imgui_impl_dx9.cpp">
@@ -367,7 +372,9 @@
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
     <ClCompile Include="..\Code\HoverComponent.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
+    <ClCompile Include="..\Code\InventoryManager.cpp" />
     <ClCompile Include="..\Code\IronCage.cpp" />
+    <ClCompile Include="..\Code\ItemComponent.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp" />
@@ -385,6 +392,7 @@
     <ClCompile Include="..\Code\ObjectManager.cpp" />
     <ClCompile Include="..\Code\ParallelNode.cpp" />
     <ClCompile Include="..\Code\PhysicsSystem.cpp" />
+    <ClCompile Include="..\Code\QuestSystem.cpp" />
     <ClCompile Include="..\Code\RandomSelectorNode.cpp" />
     <ClCompile Include="..\Code\ProgressBar.cpp" />
     <ClCompile Include="..\Code\RendererComponent.cpp" />
@@ -409,12 +417,16 @@
     <ClCompile Include="..\Code\ToolcamComponent.cpp" />
     <ClCompile Include="..\Code\TransformComponent.cpp" />
     <ClCompile Include="..\Code\IObserver.cpp" />
+    <ClCompile Include="..\Code\UIManager.cpp" />
     <ClCompile Include="..\Code\UIRenderer.cpp" />
     <ClCompile Include="CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\External\imgui\.editorconfig" />
     <None Include="..\Header\Math.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,6 +22,7 @@ public:
 
     void SetScale(float cx, float cy, float cz);
     void SetScale(_vec3 scale);
+    void SetScale(float cx, float cy);
 
     void SetRotate(float pitch, float yaw, float roll);
     void SetRotate(_vec3 rotate);
@@ -49,6 +50,8 @@ public:
     _vec3 GetFoward()const;
     _vec3 GetRight()const;
     _vec3 GetUp()const;
+
+    _vec2 GetScale2D() const;
 
     _matrix GetWorldMatrix()const;
     _matrix GetLocalMatrix()const;

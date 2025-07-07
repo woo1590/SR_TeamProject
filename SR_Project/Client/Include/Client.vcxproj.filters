@@ -124,9 +124,6 @@
     <Filter Include="02. Object\UIObj\Slot\QuickSlot">
       <UniqueIdentifier>{5f79b9a4-77fb-4a3c-9d72-515676a39030}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\GreenIcon">
-      <UniqueIdentifier>{bfa92b8d-b4a3-46d8-9aba-bd2007295012}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Monster\Zombie">
       <UniqueIdentifier>{29a25081-9fe3-41d0-8766-63fd5707b964}</UniqueIdentifier>
     </Filter>
@@ -168,7 +165,7 @@
     </Filter>
     <Filter Include="02. Object\Light\Point">
       <UniqueIdentifier>{7c81f8d6-d1d8-495a-8d5e-274119b37ab2}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Item">
       <UniqueIdentifier>{00b083ae-f5c0-476a-8bf8-75a57fc8a812}</UniqueIdentifier>
     </Filter>
@@ -177,21 +174,15 @@
     </Filter>
     <Filter Include="02. Object\Item\Bow">
       <UniqueIdentifier>{e8969dd1-2bc7-497b-add4-2cb1bc657a17}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\Panel\InventoryPanel">
       <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\UIObj\Slot\GearSlot">
       <UniqueIdentifier>{81605eca-a69b-48fd-a392-028277a5bc75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\Sword">
-      <UniqueIdentifier>{32b85a88-8d78-4c98-9462-c2ac5d47d87d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\Slot\GearSlotPlus">
       <UniqueIdentifier>{018d9042-ff23-4620-b39d-ad6c2e05d416}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HP_Potion">
-      <UniqueIdentifier>{f2a2d80a-c29e-48d0-a186-6ddcd89eea08}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\UIObj\Slot\GearStrength">
       <UniqueIdentifier>{4303a188-27b0-4efe-a87c-4aaf7f963b84}</UniqueIdentifier>
@@ -228,6 +219,60 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Slot\InventorySlot">
       <UniqueIdentifier>{d914f399-5087-4522-bc85-0f2b25e7eb73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Slot\ItemSlot">
+      <UniqueIdentifier>{18112d4c-19ea-41a9-9f17-c8ddf317460a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\InventoryEmerald">
+      <UniqueIdentifier>{f4b4d265-4135-4773-b627-ae21d2c2c3a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\InventoryEnchant">
+      <UniqueIdentifier>{915546ff-5811-4797-b5e9-a3945d768751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ScrollBack">
+      <UniqueIdentifier>{0be50c81-d2b4-4ac1-a9d2-25fe070e8716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item">
+      <UniqueIdentifier>{f9baad88-dcfe-443d-bdda-9b55567d7652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\InventoryUI">
+      <UniqueIdentifier>{81d7d4dd-f144-4abb-92e7-4e4ea2ee6b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\00. SwordItem">
+      <UniqueIdentifier>{7465cec9-c470-453c-a104-8ce5a8019618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\UIManager">
+      <UniqueIdentifier>{97af0672-8d0a-43fd-96df-c5a46fe31bd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\UIManager\InventoryUIBuilder">
+      <UniqueIdentifier>{a6970c45-6bb9-4dbf-982e-928b72f75291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\01. BowItem">
+      <UniqueIdentifier>{253139af-b937-4340-b766-da94797aec04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\04. HP_Potion">
+      <UniqueIdentifier>{f2a2d80a-c29e-48d0-a186-6ddcd89eea08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\02. WolfArmor">
+      <UniqueIdentifier>{e01fdcd5-31ae-4ffb-b8b7-856d2b88c10a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\03. RocketItem">
+      <UniqueIdentifier>{4378acd1-1adc-42b0-8df0-7aa24c4b787a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\Sword">
+      <UniqueIdentifier>{32b85a88-8d78-4c98-9462-c2ac5d47d87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\TooltipObj">
+      <UniqueIdentifier>{791f16c4-7087-4ad4-8813-882cccd29a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\FishingItem">
+      <UniqueIdentifier>{86943bb5-011a-4051-a90d-f9010908dd21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\QuestPanel">
+      <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\QuestTextObj">
+      <UniqueIdentifier>{91e2b8b4-72bd-44be-8e7d-a8269d158f4f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -370,7 +415,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\DirectionLight.h">
       <Filter>02. Object\Light\Direction</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\Item.h">
       <Filter>02. Object\Item</Filter>
     </ClInclude>
@@ -379,7 +424,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Bow.h">
       <Filter>02. Object\Item\Bow</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\UILoader.h">
       <Filter>02. Object\UIObj\UILoader</Filter>
     </ClInclude>
@@ -390,13 +435,13 @@
       <Filter>02. Object\UIObj\Slot\GearSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EmeraldSword.h">
-      <Filter>02. Object\UIObj\Sword</Filter>
+      <Filter>02. Object\UIObj\Item\Sword</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearSlotPlus.h">
       <Filter>02. Object\UIObj\Slot\GearSlotPlus</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HP_Potion.h">
-      <Filter>02. Object\UIObj\HP_Potion</Filter>
+      <Filter>02. Object\UIObj\Item\04. HP_Potion</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearStrength.h">
       <Filter>02. Object\UIObj\Slot\GearStrength</Filter>
@@ -430,6 +475,48 @@
     </ClInclude>
     <ClInclude Include="..\Header\InventorySlot.h">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemSlot.h">
+      <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryUIBuilder.h">
+      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryEmerald.h">
+      <Filter>02. Object\UIObj\InventoryEmerald</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryEnchant.h">
+      <Filter>02. Object\UIObj\InventoryEnchant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ScrollBack.h">
+      <Filter>02. Object\UIObj\ScrollBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryUI.h">
+      <Filter>02. Object\UIObj\InventoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SwordItem.h">
+      <Filter>02. Object\UIObj\Item\00. SwordItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BowItem.h">
+      <Filter>02. Object\UIObj\Item\01. BowItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WolfArmor.h">
+      <Filter>02. Object\UIObj\Item\02. WolfArmor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RocketItem.h">
+      <Filter>02. Object\UIObj\Item\03. RocketItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TooltipObj.h">
+      <Filter>02. Object\UIObj\TooltipObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FishingItem.h">
+      <Filter>02. Object\UIObj\Item\FishingItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuestPanel.h">
+      <Filter>02. Object\UIObj\QuestPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuestTextObj.h">
+      <Filter>02. Object\UIObj\QuestTextObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -572,7 +659,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\DirectionLight.cpp">
       <Filter>02. Object\Light\Direction</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\Item.cpp">
       <Filter>02. Object\Item</Filter>
     </ClCompile>
@@ -581,7 +668,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bow.cpp">
       <Filter>02. Object\Item\Bow</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp">
       <Filter>02. Object\UIObj\UILoader</Filter>
     </ClCompile>
@@ -592,13 +679,13 @@
       <Filter>02. Object\UIObj\Slot\GearSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EmeraldSword.cpp">
-      <Filter>02. Object\UIObj\Sword</Filter>
+      <Filter>02. Object\UIObj\Item\Sword</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearSlotPlus.cpp">
       <Filter>02. Object\UIObj\Slot\GearSlotPlus</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HP_Potion.cpp">
-      <Filter>02. Object\UIObj\HP_Potion</Filter>
+      <Filter>02. Object\UIObj\Item\04. HP_Potion</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearStrength.cpp">
       <Filter>02. Object\UIObj\Slot\GearStrength</Filter>
@@ -632,6 +719,48 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventorySlot.cpp">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemSlot.cpp">
+      <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryUIBuilder.cpp">
+      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryEmerald.cpp">
+      <Filter>02. Object\UIObj\InventoryEmerald</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryEnchant.cpp">
+      <Filter>02. Object\UIObj\InventoryEnchant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ScrollBack.cpp">
+      <Filter>02. Object\UIObj\ScrollBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryUI.cpp">
+      <Filter>02. Object\UIObj\InventoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SwordItem.cpp">
+      <Filter>02. Object\UIObj\Item\00. SwordItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BowItem.cpp">
+      <Filter>02. Object\UIObj\Item\01. BowItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WolfArmor.cpp">
+      <Filter>02. Object\UIObj\Item\02. WolfArmor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RocketItem.cpp">
+      <Filter>02. Object\UIObj\Item\03. RocketItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TooltipObj.cpp">
+      <Filter>02. Object\UIObj\TooltipObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FishingItem.cpp">
+      <Filter>02. Object\UIObj\Item\FishingItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuestPanel.cpp">
+      <Filter>02. Object\UIObj\QuestPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuestTextObj.cpp">
+      <Filter>02. Object\UIObj\QuestTextObj</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

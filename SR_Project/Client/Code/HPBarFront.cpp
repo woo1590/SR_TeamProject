@@ -32,8 +32,6 @@ HRESULT HPBarFront::Ready_Object()
 	renderer->SetScale(0.35f, 0.32f);
 	transform->SetPosition(610.f, 690.f);
 
-	font->SetFontType(FontType::Title);
-
 	hover->SetUpdateCallBack([this](bool isHovered) {
 		const auto& input = EngineCore::GetInstance()->GetInputSystem();
 		auto font = GetComponent<FontComponent>();

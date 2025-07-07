@@ -3,9 +3,9 @@
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 #include "HoverComponent.h"
+#include "ItemComponent.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
-#include "Player.h"
 #include "ObjectManager.h"
 
 
@@ -19,26 +19,32 @@ HP_Potion* HP_Potion::Create(ObjectManager* owner)
 HRESULT HP_Potion::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
-	auto renderer = AddComponent<UIRenderer>();
-	auto hover = AddComponent<HoverComponent>();
+	auto renderer  = AddComponent<UIRenderer>();
+	auto hover     = AddComponent<HoverComponent>();
+	auto info      = AddComponent<InfoComponent<ItemInfo>>();
+	auto item      = AddComponent<ItemComponent>();
 
 	transform->SetPosition(700.f, 700.f);
-	renderer->SetScale(0.8f, 0.8f);
+	transform->SetScale(0.8f, 0.8f);
 	renderer->SetTexture(L"hp_potion");
 
-	hover->SetUpdateCallBack([this](bool isHovered)
+	info->SetInfo({L"HP 포션", L"hp_potion",ItemType::Potion,Rarity::Default,10,L"HP 10 회복"});
+
+	hover->SetUpdateCallBack([this](bool isHovered) {
+		auto input = EngineCore::GetInstance()->GetInputSystem();
+
+		const bool leftClick = isHovered && input->IsKeyPressed(KEY::LBUTTON);
+		const bool keyE = input->IsKeyPressed(KEY::E);
+
+		if (leftClick || keyE)
 		{
-			if (!isHovered) return;
-
-			auto input = EngineCore::GetInstance()->GetInputSystem();
-			if (input->IsKeyPressed(KEY::LBUTTON))
-			{
-				auto player = owner->GetFrontObject(ObjectType::Player);
-				auto playerInfo = player->GetComponent<InfoComponent<PlayerInfo>>();
-
-				playerInfo->AddHp(10);
-			}
+			auto player = owner->GetFrontObject(ObjectType::Player);
+			auto itemComponent = GetComponent<ItemComponent>();
+			if (itemComponent && player)
+				itemComponent->Use(player);
+		}
 		});
+
 
 	return S_OK;
 }

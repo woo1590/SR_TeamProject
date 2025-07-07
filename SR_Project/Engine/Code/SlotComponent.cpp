@@ -5,36 +5,10 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "TransformComponent.h"
-
-void SlotComponent::SetSlotSize(SlotSize size)
-{
-	slotSize = size;
-	ApplySlotSize();
-}
-
-void SlotComponent::ApplySlotSize()
-{
-	assert(base && "SlotComponent::ApplySlotSize - base is missing");
-	assert(highlight && "SlotComponent::ApplySlotSize - highlight is missing");
-
-	switch (slotSize)
-	{
-	case SlotSize::Small:
-		base->SetScale(0.2f, 0.2f);
-		highlight->SetScale(1.6f, 1.6f);
-		break;
-
-	case SlotSize::Default:
-		base->SetScale(0.25f, 0.25f);
-		highlight->SetScale(2.5f, 2.5f);
-		break;
-
-	case SlotSize::Large:
-		base->SetScale(0.3f, 0.3f);
-		highlight->SetScale(3.f, 3.f);
-		break;
-	}
-}
+#include "ObjectManager.h"
+#include "Scene.h"
+#include "UIManager.h"
+#include "InventoryManager.h"
 
 void SlotComponent::OnClick()
 {
@@ -47,12 +21,18 @@ void SlotComponent::OnClick()
 		shakeDuration = 0.05f;
 		isShaking = true;
 	}
-	else if (slotType == SlotType::Gear)
+	else if (slotType == SlotType::Gear || slotType == SlotType::Item || slotType == SlotType::Inventory)
 	{
 		isSelected = true;
+
+		auto scene = owner->GetScene();
+		if (auto uiMgr = scene->GetUIManager())
+		{
+			if (auto invMgr = uiMgr->GetInventory())
+				invMgr->SelectSlot(this);
+		}
 	}
 }
-
 
 void SlotComponent::BindRenderers(UIRenderer* _base, UIRenderer* _highlight)
 {
@@ -88,19 +68,32 @@ void SlotComponent::Update(float dt)
 			transform->SetPosition(pos);
 		}
 	}
-}
 
-void SlotComponent::OnHoverEnter()
-{
-	isHovered = true;
-
-	highlight->SetVisible(true);
-}
-
-void SlotComponent::OnHoverExit()
-{
-	isHovered = false;
-
-	//if (!isSelected)
-		highlight->SetVisible(false);
+	if (highlight)
+	{
+		if (isSelected)
+		{
+			highlight->SetTexture(L"slot_selected");
+			highlight->SetVisible(true);
+		}
+		else if (isHovered)
+		{
+			switch (slotType)
+			{
+			case SlotType::Quick:
+				highlight->SetTexture(L"quickslot_hover");
+				break;
+			case SlotType::Gear:
+			case SlotType::Item:
+			case SlotType::Inventory:
+				highlight->SetTexture(L"gearslot_hover");
+				break;
+			default:
+				break;
+			}
+			highlight->SetVisible(true);
+		}
+		else
+			highlight->SetVisible(false);
+	}
 }
