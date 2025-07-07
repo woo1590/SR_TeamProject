@@ -1,4 +1,5 @@
 #include "EnginePCH.h"
+#include "EngineCore.h"
 #include "ResourceManager.h"
 #include "GraphicDevice.h"
 #include "Mesh.h"
@@ -89,6 +90,24 @@ void ResourceManager::LoadMesh(const std::wstring& key, Mesh* mesh)
 void ResourceManager::LoadMaterial(const std::wstring& key, Material* mtrl)
 {
     MaterialContainer[key] = mtrl;
+}
+
+void ResourceManager::LoadMaterial(const std::wstring& filePath)
+{
+    auto mtrl = Material::Create();
+
+    nlohmann::json j = nlohmann::json::parse(std::ifstream(filePath.c_str()));
+
+
+
+}
+
+void ResourceManager::LoadShader(const std::wstring& key)
+{
+}
+
+void ResourceManager::LoadTexture(const std::wstring& key)
+{
 }
 
 Mesh* ResourceManager::GetMesh(const std::wstring& key)

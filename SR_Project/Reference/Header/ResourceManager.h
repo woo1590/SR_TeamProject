@@ -23,6 +23,11 @@ public:
     void LoadMesh(const std::wstring& key, Mesh* mesh);
     void LoadMaterial(const std::wstring& key, Material* mtrl);
 
+    /*------------Load .mat File----------------*/
+    void LoadMaterial(const std::wstring& filePath);
+    void LoadShader(const std::wstring& key);
+    void LoadTexture(const std::wstring& key);
+
     Mesh*           GetMesh(const std::wstring& key);
     Material*       GetMaterial(const std::wstring& key);
     Shader*         GetShader(const std::wstring& key);
