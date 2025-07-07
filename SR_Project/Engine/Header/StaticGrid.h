@@ -3,27 +3,30 @@
 
 BEGIN(Engine)
 
+class Scene;
 class CollisionComponent;
 class ENGINE_DLL StaticGrid :
     public Base
 {
 private:
-    StaticGrid();
+    StaticGrid(Scene* owner);
     virtual ~StaticGrid();
 
 public:
-    static StaticGrid* Create();
+    static StaticGrid* Create(Scene* owner);
     HRESULT Ready_StaticGrid();
 
     int WorldToCell(_float v);
-    void InsertBlock(int cx, int cy, int cz, CollisionComponent* comp);
     CollisionComponent* QueryCell(int cx, int cy, int cz);
+    void InsertBlock();
 
 private:
     void Free()override;
 
-    static constexpr float CELL_SIZE = 2.f;
     UINT64 HashCell(int cx, int cy, int cz);
+
+    Scene* owner = nullptr;
+    static constexpr float CELL_SIZE = 2.f;
     std::unordered_map<UINT64, CollisionComponent*> Cells;
 };
 

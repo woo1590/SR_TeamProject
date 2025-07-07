@@ -1,8 +1,13 @@
 #include "EnginePCH.h"
 #include "StaticGrid.h"
+#include "Scene.h"
+#include "Object.h"
+#include "ObjectManager.h"
 #include "CollisionComponent.h"
+#include "TransformComponent.h"
 
-StaticGrid::StaticGrid()
+StaticGrid::StaticGrid(Scene* owner)
+	:owner(owner)
 {
 }
 
@@ -10,9 +15,9 @@ StaticGrid::~StaticGrid()
 {
 }
 
-StaticGrid* StaticGrid::Create()
+StaticGrid* StaticGrid::Create(Scene* owner)
 {
-	StaticGrid* Instance = new StaticGrid;
+	StaticGrid* Instance = new StaticGrid(owner);
 
 	if (FAILED(Instance->Ready_StaticGrid()))
 	{
@@ -36,12 +41,24 @@ int StaticGrid::WorldToCell(_float v)
 	return static_cast<int>(std::floorf(v / CELL_SIZE));
 }
 
-void StaticGrid::InsertBlock(int cx, int cy, int cz, CollisionComponent* comp)
+void StaticGrid::InsertBlock()
 {
-	UINT64 key = HashCell(cx, cy, cz);
+	auto staticBlocks = owner->GetObjectManager()->GetObjectList(ObjectType::StaticBlock);
+	
+	for (const auto& block : staticBlocks)
+	{
+		_vec3 pos = block->GetComponent<TransformComponent>()->GetPosition();
+		auto collision = block->GetComponent<CollisionComponent>();
 
-	Cells[key] = comp;
-	comp->AddRef();
+		int cx = WorldToCell(pos.x);
+		int cy = WorldToCell(pos.y);
+		int cz = WorldToCell(pos.z);
+
+		UINT64 key = HashCell(cx, cy, cz);
+
+		Cells[key] = collision;
+		collision->AddRef();
+	}
 }
 
 CollisionComponent* StaticGrid::QueryCell(int cx, int cy, int cz)

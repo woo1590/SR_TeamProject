@@ -62,12 +62,15 @@ TestScene* TestScene::Create()
 
 void TestScene::Load()
 {
-	Grid			= StaticGrid::Create();
+	Grid			= StaticGrid::Create(this);
 	ObjectMgr		= ObjectManager::Create(this);
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
 	PhysicsSys		= PhysicsSystem::Create(this);
 	BlockMgr		= BlockManager::Create(this);
+
+	BlockMgr->LoadStage("Create");
+	Grid->InsertBlock();
 
 #ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
@@ -77,7 +80,7 @@ void TestScene::Load()
 	/*----------------Load Camera---------------------*/
 
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(40.f, 100.f, 30.f);
+	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	auto fCam = FirstCam::Create(ObjectMgr);
@@ -93,7 +96,6 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
 
 	/*------------------------------------------------*/
-	BlockMgr->LoadStage("TestScene");
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 
@@ -199,6 +201,7 @@ void TestScene::Free()
 	Safe_Release(CollisionSys);
 	Safe_Release(CameraMgr);
 	Safe_Release(PhysicsSys);
+	Safe_Release(BlockMgr);
 	Safe_Release(Grid);
 
 	Scene::Free();

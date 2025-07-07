@@ -26,14 +26,10 @@ public:
     Chunk* CreateChunk(int chunkX, int chunkY);
     void RemoveChunk(int chunkX, int chunkY);
 
-    void UpdateChunk(const _vec3& playerPos);
-    void RenderChunk(const _vec3& playerPos);
-
 private:
     void Free()override;
 
 private:
-    int renderDistance = 5;
     Scene* owner = nullptr;
     std::unordered_map<std::pair<int, int>, Chunk*, PairHash> worldChunks;
 };

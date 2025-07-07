@@ -32,6 +32,7 @@ namespace Engine
 		UI,
 		StaticBlock,
 		DynamicBlock,
+		Part,
 		Count
 	};
 
