@@ -417,10 +417,10 @@ void RedGolem::PlaySuperAttackDelay(_float dt)
         SpawnTime = 0.f;
         auto projectileTransform = BoxProjectile[Index]->GetComponent<TransformComponent>();
         projectileTransform->SetPosition(randPos);
-
         static_cast<GolemProjectile*>(BoxProjectile[Index++])->SetOn(true);
 
-        if (Index > 10) Index = 0;
+        if (Index >= 10) Index = 0;
+
     }
 
     if (SuperAttackAnim.DelayTime < 0)
