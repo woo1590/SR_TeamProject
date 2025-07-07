@@ -1,9 +1,12 @@
 ﻿#include "pch.h"
 #include "Sword.h"
-
+#include "Scene.h"
+#include "PhysicsSystem.h"
 #include "ObjectManager.h"
+
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
+#include "PhysicsComponent.h"
 #include "InfoComponent.h"
 #include "CollisionComponent.h"
 
@@ -52,8 +55,13 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_ENEMY);
-    collision->SetSize(_vec3(5.f, 5.f, 5.f));
+    collision->SetSize(_vec3(2.f, 2.f, 5.f));
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
+
+    /////////////////////////////////////////////////
+    auto physics = AddComponent<PhysicsComponent>();
+    physics->SetKinematic(true);//Disable Gravity
+    GetScene()->GetPhysicsStstem()->RegisterBody(physics);
 
     return S_OK;
 }
@@ -81,6 +89,5 @@ void Sword::SetCollisionEnter(Object* other)
     if (objType == ObjectType::Monster) {
         float swordAttackDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().attackDamage;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
-        collision->ResolveAABBColiision(other);
     }
 }

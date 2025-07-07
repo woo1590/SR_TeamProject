@@ -112,7 +112,7 @@ void CollisionComponent::GetWorldAABB(_vec3* worldMin, _vec3* worldMax)
 {
 	auto transform = owner->GetComponent<TransformComponent>();
 
-	_vec3 pos = transform->GetPosition() + Offset;
+	_vec3 pos = transform->GetWorldPosition() + Offset;
 	_matrix worldMat;
 	D3DXMatrixTranslation(&worldMat, pos.x, pos.y, pos.z);
 
@@ -198,8 +198,8 @@ _bool CollisionComponent::CanCollision(CollisionComponent* other)
 
 _bool CollisionComponent::CheckAABBCollision(CollisionComponent* other)
 {
-	_vec3 aPos = owner->GetComponent<TransformComponent>()->GetPosition() + Offset;
-	_vec3 bPos = other->owner->GetComponent<TransformComponent>()->GetPosition() + Offset;
+	_vec3 aPos = owner->GetComponent<TransformComponent>()->GetWorldPosition() + Offset;
+	_vec3 bPos = other->owner->GetComponent<TransformComponent>()->GetWorldPosition() + Offset;
 
 	_matrix aTransMat;
 	_matrix bTransMat;
@@ -284,7 +284,7 @@ void CollisionComponent::OnCollisionExit(CollisionComponent*other)
 void CollisionComponent::Render()
 {
 	auto device = GraphicDevice::GetInstance()->GetDevice();
-	_vec3 pos = owner->GetComponent<TransformComponent>()->GetPosition() + Offset;
+	_vec3 pos = owner->GetComponent<TransformComponent>()->GetWorldPosition() + Offset;
 	_matrix worldMat;
 	D3DXMatrixTranslation(&worldMat, pos.x, pos.y, pos.z);
 

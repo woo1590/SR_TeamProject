@@ -26,12 +26,15 @@ public:
     void SetGround(_bool ground);
     _bool IsGrounded()const;
 
-    _vec3 Position; //Transform
-    _vec3 PredPosition; //Next Frame Position
+    void SetKinematic(_bool kinematic);
+    _bool IsKinematic()const;
+
 private:
     void Free()override;
 
     _bool Is_Ground = false;
+    _bool Is_Kinematic = false;
+
     _vec3 Velocity{ 0.f,0.f,0.f };
     _float Mass = 0.f;
 };

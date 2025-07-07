@@ -27,6 +27,7 @@ public:
 
     void SetOffset(_vec3 offset);
     void SetOffset(_float x, _float y, _float z);
+    _vec3 GetOffset()const { return Offset; }
 
     void SetBoudingBox(BoundingBoxType bbType);
     void SetSize(_vec3 size);
