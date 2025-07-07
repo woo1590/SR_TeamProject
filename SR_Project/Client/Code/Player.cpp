@@ -575,6 +575,12 @@ void Player::UpdateDead(_float dt) {
     D3DXMatrixRotationAxis(&matRot, &vAxis, -fCurrentAngle);
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
     transform->SetRotate(transform->GetRotate() + rotateVec);
+
+    //lerp dead y position
+    auto collision = GetComponent<CollisionComponent>();
+    float fSinT = sinf(D3DX_PI / 2.f + (D3DX_PI / 2.f) * fProgress);
+    float fLerpY = 2.f + (7.f - 2.f) * fSinT;
+    collision->SetSize(_vec3(2.f, fLerpY, 2.f));
 }
 
 void Player::KeyInput(_float dt)
@@ -655,6 +661,11 @@ float Player::NormalizeAngle(_float angle)
         angle += D3DX_PI * 2.f;
 
     return angle;
+}
+
+float Player::OffsetLerp(const _float& start, const _float& offset, float ratio)
+{
+    return start + offset * ratio;
 }
 
 _vec3 Player::OffsetLerp(const _vec3& start, const _vec3& offset, float ratio)
