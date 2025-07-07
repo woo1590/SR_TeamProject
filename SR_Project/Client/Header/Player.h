@@ -61,4 +61,7 @@ private:
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
+    float swordAttackRange = 3.f;
+    bool moveToAttack = false;
+    Object* moveToObject = nullptr;
 };
