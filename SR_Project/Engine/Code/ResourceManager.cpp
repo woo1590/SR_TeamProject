@@ -171,9 +171,9 @@ void ResourceManager::Free()
             Safe_Release(pair.second);
         });
 
-    std::for_each(TextureContainer.begin(), TextureContainer.end(), [](auto& pair)
-        {
-            Safe_Release(pair.second);
-        });
+    //std::for_each(TextureContainer.begin(), TextureContainer.end(), [](auto& pair)
+    //    {
+    //        Safe_Release(pair.second);
+    //    });
 
 }

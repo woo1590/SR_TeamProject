@@ -38,6 +38,15 @@ StaticGrid* Scene::GetStaticGrid() const
 {
 	return Grid;
 }
+BlockManager* Scene::GetBlockManager() const
+{
+	return BlockMgr;
+}
+
+ChunkManager* Scene::GetChunkManager() const
+{
+	return ChunkMgr;
+}
 
 void Scene::Free()
 {

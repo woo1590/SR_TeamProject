@@ -7,12 +7,12 @@ class ENGINE_DLL IronCage : public DynamicBlock
 {
     friend class DynamicBlock;
 private:
-    IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count);
+    IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count);
     virtual ~IronCage();
 
 public:
-    static IronCage* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count);
-    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
+    static IronCage* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count);
+    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType, DynamicBlockRot rot);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 

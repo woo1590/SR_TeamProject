@@ -3,6 +3,7 @@
 #include "GraphicDevice.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
+#include "ChunkManager.h"
 #include "Object.h"
 
 //component

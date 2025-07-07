@@ -11,11 +11,12 @@
 #include "Lever.h"
 #include "Chest.h"
 #include "IronCage.h"
+#include "Bridge.h"
 
 USING(Engine)
 
-DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockDir dir, int Count)
-    : Object(owner, objType), Type(type), Dir(dir), Count(Count)
+DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count)
+    : Object(owner, objType), Type(type), Col(col), Rot(rot), Count(Count)
 {
 }
 
@@ -23,25 +24,28 @@ DynamicBlock::~DynamicBlock()
 {
 }
 
-Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockDir dir, int Count)
+Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count)
 {
     Object* Instance(nullptr);
 
     switch (type)
     {
     case DynamicBlockType::LeverSwitch:
-        if (dir != DynamicBlockDir::DBEnd)
-            Instance = Lever::Create(owner, ObjectType::DynamicBlock, type, dir);
+        if (col != DynamicBlockCol::dAEnd && col != DynamicBlockCol::dYP)
+            Instance = Lever::Create(owner, ObjectType::DynamicBlock, type, col);
         break;
     case DynamicBlockType::BasicChest:
-        Instance = Chest::Create(owner, ObjectType::DynamicBlock, type, dir);
+        Instance = Chest::Create(owner, ObjectType::DynamicBlock, type, rot);
         break;
     case DynamicBlockType::IronCages:
-        if (dir == DynamicBlockDir::YP)
-            Instance = IronCage::Create(owner, ObjectType::DynamicBlock, type, dir, Count);
+        if (col == DynamicBlockCol::dYP)
+            Instance = IronCage::Create(owner, ObjectType::DynamicBlock, type, col, rot, Count);
+        break;
+    case DynamicBlockType::WoodBridge:
+        Instance = Bridge::Create(owner, ObjectType::DynamicBlock, type, col, Count);
         break;
     default:
-        MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"DynamicBlock::Create Error", MB_OK);
+        MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"Error", MB_OK);
         break;
     }
 
@@ -52,10 +56,7 @@ HRESULT DynamicBlock::Ready_Object()
 {
     auto collision = AddComponent<CollisionComponent>();
     auto transform = AddComponent<TransformComponent>();
-    transform->SetScale(1.f, 1.f, 1.f);
-
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-
     return S_OK;
 }
 

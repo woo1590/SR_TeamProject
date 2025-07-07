@@ -56,6 +56,11 @@ void Camera::Late_Update(_float dt)
     Object::Late_Update(dt);
 }
 
+void Camera::SetPosition(_vec3 pos)
+{
+    GetComponent<TransformComponent>()->SetPosition(pos);
+}
+
 void Camera::Free()
 {
     Object::Free();

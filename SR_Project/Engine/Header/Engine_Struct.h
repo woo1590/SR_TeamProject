@@ -68,15 +68,24 @@ namespace Engine
 	{
 		_vec3 Pos;
 		StaticBlockType Type;
-		StaticBlockDir Dir;
+		StaticBlockAxis Axis;
+		StaticBlockRot Rot;
+		StaticBlockUsage Usage;
 	} SB;
 
 	typedef struct DynamicBlockData
 	{
 		_vec3 Pos;
 		DynamicBlockType Type;
-		DynamicBlockDir Dir;
+		DynamicBlockCol Col;
+		DynamicBlockRot Rot;
 	} DB;
+
+	typedef struct ChunkData
+	{
+		int chunkX, chunkZ;			// 청크의 좌표 위치
+		std::vector<SB> sBlocks;	// 해당 청크에서 보관하는 Static Block
+	} CHUNK;
 }
 
 #endif // Engine_Struct_h__

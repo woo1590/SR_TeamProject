@@ -10,6 +10,8 @@
 #include "ImGuiManager.h"
 #include "CameraManager.h"
 #include "CollisionSystem.h"
+#include "BlockManager.h"
+#include "ChunkManager.h"
 
 //object
 #include "Camera.h"
@@ -21,11 +23,15 @@
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 
+//object
 #include "CubeMesh.h"
 #include "Material.h"
 #include "GraphicDevice.h"
 #include "Lever.h"
+#include "Chunk.h"
 #include "IronCage.h"
+
+#include "TerrainCreater.h"
 
 EditScene::EditScene()
 {
@@ -45,36 +51,21 @@ EditScene* EditScene::Create()
 void EditScene::Load()
 {
 #ifdef USE_IMGUI
-
-	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapToolTest", [this]() {this->ImGuiTest();});
-
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapTool", [this]() {this->ImGui_Main();});
 #endif
 
 	CollisionSys = CollisionSystem::Create(this);
+	BlockMgr = BlockManager::Create(this);
+	ChunkMgr = ChunkManager::Create(this);
 
-	auto cube = CubeMesh::Create();
-	auto resource = EngineCore::GetInstance()->GetResourceManager();
-	
-	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube, L"WoodPlank_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/Stone.dds", L"Stone", TEXTURE::Tex_Cube, L"Stone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone.dds", L"CobbleStone", TEXTURE::Tex_Cube, L"CobbleStone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube, L"Lever_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube, L"ChestDown_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube, L"ChestUp_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
-	
-	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockDir::BlockY };
+	BlockMgr->LoadTexture();
+	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockAxis::sAY };
 	staticBlocks.push_back(baseBlock);
 
 	ObjectMgr = ObjectManager::Create(this);
 	auto cam = Camera::Create(ObjectMgr, ObjectType::Camera);
 	ObjectMgr->AddObject(ObjectType::Camera, cam);
-	ObjectMgr->AddObject(ObjectType::StaticBlock, StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, StaticBlockType::Dirt, StaticBlockDir::BlockY));
+	ObjectMgr->AddObject(ObjectType::StaticBlock, StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, StaticBlockType::Dirt, StaticBlockAxis::sAY, StaticBlockRot::sREnd, StaticBlockUsage::Basic));
 
 	CameraMgr = CameraManager::Create(this);
 	CameraMgr->AddCamera(L"ToolCam", cam);
@@ -84,10 +75,6 @@ void EditScene::Load()
 void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
-
-	wchar_t title[128];
-	swprintf_s(title, L"Blocks : %d", (int)staticBlocks.size());
-	SetWindowText(EngineCore::GetInstance()->GetWindowHandle(), title);
 
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 	if (Input->IsKeyPressed(LBUTTON))
@@ -117,70 +104,168 @@ void EditScene::Late_Update(float dt)
 	ObjectMgr->Late_Update(dt);
 }
 
-void EditScene::Unload()
-{
-}
-
 #ifdef USE_IMGUI
-void EditScene::ImGuiTest()
+
+void EditScene::ImGui_Main()
 {
 	ImGui::SetNextWindowPos({ 0.f, 0.f });
 	ImGui::Begin("==== MineCraft Dungeon Map Editor ====", NULL, 0);
-
-	static char save[64]{};
-	ImGui::InputText("<- Save Stage Name", save, sizeof(save));
-	if (ImGui::Button("SAVE")) SaveStage(save);
-
-	static char load[64]{};
-	ImGui::InputText("<- Load Stage Name", load, sizeof(load));
-	if (ImGui::Button("LOAD")) LoadStage(load);
-
-	const char* staticBlockNames[] = { "Dirt", "GrassDirt", "Wood", "WoodPlank", "Stone", "CobbleStone", "None" };
-	if (ImGui::Combo("<- Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
-		staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
-
-	if (staticBlockType == StaticBlockType::SBlockNone)
-	{
-		const char* dynamicBlockNames[] = { "Lever", "Chest", "IronCage", "None" };
-		if (ImGui::Combo("<- Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
-			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
-	}
-
+	ImGui_SaveLoad();
+	ImGui_SetBlockType();
+	ImGui_SetBlockUsage();
+	ImGui_SetBlockInfo();
 	ImGui::End();
 
 	ImGui::SetNextWindowPos({ 0.f, 300.f });
-	ImGui::SetNextWindowSize({ 200.f, 200.f });
-	ImGui::Begin("==== BLOCK DIR ====");
+	ImGui::Begin("==== Link IronCage & Lever ====");
+	ImGui_LinkLever();
+	ImGui::End();
 
-	if (staticBlockType != StaticBlockType::SBlockNone)
+	// ImGui::SetNextWindowPos({ 0.f, 600.f });
+	// ImGui::Begin("==== Remove Dynamic Block ====");
+	// ImGui_RemoveBlock();
+	// ImGui::End();
+}
+
+void EditScene::ImGui_SaveLoad()
+{
+	static char save[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : SAVE ST", save, sizeof(save)); ImGui::SameLine();
+	if (ImGui::Button("SV STAGE")) BlockMgr->SaveStage(save);
+
+	static char load[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : LOAD ST", load, sizeof(load)); ImGui::SameLine();
+	if (ImGui::Button("LD STAGE")) BlockMgr->LoadStage(load);
+
+	ImGui::SetNextItemWidth(100); ImGui::InputInt("Width", &Width); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputInt("Height", &Height); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputFloat("Scale", &Scale, 0.005f, 0.05f, "%.3f");
+
+	static char saveHeight[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : SAVE HM", saveHeight, sizeof(saveHeight)); ImGui::SameLine();
+	if (ImGui::Button("SV HEIGHTMAP")) CreateTerrain(saveHeight);
+
+	static char loadHeight[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : LOAD HM", loadHeight, sizeof(loadHeight)); ImGui::SameLine();
+	if (ImGui::Button("LD HEIGHTMAP")) PlaceTerrainBlocks(loadHeight);
+
+	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
 	{
-		const char* staticDirNames[] = { "X", "Y", "Z" };
-		if (ImGui::Combo("<- SDir", &selectedSBlockDir, staticDirNames, IM_ARRAYSIZE(staticDirNames)))
-			staticBlockDir = static_cast<StaticBlockDir>(selectedSBlockDir);
+		CreateTerrain("heightMap");
+		PlaceTerrainBlocks("heightMap");
 	}
-	else
+	ImGui::SameLine();
+	if (ImGui::Button("CLEAR TERRAIN"))
 	{
-		const char* dynamicDirNames[] = { "+Z", "-Z", "+X", "-X" };
-		switch (dynamicBlockType)
+		staticBlocks.clear();
+		dynamicBlocks.clear();
+
+		ObjectMgr->ClearList(ObjectType::StaticBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+
+		TerrainCreater terrain;
+		terrain.Free();
+	}
+}
+
+void EditScene::ImGui_SetBlockType()
+{
+	if (dynamicBlockType == DynamicBlockType::dBlockNone)
+	{
+		const char* staticBlockNames[] =
 		{
-		case DynamicBlockType::DBlockNone: case DynamicBlockType::LeverSwitch:
-			break;
-		case DynamicBlockType::IronCages:
-			ImGui::InputInt("Count", &Count);
-			if (ImGui::Combo("<- DDir", &selectedDBlockDir, dynamicDirNames, IM_ARRAYSIZE(dynamicDirNames)))
-				dynamicBlockDir = static_cast<DynamicBlockDir>(selectedDBlockDir);
-			break;
-		default:
-			if (ImGui::Combo("<- DDir", &selectedDBlockDir, dynamicDirNames, IM_ARRAYSIZE(dynamicDirNames)))
-				dynamicBlockDir = static_cast<DynamicBlockDir>(selectedDBlockDir);
-			break;
+			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK",
+			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
+			"GLASS", "LEAF"
+		};
+		if (ImGui::Combo(" : Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
+		{
+			staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
+			staticBlockUsage = StaticBlockUsage::Basic; selectedSBlockUsage = 0;
+			staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
+			staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
 		}
 	}
 
-	ImGui::End();
+	if (staticBlockType == StaticBlockType::sBlockNone)
+	{
+		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE"};
+		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
+			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
+	}
+}
 
-	ImGui::Begin("Linking IronCages with Levers");
+void EditScene::ImGui_SetBlockUsage()
+{
+	if (staticBlockType == StaticBlockType::sBlockNone)
+		return;
 
+	std::vector<const char*> usageOptions;
+	std::vector<StaticBlockUsage> usageEnums;
+	switch (staticBlockType)
+	{
+	case StaticBlockType::Dirt: case StaticBlockType::GrassDirt: case StaticBlockType::Wood:
+	case StaticBlockType::StoneBrick: case StaticBlockType::MossyStoneBrick:
+		return;
+	case StaticBlockType::WoodPlank: case StaticBlockType::Stone: case StaticBlockType::CobbleStone: case StaticBlockType::SmoothStone:
+		usageOptions = { "BASIC", "HALF", "STAIR" };
+		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair };
+		break;
+	case StaticBlockType::Glass: case StaticBlockType::Leaf:
+		staticBlockUsage = StaticBlockUsage::Alpha;
+		return;
+	}
+
+	if (!usageOptions.empty())
+	{
+		if (ImGui::Combo(" : Usage", &selectedSBlockUsage, usageOptions.data(), static_cast<int>(usageOptions.size())))
+		{
+			staticBlockUsage = usageEnums[selectedSBlockUsage];
+			staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
+			staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
+		}
+	}
+}
+
+void EditScene::ImGui_SetBlockInfo()
+{
+	if (staticBlockType != StaticBlockType::sBlockNone)
+	{
+		switch (staticBlockUsage)
+		{
+		case StaticBlockUsage::Basic:
+		{
+			const char* axisNames[] = { "X", "Y", "Z" };
+			if (ImGui::Combo(" : Axis", &selectedSBlockAxis, axisNames, IM_ARRAYSIZE(axisNames)))
+				staticBlockAxis = static_cast<StaticBlockAxis>(selectedSBlockAxis);
+			break;
+		}
+		case StaticBlockUsage::Stair: case StaticBlockUsage::Fence:
+		{
+			const char* rotNames[] = { "+Z", "-Z", "+X", "-X" };
+			if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
+				staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
+			break;
+		}
+		}
+	}
+	else
+	{
+		const char* dynamicRotNames[] = { "+X", "-X", "+Z", "-Z" };
+		switch (dynamicBlockType)
+		{
+		case DynamicBlockType::BasicChest: case DynamicBlockType::IronCages:
+			if (ImGui::Combo(" : Rotation", &selectedDBlockRot, dynamicRotNames, IM_ARRAYSIZE(dynamicRotNames)))
+				dynamicBlockRot = static_cast<DynamicBlockRot>(selectedDBlockRot);
+			if (dynamicBlockType == DynamicBlockType::IronCages)
+				ImGui::InputInt(" : Count", &Count);
+			break;
+		}
+	}
+}
+
+void EditScene::ImGui_LinkLever()
+{
 	static int selectedCageIndex = -1;
 	static int selectedLeverIndex = -1;
 
@@ -294,9 +379,50 @@ void EditScene::ImGuiTest()
 			}
 		}
 	}
-
-	ImGui::End();
 }
+
+void EditScene::ImGui_RemoveBlock()
+{
+	static int selectedDynamicIndex = -1;
+
+	ImGui::Separator();
+	ImGui::Text("Dynamic Blocks:");
+
+	for (int i = 0; i < dynamicBlocks.size(); ++i)
+	{
+		const auto& block = dynamicBlocks[i];
+
+		char buf[64];
+		snprintf(buf, sizeof(buf), "[%d] %s (%.1f, %.1f, %.1f)", i,
+			(block.Type == DynamicBlockType::LeverSwitch ? "Lever" :
+				block.Type == DynamicBlockType::IronCages ? "Cage" : "Chest"),
+			block.Pos.x, block.Pos.y, block.Pos.z);
+
+		if (ImGui::Selectable(buf, selectedDynamicIndex == i))
+		{
+			selectedDynamicIndex = i;
+			if (Object* cam = (ObjectMgr)->GetFrontObject(ObjectType::Camera))
+			{
+				_vec3 lookPos = block.Pos + _vec3(-5.f, 0.f, -5.f);
+				static_cast<Camera*>(cam)->SetPosition(lookPos);
+			}
+		}
+	}
+
+	if (selectedDynamicIndex != -1)
+	{
+		ImGui::Separator();
+		ImGui::TextColored(ImVec4(1, 0.8f, 0.2f, 1), "Selected Block: %d", selectedDynamicIndex);
+		if (ImGui::Button("Remove Dynamic Block"))
+		{
+			_vec3 posToDelete = dynamicBlocks[selectedDynamicIndex].Pos;
+			ObjectMgr->RemoveObject(ObjectType::DynamicBlock, posToDelete);
+			dynamicBlocks.erase(dynamicBlocks.begin() + selectedDynamicIndex);
+			selectedDynamicIndex = -1;
+		}
+	}
+}
+
 #endif
 
 void EditScene::MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir)
@@ -364,6 +490,7 @@ void EditScene::OnLeftClick(_vec3& rayOrigin, _vec3& rayDir)
 
 	_vec3 normal = GetHitNormal(closestHitPoint, selectedBlockPos - _vec3(1, 1, 1), selectedBlockPos + _vec3(1, 1, 1));
 	_vec3 newBlockPos = selectedBlockPos + normal * 2.0f;
+
 	Place(newBlockPos);
 }
 
@@ -396,6 +523,26 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 		ObjectMgr->RemoveObject(ObjectType::StaticBlock, (staticBlocks.begin() + targetIndex)->Pos);
 		staticBlocks.erase(staticBlocks.begin() + targetIndex);
 		return;
+	}
+}
+
+void EditScene::CreateTerrain(const std::string& filename)
+{
+	TerrainCreater terrain;
+	terrain.CreateHeightmap(Width, Height, Scale);
+	terrain.SaveHeightmapAsImage(filename);
+}
+
+void EditScene::PlaceTerrainBlocks(const std::string& filename)
+{
+	TerrainCreater terrain;
+	if (!terrain.LoadHeightmapFromImage(filename)) return;
+	terrain.CreateBlockTerrain(10);
+
+	for (const auto& block : terrain.GetBlocks())
+	{
+		_vec3 position = { block.x * 2.0f, block.y * 2.0f, block.z * 2.0f };
+		Place(position);
 	}
 }
 
@@ -434,222 +581,77 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 {
 	if (fabs(hitPoint.x - boxMin.x) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::XM;
+		dynamicBlockCol = DynamicBlockCol::dXM;
 		return _vec3(-1, 0, 0);
 	}
 	if (fabs(hitPoint.x - boxMax.x) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::XP;
+		dynamicBlockCol = DynamicBlockCol::dXP;
 		return _vec3(1, 0, 0);
 	}
 
 	if (fabs(hitPoint.y - boxMin.y) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::DBEnd;
+		dynamicBlockCol = DynamicBlockCol::dAEnd;
 		return _vec3(0, -1, 0);
 	}
 	if (fabs(hitPoint.y - boxMax.y) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::IronCages) dynamicBlockDir = DynamicBlockDir::YP;
+		dynamicBlockCol = DynamicBlockCol::dYP;
 		return _vec3(0, 1, 0);
 	}
 
 	if (fabs(hitPoint.z - boxMin.z) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::ZM;
+		dynamicBlockCol = DynamicBlockCol::dZM;
 		return _vec3(0, 0, -1);
 	}
 	if (fabs(hitPoint.z - boxMax.z) < 0.01f)
 	{
-		if (dynamicBlockType == DynamicBlockType::LeverSwitch) dynamicBlockDir = DynamicBlockDir::ZP;
+		dynamicBlockCol = DynamicBlockCol::dZP;
 		return _vec3(0, 0, 1);
 	}
 	
 	return _vec3(0, 0, 0);
 }
 
-void EditScene::Place(const _vec3& position)
+void EditScene::Place(_vec3& position)
 {
 	for (const auto& block : staticBlocks) if (block.Pos == position) return;
 	for (const auto& block : dynamicBlocks) if (block.Pos == position) return;
-
-	if (staticBlockType != StaticBlockType::SBlockNone)
+	
+	if (staticBlockType != StaticBlockType::sBlockNone)
 	{
-		auto newBlockObj = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockDir);
+		auto newBlockObj = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 		if (!newBlockObj) return;
+		position += newBlockObj->GetComponent<TransformComponent>()->GetPosition();
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
+		
+		int chunkX = position.x / CHUNK_SIZE;
+		int chunkY = position.z / CHUNK_SIZE;
+		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
+		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 
-		staticBlocks.push_back({ position, staticBlockType, staticBlockDir });
+		staticBlocks.push_back({ position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage });
 	}
-	else if (dynamicBlockType != DynamicBlockType::DBlockNone)
+	else if (dynamicBlockType != DynamicBlockType::dBlockNone)
 	{
-		Object* newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockDir, Count);
+		Object* newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockCol,dynamicBlockRot, Count);
 		if (!newBlockObj) return;
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, newBlockObj);
-
-		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockDir });
-	}
-}
-
-void EditScene::SaveStage(const char* saveStage)
-{
-	HANDLE hFile(nullptr);
-	string path = "../../Reference/MapData/"; path += saveStage; path += ".dat";
-
-	int len(MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, NULL, 0));
-	wstring wpath(len, 0);
-	MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, &wpath[0], len);
-
-	hFile = CreateFile(wpath.c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	if (hFile == INVALID_HANDLE_VALUE)
-	{
-		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Fail", _T("Fail"), MB_OK);
-		return;
-	}
-
-	DWORD dwByte(0);
-	DWORD SBSize(staticBlocks.size());
-	DWORD DBSize(dynamicBlocks.size());
-	WriteFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr);
-	WriteFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr);
-	for (auto& block : staticBlocks) WriteFile(hFile, &block, sizeof(SB), &dwByte, nullptr);
-	for (auto& block : dynamicBlocks)
-	{
-		WriteFile(hFile, &block, sizeof(DB), &dwByte, nullptr);
-
-		switch (block.Type)
-		{
-		case DynamicBlockType::LeverSwitch:
-		{
-			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
-			{
-				if (obj->GetComponent<TransformComponent>()->GetPosition() == block.Pos)
-				{
-					int id = static_cast<DynamicBlock*>(obj)->GetID();
-					WriteFile(hFile, &id, sizeof(int), &dwByte, nullptr);
-					break;
-				}
-			}
-			break;
-		}
-		case DynamicBlockType::IronCages:
-		{
-			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
-			{
-				if (obj->GetComponent<TransformComponent>()->GetPosition() == block.Pos)
-				{
-					auto dyn = static_cast<DynamicBlock*>(obj);
-
-					int count = dyn->GetCount();
-					WriteFile(hFile, &count, sizeof(int), &dwByte, nullptr);
-
-					auto ids = dyn->GetIDVec();
-					int size = static_cast<int>(ids.size());
-					WriteFile(hFile, &size, sizeof(int), &dwByte, nullptr);
-					if (size > 0)
-						WriteFile(hFile, ids.data(), sizeof(int) * size, &dwByte, nullptr);
-					break;
-				}
-			}
-			break;
-		}
-		}
-	}
-		
-	CloseHandle(hFile);
-	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Save Success", _T("Success"), MB_OK);
-}
-
-void EditScene::LoadStage(const char* loadStage)
-{
-	HANDLE hFile(nullptr);
-	string path = "../../Reference/MapData/"; path += loadStage; path += ".dat";
-
-	int len(MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, NULL, 0));
-	wstring wpath(len, 0);
-	MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, &wpath[0], len);
-
-	hFile = CreateFile(wpath.c_str(), GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	if (INVALID_HANDLE_VALUE == hFile)
-	{
-		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Fail", _T("Fail"), MB_OK);
-		return;
-	}
 	
-	ObjectMgr->ClearList(ObjectType::StaticBlock); staticBlocks.clear(); staticBlocks.shrink_to_fit();
-	ObjectMgr->ClearList(ObjectType::DynamicBlock); dynamicBlocks.clear(); dynamicBlocks.shrink_to_fit();
-
-	DWORD dwByte(0), dwSBTot(0), dwDBTot(0);
-	DWORD SBSize(0), DBSize(0);
-	SB newSBlock; DB newDBlock;
-
-	if (!ReadFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr)) return;
-	if (!ReadFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr)) return;
-
-	for (DWORD i = 0; i < SBSize; ++i)
-	{
-		if (!ReadFile(hFile, &newSBlock, sizeof(SB), &dwByte, nullptr)) return;
-
-		auto sBlock = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, newSBlock.Type, newSBlock.Dir);
-		sBlock->GetComponent<TransformComponent>()->SetPosition(newSBlock.Pos);
-
-		ObjectMgr->AddObject(ObjectType::StaticBlock, sBlock);
-		staticBlocks.push_back(newSBlock);
+		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockCol, dynamicBlockRot });
 	}
-
-	for (DWORD i = 0; i < DBSize; ++i)
-	{
-		if (!ReadFile(hFile, &newDBlock, sizeof(DB), &dwByte, nullptr)) return;
-
-		Object* dBlock = nullptr;
-
-		if (newDBlock.Type == DynamicBlockType::IronCages)
-		{
-			int count = 0;
-			ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr);
-
-			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, count);
-			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
-
-			int vecSize = 0;
-			ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr);
-			if (vecSize > 0)
-			{
-				std::vector<int> ids(vecSize);
-				ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr);
-				for (int id : ids)
-					static_cast<DynamicBlock*>(dBlock)->AddID(id);
-			}
-		}
-		else
-		{
-			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, Count);
-			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
-
-			if (newDBlock.Type == DynamicBlockType::LeverSwitch)
-			{
-				int id = 0;
-				ReadFile(hFile, &id, sizeof(int), &dwByte, nullptr);
-				static_cast<DynamicBlock*>(dBlock)->SetID(id);
-			}
-		}
-
-		ObjectMgr->AddObject(ObjectType::DynamicBlock, dBlock);
-		dynamicBlocks.push_back(newDBlock);
-	}
-
-	CloseHandle(hFile);
-	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
 }
 
 void EditScene::Free()
 {
 	Safe_Release(ObjectMgr);
 	Safe_Release(CameraMgr);
+	Safe_Release(BlockMgr);
+	Safe_Release(ChunkMgr);
 	Safe_Release(CollisionSys);
 	staticBlocks.clear();
 	staticBlocks.shrink_to_fit();

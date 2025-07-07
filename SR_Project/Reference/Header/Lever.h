@@ -7,11 +7,11 @@ class ENGINE_DLL Lever : public DynamicBlock
 {
     friend class DynamicBlock;
 private:
-    Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir);
+    Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col);
     virtual ~Lever();
 
 public:
-    static Lever* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir);
+    static Lever* Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col);
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;

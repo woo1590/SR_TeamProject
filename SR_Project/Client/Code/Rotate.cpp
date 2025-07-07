@@ -29,19 +29,19 @@ BTStatus RotateNode::Tick(float dt, BlackBoard* bb)
 	_vec3 TargetPos = target->GetComponent<TransformComponent>()->GetPosition();
 	_vec3 SelfPos = self->GetComponent<TransformComponent>()->GetPosition();
 
-	_vec3 Dir = _vec3(TargetPos.x - SelfPos.x, 0.f, TargetPos.z - SelfPos.z);
+	_vec3 Axis = _vec3(TargetPos.x - SelfPos.x, 0.f, TargetPos.z - SelfPos.z);
 
 	Monster* monster = static_cast<Monster*>(self);
-	D3DXVec3Normalize(&Dir, &Dir);
+	D3DXVec3Normalize(&Axis, &Axis);
 
 	_vec3 forward = _vec3 (self->GetComponent<TransformComponent>()->GetFoward().x, 0.f, self->GetComponent<TransformComponent>()->GetFoward().z);
 	D3DXVec3Normalize(&forward, &forward);
- 	float dot = D3DXVec3Dot(&Dir, &forward);
+ 	float dot = D3DXVec3Dot(&Axis, &forward);
 
 	if (dot > 0.99f) 
 		return BTStatus::Success;
 
-	else monster->RotateTo(&Dir, dt);
+	else monster->RotateTo(&Axis, dt);
 
 	return BTStatus::Running;
 }

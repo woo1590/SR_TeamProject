@@ -16,8 +16,8 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
-IronCage::IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count)
-    : DynamicBlock(owner, objType, DynamicBlockType, DynamicBlockDir, Count)
+IronCage::IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count)
+    : DynamicBlock(owner, objType, type, col, rot, Count)
 {
 }
 
@@ -25,22 +25,24 @@ IronCage::~IronCage()
 {
 }
 
-IronCage* IronCage::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType DynamicBlockType, DynamicBlockDir DynamicBlockDir, int Count)
+IronCage* IronCage::Create(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count)
 {
-    IronCage* Instance = new IronCage(owner, objType, DynamicBlockType, DynamicBlockDir, Count);
+    IronCage* Instance = new IronCage(owner, objType, type, col, rot, Count);
 
-    if (FAILED(Instance->Ready_Object(owner, objType)))
+    if (FAILED(Instance->Ready_Object(owner, objType, rot)))
     {
         Safe_Release(Instance);
-        MessageBoxW(nullptr, L"IronCage Created Failed", L"Fail", MB_OK);
         Instance = nullptr;
     }
 
     return Instance;
 }
 
-HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType, DynamicBlockRot rot)
 {
+    if (Count < 1)
+        return E_FAIL;
+
     Object::Ready_Object();
     auto transform = AddComponent<TransformComponent>();
 
@@ -52,6 +54,10 @@ HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     ironParTrans->Translate(-0.5f, 3.f, 0.f);
     ironTrans->Translate(1.f, 0.f, 0.f);
+
+    ironParTrans->SetIsBlock();
+    ironParTrans->SetPivotEnable(TRUE);
+    ironParTrans->SetPivot(_vec3(0.5f, -3.f, 0.f));
 
     for (int i = 1; i < Count; ++i)
     {
@@ -65,6 +71,19 @@ HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType)
 
         first->Translate(2.f * i, 0.f, 0.f);
         second->Translate(2.f * i + 1.f, 0.f, 0.f);
+    }
+
+    switch (rot)
+    {
+    case DynamicBlockRot::drZP:
+        ironParTrans->SetRotate(0.f, D3DXToRadian(-90.f), 0.f);
+        break;
+    case DynamicBlockRot::drZM:
+        ironParTrans->SetRotate(0.f, D3DXToRadian(90.f), 0.f);
+        break;
+    case DynamicBlockRot::drXM:
+        ironParTrans->SetRotate(0.f, D3DXToRadian(180.f), 0.f);
+        break;
     }
 
     for (auto& part : Parts)

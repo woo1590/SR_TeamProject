@@ -12,6 +12,7 @@
 #include "CameraManager.h"
 #include "PhysicsSystem.h"
 #include "StaticGrid.h"
+#include "BlockManager.h"
 
 //object
 #include "TestObject.h"
@@ -66,6 +67,7 @@ void TestScene::Load()
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
 	PhysicsSys		= PhysicsSystem::Create(this);
+	BlockMgr		= BlockManager::Create(this);
 
 #ifdef USE_IMGUI
 	/*----------------Load ImGui----------------------*/
@@ -73,7 +75,6 @@ void TestScene::Load()
 
 #endif
 	/*----------------Load Camera---------------------*/
-	LoadBlock();
 
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(40.f, 100.f, 30.f);
@@ -92,6 +93,7 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
 
 	/*------------------------------------------------*/
+	BlockMgr->LoadStage("TestScene");
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 
@@ -200,98 +202,4 @@ void TestScene::Free()
 	Safe_Release(Grid);
 
 	Scene::Free();
-}
-
-void TestScene::LoadBlock()
-{
-	HANDLE hFile(nullptr);
-	hFile = CreateFile(L"../../Reference/MapData/TestScene.dat", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	if (INVALID_HANDLE_VALUE == hFile)
-	{
-		MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Fail", _T("Fail"), MB_OK);
-		return;
-	}
-
-	ObjectMgr->ClearList(ObjectType::StaticBlock); staticBlocks.clear(); staticBlocks.shrink_to_fit();
-	ObjectMgr->ClearList(ObjectType::DynamicBlock); dynamicBlocks.clear(); dynamicBlocks.shrink_to_fit();
-
-	DWORD dwByte(0), dwSBTot(0), dwDBTot(0);
-	DWORD SBSize(0), DBSize(0);
-	SB newSBlock; DB newDBlock;
-
-	if (!ReadFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr)) return;
-	if (!ReadFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr)) return;
-
-	for (DWORD i = 0; i < SBSize; ++i)
-	{
-		if (!ReadFile(hFile, &newSBlock, sizeof(SB), &dwByte, nullptr)) return;
-
-		auto sBlock = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, newSBlock.Type, newSBlock.Dir);
-		sBlock->GetComponent<TransformComponent>()->SetPosition(newSBlock.Pos);
-
-		ObjectMgr->AddObject(ObjectType::StaticBlock, sBlock);
-		staticBlocks.push_back(newSBlock);
-	}
-
-	for (DWORD i = 0; i < DBSize; ++i)
-	{
-		if (!ReadFile(hFile, &newDBlock, sizeof(DB), &dwByte, nullptr)) return;
-
-		Object* dBlock = nullptr;
-
-		if (newDBlock.Type == DynamicBlockType::IronCages)
-		{
-			int count = 0;
-			ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr);
-
-			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, count);
-			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
-
-			int vecSize = 0;
-			ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr);
-			if (vecSize > 0)
-			{
-				std::vector<int> ids(vecSize);
-				ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr);
-				for (int id : ids)
-					static_cast<DynamicBlock*>(dBlock)->AddID(id);
-			}
-		}
-		else
-		{
-			dBlock = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Dir, Count);
-			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
-
-			if (newDBlock.Type == DynamicBlockType::LeverSwitch)
-			{
-				int id = 0;
-				ReadFile(hFile, &id, sizeof(int), &dwByte, nullptr);
-				static_cast<DynamicBlock*>(dBlock)->SetID(id);
-			}
-		}
-
-		ObjectMgr->AddObject(ObjectType::DynamicBlock, dBlock);
-		dynamicBlocks.push_back(newDBlock);
-	}
-
-	CloseHandle(hFile);
-	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), L"Load Success", _T("Success"), MB_OK);
-
-	/*---------------StaticGrid-------------------*/
-
-	auto staticBlocks = ObjectMgr->GetObjectList(ObjectType::StaticBlock);
-
-	for (const auto& block : staticBlocks)
-	{
-		_vec3 pos = block->GetComponent<TransformComponent>()->GetPosition();
-		auto collision = block->GetComponent<CollisionComponent>();
-
-		int cx, cy, cz;
-		cx = Grid->WorldToCell(pos.x);
-		cy = Grid->WorldToCell(pos.y);
-		cz = Grid->WorldToCell(pos.z);
-
-		Grid->InsertBlock(cx, cy, cz, collision);
-	}
 }

@@ -215,14 +215,19 @@
     <ClInclude Include="..\..\External\imgui\imstb_truetype.h" />
     <ClInclude Include="..\Header\ActionNode.h" />
     <ClInclude Include="..\Header\AIController.h" />
+    <ClInclude Include="..\Header\AlphaBlock.h" />
+    <ClInclude Include="..\Header\BasicBlock.h" />
     <ClInclude Include="..\Header\BehaviorTree.h" />
     <ClInclude Include="..\Header\BlackBoard.h" />
     <ClInclude Include="..\Header\BlockManager.h" />
+    <ClInclude Include="..\Header\Bridge.h" />
     <ClInclude Include="..\Header\BTNode.h" />
     <ClInclude Include="..\Header\ButtonComponent.h" />
     <ClInclude Include="..\Header\CameraComponent.h" />
     <ClInclude Include="..\Header\CameraManager.h" />
     <ClInclude Include="..\Header\Chest.h" />
+    <ClInclude Include="..\Header\Chunk.h" />
+    <ClInclude Include="..\Header\ChunkManager.h" />
     <ClInclude Include="..\Header\CollisionComponent.h" />
     <ClInclude Include="..\Header\CollisionSystem.h" />
     <ClInclude Include="..\Header\CompositeNode.h" />
@@ -243,6 +248,7 @@
     <ClInclude Include="..\Header\FrameManager.h" />
     <ClInclude Include="..\Header\FreecamComponent.h" />
     <ClInclude Include="..\Header\GraphicDevice.h" />
+    <ClInclude Include="..\Header\HalfBlock.h" />
     <ClInclude Include="..\Header\HoverComponent.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\InfoDetector.h" />
@@ -279,6 +285,7 @@
     <ClInclude Include="..\Header\SlotComponent.h" />
     <ClInclude Include="..\Header\SoundManager.h" />
     <ClInclude Include="..\Header\StaticGrid.h" />
+    <ClInclude Include="..\Header\StairBlock.h" />
     <ClInclude Include="..\Header\StaticMesh.h" />
     <ClInclude Include="..\Header\Subject.h" />
     <ClInclude Include="..\Header\SucceederDecorator.h" />
@@ -337,13 +344,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\ActionNode.cpp" />
     <ClCompile Include="..\Code\AIController.cpp" />
+    <ClCompile Include="..\Code\AlphaBlock.cpp" />
+    <ClCompile Include="..\Code\BasicBlock.cpp" />
     <ClCompile Include="..\Code\BehaviorTree.cpp" />
     <ClCompile Include="..\Code\BlackBoard.cpp" />
     <ClCompile Include="..\Code\BlockManager.cpp" />
+    <ClCompile Include="..\Code\Bridge.cpp" />
     <ClCompile Include="..\Code\BTNode.cpp" />
     <ClCompile Include="..\Code\ButtonComponent.cpp" />
     <ClCompile Include="..\Code\CameraComponent.cpp" />
     <ClCompile Include="..\Code\Chest.cpp" />
+    <ClCompile Include="..\Code\Chunk.cpp" />
+    <ClCompile Include="..\Code\ChunkManager.cpp" />
     <ClCompile Include="..\Code\CollisionComponent.cpp" />
     <ClCompile Include="..\Code\CollisionSystem.cpp" />
     <ClCompile Include="..\Code\CompositeNode.cpp" />
@@ -365,6 +377,7 @@
     <ClCompile Include="..\Code\FrameManager.cpp" />
     <ClCompile Include="..\Code\FreecamComponent.cpp" />
     <ClCompile Include="..\Code\GraphicDevice.cpp" />
+    <ClCompile Include="..\Code\HalfBlock.cpp" />
     <ClCompile Include="..\Code\HoverComponent.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\InfoDetector.cpp" />
@@ -400,6 +413,7 @@
     <ClCompile Include="..\Code\SlotComponent.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp" />
     <ClCompile Include="..\Code\StaticGrid.cpp" />
+    <ClCompile Include="..\Code\StairBlock.cpp" />
     <ClCompile Include="..\Code\StaticMesh.cpp" />
     <ClCompile Include="..\Code\Subject.cpp" />
     <ClCompile Include="..\Code\SucceederDecorator.cpp" />

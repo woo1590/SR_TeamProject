@@ -27,11 +27,5 @@ private:
 
 private:
     Player* player;
-    void LoadBlock();
-
-    int Count = -1;
-
-    std::vector<SB> staticBlocks;
-    std::vector<DB> dynamicBlocks;
 };
 
