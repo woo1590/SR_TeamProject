@@ -48,7 +48,7 @@ HRESULT Arrow::Ready_Object(ObjectManager* owner, ObjectType objType, Object* sh
 
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     auto i = info->GetInfo();
-    i.attackDamage = 10.f;
+    //i.attackDamage = 10.f;
     info->SetInfo(i);
 
     SetMesh(L"Cube_Mesh");
@@ -110,14 +110,14 @@ void Arrow::SetCollisionEnter(Object* other)
         auto info = GetComponent<InfoComponent<ItemInfo>>();
         auto collision = GetComponent<CollisionComponent>();
 
-        float arrowAttackDamage = info->GetInfo().attackDamage;
-        other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
+        //float arrowAttackDamage = info->GetInfo().attackDamage;
+        //other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
         switch (objType) 
         {
         case ObjectType::Monster:
-            other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(info->GetInfo().attackDamage);
+            //other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(info->GetInfo().attackDamage);
             break;
         case ObjectType::StaticBlock:
             break;

@@ -81,8 +81,6 @@ void TestScene::Load()
 
 #endif
 	/*----------------Load Camera---------------------*/
-	LoadBlock();
-
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);

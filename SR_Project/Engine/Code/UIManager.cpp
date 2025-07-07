@@ -31,4 +31,5 @@ void UIManager::Update(float dt)
 void UIManager::Free()
 {
 	Safe_Release(inventory);
+	Safe_Release(quest);
 }
