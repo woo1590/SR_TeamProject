@@ -68,11 +68,6 @@ void CollisionComponent::SetOffset(_float x, _float y, _float z)
 	SetOffset(_vec3(x, y, z));
 }
 
-_vec3 CollisionComponent::GetOffset()
-{
-	return Offset;
-}
-
 void CollisionComponent::SetBoudingBox(BoundingBoxType bbType)
 {
 	if (BoundingBox)

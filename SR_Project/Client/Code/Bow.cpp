@@ -53,8 +53,6 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Bow::Update(_float dt)
 {
     Item::Update(dt);
-    auto collision = GetComponent<CollisionComponent>();
-    collision->SetOffset(owner->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
 }
 
 void Bow::Late_Update(_float dt)

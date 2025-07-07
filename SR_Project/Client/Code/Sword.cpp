@@ -42,16 +42,6 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     SetMaterial(L"sword_Mtrl");
     SetRenderId(renderId);
 
-    auto mesh = GetComponent<MeshRenderer>();
-    mesh->SetMesh(i.meshType);
-    mesh->SetMaterial(i.material);
-    mesh->SetRenderID(i.renderId);
-
-    auto collision = AddComponent<CollisionComponent>();
-    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_ENEMY);
-    collision->SetSize(_vec3(2.f, 2.f, 5.f));
-    collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
     PlayerSwordInfo();
     ApplyComponents();
 
@@ -66,8 +56,6 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Sword::Update(_float dt)
 {
     Item::Update(dt);
-    auto collision = GetComponent<CollisionComponent>();
-    collision->SetOffset(owner->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
 }
 
 void Sword::Late_Update(_float dt)
@@ -96,8 +84,9 @@ void Sword::PlayerSwordInfo()
     SetOwnerObject(owner->GetFrontObject(ObjectType::Player));
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
-    auto collision = GetComponent<CollisionComponent>();
+    auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_ENEMY);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
+
 }

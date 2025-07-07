@@ -67,8 +67,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
 
     Bones["LHand"] = nullptr;
-    Bones["RHand"] = Sword::Create(owner, ObjectType::Item);
-    Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
+    Bones["RHand"] = nullptr;
 
     return S_OK;
 }

@@ -1,5 +1,7 @@
 ﻿#include "pch.h"
 #include "Item.h"
+#include "Scene.h"
+#include "CollisionSystem.h"
 
 #include "TransformComponent.h"
 #include "ObjectManager.h"
@@ -30,10 +32,11 @@ HRESULT Item::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     if (FAILED(Object::Ready_Object()))
         return E_FAIL;
+
     auto transform = AddComponent<TransformComponent>();
     auto info = AddComponent<InfoComponent<ItemInfo>>();
     auto mesh = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-    auto collision = AddComponent<CollisionComponent>();
+
     owner->AddObject(objType, this);
     
     return S_OK;
@@ -110,8 +113,5 @@ void Item::ApplyComponents()
     mesh->SetMesh(meshType);
     mesh->SetMaterial(material);
     mesh->SetRenderID(renderId);
-
-    auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(itemScaleRatio.x * itemScale, itemScaleRatio.y * itemScale, itemScaleRatio.z * itemScale));
 }
 

@@ -1,11 +1,14 @@
 ﻿#include "pch.h"
 #include "Arrow.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
 
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "InfoComponent.h"
 #include "ObjectManager.h"
 #include "CollisionComponent.h"
+#include "PhysicsComponent.h"
 
 Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType) 
 {
@@ -38,6 +41,10 @@ HRESULT Arrow::Ready_Object(ObjectManager* owner, ObjectType objType, Object* sh
 
     SetOwnerObject(shooter);
     arrowDirection = normalDirection;
+
+    auto physics = AddComponent<PhysicsComponent>();
+    physics->SetKinematic(true);
+    GetScene()->GetPhysicsStstem()->RegisterBody(physics);
 
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     auto i = info->GetInfo();
@@ -100,12 +107,13 @@ void Arrow::SetCollisionEnter(Object* other)
 
     if (objType == ObjectType::Monster) 
     {
-        float arrowAttackDamage = GetComponent<InfoComponent<ProjectileInfo>>()->GetInfo().attackDamage;
+        auto info = GetComponent<InfoComponent<ItemInfo>>();
+        auto collision = GetComponent<CollisionComponent>();
+
+        float arrowAttackDamage = info->GetInfo().attackDamage;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
-        auto collision = GetComponent<CollisionComponent>();
-        auto info = GetComponent<InfoComponent<ItemInfo>>();
         switch (objType) 
         {
         case ObjectType::Monster:
