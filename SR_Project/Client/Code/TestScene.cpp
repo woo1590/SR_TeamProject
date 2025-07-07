@@ -83,7 +83,7 @@ void TestScene::Load()
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
-	//static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
+	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
 
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
