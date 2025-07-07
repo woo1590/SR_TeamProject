@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Arrow.h"
 
 #include "TransformComponent.h"
@@ -107,23 +107,27 @@ void Arrow::ArrowRotateSet()
 {
     auto transform = GetComponent<TransformComponent>();
     transform->SetForward(arrowDirection);
-
+    
     _vec3 right = transform->GetRight();
     
-    float angle = D3DXToRadian(45.f);
-    if (arrowDirection.z < 0.f) angle *= -1.f;
+    float angle = D3DXToRadian(-45.f);
     
-    _matrix rotMat;
-    D3DXMatrixRotationAxis(&rotMat, &right, angle);
+    _matrix rotX, rotZ , matRot;
+    D3DXMatrixRotationAxis(&rotX, &right, angle);
+    D3DXMatrixRotationAxis(&rotZ, &arrowDirection, angle);
+    matRot = rotX * rotZ;
     
     _vec3 finalDir;
-    D3DXVec3TransformNormal(&finalDir, &arrowDirection, &rotMat);
+    D3DXVec3TransformNormal(&finalDir, &arrowDirection, &matRot);
     D3DXVec3Normalize(&finalDir, &finalDir);
-    
-    _float pitch = asinf(finalDir.y);
-    _float yaw = atan2f(-finalDir.x, finalDir.z);
-    _float roll = 0.f;
-    SetRotation(_vec3(pitch, -yaw, roll));
+
+    _float pitch = sqrtf(2.f) * asinf(finalDir.y);
+    pitch *= arrowDirection.z;
+    _float yaw = atan2f(-arrowDirection.x, arrowDirection.z);
+    _float roll = sqrtf(2.f) * asinf(finalDir.y);
+    roll *= arrowDirection.x;
+    SetRotation(_vec3(-pitch, -yaw, roll));
+
 }
 
 void Arrow::PlayerArrowInfo()
@@ -131,7 +135,7 @@ void Arrow::PlayerArrowInfo()
     arrowSpeed = 30.f;
 
     SetScale(1.f);
-    SetScaleRatio(_vec3(0.1f, 2.f, 2.f));
+    SetScaleRatio(_vec3(0.1f, 1.f, 1.f));
     SetPosition(ownerObject->GetComponent<TransformComponent>()->GetWorldPosition());
     SetPivot(false);
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
@@ -140,7 +144,7 @@ void Arrow::PlayerArrowInfo()
 
     auto collision = GetComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_ENEMY);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }
 
@@ -149,7 +153,7 @@ void Arrow::MonsterArrowInfo()
     arrowSpeed = 30.f;
 
     SetScale(1.f);
-    SetScaleRatio(_vec3(0.1f, 2.f, 2.f));
+    SetScaleRatio(_vec3(0.1f, 1.f, 1.f));
     SetPosition(ownerObject->GetComponent<TransformComponent>()->GetWorldPosition());
     SetPivot(false);
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
@@ -158,6 +162,6 @@ void Arrow::MonsterArrowInfo()
 
     auto collision = GetComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_ENEMY);
-    collision->SetMask(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_DEFAULT);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }
