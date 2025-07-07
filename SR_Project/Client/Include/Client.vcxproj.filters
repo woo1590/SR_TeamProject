@@ -238,6 +238,9 @@
     <Filter Include="02. Object\Monster\Creeper">
       <UniqueIdentifier>{55568c30-c6cf-4688-ad2b-9ca5d546b10d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Item\Arrow">
+      <UniqueIdentifier>{4d40d8dd-85fa-498a-aed9-2d68bd53ad62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\IsHit.h">
       <Filter>02. Object\Monster\BTNode</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\Arrow.h">
+      <Filter>02. Object\Item\Arrow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -671,6 +677,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\IsHit.cpp">
       <Filter>02. Object\Monster\BTNode</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\Arrow.cpp">
+      <Filter>02. Object\Item\Arrow</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

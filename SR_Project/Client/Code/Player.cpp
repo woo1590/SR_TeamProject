@@ -156,7 +156,7 @@ void Player::PickingTerrain()
                 SaveStartRotation();
             }
             auto transform = GetComponent<TransformComponent>();
-            auto curPos = transform->GetPosition();
+            auto curPos = transform->GetWorldPosition();
             auto attackPos = hit.Position;
             AttackDirection = attackPos - curPos;
         }
@@ -177,7 +177,8 @@ void Player::PickingTerrain()
                 Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
                 Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
             }
-            auto transform = Bones["LHand"]->GetComponent<TransformComponent>();
+            auto transform = GetComponent<TransformComponent>();
+            auto collision = GetComponent<CollisionComponent>();
             auto curPos = transform->GetWorldPosition();
             auto attackPos = hit.Position;
             AttackDirection = attackPos - curPos;
@@ -214,12 +215,18 @@ void Player::UnEquipItem(Item::ItemType itemType)
 {
     switch (itemType) {
     case Item::ItemType::ITEM_BOW:
+        Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case Item::ItemType::ITEM_SWORD:
+        Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
     }
+}
+Object* Player::GetBone(std::string boneName)
+{
+    return Bones[boneName];
 }
 void Player::UpdateIdle(_float dt)
 {
@@ -360,9 +367,9 @@ void Player::UpdateAttack(_float dt) {
     vector<_vec3> RArmRotVec =
     {
         StartRotations["RArm"],
-        { -210.f, 10.f, -60.f },
-        { -150.f, 10.f, -60.f },
-        { -60.f, 10.f,-60.f }
+        { -180.f, 10.f, -60.f },
+        { -120.f, 10.f, -60.f },
+        { -30.f, 10.f,-60.f }
     };
     vector<_vec3> LArmRotVec =
     {
@@ -430,9 +437,9 @@ void Player::UpdateShoot(_float dt) {
 
     static float prePhase = 0.f;
     if (prePhase < phaseVec.at(0) && fProgress >= phaseVec.at(0)) {
-        auto shootDir = AttackDirection + GetComponent<TransformComponent>()->GetPosition() - Bones["LHand"]->GetComponent<TransformComponent>()->GetPosition();
+        auto shootDir = AttackDirection ;
         D3DXVec3Normalize(&shootDir, &shootDir);
-        Arrow::Create(owner, ObjectType::Projectile, ObjectType::Player, shootDir);
+        Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
     }
     prePhase = fProgress;
 
@@ -573,6 +580,12 @@ void Player::UpdateDead(_float dt) {
     D3DXMatrixRotationAxis(&matRot, &vAxis, -fCurrentAngle);
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
     transform->SetRotate(transform->GetRotate() + rotateVec);
+
+    //lerp dead y position
+    auto collision = GetComponent<CollisionComponent>();
+    float fSinT = sinf(D3DX_PI / 2.f + (D3DX_PI / 2.f) * fProgress);
+    float fLerpY = 2.f + (7.f - 2.f) * fSinT;
+    collision->SetSize(_vec3(2.f, fLerpY, 2.f));
 }
 
 void Player::KeyInput(_float dt)
@@ -653,6 +666,11 @@ float Player::NormalizeAngle(_float angle)
         angle += D3DX_PI * 2.f;
 
     return angle;
+}
+
+float Player::OffsetLerp(const _float& start, const _float& offset, float ratio)
+{
+    return start + offset * ratio;
 }
 
 _vec3 Player::OffsetLerp(const _vec3& start, const _vec3& offset, float ratio)

@@ -23,6 +23,7 @@ private:
 public:
     static CollisionComponent* Create(Object* owner);
     HRESULT Ready_Component()override;
+    void Update(_float dt)override;
     void Late_Update(_float dt)override;
 
     void SetOffset(_vec3 offset);
@@ -68,7 +69,7 @@ private:
 
     _vec3 Offset{ 0.f,0.f,0.f };
 
-    LPD3DXMESH BoundingBox = nullptr;   //µð¹ö±×¿ë ¸Þ½¬ 
+    LPD3DXMESH BoundingBox = nullptr;   //ï¿½ï¿½ï¿½ï¿½×¿ï¿½ ï¿½Þ½ï¿½ 
     BoundingBoxType BBType = BoundingBoxType::Box;
 
     _vec3 LocalMin{ -1.f,-1.f,-1.f };

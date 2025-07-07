@@ -17,6 +17,10 @@ public:
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
+
+    void EquipItem(Item::ItemType itemType);
+    void UnEquipItem(Item::ItemType itemType);
+    Object* GetBone(std::string boneName);
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -36,13 +40,12 @@ private:
     void UpdateDead(_float dt);
 
     void SaveStartRotation();
-    void EquipItem(Item::ItemType itemType);
-    void UnEquipItem(Item::ItemType itemType);
 
     _vec3 MatrixToEulerAngles(const _matrix& mat);
     void OnCollisionStay(Object* other);
     void IdleSmoothing(_float dt, std::string bone);
     float NormalizeAngle(_float angle);
+    float OffsetLerp(const _float& start, const _float& offset, float ratio);
     _vec3 OffsetLerp(const _vec3& start, const _vec3& offset, float ratio);
     _vec3 DegToRadLerp(const _vec3& startDeg, const _vec3& endDeg, float ratio);
     _vec3 GetPhasedRotation(float fProgress, vector<float>& phaseVec, vector<_vec3>& destinations);
