@@ -83,7 +83,6 @@ namespace Engine
 
 	typedef struct ChunkData
 	{
-		bool isActive = false;
 		int chunkX, chunkZ;			// 청크의 좌표 위치
 		std::vector<SB> sBlocks;	// 해당 청크에서 보관하는 Static Block
 	} CHUNK;

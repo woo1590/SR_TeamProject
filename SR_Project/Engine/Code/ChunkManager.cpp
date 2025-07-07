@@ -53,55 +53,6 @@ void ChunkManager::RemoveChunk(int chunkX, int chunkY)
     }
 }
 
-void ChunkManager::UpdateChunk(const _vec3& playerPos)
-{
-    int playerChunkX = static_cast<int>(floor(playerPos.x / CHUNK_SIZE));
-    int playerChunkY = static_cast<int>(floor(playerPos.z / CHUNK_SIZE));
-
-    std::unordered_set<std::pair<int, int>, PairHash> neededChunks;
-
-    for (int x = playerChunkX - renderDistance; x <= playerChunkX + renderDistance; ++x)
-    {
-        for (int y = playerChunkY - renderDistance; y <= playerChunkY + renderDistance; ++y)
-        {
-            neededChunks.emplace(x, y);
-            if (worldChunks.find({ x, y }) == worldChunks.end())
-            {
-                CreateChunk(x, y);
-            }
-        }
-    }
-
-    for (auto it = worldChunks.begin(); it != worldChunks.end(); )
-    {
-        if (neededChunks.find(it->first) == neededChunks.end())
-        {
-            Safe_Release(it->second);
-            it = worldChunks.erase(it);
-        }
-        else
-            ++it;
-    }
-}
-
-void ChunkManager::RenderChunk(const _vec3& playerPos)
-{
-    int playerChunkX = static_cast<int>(floor(playerPos.x / CHUNK_SIZE));
-    int playerChunkY = static_cast<int>(floor(playerPos.z / CHUNK_SIZE));
-
-    for (int x = playerChunkX - renderDistance; x <= playerChunkX + renderDistance; ++x)
-    {
-        for (int y = playerChunkY - renderDistance; y <= playerChunkY + renderDistance; ++y)
-        {
-            auto it = worldChunks.find({ x, y });
-            if (it != worldChunks.end())
-            {
-                it->second->Render();
-            }
-        }
-    }
-}
-
 void ChunkManager::Free()
 {
 	for (auto& pair : worldChunks)

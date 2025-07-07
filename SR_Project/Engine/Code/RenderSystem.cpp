@@ -44,7 +44,7 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->AddRef();
 
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	/*---------------Light Setting---------------------*/
 	Device->SetRenderState(D3DRS_LIGHTING, FALSE);

@@ -221,6 +221,6 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
 
 void MainApp::Free()
 {
-    //Core->DestroyInstance();
+    Core->DestroyInstance();
     GraphicDev->DestroyInstance();
 }

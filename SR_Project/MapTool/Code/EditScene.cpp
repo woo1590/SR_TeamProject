@@ -137,6 +137,10 @@ void EditScene::ImGui_SaveLoad()
 	ImGui::InputText(" : LOAD ST", load, sizeof(load)); ImGui::SameLine();
 	if (ImGui::Button("LD STAGE")) BlockMgr->LoadStage(load);
 
+	ImGui::SetNextItemWidth(100); ImGui::InputInt("Width", &Width); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputInt("Height", &Height); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputFloat("Scale", &Scale, 0.005f, 0.05f, "%.3f");
+
 	static char saveHeight[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE HM", saveHeight, sizeof(saveHeight)); ImGui::SameLine();
 	if (ImGui::Button("SV HEIGHTMAP")) CreateTerrain(saveHeight);
@@ -145,6 +149,12 @@ void EditScene::ImGui_SaveLoad()
 	ImGui::InputText(" : LOAD HM", loadHeight, sizeof(loadHeight)); ImGui::SameLine();
 	if (ImGui::Button("LD HEIGHTMAP")) PlaceTerrainBlocks(loadHeight);
 
+	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
+	{
+		CreateTerrain("heightMap");
+		PlaceTerrainBlocks("heightMap");
+	}
+	ImGui::SameLine();
 	if (ImGui::Button("CLEAR TERRAIN"))
 	{
 		staticBlocks.clear();
@@ -519,15 +529,14 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 void EditScene::CreateTerrain(const std::string& filename)
 {
 	TerrainCreater terrain;
-	terrain.CreateHeightmap(16, 16, 0.03f);
+	terrain.CreateHeightmap(Width, Height, Scale);
 	terrain.SaveHeightmapAsImage(filename);
 }
 
 void EditScene::PlaceTerrainBlocks(const std::string& filename)
 {
 	TerrainCreater terrain;
-	if (!terrain.LoadHeightmapFromImage(filename))
-		return;
+	if (!terrain.LoadHeightmapFromImage(filename)) return;
 	terrain.CreateBlockTerrain(10);
 
 	for (const auto& block : terrain.GetBlocks())
@@ -619,10 +628,10 @@ void EditScene::Place(_vec3& position)
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 		
-		// int chunkX = position.x / 16;
-		// int chunkY = position.z / 16;
-		// Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
-		// chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
+		int chunkX = position.x / 16;
+		int chunkY = position.z / 16;
+		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
+		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 
 		staticBlocks.push_back({ position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage });
 	}

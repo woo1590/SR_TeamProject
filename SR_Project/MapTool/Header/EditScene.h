@@ -44,6 +44,10 @@ private:
     void Free() override;
 
 private:
+    int Width = 0;
+    int Height = 0;
+    float Scale = 0.f;
+
     int selectedSBlockUsage = 0;
     int selectedSBlockAxis = 1;
     int selectedSBlockRot = 0;
