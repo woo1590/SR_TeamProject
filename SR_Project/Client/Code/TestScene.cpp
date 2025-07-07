@@ -73,18 +73,18 @@ void TestScene::Load()
 
 #endif
 	/*----------------Load Camera---------------------*/
-	//LoadBlock();
+	LoadBlock();
 
-	//player = Player::Create(ObjectMgr, ObjectType::Player);
-	//player->GetComponent<TransformComponent>()->SetPosition(40.f, 100.f, 30.f);
-	//ObjectMgr->AddObject(ObjectType::Player, player);
+	player = Player::Create(ObjectMgr, ObjectType::Player);
+	player->GetComponent<TransformComponent>()->SetPosition(40.f, 100.f, 30.f);
+	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
 	
 	CameraMgr->AddCamera(L"First_Camera", fCam);
 	CameraMgr->AddCamera(L"Third_Camera", tCam);
-	//tCam->SetTarget(player);
+	tCam->SetTarget(player);
 	
 	CameraMgr->SetMainCamera(L"First_Camera");
 	
@@ -93,22 +93,13 @@ void TestScene::Load()
 
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	//ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
-	//
-	//auto monster = ObjectMgr->GetObjectList(ObjectType::Monster);
-	//int size = monster.size();
-	//size = 2;
-	//
-	//ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
-	//ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 	
-
-	/*------------------Load UI------------------------*/
-	//LoadUI();
-	/*-------------------------------------------------*/
+	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
 	
-	//UILoader loader;
-	//loader.LoadUI(ObjectMgr, player);
+	UILoader loader;
+	loader.LoadUI(ObjectMgr, player);
 }
 
 void TestScene::Update(float dt)

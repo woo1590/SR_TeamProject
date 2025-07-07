@@ -33,6 +33,7 @@
 #include <optional>
 #include <random>
 #include <cassert>
+#include <variant>
 
 //Header
 #include "Base.h"

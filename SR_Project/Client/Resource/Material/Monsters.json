@@ -1,0 +1,78 @@
+{
+  "template" :{
+    "fx" : "BasicShader",
+    "constants": {
+    "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],      
+    "MatSpecular"  : [1.0, 1.0, 1.0],        
+    "Shininess"    : 32.0,                   
+
+    "Emissive"     : [0.0, 0.0, 0.0],        
+    "EmissivePow"  : 1.0,
+
+    "AlphaCut"     : 0.4,
+
+    "UVScale"      : [1.0, 1.0],             
+    "UVOffset"     : [0.0, 0.0]       
+    }
+  },
+
+  "materials":{
+    "ZombieBody_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/Body2.dds"
+      }
+    },
+    "ZombieHead_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/ZombieHead.dds"
+      }
+    },
+    "ZombieArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/Arm.dds"
+      }
+    },
+    "ZombieLeg_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/Leg.dds"
+      }
+    },
+     "CreeperFace_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Creeper_Face.dds"
+      }
+    },
+    "CreeperBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Creeper_Body.dds"
+      }
+    },
+    "CreeperLeg_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Creeper_Leg.dds"
+      }
+    },
+
+    "SkeletonBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Skeleton_Body.dds"
+      }
+    },
+    "SkeletonFace_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Skeleton_Face.dds"
+      }
+    },
+    "SkeletonBone_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Skeleton_Bone.dds"
+      }
+    },
+    "Bow_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/bow.dds"
+      }
+    }
+  
+  }
+}

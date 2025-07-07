@@ -124,9 +124,6 @@ void RenderSystem::PriorityPass()
 
 void RenderSystem::NonAlphaPass()
 {
-	CurrView = Camera->GetViewMatrix();
-	Device->SetTransform(D3DTS_VIEW, &CurrView);
-
 	for (const auto& r : RenderList[(int)RENDER_ID::Render_NonAlpha])
 		r->Render();
 }

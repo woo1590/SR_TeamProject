@@ -112,6 +112,7 @@ void Material::SetMat(const std::string& name, _matrix value)
 void Material::SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 value)
 {
     TexParam[name] = value;
+    value->AddRef();
 }
 
 void Material::SetShader(Shader* shader)
@@ -124,8 +125,30 @@ Shader* Material::GetShader() const
     return shader;
 }
 
+Material* Material::CloneInstance()
+{
+    Material* Instance = Material::Create();
+
+    Instance->IntParam = this->IntParam;
+    Instance->FloatParam = this->FloatParam;
+    Instance->Vec3Param = this->Vec3Param;
+    Instance->Vec4Param = this->Vec4Param;
+
+    Instance->TexParam = this->TexParam;
+    for (auto& [key, tex] : TexParam)
+        tex->AddRef();
+
+    Instance->shader = this->shader;
+    shader->AddRef();
+
+    return Instance;
+}
+
 void Material::Free()
 {
     Safe_Release(Texture);
     Safe_Release(Device);
+
+    std::for_each(TexParam.begin(), TexParam.end(), [](auto& pair) {Safe_Release(pair.second);});
+    Safe_Release(shader);
 }

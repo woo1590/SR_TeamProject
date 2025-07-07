@@ -88,55 +88,16 @@ HRESULT Loader::Load_TestScene()
 	auto cube = CubeMesh::Create();
 	resource->LoadMesh("Cube_Mesh", cube);
 	/*--------------------Load Shader---------------------------------*/
-	resource->LoadMaterial("SkyBox_Mtrl", "../Resource/Material/SkyBox.json");
-	resource->LoadMaterial("ZombieBody_Mtrl", "../Resource/Material/ZombieBody.json");
-	resource->LoadMaterial("ZombieHead_Mtrl", "../Resource/Material/ZombieHead.json");
-	resource->LoadMaterial("ZombieArm_Mtrl", "../Resource/Material/ZombieArm.json");
-	resource->LoadMaterial("ZombieLeg_Mtrl", "../Resource/Material/ZombieLeg.json");
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	//resource->LoadResource(L"../Resource/Asset/HY/Body2.dds", L"Body", TEXTURE::Tex_Cube, L"ZombieBody_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/ZombieHead.dds", L"Head", TEXTURE::Tex_Cube, L"ZombieHead_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/Arm.dds", L"Arm", TEXTURE::Tex_Cube, L"ZombieArm_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/Leg.dds", L"Leg", TEXTURE::Tex_Cube, L"ZombieLeg_Mtrl");
-	//
-	////////////////////////////////////////////////////////////////////////////////////
-	//resource->LoadResource(L"../Resource/Texture/Player/playerHead.dds", L"playerHead", TEXTURE::Tex_Cube, L"playerHead_Mtrl");
-	//resource->LoadResource(L"../Resource/Texture/Player/playerBody.dds", L"playerBody", TEXTURE::Tex_Cube, L"playerBody_Mtrl");
-	//resource->LoadResource(L"../Resource/Texture/Player/playerRightArm.dds", L"playerRightArm", TEXTURE::Tex_Cube, L"playerRightArm_Mtrl");
-	//resource->LoadResource(L"../Resource/Texture/Player/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube, L"playerLeftArm_Mtrl");
-	//resource->LoadResource(L"../Resource/Texture/Player/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
-	//resource->LoadResource(L"../Resource/Texture/Player/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
+	resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
+	resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
+	resource->LoadMaterial("../Resource/Material/SkyBox.json");
+	resource->LoadMaterial("../Resource/Material/Monsters.json");
+	resource->LoadMaterial("../Resource/Material/Player.json");
+	resource->LoadMaterial("../Resource/Material/Blocks.json");
+
 	//resource->LoadResource(L"../Resource/Texture/Player/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
 	//resource->LoadResource(L"../Resource/Texture/Player/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
 	//resource->LoadResource(L"../Resource/Texture/Player/arrow.dds", L"arrow", TEXTURE::Tex_Cube, L"arrow_Mtrl");
-
-	///////////////////////////////////////////////////////////////////////////////////
-	//resource->LoadResource(L"../Resource/Asset/HY/Creeper_Face.dds", L"CreeperFace", TEXTURE::Tex_Cube, L"CreeperFace_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/Creeper_Body.dds", L"CreeperBody", TEXTURE::Tex_Cube, L"CreeperBody_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/Creeper_Leg.dds", L"CreeperLeg", TEXTURE::Tex_Cube, L"CreeperLeg_Mtrl");
-
-	///////////////////////////////////////////////////////////////////////////////////
-	//resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Body.dds", L"SkeletonBody", TEXTURE::Tex_Cube, L"SkeletonBody_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Face.dds", L"SkeletonFace", TEXTURE::Tex_Cube, L"SkeletonFace_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
-	//resource->LoadResource(L"../Resource/Asset/HY/bow.dds", L"bow", TEXTURE::Tex_Cube, L"Bow_Mtrl");
-
-	///////////////////////////////////////////////////////////////////////////////////
-	resource->LoadMaterial("Dirtblock_Mtrl", "../Resource/Material/DirtBlock.json");
-	resource->LoadMaterial("GrassBlock", "../Resource/Material/GrassBlock.json");
-	resource->LoadMaterial("WoodBlock", "../Resource/Material/WoodBlock.json");
-	resource->LoadMaterial("WoodPlank", "../Resource/Material/WoodPlank.json");
-	resource->LoadMaterial("Stone", "../Resource/Material/Stone.json");
-	resource->LoadMaterial("CobbleStone", "../Resource/Material/CobbleStone.json");
-	resource->LoadMaterial("Lever", "../Resource/Material/Lever.json");
-	resource->LoadMaterial("ChestDown", "../Resource/Material/ChestDown.json");
-	resource->LoadMaterial("ChestLock", "../Resource/Material/ChestLock.json");
-	resource->LoadMaterial("IronCage", "../Resource/Material/IronCage.json");
-
-
-	
-
 	return S_OK;
 }
 

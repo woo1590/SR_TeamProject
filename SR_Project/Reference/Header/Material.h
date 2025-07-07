@@ -26,6 +26,7 @@ public:
     void SetShader(Shader* shader);
     Shader* GetShader()const;
 
+    Material* CloneInstance();
 private:
     void Free()override;
 

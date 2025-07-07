@@ -69,7 +69,7 @@ private:
 
     HWND hWnd;
 
-    _bool Debug_Mode = true;
+    _bool Debug_Mode = false;
     void Free()override;
 };
 

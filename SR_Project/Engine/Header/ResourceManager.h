@@ -24,8 +24,8 @@ public:
 
     /*------------Load .mat File----------------*/
     void LoadMesh(const std::string& key, Mesh* mesh);
-    void LoadMaterial(const std::string& key, const std::string& filePath);
-    Shader* LoadShader(const std::string& key);
+    void LoadMaterial(const std::string& filePath);
+    void LoadShader(const std::string& filePath, const std::string& key);
     void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
     LPDIRECT3DBASETEXTURE9 LoadTexture(const std::string& key, TEXTURE texType);
 

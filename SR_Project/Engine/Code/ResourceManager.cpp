@@ -93,84 +93,76 @@ void ResourceManager::LoadMesh(const std::string & key, Mesh* mesh)
     MeshContainer[key] = mesh;
 }
 
-void ResourceManager::LoadMaterial(const std::string& key, const std::string& filePath)
+void ResourceManager::LoadMaterial(const std::string& filePath)
 {
-    auto mtrl = Material::Create();
+    using json = nlohmann::json;
 
-    nlohmann::json j = nlohmann::json::parse(std::ifstream(filePath.c_str()));
+    auto baseMtrl = Material::Create();
 
-    //Shader
-    auto shader = LoadShader(j.value("fx", "Shaders/default.fx"));
-    mtrl->SetShader(shader);
+    json j = json::parse(std::ifstream(filePath.c_str()));
 
-    //Texture
-    for (auto& [slot, p] : j["textures"].items())
+    // ¼ÎÀÌ´õ
+    baseMtrl->SetShader(GetShader(j["template"].value("fx", "BasicShader")));
+
+    if (j["template"].contains("constants"))
     {
-        auto tex = (slot == "CubeMap") ? LoadTexture(p.get<std::string>(), TEXTURE::Tex_Cube)
-                                       : LoadTexture(p.get<std::string>(), TEXTURE::Tex_Diffuse);
-
-        mtrl->SetTexture(slot, tex);
+        const auto& c = j["template"]["constants"];
+        if (c.contains("Diffuse")) baseMtrl->SetVec4("g_Diffuse", _vec4(c["Diffuse"][0], c["Diffuse"][1], c["Diffuse"][2], c["Diffuse"][3]));
+        if (c.contains("Specular")) baseMtrl->SetVec4("g_Specular", _vec4(c["Specular"][0], c["Specular"][1], c["Specular"][2],1.f));
+        if (c.contains("Shininess")) baseMtrl->SetFloat("g_Shininess", c["Shininess"]);
+        if (c.contains("Emissive")) baseMtrl->SetVec4("g_Emissive", _vec4(c["Emissive"][0], c["Emissive"][1], c["Emissive"][2],1.f));
+        if (c.contains("EmissivePow")) baseMtrl->SetFloat("g_EmissivePow", c["EmissivePow"]);
+        if (c.contains("AlphaCut")) baseMtrl->SetFloat("g_AlphaCut", c["AlphaCut"]);
+        if (c.contains("UVScale")) baseMtrl->SetVec4("g_UVScale", _vec4(c["UVScale"][0], c["UVScale"][1], 0.f, 0.f));
+        if (c.contains("UVOffset")) baseMtrl->SetVec4("g_UVOffset", _vec4(c["UVOffset"][0], c["UVOffset"][1], 0.f, 0.f));
     }
 
-    //Constant
-    if (j.contains("constants"))
+    for (auto& [name, node] : j["materials"].items())
     {
-        auto& c = j["constants"];
+        Material* mat = baseMtrl->CloneInstance();
 
-        auto GetVec4 = [](const nlohmann::json& arr)->_vec4 {return _vec4(arr[0], arr[1], arr[2], arr[4]);};
+        if (node.contains("fx"))
+            mat->SetShader(ShaderContainer[node["fx"].get<std::string>()]);
 
-        if (c.contains("Diffuse"))
-            mtrl->SetVec4("g_Diffuse", GetVec4(c["Diffuse"]));
+        if(node.contains("textures"))
+            for (auto& [slot, path] : node["textures"].items())
+            {
+                auto tex = (slot == "CubeMap") ? LoadTexture(path, TEXTURE::Tex_Cube) :
+                                                 LoadTexture(path, TEXTURE::Tex_Diffuse);
 
-        if (c.contains("Ambient"))
-            mtrl->SetVec4("g_Ambient", _vec4(c["Ambient"][0], c["Ambient"][1], c["Ambient"][2], 1.f));
-        
-        if (c.contains("Specular"))
-            mtrl->SetVec4("g_Specular", _vec4(c["Specular"][0], c["Specular"][1], c["Specular"][2], 1.f));
-        mtrl->SetFloat("g_Shininess",c.value("Shininess", 0.f));
+                TextureContainer[path] = tex;
+                mat->SetTexture(slot, tex);
+            }
 
-        if (c.contains("AlphaCut"))
-            mtrl->SetFloat("g_AlphaCur", c.value("AlphaCut", 0.f));
+        if (node.contains("constants"))
+            for (auto& [key, value] : node["constants"].items())
+            {
+                if (value.is_number_integer())                  mat->SetInt(key, value);
+                if (value.is_number_float())                    mat->SetFloat(key, value);
+                if (value.is_array() && value.size() == 3)      mat->SetVec3(key, _vec3(value[0], value[1], value[2]));
+                if (value.is_array() && value.size() == 4)      mat->SetVec4(key, _vec4(value[0], value[1], value[2], value[3]));
+            }
 
-        if (c.contains("UVScale"))
-            mtrl->SetVec4("g_UVScale", _vec4(c["UVScale"][0], c["UVScale"][1], 0.f, 0.f));
-
-        if (c.contains("UVOffset"))
-            mtrl->SetVec4("g_UVOffset", _vec4(c["UVOffset"][0], c["UVOffset"][1], 0.f, 0.f));
-
-        if (c.contains("Emissive"))
-            mtrl->SetVec4("g_Emissive", _vec4(c["Emissive"][0], c["Emissive"][1], c["Emissive"][2], 1.f));
-        mtrl->SetFloat("g_EmissivePow", c.value("EmissivePow", 1.f));
+        MaterialContainer[name] = mat;
     }
-    
-    MaterialContainer[key] = mtrl;
 }
 
-Shader* ResourceManager::LoadShader(const std::string& key)
+void ResourceManager::LoadShader(const std::string& filePath, const std::string& key)
 {
-    auto iter = ShaderContainer.find(key);
+    auto device = GraphicDevice::GetInstance()->GetDevice();
 
-    if (iter != ShaderContainer.end())
-        return iter->second;
-    else
-    {
-        auto device = GraphicDevice::GetInstance()->GetDevice();
+    LPD3DXEFFECT effect = nullptr;
+    LPD3DXBUFFER error = nullptr;
+    D3DXCreateEffectFromFile(device, filePath.c_str(), nullptr, nullptr, 0, nullptr, &effect, &error);
 
-        LPD3DXEFFECT effect = nullptr;
-        LPD3DXBUFFER error = nullptr;
-        D3DXCreateEffectFromFile(device, key.c_str(), nullptr, nullptr, 0, nullptr, &effect, &error);
-
-        if (error) {
-            OutputDebugStringA((char*)error->GetBufferPointer());
-            error->Release();
-        }
-
-        auto shader = Shader::Create(effect);
-
-        ShaderContainer[key] = shader;
-
-        return shader;
+    if (error) {
+        OutputDebugStringA((char*)error->GetBufferPointer());
+        error->Release();
     }
+
+    auto shader = Shader::Create(effect);
+
+    ShaderContainer[key] = shader;
 }
 
 void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
