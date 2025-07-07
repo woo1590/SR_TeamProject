@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc;../../External/nlohmann</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
@@ -125,7 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc;../../External/nlohmann</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
@@ -152,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc;../../External/nlohmann</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -181,7 +181,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ENGINE_EXPORTS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/imgui/backends;../../External/imgui;../Header;../../Base;./;../../External/FMOD/inc;../../External/nlohmann</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
