@@ -101,8 +101,6 @@ void Item::SetMaterial(std::wstring _material)
 void Item::ApplyComponents()
 {
     auto transform = GetComponent<TransformComponent>();
-    //if(ownerObject)
-    //    transform->SetParent(ownerObject->GetComponent<TransformComponent>());
     transform->SetScale(itemScaleRatio.x * itemScale, itemScaleRatio.y * itemScale, itemScaleRatio.z * itemScale);
     transform->SetPosition(itemPosition.x * itemScale, itemPosition.y * itemScale, itemPosition.z * itemScale);
     transform->SetPivot(_vec3(pivotPosition.x * itemScale, pivotPosition.y * itemScale, pivotPosition.z * itemScale));

@@ -24,6 +24,8 @@
 #include "Bow.h"
 #include "Arrow.h"
 
+#include "StaticGrid.h"
+
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) {}
 Player::~Player() {}
 Player* Player::Create(ObjectManager* owner, ObjectType objType)
@@ -119,49 +121,71 @@ void Player::PickingTerrain()
     auto mainCam = curScene->GetCameraManager()->GetMainCamera();
     auto collision = curScene->GetCollisionSystem();
 
-    if (input->IsKeyPressed(RBUTTON))
+    if (input->IsKeyPressed(LBUTTON))
     {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
 
         if (hit.IsHit)
         {
-            if (State == ePlayerState::IDLE) 
+            if ((State == ePlayerState::IDLE || State == ePlayerState::WALK) && 
+                hit.Component->GetLayer() == CollisionComponent::LAYER_ENEMY && 
+                Bones["RHand"] != nullptr) 
             {
-                State = ePlayerState::WALK;
-                WalkTime = 0.f;
-            }
-            auto transform = GetComponent<TransformComponent>();
-            auto curPos = transform->GetPosition();
-            destinationPos = hit.Position;
+                if (State == ePlayerState::IDLE) 
+                {
+                    WalkTime = 0.f;
+                    State = ePlayerState::WALK;
 
-            destinationPos.y = 0.f;
-            curPos.y = 0.f;
-            PlayerDirection = destinationPos - curPos; 
+                    moveToAttack = true;
+                    moveToObject = hit.Component->GetOwner();
+                    return;
+                }
+
+                destinationPos = hit.Position;
+                auto transform = GetComponent<TransformComponent>();
+                auto curPos = transform->GetWorldPosition();
+
+                destinationPos.y = 0.f;
+                curPos.y = 0.f;
+                PlayerDirection = destinationPos - curPos;
+
+                auto distance = sqrtf(PlayerDirection.x * PlayerDirection.x + PlayerDirection.z * PlayerDirection.z);
+                if (distance <= swordAttackRange) 
+                {
+                    State = ePlayerState::ATTACK;
+                    AttackTime = 0.f;
+
+                    SaveStartRotation();
+                    curPos = transform->GetWorldPosition();
+                    auto attackPos = hit.Position;
+                    AttackDirection = attackPos - curPos;
+                }
+            }
+            if (State == ePlayerState::IDLE || State == ePlayerState::WALK)
+            {
+                if (State == ePlayerState::IDLE) 
+                {
+                    State = ePlayerState::WALK;
+                    WalkTime = 0.f;
+                }
+                if (moveToAttack) 
+                {
+                    moveToAttack = false;
+                    moveToObject = nullptr;
+                }
+                auto transform = GetComponent<TransformComponent>();
+                auto curPos = transform->GetWorldPosition();
+                destinationPos = hit.Position;
+
+                destinationPos.y = 0.f;
+                curPos.y = 0.f;
+                PlayerDirection = destinationPos - curPos;
+            }
         }
     }
 
-    if (State != ePlayerState::ATTACK && input->IsKeyPressed(Z) && Bones["RHand"] != nullptr)
-    {
-        Ray ray = mainCam->ScreenPointRay();
-        HitInfo hit = collision->Raycast(ray);
-
-        if (hit.IsHit)
-        {
-            if (State == ePlayerState::IDLE || State == ePlayerState::WALK) 
-            {
-                State = ePlayerState::ATTACK;
-                AttackTime = 0.f;
-                SaveStartRotation();
-            }
-            auto transform = GetComponent<TransformComponent>();
-            auto curPos = transform->GetWorldPosition();
-            auto attackPos = hit.Position;
-            AttackDirection = attackPos - curPos;
-        }
-    }
-
-    if (State != ePlayerState::SHOOT && input->IsKeyPressed(X) && Bones["LHand"] != nullptr)
+    if (State != ePlayerState::SHOOT && input->IsKeyPressed(RBUTTON) && Bones["LHand"] != nullptr)
     {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
@@ -250,6 +274,12 @@ void Player::UpdateWalk(_float dt) {
     SetRotation({ fAngle, 0.f, 0.f }, "RArm");
     
     //Move Player
+    auto transform = GetComponent<TransformComponent>();
+    if (moveToAttack)
+    {
+        PlayerDirection = moveToObject->GetComponent<TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
+        PlayerDirection.y = 0.f;
+    }
     _vec3 vDir;
     D3DXVec3Normalize(&vDir, &PlayerDirection);
     
@@ -261,14 +291,26 @@ void Player::UpdateWalk(_float dt) {
         vDir.z * Speed * Scale * dt
     };
 
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetPosition(transform->GetPosition() + moveVec);
+    auto blockPos = transform->GetWorldPosition() + moveVec;
+    auto grid = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetStaticGrid();
+    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y+1), grid->WorldToCell(blockPos.z));
+    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y-1), grid->WorldToCell(blockPos.z));
+    if (blockUp == nullptr && blockDown == nullptr)
+    {
+        transform->Translate(moveVec);
+    }
+    else if (blockUp == nullptr && blockDown->GetOwner()->GetObjectType() == ObjectType::StaticBlock) {
+        transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
+    }
+
+    auto blockOn = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z));
+    if (blockOn == nullptr) GetComponent<PhysicsComponent>()->SetGround(false);
     
     //Rotate Player
     const float fRotateDuration = 0.05f;
 
     float TargetAngle = atan2f(vDir.x, vDir.z);
-    _vec3 vCurRot = GetComponent<TransformComponent>()->GetRotate();
+    _vec3 vCurRot = transform->GetRotate();
 
     float curAngle = NormalizeAngle(vCurRot.y);
     float deltaAngle = NormalizeAngle(TargetAngle - curAngle);
@@ -277,14 +319,35 @@ void Player::UpdateWalk(_float dt) {
     transform->SetRotate(transform->GetRotate() + _vec3{ 0.f, rotValue, 0.f });
     
     //CheckExit
+    if (moveToAttack) 
+    {
+        auto curPos = transform->GetWorldPosition();
+        auto objectPos = moveToObject->GetComponent<TransformComponent>()->GetWorldPosition();
+        AttackDirection = objectPos - curPos;
+
+        AttackDirection.y = 0.f;
+        curPos.y = 0.f;
+
+        auto distance = sqrtf(AttackDirection.x * AttackDirection.x + AttackDirection.z * AttackDirection.z);
+        if (distance <= swordAttackRange) 
+        {
+            State = ePlayerState::ATTACK;
+            AttackTime = 0.f;
+
+            SaveStartRotation();
+        }
+        return;
+    }
+
     auto curPos = transform->GetPosition();
     auto posGap = curPos - destinationPos;
+
     auto distance = sqrtf(posGap.x * posGap.x + posGap.z * posGap.z);
-    if (distance < 0.5f) 
+    if (distance < 1.f)
     {
         State = ePlayerState::IDLE;
         WalkTime = 0.f;
-    } 
+    }
 }
 void Player::UpdateRoll(_float dt)
 {
@@ -417,7 +480,13 @@ void Player::UpdateAttack(_float dt) {
     if (AttackTime >= fAttackDuration) 
     {
         AttackTime = 0.f;
-        if (WalkTime == 0.f) 
+        if (moveToAttack) {
+            moveToAttack = false;
+            moveToObject = nullptr;
+
+            State = ePlayerState::IDLE;
+        }
+        else if (WalkTime == 0.f) 
             State = ePlayerState::IDLE;
         else 
         {

@@ -164,7 +164,7 @@ void Arrow::PlayerArrowInfo()
 
     ArrowRotateSet();
 
-    auto collision = GetComponent<CollisionComponent>();
+    auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
@@ -182,7 +182,7 @@ void Arrow::MonsterArrowInfo()
 
     ArrowRotateSet();
 
-    auto collision = GetComponent<CollisionComponent>();
+    auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_ENEMY);
     collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_DEFAULT);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
