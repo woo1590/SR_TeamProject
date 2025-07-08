@@ -19,6 +19,7 @@ public:
     void AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
     void Render();
 
+    void InitializeAirBlocks();
     void BuildChunkFace();
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, const _vec3& blockPos, int faceDir);
 

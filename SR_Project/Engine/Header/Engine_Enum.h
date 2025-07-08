@@ -119,10 +119,10 @@ namespace Engine
 	enum StaticBlockRot { sZP, sZM, sXP, sXM, sREnd };
 	enum StaticBlockType
 	{
-		sBlockNone,
+		Air,
 		Dirt, GrassDirt, Wood, WoodPlank,
 		Stone, CobbleStone, SmoothStone, StoneBrick, MossyStoneBrick,
-		Glass, Leaf, Air,
+		Glass, Leaf,
 		sBlockEnd
 	};
 	enum StaticBlockUsage { Basic, Half, Stair, Alpha, Fence };

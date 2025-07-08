@@ -32,7 +32,6 @@ Bridge* Bridge::Create(ObjectManager* owner, ObjectType objType, DynamicBlockTyp
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {
         Safe_Release(Instance);
-        MessageBoxW(nullptr, L"Bridge Created Failed", L"Fail", MB_OK);
         Instance = nullptr;
     }
 
@@ -44,28 +43,56 @@ HRESULT Bridge::Ready_Object(ObjectManager* owner, ObjectType objType)
     Object::Ready_Object();
     auto transform = AddComponent<TransformComponent>();
 
-    Parts["IronParCage"] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), this, "IronCage_Mtrl");
-    auto ironParTrans = Parts["IronParCage"]->GetComponent<TransformComponent>();
+    Parts["BriPar"] = Part::Create(owner, objType, _vec3(1.f, 1.f, 1.f), this, "WoodPlank_Mtrl");
+    auto BriPar = Parts["BriPar"]->GetComponent<TransformComponent>();
 
-    Parts["IronCage0"] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], "IronCage_Mtrl");
-    auto ironTrans = Parts["IronCage0"]->GetComponent<TransformComponent>();
-
-    ironParTrans->Translate(-0.5f, 3.f, 0.f);
-    ironTrans->Translate(1.f, 0.f, 0.f);
-
-    for (int i = 1; i < Count; ++i)
+    for (int i = 1; i <= 4; ++i)
     {
-        string fir = "IronCage_" + std::to_string(i) + "_1";
-        Parts[fir] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], "IronCage_Mtrl");
-        auto first = Parts[fir]->GetComponent<TransformComponent>();
+        string Bri = "Bri" + std::to_string(i);
+        Parts[Bri] = Part::Create(owner, objType, _vec3(1.f, 1.f, 1.f), Parts["BriPar"], "WoodPlank_Mtrl");
+        auto BriTrans = Parts[Bri]->GetComponent<TransformComponent>();
 
-        string sec = "IronCage_" + std::to_string(i) + "_2";
-        Parts[sec] = Part::Create(owner, objType, _vec3(0.1f, 4.f, 0.1f), Parts["IronParCage"], "IronCage_Mtrl");
-        auto second = Parts[sec]->GetComponent<TransformComponent>();
-
-        first->Translate(2.f * i, 0.f, 0.f);
-        second->Translate(2.f * i + 1.f, 0.f, 0.f);
+        BriTrans->Translate(2.f * i, 0.f, 0.f);
     }
+
+    for (int i = 1; i <= 4; ++i)
+    {
+        for (int j = 0; j <= 4; ++j)
+        {
+            string Bri = "Bricount" + std::to_string(i) + "_" + std::to_string(j);
+            Parts[Bri] = Part::Create(owner, objType, _vec3(1.f, 0.5f, 1.f), Parts["BriPar"], "WoodPlank_Mtrl");
+            auto briSon = Parts[Bri]->GetComponent<TransformComponent>();
+            briSon->Translate(2.f * j, 0.5f, -2.f * i);
+        }
+    }
+
+    Parts["Stick1"] = Part::Create(owner, objType, _vec3(0.5f, 4.f, 0.5f), this, "WoodBlock_Mtrl");
+    auto st1Trans = Parts["Stick1"]->GetComponent<TransformComponent>();
+
+    Parts["Stick2"] = Part::Create(owner, objType, _vec3(0.5f, 4.f, 0.5f), this, "WoodBlock_Mtrl");
+    auto st2Trans = Parts["Stick2"]->GetComponent<TransformComponent>();
+
+    st1Trans->Translate(0.f, 5.f, 2.f);
+    st2Trans->Translate(8.f, 5.f, 2.f);
+
+    Parts["Stick3"] = Part::Create(owner, objType, _vec3(0.25f, 8.f, 0.25f), this, "WoodBlock_Mtrl");
+    auto st3Trans = Parts["Stick3"]->GetComponent<TransformComponent>();
+
+    Parts["Stick4"] = Part::Create(owner, objType, _vec3(0.25f, 8.f, 0.25f), Parts["Stick3"], "WoodBlock_Mtrl");
+    auto st4Trans = Parts["Stick4"]->GetComponent<TransformComponent>();
+    
+    st3Trans->SetRotate(D3DXToRadian(90.f), 0.f, 0.f);
+    st3Trans->Translate(1.5f, 8.f, 0.f);
+    st4Trans->Translate(5.5f, 0.f, 0.f);
+
+    Parts["Stick5"] = Part::Create(owner, objType, _vec3(4.f, 0.15f, 0.15f), this, "WoodPlank_Mtrl");
+    auto st5Trans = Parts["Stick5"]->GetComponent<TransformComponent>();
+
+    st5Trans->Translate(4.f, 8.f, 2.f);
+
+    BriPar->SetIsBlock();
+    BriPar->SetPivotEnable(TRUE);
+    BriPar->SetPivot(_vec3(0.f, 0.f, 0.f));
 
     for (auto& part : Parts)
         owner->AddObject(objType, part.second);
@@ -123,7 +150,7 @@ void Bridge::SetRotation(_vec3 rotation, string str)
 
 void Bridge::Operate()
 {
-    
+
 }
 
 void Bridge::Free()

@@ -53,7 +53,7 @@ void EditScene::Load()
 #ifdef USE_IMGUI
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapTool", [this]() {this->ImGui_Main();});
 #endif
-
+	Terrain = new TerrainCreater;
 	CollisionSys = CollisionSystem::Create(this);
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
@@ -137,14 +137,18 @@ void EditScene::ImGui_SaveLoad()
 
 	static char save[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE ST", save, sizeof(save)); ImGui::SameLine();
-	if (ImGui::Button("SV STAGE")) BlockMgr->SaveStage(save);
+	if (ImGui::Button("SV STAGE")) BlockMgr->SaveChunk(save);
 
 	static char load[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : LOAD ST", load, sizeof(load)); ImGui::SameLine();
 	if (ImGui::Button("LD STAGE"))
 	{
 		staticBlocks.clear();
-		BlockMgr->LoadStage(load);
+		BlockMgr->LoadChunk(load);
+
+		// auto chunks = ChunkMgr->GetChunks();
+		// for (auto& [key, chunk] : chunks)
+		// 	chunk->BuildChunkFace();
 	}
 
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
@@ -154,17 +158,12 @@ void EditScene::ImGui_SaveLoad()
 
 	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
 	{
-		staticBlocks.clear();
-		dynamicBlocks.clear();
-
-		ObjectMgr->ClearList(ObjectType::StaticBlock);
-		ObjectMgr->ClearList(ObjectType::DynamicBlock);
-
-		TerrainCreater terrain;
-		terrain.Free();
-
 		CreateTerrain("heightMap");
 		PlaceTerrainBlocks("heightMap");
+		
+		auto chunks = ChunkMgr->GetChunks();
+		for (auto& [key, chunk] : chunks)
+			chunk->BuildChunkFace();
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("CLEAR TERRAIN"))
@@ -175,13 +174,12 @@ void EditScene::ImGui_SaveLoad()
 		ObjectMgr->ClearList(ObjectType::StaticBlock);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 
-		TerrainCreater terrain;
-		terrain.Free();
+		Terrain->Free();
 	}
 
-	auto chunks = ChunkMgr->GetChunks();
-	for (auto& [key, chunk] : chunks)
-		chunk->BuildChunkFace();
+	static char loadHeight[16]{}; ImGui::SetNextItemWidth(150);
+	ImGui::InputText(" : LOAD HM", loadHeight, sizeof(loadHeight)); ImGui::SameLine();
+	if (ImGui::Button("LD HEIGHTMAP")) PlaceTerrainBlocks(loadHeight);
 }
 
 void EditScene::ImGui_SetBlockType()
@@ -203,7 +201,7 @@ void EditScene::ImGui_SetBlockType()
 		}
 	}
 
-	if (staticBlockType == StaticBlockType::sBlockNone)
+	if (staticBlockType == StaticBlockType::Air)
 	{
 		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE"};
 		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
@@ -213,7 +211,7 @@ void EditScene::ImGui_SetBlockType()
 
 void EditScene::ImGui_SetBlockUsage()
 {
-	if (staticBlockType == StaticBlockType::sBlockNone)
+	if (staticBlockType == StaticBlockType::Air)
 		return;
 
 	std::vector<const char*> usageOptions;
@@ -245,7 +243,7 @@ void EditScene::ImGui_SetBlockUsage()
 
 void EditScene::ImGui_SetBlockInfo()
 {
-	if (staticBlockType != StaticBlockType::sBlockNone)
+	if (staticBlockType != StaticBlockType::Air)
 	{
 		switch (staticBlockUsage)
 		{
@@ -544,21 +542,23 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 
 void EditScene::CreateTerrain(const std::string& filename)
 {
-	TerrainCreater terrain;
-	terrain.CreateHeightmap(WidthX, WidthZ, Scale);
-	terrain.SaveHeightmapAsImage(filename);
+	Terrain->CreateHeightmap(WidthX, WidthZ, Scale);
+	Terrain->SaveHeightmapAsImage(filename);
 }
 
 void EditScene::PlaceTerrainBlocks(const std::string& filename)
 {
-	TerrainCreater terrain;
-	if (!terrain.LoadHeightmapFromImage(filename)) return;
+	if (!Terrain->LoadHeightmapFromImage(filename)) return;
 
-	terrain.CreateBlockTerrain(WidthX, WidthZ, Height);
+	Terrain->CreateBlockTerrain(WidthX, WidthZ, Height);
 
-	for (const auto& block : terrain.GetBlocks())
+	for (const auto& block : Terrain->GetBlocks())
 	{
 		_vec3 position = block.Pos * 2.f;
+		staticBlockUsage = block.Usage;
+		staticBlockType = block.Type;
+		staticBlockAxis = block.Axis;
+		staticBlockRot = block.Rot;
 		Place(position);
 	}
 }
@@ -637,8 +637,10 @@ void EditScene::Place(_vec3& position)
 	for (const auto& block : staticBlocks) if (block.Pos == position) return;
 	for (const auto& block : dynamicBlocks) if (block.Pos == position) return;
 	
-	if (staticBlockType != StaticBlockType::sBlockNone)
+	if (staticBlockType != StaticBlockType::Air)
 	{
+		if (staticBlockType == StaticBlockType::Air) return;
+
 		auto newBlockObj = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 		if (!newBlockObj) return;
 		position += newBlockObj->GetComponent<TransformComponent>()->GetPosition();
@@ -647,10 +649,10 @@ void EditScene::Place(_vec3& position)
 		
 		int chunkX = int(position.x / CHUNK_SIZE);
 		int chunkY = int(position.z / CHUNK_SIZE);
-
+		
 		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
 		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
-		chunk->BuildChunkFace();
+		// chunk->BuildChunkFace();
 
 		staticBlocks.push_back({ position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage });
 	}
@@ -672,6 +674,7 @@ void EditScene::Free()
 	Safe_Release(CameraMgr);
 	Safe_Release(BlockMgr);
 	Safe_Release(ChunkMgr);
+	Safe_Release(Terrain);
 	staticBlocks.clear();
 	staticBlocks.shrink_to_fit();
 	Scene::Free();

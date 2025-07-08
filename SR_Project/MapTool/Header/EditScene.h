@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "DynamicBlock.h"
 
+class TerrainCreater;
 class EditScene : public Scene
 {
     friend class Scene;
@@ -49,17 +50,19 @@ private:
     int Height = 0;
     float Scale = 0.f;
 
+    TerrainCreater* Terrain = nullptr;
+
     int selectedSBlockUsage = 0;
     int selectedSBlockAxis = 1;
     int selectedSBlockRot = 0;
-    int selectedSBlockType = static_cast<int>(StaticBlockType::sBlockNone);
+    int selectedSBlockType = static_cast<int>(StaticBlockType::Air);
 
     int selectedDBlockAxis = 0;
     int selectedDBlockRot = 0;
     int selectedDBlockType = static_cast<int>(DynamicBlockType::dBlockNone);
 
     StaticBlockUsage staticBlockUsage = StaticBlockUsage::Basic;
-    StaticBlockType staticBlockType = StaticBlockType::sBlockNone;
+    StaticBlockType staticBlockType = StaticBlockType::Air;
     StaticBlockAxis staticBlockAxis = StaticBlockAxis::sAY;
     StaticBlockRot staticBlockRot = StaticBlockRot::sREnd;
 
