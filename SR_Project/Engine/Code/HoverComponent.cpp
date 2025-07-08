@@ -18,7 +18,7 @@ void HoverComponent::Update(float dt)
 	assert(transform && "HoverComponent::Update - transformComponent is Missing");
 	assert(renderer && "HoverComponent::Update - UIRenderer is Missing");
 
-	_vec3 pos = transform->GetPosition();
+	_vec3 pos = transform->GetWorldPosition();
 
 	_vec3 scale = transform->GetScale();
 	_vec2 overrideScale = renderer->GetScale();

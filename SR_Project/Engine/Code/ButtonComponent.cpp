@@ -27,8 +27,7 @@ void ButtonComponent::ApplyHover(bool over)
 	renderer->SetTexture(over ? hoverKey : baseKey);
 }
 
-
-void ButtonComponent::Update(float dt)
+void ButtonComponent::Update(float dt) 
 {
 	if (prevHover != isHovered)
 	{

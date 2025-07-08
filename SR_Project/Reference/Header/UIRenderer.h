@@ -33,6 +33,8 @@ public:
 	LONG GetFullWidth() const { return fullWidth; }
 	LONG GetFullHeight() const { return fullHeight; }
 
+	void SetSrcRect(const RECT& rect);
+
 	void SetVisible(bool visible) { isVisible = visible; }
 	bool IsVisible() const { return isVisible; }
 

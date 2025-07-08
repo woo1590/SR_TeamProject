@@ -58,7 +58,7 @@ namespace Engine
 
 	enum class SlotSize {Small, Default, Large};
 
-	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Always };
+	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Loading, Always };
 
 
 	enum class Color

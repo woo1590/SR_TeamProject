@@ -9,7 +9,7 @@
 #include "ResourceManager.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
-
+#include "Object.h"
 #include "ObjectManager.h"
 #include "Player.h"
 
@@ -32,7 +32,7 @@ HRESULT UIDebugObj::Ready_Object()
 
 void UIDebugObj::Update(float dt)
 {
-	const auto& playerInfo = player->GetComponent<InfoComponent<PlayerInfo>>();
+	const auto& playerInfo = owner->GetFrontObject(ObjectType::Player)->GetComponent<InfoComponent<PlayerInfo>>();
 	const auto& info = playerInfo->GetInfo();
 	auto font = GetComponent<FontComponent>();
 
@@ -49,8 +49,6 @@ void UIDebugObj::Update(float dt)
 		L"\nExp: " + to_wstring(info.curExp) + L"/" + to_wstring(info.maxExp) +
 		L"\nspeed: " + to_wstring((int)info.speed),
 		debugRect, Color::Cyan, DT_LEFT, FontType::Title);
-
-	
 
 	accTime += dt;
 	++frameCount;

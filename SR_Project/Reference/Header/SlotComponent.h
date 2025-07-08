@@ -25,7 +25,7 @@ public:
 	Object* GetItem()const { return itemObj; }
 
 	void SetAllowedType(SlotItemType type) { allowedType = type; }
-	SlotItemType GetAllowedType() const { return allowedType; }
+	SlotItemType GetAllowedType() const { return allowedType; } 
 
 	void OnClick();
 	void BindRenderers(UIRenderer* _base, UIRenderer* _highlight);
