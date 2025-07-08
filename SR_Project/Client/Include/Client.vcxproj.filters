@@ -237,7 +237,7 @@
     </Filter>
     <Filter Include="02. Object\Monster\RedGolem\Projectile">
       <UniqueIdentifier>{14456796-8f96-4088-a27a-aa13642bd049}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\Slot\ItemSlot">
       <UniqueIdentifier>{18112d4c-19ea-41a9-9f17-c8ddf317460a}</UniqueIdentifier>
     </Filter>
@@ -294,6 +294,21 @@
     </Filter>  
     <Filter Include="99. Etc\Shader/Fx">
       <UniqueIdentifier>{23c39b64-fa09-4d84-bbba-49cff170b28d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\BTNode\Action\Monster">
+      <UniqueIdentifier>{481858d7-6ae8-4b21-86ff-388aa5fb651a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\BTNode\Action\Boss">
+      <UniqueIdentifier>{261c8862-ddc4-4747-8e27-9b034224954a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\BTNode\Decorator">
+      <UniqueIdentifier>{be1919a7-a3bc-40ae-bd98-cc7385c6ad57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\BTNode\Decorator\Monster">
+      <UniqueIdentifier>{752dcd1f-3094-48b0-a3f8-b55390818aae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\BTNode\Decorator\Boss">
+      <UniqueIdentifier>{f09359cc-229b-419e-a55b-5dfb052caba8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -357,12 +372,6 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02. Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\IsTargetInAttackRange.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\IsTargetInDetectRange.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\FirstCam.h">
       <Filter>02. Object\CameraActor\FirstCam</Filter>
     </ClInclude>
@@ -383,18 +392,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\IsAlive.h">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Chase.h">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Attack.h">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Die.h">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
@@ -430,9 +427,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\ExitBtn.h">
       <Filter>02. Object\UIObj\Button\ExitBtn</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Rotate.h">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DirectionLight.h">
       <Filter>02. Object\Light\Direction</Filter>
@@ -520,7 +514,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. Object\Item\Arrow</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ItemSlot.h">
       <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
     </ClInclude>
@@ -562,6 +556,36 @@
     </ClInclude>
     <ClInclude Include="..\Header\QuestTextObj.h">
       <Filter>02. Object\UIObj\QuestTextObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Attack.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Chase.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Die.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Rotate.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsTimerOn.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsTargetInAttackRange.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsTargetInDetectRange.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsAlive.h">
+      <Filter>02. Object\Monster\BTNode\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsTargetInRange.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossChase.h">
+      <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -619,12 +643,6 @@
     <ClCompile Include="..\Code\InventoryPanel.cpp">
       <Filter>02. Object\UIObj\Panel\InventoryPanel</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\IsTargetInAttackRange.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\IsTargetInDetectRange.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\FirstCam.cpp">
       <Filter>02. Object\CameraActor\FirstCam</Filter>
     </ClCompile>
@@ -648,18 +666,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\IsAlive.cpp">
-      <Filter>02. Object\Monster\BTNode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Attack.cpp">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Chase.cpp">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Die.cpp">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
@@ -698,9 +704,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExitBtn.cpp">
       <Filter>02. Object\UIObj\Button\ExitBtn</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Rotate.cpp">
-      <Filter>02. Object\Monster\BTNode\Action</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DirectionLight.cpp">
       <Filter>02. Object\Light\Direction</Filter>
@@ -788,7 +791,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. Object\Item\Arrow</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ItemSlot.cpp">
       <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
     </ClCompile>
@@ -830,6 +833,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\QuestTextObj.cpp">
       <Filter>02. Object\UIObj\QuestTextObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Attack.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Chase.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Die.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rotate.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsTimerOn.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsTargetInAttackRange.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsTargetInDetectRange.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsAlive.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsTargetInRange.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossChase.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

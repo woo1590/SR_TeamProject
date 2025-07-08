@@ -4,6 +4,7 @@
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 #include "InfoComponent.h"
+#include "AIController.h"
 
 #include "ResourceManager.h"
 #include "EngineCore.h"
@@ -11,6 +12,7 @@
 
 #include "ObjectManager.h"
 #include "Player.h"
+
 
 UIDebugObj* UIDebugObj::Create(ObjectManager* owner)
 {
@@ -33,6 +35,10 @@ void UIDebugObj::Update(float dt)
 	const auto& playerInfo = player->GetComponent<InfoComponent<PlayerInfo>>();
 	const auto& info = playerInfo->GetInfo();
 	auto font = GetComponent<FontComponent>();
+
+	auto monster = owner->GetFrontObject(ObjectType::Monster);
+	auto AI = monster->GetComponent<AIController>();
+
 
 	font->ClearText();
 
