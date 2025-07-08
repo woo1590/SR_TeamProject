@@ -125,7 +125,7 @@ void RedGolem::InitTransform(ObjectType objType)
 
     //body
     SetScale(_vec3(40.f * Scale, 30.f * Scale, 20.f * Scale), "Body");
-    Add_Bone("LightBlock", objType, Bones["Body"], "RedgolemLightblock_Mtrl");
+    Add_Bone("LightBlock", objType, Bones["Body"], "RedGolemLightblock_Mtrl");
     SetScale(_vec3(20.f * Scale, 20.f * Scale, 20.f * Scale), "LightBlock");
     SetPosition(_vec3(0.f, -3.f * Scale, -10.f * Scale), "LightBlock");
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f, -20.f * Scale, 0.0f));

@@ -72,7 +72,42 @@
       "textures":{
         "CubeMap":"../Resource/Asset/HY/bow.dds"
       }
-    }
+    },
+
+    "RedGolemBody_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/redgolem_body.dds"
+      }
+    },
+
+    "RedGolemFace_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/redgolem_face.dds"
+      }
+    },
   
+    "RedGolemArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/redgolem_arm.dds"
+      }
+    },
+
+    "RedGolemFoot_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/redgolem_foot.dds"
+      }
+    },
+
+    "RedGolemLightblock_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/redgolem_lightblock.dds"
+      }
+    },
+
+    "RedGolemHand_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/HY/redgolem_hand.dds"
+      }
+    }
   }
 }

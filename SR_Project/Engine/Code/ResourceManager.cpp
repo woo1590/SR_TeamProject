@@ -50,7 +50,7 @@ void ResourceManager::LoadMaterial(const std::string& filePath)
     json j = json::parse(std::ifstream(filePath.c_str()));
 
     // ¼ÎÀÌ´õ
-    baseMtrl->SetShader(GetShader(j["template"].value("fx", "BasicShader")));
+       baseMtrl->SetShader(GetShader(j["template"].value("fx", "BasicShader")));
 
     if (j["template"].contains("constants"))
     {
