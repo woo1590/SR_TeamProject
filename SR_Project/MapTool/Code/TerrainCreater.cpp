@@ -60,8 +60,8 @@ bool TerrainCreater::LoadHeightmapFromImage(const std::string& filename)
 
     stbi_image_free(data);
 
-    this->width = width;
-    this->height = height;
+    this->Wid = width;
+    this->Hei = height;
 
     return true;
 }
@@ -77,10 +77,10 @@ void TerrainCreater::CreateBlockTerrain(int terrainWidth, int terrainDepth, int 
     {
         for (int x = 0; x < terrainWidth; ++x)
         {
-            int mapX = min(x, width - 1);
-            int mapZ = min(z, height - 1);
+            int mapX = min(x, Wid - 1);
+            int mapZ = min(z, Hei - 1);
 
-            unsigned char heightValue = heightMap[mapZ * width + mapX];
+            unsigned char heightValue = heightMap[mapZ * Wid + mapX];
             int blockHeight = (heightValue * maxHeight) / 255;
 
             for (int y = 0; y < maxHeight; ++y)
@@ -88,15 +88,13 @@ void TerrainCreater::CreateBlockTerrain(int terrainWidth, int terrainDepth, int 
                 int index = GetIndex(x, y, z);
 
                 StaticBlockData block;
-                block.Pos = { (float)x, (float)y, (float)z };
+                block.Pos = { x * 2.f, y * 2.f, z * 2.f };
                 block.Axis = StaticBlockAxis::sAY;
                 block.Rot = StaticBlockRot::sREnd;
                 block.Usage = StaticBlockUsage::Basic;
 
-                if (y < blockHeight)
-                    block.Type = GetBlockTypeByHeight(y, maxHeight);
-                else
-                    block.Type = StaticBlockType::Air;
+                if (y < blockHeight) block.Type = GetBlockTypeByHeight(y, maxHeight);
+                else block.Type = StaticBlockType::Air;
 
                 blocks[index] = block;
             }

@@ -80,12 +80,15 @@ void TestScene::Load()
 	BlockMgr		= BlockManager::Create(this);
 	ChunkMgr		= ChunkManager::Create(this);
 
-	BlockMgr->LoadChunk("testScene");
 	auto& chunks = ChunkMgr->GetChunks();
+
 	for (auto& [key, chunk] : chunks)
-	{
+		chunk->InitializeAirBlocks();
+
+	BlockMgr->LoadChunk("testScene");
+
+	for (auto& [key, chunk] : chunks)
 		chunk->BuildChunkFace();
-	}
 
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);

@@ -58,6 +58,8 @@ void EditScene::Load()
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
 
+	Terrain = new TerrainCreater;
+
 	auto cube = CubeMesh::Create();
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 	
@@ -137,14 +139,14 @@ void EditScene::ImGui_SaveLoad()
 
 	static char save[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE ST", save, sizeof(save)); ImGui::SameLine();
-	if (ImGui::Button("SV STAGE")) BlockMgr->SaveStage(save);
+	if (ImGui::Button("SV STAGE")) BlockMgr->SaveChunk(save);
 
 	static char load[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : LOAD ST", load, sizeof(load)); ImGui::SameLine();
 	if (ImGui::Button("LD STAGE"))
 	{
 		staticBlocks.clear();
-		BlockMgr->LoadStage(load);
+		BlockMgr->LoadChunk(load);
 	}
 
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
@@ -160,8 +162,8 @@ void EditScene::ImGui_SaveLoad()
 		ObjectMgr->ClearList(ObjectType::StaticBlock);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 
-		TerrainCreater terrain;
-		terrain.Free();
+		TerrainCreater Terrain;
+		Terrain.Free();
 
 		CreateTerrain("heightMap");
 		PlaceTerrainBlocks("heightMap");
@@ -175,8 +177,7 @@ void EditScene::ImGui_SaveLoad()
 		ObjectMgr->ClearList(ObjectType::StaticBlock);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 
-		TerrainCreater terrain;
-		terrain.Free();
+		Terrain->Free();
 	}
 
 	auto chunks = ChunkMgr->GetChunks();
@@ -203,7 +204,7 @@ void EditScene::ImGui_SetBlockType()
 		}
 	}
 
-	if (staticBlockType == StaticBlockType::sBlockNone)
+	if (staticBlockType == StaticBlockType::Air)
 	{
 		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE"};
 		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
@@ -213,7 +214,7 @@ void EditScene::ImGui_SetBlockType()
 
 void EditScene::ImGui_SetBlockUsage()
 {
-	if (staticBlockType == StaticBlockType::sBlockNone)
+	if (staticBlockType == StaticBlockType::Air)
 		return;
 
 	std::vector<const char*> usageOptions;
@@ -245,7 +246,7 @@ void EditScene::ImGui_SetBlockUsage()
 
 void EditScene::ImGui_SetBlockInfo()
 {
-	if (staticBlockType != StaticBlockType::sBlockNone)
+	if (staticBlockType != StaticBlockType::Air)
 	{
 		switch (staticBlockUsage)
 		{
@@ -544,21 +545,20 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 
 void EditScene::CreateTerrain(const std::string& filename)
 {
-	TerrainCreater terrain;
-	terrain.CreateHeightmap(WidthX, WidthZ, Scale);
-	terrain.SaveHeightmapAsImage(filename);
+	TerrainCreater Terrain;
+	Terrain.CreateHeightmap(WidthX, WidthZ, Scale);
+	Terrain.SaveHeightmapAsImage(filename);
 }
 
 void EditScene::PlaceTerrainBlocks(const std::string& filename)
 {
-	TerrainCreater terrain;
-	if (!terrain.LoadHeightmapFromImage(filename)) return;
+	if (!Terrain->LoadHeightmapFromImage(filename)) return;
 
-	terrain.CreateBlockTerrain(WidthX, WidthZ, Height);
+	Terrain->CreateBlockTerrain(WidthX, WidthZ, Height);
 
-	for (const auto& block : terrain.GetBlocks())
+	for (const auto& block : Terrain->GetBlocks())
 	{
-		_vec3 position = block.Pos * 2.f;
+		_vec3 position = block.Pos;// +_vec3(1.f, 1.f, 1.f);
 		Place(position);
 	}
 }
@@ -637,18 +637,21 @@ void EditScene::Place(_vec3& position)
 	for (const auto& block : staticBlocks) if (block.Pos == position) return;
 	for (const auto& block : dynamicBlocks) if (block.Pos == position) return;
 	
-	if (staticBlockType != StaticBlockType::sBlockNone)
+	if (staticBlockType != StaticBlockType::Air)
 	{
 		auto newBlockObj = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 		if (!newBlockObj) return;
-		position += newBlockObj->GetComponent<TransformComponent>()->GetPosition();
+		// position += newBlockObj->GetComponent<TransformComponent>()->GetPosition();
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 		
-		int chunkX = int(floorf(position.x / CHUNK_SIZE));
-		int chunkY = int(floorf(position.z / CHUNK_SIZE));
+		int blockX = static_cast<int>(floorf(position.x / 2.f));
+		int blockZ = static_cast<int>(floorf(position.z / 2.f));
 
-		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
+		int chunkX = blockX / CHUNK_SIZE;
+		int chunkZ = blockZ / CHUNK_SIZE;
+
+		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkZ);
 		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 		chunk->BuildChunkFace();
 
@@ -672,6 +675,7 @@ void EditScene::Free()
 	Safe_Release(CameraMgr);
 	Safe_Release(BlockMgr);
 	Safe_Release(ChunkMgr);
+	Safe_Release(Terrain);
 	staticBlocks.clear();
 	staticBlocks.shrink_to_fit();
 	Scene::Free();

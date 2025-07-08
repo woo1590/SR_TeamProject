@@ -27,7 +27,6 @@ Chunk* Chunk::Create(ObjectManager* owner, int chunkX, int chunkZ)
     if (FAILED(Instance->Ready_Object()))
     {
         Safe_Release(Instance);
-
         Instance = nullptr;
     }
 
@@ -49,9 +48,9 @@ HRESULT Chunk::Ready_Object()
 
 void Chunk::AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
 {
-    int localX = static_cast<int>(pos.x) % CHUNK_SIZE;
-    int localY = static_cast<int>(pos.y);
-    int localZ = static_cast<int>(pos.z) % CHUNK_SIZE;
+    int localX = static_cast<int>(pos.x / 2) % CHUNK_SIZE;
+    int localY = static_cast<int>(pos.y / 2);
+    int localZ = static_cast<int>(pos.z / 2) % CHUNK_SIZE;
 
     if (localX < 0 || localX >= CHUNK_SIZE ||
         localY < 0 || localY >= CHUNK_HEIGHT ||
@@ -66,10 +65,24 @@ void Chunk::AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axi
     block.Usage = usage;
 }
 
+void Chunk::InitializeAirBlocks()
+{
+    for (int y = 0; y < CHUNK_HEIGHT; ++y)
+    {
+        for (int z = 0; z < CHUNK_SIZE; ++z)
+        {
+            for (int x = 0; x < CHUNK_SIZE; ++x)
+            {
+                Blocks[x][y][z].Type = StaticBlockType::Air;
+            }
+        }
+    }
+}
+
 void Chunk::BuildChunkFace()
 {
     std::vector<VTXTEX> vertices;
-    std::vector<int> indices;
+    std::vector<uint32_t> indices;
 
     auto IsAir = [&](int x, int y, int z) -> bool
         {
@@ -112,7 +125,7 @@ void Chunk::BuildChunkFace()
     renderer->SetMesh(mesh);
 }
 
-void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, const _vec3& blockPos, int faceDir)
+void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir)
 {
     static const _vec3 offsets[6][4] =
     {
@@ -147,7 +160,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, co
     for (int i = 0; i < 4; ++i)
     {
         VTXTEX v;
-        v.vPosition = blockPos * 2.f + offsets[faceDir][i];
+        v.vPosition = blockPos + offsets[faceDir][i];
         v.vNormal = normals[faceDir];
         v.vTexUV = uvs[i];
         vertices.push_back(v);
@@ -161,7 +174,6 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, co
     indices.push_back(startIndex + 2);
     indices.push_back(startIndex + 3);
 }
-
 
 StaticBlockData Chunk::GetBlock(int x, int y, int z) const
 {
@@ -181,9 +193,9 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 {
     for (const auto& block : flatBlocks)
     {
-        int localX = static_cast<int>(block.Pos.x) % CHUNK_SIZE;
-        int localY = static_cast<int>(block.Pos.y);
-        int localZ = static_cast<int>(block.Pos.z) % CHUNK_SIZE;
+        int localX = (static_cast<int>(block.Pos.x) / 2) - (ChunkX * CHUNK_SIZE);
+        int localY = static_cast<int>(block.Pos.y / 2);
+        int localZ = (static_cast<int>(block.Pos.z) / 2) - (ChunkZ * CHUNK_SIZE);
 
         if (localX < 0 || localX >= CHUNK_SIZE || localY < 0 || localY >= CHUNK_HEIGHT || localZ < 0 || localZ >= CHUNK_SIZE) continue;
 

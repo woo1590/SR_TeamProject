@@ -15,7 +15,7 @@ ChunkMesh* ChunkMesh::Create()
     return instance;
 }
 
-HRESULT ChunkMesh::Ready_Mesh(const std::vector<VTXTEX>& vertices, const std::vector<int>& indices)
+HRESULT ChunkMesh::Ready_Mesh(const std::vector<VTXTEX>& vertices, const std::vector<uint32_t>& indices)
 {
     Safe_Release(VB);
     Safe_Release(IB);
@@ -23,7 +23,7 @@ HRESULT ChunkMesh::Ready_Mesh(const std::vector<VTXTEX>& vertices, const std::ve
     return CreateBuffer(vertices, indices);
 }
 
-HRESULT ChunkMesh::CreateBuffer(const std::vector<VTXTEX>& vertices, const std::vector<int>& indices)
+HRESULT ChunkMesh::CreateBuffer(const std::vector<VTXTEX>& vertices, const std::vector<uint32_t>& indices)
 {
     VertexCnt = static_cast<_ulong>(vertices.size());
     IndexCnt = static_cast<_ulong>(indices.size());
