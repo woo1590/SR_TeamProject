@@ -57,18 +57,22 @@ void EditScene::Load()
 	CollisionSys = CollisionSystem::Create(this);
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
+	ObjectMgr = ObjectManager::Create(this);
 
 	auto cube = CubeMesh::Create();
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 	
+	/////////////////////////////////////////////
 	BlockMgr->LoadTexture();
+	Chunk* baseChunk = ChunkMgr->CreateChunk(0, 0);
 	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockAxis::sAY};
+	baseChunk->AddBlock(0, 0, 0, baseBlock);
+	
 	staticBlocks.push_back(baseBlock);
-
-	ObjectMgr = ObjectManager::Create(this);
+	//////////////////////////////////////////////
 	auto cam = Camera::Create(ObjectMgr, ObjectType::Camera);
 	ObjectMgr->AddObject(ObjectType::Camera, cam);
-	ObjectMgr->AddObject(ObjectType::StaticBlock, StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, StaticBlockType::Dirt, StaticBlockAxis::sAY, StaticBlockRot::sREnd, StaticBlockUsage::Basic));
+	//ObjectMgr->AddObject(ObjectType::StaticBlock, StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, StaticBlockType::Dirt, StaticBlockAxis::sAY, StaticBlockRot::sREnd, StaticBlockUsage::Basic));
 
 	CameraMgr = CameraManager::Create(this);
 	CameraMgr->AddCamera(L"ToolCam", cam);
@@ -78,7 +82,7 @@ void EditScene::Load()
 void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
-
+	ChunkMgr->Update(dt);
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 	if (Input->IsKeyPressed(LBUTTON))
 	{
@@ -179,9 +183,9 @@ void EditScene::ImGui_SaveLoad()
 		terrain.Free();
 	}
 
-	auto chunks = ChunkMgr->GetChunks();
-	for (auto& [key, chunk] : chunks)
-		chunk->BuildChunkFace();
+	//auto chunks = ChunkMgr->GetChunks();
+	//for (auto& [key, chunk] : chunks)
+	//	chunk->BuildChunkFace();
 }
 
 void EditScene::ImGui_SetBlockType()
@@ -646,13 +650,19 @@ void EditScene::Place(_vec3& position)
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 		
 		int chunkX = int(floorf(position.x / CHUNK_SIZE));
-		int chunkY = int(floorf(position.z / CHUNK_SIZE));
+		int chunkZ = int(floorf(position.z / CHUNK_SIZE));
 
-		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
-		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
-		chunk->BuildChunkFace();
+		int localX = int(position.x) - chunkX * CHUNK_SIZE;
+		int localY = int(position.y);
+		int localZ = int(position.z) - chunkZ * CHUNK_SIZE;
 
-		staticBlocks.push_back({ position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage });
+		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkZ);
+
+		staticBlocks.push_back({ _vec3(localX,localY,localZ),
+								 staticBlockType, 
+								 staticBlockAxis, 
+								 staticBlockRot, 
+								 staticBlockUsage });
 	}
 	else if (dynamicBlockType != DynamicBlockType::dBlockNone)
 	{

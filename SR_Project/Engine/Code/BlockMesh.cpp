@@ -131,5 +131,6 @@ void BlockMesh::Free()
 {
     Safe_Release(VB);
     Safe_Release(Decl);
+    std::for_each(IBTable.begin(), IBTable.end(), [](IBEntry& e) {Safe_Release(e.ib);});
     Mesh::Free();
 }

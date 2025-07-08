@@ -220,6 +220,7 @@
     <ClInclude Include="..\Header\BehaviorTree.h" />
     <ClInclude Include="..\Header\BlackBoard.h" />
     <ClInclude Include="..\Header\BlockManager.h" />
+    <ClInclude Include="..\Header\BlockMesh.h" />
     <ClInclude Include="..\Header\Bridge.h" />
     <ClInclude Include="..\Header\BTNode.h" />
     <ClInclude Include="..\Header\ButtonComponent.h" />
@@ -355,6 +356,7 @@
     <ClCompile Include="..\Code\BehaviorTree.cpp" />
     <ClCompile Include="..\Code\BlackBoard.cpp" />
     <ClCompile Include="..\Code\BlockManager.cpp" />
+    <ClCompile Include="..\Code\BlockMesh.cpp" />
     <ClCompile Include="..\Code\Bridge.cpp" />
     <ClCompile Include="..\Code\BTNode.cpp" />
     <ClCompile Include="..\Code\ButtonComponent.cpp" />

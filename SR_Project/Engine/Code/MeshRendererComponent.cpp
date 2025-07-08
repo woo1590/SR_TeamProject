@@ -50,9 +50,9 @@ void MeshRenderer::Render()
 	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
 	auto shader = mtrl->GetShader();
 
-	_matrix worldMat = transform->GetWorldMatrix();
-	_matrix viewMat = cam->GetViewMatrix();
 	_matrix projMat = cam->GetProjMatrix();
+	_matrix viewMat = cam->GetViewMatrix();
+	_matrix worldMat = transform->GetWorldMatrix();
 
 	if (shader)
 	{
