@@ -24,7 +24,7 @@ namespace Engine
 		Player,
 		Monster,
 		Item,
-		Light,
+		Chunk,
 		Bone,
 		Projectile,
 		SkyBox,

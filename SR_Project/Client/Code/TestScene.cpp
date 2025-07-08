@@ -14,6 +14,7 @@
 #include "StaticGrid.h"
 #include "BlockManager.h"
 #include "UIManager.h"
+#include "ChunkManager.h"
 
 //object
 #include "TestObject.h"
@@ -39,6 +40,7 @@
 #include "StaticBlock.h"
 #include "DynamicBlock.h"
 #include "RedGolem.h"
+#include "Chunk.h"
 
 //component
 #include "TransformComponent.h"
@@ -64,22 +66,30 @@ TestScene* TestScene::Create()
 
 void TestScene::Load()
 {
+#ifdef USE_IMGUI
+	/*----------------Load ImGui----------------------*/
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
+
+#endif
+
 	Grid			= StaticGrid::Create(this);
 	ObjectMgr		= ObjectManager::Create(this);
 	CollisionSys	= CollisionSystem::Create(this);
 	CameraMgr		= CameraManager::Create(this);
 	PhysicsSys		= PhysicsSystem::Create(this);
 	BlockMgr		= BlockManager::Create(this);
+	ChunkMgr		= ChunkManager::Create(this);
 
-	BlockMgr->LoadStage("test");
+	BlockMgr->LoadChunk("testScene");
+	auto& chunks = ChunkMgr->GetChunks();
+	for (auto& [key, chunk] : chunks)
+	{
+		chunk->BuildChunkFace();
+	}
+
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
 
-#ifdef USE_IMGUI
-	/*----------------Load ImGui----------------------*/
-	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
-
-#endif
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
 	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
@@ -200,6 +210,7 @@ void TestScene::Free()
 	Safe_Release(BlockMgr);
 	Safe_Release(Grid);
 	Safe_Release(uiMgr);
+	Safe_Release(ChunkMgr);
 
 	Scene::Free();
 }

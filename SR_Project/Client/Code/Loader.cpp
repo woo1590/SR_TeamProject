@@ -90,6 +90,7 @@ HRESULT Loader::Load_TestScene()
 	/*--------------------Load Shader---------------------------------*/
 	resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
 	resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
+	resource->LoadShader("../Resource/Shader/ChunkShader.fx", "ChunkShader");
 
 	resource->LoadMaterial("../Resource/Material/SkyBox.json");
 	resource->LoadMaterial("../Resource/Material/Monsters.json");

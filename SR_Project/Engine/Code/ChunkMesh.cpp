@@ -28,12 +28,28 @@ HRESULT ChunkMesh::CreateBuffer(const std::vector<VTXTEX>& vertices, const std::
     VertexCnt = static_cast<_ulong>(vertices.size());
     IndexCnt = static_cast<_ulong>(indices.size());
 
+    /*----------Vertex Decl-----------------------------*/
+    static const D3DVERTEXELEMENT9 kDecl[] =
+    {
+        { 0,  0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT,
+                                        D3DDECLUSAGE_POSITION, 0 },
+        { 0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT,
+                                        D3DDECLUSAGE_NORMAL,   0 },
+        { 0, 24,  D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT,
+                                        D3DDECLUSAGE_TEXCOORD, 0 },
+        D3DDECL_END()
+    };
+
+    if (FAILED(Device->CreateVertexDeclaration(kDecl, &Decl)))
+        return E_FAIL;
+    /*--------------------------------------------------*/
+
     if (VertexCnt == 0 || IndexCnt == 0)
         return E_FAIL;
 
     if (FAILED(Device->CreateVertexBuffer(VertexCnt * sizeof(VTXTEX),
         D3DUSAGE_WRITEONLY,
-        FVF_TEX,
+        0,
         D3DPOOL_MANAGED,
         &VB, nullptr)))
         return E_FAIL;
@@ -71,7 +87,8 @@ void ChunkMesh::Draw()
 
     Device->SetStreamSource(0, VB, 0, sizeof(VTXTEX));
     Device->SetIndices(IB);
-    Device->SetFVF(FVF_TEX);
+    Device->SetVertexDeclaration(Decl);
+
     Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, VertexCnt, 0, IndexCnt / 3);
 }
 
@@ -79,5 +96,6 @@ void ChunkMesh::Free()
 {
     Safe_Release(VB);
     Safe_Release(IB);
+    Safe_Release(Decl);
     Mesh::Free();
 }

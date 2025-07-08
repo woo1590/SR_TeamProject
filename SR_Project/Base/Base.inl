@@ -18,7 +18,7 @@ unsigned long Base::Release()
 	if (m_dwRefCnt == 0)
 	{
 		Free();
-
+		
 		delete this;
 
 		return 0;

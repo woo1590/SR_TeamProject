@@ -1,6 +1,7 @@
 #include "EnginePCH.h"
 #include "Chunk.h"
 #include "ChunkMesh.h"
+#include "ObjectManager.h"
 
 //component
 #include "TransformComponent.h"
@@ -8,7 +9,8 @@
 #include "StaticBlock.h"
 #include "DynamicBlock.h"
 
-Chunk::Chunk(int chunkX, int chunkZ)
+Chunk::Chunk(ObjectManager* owner, int chunkX, int chunkZ)
+    :Object(owner,ObjectType::Chunk)
 {
     ChunkX = chunkX;
     ChunkZ = chunkZ;
@@ -18,10 +20,31 @@ Chunk::~Chunk()
 {
 }
 
-Chunk* Chunk::Create(int chunkX, int chunkZ)
+Chunk* Chunk::Create(ObjectManager* owner, int chunkX, int chunkZ)
 {
-    Chunk* Instance = new Chunk(chunkX, chunkZ);
+    Chunk* Instance = new Chunk(owner,chunkX, chunkZ);
+
+    if (FAILED(Instance->Ready_Object()))
+    {
+        Safe_Release(Instance);
+
+        Instance = nullptr;
+    }
+
     return Instance;
+}
+
+HRESULT Chunk::Ready_Object()
+{
+    auto transform = AddComponent<TransformComponent>();
+    transform->SetPosition(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
+
+    auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
+    renderer->SetMaterial("Chunk_Mtrl");
+    renderer->SetMesh(mesh);
+    
+    owner->AddObject(ObjectType::Chunk, this);
+    return S_OK;
 }
 
 void Chunk::AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
@@ -41,12 +64,6 @@ void Chunk::AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axi
     block.Axis = axis;
     block.Rot = rot;
     block.Usage = usage;
-}
-
-void Chunk::Render()
-{
-    if (!Mesh) return;
-    Mesh->Draw();
 }
 
 void Chunk::BuildChunkFace()
@@ -81,15 +98,18 @@ void Chunk::BuildChunkFace()
         }
     }
 
-    Safe_Release(Mesh);
+    Safe_Release(mesh);
     if (vertices.empty() || indices.empty()) return;
 
-    Mesh = ChunkMesh::Create();
-    if (FAILED(Mesh->Ready_Mesh(vertices, indices)))
+    mesh = ChunkMesh::Create();
+    if (FAILED(mesh->Ready_Mesh(vertices, indices)))
     {
-        Safe_Release(Mesh);
-        Mesh = nullptr;
+        Safe_Release(mesh);
+        mesh = nullptr;
     }
+
+    auto renderer = GetComponent<MeshRenderer>();
+    renderer->SetMesh(mesh);
 }
 
 void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, const _vec3& blockPos, int faceDir)
@@ -116,10 +136,10 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, co
 
     static const _vec2 uvs[4] = // 아틀라스 이미지 UV 지정
     {
+        { 0.f, 1.f },
         { 0.f, 0.f },
         { 1.f, 0.f },
-        { 1.f, 1.f },
-        { 0.f, 1.f }
+        { 1.f, 1.f }
     };
 
     int startIndex = static_cast<int>(vertices.size());
@@ -146,7 +166,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, co
 StaticBlockData Chunk::GetBlock(int x, int y, int z) const
 {
     if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return SB{};
-
+    
     return Blocks[x][y][z];
 }
 

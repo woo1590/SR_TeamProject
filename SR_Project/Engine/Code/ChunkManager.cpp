@@ -104,7 +104,7 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
         if (blockCount > 0)
             if (!ReadFile(hFile, blocks.data(), sizeof(StaticBlockData) * blockCount, &dwByte, nullptr)) return;
 
-        Chunk* chunk = Chunk::Create(chunkX, chunkZ);
+        Chunk* chunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkZ);
         chunk->SetBlocksFromFlatVector(blocks);
         worldChunks[{chunkX, chunkZ}] = chunk;
     }
@@ -120,7 +120,7 @@ Chunk* ChunkManager::CreateChunk(int chunkX, int chunkY)
     if (it != worldChunks.end())
         return it->second;
 
-    Chunk* newChunk = Chunk::Create(chunkX, chunkY);
+    Chunk* newChunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkY);
     worldChunks[key] = newChunk;
     return newChunk;
 }

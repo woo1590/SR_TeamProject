@@ -262,11 +262,11 @@
     <Filter Include="00. EngineCore">
       <UniqueIdentifier>{c7d740f0-2e89-440a-939e-00714085aa0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Scene Component\Chunk">
-      <UniqueIdentifier>{516bf75c-515a-4e4c-a73b-d6a653ee1289}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06. Object\00. Parts">
       <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\Chunk">
+      <UniqueIdentifier>{516bf75c-515a-4e4c-a73b-d6a653ee1289}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -498,7 +498,7 @@
       <Filter>06. Object\02. DynamicBlock\IronCage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Chunk.cpp">
-      <Filter>05. Scene Component\Chunk</Filter>
+      <Filter>06. Object\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ChunkManager.cpp">
       <Filter>05. Scene Component\ChunkManager</Filter>
@@ -794,7 +794,7 @@
       <Filter>06. Object\02. DynamicBlock\IronCage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Chunk.h">
-      <Filter>05. Scene Component\Chunk</Filter>
+      <Filter>06. Object\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>

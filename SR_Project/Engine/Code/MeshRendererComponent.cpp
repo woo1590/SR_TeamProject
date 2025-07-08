@@ -74,6 +74,11 @@ void MeshRenderer::SetMesh(const std::string& key)
 	mesh = EngineCore::GetInstance()->GetResourceManager()->GetMesh(key);
 }
 
+void MeshRenderer::SetMesh(Mesh* mesh)
+{
+	this->mesh = mesh;
+}
+
 void MeshRenderer::SetMaterial(const std::string & key)
 {
 	mtrl = EngineCore::GetInstance()->GetResourceManager()->GetMaterial(key);
