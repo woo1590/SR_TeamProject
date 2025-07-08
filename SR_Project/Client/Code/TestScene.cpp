@@ -71,7 +71,7 @@ void TestScene::Load()
 	PhysicsSys		= PhysicsSystem::Create(this);
 	BlockMgr		= BlockManager::Create(this);
 
-	BlockMgr->LoadStage("Create");
+	BlockMgr->LoadStage("test");
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
 

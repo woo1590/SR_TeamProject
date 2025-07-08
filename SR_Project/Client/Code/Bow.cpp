@@ -36,7 +36,7 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     auto i = info->GetInfo();
-    //i.attackDamage = 10.f;
+    i.value = 10.f;
     info->SetInfo(i);
 
     SetMesh(L"Cube_Mesh");

@@ -35,7 +35,7 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     auto i = info->GetInfo();
-    //i.attackDamage = 10.f;
+    i.value = 10.f;
     info->SetInfo(i);
 
     SetMesh(L"Cube_Mesh");
@@ -69,8 +69,8 @@ void Sword::SetCollisionEnter(Object* other)
     auto collision = GetComponent<CollisionComponent>();
 
     if (objType == ObjectType::Monster) {
-        //float swordAttackDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().attackDamage;
-        //other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
+        float swordAttackDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
+        other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
     }
 }
 
