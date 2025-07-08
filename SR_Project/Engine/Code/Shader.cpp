@@ -2,17 +2,17 @@
 #include "Shader.h"
 #include "GraphicDevice.h"
 
-Shader::Shader()
-	:Device(GraphicDevice::GetInstance()->GetDevice())
+Shader::Shader(LPD3DXEFFECT effect)
+	:Device(GraphicDevice::GetInstance()->GetDevice()),effect(effect)
 {
 	Device->AddRef();
 }
 
-Shader * Shader::Create(const void * vsCode, const void* psCode)
+Shader * Shader::Create(LPD3DXEFFECT effect)
 {
-	Shader* Instance = new Shader;
+	Shader* Instance = new Shader(effect);
 
-	if (FAILED(Instance->Ready_Shader(vsCode, psCode)))
+	if (FAILED(Instance->Ready_Shader()))
 	{
 		Safe_Release(Instance);
 
@@ -22,43 +22,59 @@ Shader * Shader::Create(const void * vsCode, const void* psCode)
 	return Instance;
 }
 
-HRESULT Shader::Ready_Shader(const void* vsCode, const void* psCode)
+HRESULT Shader::Ready_Shader()
 {
-	if (vsCode)
-	{
-		Device->CreateVertexShader((DWORD*)vsCode, &VS);
-		D3DXGetShaderConstantTable((DWORD*)vsCode, &vsConst);
-	}
-	Device->CreatePixelShader((DWORD*)psCode, &PS);
-
-	D3DXGetShaderConstantTable((DWORD*)psCode, &psConst);
 
 	return S_OK;
 }
 
-void Shader::Apply()
+HRESULT Shader::Begin(UINT passIndex)
 {
-	Device->SetVertexShader(VS);
-	Device->SetPixelShader(PS);
+	if (!effect) return E_FAIL;
+
+	effect->Begin(nullptr, 0);
+	effect->BeginPass(passIndex);
+
+	return S_OK;
 }
+
+HRESULT Shader::End()
+{
+	if (!effect) return E_FAIL;
+
+	effect->EndPass();
+	effect->End();
+
+	return S_OK;
+}
+
 
 void Shader::SetConstant(const std::string& name, int value)
 {
-	D3DXHANDLE h = vsConst->GetConstantByName(nullptr, name.c_str());
-	if (h)
-		vsConst->SetInt(Device, h, value);
-	
-	h = psConst->GetConstantByName(nullptr, name.c_str());
+	if (effect)
+		effect->SetInt(name.c_str(), value);
 }
 
 void Shader::SetConstant(const std::string& name, float value)
 {
+	if (effect)
+		effect->SetFloat(name.c_str(), value);
 }
 
-void Shader::SetConstant(const std::string& name, _vec3 value)
+void Shader::SetConstant(const std::string& name, const _vec3& value)
 {
+	if (effect)
+		effect->SetVector(name.c_str(), reinterpret_cast<const D3DXVECTOR4*>(&value));
 }
 
-void Shader::SetConstant(const std::string& name, _matrix value)
+void Shader::SetConstant(const std::string& name, const _matrix& value)
 {
+	if(effect)
+		effect->SetMatrix(name.c_str(), &value);
+}
+
+void Shader::SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 tex)
+{
+	if (effect)
+		effect->SetTexture(name.c_str(), tex);
 }

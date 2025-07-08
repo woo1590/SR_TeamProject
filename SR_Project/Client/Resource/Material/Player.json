@@ -1,0 +1,56 @@
+{
+  "template" :{
+    "fx" : "BasicShader",
+    "constants": {
+    "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],      
+    "MatSpecular"  : [1.0, 1.0, 1.0],        
+    "Shininess"    : 32.0,                   
+
+    "Emissive"     : [0.0, 0.0, 0.0],        
+    "EmissivePow"  : 1.0,
+
+    "AlphaCut"     : 0.4,
+
+    "UVScale"      : [1.0, 1.0],             
+    "UVOffset"     : [0.0, 0.0]       
+    }
+  },
+
+  "materials":{
+    "playerHead_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/Player/playerHead.dds"
+      }
+    },
+
+    "playerBody_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/Player/playerBody.dds"
+      }
+    },
+
+    "playerRightArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/Player/playerRightArm.dds"
+      }
+    },
+
+    "playerLeftArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/Player/playerLeftArm.dds"
+      }
+    },
+
+    "playerRightLeg_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/Player/playerRightLeg.dds"
+      }
+    },
+
+    "playerLeftLeg_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/Player/playerLeftLeg.dds"
+      }
+    }
+  }
+}

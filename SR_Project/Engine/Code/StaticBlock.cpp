@@ -59,6 +59,45 @@ HRESULT StaticBlock::Ready_Object()
     collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_ENEMY);
     auto physics = AddComponent<PhysicsComponent>();
     auto transform = AddComponent<TransformComponent>();
+    transform->SetScale(1.f, 1.f, 1.f);
+    
+    auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
+    renderer->SetMesh("Cube_Mesh");
+    switch (Type)
+    {
+    case StaticBlockType::Dirt:
+        renderer->SetMaterial("DirtBlock_Mtrl");
+        break;
+    case StaticBlockType::GrassDirt:
+        renderer->SetMaterial("GrassBlock_Mtrl");
+        break;
+    case StaticBlockType::Wood:
+        renderer->SetMaterial("WoodBlock_Mtrl");
+        break;
+    case StaticBlockType::WoodPlank:
+        renderer->SetMaterial("WoodPlank_Mtrl");
+        break;
+    case StaticBlockType::Stone:
+        renderer->SetMaterial("Stone_Mtrl");
+        break;
+    case StaticBlockType::CobbleStone:
+        renderer->SetMaterial("CobbleStone_Mtrl");
+        break;
+    }
+    
+    switch (Dir)
+    {
+    case StaticBlockDir::BlockX:
+        transform->SetRotate({ 0.f, 0.f, D3DXToRadian(90.f) });
+        break;
+    case StaticBlockDir::BlockY:
+        transform->SetRotate({ 0.f, 0.f, 0.f });
+        break;
+    case StaticBlockDir::BlockZ:
+        transform->SetRotate({ D3DXToRadian(-90.f), 0.f, 0.f });
+        break;
+    }
+
     return S_OK;
 }
 

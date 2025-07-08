@@ -85,79 +85,19 @@ HRESULT Loader::Load_TestScene()
 {
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 
-	/*--------------Load File Resource-----------------*/
 	auto cube = CubeMesh::Create();
-	resource->LoadMesh(L"Cube_Mesh", cube);
-	resource->LoadResource(L"../Resource/Texture/SkyBox/burger3.dds", L"Basic_SkyBox", TEXTURE::Tex_Cube, L"SkyBox_Mtrl");
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	resource->LoadResource(L"../Resource/Asset/HY/Body2.dds", L"Body", TEXTURE::Tex_Cube, L"ZombieBody_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/ZombieHead.dds", L"Head", TEXTURE::Tex_Cube, L"ZombieHead_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/Arm.dds", L"Arm", TEXTURE::Tex_Cube, L"ZombieArm_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/Leg.dds", L"Leg", TEXTURE::Tex_Cube, L"ZombieLeg_Mtrl");
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	resource->LoadResource(L"../Resource/Asset/JW/playerHead.dds", L"playerHead", TEXTURE::Tex_Cube, L"playerHead_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/playerBody.dds", L"playerBody", TEXTURE::Tex_Cube, L"playerBody_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/playerRightArm.dds", L"playerRightArm", TEXTURE::Tex_Cube, L"playerRightArm_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/playerLeftArm.dds", L"playerLeftArm", TEXTURE::Tex_Cube, L"playerLeftArm_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/playerRightLeg.dds", L"playerRightLeg", TEXTURE::Tex_Cube, L"playerRightLeg_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/playerLeftLeg.dds", L"playerLeftLef", TEXTURE::Tex_Cube, L"playerLeftLeg_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/JW/arrow.dds", L"arrow", TEXTURE::Tex_Cube, L"arrow_Mtrl");
+	resource->LoadMesh("Cube_Mesh", cube);
+	/*--------------------Load Shader---------------------------------*/
+	resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
+	resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
+	resource->LoadMaterial("../Resource/Material/SkyBox.json");
+	resource->LoadMaterial("../Resource/Material/Monsters.json");
+	resource->LoadMaterial("../Resource/Material/Player.json");
+	resource->LoadMaterial("../Resource/Material/Blocks.json");
 
-	/////////////////////////////////////////////////////////////////////////////////
-	resource->LoadResource(L"../Resource/Asset/HY/Creeper_Face.dds", L"CreeperFace", TEXTURE::Tex_Cube, L"CreeperFace_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/Creeper_Body.dds", L"CreeperBody", TEXTURE::Tex_Cube, L"CreeperBody_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/Creeper_Leg.dds", L"CreeperLeg", TEXTURE::Tex_Cube, L"CreeperLeg_Mtrl");
-
-	/////////////////////////////////////////////////////////////////////////////////
-	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Body.dds", L"SkeletonBody", TEXTURE::Tex_Cube, L"SkeletonBody_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Face.dds", L"SkeletonFace", TEXTURE::Tex_Cube, L"SkeletonFace_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/Skeleton_Bone.dds", L"SkeletonBone", TEXTURE::Tex_Cube, L"SkeletonBone_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/bow.dds", L"bow", TEXTURE::Tex_Cube, L"Bow_Mtrl");
-
-	/////////////////////////////////////////////////////////////////////////////////
-	resource->LoadResource(L"../Resource/Asset/HY/redgolem_body.dds", L"RedGolem_Body", TEXTURE::Tex_Cube, L"RedGolemBody_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/redgolem_face.dds", L"RedGolem_Face", TEXTURE::Tex_Cube, L"RedGolemFace_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/redgolem_finger.dds", L"RedGolem_Finger", TEXTURE::Tex_Cube, L"RedGolemFinger_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/redgolem_foot.dds", L"RedGolem_Foot", TEXTURE::Tex_Cube, L"RedGolemFoot_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/redgolem_arm.dds", L"RedGolem_Arm", TEXTURE::Tex_Cube, L"RedGolemArm_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/redgolem_hand.dds", L"RedGolem_Hand", TEXTURE::Tex_Cube, L"RedGolemHand_Mtrl");
-	resource->LoadResource(L"../Resource/Asset/HY/redgolem_lightblock.dds", L"Redgolem_Lightblock", TEXTURE::Tex_Cube, L"RedgolemLightblock_Mtrl");
-
-	/////////////////////////////////////////////////////////////////////////////////
-	resource->LoadResource(L"../Resource/Texture/Block/DirtBlock.dds", L"DirtBlock", TEXTURE::Tex_Cube, L"DirtBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/GrassBlock.dds", L"GrassBlock", TEXTURE::Tex_Cube, L"GrassBlock_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/WoodBlock.dds", L"WoodBlock", TEXTURE::Tex_Cube, L"WoodBlock_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank.dds", L"WoodPlank", TEXTURE::Tex_Cube, L"WoodPlank_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/WoodPlank_Half.dds", L"WoodPlank_Half", TEXTURE::Tex_Cube, L"WoodPlank_Half_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/Stone.dds", L"Stone", TEXTURE::Tex_Cube, L"Stone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/Stone_Half.dds", L"Stone_Half", TEXTURE::Tex_Cube, L"Stone_Half_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone.dds", L"CobbleStone", TEXTURE::Tex_Cube, L"CobbleStone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/CobbleStone_Half.dds", L"CobbleStone_Half", TEXTURE::Tex_Cube, L"CobbleStone_Half_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/SmoothStone.dds", L"SmoothStone", TEXTURE::Tex_Cube, L"SmoothStone_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/SmoothStone_Half.dds", L"SmoothStone_Half", TEXTURE::Tex_Cube, L"SmoothStone_Half_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/StoneBrick.dds", L"StoneBrick", TEXTURE::Tex_Cube, L"StoneBrick_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/MossyStoneBrick.dds", L"MossyStoneBrick", TEXTURE::Tex_Cube, L"MossyStoneBrick_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/Glass.dds", L"Glass", TEXTURE::Tex_Cube, L"Glass_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/Leaf.dds", L"Leaf", TEXTURE::Tex_Cube, L"Leaf_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/Lever.dds", L"Lever", TEXTURE::Tex_Cube, L"Lever_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/ChestDown.dds", L"ChestDown", TEXTURE::Tex_Cube, L"ChestDown_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestUp.dds", L"ChestUp", TEXTURE::Tex_Cube, L"ChestUp_Mtrl");
-	resource->LoadResource(L"../Resource/Texture/Block/ChestLock.dds", L"ChestLock", TEXTURE::Tex_Cube, L"ChestLock_Mtrl");
-
-	resource->LoadResource(L"../Resource/Texture/Block/IronCage.dds", L"IronCage", TEXTURE::Tex_Cube, L"IronCage_Mtrl");
-
+	//resource->LoadResource(L"../Resource/Texture/Player/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
+	//resource->LoadResource(L"../Resource/Texture/Player/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
+	//resource->LoadResource(L"../Resource/Texture/Player/arrow.dds", L"arrow", TEXTURE::Tex_Cube, L"arrow_Mtrl");
 	return S_OK;
 }
 

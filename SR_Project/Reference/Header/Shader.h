@@ -5,27 +5,26 @@ BEGIN(Engine)
 class ENGINE_DLL Shader : public Base
 {
 private:
-    Shader();
+    Shader(LPD3DXEFFECT effect );
     virtual ~Shader() {}
 
 public:
-    static Shader* Create(const void * vsCode, const void* psCode);
-    HRESULT Ready_Shader(const void* vsCode, const void* psCode);
+    static Shader* Create(LPD3DXEFFECT effect);
+    HRESULT Ready_Shader();
 
-    void Apply();
+    HRESULT Begin(UINT passIndex);
+    HRESULT End();
+
     void SetConstant(const std::string& name, int value);
     void SetConstant(const std::string& name, float value);
-    void SetConstant(const std::string& name, _vec3 value);
-    void SetConstant(const std::string& name, _matrix value);
+    void SetConstant(const std::string& name, const _vec3& value);
+    void SetConstant(const std::string& name, const _matrix& value);
+    void SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 tex);
 
 private:
     void Free()override {}
 
-    LPDIRECT3DVERTEXSHADER9 VS = nullptr;
-    LPDIRECT3DPIXELSHADER9 PS = nullptr;
-    LPD3DXCONSTANTTABLE vsConst = nullptr;
-    LPD3DXCONSTANTTABLE psConst = nullptr;
-
+    LPD3DXEFFECT effect = nullptr;
     LPDIRECT3DDEVICE9 Device = nullptr;
 };
 

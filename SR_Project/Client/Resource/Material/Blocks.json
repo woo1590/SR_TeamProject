@@ -1,0 +1,86 @@
+{
+    "template" :{
+    "fx" : "BasicShader",
+    "constants": {
+    "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],      
+    "MatSpecular"  : [1.0, 1.0, 1.0],        
+    "Shininess"    : 32.0,                   
+
+    "Emissive"     : [0.0, 0.0, 0.0],        
+    "EmissivePow"  : 1.0,
+
+    "AlphaCut"     : 0.4,
+
+    "UVScale"      : [1.0, 1.0],             
+    "UVOffset"     : [0.0, 0.0]       
+    }
+  },
+
+    "materials": {
+    "DirtBlock_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/DirtBlock.dds"
+        }
+    },
+
+    "GrassBlock_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/GrassBlock.dds"
+        }
+    },
+
+    "WoodBlock_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/WoodBlock.dds"
+        }
+    },
+
+    "WoodPlank_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/WoodPlank.dds"
+        }
+    },
+
+    "Stone_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/Stone.dds"
+        }
+    },
+
+    "CobbleStone_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/CobbleStone.dds"
+        }
+    },
+
+    "Lever_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/Lever.dds"
+        }
+    },
+
+    "ChestDown_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/ChestDown.dds"
+        }
+    },
+
+    "ChestUp_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/ChestUp.dds"
+        }
+    },
+
+    "ChestLock_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/ChestLock.dds"
+        }
+    },
+
+    "IronCage_Mtrl": {
+        "textures": {
+        "CubeMap": "../Resource/Texture/Block/IronCage.dds"
+        }
+    }
+    }
+}

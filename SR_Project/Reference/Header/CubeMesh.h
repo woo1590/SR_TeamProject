@@ -27,6 +27,8 @@ private:
 
     _ulong VertexCnt = 0;
     _ulong IndexCnt = 0;
+
+    LPDIRECT3DVERTEXDECLARATION9 Decl = nullptr;
 };
 
 END

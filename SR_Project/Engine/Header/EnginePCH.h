@@ -34,6 +34,7 @@
 #include <optional>
 #include <random>
 #include <cassert>
+#include <variant>
 
 //Header
 #include "Base.h"
@@ -48,6 +49,7 @@
 
 //Library
 #include <fmod.hpp>
+#include <json.hpp>
 
 #ifdef _DEBUG
 //#define USE_IMGUI

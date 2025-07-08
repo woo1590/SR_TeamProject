@@ -16,8 +16,8 @@ public:
     void Late_Update(_float dt)override;
     void Render()override;
 
-    void SetMesh(const std::wstring& key);
-    void SetMaterial(const std::wstring& key);
+    void SetMesh(const std::string & key);
+    void SetMaterial(const std::string & key);
 private:
     void Free()override;
 

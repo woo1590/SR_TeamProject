@@ -46,6 +46,11 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
     PlayerBowInfo();
 
     ApplyComponents();
+    
+    auto collision = AddComponent<CollisionComponent>();
+    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY);
+    collision->SetSize(_vec3(5.f, 5.f, 5.f));
 
     return S_OK;
 }

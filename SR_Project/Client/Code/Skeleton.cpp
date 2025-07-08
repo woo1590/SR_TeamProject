@@ -134,12 +134,12 @@ void Skeleton::InitTransform(ObjectType objType)
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     transform->SetPosition(_vec3(30.f, 100.f, 40.f));
-    SetMaterial(L"SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
-    SetMaterial(L"SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
-    SetMaterial(L"SkeletonBone_Mtrl", "LArm");
-    SetMaterial(L"SkeletonBone_Mtrl", "RArm");
-    SetMaterial(L"SkeletonBone_Mtrl", "LLeg");
-    SetMaterial(L"SkeletonBone_Mtrl", "RLeg");
+    SetMaterial("SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
+    SetMaterial("SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
+    SetMaterial("SkeletonBone_Mtrl", "LArm");
+    SetMaterial("SkeletonBone_Mtrl", "RArm");
+    SetMaterial("SkeletonBone_Mtrl", "LLeg");
+    SetMaterial("SkeletonBone_Mtrl", "RLeg");
 
     //head
     SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
@@ -159,21 +159,21 @@ void Skeleton::InitTransform(ObjectType objType)
     SetScale(_vec3(2.f * Scale, 12.f * Scale, 2.f * Scale), "RLeg");
 
     //hand
-    Add_Bone("LHand", objType, Bones["LArm"], L"SkeletonBone_Mtrl");
+    Add_Bone("LHand", objType, Bones["LArm"], "SkeletonBone_Mtrl");
     SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "LHand");
     SetPosition(_vec3(0.f, -10 * Scale, 0.f), "LHand");
 
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 5.f * Scale, 0.0f));
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
-    Add_Bone("RHand", objType, Bones["RArm"], L"SkeletonBone_Mtrl");
+    Add_Bone("RHand", objType, Bones["RArm"], "SkeletonBone_Mtrl");
     SetScale(_vec3(2.f * Scale, 5 * Scale, 2.f * Scale), "RHand");
     SetPosition(_vec3(0.f, -10 * Scale, 0.f), "RHand");
 
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 5.f * Scale, 0.0f));
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
-    SetWeapon(Bones["LArm"], objType, L"Bow_Mtrl");
+    SetWeapon(Bones["LArm"], objType, "Bow_Mtrl");
     SetPosition(_vec3(0.f, -13 * Scale, 1.f * Scale), "Weapon");
     SetRotation(_vec3(-90.f, 0.f, 0.f), "Weapon");
 }

@@ -40,35 +40,35 @@ HRESULT BaseCharacter::Ready_Object(ObjectManager* owner, ObjectType objType)
     Object::Ready_Object();
     SetScale(0.1f);
 
-    Bones["Body"] = Bone::Create(owner, objType, _vec3(Scale, Scale, Scale /2.f), this, L"ZombieBody_Mtrl");
+    Bones["Body"] = Bone::Create(owner, objType, _vec3(Scale, Scale, Scale /2.f), this, "ZombieBody_Mtrl");
     Bones["Body"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 12.f * Scale, 4.f * Scale);
     Bones["Body"]->GetComponent<TransformComponent>()->SetPosition(0.f, 0.f, 0.f);
     
-    Bones["Head"] = Bone::Create(owner, objType, _vec3(Scale, Scale, Scale), Bones["Body"], L"ZombieHead_Mtrl");
+    Bones["Head"] = Bone::Create(owner, objType, _vec3(Scale, Scale, Scale), Bones["Body"], "ZombieHead_Mtrl");
     Bones["Head"]->GetComponent<TransformComponent>()->SetScale(8.f * Scale, 8.f * Scale, 8.f * Scale);
     Bones["Head"]->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f * Scale, 0.f);
     Bones["Head"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, -8.f * Scale, 0.0f));
     Bones["Head"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     
-    Bones["LArm"] = Bone::Create(owner, objType, _vec3(Scale /2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieArm_Mtrl");
+    Bones["LArm"] = Bone::Create(owner, objType, _vec3(Scale /2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], "ZombieArm_Mtrl");
     Bones["LArm"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
     Bones["LArm"]->GetComponent<TransformComponent>()->SetPosition(-11.f * Scale, 0.f, 0.f);
     Bones["LArm"]->GetComponent<TransformComponent>()->SetPivot(_vec3(11.0f * Scale, -8.f * Scale, 0.0f));
     Bones["LArm"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
-    Bones["RArm"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieArm_Mtrl");
+    Bones["RArm"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], "ZombieArm_Mtrl");
     Bones["RArm"]->GetComponent<TransformComponent>()->SetScale(3.f * Scale, 12.f * Scale, 4.f * Scale);
     Bones["RArm"]->GetComponent<TransformComponent>()->SetPosition(11.f * Scale, 0.f, 0.f);
     Bones["RArm"]->GetComponent<TransformComponent>()->SetPivot(_vec3(-11.0f * Scale, -8.f * Scale, 0.0f));
     Bones["RArm"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
-    Bones["LLeg"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieLeg_Mtrl");
+    Bones["LLeg"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], "ZombieLeg_Mtrl");
     Bones["LLeg"]->GetComponent<TransformComponent>()->SetScale(4.f * Scale, 12.f * Scale, 4.f * Scale);
     Bones["LLeg"]->GetComponent<TransformComponent>()->SetPosition(-4.f * Scale, -24.f * Scale, 0.f);
     Bones["LLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 12.f * Scale, 0.0f));
     Bones["LLeg"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
 
-    Bones["RLeg"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], L"ZombieLeg_Mtrl");
+    Bones["RLeg"] = Bone::Create(owner, objType, _vec3(Scale / 2.f, Scale / 2.f * 3.f, Scale / 2.f), Bones["Body"], "ZombieLeg_Mtrl");
     Bones["RLeg"]->GetComponent<TransformComponent>()->SetScale(4.f * Scale, 12.f * Scale, 4.f * Scale);
     Bones["RLeg"]->GetComponent<TransformComponent>()->SetPosition(4.f * Scale, -24.f * Scale, 0.f);
     Bones["RLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 12.f * Scale, 0.0f));
@@ -106,7 +106,7 @@ void BaseCharacter::Attack(Object* target)
 {
 }
 
-void BaseCharacter::Add_Bone(string str, ObjectType objType, Object* parent, const wstring& mtrl)
+void BaseCharacter::Add_Bone(string str, ObjectType objType, Object* parent, const string& mtrl)
 {
     Bones[str] = Bone::Create(owner, objType, _vec3(1.f, 1.f, 1.f), parent, mtrl);
 
@@ -132,7 +132,7 @@ void BaseCharacter::Free()
     Object::Free();
 }
 
-void BaseCharacter::SetMaterial(const std::wstring& mtrl, string str, RENDER_ID id)
+void BaseCharacter::SetMaterial(const std::string& mtrl, string str, RENDER_ID id)
 {
     if (Bones[str] != nullptr)
     {
@@ -178,7 +178,7 @@ void BaseCharacter::SetTranslate(_vec3 translate, string str)
     }
 }
 
-void BaseCharacter::SetWeapon(Object* parent, ObjectType objType, const wstring& mtrl)
+void BaseCharacter::SetWeapon(Object* parent, ObjectType objType, const string& mtrl)
 {
     if (parent == nullptr) return;
     Bones["Weapon"] = Bone::Create(owner, objType, _vec3(0.1f, 1.5f, 1.5f), parent, mtrl);

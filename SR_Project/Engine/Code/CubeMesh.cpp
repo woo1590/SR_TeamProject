@@ -70,6 +70,20 @@ HRESULT CubeMesh::CreateBuffer()
 	VertexCnt = Vertices.size();
 	IndexCnt = Indices.size() * 3;
 
+	/*----------Vertex Decl-----------------------------*/
+	static const D3DVERTEXELEMENT9 kDecl[] =
+	{
+		{ 0,  0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT,
+										D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT,
+										D3DDECLUSAGE_NORMAL,   0 },
+		D3DDECL_END()
+	};
+	/*--------------------------------------------------*/
+
+	if (FAILED(Device->CreateVertexDeclaration(kDecl, &Decl)))
+		return E_FAIL;
+
 	for (auto& vertex : Vertices)
 	{
 		vertex.vTexUV = vertex.vPosition;
@@ -106,7 +120,7 @@ HRESULT CubeMesh::CreateBuffer()
 	//Vertex Buffer
 	Device->CreateVertexBuffer(VertexCnt * sizeof(VTXCUBE),
 		D3DUSAGE_WRITEONLY,
-		FVF_CUBE,
+		0,
 		D3DPOOL_MANAGED,
 		&VB, 0);
 
@@ -134,7 +148,7 @@ void CubeMesh::Draw()
 {
 	Device->SetStreamSource(0, VB, 0, sizeof(VTXCUBE));
 	Device->SetIndices(IB);
-	Device->SetFVF(FVF_CUBE);
+	Device->SetVertexDeclaration(Decl);
 
 	Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, VertexCnt, 0, IndexCnt / 3);
 }

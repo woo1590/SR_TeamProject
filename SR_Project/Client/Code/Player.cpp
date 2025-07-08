@@ -61,12 +61,12 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     SetScale(1.f);
     
-    SetMaterial(L"playerBody_Mtrl","Body");
-    SetMaterial(L"playerHead_Mtrl","Head");
-    SetMaterial(L"playerLeftArm_Mtrl","LArm");
-    SetMaterial(L"playerRightArm_Mtrl","RArm");
-    SetMaterial(L"playerLeftLeg_Mtrl", "LLeg");
-    SetMaterial(L"playerRightLeg_Mtrl", "RLeg");
+    SetMaterial("playerBody_Mtrl","Body");
+    SetMaterial("playerHead_Mtrl","Head");
+    SetMaterial("playerLeftArm_Mtrl","LArm");
+    SetMaterial("playerRightArm_Mtrl","RArm");
+    SetMaterial("playerLeftLeg_Mtrl", "LLeg");
+    SetMaterial("playerRightLeg_Mtrl", "RLeg");
 
     Bones["LHand"] = nullptr;
     Bones["RHand"] = nullptr;

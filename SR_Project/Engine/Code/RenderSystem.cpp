@@ -53,7 +53,6 @@ HRESULT RenderSystem::Ready_RenderSystem()
 
 	/*---------------Light Setting---------------------*/
 	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//Device->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(20,20,20));
 	Device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	Device->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 
@@ -119,16 +118,6 @@ void RenderSystem::SetUIRenderState(UIRenderType newType)
 
 void RenderSystem::PriorityPass()
 {
-	_matrix view = Camera->GetViewMatrix();
-	_matrix skyboxView = view;
-	skyboxView._41 = 0.f;
-	skyboxView._42 = 0.f;
-	skyboxView._43 = 0.f;
-
-	_matrix proj = Camera->GetProjMatrix();
-	Device->SetTransform(D3DTS_VIEW, &skyboxView);
-	Device->SetTransform(D3DTS_PROJECTION, &proj);
-
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -141,9 +130,6 @@ void RenderSystem::PriorityPass()
 
 void RenderSystem::NonAlphaPass()
 {
-	_matrix view = Camera->GetViewMatrix();
-	Device->SetTransform(D3DTS_VIEW, &view);
-
 	for (const auto& r : RenderList[(int)RENDER_ID::Render_NonAlpha])
 		r->Render();
 }
@@ -205,11 +191,11 @@ void RenderSystem::DebugPass()
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	_matrix view = Camera->GetViewMatrix();
-	_matrix proj = Camera->GetProjMatrix();
+	CurrView = Camera->GetViewMatrix();
+	CurrProj = Camera->GetProjMatrix();
 
-	Device->SetTransform(D3DTS_VIEW, &view);
-	Device->SetTransform(D3DTS_PROJECTION, &proj);
+	Device->SetTransform(D3DTS_VIEW, &CurrView);
+	Device->SetTransform(D3DTS_PROJECTION, &CurrProj);
 
 	for (const auto& collision : DebugRender)
 		collision->Render();
@@ -234,7 +220,6 @@ void RenderSystem::Reset()
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	Device->SetRenderState(D3DRS_COLORWRITEENABLE, 0xF);
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
