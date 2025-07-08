@@ -145,6 +145,8 @@ void ResourceManager::LoadMaterial(const std::string& filePath)
 
         MaterialContainer[name] = mat;
     }
+
+    Safe_Release(baseMtrl);
 }
 
 void ResourceManager::LoadShader(const std::string& filePath, const std::string& key)
@@ -292,4 +294,8 @@ void ResourceManager::Free()
             Safe_Release(pair.second);
         });
 
+    std::for_each(ShaderContainer.begin(), ShaderContainer.end(), [](auto& pair)
+        {
+            Safe_Release(pair.second);
+        });
 }

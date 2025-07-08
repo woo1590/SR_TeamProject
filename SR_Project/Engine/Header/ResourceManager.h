@@ -16,13 +16,7 @@ public:
     static ResourceManager* Create();
     HRESULT Ready_ResourceManager();
 
-    /*----------File Load----------------*/
-    //void LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey);
-    //void LoadShader(const std::wstring & filePath,const std::wstring& key);
-    //void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
-    //void LoadMaterial(const std::wstring& key, Material* mtrl);
-
-    /*------------Load .mat File----------------*/
+    /*------------Load .json File----------------*/
     void LoadMesh(const std::string& key, Mesh* mesh);
     void LoadMaterial(const std::string& filePath);
     void LoadShader(const std::string& filePath, const std::string& key);
