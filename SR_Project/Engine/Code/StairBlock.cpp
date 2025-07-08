@@ -41,10 +41,10 @@ HRESULT StairBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     StaticBlock::Ready_Object();
 
-    Parts["Bottom"] = Part::Create(owner, objType, _vec3(1.f, 0.5f, 1.f), this, L"WoodPlank_Half_Mtrl");
+    Parts["Bottom"] = Part::Create(owner, objType, _vec3(1.f, 0.5f, 1.f), this, "WoodPlank_Half_Mtrl");
     auto bottom = Parts["Bottom"]->GetComponent<TransformComponent>();
 
-    Parts["Up"] = Part::Create(owner, objType, _vec3(1.f, 0.5f, 0.5f), Parts["Bottom"], L"WoodPlank_Half_Mtrl");
+    Parts["Up"] = Part::Create(owner, objType, _vec3(1.f, 0.5f, 0.5f), Parts["Bottom"], "WoodPlank_Half_Mtrl");
     auto up = Parts["Up"]->GetComponent<TransformComponent>();
 
     bottom->SetIsBlock();
@@ -54,16 +54,16 @@ HRESULT StairBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
     switch (Type)
     {
     case StaticBlockType::Stone:
-        SetMaterial(L"Stone_Half_Mtrl", "Bottom");
-        SetMaterial(L"Stone_Half_Mtrl", "Up");
+        SetMaterial("Stone_Half_Mtrl", "Bottom");
+        SetMaterial("Stone_Half_Mtrl", "Up");
         break;
     case StaticBlockType::CobbleStone:
-        SetMaterial(L"CobbleStone_Half_Mtrl", "Bottom");
-        SetMaterial(L"CobbleStone_Half_Mtrl", "Up");
+        SetMaterial("CobbleStone_Half_Mtrl", "Bottom");
+        SetMaterial("CobbleStone_Half_Mtrl", "Up");
         break;
     case StaticBlockType::SmoothStone:
-        SetMaterial(L"SmoothStone_Half_Mtrl", "Bottom");
-        SetMaterial(L"SmoothStone_Half_Mtrl", "Up");
+        SetMaterial("SmoothStone_Half_Mtrl", "Bottom");
+        SetMaterial("SmoothStone_Half_Mtrl", "Up");
         break;
     }
 
@@ -97,7 +97,7 @@ void StairBlock::Late_Update(_float dt)
     Object::Late_Update(dt);
 }
 
-void StairBlock::SetMaterial(const std::wstring& mtrl, string str)
+void StairBlock::SetMaterial(const std::string& mtrl, string str)
 {
     if (Parts[str] != nullptr)
         Parts[str]->GetComponent<MeshRenderer>()->SetMaterial(mtrl);

@@ -38,8 +38,8 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     i.value = 10.f;
     info->SetInfo(i);
 
-    SetMesh(L"Cube_Mesh");
-    SetMaterial(L"sword_Mtrl");
+    SetMesh("Cube_Mesh");
+    SetMaterial("sword_Mtrl");
     SetRenderId(renderId);
 
     PlayerSwordInfo();

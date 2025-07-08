@@ -37,8 +37,8 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto collision = AddComponent<CollisionComponent>();
     collision->SetSize(_vec3(0.5f, 0.5f, 0.5f));
 
-    renderer->SetMesh(L"Cube_Mesh");
-    renderer->SetMaterial(L"RedgolemLightblock_Mtrl");
+    renderer->SetMesh("Cube_Mesh");
+    renderer->SetMaterial("RedgolemLightblock_Mtrl");
     owner->AddObject(objType, this);
     return S_OK;
 }

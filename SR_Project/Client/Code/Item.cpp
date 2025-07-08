@@ -88,12 +88,12 @@ void Item::SetOwnerObject(Object* _ownerObject)
     ownerObject = _ownerObject;
 }
 
-void Item::SetMesh(std::wstring _meshType)
+void Item::SetMesh(std::string _meshType)
 {
     meshType = _meshType;
 }
 
-void Item::SetMaterial(std::wstring _material)
+void Item::SetMaterial(std::string _material)
 {
     material = _material;
 }

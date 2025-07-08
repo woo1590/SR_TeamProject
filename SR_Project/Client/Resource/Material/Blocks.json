@@ -1,86 +1,90 @@
-{
-    "template" :{
-    "fx" : "BasicShader",
+ {
+  "template": {
+    "fx": "BasicShader",
     "constants": {
-    "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],      
-    "MatSpecular"  : [1.0, 1.0, 1.0],        
-    "Shininess"    : 32.0,                   
+      "MatDiffuse":  [1.0, 1.0, 1.0, 1.0],
+      "MatSpecular": [1.0, 1.0, 1.0],
+      "Shininess":   32.0,
 
-    "Emissive"     : [0.0, 0.0, 0.0],        
-    "EmissivePow"  : 1.0,
+      "Emissive":    [0.0, 0.0, 0.0],
+      "EmissivePow": 1.0,
 
-    "AlphaCut"     : 0.4,
+      "AlphaCut":    0.4,
 
-    "UVScale"      : [1.0, 1.0],             
-    "UVOffset"     : [0.0, 0.0]       
+      "UVScale":  [1.0, 1.0],
+      "UVOffset": [0.0, 0.0]
     }
   },
 
-    "materials": {
-    "DirtBlock_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/DirtBlock.dds"
-        }
+  "materials": {
+    "ChestBottom_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/ChestBottom.dds" }
     },
-
-    "GrassBlock_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/GrassBlock.dds"
-        }
+    "ChestDown_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/ChestDown.dds" }
     },
-
-    "WoodBlock_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/WoodBlock.dds"
-        }
+    "ChestLock_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/ChestLock.dds" }
     },
-
-    "WoodPlank_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/WoodPlank.dds"
-        }
-    },
-
-    "Stone_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/Stone.dds"
-        }
+    "ChestUp_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/ChestUp.dds" }
     },
 
     "CobbleStone_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/CobbleStone.dds"
-        }
+      "textures": { "CubeMap": "../Resource/Texture/Block/CobbleStone.dds" }
+    },
+    "CobbleStone_Half_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/CobbleStone_Half.dds" }
     },
 
-    "Lever_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/Lever.dds"
-        }
+    "DirtBlock_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/DirtBlock.dds" }
     },
-
-    "ChestDown_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/ChestDown.dds"
-        }
+    "Glass_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/Glass.dds" }
     },
-
-    "ChestUp_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/ChestUp.dds"
-        }
-    },
-
-    "ChestLock_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/ChestLock.dds"
-        }
+    "GrassBlock_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/GrassBlock.dds" }
     },
 
     "IronCage_Mtrl": {
-        "textures": {
-        "CubeMap": "../Resource/Texture/Block/IronCage.dds"
-        }
+      "textures": { "CubeMap": "../Resource/Texture/Block/IronCage.dds" }
+    },
+    "Leaf_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/Leaf.dds" }
+    },
+    "Lever_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/Lever.dds" }
+    },
+
+    "MossyStoneBrick_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/MossyStoneBrick.dds" }
+    },
+    "SmoothStone_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/SmoothStone.dds" }
+    },
+    "SmoothStone_Half_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/SmoothStone_Half.dds" }
+    },
+
+    "Stone_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/Stone.dds" }
+    },
+    "Stone_Half_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/Stone_Half.dds" }
+    },
+    "StoneBrick_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/StoneBrick.dds" }
+    },
+
+    "WoodBlock_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/WoodBlock.dds" }
+    },
+    "WoodPlank_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/WoodPlank.dds" }
+    },
+    "WoodPlank_Half_Mtrl": {
+      "textures": { "CubeMap": "../Resource/Texture/Block/WoodPlank_Half.dds" }
     }
-    }
+  }
 }

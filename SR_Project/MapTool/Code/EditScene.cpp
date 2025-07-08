@@ -61,11 +61,8 @@ void EditScene::Load()
 	auto cube = CubeMesh::Create();
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 	
-	resource->LoadMesh("Cube_Mesh", cube);
-	resource->LoadShader("../../Client/Resource/Shader/BasicShader.fx","BasicShader");
-	resource->LoadMaterial("../../Client/Resource/Material/Blocks.json");
-	
-	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockDir::BlockY };
+	BlockMgr->LoadTexture();
+	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockAxis::sAY};
 	staticBlocks.push_back(baseBlock);
 
 	ObjectMgr = ObjectManager::Create(this);

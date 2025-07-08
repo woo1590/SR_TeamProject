@@ -39,8 +39,8 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
     i.value = 10.f;
     info->SetInfo(i);
 
-    SetMesh(L"Cube_Mesh");
-    SetMaterial(L"bow_Mtrl");
+    SetMesh("Cube_Mesh");
+    SetMaterial("bow_Mtrl");
     SetRenderId(renderId);
 
     PlayerBowInfo();

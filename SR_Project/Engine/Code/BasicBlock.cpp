@@ -40,36 +40,36 @@ HRESULT BasicBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto transform = GetComponent<TransformComponent>();
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-    renderer->SetMesh(L"Cube_Mesh");
+    renderer->SetMesh("Cube_Mesh");
 
     switch (Type)
     {
     case StaticBlockType::Dirt:
-        renderer->SetMaterial(L"DirtBlock_Mtrl");
+        renderer->SetMaterial("DirtBlock_Mtrl");
         break;
     case StaticBlockType::GrassDirt:
-        renderer->SetMaterial(L"GrassBlock_Mtrl");
+        renderer->SetMaterial("GrassBlock_Mtrl");
         break;
     case StaticBlockType::Wood:
-        renderer->SetMaterial(L"WoodBlock_Mtrl");
+        renderer->SetMaterial("WoodBlock_Mtrl");
         break;
     case StaticBlockType::WoodPlank:
-        renderer->SetMaterial(L"WoodPlank_Mtrl");
+        renderer->SetMaterial("WoodPlank_Mtrl");
         break;
     case StaticBlockType::Stone:
-        renderer->SetMaterial(L"Stone_Mtrl");
+        renderer->SetMaterial("Stone_Mtrl");
         break;
     case StaticBlockType::CobbleStone:
-        renderer->SetMaterial(L"CobbleStone_Mtrl");
+        renderer->SetMaterial("CobbleStone_Mtrl");
         break;
     case StaticBlockType::SmoothStone:
-        renderer->SetMaterial(L"SmoothStone_Mtrl");
+        renderer->SetMaterial("SmoothStone_Mtrl");
         break;
     case StaticBlockType::StoneBrick:
-        renderer->SetMaterial(L"StoneBrick_Mtrl");
+        renderer->SetMaterial("StoneBrick_Mtrl");
         break;
     case StaticBlockType::MossyStoneBrick:
-        renderer->SetMaterial(L"MossyStoneBrick_Mtrl");
+        renderer->SetMaterial("MossyStoneBrick_Mtrl");
         break;
     }
 

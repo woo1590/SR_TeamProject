@@ -36,58 +36,6 @@ HRESULT ResourceManager::Ready_ResourceManager()
     return S_OK;
 }
 
-//void ResourceManager::LoadResource(const std::wstring& texPath, const std::wstring& texKey, TEXTURE texType, const std::wstring& mtrlKey)
-//{
-//    LoadTexture(texPath, texKey, texType);
-//    auto mtrl = Material::Create();
-//    mtrl->SetTexture(texKey);
-//    LoadMaterial(mtrlKey, mtrl);
-//}
-
-//void ResourceManager::LoadShader(const std::wstring& filePath, const std::wstring& key)
-//{
-//    auto device = GraphicDevice::GetInstance()->GetDevice();
-//
-//    LPD3DXEFFECT effect = nullptr;
-//    LPD3DXBUFFER error = nullptr;
-//    D3DXCreateEffectFromFileW(device, filePath.c_str(), nullptr, nullptr, 0, nullptr, &effect, &error);
-//
-//    if (error) {
-//        OutputDebugStringA((char*)error->GetBufferPointer());
-//        error->Release();
-//    }
-//
-//    auto shader = Shader::Create(effect);
-//
-//    ShaderContainer[key] = shader;
-//}
-//
-//void ResourceManager::LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType)
-//{
-//    LPDIRECT3DBASETEXTURE9 tex = nullptr;
-//    auto device = GraphicDevice::GetInstance()->GetDevice();
-//
-//    switch (texType)
-//    {
-//    case Engine::TEXTURE::Tex_Diffuse:
-//        D3DXCreateTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&tex);
-//        break;
-//    case Engine::TEXTURE::Tex_Cube:
-//        D3DXCreateCubeTextureFromFileW(device, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&tex);
-//        break;
-//    default:
-//        break;
-//    }
-//
-//    TextureContainer[key] = tex;
-//}
-//
-
-//void ResourceManager::LoadMaterial(const std::wstring& key, Material* mtrl)
-//{
-//    MaterialContainer[key] = mtrl;
-//}
-
 void ResourceManager::LoadMesh(const std::string & key, Mesh* mesh)
 {
     MeshContainer[key] = mesh;

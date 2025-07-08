@@ -107,12 +107,12 @@ void RedGolem::InitTransform(ObjectType objType)
     transform->SetRotate(0.f, D3DXToRadian(90.f), 0.f);
     //
 
-    SetMaterial(L"RedGolemBody_Mtrl", "Body");
-    SetMaterial(L"RedGolemFace_Mtrl", "Head");
-    SetMaterial(L"RedGolemArm_Mtrl", "LArm");
-    SetMaterial(L"RedGolemArm_Mtrl", "RArm");
-    SetMaterial(L"RedGolemFoot_Mtrl", "LLeg");
-    SetMaterial(L"RedGolemFoot_Mtrl", "RLeg");
+    SetMaterial("RedGolemBody_Mtrl", "Body");
+    SetMaterial("RedGolemFace_Mtrl", "Head");
+    SetMaterial("RedGolemArm_Mtrl", "LArm");
+    SetMaterial("RedGolemArm_Mtrl", "RArm");
+    SetMaterial("RedGolemFoot_Mtrl", "LLeg");
+    SetMaterial("RedGolemFoot_Mtrl", "RLeg");
 
     //head
     SetScale(_vec3(15.f * Scale, 15.f * Scale, 10.f * Scale), "Head");
@@ -120,7 +120,7 @@ void RedGolem::InitTransform(ObjectType objType)
 
     //body
     SetScale(_vec3(40.f * Scale, 30.f * Scale, 20.f * Scale), "Body");
-    Add_Bone("LightBlock", objType, Bones["Body"], L"RedgolemLightblock_Mtrl");
+    Add_Bone("LightBlock", objType, Bones["Body"], "RedgolemLightblock_Mtrl");
     SetScale(_vec3(20.f * Scale, 20.f * Scale, 20.f * Scale), "LightBlock");
     SetPosition(_vec3(0.f, -3.f * Scale, -10.f * Scale), "LightBlock");
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f, -20.f * Scale, 0.0f));
@@ -147,14 +147,14 @@ void RedGolem::InitTransform(ObjectType objType)
     Bones["RLeg"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 12.5f * Scale, 0.0f));
 
     //hand
-    Add_Bone("LHand", objType, Bones["LArm"], L"RedGolemHand_Mtrl");
+    Add_Bone("LHand", objType, Bones["LArm"], "RedGolemHand_Mtrl");
     SetScale(_vec3(10.f * Scale, 20.f * Scale, 10.f * Scale), "LHand");
     SetPosition(_vec3(-5.f * Scale, -40.f * Scale, 0.f), "LHand");
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(5.f* Scale, 20.f * Scale, 0.0f));
     Bones["LHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "LHand");
 
-    Add_Bone("RHand", objType, Bones["RArm"], L"RedGolemHand_Mtrl");
+    Add_Bone("RHand", objType, Bones["RArm"], "RedGolemHand_Mtrl");
     SetScale(_vec3(10.f * Scale, 20.f * Scale, 10.f * Scale), "RHand");
     SetPosition(_vec3(5.f * Scale, -40.f * Scale, 0.f), "RHand");
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(-5.f * Scale, 20.f * Scale, 0.0f));

@@ -39,7 +39,7 @@ HRESULT HalfBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
     StaticBlock::Ready_Object();
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
-    renderer->SetMesh(L"Cube_Mesh");
+    renderer->SetMesh("Cube_Mesh");
 
     auto transform = GetComponent<TransformComponent>();
     transform->SetScale(1.f, 0.5f, 1.f);
@@ -48,16 +48,16 @@ HRESULT HalfBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
     switch (Type)
     {
     case StaticBlockType::WoodPlank:
-        renderer->SetMaterial(L"WoodPlank_Half_Mtrl");
+        renderer->SetMaterial("WoodPlank_Half_Mtrl");
         break;
     case StaticBlockType::Stone:
-        renderer->SetMaterial(L"Stone_Half_Mtrl");
+        renderer->SetMaterial("Stone_Half_Mtrl");
         break;
     case StaticBlockType::CobbleStone:
-        renderer->SetMaterial(L"CobbleStone_Half_Mtrl");
+        renderer->SetMaterial("CobbleStone_Half_Mtrl");
         break;
     case StaticBlockType::SmoothStone:
-        renderer->SetMaterial(L"SmoothStone_Half_Mtrl");
+        renderer->SetMaterial("SmoothStone_Half_Mtrl");
         break;
     }
 

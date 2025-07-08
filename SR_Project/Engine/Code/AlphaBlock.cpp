@@ -40,15 +40,15 @@ HRESULT AlphaBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto transform = GetComponent<TransformComponent>();
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_Alpha);
-    renderer->SetMesh(L"Cube_Mesh");
+    renderer->SetMesh("Cube_Mesh");
 
     switch (Type)
     {
     case StaticBlockType::Glass:
-        renderer->SetMaterial(L"Glass_Mtrl");
+        renderer->SetMaterial("Glass_Mtrl");
         break;
     case StaticBlockType::Leaf:
-        renderer->SetMaterial(L"Leaf_Mtrl");
+        renderer->SetMaterial("Leaf_Mtrl");
         break;
     }
 

@@ -25,8 +25,8 @@ public:
     void SetRotation(_vec3 _rotation);
     void SetRenderId(Engine::RENDER_ID _renderId);
     void SetOwnerObject(Object* _ownerObject);
-    void SetMesh(std::wstring _mesh);
-    void SetMaterial(std::wstring _material);
+    void SetMesh(std::string _mesh);
+    void SetMaterial(std::string _material);
 
     void ApplyComponents();
 
@@ -38,8 +38,8 @@ protected:
     _vec3 pivotPosition = { 0.f,0.f,0.f };
     _vec3 itemRotation = { 0.f,0.f,0.f };
     
-    std::wstring meshType;
-    std::wstring material;
+    std::string meshType;
+    std::string material;
     Engine::RENDER_ID renderId = Engine::RENDER_ID::Render_NonAlpha;
 
     Object* ownerObject = nullptr;

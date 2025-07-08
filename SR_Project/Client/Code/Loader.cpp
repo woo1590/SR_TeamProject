@@ -90,14 +90,12 @@ HRESULT Loader::Load_TestScene()
 	/*--------------------Load Shader---------------------------------*/
 	resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
 	resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
+
 	resource->LoadMaterial("../Resource/Material/SkyBox.json");
 	resource->LoadMaterial("../Resource/Material/Monsters.json");
 	resource->LoadMaterial("../Resource/Material/Player.json");
 	resource->LoadMaterial("../Resource/Material/Blocks.json");
-
-	//resource->LoadResource(L"../Resource/Texture/Player/sword.dds", L"sword", TEXTURE::Tex_Cube, L"sword_Mtrl");
-	//resource->LoadResource(L"../Resource/Texture/Player/bow.dds", L"bow", TEXTURE::Tex_Cube, L"bow_Mtrl");
-	//resource->LoadResource(L"../Resource/Texture/Player/arrow.dds", L"arrow", TEXTURE::Tex_Cube, L"arrow_Mtrl");
+	resource->LoadMaterial("../Resource/Material/Items.json");
 	return S_OK;
 }
 

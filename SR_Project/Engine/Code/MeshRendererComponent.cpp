@@ -61,6 +61,7 @@ void MeshRenderer::Render()
 		shader->SetConstant("g_View", viewMat);
 		shader->SetConstant("g_Proj", projMat);
 	}
+
 	mtrl->Apply();
 	mesh->Draw();
 

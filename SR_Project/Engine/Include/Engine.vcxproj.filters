@@ -205,9 +205,6 @@
     <Filter Include="05. Scene Component\BlockManager">
       <UniqueIdentifier>{1e9c3aa3-c103-4a7f-bff3-f1f7d1d1b0b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\00. Parts">
-      <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06. Object\01. StaticBlock">
       <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
     </Filter>
@@ -258,7 +255,7 @@
     </Filter>
     <Filter Include="05. Scene Component\UIManager\QuestSystem">
       <UniqueIdentifier>{72d62749-4c58-4a7d-8624-ee1caf296f10}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="01. Engine Component\ResourceManager\Mesh\ChunkMesh">
       <UniqueIdentifier>{9a017fa7-a6a9-436d-804a-97eab5cb419a}</UniqueIdentifier>
     </Filter>
@@ -267,6 +264,9 @@
     </Filter>
     <Filter Include="05. Scene Component\Chunk">
       <UniqueIdentifier>{516bf75c-515a-4e4c-a73b-d6a653ee1289}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\00. Parts">
+      <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -514,7 +514,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticGrid.cpp">
       <Filter>05. Scene Component\StaticGrid</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\BasicBlock.cpp">
       <Filter>06. Object\01. StaticBlock\BasicBlock</Filter>
     </ClCompile>
@@ -529,7 +529,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\AlphaBlock.cpp">
       <Filter>06. Object\01. StaticBlock\AlphaBlock</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ItemComponent.cpp">
       <Filter>07. Object Component\UIComponent\08. ItemComponent</Filter>
     </ClCompile>
@@ -810,7 +810,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\ObjectComponent.h">
       <Filter>07. Object Component</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\BasicBlock.h">
       <Filter>06. Object\01. StaticBlock\BasicBlock</Filter>
     </ClInclude>
@@ -828,7 +828,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\ChunkManager.h">
       <Filter>05. Scene Component\ChunkManager</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ItemComponent.h">
       <Filter>07. Object Component\UIComponent\08. ItemComponent</Filter>
     </ClInclude>

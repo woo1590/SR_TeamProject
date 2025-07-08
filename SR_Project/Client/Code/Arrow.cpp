@@ -51,8 +51,8 @@ HRESULT Arrow::Ready_Object(ObjectManager* owner, ObjectType objType, Object* sh
     i.value = 10.f;
     info->SetInfo(i);
 
-    SetMesh(L"Cube_Mesh");
-    SetMaterial(L"arrow_Mtrl");
+    SetMesh("Cube_Mesh");
+    SetMaterial("arrow_Mtrl");
     SetRenderId(renderId);
 
     switch (ownerObject->GetObjectType()) 

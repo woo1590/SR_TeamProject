@@ -19,37 +19,37 @@
   "materials":{
     "playerHead_Mtrl":{
       "textures":{
-        "CubeMap":"../Resource/Texture/Player/playerHead.dds"
+        "CubeMap":"../Resource/Asset/JW/playerHead.dds"
       }
     },
 
     "playerBody_Mtrl":{
       "textures":{
-        "CubeMap":"../Resource/Texture/Player/playerBody.dds"
+        "CubeMap":"../Resource/Asset/JW/playerBody.dds"
       }
     },
 
     "playerRightArm_Mtrl":{
       "textures":{
-        "CubeMap":"../Resource/Texture/Player/playerRightArm.dds"
+        "CubeMap":"../Resource/Asset/JW/playerRightArm.dds"
       }
     },
 
     "playerLeftArm_Mtrl":{
       "textures":{
-        "CubeMap":"../Resource/Texture/Player/playerLeftArm.dds"
+        "CubeMap":"../Resource/Asset/JW/playerLeftArm.dds"
       }
     },
 
     "playerRightLeg_Mtrl":{
       "textures":{
-        "CubeMap":"../Resource/Texture/Player/playerRightLeg.dds"
+        "CubeMap":"../Resource/Asset/JW/playerRightLeg.dds"
       }
     },
 
     "playerLeftLeg_Mtrl":{
       "textures":{
-        "CubeMap":"../Resource/Texture/Player/playerLeftLeg.dds"
+        "CubeMap":"../Resource/Asset/JW/playerLeftLeg.dds"
       }
     }
   }

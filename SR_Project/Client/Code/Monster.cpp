@@ -114,6 +114,5 @@ void Monster::OnCollisionStay(Object* other)
 void Monster::Free()
 {
     Safe_Delete(Distance);
-    Safe_Delete(PrevHp);
     BaseCharacter::Free();
 }
