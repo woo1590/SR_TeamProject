@@ -37,7 +37,6 @@ Chunk* Chunk::Create(ObjectManager* owner, int chunkX, int chunkZ)
 HRESULT Chunk::Ready_Object()
 {
     auto transform = AddComponent<TransformComponent>();
-    transform->SetPosition(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMaterial("Chunk_Mtrl");
@@ -147,7 +146,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, co
     for (int i = 0; i < 4; ++i)
     {
         VTXTEX v;
-        v.vPosition = blockPos * 2.f + offsets[faceDir][i];
+        v.vPosition = blockPos + offsets[faceDir][i];
         v.vNormal = normals[faceDir];
         v.vTexUV = uvs[i];
         vertices.push_back(v);

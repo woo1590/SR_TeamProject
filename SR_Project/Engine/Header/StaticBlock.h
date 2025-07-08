@@ -27,5 +27,7 @@ protected:
     StaticBlockAxis Axis;
     StaticBlockRot Rot;
     StaticBlockUsage Usage;
+
+    UINT8 FaceMask;
 };
 END
