@@ -22,12 +22,12 @@ public:
     void BuildChunkFace();
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, const _vec3& blockPos, int faceDir);
 
-    StaticBlockData GetBlock(int x, int y, int z) const;
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);
 
     int GetChunkX() const { return ChunkX; }
     int GetChunkZ() const { return ChunkZ; }
+    StaticBlockData GetBlock(int x, int y, int z) const;
 
 private:
     void Free()override;

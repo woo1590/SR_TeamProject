@@ -134,14 +134,14 @@ void EditScene::ImGui_SaveLoad()
 
 	static char save[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE ST", save, sizeof(save)); ImGui::SameLine();
-	if (ImGui::Button("SV STAGE")) BlockMgr->SaveChunk(save);
+	if (ImGui::Button("SV STAGE")) BlockMgr->SaveStage(save);
 
 	static char load[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : LOAD ST", load, sizeof(load)); ImGui::SameLine();
 	if (ImGui::Button("LD STAGE"))
 	{
 		staticBlocks.clear();
-		BlockMgr->LoadChunk(load);
+		BlockMgr->LoadStage(load);
 	}
 
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
