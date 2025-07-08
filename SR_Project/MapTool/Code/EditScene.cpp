@@ -129,28 +129,37 @@ void EditScene::ImGui_Main()
 
 void EditScene::ImGui_SaveLoad()
 {
+	ImGui::Text("Static Block Count : %d", staticBlocks.size());
+	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
+
 	static char save[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE ST", save, sizeof(save)); ImGui::SameLine();
-	if (ImGui::Button("SV STAGE")) BlockMgr->SaveStage(save);
+	if (ImGui::Button("SV STAGE")) BlockMgr->SaveChunk(save);
 
 	static char load[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : LOAD ST", load, sizeof(load)); ImGui::SameLine();
-	if (ImGui::Button("LD STAGE")) BlockMgr->LoadStage(load);
+	if (ImGui::Button("LD STAGE"))
+	{
+		staticBlocks.clear();
+		BlockMgr->LoadChunk(load);
+	}
 
-	ImGui::SetNextItemWidth(100); ImGui::InputInt("Width", &Width); ImGui::SameLine();
-	ImGui::SetNextItemWidth(100); ImGui::InputInt("Height", &Height); ImGui::SameLine();
-	ImGui::SetNextItemWidth(100); ImGui::InputFloat("Scale", &Scale, 0.005f, 0.05f, "%.3f");
-
-	static char saveHeight[16]{}; ImGui::SetNextItemWidth(150);
-	ImGui::InputText(" : SAVE HM", saveHeight, sizeof(saveHeight)); ImGui::SameLine();
-	if (ImGui::Button("SV HEIGHTMAP")) CreateTerrain(saveHeight);
-
-	static char loadHeight[16]{}; ImGui::SetNextItemWidth(150);
-	ImGui::InputText(" : LOAD HM", loadHeight, sizeof(loadHeight)); ImGui::SameLine();
-	if (ImGui::Button("LD HEIGHTMAP")) PlaceTerrainBlocks(loadHeight);
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthZ", &WidthZ);
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
 
 	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
 	{
+		staticBlocks.clear();
+		dynamicBlocks.clear();
+
+		ObjectMgr->ClearList(ObjectType::StaticBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+
+		TerrainCreater terrain;
+		terrain.Free();
+
 		CreateTerrain("heightMap");
 		PlaceTerrainBlocks("heightMap");
 	}
@@ -166,6 +175,10 @@ void EditScene::ImGui_SaveLoad()
 		TerrainCreater terrain;
 		terrain.Free();
 	}
+
+	auto chunks = ChunkMgr->GetChunks();
+	for (auto& [key, chunk] : chunks)
+		chunk->BuildChunkFace();
 }
 
 void EditScene::ImGui_SetBlockType()
@@ -529,7 +542,7 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 void EditScene::CreateTerrain(const std::string& filename)
 {
 	TerrainCreater terrain;
-	terrain.CreateHeightmap(Width, Height, Scale);
+	terrain.CreateHeightmap(WidthX, WidthZ, Scale);
 	terrain.SaveHeightmapAsImage(filename);
 }
 
@@ -537,11 +550,12 @@ void EditScene::PlaceTerrainBlocks(const std::string& filename)
 {
 	TerrainCreater terrain;
 	if (!terrain.LoadHeightmapFromImage(filename)) return;
-	terrain.CreateBlockTerrain(10);
+
+	terrain.CreateBlockTerrain(WidthX, WidthZ, Height);
 
 	for (const auto& block : terrain.GetBlocks())
 	{
-		_vec3 position = { block.x * 2.0f, block.y * 2.0f, block.z * 2.0f };
+		_vec3 position = block.Pos * 2.f;
 		Place(position);
 	}
 }
@@ -628,10 +642,12 @@ void EditScene::Place(_vec3& position)
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 		
-		int chunkX = position.x / CHUNK_SIZE;
-		int chunkY = position.z / CHUNK_SIZE;
+		int chunkX = int(position.x / CHUNK_SIZE);
+		int chunkY = int(position.z / CHUNK_SIZE);
+
 		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
 		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
+		chunk->BuildChunkFace();
 
 		staticBlocks.push_back({ position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage });
 	}
@@ -649,10 +665,10 @@ void EditScene::Place(_vec3& position)
 void EditScene::Free()
 {
 	Safe_Release(ObjectMgr);
+	Safe_Release(CollisionSys);
 	Safe_Release(CameraMgr);
 	Safe_Release(BlockMgr);
 	Safe_Release(ChunkMgr);
-	Safe_Release(CollisionSys);
 	staticBlocks.clear();
 	staticBlocks.shrink_to_fit();
 	Scene::Free();

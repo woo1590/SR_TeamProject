@@ -26,6 +26,8 @@ public:
     Chunk* CreateChunk(int chunkX, int chunkY);
     void RemoveChunk(int chunkX, int chunkY);
 
+    const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() { return worldChunks; }
+
 private:
     void Free()override;
 
