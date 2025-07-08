@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "Player.h"
-#include "Player.h"
 #include "Bone.h"
 #include "TransformComponent.h"
 #include "ObjectManager.h"
@@ -243,9 +242,9 @@ void Player::SetUpFirstAttackPhaseRotations()
     RightArmRot.destinations =
     {
         StartRotations["RArm"],
-        { -180.f, 10.f, -60.f },
-        { -120.f, 10.f, -60.f },
-        { -30.f, 10.f,-60.f }
+        { this->GetStringAngleX("","up"), 10.f, this->GetStringAngleZ("left","down") },
+        { this->GetStringAngleX("front","up"), 10.f, this->GetStringAngleZ("left","down") },
+        { this->GetStringAngleX("front","down"), 10.f, this->GetStringAngleZ("left","down") }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
 
@@ -395,9 +394,9 @@ void Player::SetUpLastAttackPhaseRotations() {
     bodyRot.phaseVec = phase;
     bodyRot.destinations = {
         { 0.f, atan2f(-AttackDirection.x, AttackDirection.z), 0.f },
-        { 0.f, 0.f, 5.f },    // 약간 앞으로 숙이는 느낌 (Z축)
-        { 0.f, 0.f, 0.f },
-        { 0.f, 0.f, -5.f }    // 찌르기 후 반동
+        { 0.f, 0.f, 5.f },
+        { 0.f, 0.f, -5.f },
+        { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::BODY, bodyRot);
 }
@@ -1081,4 +1080,68 @@ void Player::SetPhaseRotations(const ePlayerState& state, const ePlayerBone& bon
 Player::PhaseRotation& Player::GetPhaseRotations(const ePlayerState& state, const ePlayerBone& bone)
 {
     return PhaseRotations.at({ static_cast<int>(state), static_cast<int>(bone) });
+}
+
+float Player::GetStringAngleX(const string& frontBack, const string& upDown, bool clockwise, float offset)
+{
+    float fAngle = 0.f;
+
+    if (frontBack == "front")
+    {
+        fAngle += -90;
+    }
+    if (frontBack == "back") 
+    {
+        fAngle += 90;
+    }
+
+    if (frontBack == "") {
+        if (upDown == "up") fAngle = -180.f;
+        else if (upDown == "down") fAngle = 0.f;
+    }
+    else
+    {
+        if (upDown == "up")
+        {
+            fAngle *= 1.5f;
+        }
+        if (upDown == "down") {
+            fAngle /= 2.f;
+        }
+    }
+    fAngle += offset;
+
+    return clockwise ? fAngle : -fAngle;
+}
+
+float Player::GetStringAngleZ(const string& leftRight, const string& upDown, bool clockwise, float offset)
+{
+    float fAngle = 0.f;
+
+    if (leftRight == "left")
+    {
+        fAngle += -90;
+    }
+    if (leftRight == "right")
+    {
+        fAngle += 90;
+    }
+
+    if (leftRight == "") {
+        if (upDown == "up") fAngle = -180.f;
+        else if (upDown == "down") fAngle = 0.f;
+    }
+    else
+    {
+        if (upDown == "up")
+        {
+            fAngle *= 1.5f;
+        }
+        if (upDown == "down") {
+            fAngle /= 2.f;
+        }
+    }
+    fAngle += offset;
+
+    return clockwise ? fAngle : -fAngle;
 }
