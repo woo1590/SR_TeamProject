@@ -4,13 +4,42 @@
 class Player : public BaseCharacter
 {   
 public:
-    enum class ePlayerState {
+    enum class ePlayerState : int
+    {
         IDLE,
         WALK,
         ROLL,
         ATTACK,
         SHOOT,
         DEAD
+    };
+    enum class ePlayerBone :int
+    {
+        BODY,
+        HEAD,
+        LARM,
+        RARM,
+        LLEG,
+        RLEG,
+    };
+    enum class ePlayerAttackType : int
+    {
+        FIRST,
+        SECOND,
+        LAST,
+        COUNT
+    };
+    struct PhaseRotation 
+    {
+        string name;
+        vector<_vec3> destinations;
+        vector<float> phaseVec;
+
+        PhaseRotation() = default;
+        PhaseRotation(const vector<_vec3>& vecRot, const vector<float>& vecPhase)
+            : destinations(vecRot), phaseVec(vecPhase) 
+        {
+        }
     };
 public:
     static Player* Create(ObjectManager* owner, ObjectType objType);
@@ -40,6 +69,12 @@ private:
     void UpdateDead(_float dt);
 
     void SaveStartRotation();
+    void SetUpFirstAttackPhaseRotations();
+    void SetUpSecondAttackPhaseRotations();
+    void SetUpLastAttackPhaseRotations();
+    void SetUpShootPhaseRotations();
+    void SetUpDeadPhaseRotations();
+    void SetAttackTypeNext();
 
     _vec3 MatrixToEulerAngles(const _matrix& mat);
     void OnCollisionStay(Object* other);
@@ -48,20 +83,35 @@ private:
     float OffsetLerp(const _float& start, const _float& offset, float ratio);
     _vec3 OffsetLerp(const _vec3& start, const _vec3& offset, float ratio);
     _vec3 DegToRadLerp(const _vec3& startDeg, const _vec3& endDeg, float ratio);
-    _vec3 GetPhasedRotation(float fProgress, vector<float>& phaseVec, vector<_vec3>& destinations);
-    void ApplyPhasedRotation(const std::string& name, float fProgress, vector<float>& phaseVec, vector<_vec3>& destinations);
+    _vec3 GetPhasedRotation(float fProgress, PhaseRotation& phaseRot);
+    void ApplyPhasedRotation(float fProgress, PhaseRotation& phaseRot);
+    void SetPhaseRotations(const ePlayerState& state, const ePlayerBone& bone, PhaseRotation& phaseRot);
+    PhaseRotation& GetPhaseRotations(const ePlayerState& state, const ePlayerBone& bone);
+    
 private:
     ePlayerState State = ePlayerState::IDLE;
     float WalkTime = 0.f;
     float RollTime = 0.f;
     float AttackTime = 0.f;
     float DeadTime = 0.f;
+    float comboAttackableTime = 0.f;
 
     std::unordered_map<std::string, _vec3> StartRotations;
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
-    float swordAttackRange = 3.f;
+    float swordAttackRange = 4.f;
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
+    
+    struct PairHash 
+    {
+        size_t operator()(const pair<int, int>& pr) const 
+        {
+            return hash<int>()(pr.first) ^ (hash<int>()(pr.second) << 1);
+        }
+    };
+    std::unordered_map<std::pair<int,int>,PhaseRotation, PairHash> PhaseRotations;
+
+    ePlayerAttackType attackType = ePlayerAttackType::FIRST;
 };
