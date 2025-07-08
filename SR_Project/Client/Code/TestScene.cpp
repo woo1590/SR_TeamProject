@@ -72,7 +72,7 @@ void TestScene::Load()
 	BlockMgr		= BlockManager::Create(this);
 
 	BlockMgr->LoadStage("test");
-	Grid->InsertBlock();
+	//Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
 
 #ifdef USE_IMGUI
@@ -107,7 +107,7 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
 	
 	UILoader loader;
-	loader.LoadUI(ObjectMgr, player);
+	loader.LoadUI(ObjectMgr);
 }
 
 void TestScene::Update(float dt)

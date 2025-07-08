@@ -57,6 +57,13 @@
 #include "FishingItem.h"
 #include "QuestPanel.h"
 #include "QuestTextObj.h"
+#include "WorldMapPanel.h"
+#include "Locked_Node.h"
+#include "MapNode.h"
+#include "LockNode_Back.h"
+#include "MapNode_Front.h"
+#include "LoadingStone.h"
+#include "WorldMapTextPanel.h"
 
 #include "ArrowSlot.h"
 #include "UIManager.h"
@@ -67,14 +74,16 @@
 #include "InventoryManager.h"
 #include "InventoryUIBuilder.h"
 #include "QuestSystem.h"
+#include "ObjectManager.h"
 
-void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
+void UILoader::LoadUI(ObjectManager* objMgr)
 {
-	const auto& playerInfo = player->GetComponent<InfoComponent<PlayerInfo>>();
+	const auto& playerInfo = objMgr->GetFrontObject(ObjectType::Player)->GetComponent<InfoComponent<PlayerInfo>>();
 	auto* scene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
 	auto* uiMgr = scene->GetUIManager();
 	auto* invMgr = uiMgr->GetInventory();
 
+	objMgr->AddUIObject(Cursor::Create(objMgr));
 	InventoryUIBuilder::BuildInventoryUI(objMgr, invMgr);
 	auto tooltip = TooltipObj::Create(objMgr);
 	tooltip->SetInventoryManager(invMgr);
@@ -133,15 +142,10 @@ void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
 	expInfo->SetEventType(UIEventType::EXP_Changed);
 
 	objMgr->AddUIObject(HotBarBack::Create(objMgr));
-	//objMgr->AddUIObject(HPBarBack::Create(objMgr));
-
 	objMgr->AddUIObject(ScrollBack::Create(objMgr));
-
-	objMgr->AddUIObject(Cursor::Create(objMgr));
-
+	
 	objMgr->AddUIObject(InventoryEmerald::Create(objMgr));
 	objMgr->AddUIObject(InventoryEnchant::Create(objMgr));
-
 	objMgr->AddUIObject(InventoryUI::Create(objMgr));
 
 	struct GearSlotInfo { float x; float y; };
@@ -203,9 +207,12 @@ void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
 	auto exitBtn = ExitBtn::Create(objMgr);
 	objMgr->AddUIObject(exitBtn);
 
+	auto exitBtn2 = ExitBtn::Create(objMgr);
+	exitBtn2->GetComponent<UIRenderer>()->SetRenderType(UIRenderType::WorldMap);
+	objMgr->AddUIObject(exitBtn2);
+
 	auto debugUI = UIDebugObj::Create(objMgr);
 	objMgr->AddUIObject(debugUI);
-	debugUI->SetPlayer(player);
 
 	auto hpPotion = HP_Potion::Create(objMgr);
 	objMgr->AddUIObject(hpPotion);
@@ -223,7 +230,73 @@ void UILoader::LoadUI(ObjectManager* objMgr, Player* player)
 	objMgr->AddUIObject(EnchantFilter::Create(objMgr));
 	objMgr->AddUIObject(CostumeFilter::Create(objMgr));
 
-	
+	BuildWorldMapUI(objMgr);
+}
+
+void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
+{
+	auto worldMapPanel = WorldMapPanel::Create(objMgr);
+	objMgr->AddUIObject(worldMapPanel);
+	auto panelTransform = worldMapPanel->GetComponent<TransformComponent>();
+
+	auto CreateLockedNode = [&](const _vec2& pos)
+		{
+			auto node = Locked_Node::Create(objMgr);
+			auto nodeTf = node->GetComponent<TransformComponent>();
+			nodeTf->SetPosition(pos.x, pos.y);
+			nodeTf->SetParent(panelTransform);
+			objMgr->AddUIObject(node);
+
+			auto back = LockNode_Back::Create(objMgr);
+			back->GetComponent<TransformComponent>()->SetParent(nodeTf);
+			objMgr->AddUIObject(back);
+		};
+
+	vector<_vec2> lockedNodePositions = {
+		{-100.f, 200.f},
+		{-150.f, 0.f},
+		{-120.f, -200.f},
+		{-450.f, 240.f},
+	};
+
+	for (const auto& pos : lockedNodePositions)
+		CreateLockedNode(pos);
+
+	auto CreateMapNode = [&](const _vec2& pos)
+		{
+			auto node = MapNode_Front::Create(objMgr);
+			auto nodeTf = node->GetComponent<TransformComponent>();
+			nodeTf->SetPosition(pos.x, pos.y);
+			nodeTf->SetParent(panelTransform);
+			objMgr->AddUIObject(node);
+		};
+
+	vector<_vec2> mapNodePositions = {
+		{-600.f, 80.f},
+		{-480.f, -150.f},
+	};
+
+	for (const auto& pos : mapNodePositions)
+		CreateMapNode(pos);
+
+	objMgr->AddUIObject(LoadingStone::Create(objMgr));
+
+	auto CreateTextPanel = [&](const _vec2& pos, const wstring& text)
+		{
+			auto panel = WorldMapTextPanel::Create(objMgr);
+			panel->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
+			panel->SetText(text);
+			objMgr->AddUIObject(panel);
+		};
+
+	vector<pair<_vec2, wstring>> textPanels = {
+		{{400.f, 100.f}, L"주 대륙"},
+		{{610.f, 100.f}, L"섬 영지"},
+		{{820.f, 100.f}, L"다른 차원"},
+	};
+
+	for (const auto& [pos, text] : textPanels)
+		CreateTextPanel(pos, text);
 }
 
 void UILoader::Update(float dt)

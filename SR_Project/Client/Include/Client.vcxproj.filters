@@ -118,9 +118,6 @@
     <Filter Include="02. Object\UIObj\ExpBar\ExpBarBack">
       <UniqueIdentifier>{b273c10f-7d6f-4c1f-bd24-49fd9bf361dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UILoader">
-      <UniqueIdentifier>{782f7a20-b6f3-44db-94e8-12e7eb8b2021}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\Slot\QuickSlot">
       <UniqueIdentifier>{5f79b9a4-77fb-4a3c-9d72-515676a39030}</UniqueIdentifier>
     </Filter>
@@ -237,7 +234,7 @@
     </Filter>
     <Filter Include="02. Object\Monster\RedGolem\Projectile">
       <UniqueIdentifier>{14456796-8f96-4088-a27a-aa13642bd049}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\Slot\ItemSlot">
       <UniqueIdentifier>{18112d4c-19ea-41a9-9f17-c8ddf317460a}</UniqueIdentifier>
     </Filter>
@@ -286,14 +283,38 @@
     <Filter Include="02. Object\UIObj\Item\FishingItem">
       <UniqueIdentifier>{86943bb5-011a-4051-a90d-f9010908dd21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\QuestPanel">
-      <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\QuestTextObj">
       <UniqueIdentifier>{91e2b8b4-72bd-44be-8e7d-a8269d158f4f}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="99. Etc\Shader/Fx">
       <UniqueIdentifier>{23c39b64-fa09-4d84-bbba-49cff170b28d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Panel\QuestPanel">
+      <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Panel\WorldMapPanel">
+      <UniqueIdentifier>{a7a57302-6f01-41e2-8414-0a3f207e141c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\UIManager\UILoader">
+      <UniqueIdentifier>{782f7a20-b6f3-44db-94e8-12e7eb8b2021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\Locked_Node">
+      <UniqueIdentifier>{d12dcb0c-bc08-4a42-8847-bbef7d269a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\MapNode">
+      <UniqueIdentifier>{db018844-a88c-49fd-a806-bf884c53bf45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\LockedNode_Back">
+      <UniqueIdentifier>{1f75d5cb-a79e-4c5a-8574-e84973586753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\MapNode_Front">
+      <UniqueIdentifier>{c25954a4-4c89-454a-bf96-7596365b67fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\LoadingUI\LoadingStone">
+      <UniqueIdentifier>{a0df6aec-5ee3-450b-89ff-618aae2eeef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Panel\WorldMapTextPanel">
+      <UniqueIdentifier>{bffa4f9e-6c08-4779-b144-0a868dc4d049}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -497,9 +518,6 @@
     <ClInclude Include="..\Header\InventorySlot.h">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Projectile.h">
-      <Filter>02. Object\Projectile</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. Object\Projectile\Arrow</Filter>
     </ClInclude>
@@ -520,7 +538,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. Object\Item\Arrow</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ItemSlot.h">
       <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
     </ClInclude>
@@ -558,10 +576,31 @@
       <Filter>02. Object\UIObj\Item\FishingItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuestPanel.h">
-      <Filter>02. Object\UIObj\QuestPanel</Filter>
+      <Filter>02. Object\UIObj\Panel\QuestPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuestTextObj.h">
       <Filter>02. Object\UIObj\QuestTextObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WorldMapPanel.h">
+      <Filter>02. Object\UIObj\Panel\WorldMapPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Locked_Node.h">
+      <Filter>02. Object\UIObj\Button\Locked_Node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MapNode.h">
+      <Filter>02. Object\UIObj\Button\MapNode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LockNode_Back.h">
+      <Filter>02. Object\UIObj\Button\LockedNode_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MapNode_Front.h">
+      <Filter>02. Object\UIObj\Button\MapNode_Front</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingStone.h">
+      <Filter>02. Object\UIObj\LoadingUI\LoadingStone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WorldMapTextPanel.h">
+      <Filter>02. Object\UIObj\Panel\WorldMapTextPanel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -765,9 +804,6 @@
     <ClCompile Include="..\Code\InventorySlot.cpp">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Projectile.cpp">
-      <Filter>02. Object\Projectile</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. Object\Projectile\Arrow</Filter>
     </ClCompile>
@@ -788,7 +824,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. Object\Item\Arrow</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ItemSlot.cpp">
       <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
     </ClCompile>
@@ -826,10 +862,31 @@
       <Filter>02. Object\UIObj\Item\FishingItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuestPanel.cpp">
-      <Filter>02. Object\UIObj\QuestPanel</Filter>
+      <Filter>02. Object\UIObj\Panel\QuestPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuestTextObj.cpp">
       <Filter>02. Object\UIObj\QuestTextObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WorldMapPanel.cpp">
+      <Filter>02. Object\UIObj\Panel\WorldMapPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Locked_Node.cpp">
+      <Filter>02. Object\UIObj\Button\Locked_Node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MapNode.cpp">
+      <Filter>02. Object\UIObj\Button\MapNode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LockNode_Back.cpp">
+      <Filter>02. Object\UIObj\Button\LockedNode_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MapNode_Front.cpp">
+      <Filter>02. Object\UIObj\Button\MapNode_Front</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingStone.cpp">
+      <Filter>02. Object\UIObj\LoadingUI\LoadingStone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WorldMapTextPanel.cpp">
+      <Filter>02. Object\UIObj\Panel\WorldMapTextPanel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -165,7 +165,16 @@ HRESULT Loader::load_UIResources()
 		{L"inventory_fishing",  eUI},
 		{L"questpanel",         eUI},
 		{L"quest_icon",         eUI},
-		{L"quest_icon2",        eUI},
+		{L"map_node",           eUI},
+		{L"worldmap",           eUI},
+		{L"locked_node",        eUI},
+		{L"locked_node_back",   eUI},
+		{L"map_node_front",     eUI},
+		{L"map_node_hover",     eUI},
+		{L"locked_node_hover",  eUI},
+		{L"loading_stone",      eUI},
+		{L"loadingscene_lobby", eUI},
+		{L"worldmap_textpanel", eUI},
 
 	};
 
@@ -235,10 +244,17 @@ HRESULT Loader::load_UIResources()
 		{L"inventory_fishing",   5},
 		{L"questpanel",          3},
 		{L"quest_icon",          4},
-		{L"quest_icon2",         4},
-
+		{L"map_node",            4},
+		{L"worldmap",           -1},
+		{L"locked_node",         2},
+		{L"locked_node_back",    1},
+		{L"map_node_front",      2},
 		{L"Cursor",           1000},
-
+		{L"map_node_hover",      5},
+		{L"locked_node_hover",   5},
+		{L"loadingscene_lobby",  0},
+		{L"loading_stone",       1},
+		{L"worldmap_textpanel",  5},
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

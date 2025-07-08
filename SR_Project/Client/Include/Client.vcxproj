@@ -176,6 +176,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\FishingItem.h" />
+    <ClInclude Include="..\Header\LoadingStone.h" />
+    <ClInclude Include="..\Header\Locked_Node.h" />
+    <ClInclude Include="..\Header\LockNode_Back.h" />
+    <ClInclude Include="..\Header\MapNode.h" />
+    <ClInclude Include="..\Header\MapNode_Front.h" />
     <ClInclude Include="..\Header\QuestPanel.h" />
     <ClInclude Include="..\Header\QuestTextObj.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
@@ -255,6 +260,8 @@
     <ClInclude Include="..\Header\ThirdCam.h" />
     <ClInclude Include="..\Header\UIDebugObj.h" />
     <ClInclude Include="..\Header\UILoader.h" />
+    <ClInclude Include="..\Header\WorldMapPanel.h" />
+    <ClInclude Include="..\Header\WorldMapTextPanel.h" />
     <ClInclude Include="..\Header\Zombie.h" />
     <ClInclude Include="Client_Defines.h" />
     <ClInclude Include="pch.h" />
@@ -262,6 +269,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\FishingItem.cpp" />
+    <ClCompile Include="..\Code\LoadingStone.cpp" />
+    <ClCompile Include="..\Code\Locked_Node.cpp" />
+    <ClCompile Include="..\Code\LockNode_Back.cpp" />
+    <ClCompile Include="..\Code\MapNode.cpp" />
+    <ClCompile Include="..\Code\MapNode_Front.cpp" />
     <ClCompile Include="..\Code\QuestPanel.cpp" />
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />
@@ -341,6 +353,8 @@
     <ClCompile Include="..\Code\ThirdCam.cpp" />
     <ClCompile Include="..\Code\UIDebugObj.cpp" />
     <ClCompile Include="..\Code\UILoader.cpp" />
+    <ClCompile Include="..\Code\WorldMapPanel.cpp" />
+    <ClCompile Include="..\Code\WorldMapTextPanel.cpp" />
     <ClCompile Include="..\Code\Zombie.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">

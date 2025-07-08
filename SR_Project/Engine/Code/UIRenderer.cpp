@@ -70,6 +70,12 @@ void UIRenderer::SetPivot(UIPivot _pivot)
     UpdateCenter();
 }
 
+void UIRenderer::SetSrcRect(const RECT& rect)
+{
+    srcRect = rect;
+    UpdateCenter();
+}
+
 void UIRenderer::UpdateCenter()
 {
     const float width = static_cast<float>(srcRect.right - srcRect.left);
@@ -99,7 +105,7 @@ void UIRenderer::Render()
     auto transform = owner->GetComponent<TransformComponent>();
     assert(transform);
 
-    _vec3 worldPos = transform->GetPosition();
+    _vec3 worldPos = transform->GetWorldPosition();
     _vec2 scale2D = transform->GetScale2D();
     if (scale.x != 1.f || scale.y != 1.f)
         scale2D = scale;
