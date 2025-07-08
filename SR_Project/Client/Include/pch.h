@@ -18,6 +18,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <cmath>
+#include <array>
 
 #include "Resource.h"
 
