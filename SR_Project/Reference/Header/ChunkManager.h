@@ -23,8 +23,8 @@ public:
     void SaveChunk(const std::wstring& saveStage);
     void LoadChunk(const std::wstring& loadStage);
     
-    Chunk* CreateChunk(int chunkX, int chunkY);
-    void RemoveChunk(int chunkX, int chunkY);
+    Chunk* CreateChunk(int chunkX, int chunkZ);
+    void RemoveChunk(int chunkX, int chunkZ);
 
     const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() { return worldChunks; }
 

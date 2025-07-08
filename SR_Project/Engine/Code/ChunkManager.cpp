@@ -113,21 +113,21 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
     MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", "Success", MB_OK);
 }
 
-Chunk* ChunkManager::CreateChunk(int chunkX, int chunkY)
+Chunk* ChunkManager::CreateChunk(int chunkX, int chunkZ)
 {
-    auto key = std::make_pair(chunkX, chunkY);
+    auto key = std::make_pair(chunkX, chunkZ);
     auto it = worldChunks.find(key);
     if (it != worldChunks.end())
         return it->second;
 
-    Chunk* newChunk = Chunk::Create(chunkX, chunkY);
+    Chunk* newChunk = Chunk::Create(chunkX, chunkZ);
     worldChunks[key] = newChunk;
     return newChunk;
 }
 
-void ChunkManager::RemoveChunk(int chunkX, int chunkY)
+void ChunkManager::RemoveChunk(int chunkX, int chunkZ)
 {
-    auto key = std::make_pair(chunkX, chunkY);
+    auto key = std::make_pair(chunkX, chunkZ);
     auto it = worldChunks.find(key);
     if (it != worldChunks.end())
     {

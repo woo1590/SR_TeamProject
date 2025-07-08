@@ -11,7 +11,7 @@
 
 TerrainCreater::TerrainCreater()
 {
-    srand(static_cast<unsigned int>(time(0)));
+    srand(static_cast<unsigned int>(time(NULL)));
 }
 
 TerrainCreater::~TerrainCreater()
@@ -30,7 +30,7 @@ void TerrainCreater::CreateHeightmap(int width, int height, float scale)
         {
             float noise = stb_perlin_noise3(x * scale, y * scale, randomZ, 0, 0, 0);
             noise = (noise + 1.0f) * 0.5f;
-            heightMap[y * width + x] = static_cast<unsigned char>(noise * 255.0f);
+            heightMap[y * width + x] = static_cast<unsigned char>(noise * 255.f);
         }
     }
 }
@@ -60,8 +60,8 @@ bool TerrainCreater::LoadHeightmapFromImage(const std::string& filename)
 
     stbi_image_free(data);
 
-    this->width = width;
-    this->height = height;
+    this->hWidth = width;
+    this->hHeight = height;
 
     return true;
 }
@@ -77,10 +77,10 @@ void TerrainCreater::CreateBlockTerrain(int terrainWidth, int terrainDepth, int 
     {
         for (int x = 0; x < terrainWidth; ++x)
         {
-            int mapX = min(x, width - 1);
-            int mapZ = min(z, height - 1);
+            int mapX = min(x, hWidth - 1);
+            int mapZ = min(z, hHeight - 1);
 
-            unsigned char heightValue = heightMap[mapZ * width + mapX];
+            unsigned char heightValue = heightMap[mapZ * hWidth + mapX];
             int blockHeight = (heightValue * maxHeight) / 255;
 
             for (int y = 0; y < maxHeight; ++y)
@@ -93,10 +93,8 @@ void TerrainCreater::CreateBlockTerrain(int terrainWidth, int terrainDepth, int 
                 block.Rot = StaticBlockRot::sREnd;
                 block.Usage = StaticBlockUsage::Basic;
 
-                if (y < blockHeight)
-                    block.Type = GetBlockTypeByHeight(y, maxHeight);
-                else
-                    block.Type = StaticBlockType::Air;
+                if (y < blockHeight) block.Type = GetBlockTypeByHeight(y, maxHeight);
+                else block.Type = StaticBlockType::Air;
 
                 blocks[index] = block;
             }
@@ -109,11 +107,11 @@ StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
     if (y <= 1)
         return StaticBlockType::Stone;
     else if (y < maxHeight * 0.4f)
-        return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.9f)
         return StaticBlockType::Dirt;
-    else
+    else if (y < maxHeight * 0.9f)
         return StaticBlockType::GrassDirt;
+    else
+        return StaticBlockType::StoneBrick;
 }
 
 void TerrainCreater::Free()
