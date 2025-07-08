@@ -256,17 +256,14 @@
     <Filter Include="05. Scene Component\UIManager\QuestSystem">
       <UniqueIdentifier>{72d62749-4c58-4a7d-8624-ee1caf296f10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Engine Component\ResourceManager\Mesh\ChunkMesh">
-      <UniqueIdentifier>{9a017fa7-a6a9-436d-804a-97eab5cb419a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. EngineCore">
       <UniqueIdentifier>{c7d740f0-2e89-440a-939e-00714085aa0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Scene Component\Chunk">
-      <UniqueIdentifier>{516bf75c-515a-4e4c-a73b-d6a653ee1289}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06. Object\00. Parts">
       <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\Chunk">
+      <UniqueIdentifier>{516bf75c-515a-4e4c-a73b-d6a653ee1289}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -498,7 +495,7 @@
       <Filter>06. Object\02. DynamicBlock\IronCage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Chunk.cpp">
-      <Filter>05. Scene Component\Chunk</Filter>
+      <Filter>06. Object\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ChunkManager.cpp">
       <Filter>05. Scene Component\ChunkManager</Filter>
@@ -543,7 +540,7 @@
       <Filter>05. Scene Component\UIManager\QuestSystem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ChunkMesh.cpp">
-      <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -794,7 +791,7 @@
       <Filter>06. Object\02. DynamicBlock\IronCage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Chunk.h">
-      <Filter>05. Scene Component\Chunk</Filter>
+      <Filter>06. Object\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>
@@ -842,11 +839,11 @@
     <ClInclude Include="..\Header\QuestSystem.h">
       <Filter>05. Scene Component\UIManager\QuestSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ChunkMesh.h">
-      <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ObjectComponent.h">
       <Filter>07. Object Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ChunkMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
