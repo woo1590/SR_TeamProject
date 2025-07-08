@@ -13,6 +13,7 @@
 #include "PhysicsSystem.h"
 #include "StaticGrid.h"
 #include "BlockManager.h"
+#include "ChunkManager.h"
 #include "UIManager.h"
 
 //object
@@ -70,8 +71,9 @@ void TestScene::Load()
 	CameraMgr		= CameraManager::Create(this);
 	PhysicsSys		= PhysicsSystem::Create(this);
 	BlockMgr		= BlockManager::Create(this);
+	ChunkMgr		= ChunkManager::Create(this);
 
-	BlockMgr->LoadStage("test");
+	BlockMgr->LoadChunk("testScene");
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
 
