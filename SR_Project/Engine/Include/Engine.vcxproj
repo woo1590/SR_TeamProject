@@ -228,6 +228,7 @@
     <ClInclude Include="..\Header\Chest.h" />
     <ClInclude Include="..\Header\Chunk.h" />
     <ClInclude Include="..\Header\ChunkManager.h" />
+    <ClInclude Include="..\Header\ChunkMesh.h" />
     <ClInclude Include="..\Header\CollisionComponent.h" />
     <ClInclude Include="..\Header\CollisionSystem.h" />
     <ClInclude Include="..\Header\CompositeNode.h" />
@@ -354,6 +355,7 @@
     <ClCompile Include="..\Code\Chest.cpp" />
     <ClCompile Include="..\Code\Chunk.cpp" />
     <ClCompile Include="..\Code\ChunkManager.cpp" />
+    <ClCompile Include="..\Code\ChunkMesh.cpp" />
     <ClCompile Include="..\Code\CollisionComponent.cpp" />
     <ClCompile Include="..\Code\CollisionSystem.cpp" />
     <ClCompile Include="..\Code\CompositeNode.cpp" />
