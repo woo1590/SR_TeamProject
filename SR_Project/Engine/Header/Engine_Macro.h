@@ -6,7 +6,6 @@ namespace Engine
 	constexpr float WINCX = 1280;
 	constexpr float WINCY = 720;
 	constexpr int CHUNK_SIZE = 16;
-	constexpr int CHUNK_HEIGHT = 8;
 
 #ifndef MSG_BOX
 #define MSG_BOX(_message)		MessageBox(NULL, TEXT(_message), L"System Message", MB_OK);

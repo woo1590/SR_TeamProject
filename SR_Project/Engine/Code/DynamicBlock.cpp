@@ -55,8 +55,6 @@ Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBl
 HRESULT DynamicBlock::Ready_Object()
 {
     auto collision = AddComponent<CollisionComponent>();
-    collision->SetLayer(CollisionComponent::LAYER_DEFAULT);
-    collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_ENEMY);
     auto transform = AddComponent<TransformComponent>();
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     return S_OK;

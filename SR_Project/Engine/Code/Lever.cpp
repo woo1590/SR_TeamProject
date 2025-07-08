@@ -92,7 +92,7 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
     }
 
     for (auto& part : Parts)
-        owner->AddObject(ObjectType::Part, part.second);
+        owner->AddObject(objType, part.second);
 
     return S_OK;
 }

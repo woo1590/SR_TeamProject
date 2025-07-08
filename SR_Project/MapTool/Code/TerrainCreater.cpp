@@ -66,60 +66,25 @@ bool TerrainCreater::LoadHeightmapFromImage(const std::string& filename)
     return true;
 }
 
-void TerrainCreater::CreateBlockTerrain(int terrainWidth, int terrainDepth, int maxHeight)
+void TerrainCreater::CreateBlockTerrain(int maxHeight)
 {
     blocks.clear();
-    blocks.resize(terrainWidth * terrainDepth * maxHeight);
 
-    auto GetIndex = [&](int x, int y, int z) { return y * terrainDepth * terrainWidth + z * terrainWidth + x; };
-
-    for (int z = 0; z < terrainDepth; ++z)
+    for (int z = 0; z < height; ++z)
     {
-        for (int x = 0; x < terrainWidth; ++x)
+        for (int x = 0; x < width; ++x)
         {
-            int mapX = min(x, width - 1);
-            int mapZ = min(z, height - 1);
-
-            unsigned char heightValue = heightMap[mapZ * width + mapX];
+            unsigned char heightValue = heightMap[z * width + x];
             int blockHeight = (heightValue * maxHeight) / 255;
 
-            for (int y = 0; y < maxHeight; ++y)
-            {
-                int index = GetIndex(x, y, z);
-
-                StaticBlockData block;
-                block.Pos = { (float)x, (float)y, (float)z };
-                block.Axis = StaticBlockAxis::sAY;
-                block.Rot = StaticBlockRot::sREnd;
-                block.Usage = StaticBlockUsage::Basic;
-
-                if (y < blockHeight)
-                    block.Type = GetBlockTypeByHeight(y, maxHeight);
-                else
-                    block.Type = StaticBlockType::Air;
-
-                blocks[index] = block;
-            }
+            for (int y = 0; y < blockHeight; ++y)
+                blocks.push_back({ (float)x, (float)y, (float)z });
         }
     }
 }
 
-StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
-{
-    if (y <= 1)
-        return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.4f)
-        return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.9f)
-        return StaticBlockType::Dirt;
-    else
-        return StaticBlockType::GrassDirt;
-}
-
 void TerrainCreater::Free()
 {
-    blocks.clear();
-    blocks.shrink_to_fit();
     heightMap.clear();
     heightMap.shrink_to_fit();
 }

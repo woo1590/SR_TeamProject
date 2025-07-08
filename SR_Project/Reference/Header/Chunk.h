@@ -4,14 +4,10 @@
 #include "ObjectManager.h"
 
 BEGIN(Engine)
-class ChunkMesh;
 class ENGINE_DLL Chunk : public Base
 {
-    friend class Object;
 private:
     Chunk(int chunkX, int chunkZ);
-
-public:
     virtual ~Chunk();
 
 public:
@@ -19,22 +15,12 @@ public:
     void AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
     void Render();
 
-    void BuildChunkFace();
-    void AddFace(std::vector<VTXTEX>& vertices, std::vector<int>& indices, const _vec3& blockPos, int faceDir);
-
-    StaticBlockData GetBlock(int x, int y, int z) const;
-    void SetBlock(int x, int y, int z, const StaticBlockData& block);
-    void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);
-
-    int GetChunkX() const { return ChunkX; }
-    int GetChunkZ() const { return ChunkZ; }
+    const CHUNK& GetChunkData() const { return CD; }
 
 private:
     void Free()override;
 
 private:
-    int ChunkX = 0, ChunkZ = 0;
-    SB Blocks[CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
-    ChunkMesh* Mesh = nullptr;
+    CHUNK CD;
 };
 END

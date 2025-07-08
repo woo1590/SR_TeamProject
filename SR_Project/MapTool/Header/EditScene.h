@@ -44,8 +44,7 @@ private:
     void Free() override;
 
 private:
-    int WidthX = 0;
-    int WidthZ = 0;
+    int Width = 0;
     int Height = 0;
     float Scale = 0.f;
 
