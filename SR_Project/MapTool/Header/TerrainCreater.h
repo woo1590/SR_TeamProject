@@ -12,10 +12,13 @@ public:
     void SaveHeightmapAsImage(const std::string& filepath);
 
     bool LoadHeightmapFromImage(const std::string& filepath);
-    void CreateBlockTerrain(int maxHeight);
+    void CreateBlockTerrain(int terrainWidth, int terrainDepth, int maxHeight);
 
     const std::vector<unsigned char>& GetHeightmap() const { return heightMap; }
-    const std::vector<_vec3>& GetBlocks() const { return blocks; }
+    const std::vector<SB>& GetBlocks() const { return blocks; }
+
+private:
+    StaticBlockType GetBlockTypeByHeight(int y, int maxHeight);
 
 public:
     void Free() override;
@@ -25,5 +28,5 @@ private:
     int height = 0;
 
     std::vector<unsigned char> heightMap;
-    std::vector<_vec3> blocks;
+    std::vector<SB> blocks;
 };

@@ -30,6 +30,7 @@ namespace Engine
 		UI,
 		StaticBlock,
 		DynamicBlock,
+		Part,
 		Count
 	};
 
@@ -114,7 +115,7 @@ namespace Engine
 		sBlockNone,
 		Dirt, GrassDirt, Wood, WoodPlank,
 		Stone, CobbleStone, SmoothStone, StoneBrick, MossyStoneBrick,
-		Glass, Leaf,
+		Glass, Leaf, Air,
 		sBlockEnd
 	};
 	enum StaticBlockUsage { Basic, Half, Stair, Alpha, Fence };
@@ -127,5 +128,7 @@ namespace Engine
 		LeverSwitch, BasicChest, IronCages, WoodBridge,
 		dBlockEnd
 	};
+
+	enum FaceDir { Face_Top, Face_Bottom, Face_Left, Face_Right, Face_Front, Face_Behind };
 }
 #endif // Engine_Enum_h__

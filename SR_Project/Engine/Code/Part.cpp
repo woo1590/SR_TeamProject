@@ -24,7 +24,6 @@ Part* Part::Create(ObjectManager* owner, ObjectType objType, _vec3 scale, Object
     }
 
     return Instance;
-
 }
 
 HRESULT Part::Ready_Object(Object* Parent, _vec3 scale, const std::wstring& mtrl)
