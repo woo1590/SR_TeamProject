@@ -36,6 +36,7 @@ protected:
 
 private:
     void PlayLeftAttack(_float dt);
+    void PlayRightAttack(_float dt);
     void PlaySuperAttack(_float dt);
     void PlaySuperAttackDelay(_float dt);
 
@@ -47,11 +48,16 @@ protected:
 
 private:
     Animation           LeftAttackAnim;
+    Animation           RightAttackAnim;
     Animation           SuperAttackAnim;
 
     vector<Object*>     BoxProjectile;
 
     _float              SpawnTime = 0.f;
     _int                Index = 0;
+
+    _float*             AttackTimer = nullptr;
+    _int*               AttackNum = nullptr;
+
 };
 

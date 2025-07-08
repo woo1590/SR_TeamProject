@@ -38,6 +38,11 @@ BTStatus SelectorNode::Tick(float dt, BlackBoard* bb)
 
     case BTStatus::Failure:
         ++CurrentIndex;
+        if (CurrentIndex >= ChildNodes.size())
+        {
+            CurrentIndex = 0;
+            return BTStatus::Failure;
+        }
         return BTStatus::Running;
 
     case BTStatus::Running:

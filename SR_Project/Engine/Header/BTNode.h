@@ -25,6 +25,7 @@ public:
 
 protected:
     void Free()override;
+
 };
 
 END

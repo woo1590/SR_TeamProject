@@ -35,6 +35,11 @@ BTStatus SequenceNode::Tick(float dt, BlackBoard* bb)
     {
     case BTStatus::Success:
         ++CurrentIndex;
+        if (CurrentIndex >= ChildNodes.size())
+        {
+            CurrentIndex = 0;
+            return BTStatus::Success;
+        }
         return BTStatus::Running;
 
     case BTStatus::Failure:

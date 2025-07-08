@@ -3,10 +3,11 @@
 #include "TransformComponent.h"
 #include "InfoComponent.h"
 #include "CollisionComponent.h"
-#include "IsTargetInAttackRange.h"
-#include "Chase.h"
+#include "IsTimerOn.h"
+#include "BossChase.h"
 #include "Attack.h"
 #include "SequenceNode.h"
+#include "IsTargetInRange.h"
 #include "SelectorNode.h"
 #include "ObjectManager.h"
 #include "BehaviorTree.h"
@@ -57,6 +58,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
 void RedGolem::Update(_float dt)
 {
     Monster::Update(dt);
+    *AttackTimer -= dt;
     PlayAnimation(dt);
 }
 
@@ -86,7 +88,10 @@ void RedGolem::Attack(Object* target)
         State = MonsterState::Attack;
         SuperAttackAnim.DelayTime = 0.f;
         LeftAttackAnim.DelayTime = 0.f;
+        RightAttackAnim.DelayTime = 0.f;
+
         AttackAnim.ElapsedTime = 0;
+        AttackAnim.IsEnd = false;
     }
 }
 
@@ -168,29 +173,33 @@ void RedGolem::InitTree()
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
+
     Distance = new float(10.f);
     bb->SetValue("Distance", Distance);
 
+    AttackTimer = new float(5.f);
+    bb->SetValue("Timer", AttackTimer);
+
+    AttackNum = new int(1);
+    bb->SetValue("AttackNumber", AttackNum);
+
     //BT
-    IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(new AttackNode());
+    SelectorNode* attackSequence = new SelectorNode();
+    attackSequence->AddChild(new IsTimerOn(new IsTargetInRange()));
+    attackSequence->AddChild(new BossChase());
 
-    SequenceNode* attackSequence = new SequenceNode();
-    attackSequence->AddChild(attackCheck);
+    SequenceNode* behaviorSelector = new SequenceNode();
+    behaviorSelector->AddChild(attackSequence);          
 
-    SelectorNode* BehaviorNode = new SelectorNode();
-    BehaviorNode->AddChild(attackSequence);
-    BehaviorNode->AddChild(new ChaseNode());
-
-    IsAliveNode* IsAlive = new IsAliveNode(BehaviorNode);
+    IsAliveNode* isAlive = new IsAliveNode(behaviorSelector);
 
     SelectorNode* root = new SelectorNode();
-    root->AddChild(IsAlive);
+    root->AddChild(isAlive);
     root->AddChild(new DieNode());
 
     BehaviorTree* bt = BehaviorTree::Create(root);
 
-    //AI
-    auto AI = AddComponent<AIController>(bt, bb);
+    AddComponent<AIController>(bt, bb);
 }
 
 void RedGolem::InitAnimation()
@@ -201,6 +210,11 @@ void RedGolem::InitAnimation()
     LeftAttackAnim.ElapsedTime = 0.f;
     LeftAttackAnim.TotalTime = 1.8f;
     LeftAttackAnim.DelayTime = 0.f;
+
+    //RightAttack
+    RightAttackAnim.ElapsedTime = 0.f;
+    RightAttackAnim.TotalTime = 1.8f;
+    RightAttackAnim.DelayTime = 0.f;
 
     //SuperAttack
     SuperAttackAnim.ElapsedTime = 0.f;
@@ -232,7 +246,6 @@ void RedGolem::PlayAnimation(_float dt)
         PlayWalk(dt);
         break;
     case MonsterState::Attack:
-        if (!AttackAnim.IsRunning) AttackAnim.IsRunning = true;
         PlayAttack(dt);
         break;
     case MonsterState::Hit:
@@ -277,17 +290,16 @@ void RedGolem::PlayWalk(_float dt)
 
 void RedGolem::PlayAttack(_float dt)
 {
-    auto bb = GetComponent<AIController>()->GetBlackBoard();
-
-   
-    //int* number = static_cast<_int*>(bb->GetValue("AttackNumber"));
-    switch (2)
+    switch (*AttackNum)
     {
     case 1:                         //ÆÈ ÈÖµÎ¸£±â
         PlayLeftAttack(dt);
         break;
     case 2:                         //³»·ÁÂï±â
         PlaySuperAttack(dt);
+        break;
+    case 3:
+        PlayRightAttack(dt);
         break;
     }
 }
@@ -342,8 +354,55 @@ void RedGolem::PlayLeftAttack(_float dt)
         LeftAttackAnim.IsRunning = false;
         LeftAttackAnim.IsEnd = true;
 
+        (*AttackTimer) = 5;
         SetRotation(_vec3(D3DXToRadian(30.f), 0.f, 0.f), "LArm");
         SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "LHand");
+        AttackAnim.IsRunning = false;
+        AttackAnim.IsEnd = true;
+    }
+}
+
+void RedGolem::PlayRightAttack(_float dt)
+{
+    RightAttackAnim.DelayTime -= dt;
+    if (RightAttackAnim.DelayTime > 0.f)
+        return;
+
+    RightAttackAnim.ElapsedTime += dt;
+
+    float t = RightAttackAnim.ElapsedTime / RightAttackAnim.TotalTime;
+    float angleCurve = sinf(t * D3DX_PI * 2);
+
+    float bodyYaw = D3DXToRadian(-30.f) * angleCurve; 
+    SetRotation(_vec3(0.f, bodyYaw, 0.f));
+
+    float armX = D3DXToRadian(-60.f + 90.f * angleCurve);
+    float armZ = D3DXToRadian(30.f - 45.f * angleCurve); 
+    SetRotation(_vec3(armX, 0.f, armZ), "RArm");
+
+    float handX = D3DXToRadian(-30.f + 75.f * angleCurve);
+    SetRotation(_vec3(handX, 0.f, 0.f), "RHand");
+
+    float Angle = sinf(WalkAnim.ElapsedTime * Speed);
+    t = std::clamp(t, 0.f, 1.f);
+
+    float LegAngle = D3DXToRadian(20.f) * Angle;
+
+    SetRotation({ LegAngle, 0.f, 0.f }, "LLeg");
+    SetRotation({ -LegAngle, 0.f, 0.f }, "RLeg");
+
+    if (RightAttackAnim.ElapsedTime >= RightAttackAnim.TotalTime)
+    {
+        RightAttackAnim.ElapsedTime = 0.f;
+        RightAttackAnim.DelayTime = 1.5f;
+        RightAttackAnim.IsRunning = false;
+        RightAttackAnim.IsEnd = true;
+
+        (*AttackTimer) = 5;
+        SetRotation(_vec3(D3DXToRadian(30.f), 0.f, 0.f), "RArm");
+        SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "RHand");
+        AttackAnim.IsRunning = false;
+        AttackAnim.IsEnd = true;
     }
 }
 
@@ -426,6 +485,14 @@ void RedGolem::PlaySuperAttackDelay(_float dt)
     if (SuperAttackAnim.DelayTime < 0)
     {
         SuperAttackAnim.IsEnd = true;
+        AttackAnim.IsRunning = false;
+        AttackAnim.IsEnd = true;
+        (*AttackTimer) = 5;
+        SetRotation(_vec3(D3DXToRadian(30.f), 0.f, 0.f), "RArm");
+        SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "RHand");
+
+        SetRotation(_vec3(D3DXToRadian(30.f), 0.f, 0.f), "LArm");
+        SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "LHand");
     }
 }
 
@@ -441,5 +508,7 @@ void RedGolem::InitProjectile(ObjectType objType)
 
 void RedGolem::Free()
 {
+    Safe_Delete(AttackTimer);
+    Safe_Delete(AttackNum);
     Monster::Free();
 }
