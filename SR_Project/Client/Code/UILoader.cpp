@@ -64,6 +64,7 @@
 #include "MapNode_Front.h"
 #include "LoadingStone.h"
 #include "WorldMapTextPanel.h"
+#include "WorldTooltip.h"
 
 #include "ArrowSlot.h"
 #include "UIManager.h"
@@ -75,6 +76,7 @@
 #include "InventoryUIBuilder.h"
 #include "QuestSystem.h"
 #include "ObjectManager.h"
+#include "TooltipManager.h"
 
 #define ADD(obj) objMgr->AddUIObject(obj)
 
@@ -134,8 +136,8 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
     auto expFront = ExpBarFront::Create(objMgr);
     playerInfo->Attach(expFront->GetComponent<ProgressBar<PlayerInfo>>());
     expFront->GetComponent<ProgressBar<PlayerInfo>>()->SetEventType(UIEventType::EXP_Changed);
-    ADD(expFront);
-
+    ADD(expFront); 
+   
     for (float x : {350.f, 670.f})
     {
         auto back = ExpBarBack::Create(objMgr);
@@ -237,6 +239,10 @@ void UILoader::BuildMiscUI(ObjectManager* objMgr)
 
 void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
 {
+    auto* scene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
+    auto* uiMgr = scene->GetUIManager();
+    auto* tooltip = uiMgr->GetTooltip();
+
     auto panel = WorldMapPanel::Create(objMgr);
     ADD(panel);
     auto rootTransform = panel->GetComponent<TransformComponent>();
@@ -282,9 +288,10 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
     AddText(400, 100, L"ÁÖ ´ë·ú");
     AddText(610, 100, L"¼¶ ¿µÁö");
     AddText(820, 100, L"´Ù¸¥ Â÷¿ø");
-}
 
-void UILoader::Update(float dt)
-{
+    auto worldTooltip = WorldTooltip::Create(objMgr);
+    worldTooltip->GetComponent<UIRenderer>()->SetVisible(false);
+    ADD(worldTooltip);
 
+    tooltip->SetWorldTooltip(worldTooltip);
 }

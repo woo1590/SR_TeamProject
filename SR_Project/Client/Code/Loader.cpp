@@ -34,6 +34,9 @@ HRESULT Loader::Ready_Loader()
 {
 	InitializeCriticalSection(&Crt);
 
+	if (FAILED(load_UIResources()))
+		return E_FAIL;
+
 	H_Thread = (HANDLE)_beginthreadex(NULL, 0, LoaderMain, this, 0, NULL);
 
 	return S_OK;
@@ -47,7 +50,7 @@ HRESULT Loader::Loading()
 	{
 	case LOADID::TestScene:
 		hr = Load_TestScene();
-		hr = load_UIResources();
+		//hr = load_UIResources();
 		break;
 	default:
 		break;
@@ -176,7 +179,6 @@ HRESULT Loader::load_UIResources()
 		{L"loading_stone",      eUI},
 		{L"loadingscene_lobby", eUI},
 		{L"worldmap_textpanel", eUI},
-
 	};
 
 	static const unordered_map<wstring, int> uiLayers = {

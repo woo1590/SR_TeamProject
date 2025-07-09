@@ -28,7 +28,7 @@ void AnimatorComponent::Play(int start, int end, float speed)
 	startFrame = start;
 	endFrame = end;
 	frameSpeed = speed;
-	curFrame = start;
+	curFrame = start; 
 	SetFrame(curFrame);
 }
 

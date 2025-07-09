@@ -265,6 +265,7 @@
     <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="..\Header\WorldMapPanel.h" />
     <ClInclude Include="..\Header\WorldMapTextPanel.h" />
+    <ClInclude Include="..\Header\WorldTooltip.h" />
     <ClInclude Include="..\Header\Zombie.h" />
     <ClInclude Include="Client_Defines.h" />
     <ClInclude Include="pch.h" />
@@ -361,6 +362,7 @@
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\WorldMapPanel.cpp" />
     <ClCompile Include="..\Code\WorldMapTextPanel.cpp" />
+    <ClCompile Include="..\Code\WorldTooltip.cpp" />
     <ClCompile Include="..\Code\Zombie.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">

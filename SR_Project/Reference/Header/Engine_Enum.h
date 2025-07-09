@@ -89,7 +89,7 @@ namespace Engine
 		Title,       // Ÿ��Ʋ��: 36pt, FW_BOLD
 		Custom,       // ����� ���� (������ Ȯ���)
 		QuestTitle,
-
+		VeryLarge,
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)

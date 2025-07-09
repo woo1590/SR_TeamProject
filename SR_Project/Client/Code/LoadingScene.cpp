@@ -10,6 +10,10 @@
 #include "TestScene.h"
 #include "LogoScene.h"
 
+//Objects
+#include "LoadingUI.h"
+#include "Cursor.h"
+
 LoadingScene::LoadingScene(LOADID loadId)
 	:nextSceneID(loadId)
 {
@@ -17,6 +21,7 @@ LoadingScene::LoadingScene(LOADID loadId)
 
 LoadingScene::~LoadingScene()
 {
+
 }
 
 LoadingScene* LoadingScene::Create(LOADID loadId)
@@ -28,11 +33,19 @@ LoadingScene* LoadingScene::Create(LOADID loadId)
 
 void LoadingScene::Load()
 {
+	ObjectMgr = ObjectManager::Create(this);
+
 	loader = Loader::Create(nextSceneID);
+
+	loadingUI = LoadingUI::Create(nullptr);
+	
+	ObjectMgr->AddUIObject(loadingUI);
 }
 
 void LoadingScene::Update(_float dt)
 {
+	ObjectMgr->Update(dt);
+
 	if (loader->IsFinished())	//Load complete
 	{
 		auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -57,11 +70,13 @@ void LoadingScene::Update(_float dt)
 
 void LoadingScene::Late_Update(_float dt)
 {
+	ObjectMgr->Late_Update(dt);
 }
 
 void LoadingScene::Unload()
 {
 	Safe_Release(loader);
+	Safe_Release(ObjectMgr);
 }
 
 void LoadingScene::Free()

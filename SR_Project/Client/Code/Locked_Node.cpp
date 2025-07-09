@@ -4,9 +4,10 @@
 #include "UIRenderer.h"
 #include "HoverButtonComponent.h"
 #include "HoverComponent.h"
-#include "EngineCore.h"
-#include "InputSystem.h"
-#include "RenderSystem.h"
+#include "UIManager.h"
+#include "TooltipManager.h"
+#include "Scene.h"
+#include "ObjectManager.h"
 
 Locked_Node* Locked_Node::Create(ObjectManager* owner)
 {
@@ -34,13 +35,30 @@ HRESULT Locked_Node::Ready_Object()
 	auto button = AddComponent<HoverButtonComponent>();
 
 	button->BindRenderers(base, highlight);
+	button->SetHighlightScale({0.4f, 0.4f}, {0.6f, 0.6f});
+
 	button->SetOnClick([]() {
 
-		});
-	button->SetHighlightScale({0.4f, 0.4f}, {0.6f, 0.6f});
+		});	
 	
-	hover->SetCallBack([button](bool over) {  
+	hover->SetCallBack([this,button](bool over) {  
 		button->SetHoverState(over);
+
+		auto* scene = this->GetOwner()->GetOwner();
+		if (!scene) return;
+
+		auto* uiMgr = scene->GetUIManager();
+		if (!uiMgr) return;
+
+		auto* tooltip = uiMgr->GetTooltip();
+		if (!tooltip) return;
+
+		auto pos = button->GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+
+		if (over)
+			tooltip->ShowWorldTooltip(L"Àá±Ý", pos.x, pos.y - 40.f);
+		else
+			tooltip->HideWorldTooltip();
 		}); 
 	return S_OK;
 

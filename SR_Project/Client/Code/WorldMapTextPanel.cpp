@@ -58,7 +58,7 @@ void WorldMapTextPanel::Update(float dt)
 		(LONG)pos.x - 100, (LONG)pos.y - 10,
 		(LONG)pos.x + 100, (LONG)pos.y + 70
 	};
-	Color color = isSelected ? Color::White : Color::Gray;
+	Color color = isSelected ? Color::White : Color::White;
 
 	font->AddText(displayText, textRect, color, DT_CENTER, FontType::Title);
 }

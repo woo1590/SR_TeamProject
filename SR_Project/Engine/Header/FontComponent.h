@@ -29,6 +29,8 @@ public:
 
 	void Render();
 	void ClearText() { entries.clear(); }
+	void SetVisible(bool visible) { isVisible = visible; }
+	bool IsVisible() const { return isVisible; }
 
 private:
 	HRESULT CreateFontResource();
@@ -37,6 +39,7 @@ private:
 private:
 	unordered_map<FontType, ID3DXFont*> fontMap;
 	vector<TextEntry> entries;
+	bool isVisible = true;
 };
 
 END
