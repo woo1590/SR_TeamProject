@@ -21,6 +21,7 @@ public:
     void SetConstant(const std::string& name, const _matrix& value);
     void SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 tex);
 
+    Shader* Clone();
 private:
     void Free()override {}
 

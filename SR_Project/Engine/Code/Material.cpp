@@ -30,33 +30,27 @@ Material* Material::Create()
 
 HRESULT Material::Ready_Material()
 {   
-    //Default Material
-    Mtrl.Ambient = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-    Mtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    Mtrl.Specular = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-    Mtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
-    Mtrl.Power = 1.f;
 
     return S_OK;
 }
 
-HRESULT Material::SetMaterial(D3DMATERIAL9& mtrl)
-{
-    Mtrl = mtrl;
-
-    return S_OK;
-}
-
-HRESULT Material::SetTexture(const std::wstring& key)
-{
-    auto tex = EngineCore::GetInstance()->GetResourceManager()->GetTexture(key);
-    if (!tex)
-        return E_FAIL;
-
-    Texture = tex;
-
-    return S_OK;
-}
+//HRESULT Material::SetMaterial(D3DMATERIAL9& mtrl)
+//{
+//    Mtrl = mtrl;
+//
+//    return S_OK;
+//}
+//
+//HRESULT Material::SetTexture(const std::wstring& key)
+//{
+//    auto tex = EngineCore::GetInstance()->GetResourceManager()->GetTexture(key);
+//    if (!tex)
+//        return E_FAIL;
+//
+//    Texture = tex;
+//
+//    return S_OK;
+//}
 
 void Material::Apply()
 {
@@ -76,11 +70,6 @@ void Material::Apply()
 
         for (const auto& [name, value] : TexParam)
             shader->SetTexture(name, value);
-    }
-    else
-    {
-        Device->SetMaterial(&Mtrl);
-        Device->SetTexture(0, Texture);
     }
 }
 
@@ -146,9 +135,8 @@ Material* Material::CloneInstance()
 
 void Material::Free()
 {
-    Safe_Release(Texture);
+    Safe_Release(shader);
     Safe_Release(Device);
 
     std::for_each(TexParam.begin(), TexParam.end(), [](auto& pair) {Safe_Release(pair.second);});
-    Safe_Release(shader);
 }

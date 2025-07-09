@@ -2,6 +2,7 @@
 #include "Chunk.h"
 #include "ChunkMesh.h"
 #include "ObjectManager.h"
+#include "CollisionBlock.h"
 
 //component
 #include "TransformComponent.h"
@@ -183,6 +184,39 @@ StaticBlockData Chunk::GetBlock(int x, int y, int z) const
     return Blocks[x][y][z];
 }
 
+void Chunk::BuildCollisionBlock()
+{
+    auto IsAir = [&](int x, int y, int z) -> bool
+        {
+            if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return true;
+            return Blocks[x][y][z].Type == StaticBlockType::Air;
+        };
+
+    for (int y = 0; y < CHUNK_HEIGHT; ++y)
+    {
+        for (int z = 0; z < CHUNK_SIZE; ++z)
+        {
+            for (int x = 0; x < CHUNK_SIZE; ++x)
+            {
+                const auto& block = Blocks[x][y][z];
+                if (block.Type == StaticBlockType::Air)
+                    continue;
+
+                // const _vec3& pos = block.Pos;
+                _vec3 pos = block.Pos - _vec3(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
+                if (IsAir(x, y + 1, z) || IsAir(x, y - 1, z) ||
+                    IsAir(x + 1, y, z) || IsAir(x - 1, y, z) ||
+                    IsAir(x, y, z + 1) || IsAir(x, y, z - 1))
+                {
+                    auto collisionBlock = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                    collisionBlock->GetComponent<TransformComponent>()->SetPosition(block.Pos);
+                    owner->AddObject(ObjectType::StaticBlock, collisionBlock);
+                }
+            }
+        }
+    }
+}
+
 void Chunk::SetBlock(int x, int y, int z, const StaticBlockData& block)
 {
     if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return;
@@ -205,13 +239,6 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
         if (localX < 0 || localX >= CHUNK_SIZE || localY < 0 || localY >= CHUNK_HEIGHT || localZ < 0 || localZ >= CHUNK_SIZE) continue;
 
         Blocks[localX][localY][localZ] = block;
-
-        if (block.Type != Air)
-        {
-            auto collisionblock = StaticBlock::Create(owner, ObjectType::StaticBlock, Dirt, sAEnd, sREnd, Basic);
-            owner->AddObject(ObjectType::StaticBlock, collisionblock);
-            collisionblock->GetComponent<TransformComponent>()->SetPosition(block.Pos.x, block.Pos.y, block.Pos.z);
-        }
     }   
 }
 
