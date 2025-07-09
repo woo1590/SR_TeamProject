@@ -9,6 +9,8 @@
 #include "PhysicsComponent.h"
 #include "InfoComponent.h"
 #include "CollisionComponent.h"
+#include "Player.h"
+#include "Monster.h"
 
 Sword::Sword(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
 
@@ -68,10 +70,17 @@ void Sword::SetCollisionEnter(Object* other)
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
 
-    if (objType == ObjectType::Monster) {
-        float swordAttackDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
-        auto enemyInfo = other->GetComponent<InfoComponent<EnemyInfo>>();
-        enemyInfo->AddHp(-swordAttackDamage);
+    if (objType == ObjectType::Monster && 
+        static_cast<Player*>(ownerObject)->GetPlayerState() == Player::ePlayerState::ATTACK && 
+        static_cast<Monster*>(other)->GetHit() == false) 
+    {
+        float swordAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
+
+        auto monster = static_cast<Monster*>(other);
+        monster->SetHit(true);
+        monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), swordAttackDamage);
+        
+        other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
     }
 }
 
@@ -89,5 +98,4 @@ void Sword::PlayerSwordInfo()
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_ENEMY);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
-
 }

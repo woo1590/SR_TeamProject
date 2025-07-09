@@ -105,12 +105,12 @@ void Arrow::SetCollisionEnter(Object* other)
     ObjectType objType = other->GetObjectType();
     arrowSpeed = 0.f;
 
-    if (objType == ObjectType::Monster) 
+    if (objType == ObjectType::Monster && hitObject == nullptr) 
     {
         auto info = GetComponent<InfoComponent<ItemInfo>>();
         auto collision = GetComponent<CollisionComponent>();
 
-        float arrowAttackDamage = info->GetInfo().value;
+        float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + info->GetInfo().value;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
