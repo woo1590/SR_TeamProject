@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "BaseCharacter.h"
 
 enum MonsterState { Idle, Walk, AttackReady, Attack, Hit, Die, };
@@ -46,7 +46,8 @@ public:
     _bool IsHitFinish() const { return HitAnim.IsEnd; }
 
     virtual _float GetHp();
-
+    void SetHit(_bool Hit);
+    _bool GetHit();
 protected:
     virtual void InitAnimation();
     virtual void PlayAnimation(_float dt);

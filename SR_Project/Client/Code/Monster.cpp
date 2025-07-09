@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Scene.h"
 #include "Monster.h"
 #include "CollisionSystem.h"
@@ -32,6 +32,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto physics = AddComponent<PhysicsComponent>();
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
     physics->SetMass(1.f);
+
     return S_OK;
 }
 
@@ -70,6 +71,19 @@ _float Monster::GetHp()
 {
     auto  statcomponent = GetComponent<InfoComponent<EnemyInfo>>();
     return statcomponent->GetInfo().curHp;
+}
+
+void Monster::SetHit(_bool Hit)
+{
+    if (IsHit != nullptr) *IsHit = Hit;
+}
+
+_bool Monster::GetHit()
+{
+    if (IsHit != nullptr)
+        return *IsHit;
+    else
+        return false;
 }
 
 void Monster::InitAnimation()
