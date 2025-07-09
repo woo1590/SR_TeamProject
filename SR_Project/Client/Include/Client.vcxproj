@@ -365,7 +365,6 @@
     <ClCompile Include="..\Code\WorldTooltip.cpp" />
     <ClCompile Include="..\Code\Zombie.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="notepad.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

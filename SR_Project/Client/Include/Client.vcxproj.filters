@@ -932,9 +932,6 @@
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\WorldTooltip.cpp">
       <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
-    </ClCompile>  
-    <ClCompile Include="notepad.cpp">
-      <Filter>02. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
