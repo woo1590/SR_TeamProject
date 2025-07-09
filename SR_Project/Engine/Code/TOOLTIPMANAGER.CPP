@@ -13,7 +13,7 @@ void TooltipManager::ShowWorldTooltip(const wstring& text, float x, float y)
 	auto font      = worldTooltip->GetComponent<FontComponent>();
 	auto renderer  = worldTooltip->GetComponent<UIRenderer>();
 
-	if (!transform || !font || !renderer) return;
+	if (!transform || !font || !renderer) return; 
 
 	transform->SetPosition(x, y + 120.f);
 	font->ClearText();
@@ -36,4 +36,57 @@ void TooltipManager::HideWorldTooltip()
 		renderer->SetVisible(false);
 	if (font)
 		font->SetVisible(false);
+}
+
+void TooltipManager::ShowInventoryTooltip(const wstring& text, float x, float y)
+{
+	if (!inventoryTooltip) return;
+
+	auto transform = inventoryTooltip->GetComponent<TransformComponent>();
+	auto font = inventoryTooltip->GetComponent<FontComponent>();
+	if (!transform || !font) return;
+
+	transform->SetPosition(x, y - 30.f);
+
+	font->ClearText();
+
+	RECT rect = {(LONG)x - 100, 
+		         (LONG)y - 60, 
+		         (LONG)x + 100, 
+		         (LONG)y - 30};
+	font->AddText(text, rect, Color::White, DT_CENTER, FontType::Large);
+	font->SetVisible(true);
+
+	invAlpha = 0.f;
+	invFadingIn = true;
+}
+
+void TooltipManager::HideInventoryTooltip()
+{
+	if (!inventoryTooltip) return;
+	
+	if (auto font = inventoryTooltip->GetComponent<FontComponent>())
+	{
+		font->SetVisible(false);
+		font->SetAlpha(1.f);
+	}
+	invAlpha = 0.f;
+	invFadingIn = false;
+}
+
+void TooltipManager::Update(float dt)
+{
+	if (invFadingIn && inventoryTooltip)
+	{
+		auto font = inventoryTooltip->GetComponent<FontComponent>();
+		if (!font) return;
+
+		invAlpha += dt * 2.f;
+		if (invAlpha >= 1.f)
+		{
+			invAlpha = 1.f;
+			invFadingIn = false;
+		}
+		font->SetAlpha(invAlpha);
+	}
 }

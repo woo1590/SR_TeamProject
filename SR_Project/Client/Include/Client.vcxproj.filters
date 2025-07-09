@@ -277,9 +277,6 @@
     <Filter Include="02. Object\UIObj\Item\Sword">
       <UniqueIdentifier>{32b85a88-8d78-4c98-9462-c2ac5d47d87d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\Item\FishingItem">
-      <UniqueIdentifier>{86943bb5-011a-4051-a90d-f9010908dd21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\QuestTextObj">
       <UniqueIdentifier>{91e2b8b4-72bd-44be-8e7d-a8269d158f4f}</UniqueIdentifier>
     </Filter>
@@ -336,6 +333,15 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Tooltip\TooltipObj">
       <UniqueIdentifier>{791f16c4-7087-4ad4-8813-882cccd29a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Tooltip\FilterTooltip">
+      <UniqueIdentifier>{0b274195-08ee-43af-ae39-a76c1d5eef38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\06. PigItem">
+      <UniqueIdentifier>{a260439e-c6f4-486f-a93d-3f6d153faf58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Item\05. FishingItem">
+      <UniqueIdentifier>{86943bb5-011a-4051-a90d-f9010908dd21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -569,7 +575,7 @@
       <Filter>02. Object\UIObj\Tooltip\TooltipObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FishingItem.h">
-      <Filter>02. Object\UIObj\Item\FishingItem</Filter>
+      <Filter>02. Object\UIObj\Item\05. FishingItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuestPanel.h">
       <Filter>02. Object\UIObj\Panel\QuestPanel</Filter>
@@ -628,12 +634,18 @@
     <ClInclude Include="..\Header\WorldMapTextPanel.h">
       <Filter>02. Object\UIObj\Panel\WorldMapTextPanel</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UILoader.h">
-      <Filter>01. Scene\UIManager\UILoader</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="..\Header\WorldTooltip.h">
       <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UILoader.h">
+      <Filter>01. Scene\UIManager\UILoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FilterTooltip.h">
+      <Filter>02. Object\UIObj\Tooltip\FilterTooltip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PigItem.h">
+      <Filter>02. Object\UIObj\Item\06. PigItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -867,7 +879,7 @@
       <Filter>02. Object\UIObj\Tooltip\TooltipObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FishingItem.cpp">
-      <Filter>02. Object\UIObj\Item\FishingItem</Filter>
+      <Filter>02. Object\UIObj\Item\05. FishingItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuestPanel.cpp">
       <Filter>02. Object\UIObj\Panel\QuestPanel</Filter>
@@ -926,12 +938,18 @@
     <ClCompile Include="..\Code\WorldMapTextPanel.cpp">
       <Filter>02. Object\UIObj\Panel\WorldMapTextPanel</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UILoader.cpp">
-      <Filter>01. Scene\UIManager\UILoader</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\WorldTooltip.cpp">
       <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UILoader.cpp">
+      <Filter>01. Scene\UIManager\UILoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FilterTooltip.cpp">
+      <Filter>02. Object\UIObj\Tooltip\FilterTooltip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PigItem.cpp">
+      <Filter>02. Object\UIObj\Item\06. PigItem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,6 +9,8 @@
 #include "PanelComponent.h"
 #include "ButtonComponent.h"
 #include "UIRenderer.h"
+#include "HoverComponent.h"
+#include "HoverButtonComponent.h"
 
 // Objects
 #include "HPBarFront.h"
@@ -65,6 +67,8 @@
 #include "LoadingStone.h"
 #include "WorldMapTextPanel.h"
 #include "WorldTooltip.h"
+#include "FilterTooltip.h"
+#include "PigItem.h"
 
 #include "ArrowSlot.h"
 #include "UIManager.h"
@@ -82,22 +86,23 @@
 
 void UILoader::LoadUI(ObjectManager* objMgr)
 {
-    BuildCursorAndInventory(objMgr);
+    auto* scene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
+    auto* uiMgr = scene->GetUIManager();
+    auto* invMgr = uiMgr->GetInventory();
+    auto* tooltipMgr = uiMgr->GetTooltip();
+
+    BuildCursorAndInventory(objMgr,invMgr);
     BuildPlayerBars(objMgr);
     BuildHotbar(objMgr);
     BuildQuickSlots(objMgr);
-    BuildFilters(objMgr);
+    BuildFilters(objMgr, invMgr, tooltipMgr);
     BuildQuestUI(objMgr);
     BuildMiscUI(objMgr);
     BuildWorldMapUI(objMgr);
 }
 
-void UILoader::BuildCursorAndInventory(ObjectManager* objMgr)
+void UILoader::BuildCursorAndInventory(ObjectManager* objMgr,InventoryManager* invMgr)
 {
-    auto* scene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
-    auto* uiMgr = scene->GetUIManager();
-    auto* invMgr = uiMgr->GetInventory();
-
     ADD(Cursor::Create(objMgr));
     InventoryUIBuilder::BuildInventoryUI(objMgr, invMgr);
 
@@ -109,7 +114,7 @@ void UILoader::BuildCursorAndInventory(ObjectManager* objMgr)
     {
         SwordItem::Create(objMgr), BowItem::Create(objMgr),
         WolfArmor::Create(objMgr), RocketItem::Create(objMgr),
-        FishingItem::Create(objMgr)
+        FishingItem::Create(objMgr), PigItem::Create(objMgr),
     };
 
     for (auto* it : items) 
@@ -178,36 +183,85 @@ void UILoader::BuildQuickSlots(ObjectManager* objMgr)
     ADD(arrowSlot);
 }
 
-void UILoader::BuildFilters(ObjectManager* objMgr)
+void UILoader::BuildFilters(ObjectManager* objMgr, InventoryManager* invMgr, TooltipManager* tooltipMgr)
 {
     struct Pos { float x, y; };
-    vector<Pos> base = {{120, 170}, {300, 120}, {480, 170}, {150, 620}, {300, 620}, {450, 620}};
-    vector<Object*> filters = 
+    array<Pos, 6> leftPos = {{{120, 170}, {300, 120}, {480, 170}, 
+                              {150, 620}, {300, 620}, {450, 620}}};
+
+    array<Object*, 6> leftFilters =
     {
-        SwordFilter::Create(objMgr), ArmorFilter::Create(objMgr),
-        ArrowFilter::Create(objMgr), PotionFilter::Create(objMgr),
-        PotionFilter::Create(objMgr), PotionFilter::Create(objMgr),
+        SwordFilter::Create(objMgr),  ArmorFilter::Create(objMgr),
+        ArrowFilter::Create(objMgr),  PotionFilter::Create(objMgr),
+        PotionFilter::Create(objMgr), PotionFilter::Create(objMgr)
     };
-    for (size_t i = 0; i < filters.size(); ++i) 
+
+    for (size_t i = 0; i < leftFilters.size(); ++i)
     {
-        auto transform = filters[i]->GetComponent<TransformComponent>();
-        transform->SetPosition(base[i].x + 35.f, base[i].y + 35.f);
-        filters[i]->GetComponent<UIRenderer>()->SetScale(0.8f, 0.8f);
-        ADD(filters[i]);
+        auto* obj = leftFilters[i];
+        auto transform = obj->GetComponent<TransformComponent>();
+        transform->SetPosition(leftPos[i].x + 35.f, leftPos[i].y + 35.f);
+        obj->GetComponent<UIRenderer>()->SetScale(0.8f, 0.8f);
+        ADD(obj);
     }
 
-    initializer_list<Object*> iconFilters =
+    struct FInfo { Object* obj; optional<ItemType> type; };
+
+    vector<FInfo> btns = 
     {
-        Filter::Create(objMgr),
-        SwordFilter::Create(objMgr),
-        ArrowFilter::Create(objMgr),
-        ArmorFilter::Create(objMgr),
-        PotionFilter::Create(objMgr),
-        EnchantFilter::Create(objMgr),
-        CostumeFilter::Create(objMgr)
+        {Filter::Create(objMgr), nullopt},
+        {SwordFilter::Create(objMgr),   ItemType::Sword},
+        {ArrowFilter::Create(objMgr),   ItemType::Arrow},
+        {ArmorFilter::Create(objMgr),   ItemType::Armor},
+        {PotionFilter::Create(objMgr),  ItemType::Potion},
+        {EnchantFilter::Create(objMgr), ItemType::Enchant},
+        {CostumeFilter::Create(objMgr), ItemType::Costume},
     };
 
-    for (auto* f : iconFilters) ADD(f);
+    for (auto& [obj, typeOpt] : btns)
+    {
+        if (auto* btn = obj->GetComponent<ButtonComponent>())
+            btn->SetOnClick([invMgr, typeOpt] { invMgr->ApplyFilter(typeOpt); });
+
+        auto hover = obj->AddComponent<HoverComponent>();
+        hover->SetCallBack([obj, typeOpt](bool over) {
+            auto tooltipMgr = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetUIManager()->GetTooltip();
+            if (!tooltipMgr) return;
+
+            auto pos = obj->GetComponent<TransformComponent>()->GetWorldPosition();
+
+            if (over)
+            {
+                wstring name = L"";
+
+                if (!typeOpt.has_value())
+                    name = L"전체";
+                else
+                {
+                    switch (typeOpt.value())
+                    {
+                    case ItemType::Sword:   name = L"근접"; break;
+                    case ItemType::Arrow:   name = L"원거리"; break;
+                    case ItemType::Armor:   name = L"방어구"; break;
+                    case ItemType::Potion:  name = L"유물"; break;
+                    case ItemType::Enchant: name = L"효과 부여됨"; break;
+                    case ItemType::Costume: name = L"코스메틱"; break;
+                    default:                name = L"알 수 없음"; break;
+                    }
+                }
+                tooltipMgr->ShowInventoryTooltip(name, pos.x, pos.y);
+            }
+            else
+                tooltipMgr->HideInventoryTooltip();
+            });
+
+        ADD(obj);
+    }
+
+    auto filterTooltip = FilterTooltip::Create(objMgr);
+    ADD(filterTooltip);
+
+    tooltipMgr->SetInventoryTooltip(filterTooltip);
 }
 
 void UILoader::BuildQuestUI(ObjectManager* objMgr)
@@ -275,7 +329,7 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
     for (auto p : {_vec2{-600, 80}, {-480, -150}})
         AddMap(p.x, p.y);
 
-    ADD(LoadingStone::Create(objMgr));
+   // ADD(LoadingStone::Create(objMgr));
 
     auto AddText = [&](float x, float y, const wchar_t* txt)
         {

@@ -31,6 +31,7 @@ public:
 	void ClearText() { entries.clear(); }
 	void SetVisible(bool visible) { isVisible = visible; }
 	bool IsVisible() const { return isVisible; }
+	void SetAlpha(float a) { globalAlpha = clamp(a, 0.f, 1.f); }
 
 private:
 	HRESULT CreateFontResource();
@@ -40,6 +41,7 @@ private:
 	unordered_map<FontType, ID3DXFont*> fontMap;
 	vector<TextEntry> entries;
 	bool isVisible = true;
+	float globalAlpha = 1.f;
 };
 
 END

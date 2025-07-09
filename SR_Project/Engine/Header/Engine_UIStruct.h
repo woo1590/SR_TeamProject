@@ -13,7 +13,7 @@ namespace Engine
 		float speed = 6.f;
 	};
 
-	enum class ItemType{ Sword, Armor, Arrow, Potion };
+	enum class ItemType{ Sword, Armor, Arrow, Potion, Enchant, Costume };
 	enum class Rarity { Default, Rare};
 
 	enum class SlotItemType {Any, Sword, Armor, Arrow, Potion};

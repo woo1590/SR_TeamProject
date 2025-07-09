@@ -98,6 +98,10 @@ void FontComponent::Render()
 	{
 		ID3DXFont* font = GetFont(entry.fontType);
 		if (font)
-			font->DrawTextW(nullptr, entry.text.c_str(), -1, &entry.rect, entry.format, entry.color);
+		{
+			auto c = entry.color;
+			c.a *= globalAlpha;
+			font->DrawTextW(nullptr, entry.text.c_str(), -1, &entry.rect, entry.format, c);
+		}
 	}
 }
