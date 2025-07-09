@@ -30,7 +30,6 @@ public:
         Components.push_back(comp);
 
         ComponentMap[typeid(T)] = comp;
-        comp->AddRef();
 
         return comp;
     }

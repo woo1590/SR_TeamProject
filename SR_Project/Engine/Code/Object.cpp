@@ -73,7 +73,6 @@ void Object::Free()
 		});
 	Components.clear();
 	
-	std::for_each(ComponentMap.begin(), ComponentMap.end(), DeleteMap());
 	ComponentMap.clear();
 
 }
