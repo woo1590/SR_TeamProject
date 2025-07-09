@@ -114,14 +114,6 @@ void Arrow::SetCollisionEnter(Object* other)
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
-        switch (objType) 
-        {
-        case ObjectType::Monster:
-            other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(info->GetInfo().value);
-            break;
-        case ObjectType::StaticBlock:
-            break;
-        }
     }
 }
 

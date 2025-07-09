@@ -70,7 +70,8 @@ void Sword::SetCollisionEnter(Object* other)
 
     if (objType == ObjectType::Monster) {
         float swordAttackDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
-        other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
+        auto enemyInfo = other->GetComponent<InfoComponent<EnemyInfo>>();
+        enemyInfo->AddHp(-swordAttackDamage);
     }
 }
 
