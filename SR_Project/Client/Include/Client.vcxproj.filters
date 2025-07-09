@@ -291,7 +291,7 @@
     </Filter>
     <Filter Include="02. Object\UIObj\QuestTextObj">
       <UniqueIdentifier>{91e2b8b4-72bd-44be-8e7d-a8269d158f4f}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="99. Etc\Shader/Fx">
       <UniqueIdentifier>{23c39b64-fa09-4d84-bbba-49cff170b28d}</UniqueIdentifier>
     </Filter>
@@ -490,9 +490,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\InventorySlot.h">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Projectile.h">
-      <Filter>02. Object\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. Object\Projectile\Arrow</Filter>
@@ -767,9 +764,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\InventorySlot.cpp">
       <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Projectile.cpp">
-      <Filter>02. Object\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. Object\Projectile\Arrow</Filter>

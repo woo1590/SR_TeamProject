@@ -38,16 +38,19 @@
       }
     },
      "CreeperFace_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Creeper_Face.dds"
       }
     },
     "CreeperBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Creeper_Body.dds"
       }
     },
     "CreeperLeg_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Creeper_Leg.dds"
       }
@@ -99,6 +102,7 @@
     },
 
     "RedGolemLightblock_Mtrl":{
+ "fx": "ColorShader",
       "textures":{
         "CubeMap":"../Resource/Asset/HY/redgolem_lightblock.dds"
       }

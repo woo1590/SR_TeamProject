@@ -4,7 +4,8 @@
 //component
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
-
+#include "Material.h"
+#include "ResourceManager.h"
 Bone::Bone(ObjectManager* owner, ObjectType objType)
 	:Object(owner,objType)
 {
@@ -40,7 +41,6 @@ HRESULT Bone::Ready_Object(Object* Parent, _vec3 scale, const std::string& mtrl)
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMesh("Cube_Mesh");
     renderer->SetMaterial(mtrl);
-
     return S_OK;
 }
 

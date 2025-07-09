@@ -79,6 +79,11 @@ void MeshRenderer::SetMaterial(const std::string & key)
 	mtrl = EngineCore::GetInstance()->GetResourceManager()->GetMaterial(key);
 }
 
+Material* MeshRenderer::GetMaterial()
+{
+	return mtrl;
+}
+
 void MeshRenderer::Free()
 {
 	RendererComponent::Free();

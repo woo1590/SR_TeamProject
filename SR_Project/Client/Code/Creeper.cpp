@@ -14,6 +14,7 @@
 #include "IsTargetInAttackRange.h"
 #include "ObjectManager.h"
 #include "InfoComponent.h"
+#include "Material.h"
 
 Creeper::Creeper(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -87,13 +88,22 @@ void Creeper::RotateTo(_vec3* dir, float dt)
 
 void Creeper::Die()
 {
-    //explode -> die;
+    if (State != MonsterState::Die)
+    {
+        State = MonsterState::Die;
+
+        DieAnim.IsRunning = true;
+        DieAnim.IsEnd = false;
+        DieAnim.ElapsedTime = 0.0f;
+        DieAnim.DelayTime = 0.0f;
+        emissiveOn = false;
+    }
 }
 
 void Creeper::InitTransform(ObjectType objType)
 {
     auto transform = GetComponent<TransformComponent>();
-    transform->SetPosition(30.f, 100.f, 30.f);
+    transform->SetPosition(0.f, 100.f, 0.f);
 
     SetMaterial("CreeperFace_Mtrl", "Head");
     SetMaterial("CreeperBody_Mtrl", "Body");
@@ -102,6 +112,21 @@ void Creeper::InitTransform(ObjectType objType)
     SetMaterial("CreeperLeg_Mtrl", "LLeg");
     SetMaterial("CreeperLeg_Mtrl", "RLeg");
 
+    materials.push_back(GetMaterial("Head"));
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("LArm"));
+    materials.push_back(GetMaterial("RArm"));
+    materials.push_back(GetMaterial("LLeg"));
+    materials.push_back(GetMaterial("RLeg"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 1);
+        material->SetVec3("emissivecolor", _vec3(1.0, 0.1, 0.03));
+        material->SetFloat("emissivePow", 2);
+    }
     //body
     SetScale(_vec3(7.f * Scale, 16.f * Scale, 4.f * Scale), "Body");
 
@@ -152,10 +177,34 @@ void Creeper::InitTree()
 void Creeper::InitAnimation()
 {
     WalkAnim.ElapsedTime = 0.5f;
+
+    DieAnim.ElapsedTime = 0.f;
+    DieAnim.DelayTime = 0.f;
 }
 
 void Creeper::PlayAnimation(_float dt)
 {
+    switch (State)
+    {
+    case MonsterState::Idle:
+        PlayIdle(dt);
+        break;
+    case MonsterState::Walk:
+        PlayWalk(dt);
+        break;
+    case MonsterState::Attack:
+        if (!AttackAnim.IsRunning) AttackAnim.IsRunning = true;
+        PlayAttack(dt);
+        break;
+    case MonsterState::Hit:
+        if (!HitAnim.IsRunning) HitAnim.IsRunning = true;
+        PlayHit(dt);
+        break;
+    case MonsterState::Die:
+        if (!DieAnim.IsRunning) DieAnim.IsRunning = true;
+        PlayDie(dt);
+        break;
+    }
 }
 
 void Creeper::PlayIdle(_float dt)
@@ -180,6 +229,32 @@ void Creeper::PlayAttack(_float dt)
 
 void Creeper::PlayDie(_float dt)
 {
+    DieAnim.ElapsedTime += dt;
+    DieAnim.DelayTime -= dt;
+
+    float blinkInterval = max(0.05f, 0.5f - DieAnim.ElapsedTime * 0.1f);
+
+    if (DieAnim.DelayTime <= 0.0f)
+    {
+        emissiveOn = !emissiveOn;
+        if (emissiveOn)
+        {
+            for(auto& material : materials)
+            material->SetFloat("emissive", 1.f);
+        }
+        else
+        {
+            for (auto& material : materials)
+            material->SetFloat("emissive", 0);
+        }
+        DieAnim.DelayTime = blinkInterval;
+    }
+
+    if (DieAnim.ElapsedTime >= 3.0f)
+    {
+        DieAnim.IsEnd = true;
+       // Free();
+    }
 }
 
 void Creeper::OnCollisionStay(Object* other)

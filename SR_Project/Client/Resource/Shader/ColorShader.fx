@@ -18,6 +18,12 @@ float4x4 g_World : WORLD;
 float4x4 g_View : VIEW;
 float4x4 g_Proj : PROJECTION;
 
+int coloruse;
+int emissive;
+float3 emissivecolor;
+float3 color;
+float emissivePow;
+
 // Vertex input/output matching xyz, normal, cubetex declaration
 struct VS_INPUT
 {
@@ -47,8 +53,25 @@ VS_OUTPUT VS_Main(VS_INPUT input)
 // Pixel Shader
 float4 PS_Main(VS_OUTPUT input) : SV_Target
 {
-    return texCUBE(CubeSampler, input.TexCoord);
+    float4 result;
+
+    if (coloruse == 0)
+    {
+        result = texCUBE(CubeSampler, input.TexCoord);
+    }
+    else
+    {
+        result = float4(color.rgb, 1.0);
+    }
+
+    if (emissive != 0 && emissivePow > 0)
+    {
+        result.rgb += emissivecolor.rgb * emissivePow;
+    }
+
+    return result;
 }
+
 // Technique for priority rendering of skybox
 technique SkyboxPriority
 {
