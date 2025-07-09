@@ -86,6 +86,7 @@ void PhysicsSystem::ApplyVelocity(_float dt)
 void PhysicsSystem::CollectAABBEntry()
 {
 	AABBEntries.clear();
+	AABBEntries.reserve(DynamicBodies.size() * 2);
 	std::set<CollisionComponent*> chache;
 
 	//Dynamic vs Dynamic

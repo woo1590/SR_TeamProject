@@ -76,6 +76,8 @@ void Material::Apply()
 
         for (const auto& [name, value] : TexParam)
             shader->SetTexture(name, value);
+
+        shader->Commit();
     }
     else
     {
@@ -117,7 +119,7 @@ void Material::SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 value)
 
 void Material::SetShader(Shader* shader)
 {
-    this->shader = shader;  
+    this->shader = shader;
 }
 
 Shader* Material::GetShader() const
