@@ -206,14 +206,18 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 
         Blocks[localX][localY][localZ] = block;
 
-        auto collisionblock = StaticBlock::Create(owner, ObjectType::StaticBlock, Dirt, sAEnd, sREnd, Basic);
-        owner->AddObject(ObjectType::StaticBlock, collisionblock);
-        collisionblock->GetComponent<TransformComponent>()->SetPosition(block.Pos.x, 0.f, block.Pos.z);
-    }
+        if (block.Type != Air)
+        {
+            auto collisionblock = StaticBlock::Create(owner, ObjectType::StaticBlock, Dirt, sAEnd, sREnd, Basic);
+            owner->AddObject(ObjectType::StaticBlock, collisionblock);
+            collisionblock->GetComponent<TransformComponent>()->SetPosition(block.Pos.x, block.Pos.y, block.Pos.z);
+        }
+    }   
 }
 
 void Chunk::Free()
 {
+    Object::Free();
     memset(Blocks, 0, sizeof(Blocks));
     Safe_Release(mesh);
 }

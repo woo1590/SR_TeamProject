@@ -32,7 +32,7 @@ Object* StaticBlock::Create(ObjectManager* owner, ObjectType objType, StaticBloc
     switch (usage)
     {
     case StaticBlockUsage::Basic:
-        Instance = BasicBlock::Create(owner, ObjectType::StaticBlock, type, axis, rot, usage);
+        Instance = BasicBlock::Create(owner, ObjectType::StaticBlock, type, axis, rot, usage);//
         break;
     case StaticBlockUsage::Half:
         Instance = HalfBlock::Create(owner, ObjectType::StaticBlock, type, axis, rot, usage);
