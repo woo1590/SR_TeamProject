@@ -105,7 +105,9 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
             if (!ReadFile(hFile, blocks.data(), sizeof(StaticBlockData) * blockCount, &dwByte, nullptr)) return;
 
         Chunk* chunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkZ);
+        chunk->InitializeAirBlocks();
         chunk->SetBlocksFromFlatVector(blocks);
+        chunk->BuildChunkFace();
         worldChunks[{chunkX, chunkZ}] = chunk;
     }
 
