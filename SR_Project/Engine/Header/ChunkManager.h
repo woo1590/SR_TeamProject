@@ -26,6 +26,11 @@ public:
     Chunk* CreateChunk(int chunkX, int chunkZ);
     void RemoveChunk(int chunkX, int chunkZ);
 
+    Chunk* GetChunk(int chunkX, int chunkZ)
+    {
+        auto it = worldChunks.find({ chunkX, chunkZ });
+        return (it != worldChunks.end()) ? it->second : nullptr;
+    }
     const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() { return worldChunks; }
 
 private:

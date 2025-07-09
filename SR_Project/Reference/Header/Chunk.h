@@ -18,6 +18,8 @@ public:
     HRESULT Ready_Object()override;
     void AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
 
+    Chunk* GetNeighborChunk(int x, int z);
+
     void InitializeAirBlocks();
     void BuildChunkFace();
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir);
@@ -27,6 +29,7 @@ public:
 
     int GetChunkX() const { return ChunkX; }
     int GetChunkZ() const { return ChunkZ; }
+    void SetBlockAir(int x, int y, int z) { Blocks[x][y][z].Type = Air; }
     StaticBlockData GetBlock(int x, int y, int z) const;
 
 private:

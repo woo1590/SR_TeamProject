@@ -41,6 +41,21 @@ private:
     void CreateTerrain(const std::string& filename);
     void PlaceTerrainBlocks(const std::string& filename);
 
+    std::pair<int, int> GetChunkCoordFromWorldPos(const _vec3& pos)
+    {
+        int chunkX = static_cast<int>(round(pos.x / (CHUNK_SIZE * 2.f)));
+        int chunkZ = static_cast<int>(round(pos.z / (CHUNK_SIZE * 2.f)));
+        return { chunkX, chunkZ };
+    }
+
+    _vec3 GetLocalCoordInChunk(const _vec3& pos, int chunkX, int chunkZ)
+    {
+        float localX = (pos.x / 2.f) - chunkX * CHUNK_SIZE;
+        float localY = (pos.y / 2.f);
+        float localZ = (pos.z / 2.f) - chunkZ * CHUNK_SIZE;
+        return { localX, localY, localZ };
+    }
+
 private:
     void Free() override;
 

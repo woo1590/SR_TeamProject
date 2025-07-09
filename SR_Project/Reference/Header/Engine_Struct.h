@@ -73,6 +73,12 @@ namespace Engine
 		StaticBlockRot Rot;
 		StaticBlockUsage Usage;
 	} SB;
+	
+	typedef struct ChunkData
+	{
+		int chunkX, chunkZ;			// 청크의 좌표 위치
+		std::vector<SB> sBlocks;	// 해당 청크에서 보관하는 Static Block
+	} CHUNK;
 
 	typedef struct DynamicBlockData
 	{
@@ -81,12 +87,6 @@ namespace Engine
 		DynamicBlockCol Col;
 		DynamicBlockRot Rot;
 	} DB;
-
-	typedef struct ChunkData
-	{
-		int chunkX, chunkZ;			// 청크의 좌표 위치
-		std::vector<SB> sBlocks;	// 해당 청크에서 보관하는 Static Block
-	} CHUNK;
 }
 
 #endif // Engine_Struct_h__

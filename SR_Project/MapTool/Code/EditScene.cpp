@@ -54,6 +54,8 @@ void EditScene::Load()
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"MapTool", [this]() {this->ImGui_Main();});
 #endif
 
+	ObjectMgr = ObjectManager::Create(this);
+	CameraMgr = CameraManager::Create(this);
 	CollisionSys = CollisionSystem::Create(this);
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
@@ -67,12 +69,10 @@ void EditScene::Load()
 	SB baseBlock{ {0, 0, 0}, StaticBlockType::Dirt, StaticBlockAxis::sAY};
 	staticBlocks.push_back(baseBlock);
 
-	ObjectMgr = ObjectManager::Create(this);
 	auto cam = Camera::Create(ObjectMgr, ObjectType::Camera);
 	ObjectMgr->AddObject(ObjectType::Camera, cam);
 	ObjectMgr->AddObject(ObjectType::StaticBlock, StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, StaticBlockType::Dirt, StaticBlockAxis::sAY, StaticBlockRot::sREnd, StaticBlockUsage::Basic));
 
-	CameraMgr = CameraManager::Create(this);
 	CameraMgr->AddCamera(L"ToolCam", cam);
 	CameraMgr->SetMainCamera(L"ToolCam");
 }
@@ -147,6 +147,10 @@ void EditScene::ImGui_SaveLoad()
 	{
 		staticBlocks.clear();
 		BlockMgr->LoadChunk(load);
+
+		auto chunks = ChunkMgr->GetChunks();
+		for (auto& [key, chunk] : chunks)
+			chunk->BuildChunkFace();
 	}
 
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
@@ -179,10 +183,6 @@ void EditScene::ImGui_SaveLoad()
 
 		Terrain->Free();
 	}
-
-	auto chunks = ChunkMgr->GetChunks();
-	for (auto& [key, chunk] : chunks)
-		chunk->BuildChunkFace();
 }
 
 void EditScene::ImGui_SetBlockType()
@@ -532,6 +532,28 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 				targetIndex = i;
 				found = true;
 			}
+		}
+	}
+
+	const SB& targetBlock = staticBlocks[targetIndex];
+	auto [chunkX, chunkZ] = GetChunkCoordFromWorldPos(targetBlock.Pos);
+
+	auto chunkIt = ChunkMgr->GetChunks().find({ chunkX, chunkZ });
+	if (chunkIt != ChunkMgr->GetChunks().end())
+	{
+		Chunk* chunk = chunkIt->second;
+
+		_vec3 localPos = GetLocalCoordInChunk(targetBlock.Pos, chunkX, chunkZ);
+		int lx = static_cast<int>(localPos.x);
+		int ly = static_cast<int>(localPos.y);
+		int lz = static_cast<int>(localPos.z);
+
+		if (lx >= 0 && lx < CHUNK_SIZE &&
+			ly >= 0 && ly < CHUNK_HEIGHT &&
+			lz >= 0 && lz < CHUNK_SIZE)
+		{
+			chunk->SetBlockAir(lx, ly, lz);
+			// chunk->BuildChunkFace();
 		}
 	}
 

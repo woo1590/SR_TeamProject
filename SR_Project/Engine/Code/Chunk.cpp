@@ -6,11 +6,11 @@
 //component
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
+#include "ChunkManager.h"
 #include "StaticBlock.h"
-#include "DynamicBlock.h"
+#include "Scene.h"
 
-Chunk::Chunk(ObjectManager* owner, int chunkX, int chunkZ)
-    :Object(owner,ObjectType::Chunk)
+Chunk::Chunk(ObjectManager* owner, int chunkX, int chunkZ) : Object(owner,ObjectType::Chunk)
 {
     ChunkX = chunkX;
     ChunkZ = chunkZ;
@@ -18,6 +18,7 @@ Chunk::Chunk(ObjectManager* owner, int chunkX, int chunkZ)
 
 Chunk::~Chunk()
 {
+    Free();
 }
 
 Chunk* Chunk::Create(ObjectManager* owner, int chunkX, int chunkZ)
@@ -65,6 +66,26 @@ void Chunk::AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axi
     block.Usage = usage;
 }
 
+Chunk* Chunk::GetNeighborChunk(int x, int z)
+{
+    Scene* scene = owner->GetOwner();
+    if (!scene) return nullptr;
+
+    ChunkManager* chunkMgr = scene->GetChunkManager();
+    if (!chunkMgr) return nullptr;
+
+    int neighborChunkX = ChunkX + x;
+    int neighborChunkZ = ChunkZ + z;
+
+    auto& chunks = chunkMgr->GetChunks();
+    auto it = chunks.find({ neighborChunkX, neighborChunkZ });
+
+    if (it != chunks.end())
+        return it->second;
+
+    return nullptr;
+}
+
 void Chunk::InitializeAirBlocks()
 {
     for (int y = 0; y < CHUNK_HEIGHT; ++y)
@@ -86,9 +107,46 @@ void Chunk::BuildChunkFace()
 
     auto IsAir = [&](int x, int y, int z) -> bool
         {
-        if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return true;
-        return Blocks[x][y][z].Type == StaticBlockType::Air;
+            if (y < 0 || y >= CHUNK_HEIGHT) return true;
+            if (x >= 0 && x < CHUNK_SIZE && z >= 0 && z < CHUNK_SIZE)
+            {
+                return Blocks[x][y][z].Type == StaticBlockType::Air;
+            }
+            else
+            {
+                int offsetX(0), offsetZ(0);
+                int localX(x), localZ(z);
+
+                if (x < 0)
+                {
+                    offsetX = -1;
+                    localX = CHUNK_SIZE - 1;
+                }
+                else if (x >= CHUNK_SIZE)
+                {
+                    offsetX = 1;
+                    localX = 0;
+                }
+
+                if (z < 0)
+                {
+                    offsetZ = -1;
+                    localZ = CHUNK_SIZE - 1;
+                }
+                else if (z >= CHUNK_SIZE)
+                {
+                    offsetZ = 1;
+                    localZ = 0;
+                }
+
+                Chunk* neighborChunk = GetNeighborChunk(offsetX, offsetZ);
+
+                if (!neighborChunk)
+                    return true;
+                return neighborChunk->GetBlock(localX, y, localZ).Type == StaticBlockType::Air;
+            }
         };
+
 
     for (int y = 0; y < CHUNK_HEIGHT; ++y)
     {
@@ -194,9 +252,8 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 {
     for (const auto& block : flatBlocks)
     {
-        int blockX = static_cast<int>(floor(block.Pos.x / 2.f));
-        int blockZ = static_cast<int>(floor(block.Pos.z / 2.f));
-
+        int blockX = static_cast<int>(round(block.Pos.x / 2.f));
+        int blockZ = static_cast<int>(round(block.Pos.z / 2.f));
         int localX = blockX - ChunkX * CHUNK_SIZE;
         int localZ = blockZ - ChunkZ * CHUNK_SIZE;
 
