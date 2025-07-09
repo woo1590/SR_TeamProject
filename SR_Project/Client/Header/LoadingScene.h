@@ -2,6 +2,9 @@
 #include "Scene.h"
 
 class Loader;
+class LoadingUI;
+class Cursor;
+
 class LoadingScene :
     public Scene
 {
@@ -22,5 +25,8 @@ private:
 
     Loader* loader = nullptr;
     LOADID nextSceneID;
+
+    LoadingUI* loadingUI = nullptr;
+    Cursor* cursor = nullptr;
 };
 

@@ -264,12 +264,15 @@
     </Filter>
     <Filter Include="06. Object\Chunk">
       <UniqueIdentifier>{516bf75c-515a-4e4c-a73b-d6a653ee1289}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="07. Object Component\UIComponent\10. HoverButtonComponent">
       <UniqueIdentifier>{b8a1f086-4c06-40bb-8521-57dd1f8b21d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="07. Object Component\UIComponent\11. AnimatorComponent">
       <UniqueIdentifier>{4c314953-5d0a-49db-8ae4-1a0dc9542c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\UIManager\TooltipManager">
+      <UniqueIdentifier>{337039c7-41b6-4c6c-80e3-94378fe6e9c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -553,6 +556,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\AnimatorComponent.cpp">
       <Filter>07. Object Component\UIComponent\11. AnimatorComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TooltipManager.cpp">
+      <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -856,12 +862,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\ChunkMesh.h">
       <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\HoverButtonComponent.h">
       <Filter>07. Object Component\UIComponent\10. HoverButtonComponent</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\AnimatorComponent.h">
       <Filter>07. Object Component\UIComponent\11. AnimatorComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TooltipManager.h">
+      <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

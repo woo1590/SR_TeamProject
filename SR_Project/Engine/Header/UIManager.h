@@ -5,6 +5,7 @@ BEGIN(Engine)
 class Scene;
 class InventoryManager; 
 class QuestSystem;
+class TooltipManager;
 
 class ENGINE_DLL UIManager: public Base
 {
@@ -17,6 +18,8 @@ public:
 
 	InventoryManager* GetInventory() const { return inventory; }
 	QuestSystem* GetQuestSystem() const { return quest; }
+	TooltipManager* GetTooltip() const { return tooltip; }
+
 	Scene* GetScene() const { return owner; }
 
 	void Update(float dt);
@@ -26,6 +29,7 @@ private:
 	Scene* owner = nullptr;
 	InventoryManager* inventory = nullptr;
 	QuestSystem* quest = nullptr;
+	TooltipManager* tooltip = nullptr;
 };
 
 END

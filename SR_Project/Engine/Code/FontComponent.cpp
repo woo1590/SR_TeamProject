@@ -54,7 +54,7 @@ HRESULT FontComponent::CreateFontResource()
 	create(FontType::Title,      28, FW_BOLD,   L"Noto Sans SC Medium");
 	create(FontType::Large,      28, FW_NORMAL, L"Noto Sans TC Medium");
 	create(FontType::Bold,       26, FW_BOLD,   L"Perfect DOS VGA 437");
-
+	create(FontType::VeryLarge,  32, FW_BOLD, L"Perfect DOS VGA 437");
 	return S_OK;
 }
 
@@ -90,10 +90,9 @@ void FontComponent::AddText(const wstring& text, const RECT& rect, D3DXCOLOR col
 	entries.push_back(move(entry));
 }
 
-
 void FontComponent::Render()
 {
-	if (entries.empty()) return;
+	if (!isVisible || entries.empty()) return;
 
 	for (auto& entry : entries)
 	{
