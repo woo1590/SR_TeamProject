@@ -558,7 +558,7 @@ void EditScene::PlaceTerrainBlocks(const std::string& filename)
 
 	for (const auto& block : Terrain->GetBlocks())
 	{
-		_vec3 position = block.Pos;// +_vec3(1.f, 1.f, 1.f);
+		_vec3 position = block.Pos;
 		Place(position);
 	}
 }

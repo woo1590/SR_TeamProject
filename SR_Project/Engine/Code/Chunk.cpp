@@ -100,7 +100,8 @@ void Chunk::BuildChunkFace()
                 if (block.Type == StaticBlockType::Air)
                     continue;
 
-                const _vec3& pos = block.Pos;
+                // const _vec3& pos = block.Pos;
+                _vec3 pos = block.Pos - _vec3(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
                 if (IsAir(x, y + 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Top);
                 if (IsAir(x, y - 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Bottom);
                 if (IsAir(x + 1, y, z)) AddFace(vertices, indices, pos, FaceDir::Face_Right);
@@ -129,22 +130,29 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
 {
     static const _vec3 offsets[6][4] =
     {
-        { { -1.f, 1.f, -1.f }, { 1.f, 1.f, -1.f }, { 1.f, 1.f, 1.f }, { -1.f, 1.f, 1.f } },         // +Y
-        { { -1.f, -1.f, 1.f }, { 1.f, -1.f, 1.f }, { 1.f, -1.f, -1.f }, { -1.f, -1.f, -1.f } },     // -Y
-        { { 1.f, -1.f, -1.f }, { 1.f, -1.f, 1.f }, { 1.f, 1.f, 1.f }, { 1.f, 1.f, -1.f } },         // +X
-        { { -1.f, -1.f, 1.f }, { -1.f, -1.f, -1.f }, { -1.f, 1.f, -1.f }, { -1.f, 1.f, 1.f } },     // -X
-        { { -1.f, -1.f, 1.f }, { 1.f, -1.f, 1.f }, { 1.f, 1.f, 1.f }, { -1.f, 1.f, 1.f } },         // +Z
-        { { 1.f, -1.f, -1.f }, { -1.f, -1.f, -1.f }, { -1.f, 1.f, -1.f }, { 1.f, 1.f, -1.f } },     // -Z
+        { {-1.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, -1.f}, {-1.f, 1.f, -1.f} },
+        { {-1.f, -1.f, 1.f}, {1.f, -1.f, 1.f}, {1.f, -1.f, -1.f}, {-1.f, -1.f, -1.f} },
+        { {-1.f, 1.f, 1.f}, {-1.f, 1.f, -1.f}, {-1.f, -1.f, -1.f}, {-1.f, -1.f, 1.f} },
+        { {1.f, 1.f, -1.f}, {1.f, 1.f, 1.f}, {1.f, -1.f, 1.f}, {1.f, -1.f, -1.f} },
+        { {1.f, 1.f, 1.f}, {-1.f, 1.f, 1.f}, {-1.f, -1.f, 1.f}, {1.f, -1.f, 1.f} },
+        { {-1.f, 1.f, -1.f}, {1.f, 1.f, -1.f}, {1.f, -1.f, -1.f}, {-1.f, -1.f, -1.f} }
+        
+        // { { -1.f, 1.f, -1.f }, { -1.f, 1.f, 1.f }, { 1.f, 1.f, 1.f }, { 1.f, 1.f, -1.f } },        // +Y
+        // { { -1.f, -1.f, -1.f }, { 1.f, -1.f, -1.f }, { 1.f, -1.f, 1.f }, { -1.f, -1.f, 1.f } },     // -Y
+        // { { 1.f, -1.f, -1.f }, { 1.f, -1.f, 1.f }, { 1.f, 1.f, 1.f }, { 1.f, 1.f, -1.f } },         // +X
+        // { { -1.f, -1.f, 1.f }, { -1.f, -1.f, -1.f }, { -1.f, 1.f, -1.f }, { -1.f, 1.f, 1.f } },     // -X
+        // { { -1.f, -1.f, 1.f }, { 1.f, -1.f, 1.f }, { 1.f, 1.f, 1.f }, { -1.f, 1.f, 1.f } },         // +Z
+        // { { 1.f, -1.f, -1.f }, { -1.f, -1.f, -1.f }, { -1.f, 1.f, -1.f }, { 1.f, 1.f, -1.f } },     // -Z
     };
 
-    static const _vec3 normals[6] =
+    static const _vec3 faceOffsets[6] =
     {
-        {  0,  1,  0 },  // +Y
-        {  0, -1,  0 },  // -Y
-        {  1,  0,  0 },  // +X
-        { -1,  0,  0 },  // -X
-        {  0,  0,  1 },  // +Z
-        {  0,  0, -1 },  // -Z
+        { 0.f, 1.f, 0.f },   // +Y (Top)
+        { 0.f, -1.f, 0.f },  // -Y (Bottom)
+        { 1.f, 0.f, 0.f },   // +X (Right)
+        { -1.f, 0.f, 0.f },  // -X (Left)
+        { 0.f, 0.f, 1.f },   // +Z (Front)
+        { 0.f, 0.f, -1.f },  // -Z (Back)
     };
 
     static const _vec2 uvs[4] = // 아틀라스 이미지 UV 지정
@@ -161,7 +169,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     {
         VTXTEX v;
         v.vPosition = blockPos + offsets[faceDir][i];
-        v.vNormal = normals[faceDir];
+        v.vNormal = faceOffsets[faceDir];
         v.vTexUV = uvs[i];
         vertices.push_back(v);
     }
@@ -193,9 +201,13 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 {
     for (const auto& block : flatBlocks)
     {
-        int localX = (static_cast<int>(block.Pos.x) / 2) - (ChunkX * CHUNK_SIZE);
+        int blockX = static_cast<int>(floor(block.Pos.x / 2.f));
+        int blockZ = static_cast<int>(floor(block.Pos.z / 2.f));
+
+        int localX = blockX - ChunkX * CHUNK_SIZE;
+        int localZ = blockZ - ChunkZ * CHUNK_SIZE;
+
         int localY = static_cast<int>(block.Pos.y / 2);
-        int localZ = (static_cast<int>(block.Pos.z) / 2) - (ChunkZ * CHUNK_SIZE);
 
         if (localX < 0 || localX >= CHUNK_SIZE || localY < 0 || localY >= CHUNK_HEIGHT || localZ < 0 || localZ >= CHUNK_SIZE) continue;
 
