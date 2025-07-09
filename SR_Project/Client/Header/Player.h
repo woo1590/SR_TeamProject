@@ -50,6 +50,7 @@ public:
     void EquipItem(Item::ItemType itemType);
     void UnEquipItem(Item::ItemType itemType);
     Object* GetBone(std::string boneName);
+    ePlayerState GetPlayerState();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -87,9 +88,11 @@ private:
     void ApplyPhasedRotation(float fProgress, PhaseRotation& phaseRot);
     void SetPhaseRotations(const ePlayerState& state, const ePlayerBone& bone, PhaseRotation& phaseRot);
     PhaseRotation& GetPhaseRotations(const ePlayerState& state, const ePlayerBone& bone);
-    
+    float GetStringAngleX(const string& frontBack = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
+    float GetStringAngleZ(const string& leftRight = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
 private:
     ePlayerState State = ePlayerState::IDLE;
+    float IdleTime = 0.f;
     float WalkTime = 0.f;
     float RollTime = 0.f;
     float AttackTime = 0.f;
@@ -100,6 +103,7 @@ private:
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
+
     float swordAttackRange = 4.f;
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
