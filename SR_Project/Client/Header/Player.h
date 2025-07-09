@@ -50,6 +50,9 @@ public:
     void EquipItem(Item::ItemType itemType);
     void UnEquipItem(Item::ItemType itemType);
     Object* GetBone(std::string boneName);
+
+    Player::ePlayerState GetPlayerState();
+
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();

@@ -168,7 +168,7 @@ void Creeper::InitTree()
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(3.f);
+    Distance = new float(6.f);
     bb->SetValue("Distance", Distance);
 
     auto AI = AddComponent<AIController>(bt, bb);

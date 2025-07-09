@@ -18,7 +18,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <cmath>
-
+#include <ranges>
 #include "Resource.h"
 
 

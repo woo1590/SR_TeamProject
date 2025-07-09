@@ -27,7 +27,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(CollisionComponent::LAYER_ENEMY);
     collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_DEFAULT);
-    collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
+    collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other); });
     
     auto physics = AddComponent<PhysicsComponent>();
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
@@ -72,6 +72,11 @@ _float Monster::GetHp()
     return statcomponent->GetInfo().curHp;
 }
 
+void Monster::SetHit(_bool Hit)
+{
+    if(IsHit != nullptr) *IsHit = Hit;
+}
+
 void Monster::InitAnimation()
 {
    
@@ -114,5 +119,7 @@ void Monster::OnCollisionStay(Object* other)
 void Monster::Free()
 {
     Safe_Delete(Distance);
+    Safe_Delete(IsAttack);
+    Safe_Delete(IsHit);
     BaseCharacter::Free();
 }
