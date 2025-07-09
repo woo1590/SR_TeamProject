@@ -399,6 +399,17 @@ void Player::SetUpLastAttackPhaseRotations() {
         { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::BODY, bodyRot);
+
+    PhaseRotation RightHandRot;
+    RightHandRot.name = "RHand";
+    RightHandRot.phaseVec = phase;
+    RightHandRot.destinations = {
+        { -90.f, 0.f, 0.f },
+        { 0.f, 0.f, 0.f },
+        { 90.f, 0.f, 0.f },
+        { 180.f, 0.f, 0.f }
+    };
+    SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RHAND, RightHandRot);
 }
 void Player::SetUpShootPhaseRotations()
 {
@@ -570,7 +581,6 @@ Object* Player::GetBone(std::string boneName)
 }
 void Player::UpdateIdle(_float dt)
 {
-    const float comboInputLimit = 0.5f;
     if (comboAttackableTime < comboInputLimit) 
     {
         comboAttackableTime += dt;
@@ -588,14 +598,12 @@ void Player::UpdateIdle(_float dt)
 void Player::UpdateWalk(_float dt) {
     WalkTime += dt;
 
-    const float comboInputLimit = 0.5f;
     if (comboAttackableTime < comboInputLimit)
     {
         comboAttackableTime += dt;
         if (comboAttackableTime >= comboInputLimit) attackType = ePlayerAttackType::FIRST;
     }
     //Rotate Bones
-    float walkSwingSpeed = 10.f;
     float fAngle = sinf(WalkTime * walkSwingSpeed);
 
     SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
@@ -693,7 +701,6 @@ void Player::UpdateRoll(_float dt)
     RollTime += dt;
 
     //Rotate Bones
-    const float fRollDuration = 0.5f;
     float fProgress = RollTime / fRollDuration;
     fProgress = std::clamp(fProgress, 0.f, 1.f);
 
@@ -762,7 +769,6 @@ void Player::UpdateAttack(_float dt) {
     auto transform = GetComponent<TransformComponent>();
 
     //Rotate Bones
-    const float fAttackDuration = 0.3f;
 
     float fProgress = AttackTime / fAttackDuration;
     fProgress = std::clamp(fProgress, 0.f, 1.f);
@@ -825,8 +831,7 @@ void Player::UpdateShoot(_float dt) {
     auto transform = GetComponent<TransformComponent>();
 
     //shoot arrow
-    const float fAttackDuration = 0.6f;
-    float fProgress = std::clamp(AttackTime / fAttackDuration, 0.f, 1.f);
+    float fProgress = std::clamp(AttackTime / fShootDuration, 0.f, 1.f);
 
 
     vector<float> phaseVec = { 0.15f, 0.4f, 0.9f, 1.f };
@@ -866,7 +871,7 @@ void Player::UpdateShoot(_float dt) {
     transform->SetRotate(transform->GetRotate() + rotateVec);
 
     // CheckExit
-    if (AttackTime >= fAttackDuration) {
+    if (AttackTime >= fShootDuration) {
         AttackTime = 0.f;
         if (WalkTime == 0.f) State = ePlayerState::IDLE;
         else {
@@ -886,7 +891,6 @@ void Player::UpdateDead(_float dt) {
     auto transform = GetComponent<TransformComponent>();
 
     //Fix Dead State
-    const float fDeadDuration = 1.0f;
     if (DeadTime >= fDeadDuration) {
         DeadTime = fDeadDuration;
         State = ePlayerState::DEAD;

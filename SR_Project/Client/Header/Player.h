@@ -21,6 +21,8 @@ public:
         RARM,
         LLEG,
         RLEG,
+        RHAND,
+        LHAND
     };
     enum class ePlayerAttackType : int
     {
@@ -92,6 +94,7 @@ private:
     float GetStringAngleZ(const string& leftRight = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
 private:
     ePlayerState State = ePlayerState::IDLE;
+    ePlayerAttackType attackType = ePlayerAttackType::FIRST;
     float IdleTime = 0.f;
     float WalkTime = 0.f;
     float RollTime = 0.f;
@@ -99,12 +102,19 @@ private:
     float DeadTime = 0.f;
     float comboAttackableTime = 0.f;
 
+    const float walkSwingSpeed = 10.f;
+    const float fRollDuration = 0.5f;
+    const float fAttackDuration = 0.3f * 10;
+    const float fShootDuration = 0.6f;
+    const float fDeadDuration = 1.0f;
+    const float comboInputLimit = 0.2f;
+
     std::unordered_map<std::string, _vec3> StartRotations;
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 destinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
 
-    float swordAttackRange = 4.f;
+    const float swordAttackRange = 4.f;
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
     
@@ -116,6 +126,4 @@ private:
         }
     };
     std::unordered_map<std::pair<int,int>,PhaseRotation, PairHash> PhaseRotations;
-
-    ePlayerAttackType attackType = ePlayerAttackType::FIRST;
 };
