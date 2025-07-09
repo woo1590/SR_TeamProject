@@ -52,7 +52,7 @@
 #include <json.hpp>
 
 #ifdef _DEBUG
-#define USE_IMGUI
+// #define USE_IMGUI
 #endif
 
 #ifndef USE_IMGUI

@@ -58,6 +58,8 @@ void EditScene::Load()
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
 
+	Terrain = new TerrainCreater;
+
 	auto cube = CubeMesh::Create();
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 	
@@ -145,10 +147,6 @@ void EditScene::ImGui_SaveLoad()
 	{
 		staticBlocks.clear();
 		BlockMgr->LoadChunk(load);
-
-		// auto chunks = ChunkMgr->GetChunks();
-		// for (auto& [key, chunk] : chunks)
-		// 	chunk->BuildChunkFace();
 	}
 
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
@@ -158,6 +156,15 @@ void EditScene::ImGui_SaveLoad()
 
 	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
 	{
+		staticBlocks.clear();
+		dynamicBlocks.clear();
+
+		ObjectMgr->ClearList(ObjectType::StaticBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+
+		TerrainCreater Terrain;
+		Terrain.Free();
+
 		CreateTerrain("heightMap");
 		PlaceTerrainBlocks("heightMap");
 		
@@ -542,8 +549,9 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 
 void EditScene::CreateTerrain(const std::string& filename)
 {
-	Terrain->CreateHeightmap(WidthX, WidthZ, Scale);
-	Terrain->SaveHeightmapAsImage(filename);
+	TerrainCreater Terrain;
+	Terrain.CreateHeightmap(WidthX, WidthZ, Scale);
+	Terrain.SaveHeightmapAsImage(filename);
 }
 
 void EditScene::PlaceTerrainBlocks(const std::string& filename)
@@ -554,11 +562,7 @@ void EditScene::PlaceTerrainBlocks(const std::string& filename)
 
 	for (const auto& block : Terrain->GetBlocks())
 	{
-		_vec3 position = block.Pos * 2.f;
-		staticBlockUsage = block.Usage;
-		staticBlockType = block.Type;
-		staticBlockAxis = block.Axis;
-		staticBlockRot = block.Rot;
+		_vec3 position = block.Pos;
 		Place(position);
 	}
 }
@@ -643,14 +647,17 @@ void EditScene::Place(_vec3& position)
 
 		auto newBlockObj = StaticBlock::Create(ObjectMgr, ObjectType::StaticBlock, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 		if (!newBlockObj) return;
-		position += newBlockObj->GetComponent<TransformComponent>()->GetPosition();
+		// position += newBlockObj->GetComponent<TransformComponent>()->GetPosition();
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
 		ObjectMgr->AddObject(ObjectType::StaticBlock, newBlockObj);
 		
-		int chunkX = int(position.x / CHUNK_SIZE);
-		int chunkY = int(position.z / CHUNK_SIZE);
-		
-		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkY);
+		int blockX = static_cast<int>(floorf(position.x / 2.f));
+		int blockZ = static_cast<int>(floorf(position.z / 2.f));
+
+		int chunkX = blockX / CHUNK_SIZE;
+		int chunkZ = blockZ / CHUNK_SIZE;
+
+		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkZ);
 		chunk->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 		// chunk->BuildChunkFace();
 

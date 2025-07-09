@@ -24,8 +24,8 @@ public:
     void Free() override;
 
 private:
-    int hWidth = 0;
-    int hHeight = 0;
+    int Wid = 0;
+    int Hei = 0;
 
     std::vector<unsigned char> heightMap;
     std::vector<SB> blocks;

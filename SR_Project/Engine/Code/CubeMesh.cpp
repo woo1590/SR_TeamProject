@@ -79,10 +79,11 @@ HRESULT CubeMesh::CreateBuffer()
 										D3DDECLUSAGE_NORMAL,   0 },
 		D3DDECL_END()
 	};
-	/*--------------------------------------------------*/
 
 	if (FAILED(Device->CreateVertexDeclaration(kDecl, &Decl)))
 		return E_FAIL;
+	/*--------------------------------------------------*/
+
 
 	for (auto& vertex : Vertices)
 	{
@@ -157,5 +158,6 @@ void CubeMesh::Free()
 {
 	Safe_Release(VB);
 	Safe_Release(IB);
+	Safe_Release(Decl);
 	Mesh::Free();
 }

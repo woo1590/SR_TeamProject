@@ -17,6 +17,7 @@ public:
     void Render()override;
 
     void SetMesh(const std::string & key);
+    void SetMesh(Mesh* mesh);
     void SetMaterial(const std::string & key);
 private:
     void Free()override;
