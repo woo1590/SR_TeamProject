@@ -568,6 +568,12 @@ Object* Player::GetBone(std::string boneName)
 {
     return Bones[boneName];
 }
+
+Player::ePlayerState Player::GetPlayerState()
+{
+    return State;
+}
+
 void Player::UpdateIdle(_float dt)
 {
     const float comboInputLimit = 0.5f;

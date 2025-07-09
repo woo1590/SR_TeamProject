@@ -91,6 +91,7 @@ void RedGolem::Attack(Object* target)
         RightAttackAnim.DelayTime = 0.f;
 
         AttackAnim.ElapsedTime = 0;
+        AttackAnim.IsRunning = true;
         AttackAnim.IsEnd = false;
     }
 }

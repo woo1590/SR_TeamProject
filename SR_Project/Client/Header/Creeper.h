@@ -1,5 +1,11 @@
 #pragma once
 #include "Monster.h"
+
+namespace Engine
+{
+    class Material;
+}
+
 class Creeper :
     public Monster
 {
@@ -33,5 +39,9 @@ protected:
 
 protected:
     void Free() override;
+
+private:
+    vector<Material*> materials;
+    bool emissiveOn = false;
 };
 

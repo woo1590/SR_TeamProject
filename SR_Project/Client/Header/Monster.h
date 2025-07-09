@@ -2,7 +2,7 @@
 #include "BaseCharacter.h"
 
 enum MonsterState { Idle, Walk, AttackReady, Attack, Hit, Die, };
-
+enum Phase {Ready, Action, Recover, };
 struct Animation
 {
     _float Start;       //start angle;
@@ -15,6 +15,8 @@ struct Animation
 
     _bool IsRunning = false;
     _bool IsEnd = false;        //animation end
+
+    Phase Phase;
 };
 
 class Monster :
@@ -68,6 +70,7 @@ protected:
     _float              Speed = 5.f;
     _float*             Distance = nullptr;
     _bool*              IsHit = nullptr;
+    _bool*              IsAttack = nullptr; 
 
     Animation           WalkAnim;
     Animation           AttackAnim;

@@ -1,5 +1,11 @@
 ﻿#pragma once
 #include "Object.h"
+
+namespace Engine
+{
+    class Material;
+}
+
 class BaseCharacter :
     public Object
 {
@@ -23,6 +29,7 @@ public:
 
 protected:
     void SetMaterial(const std::string& mtrl, string str = "Body", RENDER_ID id = RENDER_ID::Render_NonAlpha);
+    Material* GetMaterial(string str = "Body");
     void SetScale(_vec3 scale, string str = "Body");
     void SetScale(float scale);
     void SetPosition(_vec3 position, string str = "Body");

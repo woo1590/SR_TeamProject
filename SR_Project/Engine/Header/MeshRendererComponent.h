@@ -19,6 +19,8 @@ public:
     void SetMesh(const std::string & key);
     void SetMesh(Mesh* mesh);
     void SetMaterial(const std::string & key);
+    Material* GetMaterial();
+
 private:
     void Free()override;
 

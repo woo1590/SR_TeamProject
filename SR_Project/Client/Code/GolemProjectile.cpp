@@ -8,6 +8,8 @@
 #include "CollisionSystem.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "ResourceManager.h"
+#include "Material.h"
 
 GolemProjectile::GolemProjectile(ObjectManager* owner, ObjectType objType)
 	:Object(owner, objType)
@@ -39,6 +41,16 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     renderer->SetMesh("Cube_Mesh");
     renderer->SetMaterial("RedGolemLightblock_Mtrl");
+
+    auto mtrl = renderer->GetMaterial();
+    mtrl->SetInt("emissive", 1);
+
+    mtrl->SetInt("coloruse", 1);
+    mtrl->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+    mtrl->SetFloat("emissive", 1);
+    mtrl->SetVec3("emissivecolor", _vec3(1.0, 0.1, 0));
+    mtrl->SetFloat("emissivePow", 3);
+
     owner->AddObject(objType, this);
     return S_OK;
 }

@@ -36,5 +36,12 @@ protected:
 
 protected:
     void Free() override;
+
+private:
+    _vec3 HitPrevRotHead;
+    _vec3 HitPrevRotLArm;
+    _vec3 HitPrevRotRArm;
+
+    bool IsAttackDamage = false;
 };
 

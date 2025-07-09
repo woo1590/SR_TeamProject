@@ -83,6 +83,8 @@ void Zombie::Attack(Object* target)
         AttackAnim.ElapsedTime = 0;
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+        IsAttackDamage = false;
+        *IsAttack = true;
     }
 }
 
@@ -111,11 +113,12 @@ void Zombie::Hit(_vec3 dir, _float power)
         HitAnim.IsEnd = false;
         HitAnim.ElapsedTime = 0.f;
         HitAnim.DelayTime = 0.f;
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
-        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
-        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+        HitAnim.Phase = Action;
 
+        HitPrevRotHead = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
+        HitPrevRotLArm = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
+        HitPrevRotRArm = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
+        
         HitDir = dir;
         HitPower = power;
     }
@@ -132,15 +135,15 @@ void Zombie::InitTransform(ObjectType objType)
     auto transform = AddComponent<TransformComponent>();
 
     auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(3.f, 7.f, 2.5f));
+    collision->SetSize(_vec3(3.5f, 7.f, 3.5f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
-    transform->SetPosition(_vec3(-5.f, 150.f, -5.f));
+    transform->SetPosition(_vec3(5.f, 150.f, 5.f));
 }
 
 void Zombie::InitTree()
 {
-    //blackboard �߰�
+    //blackboard
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
@@ -148,6 +151,8 @@ void Zombie::InitTree()
     bb->SetValue("Distance", Distance);
     IsHit = new _bool(false);
     bb->SetValue("IsDamaged", IsHit);
+    IsAttack = new _bool(false);
+    bb->SetValue("IsAttack", IsAttack);
 
     //BT
     IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(new AttackNode());
@@ -275,6 +280,8 @@ void Zombie::PlayAttack(_float dt)
 
         SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
         SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
+
+        *IsAttack = false;
     }
 }
 
@@ -302,25 +309,84 @@ void Zombie::PlayHit(_float dt)
     _float t = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
 
     _float Angle = lerp(HitAnim.Start, HitAnim.End, t);
+    float phaseProgress = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
 
-    SetRotation({ -D3DXToRadian(Angle/3), 0.f, 0.f }, "Head");
-    SetRotation({ D3DXToRadian(-90.f - Angle  * 3), 0.f, -D3DXToRadian(Angle) }, "LArm");
-    SetRotation({ D3DXToRadian(-90.f - Angle * 3), 0.f, -D3DXToRadian(Angle) }, "RArm");
-    SetRotation({ 0.f, D3DXToRadian(Angle), D3DXToRadian(Angle/ 2) }, "RLeg");
-
-    PlayKnockBack(HitDir, HitPower, dt);
-    
-    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
+    switch (HitAnim.Phase)
     {
-        HitAnim.IsRunning = false;
-        HitAnim.IsEnd = true;
-        HitAnim.ElapsedTime = 0.f;
+    case Phase::Action:
+    {
+        _float currentBendEffectAmountDeg = lerp(HitAnim.Start, HitAnim.End, phaseProgress); // 도(degree) 단위
 
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
-        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
-        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
-        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
-        *IsHit = false;
+        _vec3 targetHeadRotRad;
+        targetHeadRotRad.x = HitPrevRotHead.x - D3DXToRadian(currentBendEffectAmountDeg / 3);
+        targetHeadRotRad.y = HitPrevRotHead.y;
+        targetHeadRotRad.z = HitPrevRotHead.z;
+        SetRotation(targetHeadRotRad, "Head");
+
+        _vec3 targetLArmRotRad;
+        _vec3 targetRArmRotRad;
+
+        _float targetLArmXDeg = D3DXToDegree(HitPrevRotLArm.x) - (currentBendEffectAmountDeg * 3);
+        _float targetRArmXDeg = D3DXToDegree(HitPrevRotRArm.x) - (currentBendEffectAmountDeg * 3);
+
+        targetLArmRotRad.x = D3DXToRadian(clamp(targetLArmXDeg, -180.f, D3DXToDegree(HitPrevRotLArm.x)));
+        targetRArmRotRad.x = D3DXToRadian(clamp(targetRArmXDeg, -180.f, D3DXToDegree(HitPrevRotRArm.x)));
+
+        targetLArmRotRad.y = HitPrevRotLArm.y;
+        targetRArmRotRad.y = HitPrevRotRArm.y;
+
+        targetLArmRotRad.z = HitPrevRotLArm.z - D3DXToRadian(currentBendEffectAmountDeg); // Z축도 - 방향으로 꺾인다고 가정
+        targetRArmRotRad.z = HitPrevRotRArm.z - D3DXToRadian(currentBendEffectAmountDeg);
+
+        SetRotation(targetLArmRotRad, "LArm");
+        SetRotation(targetRArmRotRad, "RArm");
+
+        PlayKnockBack(HitDir, HitPower, dt);
+
+        if (HitAnim.ElapsedTime >= HitAnim.TotalTime)
+        {
+            HitAnim.Phase = Phase::Recover;
+            HitAnim.ElapsedTime = 0.f;
+            HitAnim.TotalTime = 0.3f;
+        }
+        break;
+    }
+    case Phase::Recover:
+    {
+        _vec3 currentRecoverHeadRot = Bones["Head"]->GetComponent<TransformComponent>()->GetRotate();
+        _vec3 currentRecoverLArmRot = Bones["LArm"]->GetComponent<TransformComponent>()->GetRotate();
+        _vec3 currentRecoverRArmRot = Bones["RArm"]->GetComponent<TransformComponent>()->GetRotate();
+     
+        _vec3 defaultArmRot = { D3DXToRadian(-90.f), 0.f, 0.f }; 
+
+        _vec3 defaultOtherRot = { 0.f, 0.f, 0.f }; 
+        SetRotation({ lerp(currentRecoverLArmRot.x, defaultArmRot.x, phaseProgress),
+                      lerp(currentRecoverLArmRot.y, defaultArmRot.y, phaseProgress),
+                      lerp(currentRecoverLArmRot.z, defaultArmRot.z, phaseProgress) }, "LArm");
+        SetRotation({ lerp(currentRecoverRArmRot.x, defaultArmRot.x, phaseProgress),
+                      lerp(currentRecoverRArmRot.y, defaultArmRot.y, phaseProgress),
+                      lerp(currentRecoverRArmRot.z, defaultArmRot.z, phaseProgress) }, "RArm");
+
+        SetRotation({ lerp(currentRecoverHeadRot.x, defaultOtherRot.x, phaseProgress),
+                      lerp(currentRecoverHeadRot.y, defaultOtherRot.y, phaseProgress),
+                      lerp(currentRecoverHeadRot.z, defaultOtherRot.z, phaseProgress) }, "Head");
+
+        if (HitAnim.ElapsedTime >= HitAnim.TotalTime)
+        {
+            HitAnim.IsRunning = false;
+            HitAnim.IsEnd = true;
+            HitAnim.ElapsedTime = 0.f;
+            HitAnim.Phase = Phase::Action;
+
+            SetRotation({ 0.f, 0.f, 0.f }, "Head");
+            SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
+            SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+            SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+            SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+            *IsHit = false;
+        }
+    }
+        break;
     }
 }
 
@@ -335,16 +401,14 @@ void Zombie::OnCollisionStay(Object* other)
     {
         auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
         auto playertransform = other->GetComponent<TransformComponent>();
-       /* if (State == MonsterState::Attack)
-        {*/
-            //playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
-            Stat->SetHp(Stat->GetInfo().curHp - Stat->GetInfo().power);
-            *IsHit = true;
-            Hit(transform->GetPosition() - playertransform->GetPosition(), playerStat->GetInfo().power);
-            //static_cast<Player*>(other)->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
-
-            //collision->ResolveAABBColiision(other);
-        //}
+        
+        auto player = static_cast<Player*>(other);
+        if (State == MonsterState::Attack && !IsAttackDamage)
+        {
+            playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
+            player->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
+            IsAttackDamage = true;
+        }
     }
 }
 

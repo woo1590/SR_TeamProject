@@ -141,6 +141,15 @@ void BaseCharacter::SetMaterial(const std::string& mtrl, string str, RENDER_ID i
     }
 }
 
+Material* BaseCharacter::GetMaterial(string str)
+{
+    if (Bones[str] != nullptr)
+    {
+        return Bones[str]->GetComponent<MeshRenderer>()->GetMaterial();
+    }
+    return nullptr;
+}
+
 void BaseCharacter::SetScale(_vec3 scale, string str)
 {
     if (Bones[str] != nullptr)

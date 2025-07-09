@@ -23,6 +23,7 @@ BTStatus IsTargetInAttackRange::Tick(float dt, BlackBoard* bb)
 
 	Object* self = static_cast<Object*>(bb->GetValue("Self"));
 	Object* target = static_cast<Object*>(bb->GetValue("Target"));
+	_bool* IsAttack = static_cast<_bool*>(bb->GetValue("IsAttack"));
 
 	if (self == nullptr || target == nullptr) return BTStatus::Failure;
 
@@ -30,6 +31,9 @@ BTStatus IsTargetInAttackRange::Tick(float dt, BlackBoard* bb)
 	_vec3 SelfPos = self->GetComponent<TransformComponent>()->GetPosition();
 
 	_vec3 Axis = TargetPos - SelfPos;
+
+	if (IsAttack != nullptr && *IsAttack == true)
+		return Child->Tick(dt, bb);
 
 	if (D3DXVec3Length(&Axis) < *(static_cast<float*>(bb->GetValue("Distance"))))
 		return Child->Tick(dt, bb);

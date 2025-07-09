@@ -15,6 +15,7 @@
 #include "IsAlive.h"
 #include "Rotate.h"
 #include "Die.h"
+#include "Player.h"
 
 Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -96,6 +97,8 @@ void Skeleton::Attack(Object* target)
         SetPosition(_vec3(9.f * Scale, 5.f * Scale, 5.f * Scale), "RArm");
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+
+        *IsAttack = true;
     }
 }
 
@@ -133,7 +136,7 @@ void Skeleton::InitTransform(ObjectType objType)
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
-    transform->SetPosition(_vec3(30.f, 100.f, 40.f));
+    transform->SetPosition(_vec3(5, 100.f, 5));
     SetMaterial("SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial("SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
     SetMaterial("SkeletonBone_Mtrl", "LArm");
@@ -187,6 +190,8 @@ void Skeleton::InitTree()
     bb->SetValue("Distance", Distance);
     IsHit = new _bool(false);
     bb->SetValue("IsDamaged", IsHit);
+    IsAttack = new _bool(false);
+    bb->SetValue("IsAttack", IsAttack);
 
     SequenceNode* rotateThenAttack = new SequenceNode();
     rotateThenAttack->AddChild(new RotateNode());
@@ -218,6 +223,7 @@ void Skeleton::InitAnimation()
     AttackAnim.TotalTime = 1.5f;
     AttackAnim.ElapsedTime = 0.f;
     AttackAnim.DelayTime = 0.f;
+    AttackAnim.Phase = Ready;
 
     //Hit
     HitAnim.Start = 0;
@@ -225,6 +231,7 @@ void Skeleton::InitAnimation()
     HitAnim.ElapsedTime = 0.f;
     HitAnim.TotalTime = 0.3f;
     HitAnim.DelayTime = 0.f;
+    HitAnim.Phase = Ready;
 
     //Die
     DieAnim.Start = 0;                  //start angle
@@ -248,7 +255,6 @@ void Skeleton::PlayAnimation(_float dt)
         PlayAttack(dt);
         break;
     case MonsterState::Hit:
-        if (!HitAnim.IsRunning) HitAnim.IsRunning = true;
         PlayHit(dt);
         break;
     case MonsterState::Die:
@@ -281,32 +287,82 @@ void Skeleton::PlayAttack(_float dt)
 
     AttackAnim.ElapsedTime += dt;
 
-    float t = clamp(AttackAnim.ElapsedTime / AttackAnim.TotalTime, 0.f, 1.f);
-    float angle = sinf(t * D3DX_PI); 
-
-    SetRotation({ D3DXToRadian(-90.f), D3DXToRadian(-10.f), D3DXToRadian(0.f) }, "LArm");
-    SetRotation({ D3DXToRadian(-10.f), 0.f, 0.f }, "LHand");
-
-    float pullAngle = lerp(0.f, D3DXToRadian(-120.f), t); 
-    SetRotation({ D3DXToRadian(-20.f), D3DXToRadian(0.f), 0.f }, "RArm"); 
-    SetPosition(_vec3(9.f * Scale, 5.f * Scale, 5.f * Scale - 0.5f * t),"RArm");
-    SetRotation({ pullAngle, 0.f, 0.f }, "RHand"); 
-
-    SetRotation({ D3DXToRadian(angle * 5.f), 0.f, 0.f }, "Head");
-
-    if (AttackAnim.ElapsedTime > AttackAnim.TotalTime)
+    float phaseProgress = clamp(AttackAnim.ElapsedTime / AttackAnim.TotalTime, 0.f, 1.f);
+    switch (AttackAnim.Phase)
     {
-        AttackAnim.IsRunning = false;
-        AttackAnim.IsEnd = true;
-        AttackAnim.ElapsedTime = 0.f;
-        AttackAnim.DelayTime = 1.5f;
+    case Phase::Ready:
+    {
+        SetRotation({ lerp(0.f, D3DXToRadian(-90.f), phaseProgress), lerp(0.f, D3DXToRadian(-10.f), phaseProgress), 0.f }, "LArm");
+        SetRotation({ lerp(0.f, D3DXToRadian(-10.f), phaseProgress), 0.f, 0.f }, "LHand");
 
-        SetRotation({ 0.f, 0.f, 0.f }, "Head");
-        SetRotation({ 0.f, 0.f, 0.f }, "LHand");
-        SetRotation({ 0.f, 0.f, 0.f }, "RHand");
-        SetRotation({ 0.f, 0.f, 0.f }, "LArm");
-        SetRotation({ 0.f, 0.f, 0.f }, "RArm");
-        SetPosition(_vec3(9.f * Scale, 5.f * Scale, 0.f), "RArm");
+        SetRotation({ lerp(0.f, D3DXToRadian(-20.f), phaseProgress), 0.f, 0.f }, "RArm");
+        SetPosition(_vec3(9.f * Scale, 5.f * Scale, lerp(0.f, 5.f * Scale, phaseProgress)), "RArm");
+        SetRotation({ lerp(0.f, 0.f, phaseProgress), 0.f, 0.f }, "RHand"); 
+
+        SetRotation({ lerp(0.f, 0.f, phaseProgress), 0.f, 0.f }, "Head"); 
+
+        if (AttackAnim.ElapsedTime >= AttackAnim.TotalTime)
+        {
+            AttackAnim.Phase = Phase::Action;
+            AttackAnim.ElapsedTime = 0.f;
+            AttackAnim.TotalTime = 1.5f;
+        }
+        break;
+    }
+    case Phase::Action:
+    {
+        float t = clamp(AttackAnim.ElapsedTime / AttackAnim.TotalTime, 0.f, 1.f);
+        float angle = sinf(t * D3DX_PI);
+
+        SetRotation({ D3DXToRadian(-90.f), D3DXToRadian(-10.f), D3DXToRadian(0.f) }, "LArm");
+        SetRotation({ D3DXToRadian(-10.f), 0.f, 0.f }, "LHand");
+
+        float pullAngle = lerp(0.f, D3DXToRadian(-120.f), t);
+        SetRotation({ D3DXToRadian(-20.f), D3DXToRadian(0.f), 0.f }, "RArm");
+        SetPosition(_vec3(9.f * Scale, 5.f * Scale, 5.f * Scale - 0.5f * t), "RArm");
+        SetRotation({ pullAngle, 0.f, 0.f }, "RHand");
+
+        SetRotation({ D3DXToRadian(angle * 5.f), 0.f, 0.f }, "Head");
+
+        if (AttackAnim.ElapsedTime >= AttackAnim.TotalTime)
+        {
+            AttackAnim.Phase = Phase::Recover;
+            AttackAnim.ElapsedTime = 0.f;
+            AttackAnim.TotalTime = 0.5f; 
+            AttackAnim.DelayTime = 0.2f;
+        }
+        break;
+    }
+    case Phase::Recover:
+    {
+        SetRotation({ lerp(D3DXToRadian(-90.f), 0.f, phaseProgress), lerp(D3DXToRadian(-10.f), 0.f, phaseProgress), 0.f }, "LArm");
+        SetRotation({ lerp(D3DXToRadian(-10.f), 0.f, phaseProgress), 0.f, 0.f }, "LHand");
+
+        SetRotation({ lerp(D3DXToRadian(-20.f), 0.f, phaseProgress), 0.f, 0.f }, "RArm");
+        SetPosition(_vec3(9.f * Scale, 5.f * Scale, lerp(5.f * Scale - 0.5f, 0.f, phaseProgress)), "RArm");
+        SetRotation({ lerp(D3DXToRadian(-120.f), 0.f, phaseProgress), 0.f, 0.f }, "RHand");
+
+        SetRotation({ lerp(0.f, 0.f, phaseProgress), 0.f, 0.f }, "Head");
+
+        if (AttackAnim.ElapsedTime >= AttackAnim.TotalTime)
+        {
+            AttackAnim.IsRunning = false;
+            AttackAnim.IsEnd = true;
+            AttackAnim.ElapsedTime = 0.f;
+            AttackAnim.DelayTime = 1.5f; 
+            AttackAnim.Phase = Phase::Ready;
+
+            SetRotation({ 0.f, 0.f, 0.f }, "Head");
+            SetRotation({ 0.f, 0.f, 0.f }, "LHand");
+            SetRotation({ 0.f, 0.f, 0.f }, "RHand");
+            SetRotation({ 0.f, 0.f, 0.f }, "LArm");
+            SetRotation({ 0.f, 0.f, 0.f }, "RArm");
+            SetPosition(_vec3(9.f * Scale, 5.f * Scale, 0.f), "RArm");
+
+            *IsAttack = false;
+        }
+        break;
+    }
     }
 }
 
@@ -369,16 +425,18 @@ void Skeleton::OnCollisionStay(Object* other)
     {
         auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
         auto playertransform = other->GetComponent<TransformComponent>();
-        /* if (State == MonsterState::Attack)
-         {*/
-         //playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
-        Stat->SetHp(Stat->GetInfo().curHp - Stat->GetInfo().power);
-        *IsHit = true;
-        Hit(transform->GetPosition() - playertransform->GetPosition(), playerStat->GetInfo().power);
-        //static_cast<Player*>(other)->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
+        if (objType == ObjectType::Player)
+        {
+            auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
+            auto playertransform = other->GetComponent<TransformComponent>();
 
-        //collision->ResolveAABBColiision(other);
-    //}
+            auto player = static_cast<Player*>(other);
+            if (State == MonsterState::Attack)
+            {
+                playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
+                player->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
+            }
+        }
     }
 }
 

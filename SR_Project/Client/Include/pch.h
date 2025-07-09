@@ -20,6 +20,7 @@
 #include <cmath>
 #include <array>
 
+#include <ranges>
 #include "Resource.h"
 
 

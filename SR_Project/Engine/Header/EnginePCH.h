@@ -19,7 +19,7 @@
 #include <typeindex>
 #include <fstream>
 #include <tchar.h>
-
+#include <ranges>
 //stl
 #include <vector>
 #include <list>
