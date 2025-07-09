@@ -5,88 +5,95 @@
 #include "TransformCOmponent.h"
 #include "FontComponent.h"
 
-void TooltipManager::ShowWorldTooltip(const wstring& text, float x, float y)
+void TooltipManager::ShowTooltip(TooltipData& tip, const wstring& text, float x, float y, bool above, FontType fontType)
 {
-	if (!worldTooltip) return;
+	if (!tip.obj) return;
 
-	auto transform = worldTooltip->GetComponent<TransformComponent>();
-	auto font      = worldTooltip->GetComponent<FontComponent>();
-	auto renderer  = worldTooltip->GetComponent<UIRenderer>();
+	auto transform = tip.obj->GetComponent<TransformComponent>();
+	auto font = tip.obj->GetComponent<FontComponent>();
+	auto renderer = tip.obj->GetComponent<UIRenderer>();
 
-	if (!transform || !font || !renderer) return; 
+	if (!transform || !font) return;
 
-	transform->SetPosition(x, y + 120.f);
+	float yOffset = above ? -30.f : +120.f;
+	transform->SetPosition(x, y + yOffset);
+
 	font->ClearText();
 
-	RECT rect = {(LONG)x - 150,(LONG)y + 100, (LONG)x + 150, (LONG)y + 150};
+	RECT rect = {
+		(LONG)x - 100,
+		(LONG)(y + yOffset - 20),
+		(LONG)x + 100,
+		(LONG)(y + yOffset + 10)
+	};
 
-	font->AddText(text, rect, D3DXCOLOR(1, 1, 1, 1), DT_CENTER, FontType::Title);
-
+	font->AddText(text, rect, Color::White, DT_CENTER, fontType);
 	font->SetVisible(true);
-	renderer->SetVisible(true);
-}
-
-void TooltipManager::HideWorldTooltip()
-{
-	if (!worldTooltip)return;
-	auto font = worldTooltip->GetComponent<FontComponent>();
-	auto renderer = worldTooltip->GetComponent<UIRenderer>();
-	
 	if (renderer)
-		renderer->SetVisible(false);
-	if (font)
-		font->SetVisible(false);
+		renderer->SetVisible(true);
+
+	tip.alpha = 0.f;
+	tip.fadingIn = true;
 }
 
 void TooltipManager::ShowInventoryTooltip(const wstring& text, float x, float y)
 {
-	if (!inventoryTooltip) return;
-
-	auto transform = inventoryTooltip->GetComponent<TransformComponent>();
-	auto font = inventoryTooltip->GetComponent<FontComponent>();
-	if (!transform || !font) return;
-
-	transform->SetPosition(x, y - 30.f);
-
-	font->ClearText();
-
-	RECT rect = {(LONG)x - 100, 
-		         (LONG)y - 60, 
-		         (LONG)x + 100, 
-		         (LONG)y - 30};
-	font->AddText(text, rect, Color::White, DT_CENTER, FontType::Large);
-	font->SetVisible(true);
-
-	invAlpha = 0.f;
-	invFadingIn = true;
+	ShowTooltip(invTip, text, x, y, true, FontType::Large
+	);
 }
 
-void TooltipManager::HideInventoryTooltip()
+void TooltipManager::ShowWorldTooltip(const wstring& text, float x, float y)
 {
-	if (!inventoryTooltip) return;
-	
-	if (auto font = inventoryTooltip->GetComponent<FontComponent>())
+	ShowTooltip(worldTip, text, x, y, false, FontType::Title);
+}
+
+void TooltipManager::HideTooltip(TooltipData& tip)
+{
+	if (!tip.obj) return;
+
+	auto font = tip.obj->GetComponent<FontComponent>();
+	auto renderer = tip.obj->GetComponent<UIRenderer>();
+
+	if (font)
 	{
 		font->SetVisible(false);
 		font->SetAlpha(1.f);
 	}
-	invAlpha = 0.f;
-	invFadingIn = false;
+	if (renderer)
+		renderer->SetVisible(false);
+
+	tip.alpha = 0.f;
+	tip.fadingIn = false;
+}
+
+void TooltipManager::HideInventoryTooltip()
+{
+	HideTooltip(invTip);
+}
+
+void TooltipManager::HideWorldTooltip()
+{
+	HideTooltip(worldTip);
 }
 
 void TooltipManager::Update(float dt)
 {
-	if (invFadingIn && inventoryTooltip)
-	{
-		auto font = inventoryTooltip->GetComponent<FontComponent>();
-		if (!font) return;
-
-		invAlpha += dt * 2.f;
-		if (invAlpha >= 1.f)
+	auto fadeUpdate = [dt](TooltipData& tip)
 		{
-			invAlpha = 1.f;
-			invFadingIn = false;
-		}
-		font->SetAlpha(invAlpha);
-	}
+			if (!tip.fadingIn || !tip.obj) return;
+
+			auto font = tip.obj->GetComponent<FontComponent>();
+			if (!font) return;
+
+			tip.alpha += dt * 2.f;
+			if (tip.alpha >= 1.f)
+			{
+				tip.alpha = 1.f;
+				tip.fadingIn = false;
+			}
+			font->SetAlpha(tip.alpha);
+		};
+	
+	fadeUpdate(invTip);
+	fadeUpdate(worldTip);
 }
