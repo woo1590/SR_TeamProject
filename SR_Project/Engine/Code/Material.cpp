@@ -114,7 +114,7 @@ Shader* Material::GetShader() const
     return shader;
 }
 
-Material* Material::CloneInstance()
+Material* Material::Clone()
 {
     Material* Instance = Material::Create();
 
