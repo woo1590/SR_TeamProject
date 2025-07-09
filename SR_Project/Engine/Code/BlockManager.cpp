@@ -32,6 +32,7 @@ void BlockManager::LoadTexture()
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 
 	resource->LoadMesh("Cube_Mesh", cube);
+	resource->LoadShader("../../Client/Resource/Shader/ChunkShader.fx","ChunkShader");
 	resource->LoadShader("../../Client/Resource/Shader/BasicShader.fx","BasicShader");
 	resource->LoadMaterial("../../Client/Resource/Material/Blocks.json");
 }

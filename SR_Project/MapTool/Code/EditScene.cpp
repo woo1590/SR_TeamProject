@@ -149,8 +149,6 @@ void EditScene::ImGui_SaveLoad()
 		BlockMgr->LoadChunk(load);
 
 		auto chunks = ChunkMgr->GetChunks();
-		for (auto& [key, chunk] : chunks)
-			chunk->BuildChunkFace();
 	}
 
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
