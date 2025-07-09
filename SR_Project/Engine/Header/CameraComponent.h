@@ -32,7 +32,7 @@ private:
     _float FOV = D3DXToRadian(60.f);
     _float Aspect = WINCX / WINCY;
     _float MinZ = 0.1f;
-    _float MaxZ = 1000.f;
+    _float MaxZ = 100.f;
 
     TransformComponent* Target = nullptr;
 };
