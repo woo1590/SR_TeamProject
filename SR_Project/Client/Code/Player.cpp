@@ -220,6 +220,7 @@ void Player::SaveStartRotation()
     StartRotations["LLeg"] = Bones["LLeg"]->GetComponent<TransformComponent>()->GetRotate();
     StartRotations["RLeg"] = Bones["RLeg"]->GetComponent<TransformComponent>()->GetRotate();
 
+    if(Bones["RHand"])
         StartRotations["RHand"] = Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate();
     if(Bones["LHand"])
         StartRotations["LHand"] = Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate();
