@@ -303,7 +303,7 @@
     </Filter>
     <Filter Include="02. Object\Monster\BTNode\Decorator\Boss">
       <UniqueIdentifier>{f09359cc-229b-419e-a55b-5dfb052caba8}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\Panel\QuestPanel">
       <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
     </Filter>
@@ -604,7 +604,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\BossChase.h">
       <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\WorldMapPanel.h">
       <Filter>02. Object\UIObj\Panel\WorldMapPanel</Filter>
     </ClInclude>
@@ -899,7 +899,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossChase.cpp">
       <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\WorldMapPanel.cpp">
       <Filter>02. Object\UIObj\Panel\WorldMapPanel</Filter>
     </ClCompile>
@@ -920,6 +920,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\WorldMapTextPanel.cpp">
       <Filter>02. Object\UIObj\Panel\WorldMapTextPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="notepad.cpp">
+      <Filter>02. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
