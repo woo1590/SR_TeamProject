@@ -363,7 +363,7 @@ void Player::SetUpLastAttackPhaseRotations() {
         StartRotations["RArm"],
         { 60.f, 0.f, -20.f },
         { 30.f, 0.f, -10.f },
-        { -60.f, 0.f, -10.f }
+        { -90.f, 0.f, -10.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
 
@@ -961,7 +961,11 @@ void Player::CheckDead()
         SaveStartRotation();
     }
 }
-_vec3 Player::MatrixToEulerAngles(const _matrix& mat) 
+Player::ePlayerState Player::GetPlayerState()
+{
+    return State;
+}
+_vec3 Player::MatrixToEulerAngles(const _matrix& mat)
 {
     _vec3 vAngles = { 0.f, 0.f, 0.f };
     vAngles.x = asinf(-mat._32); // Pitch (X rot)
