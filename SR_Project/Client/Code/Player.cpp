@@ -967,10 +967,7 @@ void Player::CheckDead()
         SaveStartRotation();
     }
 }
-Player::ePlayerState Player::GetPlayerState()
-{
-    return State;
-}
+
 _vec3 Player::MatrixToEulerAngles(const _matrix& mat)
 {
     _vec3 vAngles = { 0.f, 0.f, 0.f };
