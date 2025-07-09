@@ -79,26 +79,6 @@ void Chunk::InitializeAirBlocks()
     }
 }
 
-void Chunk::InitializeAirBlocks()
-{
-    for (int x = 0; x < CHUNK_SIZE; ++x)
-    {
-        for (int y = 0; y < CHUNK_HEIGHT; ++y)
-        {
-            for (int z = 0; z < CHUNK_SIZE; ++z)
-            {
-                Blocks[x][y][z].Type = StaticBlockType::Air;
-                Blocks[x][y][z].Pos = _vec3
-                (
-                    static_cast<float>(x + ChunkX * CHUNK_SIZE),
-                    static_cast<float>(y),
-                    static_cast<float>(z + ChunkZ * CHUNK_SIZE)
-                );
-            }
-        }
-    }
-}
-
 void Chunk::BuildChunkFace()
 {
     std::vector<VTXTEX> vertices;
@@ -225,11 +205,15 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
         if (localX < 0 || localX >= CHUNK_SIZE || localY < 0 || localY >= CHUNK_HEIGHT || localZ < 0 || localZ >= CHUNK_SIZE) continue;
 
         Blocks[localX][localY][localZ] = block;
+
+        auto collisionblock = StaticBlock::Create(owner, ObjectType::StaticBlock, Dirt, sAEnd, sREnd, Basic);
+        owner->AddObject(ObjectType::StaticBlock, collisionblock);
+        collisionblock->GetComponent<TransformComponent>()->SetPosition(block.Pos.x, 0.f, block.Pos.z);
     }
 }
 
 void Chunk::Free()
 {
     memset(Blocks, 0, sizeof(Blocks));
-    Safe_Release(Mesh);
+    Safe_Release(mesh);
 }
