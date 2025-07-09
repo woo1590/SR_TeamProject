@@ -4,7 +4,8 @@ class Item :
     public Object
 {
 public:
-    enum class ItemType {
+    enum class ItemType : int
+    {
         ITEM_SWORD,
         ITEM_BOW
     };

@@ -21,6 +21,8 @@ public:
         RARM,
         LLEG,
         RLEG,
+        LHAND,
+        RHAND
     };
     enum class ePlayerAttackType : int
     {
@@ -39,6 +41,13 @@ public:
         PhaseRotation(const vector<_vec3>& vecRot, const vector<float>& vecPhase)
             : destinations(vecRot), phaseVec(vecPhase) 
         {
+        }
+    };
+    struct PairHash
+    {
+        size_t operator()(const pair<int, int>& pr) const
+        {
+            return hash<int>()(pr.first) ^ (hash<int>()(pr.second) << 1);
         }
     };
 public:
@@ -90,14 +99,29 @@ private:
     PhaseRotation& GetPhaseRotations(const ePlayerState& state, const ePlayerBone& bone);
     float GetStringAngleX(const string& frontBack = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
     float GetStringAngleZ(const string& leftRight = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
+    float GetStringAngleY(const string& leftRight = "", const string& frontBack = "", bool clockwise = true, float offset = 0.f);
 private:
     ePlayerState State = ePlayerState::IDLE;
+    ePlayerAttackType attackType = ePlayerAttackType::FIRST;
+
     float IdleTime = 0.f;
+    float IdleSmoothingSpeed = 5.f;
+
     float WalkTime = 0.f;
+    const float walkSwingSpeed = 10.f;
+
     float RollTime = 0.f;
+    const float fRollDuration = 0.5f;
+
     float AttackTime = 0.f;
+    const float fAttackDuration = 0.3f * 20;
+    const float ShootDuration = 0.6f;
+
     float DeadTime = 0.f;
+    const float fDeadDuration = 1.0f;
+
     float comboAttackableTime = 0.f;
+    const float comboInputLimit = 0.3f;
 
     std::unordered_map<std::string, _vec3> StartRotations;
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
@@ -107,15 +131,7 @@ private:
     float swordAttackRange = 4.f;
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
-    
-    struct PairHash 
-    {
-        size_t operator()(const pair<int, int>& pr) const 
-        {
-            return hash<int>()(pr.first) ^ (hash<int>()(pr.second) << 1);
-        }
-    };
-    std::unordered_map<std::pair<int,int>,PhaseRotation, PairHash> PhaseRotations;
 
-    ePlayerAttackType attackType = ePlayerAttackType::FIRST;
+    std::unordered_map<std::pair<int, int>, PhaseRotation, PairHash> PhaseRotations;
+    std::unordered_map<std::string, _vec3> itemBaseRotOffset;
 };
