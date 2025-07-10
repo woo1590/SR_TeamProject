@@ -81,15 +81,31 @@ void EditScene::Update(float dt)
 	// 좌&우클릭에 따른 블럭 생성&제거
 	_vec3 rayOrigin, rayDir;
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
-	if (Input->IsKeyPressed(LBUTTON))
+	if (isDown)
 	{
-		MakePickingRay(rayOrigin, rayDir);
-		OnLeftClick(rayOrigin, rayDir);
+		if (Input->IsKeyDown(LBUTTON))
+		{
+			MakePickingRay(rayOrigin, rayDir);
+			OnLeftClick(rayOrigin, rayDir);
+		}
+		if (Input->IsKeyDown(RBUTTON))
+		{
+			MakePickingRay(rayOrigin, rayDir);
+			OnRightClick(rayOrigin, rayDir);
+		}
 	}
-	if (Input->IsKeyPressed(RBUTTON))
+	else
 	{
-		MakePickingRay(rayOrigin, rayDir);
-		OnRightClick(rayOrigin, rayDir);
+		if (Input->IsKeyPressed(LBUTTON))
+		{
+			MakePickingRay(rayOrigin, rayDir);
+			OnLeftClick(rayOrigin, rayDir);
+		}
+		if (Input->IsKeyPressed(RBUTTON))
+		{
+			MakePickingRay(rayOrigin, rayDir);
+			OnRightClick(rayOrigin, rayDir);
+		}
 	}
 }
 
@@ -103,6 +119,7 @@ void EditScene::ImGui_Main()
 {
 	ImGui::SetNextWindowPos({ 0.f, 0.f });
 	ImGui::Begin("==== MineCraft Dungeon Map Editor ====", NULL, 0);
+	ImGui_Info();
 	ImGui_SaveLoad();
 	ImGui_SetBlockType();
 	ImGui_SetBlockUsage();
@@ -115,11 +132,17 @@ void EditScene::ImGui_Main()
 	ImGui::End();
 }
 
-void EditScene::ImGui_SaveLoad()
+void EditScene::ImGui_Info()
 {
+	static bool isChecked(false);
+	if (ImGui::Checkbox(" : MOUSE DOWN", &isChecked)) isDown = isChecked;
+
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
+}
 
+void EditScene::ImGui_SaveLoad()
+{
 	// 청크 저장하기
 	static char save[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE", save, sizeof(save)); ImGui::SameLine();

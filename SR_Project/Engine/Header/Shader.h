@@ -22,7 +22,7 @@ public:
     void SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 tex);
 
     
-
+    Shader* Clone();
 private:
     void Free()override {}
 

@@ -84,6 +84,7 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
             unsigned char heightValue = heightMap[mapZ * Wid + mapX];
             int blockHeight = (heightValue * terY) / 255;
 
+            int topY(-1);
             for (int y = 0; y < terY; ++y)
             {
                 int index = GetIndex(x, y, z);
@@ -94,10 +95,20 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
                 block.Rot = StaticBlockRot::sREnd;
                 block.Usage = StaticBlockUsage::Basic;
 
-                if (y < blockHeight) block.Type = GetBlockTypeByHeight(y, terY);
+                if (y < blockHeight)
+                {
+                    topY = y;
+                    block.Type = GetBlockTypeByHeight(y, terY);
+                }
                 else block.Type = StaticBlockType::Air;
 
                 blocks[index] = block;
+            }
+
+            if (topY != -1)
+            {
+                int topIndex = GetIndex(x, topY, z);
+                blocks[topIndex].Type = StaticBlockType::GrassDirt;
             }
         }
     }
@@ -106,9 +117,9 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
 {
     if (y <= 1) return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.4f) return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.9f) return StaticBlockType::Dirt;
-    else return StaticBlockType::GrassDirt;
+    else if (y < maxHeight * 0.2f) return StaticBlockType::Stone;
+    else if (y < maxHeight * 0.5f) return StaticBlockType::Dirt;
+    else return StaticBlockType::Dirt;
 }
 
 void TerrainCreater::Free()

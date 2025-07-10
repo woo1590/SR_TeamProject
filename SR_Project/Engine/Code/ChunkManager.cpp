@@ -12,7 +12,6 @@ ChunkManager::ChunkManager(Scene* owner) : owner(owner)
 
 ChunkManager::~ChunkManager()
 {
-    Free();
 }
 
 ChunkManager* ChunkManager::Create(Scene* owner)
@@ -151,7 +150,10 @@ Chunk* ChunkManager::GetChunk(int chunkX, int chunkZ)
 
 void ChunkManager::Free()
 {
-    for (auto& pair : worldChunks)
-        Safe_Release(pair.second);
-    worldChunks.clear();
+    // std::for_each(worldChunks.begin(), worldChunks.end(), [](auto& pair)
+    //     {
+    //         Safe_Delete(pair.second);
+    //     });
+    // 
+    // worldChunks.clear();
 }

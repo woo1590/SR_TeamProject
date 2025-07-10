@@ -29,7 +29,7 @@ public:
     // 공기와 이웃한 면만 추려내기
     void BuildChunkFace();
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir, const SB& sb);
-    void SetUV(const SB& sb);
+    void SetUV(const SB& sb, int faceDir);
 
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);

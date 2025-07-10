@@ -200,7 +200,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
         { 0.f, 0.f, -1.f },  // -Z (Back)
     };
 
-    SetUV(sb);
+    SetUV(sb, faceDir);
     int startIndex = static_cast<int>(vertices.size());
 
     for (int i = 0; i < 4; ++i)
@@ -221,48 +221,115 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     indices.push_back(startIndex + 3);
 }
 
-void Chunk::SetUV(const SB& sb)
+void Chunk::SetUV(const SB& sb, int faceDir)
 {
     switch (sb.Type)
     {
     case Dirt:
         TexUVs[0] = { 0.f, 0.f };
-        TexUVs[1] = { 0.f, 0.125f };
+        TexUVs[1] = { 0.125f, 0.f };
         TexUVs[2] = { 0.125f, 0.125f };
         TexUVs[3] = { 0.125f, 0.f };
         break;
     
     case WoodPlank:
         TexUVs[0] = { 0.25f, 0.25f };
-        TexUVs[1] = { 0.25f, 0.375f };
+        TexUVs[1] = { 0.375f, 0.25f };
         TexUVs[2] = { 0.375f, 0.375f };
-        TexUVs[3] = { 0.375f, 0.25f };
+        TexUVs[3] = { 0.25f, 0.375f };
         break;
 
     case Stone:
         TexUVs[0] = { 0.125f, 0.125f };
-        TexUVs[1] = { 0.125f, 0.25f };
+        TexUVs[1] = { 0.25f, 0.125f };
         TexUVs[2] = { 0.25f, 0.25f };
-        TexUVs[3] = { 0.25f, 0.125f };
+        TexUVs[3] = { 0.125f, 0.25f };
         break;
 
     case CobbleStone:
-    case SmoothStone: case StoneBrick: case MossyStoneBrick:
+        TexUVs[0] = { 0.f, 0.125f };
+        TexUVs[1] = { 0.125f, 0.125f };
+        TexUVs[2] = { 0.125f, 0.25f };
+        TexUVs[3] = { 0.f, 0.25f };
+        break;
+
+    case SmoothStone:
+        TexUVs[0] = { 0.25f, 0.125f };
+        TexUVs[1] = { 0.375f, 0.125f };
+        TexUVs[2] = { 0.375f, 0.25f };
+        TexUVs[3] = { 0.25f, 0.25f };
+        break;
+    
+    case StoneBrick:
+        TexUVs[0] = { 0.375f, 0.125f };
+        TexUVs[1] = { 0.5f, 0.125f };
+        TexUVs[2] = { 0.5f, 0.25f };
+        TexUVs[3] = { 0.375f, 0.25f };
+        break;
+    
+    case MossyStoneBrick:
+        TexUVs[0] = { 0.5f, 0.125f };
+        TexUVs[1] = { 0.625f, 0.125f };
+        TexUVs[2] = { 0.625f, 0.25f };
+        TexUVs[3] = { 0.5f, 0.25f };
         break;
 
     case GrassDirt:
-        switch (sb.Axis)
+        switch (faceDir)
         {
+        case Face_Top:
+            TexUVs[0] = { 0.25f, 0.f };
+            TexUVs[1] = { 0.375f, 0.f };
+            TexUVs[2] = { 0.375f, 0.125f };
+            TexUVs[3] = { 0.25f, 0.125f };
+            break;
+        
+        case Face_Bottom:
+            TexUVs[0] = { 0.f, 0.f };
+            TexUVs[1] = { 0.125f, 0.f };
+            TexUVs[2] = { 0.125f, 0.125f };
+            TexUVs[3] = { 0.f, 0.125f };
+            break;
 
+        default:
+            TexUVs[0] = { 0.125f, 0.f };
+            TexUVs[1] = { 0.25f, 0.f };
+            TexUVs[2] = { 0.25f, 0.125f };
+            TexUVs[3] = { 0.125f, 0.125f };
+            break;
         }
         break;
 
     case Wood:
+    {
+        bool isRingFace = false;
+        const float texSize = 0.125f;
+        const _vec2 ringTexStart = { 0.125f, 0.25f };
+        const _vec2 sideTexStart = { 0.0f, 0.25f };
+
         switch (sb.Axis)
         {
+        case sAX:
+            if (faceDir == Face_Left || faceDir == Face_Right) isRingFace = true;
+            break;
 
+        case sAY:
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isRingFace = true;
+            break;
+
+        case sAZ:
+            if (faceDir == Face_Front || faceDir == Face_Behind) isRingFace = true;
+            break;
         }
-        break;
+
+        _vec2 uv = isRingFace ? ringTexStart : sideTexStart;
+
+        TexUVs[0] = { uv.x, uv.y };
+        TexUVs[1] = { uv.x + texSize, uv.y };
+        TexUVs[2] = { uv.x + texSize, uv.y + texSize };
+        TexUVs[3] = { uv.x, uv.y + texSize };
+    }
+    break;
     }
 }
 
@@ -296,6 +363,6 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 
 void Chunk::Free()
 {
-    Safe_Release(mesh);
-    memset(Blocks, 0, sizeof(Blocks));
+    Safe_Delete(mesh);
+    Object::Free();
 }

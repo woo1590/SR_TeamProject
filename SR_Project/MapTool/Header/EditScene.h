@@ -27,6 +27,7 @@ private:
 
 #ifdef USE_IMGUI
     void ImGui_Main();
+    void ImGui_Info();
     void ImGui_SaveLoad();
     void ImGui_SetBlockUsage();
     void ImGui_SetBlockType();
@@ -61,6 +62,8 @@ private:
     void Free() override;
 
 private:
+    bool isDown = false;
+    
     // ================ 지형 생성 ================
     bool CreateTer = false;             // 지형 생성 여부
     int WidthX = 0;                     // 지형 생성할 때, X 길이
