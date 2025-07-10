@@ -202,8 +202,8 @@ void TestScene::Free()
 {
 	Safe_Release(ObjectMgr);
 	Safe_Release(CollisionSys);
-	Safe_Release(CameraMgr);
 	Safe_Release(PhysicsSys);
+	Safe_Release(CameraMgr);
 	Safe_Release(BlockMgr);
 	Safe_Release(Grid);
 	Safe_Release(uiMgr);

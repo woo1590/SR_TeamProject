@@ -29,6 +29,7 @@ public:
     HRESULT Ready_CollisionSystem();
     void Late_Update();
     void RegisterCollision(CollisionComponent* collision);
+    void UnRegisterCollision(CollisionComponent* collision);
 
     HitInfo Raycast(Ray ray);
 

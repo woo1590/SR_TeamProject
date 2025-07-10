@@ -99,6 +99,18 @@ void CollisionSystem::RegisterCollision(CollisionComponent* collision)
 	Collisions.push_back(collision);
 }
 
+void CollisionSystem::UnRegisterCollision(CollisionComponent* collision)
+{
+	for (auto iter = Collisions.begin(); iter != Collisions.end(); ++iter)
+	{
+		if ((*iter) == collision)
+		{
+			Collisions.erase(iter);
+			break;
+		}
+	}
+}
+
 HitInfo CollisionSystem::Raycast(Ray ray)
 {
 	HitInfo hit;

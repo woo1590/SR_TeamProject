@@ -87,10 +87,10 @@ void Arrow::Update(_float dt)
         transform->Translate(curPos - hitObjectPos);
         hitObjectPos = curPos;
 
-        //if (hitTime > arrowPersistTime) 
-        //{
-        //    SetDead();
-        //}
+        if (hitTime > arrowPersistTime) 
+        {
+            SetDead();
+        }
     }
 }
 

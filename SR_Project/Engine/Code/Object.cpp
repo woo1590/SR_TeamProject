@@ -1,9 +1,15 @@
 #include "EnginePCH.h"
 #include "Object.h"
+#include "Scene.h"
 #include "ObjectManager.h"
 #include "ObjectComponent.h"
 #include "EngineCore.h"
 #include "SceneManager.h"
+#include "PhysicsSystem.h"
+#include "CollisionSystem.h"
+
+#include "CollisionComponent.h"
+#include "PhysicsComponent.h"
 
 Object::Object(ObjectManager* owner, ObjectType objType)
 	:owner(owner),ObjType(objType)
@@ -63,6 +69,17 @@ ObjectManager* Object::GetOwner() const
 Scene* Object::GetScene() const
 {
 	return owner->GetOwner();
+}
+
+void Object::UnRegister()
+{
+	auto collision = GetComponent<CollisionComponent>();
+	if (collision)
+		GetScene()->GetCollisionSystem()->UnRegisterCollision(collision);
+
+	auto physics = GetComponent<PhysicsComponent>();
+	if (physics)
+		GetScene()->GetPhysicsStstem()->UnRegisterBody(physics);
 }
 
 void Object::Free()

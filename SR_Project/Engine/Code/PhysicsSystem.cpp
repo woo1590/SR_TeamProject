@@ -54,6 +54,18 @@ void PhysicsSystem::RegisterBody(PhysicsComponent* body)
 	DynamicBodies.push_back(body);
 }
 
+void PhysicsSystem::UnRegisterBody(PhysicsComponent* body)
+{
+	for (auto iter = DynamicBodies.begin(); iter != DynamicBodies.end(); ++iter)
+	{
+		if ((*iter) == body)
+		{
+			DynamicBodies.erase(iter);
+			break;
+		}
+	}
+}
+
 void PhysicsSystem::ApplyGravity(_float dt)
 {
 	for (auto& body : DynamicBodies)
