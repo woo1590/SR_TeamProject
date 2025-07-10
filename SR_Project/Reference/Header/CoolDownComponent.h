@@ -4,6 +4,8 @@
 
 BEGIN(Engine)
 
+class UIRenderer;
+
 class ENGINE_DLL CoolDownComponent : public ObjectComponent
 {
 private:
@@ -14,15 +16,17 @@ public:
 	static CoolDownComponent* Create(Object* owner);
 	HRESULT Ready_Component();
 
-	void Start(float _duration);
+	void Play();
 	void Update(float dt) override;
 
-	bool IsCooling() const { return isCooling; }
-
 private:
-	float duration = 0.f;
-	float elapsed = 0.f;
-	bool isCooling = false;
+	UIRenderer* whiteOverlay = nullptr;
+	UIRenderer* cooldownBar = nullptr;
+
+	float curTime = 0.f;
+	float maxTime = 0.5f;
+	bool playing = false;
+	
 };
 
 END

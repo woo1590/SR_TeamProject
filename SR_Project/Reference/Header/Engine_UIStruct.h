@@ -40,6 +40,8 @@ namespace Engine
 		int level;
 		int curHp = 100;
 		int maxHp = 100;
+		int curExp = 0;
+		int maxExp = 0;
 		int power = 10;
 		float attackDelay;
 		float speed = 5.f;

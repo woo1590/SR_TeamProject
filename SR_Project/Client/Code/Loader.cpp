@@ -180,6 +180,8 @@ HRESULT Loader::load_UIResources()
 		{L"loadingscene_lobby", eUI},
 		{L"worldmap_textpanel", eUI},
 		{L"pig",                eUI},
+		{L"enemy_hpbarfront",   eUI},
+		{L"enemy_hpbarback",    eUI},
 
 	};
 
@@ -260,6 +262,8 @@ HRESULT Loader::load_UIResources()
 		{L"loadingscene_lobby",  0},
 		{L"loading_stone",       1},
 		{L"worldmap_textpanel",  5},
+		{L"enemy_hpbarfront",    4},
+		{L"enemy_hpbarback",     3},
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

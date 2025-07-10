@@ -119,7 +119,8 @@ void UIRenderer::Render()
     D3DXMatrixTransformation2D(&newMatrix, &anchor, 0.f, &scale2D, &pivot2D, 0.f, nullptr);
 
     sprite->SetTransform(&newMatrix);
-    sprite->Draw(tex2D, &srcRect, &center, &worldPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+    int a = static_cast<int>(alpha * 255.f);
+    sprite->Draw(tex2D, &srcRect, &center, &worldPos, D3DCOLOR_ARGB(a, 255, 255, 255));
     sprite->SetTransform(&oldMatrix);
 }
 

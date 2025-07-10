@@ -162,7 +162,6 @@ void InventoryManager::ApplyFilter(optional<ItemType> type)
 
 				auto pos = slot->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
 				item->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
-
 				item->GetComponent<UIRenderer>()->SetVisible(visible);
 			}
 		};

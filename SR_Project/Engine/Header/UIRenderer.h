@@ -8,7 +8,8 @@ class ENGINE_DLL UIRenderer : public RendererComponent
 {
 public:
 	explicit UIRenderer(Object* owner)
-		:RendererComponent(owner, RENDER_ID::Render_UI) {}
+		:RendererComponent(owner, RENDER_ID::Render_UI) {
+	}
 
 public:
 	static UIRenderer* Create(Object* owner);
@@ -34,9 +35,11 @@ public:
 	LONG GetFullHeight() const { return fullHeight; }
 
 	void SetSrcRect(const RECT& rect);
-
 	void SetVisible(bool visible) { isVisible = visible; }
 	bool IsVisible() const { return isVisible; }
+
+	void SetAlpha(float a) { alpha = clamp(a, 0.f, 1.f); }
+	float GetAlpha() const { return alpha; }
 
 	void SetRenderType(UIRenderType type) { renderType = type; }
 	UIRenderType GetRenderType() const { return renderType; }
@@ -46,22 +49,22 @@ public:
 
 private:
 	void Free()override;
-	static UIRenderType curRenderType;
+
+private:
 	UIRenderType renderType = UIRenderType::MainGame;
+	UIPivot pivot = UIPivot::Center;
+	static UIRenderType curRenderType;
+	
 	LPDIRECT3DBASETEXTURE9 texture = nullptr;
 	IDirect3DTexture9* tex2D = nullptr;
 	RECT  srcRect{}; 
 	_vec3 center{}, pos{};
-
+	float alpha = 1.f;
 	float curRatio = 1.f, targetRatio = 1.f;
 	float lerpSpeed = 6.f;
-
 	LONG fullWidth = 0, fullHeight = 0;
 	int layerIdx = 0;
-
 	bool isVisible = true;
-
-	UIPivot pivot = UIPivot::Center;
 	_vec2 scale = {1.f, 1.f};
 };
 

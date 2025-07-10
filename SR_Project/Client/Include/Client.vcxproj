@@ -176,6 +176,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BossChase.h" />
+    <ClInclude Include="..\Header\BossHPBarFront.h" />
+    <ClInclude Include="..\Header\EnemyHPBarBack.h" />
+    <ClInclude Include="..\Header\EnemyHPBarFront.h" />
     <ClInclude Include="..\Header\FilterTooltip.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
@@ -275,6 +278,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BossChase.cpp" />
+    <ClCompile Include="..\Code\BossHPBarFront.cpp" />
+    <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
+    <ClCompile Include="..\Code\EnemyHPBarFront.cpp" />
     <ClCompile Include="..\Code\FilterTooltip.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />

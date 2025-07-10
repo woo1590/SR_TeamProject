@@ -44,6 +44,24 @@ void TransformComponent::SetPosition(_vec3 position)
 }
 
 
+void TransformComponent::SetWorldPosition(const _vec3 worldPos)
+{
+    if (!Parent)
+    {
+        Position = worldPos;
+        return;
+    }
+
+    _matrix parentWorld = Parent->GetWorldMatrix();
+    _matrix invParentWorld;
+    D3DXMatrixInverse(&invParentWorld, nullptr, &parentWorld);
+
+    _vec3 localPos;
+    D3DXVec3TransformCoord(&localPos, &worldPos, &invParentWorld);
+
+    Position = localPos;
+}
+
 void TransformComponent::SetScale(float cx, float cy, float cz)
 {
     SetScale(_vec3(cx, cy, cz));

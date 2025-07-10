@@ -7,8 +7,6 @@ class ObjectManager;
 class TooltipManager;
 END
 
-class Player;
-
 class UILoader
 {
 public:

@@ -79,6 +79,9 @@ void RenderSystem::Render()
 {
 	if (Camera)
 	{
+		cachedView = Camera->GetViewMatrix();
+		cachedProj = Camera->GetProjMatrix(); 
+
 		PriorityPass();
 		NonAlphaPass();
 		AlphaPass();
@@ -164,7 +167,8 @@ void RenderSystem::UIPass()
 	{
 		auto* ui = static_cast<UIRenderer*>(renderer);
 
-		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() &&  ui->GetRenderType() != UIRenderType::Always)
+		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() &&
+			ui->GetRenderType() != UIRenderType::Always)
 			continue;
 
 		ui->Render();
@@ -174,7 +178,8 @@ void RenderSystem::UIPass()
 	for (auto* renderer : uiList)
 	{
 		auto* ui = static_cast<UIRenderer*>(renderer);
-		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() && ui->GetRenderType() != UIRenderType::Always)
+		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() && 
+			ui->GetRenderType() != UIRenderType::Always)
 			continue;
 
 		ui->RenderFont();

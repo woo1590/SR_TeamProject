@@ -343,6 +343,15 @@
     <Filter Include="02. Object\UIObj\Item\05. FishingItem">
       <UniqueIdentifier>{86943bb5-011a-4051-a90d-f9010908dd21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\HpBar\EnemyHPBarFront">
+      <UniqueIdentifier>{066ddb7d-9d39-446f-b729-30254a23fd58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HpBar\EnemyHPBarBack">
+      <UniqueIdentifier>{5b234947-6b40-436f-b0cd-83e90f3f9562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\HpBar\BossHPBarFront">
+      <UniqueIdentifier>{e4750e43-6aaa-47e2-9554-37a9542559c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -647,6 +656,15 @@
     <ClInclude Include="..\Header\PigItem.h">
       <Filter>02. Object\UIObj\Item\06. PigItem</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\EnemyHPBarFront.h">
+      <Filter>02. Object\UIObj\HpBar\EnemyHPBarFront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EnemyHPBarBack.h">
+      <Filter>02. Object\UIObj\HpBar\EnemyHPBarBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossHPBarFront.h">
+      <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -950,6 +968,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\PigItem.cpp">
       <Filter>02. Object\UIObj\Item\06. PigItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EnemyHPBarFront.cpp">
+      <Filter>02. Object\UIObj\HpBar\EnemyHPBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EnemyHPBarBack.cpp">
+      <Filter>02. Object\UIObj\HpBar\EnemyHPBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossHPBarFront.cpp">
+      <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
