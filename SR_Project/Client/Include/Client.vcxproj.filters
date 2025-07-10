@@ -337,6 +337,15 @@
     <Filter Include="02. Object\UIObj\Tooltip\TooltipObj">
       <UniqueIdentifier>{791f16c4-7087-4ad4-8813-882cccd29a7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Spawner">
+      <UniqueIdentifier>{dabd5484-e365-4db5-816b-900c42f87975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Spawner\Spawner">
+      <UniqueIdentifier>{2cd76ed9-5c7e-440b-8d99-74c70ba62af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Spawner\TriggerBox">
+      <UniqueIdentifier>{665aef6e-3cea-46d9-802e-d8a174d15bbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -635,6 +644,12 @@
     <ClInclude Include="..\Header\WorldTooltip.h">
       <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Spawner.h">
+      <Filter>02. Object\Spawner\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpawnTriggerBox.h">
+      <Filter>02. Object\Spawner\TriggerBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -932,6 +947,12 @@
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\WorldTooltip.cpp">
       <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Spawner.cpp">
+      <Filter>02. Object\Spawner\Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpawnTriggerBox.cpp">
+      <Filter>02. Object\Spawner\TriggerBox</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

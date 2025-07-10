@@ -42,6 +42,7 @@
 #include "DynamicBlock.h"
 #include "RedGolem.h"
 #include "Chunk.h"
+#include "SpawnTriggerBox.h"
 
 //component
 #include "TransformComponent.h"
@@ -107,12 +108,14 @@ void TestScene::Load()
 	
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, Zombie::Create(ObjectMgr, ObjectType::Monster));
 	
-	ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
-	ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
-	ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
-	
+	//ObjectMgr->AddObject(ObjectType::Monster, Skeleton::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, Creeper::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
+
+	ObjectMgr->AddObject(ObjectType::Monster, SpawnTriggerBox::Create(ObjectMgr, ObjectType::Monster));
+
 	UILoader loader;
 	loader.LoadUI(ObjectMgr);
 }

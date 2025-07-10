@@ -187,6 +187,8 @@
     <ClInclude Include="..\Header\QuestPanel.h" />
     <ClInclude Include="..\Header\QuestTextObj.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
+    <ClInclude Include="..\Header\Spawner.h" />
+    <ClInclude Include="..\Header\SpawnTriggerBox.h" />
     <ClInclude Include="..\Header\TooltipObj.h" />
     <ClInclude Include="..\Header\WolfArmor.h" />
     <ClInclude Include="..\Header\ArmorFilter.h" />
@@ -284,6 +286,8 @@
     <ClCompile Include="..\Code\QuestPanel.cpp" />
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />
+    <ClCompile Include="..\Code\Spawner.cpp" />
+    <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />
     <ClCompile Include="..\Code\TooltipObj.cpp" />
     <ClCompile Include="..\Code\WolfArmor.cpp" />
     <ClCompile Include="..\Code\ArmorFilter.cpp" />
