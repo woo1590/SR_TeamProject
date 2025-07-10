@@ -34,24 +34,6 @@ HRESULT Material::Ready_Material()
     return S_OK;
 }
 
-//HRESULT Material::SetMaterial(D3DMATERIAL9& mtrl)
-//{
-//    Mtrl = mtrl;
-//
-//    return S_OK;
-//}
-//
-//HRESULT Material::SetTexture(const std::wstring& key)
-//{
-//    auto tex = EngineCore::GetInstance()->GetResourceManager()->GetTexture(key);
-//    if (!tex)
-//        return E_FAIL;
-//
-//    Texture = tex;
-//
-//    return S_OK;
-//}
-
 void Material::Apply()
 {
     if (shader)

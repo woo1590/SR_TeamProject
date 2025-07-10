@@ -33,6 +33,7 @@ namespace Engine
 		StaticBlock,
 		DynamicBlock,
 		Part,
+		Neutral,
 		Count
 	};
 

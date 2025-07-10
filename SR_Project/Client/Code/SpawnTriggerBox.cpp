@@ -96,3 +96,13 @@ void SpawnTriggerBox::OnCollisionEnter(Object* other)
         SpawnOn = true;
     }
 }
+
+void SpawnTriggerBox::Free()
+{
+    Object::Free();
+
+    std::for_each(spawners.begin(), spawners.end(), [](Object* spawner)
+        {
+            Safe_Release(spawner);
+        });
+}

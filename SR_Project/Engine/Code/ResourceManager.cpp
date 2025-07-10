@@ -189,7 +189,7 @@ Shader* ResourceManager::GetShader(const std::string& key)
     auto iter = ShaderContainer.find(key);
 
     if (iter != ShaderContainer.end())
-        return iter->second;
+        return iter->second->Clone();
     else
         return nullptr;
 }

@@ -23,6 +23,8 @@ public:
     void OnCollisionEnter(Object* other);
 
 private:
+    void Free()override;
+
     vector<Spawner*> spawners;
     _bool           SpawnOn = false;
 };

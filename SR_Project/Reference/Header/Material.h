@@ -12,8 +12,6 @@ private:
 public:
     static Material* Create();
     HRESULT Ready_Material();
-    HRESULT SetMaterial(D3DMATERIAL9& mtrl);
-    HRESULT SetTexture(const std::wstring& key);
     void Apply();
 
     /*---------Shader-----------*/
