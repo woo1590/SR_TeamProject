@@ -47,9 +47,6 @@ HRESULT SpawnTriggerBox::Ready_Object(ObjectManager* owner, ObjectType objType)
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
     physics->SetKinematic(true);
     physics->SetMass(1.f);
-
-    AddSpawner(SpawnType::Zombie, _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-    
     return S_OK;
 }
 

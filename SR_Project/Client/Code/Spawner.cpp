@@ -48,7 +48,7 @@ Monster* Spawner::Spawn()
     {
     case SpawnType::Zombie:
         monster = Zombie::Create(owner, ObjectType::Monster);
-        break;
+        break; 
 
     case SpawnType::Creeper:
         monster = Creeper::Create(owner, ObjectType::Monster);
@@ -62,7 +62,6 @@ Monster* Spawner::Spawn()
         monster = RedGolem::Create(owner, ObjectType::Monster);
         break;
     }
-
 
     auto transform = monster->GetComponent<TransformComponent>();
 

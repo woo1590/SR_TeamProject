@@ -48,6 +48,7 @@ public:
     _bool IsHitFinish() const { return HitAnim.IsEnd; }
 
     virtual _float GetHp();
+    void BackStep(_vec3* dir, _float dt);
     void SetHit(_bool Hit);
     _bool GetHit();
 protected:

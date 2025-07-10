@@ -547,9 +547,6 @@
     <ClInclude Include="..\Header\ItemSlot.h">
       <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\InventoryUIBuilder.h">
-      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\InventoryEmerald.h">
       <Filter>02. Object\UIObj\InventoryEmerald</Filter>
     </ClInclude>
@@ -649,6 +646,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\SpawnTriggerBox.h">
       <Filter>02. Object\Spawner\TriggerBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryUIBuilder.h">
+      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsTargetClose.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BackStep.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -953,6 +959,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp">
       <Filter>02. Object\Spawner\TriggerBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsTargetClose.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BackStep.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

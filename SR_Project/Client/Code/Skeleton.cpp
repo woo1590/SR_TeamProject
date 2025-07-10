@@ -17,6 +17,8 @@
 #include "Die.h"
 #include "Player.h"
 #include "Arrow.h"
+#include "IsTargetClose.h"
+#include "BackStep.h"
 
 Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -187,20 +189,24 @@ void Skeleton::InitTree()
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(15.f);
+    Distance = new float(20.f);
     bb->SetValue("Distance", Distance);
     IsHit = new _bool(false);
     bb->SetValue("IsDamaged", IsHit);
     IsAttack = new _bool(false);
     bb->SetValue("IsAttack", IsAttack);
+    NearDistance = new float(17.f);
+    bb->SetValue("NearDistance", NearDistance);
 
     SequenceNode* rotateThenAttack = new SequenceNode();
     rotateThenAttack->AddChild(new RotateNode());
     rotateThenAttack->AddChild(new AttackNode());
-
     IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(rotateThenAttack);
 
+    IsTargetClose* closecheck = new IsTargetClose(new BackStepNode());
+
     SelectorNode* attackBehavior = new SelectorNode();
+    attackBehavior->AddChild(closecheck);
     attackBehavior->AddChild(attackCheck);
     attackBehavior->AddChild(new ChaseNode());
 
@@ -221,7 +227,7 @@ void Skeleton::InitAnimation()
     WalkAnim.ElapsedTime = 0.f;
 
     //Attack
-    AttackAnim.TotalTime = 0.7f;
+    AttackAnim.TotalTime = 0.4f;
     AttackAnim.ElapsedTime = 0.f;
     AttackAnim.DelayTime = 0.f;
     AttackAnim.Phase = Ready;
@@ -445,5 +451,6 @@ void Skeleton::OnCollisionStay(Object* other)
 
 void Skeleton::Free()
 {
+    Safe_Delete(NearDistance);
     Monster::Free();
 }

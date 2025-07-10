@@ -19,7 +19,7 @@
 #include <tchar.h>
 #include <cmath>
 #include <array>
-
+#include <unordered_map>
 #include <ranges>
 #include "Resource.h"
 

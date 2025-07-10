@@ -1,8 +1,6 @@
 #pragma once
 #include "Object.h"
 
-enum class SpawnType {Zombie, Skeleton, Creeper, RedGolem,};
-
 class Monster;
 
 class Spawner :

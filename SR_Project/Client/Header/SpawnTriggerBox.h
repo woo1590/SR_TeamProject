@@ -1,7 +1,7 @@
 #pragma once
 #include "Object.h"
-#include "Spawner.h"
 
+class Spawner;
 class SpawnTriggerBox :
     public Object
 {

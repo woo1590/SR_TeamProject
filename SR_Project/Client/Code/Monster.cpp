@@ -7,6 +7,7 @@
 #include "PhysicsComponent.h"
 #include "InfoComponent.h"
 #include "InfoDetector.h"
+#include "TransformComponent.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -32,6 +33,8 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto physics = AddComponent<PhysicsComponent>();
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
     physics->SetMass(1.f);
+
+    IsHit = nullptr;
 
     return S_OK;
 }
@@ -71,6 +74,16 @@ _float Monster::GetHp()
 {
     auto  statcomponent = GetComponent<InfoComponent<EnemyInfo>>();
     return statcomponent->GetInfo().curHp;
+}
+
+void Monster::BackStep(_vec3* dir, _float dt)
+{
+    auto Transform = GetComponent<TransformComponent>();
+    auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
+
+    if (State != MonsterState::Walk) State = MonsterState::Walk;
+    D3DXVec3Normalize(dir, dir);
+    Transform->Translate(*dir * dt * Stat->GetInfo().speed);
 }
 
 void Monster::SetHit(_bool Hit)

@@ -175,8 +175,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\BackStep.h" />
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
+    <ClInclude Include="..\Header\IsTargetClose.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
     <ClInclude Include="..\Header\IsTimerOn.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
@@ -274,8 +276,10 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\BackStep.cpp" />
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
+    <ClCompile Include="..\Code\IsTargetClose.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
