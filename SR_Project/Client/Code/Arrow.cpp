@@ -153,7 +153,7 @@ void Arrow::ArrowRotateSet()
 
 void Arrow::PlayerArrowInfo()
 {
-    arrowSpeed = 50.f;
+    arrowSpeed = 120.f;
 
     SetScale(1.f);
     SetScaleRatio(_vec3(0.1f, 1.f, 1.f));
@@ -172,7 +172,7 @@ void Arrow::PlayerArrowInfo()
 
 void Arrow::MonsterArrowInfo()
 {
-    arrowSpeed = 50.f;
+    arrowSpeed = 120.f;
 
     SetScale(1.f);
     SetScaleRatio(_vec3(0.1f, 1.f, 1.f));
