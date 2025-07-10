@@ -37,6 +37,9 @@ protected:
 
     void OnCollisionStay(Object* other) override;
 
+private:
+    void SetEmissive(_bool On);
+
 protected:
     void Free() override;
 

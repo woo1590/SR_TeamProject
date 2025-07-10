@@ -78,8 +78,17 @@ void Creeper::MoveTo(_vec3* dir, _float dt)
 
     if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
-    Transform->Translate(*dir * dt * Stat->GetInfo().speed);
-    Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
+
+    if (DieAnim.ElapsedTime < 5.f)
+    {
+        Transform->Translate(*dir * dt * Stat->GetInfo().speed * 0.6);
+        Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
+    }
+    if (DieAnim.ElapsedTime < 2.f)
+    {
+        emissiveOn = false;
+        SetEmissive(emissiveOn);
+    }
 }
 
 void Creeper::RotateTo(_vec3* dir, float dt)
@@ -94,16 +103,17 @@ void Creeper::Die()
 
         DieAnim.IsRunning = true;
         DieAnim.IsEnd = false;
-        DieAnim.ElapsedTime = 0.0f;
         DieAnim.DelayTime = 0.0f;
         emissiveOn = false;
+
+        if (DieAnim.ElapsedTime < 1.f) DieAnim.ElapsedTime = 0.0f;
     }
 }
 
 void Creeper::InitTransform(ObjectType objType)
 {
     auto transform = GetComponent<TransformComponent>();
-    transform->SetPosition(0.f, 100.f, 0.f);
+    transform->SetPosition(20.f, 100.f, 20.f);
 
     SetMaterial("CreeperFace_Mtrl", "Head");
     SetMaterial("CreeperBody_Mtrl", "Body");
@@ -168,7 +178,7 @@ void Creeper::InitTree()
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(6.f);
+    Distance = new float(3.f);
     bb->SetValue("Distance", Distance);
 
     auto AI = AddComponent<AIController>(bt, bb);
@@ -221,6 +231,11 @@ void Creeper::PlayWalk(_float dt)
 
     SetRotation({ Angle / 2, 0.f, 0.f }, "LArm");
     SetRotation({ -Angle / 2, 0.f, 0.f }, "RArm");
+
+    if (DieAnim.ElapsedTime > 2.f)
+    {
+        PlayDie(dt);
+    }
 }
 
 void Creeper::PlayAttack(_float dt)
@@ -237,28 +252,44 @@ void Creeper::PlayDie(_float dt)
     if (DieAnim.DelayTime <= 0.0f)
     {
         emissiveOn = !emissiveOn;
-        if (emissiveOn)
-        {
-            for(auto& material : materials)
-            material->SetFloat("emissive", 1.f);
-        }
-        else
-        {
-            for (auto& material : materials)
-            material->SetFloat("emissive", 0);
-        }
+        SetEmissive(emissiveOn);
         DieAnim.DelayTime = blinkInterval;
     }
 
-    if (DieAnim.ElapsedTime >= 3.0f)
+    if (DieAnim.ElapsedTime >= 6.f && !DieAnim.IsEnd)
     {
         DieAnim.IsEnd = true;
-       // Free();
+
+        auto player = owner->GetObjectList(ObjectType::Player).back();
+        _vec3 playerpos = player->GetComponent<TransformComponent>()->GetPosition();
+        _vec3 pos = GetComponent<TransformComponent>()->GetPosition();
+
+        _vec3 length = playerpos - pos;
+        if (D3DXVec3Length(&length) < 10)
+            player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-15);
+        
+       // SetDead();
+       // for (auto bone : Bones)
+       //     bone.second->SetDead();
     }
 }
 
 void Creeper::OnCollisionStay(Object* other)
 {
+}
+
+void Creeper::SetEmissive(_bool On)
+{
+    if (emissiveOn)
+    {
+        for (auto& material : materials)
+            material->SetFloat("emissive", 1.f);
+    }
+    else
+    {
+        for (auto& material : materials)
+            material->SetFloat("emissive", 0);
+    }
 }
 
 void Creeper::Free()
