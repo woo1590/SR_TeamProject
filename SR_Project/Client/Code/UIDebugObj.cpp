@@ -36,8 +36,8 @@ void UIDebugObj::Update(float dt)
 	const auto& info = playerInfo->GetInfo();
 	auto font = GetComponent<FontComponent>();
 
-	auto monster = owner->GetFrontObject(ObjectType::Monster);
-	auto AI = monster->GetComponent<AIController>();
+	//auto monster = owner->GetFrontObject(ObjectType::Monster); 
+	//auto AI = monster->GetComponent<AIController>();
 
 
 	font->ClearText();
