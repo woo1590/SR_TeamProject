@@ -18,6 +18,7 @@ public:
 
 private:
     void PlayScaleAnimation(_float dt);
+    void OnCollisionStay(Object* other);
 
 protected:
     void Free() override;

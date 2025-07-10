@@ -48,7 +48,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
 
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT);
+    collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT | CollisionComponent::LAYER_PROJECTILE);
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
 

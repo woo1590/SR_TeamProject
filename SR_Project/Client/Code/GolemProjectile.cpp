@@ -9,7 +9,12 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ResourceManager.h"
+#include "PhysicsComponent.h"
 #include "Material.h"
+#include "InfoComponent.h"
+#include "Player.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
 
 GolemProjectile::GolemProjectile(ObjectManager* owner, ObjectType objType)
 	:Object(owner, objType)
@@ -36,8 +41,18 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     auto transform = AddComponent<TransformComponent>();
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
+    
     auto collision = AddComponent<CollisionComponent>();
-    collision->SetSize(_vec3(0.5f, 0.5f, 0.5f));
+    GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
+    collision->SetLayer(CollisionComponent::LAYER_PROJECTILE);
+    collision->SetMask(CollisionComponent::LAYER_PLAYER);
+    collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
+    collision->SetSize(_vec3(5.f, 5.f, 5.f));
+
+    auto physics = AddComponent<PhysicsComponent>();
+    GetScene()->GetPhysicsStstem()->RegisterBody(physics);
+    physics->SetKinematic(true);
+    physics->SetMass(1.f);
 
     renderer->SetMesh("Cube_Mesh");
     renderer->SetMaterial("RedGolemLightblock_Mtrl");
@@ -51,6 +66,7 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
     mtrl->SetVec3("emissivecolor", _vec3(1.0, 0.1, 0));
     mtrl->SetFloat("emissivePow", 3);
 
+    SetOn(false);
     owner->AddObject(objType, this);
     return S_OK;
 }
@@ -81,7 +97,7 @@ void GolemProjectile::SetOn(_bool On)
     }
     else
     {
-        collision->SetSize(_vec3(0.5f, 0.5f, 0.5f));
+        collision->SetSize(_vec3(5.f, 5.f, 5.f));
         renderer->SetRenderID(RENDER_ID::Render_NonAlpha);
     }
 }
@@ -96,10 +112,21 @@ void GolemProjectile::PlayScaleAnimation(_float dt)
 
     auto transform = GetComponent<TransformComponent>();
 
-    float Scale = (sinf(ElapsedTime * D3DX_PI) * 0.5f) + 0.1f;
+    float Scale = (sinf(ElapsedTime * D3DX_PI) * 0.5f) + 0.3f;
 
     transform->SetScale(_vec3(Scale, Scale, Scale));
 
+}
+
+void GolemProjectile::OnCollisionStay(Object* other)
+{
+    ObjectType objType = other->GetObjectType();
+
+    if (objType == ObjectType::Player)
+    {
+        auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
+        playerStat->AddHp(-1);
+    }
 }
 
 void GolemProjectile::Free()
