@@ -21,6 +21,7 @@ public:
     _bool IsDead()const;
     ObjectManager* GetOwner()const;
     Scene* GetScene()const;
+    void UnRegister();
 
     template<typename T,typename... Args>
     T* AddComponent(Args&&... args)

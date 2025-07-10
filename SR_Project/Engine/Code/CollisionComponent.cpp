@@ -282,8 +282,8 @@ void CollisionComponent::OnCollisionStay(CollisionComponent* other)
 
 void CollisionComponent::OnCollisionExit(CollisionComponent*other)
 {
-	if (onExit)
-		onExit(other->GetOwner());
+	//if (onExit)
+	//	onExit(other->GetOwner());
 }
 
 void CollisionComponent::Render()

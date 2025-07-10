@@ -47,16 +47,20 @@ void ObjectManager::Late_Update(float dt)
 {
 	for (int type = 0; type < static_cast<int>(ObjectType::Count); ++type)
 	{
-		for (auto iter = Objects[type].begin(); iter != Objects[type].end();++iter)
+		for (auto iter = Objects[type].begin(); iter != Objects[type].end();)
 		{
 			(*iter)->Late_Update(dt);
 
 			if ((*iter)->IsDead())
-				DeadObjects.push_back(iter);
+			{
+				(*iter)->UnRegister();
+				Safe_Release((*iter));
+				iter = Objects[type].erase(iter);
+			}
+			else
+				++iter;
 		}
 	}
-
-	CleanDeadObject();
 }
 
 void ObjectManager::AddObject(ObjectType objType, Object* object)
@@ -106,17 +110,6 @@ std::list<Object*> ObjectManager::GetObjectList(ObjectType objType)
 Scene* ObjectManager::GetOwner() const
 {
 	return owner;
-}
-
-void ObjectManager::CleanDeadObject()
-{
-	std::for_each(DeadObjects.begin(), DeadObjects.end(), 
-		[](std::list<Object*>::iterator iter) 
-		{
-			Safe_Release((*iter));
-		});
-
-	DeadObjects.clear();
 }
 
 void ObjectManager::Free()

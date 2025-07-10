@@ -54,6 +54,7 @@ public:
     void Update(_float dt);
 
     void RegisterBody(PhysicsComponent* body);
+    void UnRegisterBody(PhysicsComponent* body);
 
 private:
     void ApplyGravity(_float dt);
