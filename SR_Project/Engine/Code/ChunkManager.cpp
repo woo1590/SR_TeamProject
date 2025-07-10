@@ -108,6 +108,7 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
         chunk->InitializeAirBlocks();
         chunk->SetBlocksFromFlatVector(blocks);
         chunk->BuildChunkFace();
+        chunk->BuildCollisionBlock();//wooseok
         chunk->AddRef();
         worldChunks[{chunkX, chunkZ}] = chunk;
     }

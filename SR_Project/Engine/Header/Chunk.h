@@ -29,6 +29,8 @@ public:
     int GetChunkZ() const { return ChunkZ; }
     StaticBlockData GetBlock(int x, int y, int z) const;
 
+    void BuildCollisionBlock();
+
 private:
     void Free()override;
 

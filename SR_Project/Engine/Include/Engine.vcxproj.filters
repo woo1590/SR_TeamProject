@@ -274,6 +274,9 @@
     <Filter Include="05. Scene Component\UIManager\TooltipManager">
       <UniqueIdentifier>{337039c7-41b6-4c6c-80e3-94378fe6e9c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Object\03. CollisionBlock">
+      <UniqueIdentifier>{19e1774f-52c3-4e4d-8d83-606dd19febe3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -559,6 +562,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\TooltipManager.cpp">
       <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CollisionBlock.cpp">
+      <Filter>06. Object\03. CollisionBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -871,6 +877,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\TooltipManager.h">
       <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CollisionBlock.h">
+      <Filter>06. Object\03. CollisionBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

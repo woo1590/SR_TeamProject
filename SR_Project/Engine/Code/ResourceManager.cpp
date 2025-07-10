@@ -67,7 +67,7 @@ void ResourceManager::LoadMaterial(const std::string& filePath)
 
     for (auto& [name, node] : j["materials"].items())
     {
-        Material* mat = baseMtrl->CloneInstance();
+        Material* mat = baseMtrl->Clone();
 
         if (node.contains("fx"))
             mat->SetShader(ShaderContainer[node["fx"].get<std::string>()]);

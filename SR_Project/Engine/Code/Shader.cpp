@@ -78,3 +78,14 @@ void Shader::SetTexture(const std::string& name, LPDIRECT3DBASETEXTURE9 tex)
 	if (effect)
 		effect->SetTexture(name.c_str(), tex);
 }
+
+Shader* Shader::Clone()
+{
+	LPD3DXEFFECT cloneEffect = nullptr;
+	if (FAILED(effect->CloneEffect(Device, &cloneEffect)))
+		return nullptr;
+
+	Shader* Instance = Shader::Create(cloneEffect);
+
+	return Instance;
+}
