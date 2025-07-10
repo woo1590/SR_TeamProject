@@ -48,8 +48,8 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
     ApplyComponents();
     
     auto collision = AddComponent<CollisionComponent>();
-    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_ENEMY);
+    collision->SetLayer(LAYER_PLAYER);
+    collision->SetMask(LAYER_ENEMY);
     collision->SetSize(_vec3(5.f, 5.f, 5.f));
 
     return S_OK;

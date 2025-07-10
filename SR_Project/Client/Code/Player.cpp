@@ -47,8 +47,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto collision = AddComponent<CollisionComponent>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
 
-    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT | CollisionComponent::LAYER_PROJECTILE);
+    collision->SetLayer(LAYER_PLAYER);
+    collision->SetMask(LAYER_ENEMY | LAYER_DEFAULT | LAYER_PROJECTILE);
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
 
@@ -128,7 +128,7 @@ void Player::PickingTerrain()
         if (hit.IsHit)
         {
             if ((State == ePlayerState::IDLE || State == ePlayerState::WALK) &&
-                hit.Component->GetLayer() == CollisionComponent::LAYER_ENEMY &&
+                hit.Component->GetLayer() == LAYER_ENEMY &&
                 Bones["RHand"] != nullptr)
             {
                 if (State == ePlayerState::IDLE)

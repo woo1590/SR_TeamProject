@@ -138,5 +138,14 @@ namespace Engine
 	};
 
 	enum FaceDir { Face_Top, Face_Bottom, Face_Left, Face_Right, Face_Front, Face_Behind };
+
+	enum CollisionLayer :ULONG
+	{
+		LAYER_DEFAULT		= 1 << 0,
+		LAYER_PLAYER		= 1 << 1,
+		LAYER_ENEMY			= 1 << 2,
+		LAYER_PROJECTILE	= 1 << 3,
+		LAYER_TRRIGER		= 1 << 4
+	};
 }
 #endif // Engine_Enum_h__

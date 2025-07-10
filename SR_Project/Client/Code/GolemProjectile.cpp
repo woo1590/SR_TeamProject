@@ -44,8 +44,8 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
     
     auto collision = AddComponent<CollisionComponent>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
-    collision->SetLayer(CollisionComponent::LAYER_PROJECTILE);
-    collision->SetMask(CollisionComponent::LAYER_PLAYER);
+    collision->SetLayer(LAYER_PROJECTILE);
+    collision->SetMask(LAYER_PLAYER);
     collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
     collision->SetSize(_vec3(5.f, 5.f, 5.f));
 
