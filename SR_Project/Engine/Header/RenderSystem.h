@@ -28,14 +28,14 @@ public:
     void SetUIRenderState(UIRenderType newType);
 
     ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
-
+    //LPDIRECT3DDEVICE9 GetDevice() { return Device; }
 private:
     void PriorityPass();
     void NonAlphaPass();
     void AlphaPass();
     void UIPass();
     void DebugPass();
-    void Reset();
+    void Reset();   
 
     void Free()override;
 
