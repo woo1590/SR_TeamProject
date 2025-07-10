@@ -97,7 +97,6 @@ void Player::Update(_float dt) {
         UpdateDead(dt);
         break;
     }
-
 }
 void Player::Late_Update(_float dt)
 {
@@ -193,17 +192,21 @@ void Player::PickingTerrain()
         {
             if (State == ePlayerState::IDLE || State == ePlayerState::WALK)
             {
+                auto transform = GetComponent<TransformComponent>();
+                auto collision = GetComponent<CollisionComponent>();
+                auto curPos = transform->GetWorldPosition();
+                auto attackPos = hit.Position;
+
+                AttackDirection = attackPos - curPos;
+                if(State == ePlayerState::IDLE)
+                    PlayerDirection = attackPos - curPos;;
+
                 State = ePlayerState::SHOOT;
                 AttackTime = 0.f;
                 SaveStartRotation();
                 Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
                 Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
             }
-            auto transform = GetComponent<TransformComponent>();
-            auto collision = GetComponent<CollisionComponent>();
-            auto curPos = transform->GetWorldPosition();
-            auto attackPos = hit.Position;
-            AttackDirection = attackPos - curPos;
         }
     }
 }
@@ -946,7 +949,6 @@ void Player::UpdateShoot(_float dt) {
     ApplyPhasedRotation(fProgress, GetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::RLEG));
 
     //Rotate Player
-
     _vec3 vCurrentRot = GetPhasedRotation(fProgress, GetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::BODY));
     float fCurrentAngle = D3DXToRadian(vCurrentRot.y);
     _vec3 vForward = AttackDirection;
@@ -1084,35 +1086,44 @@ void Player::OnCollisionStay(Object* other)
     //    collision->ResolveAABBColiision(other);
 }
 
-void Player::IdleSmoothing(_float dt, std::string bone)
-{
+void Player::IdleSmoothing(_float dt, std::string bone) {
     if (Bones[bone] == nullptr) return;
 
     _vec3 vTargetRot;
-    if (bone == "RHand" && itemBaseRotOffset.find("sword") != itemBaseRotOffset.end())
-    {
+    if (bone == "RHand" && itemBaseRotOffset.find("sword") != itemBaseRotOffset.end()) {
         vTargetRot = itemBaseRotOffset.at("sword");
     }
-    else if (bone == "LHand" && itemBaseRotOffset.find("bow") != itemBaseRotOffset.end())
-    {
+    else if (bone == "LHand" && itemBaseRotOffset.find("bow") != itemBaseRotOffset.end()) {
         vTargetRot = itemBaseRotOffset.at("bow");
     }
-    else
-    {
-        vTargetRot = { 0.f,0.f,0.f };
+    else {
+        vTargetRot = { 0.f, 0.f, 0.f };
     }
 
-    if (bone == "Body")
-    {
-        vTargetRot = { 0.f,atan2f(PlayerDirection.x,PlayerDirection.z),0.f};
+    if (bone == "Body") {
+        vTargetRot = { 0.f, atan2f(PlayerDirection.x, PlayerDirection.z), 0.f };
         _vec3 vCurrentRot = GetComponent<TransformComponent>()->GetRotate();
-        _vec3 vLerpedRot = vCurrentRot + (vTargetRot - vCurrentRot) * dt * IdleSmoothingSpeed;
+
+        _vec3 vDeltaRot = {
+            WrapAngle(vTargetRot.x - vCurrentRot.x),
+            WrapAngle(vTargetRot.y - vCurrentRot.y),
+            WrapAngle(vTargetRot.z - vCurrentRot.z)
+        };
+
+        _vec3 vLerpedRot = vCurrentRot + vDeltaRot * dt * IdleSmoothingSpeed;
         GetComponent<TransformComponent>()->SetRotate(vLerpedRot);
         return;
     }
 
     _vec3 vCurrentRot = Bones[bone]->GetComponent<TransformComponent>()->GetRotate();
-    _vec3 vLerpedRot = vCurrentRot + (vTargetRot - vCurrentRot) * dt * IdleSmoothingSpeed;
+
+    _vec3 vDeltaRot = {
+        WrapAngle(vTargetRot.x - vCurrentRot.x),
+        WrapAngle(vTargetRot.y - vCurrentRot.y),
+        WrapAngle(vTargetRot.z - vCurrentRot.z)
+    };
+
+    _vec3 vLerpedRot = vCurrentRot + vDeltaRot * dt * IdleSmoothingSpeed;
     Bones[bone]->GetComponent<TransformComponent>()->SetRotate(vLerpedRot);
 }
 
@@ -1293,4 +1304,11 @@ float Player::GetStringAngleY(const string& leftRight, const string& frontBack, 
     fAngle += offset;
 
     return clockwise ? fAngle : -fAngle;
+}
+
+_float Player::WrapAngle(_float fAngle)
+{
+    while (fAngle > D3DX_PI) fAngle -= D3DX_PI * 2;
+    while (fAngle < -D3DX_PI) fAngle += D3DX_PI * 2;
+    return fAngle;
 }

@@ -100,6 +100,7 @@ private:
     float GetStringAngleX(const string& frontBack = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
     float GetStringAngleZ(const string& leftRight = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
     float GetStringAngleY(const string& leftRight = "", const string& frontBack = "", bool clockwise = true, float offset = 0.f);
+    _float WrapAngle(_float fAngle);
 private:
     ePlayerState State = ePlayerState::IDLE;
     ePlayerAttackType attackType = ePlayerAttackType::FIRST;
@@ -128,7 +129,7 @@ private:
     _vec3 DestinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
 
-    _float SwordRange = 4.f;
+    _float SwordRange = 7.f;
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
 

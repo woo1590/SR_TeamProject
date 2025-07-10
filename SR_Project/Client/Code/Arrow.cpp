@@ -10,6 +10,8 @@
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
 
+#include "Monster.h"
+
 Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType) 
 {
 }
@@ -78,8 +80,9 @@ void Arrow::Update(_float dt)
     auto info = GetComponent<InfoComponent<ItemInfo>>()->GetInfo();
 
     if (hitObject == nullptr)
+    {
         transform->Translate(arrowDirection * arrowSpeed * dt);
-
+    }
     else 
     {
         hitTime += dt;
@@ -114,6 +117,10 @@ void Arrow::SetCollisionEnter(Object* other)
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+
+        auto monster = static_cast<Monster*>(other);
+        monster->SetHit(true);
+        monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), arrowAttackDamage);
     }
 }
 
@@ -159,6 +166,7 @@ void Arrow::PlayerArrowInfo()
     auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_PLAYER);
     collision->SetMask(CollisionComponent::LAYER_ENEMY | CollisionComponent::LAYER_DEFAULT);
+    collision->SetSize(_vec3(1.f, 1.f, 1.f));
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }
 
