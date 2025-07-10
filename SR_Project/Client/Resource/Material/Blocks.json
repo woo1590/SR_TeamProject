@@ -19,7 +19,7 @@
   "materials": {
     "Chunk_Mtrl":{
       "fx":"ChunkShader",
-      "textures":{"AlbedoMap" : "../Resource/Texture/Block/t_creeperwoods_atlas.png"}
+        "textures": { "AlbedoMap": "../Resource/Texture/Block/ChunkAtlas.png" }
     },
 
     "ChestBottom_Mtrl": {

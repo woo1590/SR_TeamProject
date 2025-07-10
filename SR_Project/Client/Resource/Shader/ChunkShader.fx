@@ -32,9 +32,10 @@ struct VS_OUTPUT
 VS_OUTPUT VS_Main(VS_INPUT input)
 {
     VS_OUTPUT output;
-    float4x4 wvp = mul(mul(g_World, g_View), g_Proj);
+    float4 worldPos = mul(float4(input.Position, 1.f), g_World);
+    float4x4 viewproj = mul(g_View, g_Proj);
     
-    output.Position = mul(float4(input.Position, 1.f), wvp);
+    output.Position = mul(worldPos, viewproj);
     output.TexCoord = input.TexCoord;
     
     return output;

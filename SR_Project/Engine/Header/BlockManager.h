@@ -10,17 +10,16 @@ private:
     virtual ~BlockManager();
 
 public:
+    Scene* GetOwner()const;
     static BlockManager* Create(Scene* owner);
 
     void LoadTexture();
 
-    void SaveStage(const char* saveStage);   // ∏  ¿˙¿Â
-    void LoadStage(const char* loadStage);   // ∏  ∑ŒµÂ
+    void SaveStage(const char* saveStage);
+    void LoadStage(const char* loadStage);
 
     void SaveChunk(const char* saveStage);
     void LoadChunk(const char* loadStage);
-
-    Scene* GetOwner()const;
 
 private:
     void Free()override;

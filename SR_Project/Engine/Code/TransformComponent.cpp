@@ -6,7 +6,7 @@
 #include "Object.h"
 
 TransformComponent::TransformComponent(Object* owner)
-    :ObjectComponent(owner)
+    :ObjectComponent(owner), Parent(nullptr)
 {
 }
 

@@ -56,10 +56,10 @@ void ToolcamComponent::Update(_float dt)
     _vec3 forward = Target->GetFoward();
     _vec3 right = Target->GetRight();
 
-    if (Input->IsKeyDown(UP)) direction += forward;
-    if (Input->IsKeyDown(LEFT)) direction -= right;
-    if (Input->IsKeyDown(DOWN)) direction -= forward;
-    if (Input->IsKeyDown(RIGHT)) direction += right;
+    if (Input->IsKeyDown(W)) direction += forward;
+    if (Input->IsKeyDown(A)) direction -= right;
+    if (Input->IsKeyDown(S)) direction -= forward;
+    if (Input->IsKeyDown(D)) direction += right;
 
     if (math::Length(direction) > 0.9f)
     {
