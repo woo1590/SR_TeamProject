@@ -93,7 +93,7 @@ void CollisionComponent::SetSize(_vec3 size)
 	D3DXCreateBox(device, size.x, size.y, size.z, &BoundingBox, nullptr);
 }
 
-void CollisionComponent::SetLayer(CollisionComponent::Layer layer)
+void CollisionComponent::SetLayer(CollisionLayer layer)
 {
 	Collision_Layer = layer;
 }

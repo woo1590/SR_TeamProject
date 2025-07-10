@@ -7,15 +7,6 @@ BEGIN(Engine)
 class ENGINE_DLL CollisionComponent :
     public ObjectComponent
 {
-public:
-    enum Layer : _ulong
-    {
-        LAYER_DEFAULT       = 1 << 0,
-        LAYER_PLAYER        = 1 << 1,
-        LAYER_ENEMY         = 1 << 2,
-        LAYER_PROJECTILE    = 1 << 3,
-    };
-
 private:
     CollisionComponent(Object* owner);
     virtual ~CollisionComponent();
@@ -33,7 +24,7 @@ public:
     void SetBoudingBox(BoundingBoxType bbType);
     void SetSize(_vec3 size);
 
-    void SetLayer(CollisionComponent::Layer layer);
+    void SetLayer(CollisionLayer layer);
     void SetMask(_ulong mask);
 
     _ulong GetLayer()const { return Collision_Layer; }
@@ -77,7 +68,7 @@ private:
 
     /*----------------------*/
     
-    Layer Collision_Layer;
+    CollisionLayer Collision_Layer;
     _ulong Collision_Mask;
 
     std::function<void(Object* other)> onEnter;

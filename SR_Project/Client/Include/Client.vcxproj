@@ -175,6 +175,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Arrow.h" />
     <ClInclude Include="..\Header\BackStep.h" />
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
@@ -199,7 +200,6 @@
     <ClInclude Include="..\Header\TooltipObj.h" />
     <ClInclude Include="..\Header\WolfArmor.h" />
     <ClInclude Include="..\Header\ArmorFilter.h" />
-    <ClInclude Include="..\Header\Arrow.h" />
     <ClInclude Include="..\Header\ArrowFilter.h" />
     <ClInclude Include="..\Header\Boss.h" />
     <ClInclude Include="..\Header\BowItem.h" />
@@ -281,6 +281,7 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\BackStep.cpp" />
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
@@ -305,7 +306,6 @@
     <ClCompile Include="..\Code\TooltipObj.cpp" />
     <ClCompile Include="..\Code\WolfArmor.cpp" />
     <ClCompile Include="..\Code\ArmorFilter.cpp" />
-    <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\ArrowFilter.cpp" />
     <ClCompile Include="..\Code\Boss.cpp" />
     <ClCompile Include="..\Code\BowItem.cpp" />

@@ -49,8 +49,7 @@ void ResourceManager::LoadMaterial(const std::string& filePath)
 
     json j = json::parse(std::ifstream(filePath.c_str()));
 
-    // ¼ÎÀÌ´õ
-       baseMtrl->SetShader(GetShader(j["template"].value("fx", "BasicShader")));
+    baseMtrl->SetShader(GetShader(j["template"].value("fx", "BasicShader")));
 
     if (j["template"].contains("constants"))
     {
@@ -179,7 +178,7 @@ Material* ResourceManager::GetMaterial(const std::string& key)
     auto iter = MaterialContainer.find(key);
 
     if (iter != MaterialContainer.end())
-        return iter->second;
+        return iter->second->Clone();
     else
         return nullptr;
 }
