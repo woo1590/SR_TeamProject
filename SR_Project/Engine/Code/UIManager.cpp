@@ -28,6 +28,8 @@ void UIManager::Update(float dt)
 		inventory->Update(dt);
 	if (quest)
 		quest->Update(dt);
+	if (tooltip)
+		tooltip->Update(dt);
 	
 }
 

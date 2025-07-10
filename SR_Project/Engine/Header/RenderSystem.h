@@ -28,6 +28,8 @@ public:
     void SetUIRenderState(UIRenderType newType);
 
     ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
+    const _matrix& GetCachedViewMatrix() const { return cachedView; }
+    const _matrix& GetCachedProjMatrix() const { return cachedProj; }
 
 private:
     void PriorityPass();
@@ -50,6 +52,9 @@ private:
     Shader* CurrShader = nullptr;
 
     LPDIRECT3DDEVICE9 Device;
+
+    _matrix cachedView;
+    _matrix cachedProj;
 };
 
 END

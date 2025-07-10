@@ -5,10 +5,8 @@
 #include "ProgressBar.h"
 #include "HoverComponent.h"
 #include "FontComponent.h"
-#include "Player.h"
 #include "ObjectManager.h"
-#include "InfoComponent.h"
-#include "InputSystem.h"
+
 
 #include "EngineCore.h"
 
@@ -38,6 +36,7 @@ HRESULT HPBarFront::Ready_Object()
 		font->ClearText();
 
 		if (!isHovered) return;
+
 		});
 
 	return S_OK;

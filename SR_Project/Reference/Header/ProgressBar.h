@@ -23,9 +23,10 @@ public:
 	void Update(float dt) override;
 	void OnNotify(const UIEvent<T>& event) override;
 
+	void AppearAnimation(float duration = 1.f);
+
 private:
 	void ApplyRatio(float ratio);
-
 
 protected:
 	UIRenderer* renderer = nullptr;
@@ -38,7 +39,12 @@ protected:
 	const float speed = 8.f;
 
 	UIEventType eventType = UIEventType::HP_Changed;
-	BarDirection barDir = BarDirection::Vertical;
+	BarDirection barDir   = BarDirection::Vertical;
+
+	bool isAppearing = false;
+	float appearElapsed = 0.f;
+	float appearDuration = 1.f;
+	float actualTargetRatio = 1.f;
 };
 
 END
@@ -81,12 +87,40 @@ void ProgressBar<T>::OnNotify(const UIEvent<T>& event)
 	}
 
 	assert(maxValue > 0 && "ProgressBar: maxValue must be > 0");
-	targetRatio = static_cast<float>(curValue) / max(1, maxValue);
+	actualTargetRatio = static_cast<float>(curValue) / max(1, maxValue);
+
+	if (!isAppearing)
+		targetRatio = actualTargetRatio;
+
+	if (event.type == UIEventType::HP_Changed && curValue <= 0)
+	{
+		//owner->SetDead();
+	}
+}
+
+template<typename T>
+inline void ProgressBar<T>::AppearAnimation(float duration)
+{
+	isAppearing = true;
+	appearElapsed = 0.f;
+	appearDuration = duration;
+	targetRatio = 0.f;
+	curRatio = 0.f;
 }
 
 template<typename T>
 void ProgressBar<T>::Update(float dt)
 {
+	if (isAppearing)
+	{
+		appearElapsed += dt;
+		float t = clamp(appearElapsed / appearDuration, 0.f, 1.f);
+		targetRatio = actualTargetRatio * t;
+
+		if (t >= 1.f)
+			isAppearing = false;
+	}
+
 	if (fabs(curRatio - targetRatio) > 0.01f)
 	{
 		float t = clamp(dt * speed, 0.f, 1.f);
@@ -104,7 +138,7 @@ void ProgressBar<T>::ApplyRatio(float ratio)
 	{
 	case BarDirection::Vertical:
 		renderer->ApplyRatioVertical(ratio);
-		break;
+		break;         
 
 	case BarDirection::Horizontal:
 		renderer->ApplyRatioHorizontal(ratio);

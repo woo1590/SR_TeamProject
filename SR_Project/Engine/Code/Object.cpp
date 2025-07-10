@@ -91,5 +91,4 @@ void Object::Free()
 	Components.clear();
 	
 	ComponentMap.clear();
-
 }

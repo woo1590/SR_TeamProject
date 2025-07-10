@@ -13,7 +13,7 @@ namespace Engine
 		float speed = 6.f;
 	};
 
-	enum class ItemType{ Sword, Armor, Arrow, Potion };
+	enum class ItemType{ Sword, Armor, Arrow, Potion, Enchant, Costume };
 	enum class Rarity { Default, Rare};
 
 	enum class SlotItemType {Any, Sword, Armor, Arrow, Potion};
@@ -40,6 +40,8 @@ namespace Engine
 		int level;
 		int curHp = 100;
 		int maxHp = 100;
+		int curExp = 0;
+		int maxExp = 0;
 		int power = 10;
 		float attackDelay;
 		float speed = 5.f;

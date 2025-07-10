@@ -7,6 +7,15 @@
 #include "PhysicsComponent.h"
 #include "InfoComponent.h"
 #include "InfoDetector.h"
+#include "ProgressBar.h"
+#include "EnemyHPBarFront.h"
+#include "TransformComponent.h"
+#include "ObjectManager.h"
+#include "EngineCore.h"
+#include "GraphicDevice.h"
+#include "Bone.h"
+#include "EnemyHPBarBack.h"
+#include "BossHPBarFront.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -17,7 +26,7 @@ Monster::~Monster()
 {
 }
 
-HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, bool isBoss)
 {
     BaseCharacter::Ready_Object(owner, objType);
 
@@ -32,6 +41,43 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto physics = AddComponent<PhysicsComponent>();
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
     physics->SetMass(1.f);
+
+    // --------------------------------------------
+
+    if (!isBoss)
+    {
+        auto body = dynamic_cast<Bone*>(Bones["Body"]);
+        assert(body && "Bones[Body] missing");
+        auto monsterTf = body->GetComponent<TransformComponent>();
+
+        auto hpBarFront = EnemyHPBarFront::Create(owner);
+        statcomponent->Attach(hpBarFront->GetComponent<ProgressBar<EnemyInfo>>());
+        hpBarFront->SetTarget(monsterTf);
+        owner->AddUIObject(hpBarFront);
+
+        auto hpBarBack = EnemyHPBarBack::Create(owner);
+        auto frontTf = hpBarFront->GetComponent<TransformComponent>();
+        auto backTf = hpBarBack->GetComponent<TransformComponent>();
+
+        backTf->SetParent(frontTf);
+        backTf->SetPosition({0.f, 0.f, 0.f});
+        backTf->SetScale({0.2f, 0.2f, 1.f});
+
+        owner->AddUIObject(hpBarBack);
+    }
+    else
+    {
+        auto bossHpFront = BossHPBarFront::Create(owner);
+        auto bossHpComp = bossHpFront->GetComponent<ProgressBar<EnemyInfo>>();
+        bossHpComp->AppearAnimation(2.f);
+        statcomponent->Attach(bossHpComp);
+        owner->AddUIObject(bossHpFront);
+
+        auto HpBarBack = EnemyHPBarBack::Create(owner);
+        HpBarBack->GetComponent<TransformComponent>()->SetPosition(250.f, 100.f);
+        HpBarBack->GetComponent<TransformComponent>()->SetScale(1.485f, 0.8f);
+        owner->AddUIObject(HpBarBack);
+    }
 
     return S_OK;
 }

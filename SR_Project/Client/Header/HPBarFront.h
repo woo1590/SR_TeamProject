@@ -11,7 +11,4 @@ private:
 public:
 	static HPBarFront* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
-
-private:
-
 };

@@ -105,7 +105,7 @@ void InventoryManager::RightClick()
 		auto* player = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetObjectManager()->GetFrontObject(ObjectType::Player);
 		itemComp->Use(player);
 		
-		return;
+		return; 
 	}
 }
 
@@ -128,32 +128,45 @@ void InventoryManager::ApplyFilter(optional<ItemType> type)
 {
 	curFilter = type;
 
+	vector<Object*> bagSlots;
 	for (auto* obj : slotObjs)
 	{
 		auto* slot = obj->GetComponent<SlotComponent>();
-		auto renderer = obj->GetComponent<UIRenderer>();
-		if (!slot) continue;
-
-		Object* item = slot->GetItem();
-
-		if (!item)
-		{
-			renderer->SetVisible(true);
-			continue;
-		}
-
-		auto* itemComp = item->GetComponent<ItemComponent>();
-		if (!itemComp)
-		{
-			renderer->SetVisible(true);
-			continue;
-		}
-
-		if (!type.has_value() || itemComp->GetItemType() == type.value())
-			renderer->SetVisible(true);
-		else
-			renderer->SetVisible(false);
+		if (slot && slot->GetAllowedType() == SlotItemType::Any)
+			bagSlots.push_back(obj);
 	}
+
+	vector<Object*> matched, others;
+	for (auto* obj : bagSlots)
+	{
+		auto* slot = obj->GetComponent<SlotComponent>();
+		Object* itemObj = slot->GetItem();
+		if (!itemObj) continue;
+
+		auto* itemComp = itemObj->GetComponent<ItemComponent>();
+		if (!itemComp) continue;
+
+		slot->ClearItem();
+
+		((type && itemComp->GetItemType() != *type) ? others : matched).push_back(itemObj);
+	}
+
+	size_t idx = 0;
+	auto assign = [&](vector<Object*>& list, bool visible)
+		{
+			for (auto* item : list)
+			{
+				if (idx >= bagSlots.size()) break;
+				auto* slot = bagSlots[idx++]->GetComponent<SlotComponent>();
+				slot->SetItem(item);
+
+				auto pos = slot->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
+				item->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
+				item->GetComponent<UIRenderer>()->SetVisible(visible);
+			}
+		};
+	assign(matched, true);
+	assign(others, !type.has_value());
 }
 
 bool InventoryManager::InsertItem(Object* item)

@@ -180,13 +180,17 @@ HRESULT Loader::load_UIResources()
 		{L"loading_stone",      eUI},
 		{L"loadingscene_lobby", eUI},
 		{L"worldmap_textpanel", eUI},
+		{L"pig",                eUI},
+		{L"enemy_hpbarfront",   eUI},
+		{L"enemy_hpbarback",    eUI},
+
 	};
 
 	static const unordered_map<wstring, int> uiLayers = {
 		{L"Logo",               -1},
 		{L"loadingscene",       -1},
 
-		{L"hotbar_back",         0},
+		{L"hotbar_back",         0}, 
 		{L"hpbar_back",          1},
 		{L"expbar_back",         1},
 		{L"expbar_back",         1},
@@ -195,25 +199,25 @@ HRESULT Loader::load_UIResources()
 		{L"expbar_front",        2},
 		{L"quickslot",           2},
 		{L"hpbar_front",         2},
-		{L"quickslot_hover", 2},
+		{L"quickslot_hover",     2},
 		{L"arrow_slot",          2},
 		{L"mouse_left",          3},
-		{L"mouse_right",         3},
+		{L"mouse_right",         3}, 
 		{L"dash_icon",           3},
 		{L"quickslot_plus",      3},
 		{L"Shield",              5},
 		{L"inventorybtn",        5},
 		{L"mapbtn",              5},
 		{L"hp_potion",           5},
-		
-		{L"gearslot_highlight", 1},
-		{L"gearslot",           1},
-		{L"gearslot_plus",      2},
-		{L"gearslot_hover",     2},
-		
-		{L"emerald_sword",      10},
-
-		{L"InventoryPanel",     -1},
+		{L"pig",                 5},
+		{L"gearslot_highlight",  1}, 
+		{L"gearslot",            1},
+		{L"gearslot_plus",       2},
+		{L"gearslot_hover",      2},
+								 
+		{L"emerald_sword",       10},
+								 
+		{L"InventoryPanel",     -1},  
 		{L"exitbtn",           101},
 		{L"exitbtn_hover",     101},
 
@@ -259,6 +263,8 @@ HRESULT Loader::load_UIResources()
 		{L"loadingscene_lobby",  0},
 		{L"loading_stone",       1},
 		{L"worldmap_textpanel",  5},
+		{L"enemy_hpbarfront",    4},
+		{L"enemy_hpbarback",     3},
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

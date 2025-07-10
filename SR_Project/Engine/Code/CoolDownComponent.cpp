@@ -12,32 +12,44 @@ CoolDownComponent* CoolDownComponent::Create(Object* owner)
 
 HRESULT CoolDownComponent::Ready_Component()
 {
+    whiteOverlay = owner->AddComponent<UIRenderer>();
+    whiteOverlay->SetTexture(L"white");
+    whiteOverlay->SetLayer(10); 
+    whiteOverlay->SetVisible(false);
+
+    cooldownBar = owner->AddComponent<UIRenderer>();
+    cooldownBar->SetTexture(L"white_bar");
+    cooldownBar->SetLayer(11);
+    cooldownBar->SetVisible(false);
 	return S_OK;
 }
 
-void CoolDownComponent::Start(float _duration)
+void CoolDownComponent::Play()
 {
-	duration = _duration;
-	elapsed = 0.f;
-	isCooling = true;
+    curTime = 0.f;
+    playing = true;
 
-	auto renderer = owner->GetComponent<UIRenderer>();
-	assert(renderer && "CoolDownComponent::Start - renderer missing");
-	renderer->ApplyRatioVertical(1.f);
+    whiteOverlay->SetVisible(true);
+    cooldownBar->SetVisible(true);
+    whiteOverlay->SetAlpha(1.f);
 }
 
 void CoolDownComponent::Update(float dt)
 {
-	if (!isCooling) return;
+    if (!playing) return;
 
-	elapsed += dt;
-	float ratio = 1.f - (elapsed / duration);
-	ratio = clamp(ratio, 0.f, 1.f);
+    curTime += dt;
+    float t = curTime / maxTime;
+    t = clamp(t, 0.f, 1.f);
 
-	auto renderer = owner->GetComponent<UIRenderer>();
-	renderer->ApplyRatioVertical(ratio);
+    whiteOverlay->SetAlpha(1.f - t);
 
-	if (elapsed >= duration)
-		isCooling = false;
+    cooldownBar->ApplyRatioVertical(1.f - t); 
+
+    if (t >= 1.f)
+    {
+        playing = false;
+        whiteOverlay->SetVisible(false);
+        cooldownBar->SetVisible(false);
+    }
 }
-

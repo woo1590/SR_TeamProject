@@ -19,6 +19,7 @@ public:
     void SetPosition(_vec3 position);
 
     void SetPosition(float x, float y) { SetPosition(x, y, 0.f); }
+    void SetWorldPosition(const _vec3 worldPos);
 
     void SetScale(float cx, float cy, float cz);
     void SetScale(_vec3 scale);

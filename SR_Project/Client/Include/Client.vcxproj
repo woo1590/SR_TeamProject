@@ -176,6 +176,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BossChase.h" />
+    <ClInclude Include="..\Header\BossHPBarFront.h" />
+    <ClInclude Include="..\Header\EnemyHPBarBack.h" />
+    <ClInclude Include="..\Header\EnemyHPBarFront.h" />
+    <ClInclude Include="..\Header\FilterTooltip.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
     <ClInclude Include="..\Header\IsTimerOn.h" />
@@ -184,6 +188,7 @@
     <ClInclude Include="..\Header\LockNode_Back.h" />
     <ClInclude Include="..\Header\MapNode.h" />
     <ClInclude Include="..\Header\MapNode_Front.h" />
+    <ClInclude Include="..\Header\PigItem.h" />
     <ClInclude Include="..\Header\QuestPanel.h" />
     <ClInclude Include="..\Header\QuestTextObj.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
@@ -273,6 +278,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BossChase.cpp" />
+    <ClCompile Include="..\Code\BossHPBarFront.cpp" />
+    <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
+    <ClCompile Include="..\Code\EnemyHPBarFront.cpp" />
+    <ClCompile Include="..\Code\FilterTooltip.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
@@ -281,6 +290,7 @@
     <ClCompile Include="..\Code\LockNode_Back.cpp" />
     <ClCompile Include="..\Code\MapNode.cpp" />
     <ClCompile Include="..\Code\MapNode_Front.cpp" />
+    <ClCompile Include="..\Code\PigItem.cpp" />
     <ClCompile Include="..\Code\QuestPanel.cpp" />
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />

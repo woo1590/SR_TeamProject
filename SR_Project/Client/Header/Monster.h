@@ -27,7 +27,7 @@ protected:
     virtual ~Monster();
 
 public:
-    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
+    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType, bool isBoss = false);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 
@@ -50,6 +50,10 @@ public:
     virtual _float GetHp();
     void SetHit(_bool Hit);
     _bool GetHit();
+
+    // ------------------------------
+
+    // ------------------------------
 protected:
     virtual void InitAnimation();
     virtual void PlayAnimation(_float dt);
