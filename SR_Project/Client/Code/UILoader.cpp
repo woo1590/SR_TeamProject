@@ -63,6 +63,7 @@
 #include "TooltipObj.h"
 #include "SwordItem.h"
 #include "BowItem.h"
+#include "HPBarBack.h"
 
 
 #define ADD(obj) objMgr->AddUIObject(obj)
@@ -120,6 +121,9 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
     playerInfo->Attach(hpFront->GetComponent<ProgressBar<PlayerInfo>>());
     hpFront->GetComponent<ProgressBar<PlayerInfo>>()->SetEventType(UIEventType::HP_Changed);
     ADD(hpFront);
+
+    auto hpBack = HPBarBack::Create(objMgr);
+    ADD(hpBack);
 
     auto expFront = ExpBarFront::Create(objMgr);
     playerInfo->Attach(expFront->GetComponent<ProgressBar<PlayerInfo>>());

@@ -18,7 +18,7 @@ HRESULT HPBarBack::Ready_Object()
 
 	transform->SetScale(0.3f, 0.25f);
 
-	transform->SetPosition(WINCX * 0.5f, WINCY * 0.9f);
+	transform->SetPosition(610.f, 650.f);
 
 	renderer->SetTexture(L"hpbar_back");
 	return S_OK;

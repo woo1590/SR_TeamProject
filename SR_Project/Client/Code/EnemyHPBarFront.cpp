@@ -37,13 +37,13 @@ void EnemyHPBarFront::Update(float dt)
 	Object::Update(dt);
 	if (!monsterTf) return;
 
-	_vec3 worldPos = monsterTf->GetWorldPosition() + _vec3(-4.f, 2.f, 0.f);
+	_vec3 worldPos = monsterTf->GetWorldPosition() + _vec3(-3.f, 2.f, 0.f);
 
 	float depthZ = 0.f;
 	_vec2 screen = WorldToScreen(worldPos, depthZ);
 	float scale = clamp(1.f / (0.1f + depthZ), 0.5f, 1.5f);
 
-	scale *= 0.25f;
+	scale *= 0.2f;
 
 	auto tf = GetComponent<TransformComponent>();
 	tf->SetScale(scale, scale);
