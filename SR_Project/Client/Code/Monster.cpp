@@ -15,7 +15,13 @@
 #include "GraphicDevice.h"
 #include "Bone.h"
 #include "EnemyHPBarBack.h"
+#include "ExpBarBack.h"
 #include "BossHPBarFront.h"
+#include "BossIcon.h"
+#include "ParticleObj.h"
+#include "WorldUIComponent.h"
+#include "DamageText.h"
+#include "Fontcomponent.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -26,7 +32,7 @@ Monster::~Monster()
 {
 }
 
-HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, bool isBoss)
+HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterType type)
 {
     BaseCharacter::Ready_Object(owner, objType);
 
@@ -44,39 +50,54 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, bool isB
 
     // --------------------------------------------
 
-    if (!isBoss)
+    if (type == MonsterType::Monster)
     {
         auto body = dynamic_cast<Bone*>(Bones["Body"]);
         assert(body && "Bones[Body] missing");
         auto monsterTf = body->GetComponent<TransformComponent>();
-
-        auto hpBarFront = EnemyHPBarFront::Create(owner);
-        statcomponent->Attach(hpBarFront->GetComponent<ProgressBar<EnemyInfo>>());
-        hpBarFront->SetTarget(monsterTf);
-        owner->AddUIObject(hpBarFront);
-
-        auto hpBarBack = EnemyHPBarBack::Create(owner);
-        auto frontTf = hpBarFront->GetComponent<TransformComponent>();
-        auto backTf = hpBarBack->GetComponent<TransformComponent>();
-
+    
+        enemyFront = EnemyHPBarFront::Create(owner);
+        statcomponent->Attach(enemyFront->GetComponent<ProgressBar<EnemyInfo>>());
+        enemyFront->SetTarget(monsterTf);
+        owner->AddUIObject(enemyFront);
+    
+        enemyBack = EnemyHPBarBack::Create(owner);
+        auto frontTf = enemyFront->GetComponent<TransformComponent>();
+        auto backTf = enemyBack->GetComponent<TransformComponent>();
+       
         backTf->SetParent(frontTf);
         backTf->SetPosition({0.f, 0.f, 0.f});
         backTf->SetScale({0.2f, 0.2f, 1.f});
-
-        owner->AddUIObject(hpBarBack);
+    
+        enemyFront->AddChild(enemyBack);
+       
+        owner->AddUIObject(enemyBack);
     }
-    else
+    else if (type == MonsterType::Boss)
     {
-        auto bossHpFront = BossHPBarFront::Create(owner);
-        auto bossHpComp = bossHpFront->GetComponent<ProgressBar<EnemyInfo>>();
+        bossFront = BossHPBarFront::Create(owner);
+        auto bossHpComp = bossFront->GetComponent<ProgressBar<EnemyInfo>>();
         bossHpComp->AppearAnimation(2.f);
         statcomponent->Attach(bossHpComp);
-        owner->AddUIObject(bossHpFront);
+        owner->AddUIObject(bossFront);
+    
+        bossBack = ExpBarBack::Create(owner);
+        bossBack->GetComponent<TransformComponent>()->SetPosition(300.f, 100.f);
+        bossBack->GetComponent<TransformComponent>()->SetScale(2.38f, 3.f);
+        owner->AddUIObject(bossBack);
+    
+        auto bossIcon = BossIcon::Create(owner);
+        bossIcon->GetComponent<TransformComponent>()->SetParent(bossFront);
+        owner->AddUIObject(bossIcon);
 
-        auto HpBarBack = EnemyHPBarBack::Create(owner);
-        HpBarBack->GetComponent<TransformComponent>()->SetPosition(250.f, 100.f);
-        HpBarBack->GetComponent<TransformComponent>()->SetScale(1.485f, 0.8f);
-        owner->AddUIObject(HpBarBack);
+        auto particle = ParticleObj::Create(owner);
+        auto particleTf = particle->GetComponent<TransformComponent>();
+       // particleTf->SetParent(bossFront);
+        //particleTf->SetPosition(200.f,100.f);
+        owner->AddUIObject(particle);
+    
+        bossFront->AddChild(bossBack);
+       // bossFront->AddChild(particle);
     }
 
     return S_OK;
@@ -106,11 +127,34 @@ void Monster::Attack(Object* target)
 
 void Monster::Die()
 {
+   
+}
+
+void Monster::DeleteBar()
+{
 
 }
 
+void Monster::ShowDmgText(int dmg, const _vec3& hitDir)
+{
+    auto headTf = Bones["Head"]->GetComponent<TransformComponent>();
+    if (!headTf) return;
+
+    auto dmgText = DamageText::Create(owner);
+
+    dmgText->worldPos = headTf->GetWorldPosition();
+    dmgText->screenDir = WorldUIComponent::ToScreen(hitDir, ScreenMode::Direction);
+
+    dmgText->GetComponent<FontComponent>()->entries[0].text = to_wstring(dmg);
+
+    owner->AddUIObject(dmgText);
+}
+
+
 void Monster::Hit(_vec3 dir, _float power)
 {
+    auto stat = GetComponent<InfoComponent<EnemyInfo>>();
+    ShowDmgText(stat->GetInfo().power, dir);
 }
 
 _float Monster::GetHp()

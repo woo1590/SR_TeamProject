@@ -97,7 +97,7 @@ void UIRenderer::Free()
     Safe_Release(texture);
 }
 
-void UIRenderer::Render()
+void UIRenderer::Render() 
 {
     if (!isVisible) return;
 

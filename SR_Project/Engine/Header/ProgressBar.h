@@ -4,6 +4,10 @@
 #include "IObserver.h"
 #include "UIRenderer.h"
 #include "Object.h"
+#include "InfoComponent.h"
+#include "Subject.h"
+
+enum class RenderPolicy {Always, HideWhenFull};
 
 BEGIN(Engine)
 
@@ -19,6 +23,7 @@ public:
 	
 	void SetEventType(UIEventType type) { eventType = type; }
 	void SetBarDirection(BarDirection _dir) { barDir = _dir; }
+	void SetRenderPolicy(RenderPolicy policy) { renderPolicy = policy; }
 
 	void Update(float dt) override;
 	void OnNotify(const UIEvent<T>& event) override;
@@ -40,6 +45,7 @@ protected:
 
 	UIEventType eventType = UIEventType::HP_Changed;
 	BarDirection barDir   = BarDirection::Vertical;
+	RenderPolicy renderPolicy = RenderPolicy::Always;
 
 	bool isAppearing = false;
 	float appearElapsed = 0.f;
@@ -94,7 +100,7 @@ void ProgressBar<T>::OnNotify(const UIEvent<T>& event)
 
 	if (event.type == UIEventType::HP_Changed && curValue <= 0)
 	{
-		//owner->SetDead();
+
 	}
 }
 
@@ -111,6 +117,17 @@ inline void ProgressBar<T>::AppearAnimation(float duration)
 template<typename T>
 void ProgressBar<T>::Update(float dt)
 {
+	const bool hide = (renderPolicy == RenderPolicy::HideWhenFull && actualTargetRatio >= 0.99f);
+
+	renderer->SetVisible(!hide);
+
+	for (auto* child : owner->GetChildren())
+	{
+		if (auto* r = child->GetComponent<UIRenderer>())
+			r->SetVisible(!hide);
+	}
+
+
 	if (isAppearing)
 	{
 		appearElapsed += dt;

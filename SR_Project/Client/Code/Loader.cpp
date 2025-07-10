@@ -183,6 +183,10 @@ HRESULT Loader::load_UIResources()
 		{L"pig",                eUI},
 		{L"enemy_hpbarfront",   eUI},
 		{L"enemy_hpbarback",    eUI},
+		{L"boss_hpbarfront",    eUI},
+		{L"boss_icon",          eUI},
+		{L"debugui",            eUI},
+		{L"particle",           eUI},
 
 	};
 
@@ -191,14 +195,14 @@ HRESULT Loader::load_UIResources()
 		{L"loadingscene",       -1},
 
 		{L"hotbar_back",         0}, 
-		{L"hpbar_back",          1},
+		{L"hpbar_back",          4},
 		{L"expbar_back",         1},
 		{L"expbar_back",         1},
 		{L"icon_emerald",        1},
 		{L"icon_enchant",        1},
 		{L"expbar_front",        2},
 		{L"quickslot",           2},
-		{L"hpbar_front",         2},
+		{L"hpbar_front",         5},
 		{L"quickslot_hover",     2},
 		{L"arrow_slot",          2},
 		{L"mouse_left",          3},
@@ -214,7 +218,7 @@ HRESULT Loader::load_UIResources()
 		{L"gearslot",            1},
 		{L"gearslot_plus",       2},
 		{L"gearslot_hover",      2},
-								 
+		{L"debugui",             5},
 		{L"emerald_sword",       10},
 								 
 		{L"InventoryPanel",     -1},  
@@ -265,6 +269,9 @@ HRESULT Loader::load_UIResources()
 		{L"worldmap_textpanel",  5},
 		{L"enemy_hpbarfront",    4},
 		{L"enemy_hpbarback",     3},
+		{L"boss_hpbarfront",     4},
+		{L"boss_icon",           2},
+		{L"particle",            6},
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

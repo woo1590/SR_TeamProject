@@ -352,6 +352,15 @@
     <Filter Include="02. Object\UIObj\HpBar\BossHPBarFront">
       <UniqueIdentifier>{e4750e43-6aaa-47e2-9554-37a9542559c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\Icon\07. BossIcon">
+      <UniqueIdentifier>{5c469025-e009-4574-819f-577182eb469f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\ParticleObj">
+      <UniqueIdentifier>{ecd64471-9daa-439e-ad9f-45bd10feffc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\DamageText">
+      <UniqueIdentifier>{51f9e712-51a5-4d13-af14-844000a64020}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -665,6 +674,15 @@
     <ClInclude Include="..\Header\BossHPBarFront.h">
       <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BossIcon.h">
+      <Filter>02. Object\UIObj\Icon\07. BossIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ParticleObj.h">
+      <Filter>02. Object\UIObj\ParticleObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DamageText.h">
+      <Filter>02. Object\UIObj\DamageText</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -977,6 +995,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossHPBarFront.cpp">
       <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossIcon.cpp">
+      <Filter>02. Object\UIObj\Icon\07. BossIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ParticleObj.cpp">
+      <Filter>02. Object\UIObj\ParticleObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DamageText.cpp">
+      <Filter>02. Object\UIObj\DamageText</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

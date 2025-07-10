@@ -48,7 +48,7 @@ public:
         size_t operator()(const pair<int, int>& pr) const
         {
             return hash<int>()(pr.first) ^ (hash<int>()(pr.second) << 1);
-        }
+        } 
     };
 public:
     static Player* Create(ObjectManager* owner, ObjectType objType);

@@ -33,15 +33,24 @@ public:
 	bool IsVisible() const { return isVisible; }
 	void SetAlpha(float a) { globalAlpha = clamp(a, 0.f, 1.f); }
 
+	void UseTransform(bool enable = true, DWORD pivot = DT_CENTER | DT_VCENTER)
+	{
+		useTransform = enable;
+		pivotFmt = pivot;
+	}
+
 private:
 	HRESULT CreateFontResource();
 	ID3DXFont* GetFont(FontType type) const;
 
-private:
+public:
 	unordered_map<FontType, ID3DXFont*> fontMap;
 	vector<TextEntry> entries;
 	bool isVisible = true;
 	float globalAlpha = 1.f;
+
+	bool useTransform = false;
+	DWORD pivotFmt = DT_CENTER | DT_VCENTER;
 };
 
 END

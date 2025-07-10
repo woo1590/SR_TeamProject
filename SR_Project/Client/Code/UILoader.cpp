@@ -17,7 +17,7 @@
 #include "ProgressBar.h"
 #include "InfoComponent.h"
 
-/* --- UI Obejct ------------------------------*/
+/* --- UI Object ------------------------------*/
 #include "Cursor.h"
 #include "InventoryUIBuilder.h"
 #include "InventoryUI.h"
@@ -63,6 +63,8 @@
 #include "TooltipObj.h"
 #include "SwordItem.h"
 #include "BowItem.h"
+#include "HPBarBack.h"
+#include "ParticleObj.h"
 
 
 #define ADD(obj) objMgr->AddUIObject(obj)
@@ -74,7 +76,9 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     auto* invMgr = uiMgr->GetInventory();
     auto* tooltipMgr = uiMgr->GetTooltip();
 
-    BuildCursorAndInventory(objMgr,invMgr);
+    ADD(Cursor::Create(objMgr));
+
+    BuildInventory(objMgr,invMgr);
     BuildPlayerBars(objMgr);
     BuildHotbar(objMgr);
     BuildQuickSlots(objMgr);
@@ -82,11 +86,12 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     BuildQuestUI(objMgr);
     BuildMiscUI(objMgr);
     BuildWorldMapUI(objMgr);
+
+  //  ADD(ParticleObj::Create(objMgr));
 }
 
-void UILoader::BuildCursorAndInventory(ObjectManager* objMgr,InventoryManager* invMgr)
+void UILoader::BuildInventory(ObjectManager* objMgr,InventoryManager* invMgr)
 {
-    ADD(Cursor::Create(objMgr));
     InventoryUIBuilder::BuildInventoryUI(objMgr, invMgr);
 
     auto tooltip = TooltipObj::Create(objMgr);
@@ -120,6 +125,9 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
     playerInfo->Attach(hpFront->GetComponent<ProgressBar<PlayerInfo>>());
     hpFront->GetComponent<ProgressBar<PlayerInfo>>()->SetEventType(UIEventType::HP_Changed);
     ADD(hpFront);
+
+    auto hpback = HPBarBack::Create(objMgr);
+    ADD(hpback);
 
     auto expFront = ExpBarFront::Create(objMgr);
     playerInfo->Attach(expFront->GetComponent<ProgressBar<PlayerInfo>>());

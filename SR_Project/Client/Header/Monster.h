@@ -3,6 +3,13 @@
 
 enum MonsterState { Idle, Walk, AttackReady, Attack, Hit, Die, };
 enum Phase {Ready, Action, Recover, };
+enum class MonsterType {Monster, Creeper, Boss};
+
+class EnemyHPBarFront;
+class EnemyHPBarBack;
+class BossHPBarFront;
+class ExpBarBack;
+
 struct Animation
 {
     _float Start;       //start angle;
@@ -27,7 +34,7 @@ protected:
     virtual ~Monster();
 
 public:
-    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType, bool isBoss = false);
+    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType, MonsterType type = MonsterType::Monster);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 
@@ -52,7 +59,8 @@ public:
     _bool GetHit();
 
     // ------------------------------
-
+    void DeleteBar();
+    void ShowDmgText(int dmg, const _vec3& hitDir);
     // ------------------------------
 protected:
     virtual void InitAnimation();
@@ -83,5 +91,10 @@ protected:
 
     _vec3               HitDir;
     _float              HitPower;
+
+    EnemyHPBarFront* enemyFront = nullptr;
+    EnemyHPBarBack* enemyBack = nullptr;
+    BossHPBarFront* bossFront = nullptr;
+    ExpBarBack*     bossBack = nullptr;
 };
 

@@ -90,6 +90,7 @@ namespace Engine
 		Custom,       // ����� ���� (������ Ȯ���)
 		QuestTitle,
 		VeryLarge,
+		DmgText,
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)

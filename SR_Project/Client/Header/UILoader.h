@@ -13,7 +13,7 @@ public:
     void LoadUI(ObjectManager* objMgr);
 
 private:
-    void BuildCursorAndInventory(ObjectManager* objMgr, InventoryManager* invMgr);
+    void BuildInventory(ObjectManager* objMgr, InventoryManager* invMgr);
     void BuildPlayerBars(ObjectManager* objMgr);
     void BuildHotbar(ObjectManager* objMgr);
     void BuildQuickSlots(ObjectManager* objMgr);

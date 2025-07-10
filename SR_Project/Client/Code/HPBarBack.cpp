@@ -16,9 +16,9 @@ HRESULT HPBarBack::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer  = AddComponent<UIRenderer>();
 
-	transform->SetScale(0.3f, 0.25f);
+	transform->SetScale(0.28f, 0.25f);
 
-	transform->SetPosition(WINCX * 0.5f, WINCY * 0.9f);
+	transform->SetPosition(610.f,648.f);
 
 	renderer->SetTexture(L"hpbar_back");
 	return S_OK;

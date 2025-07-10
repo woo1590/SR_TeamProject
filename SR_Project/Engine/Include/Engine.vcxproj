@@ -260,6 +260,7 @@
     <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\ItemComponent.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
+    <ClInclude Include="..\Header\ParticleComponent.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h" />
     <ClInclude Include="..\Header\InfoComponent.h" />
     <ClInclude Include="..\Header\Lever.h" />
@@ -307,6 +308,7 @@
     <ClInclude Include="..\Header\IObserver.h" />
     <ClInclude Include="..\Header\UIManager.h" />
     <ClInclude Include="..\Header\UIRenderer.h" />
+    <ClInclude Include="..\Header\WorldUIComponent.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -399,6 +401,7 @@
     <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\ItemComponent.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
+    <ClCompile Include="..\Code\ParticleComponent.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp" />
     <ClCompile Include="..\Code\InfoComponent.cpp" />
     <ClCompile Include="..\Code\Lever.cpp" />
@@ -445,6 +448,7 @@
     <ClCompile Include="..\Code\IObserver.cpp" />
     <ClCompile Include="..\Code\UIManager.cpp" />
     <ClCompile Include="..\Code\UIRenderer.cpp" />
+    <ClCompile Include="..\Code\WorldUIComponent.cpp" />
     <ClCompile Include="CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
