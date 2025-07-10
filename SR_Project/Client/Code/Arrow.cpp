@@ -185,5 +185,6 @@ void Arrow::MonsterArrowInfo()
     auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(CollisionComponent::LAYER_ENEMY);
     collision->SetMask(CollisionComponent::LAYER_PLAYER | CollisionComponent::LAYER_DEFAULT);
+    collision->SetSize(_vec3(1.f, 1.f, 1.f));
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }
