@@ -16,6 +16,7 @@
 #include "Rotate.h"
 #include "Die.h"
 #include "Player.h"
+#include "Arrow.h"
 
 Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -136,7 +137,7 @@ void Skeleton::InitTransform(ObjectType objType)
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
-    transform->SetPosition(_vec3(5, 100.f, 5));
+    transform->SetPosition(_vec3(50, 100.f, 50));
     SetMaterial("SkeletonBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial("SkeletonFace_Mtrl", "Head", RENDER_ID::Render_Alpha);
     SetMaterial("SkeletonBone_Mtrl", "LArm");
@@ -220,7 +221,7 @@ void Skeleton::InitAnimation()
     WalkAnim.ElapsedTime = 0.f;
 
     //Attack
-    AttackAnim.TotalTime = 1.5f;
+    AttackAnim.TotalTime = 0.7f;
     AttackAnim.ElapsedTime = 0.f;
     AttackAnim.DelayTime = 0.f;
     AttackAnim.Phase = Ready;
@@ -305,7 +306,7 @@ void Skeleton::PlayAttack(_float dt)
         {
             AttackAnim.Phase = Phase::Action;
             AttackAnim.ElapsedTime = 0.f;
-            AttackAnim.TotalTime = 1.5f;
+            AttackAnim.TotalTime = 0.5;
         }
         break;
     }
@@ -328,8 +329,10 @@ void Skeleton::PlayAttack(_float dt)
         {
             AttackAnim.Phase = Phase::Recover;
             AttackAnim.ElapsedTime = 0.f;
-            AttackAnim.TotalTime = 0.5f; 
+            AttackAnim.TotalTime = 0.3f; 
             AttackAnim.DelayTime = 0.2f;
+
+            Arrow::Create(owner, ObjectType::Projectile, this, GetComponent<TransformComponent>()->GetFoward());
         }
         break;
     }
@@ -434,7 +437,7 @@ void Skeleton::OnCollisionStay(Object* other)
             if (State == MonsterState::Attack)
             {
                 playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
-                player->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
+                //player->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
             }
         }
     }

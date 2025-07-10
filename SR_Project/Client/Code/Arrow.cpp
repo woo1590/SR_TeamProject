@@ -115,6 +115,17 @@ void Arrow::SetCollisionEnter(Object* other)
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
     }
+
+    if (objType == ObjectType::Player && hitObject == nullptr)
+    {
+        auto info = GetComponent<InfoComponent<ItemInfo>>();
+        auto collision = GetComponent<CollisionComponent>();
+
+        float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<EnemyInfo>>()->GetInfo().power + info->GetInfo().value;
+        other->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-arrowAttackDamage);
+        hitObject = other;
+        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+    }
 }
 
 void Arrow::ArrowRotateSet()
