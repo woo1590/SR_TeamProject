@@ -35,7 +35,7 @@ HRESULT Item::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto transform = AddComponent<TransformComponent>();
     auto info = AddComponent<InfoComponent<ItemInfo>>();
-    auto mesh = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
+    auto mesh = AddComponent<MeshRenderer>(RENDER_ID::Render_Alpha);
 
     owner->AddObject(objType, this);
     

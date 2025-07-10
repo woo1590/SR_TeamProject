@@ -6,6 +6,7 @@
 #include "TerrainMesh.h"
 #include "CubeMesh.h"
 #include "Material.h"
+#include "ArrowMesh.h"
 
 Loader::Loader(LOADID loadId)
 	:LoadId(loadId)
@@ -90,6 +91,8 @@ HRESULT Loader::Load_TestScene()
 
 	auto cube = CubeMesh::Create();
 	resource->LoadMesh("Cube_Mesh", cube);
+	//auto arrow = ArrowMesh::Create();
+	//resource->LoadMesh("Arrow_Mesh", arrow);
 	/*--------------------Load Shader---------------------------------*/
 	resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
 	resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");

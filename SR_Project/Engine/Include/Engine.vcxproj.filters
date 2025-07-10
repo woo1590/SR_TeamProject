@@ -274,6 +274,9 @@
     <Filter Include="05. Scene Component\UIManager\TooltipManager">
       <UniqueIdentifier>{337039c7-41b6-4c6c-80e3-94378fe6e9c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\ArrowMesh">
+      <UniqueIdentifier>{058a5e8d-4f54-4f56-b821-1f0c5ec1a1b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -559,6 +562,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\TooltipManager.cpp">
       <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ArrowMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -871,6 +877,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\TooltipManager.h">
       <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ArrowMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

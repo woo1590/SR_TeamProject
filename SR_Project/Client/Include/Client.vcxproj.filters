@@ -635,6 +635,9 @@
     <ClInclude Include="..\Header\WorldTooltip.h">
       <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Arrow.h">
+      <Filter>02. Object\Item\Arrow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -932,6 +935,9 @@
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\WorldTooltip.cpp">
       <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Arrow.cpp">
+      <Filter>02. Object\Item\Arrow</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -105,18 +105,24 @@ void Arrow::Late_Update(_float dt)
 void Arrow::SetCollisionEnter(Object* other)
 {
     if (hitObject != nullptr) return;
-    ObjectType objType = other->GetObjectType();
+    
     arrowSpeed = 0.f;
 
+    ObjectType objType = other->GetObjectType();
+    if (objType == ObjectType::StaticBlock && hitObject==nullptr) {
+        hitObject = other;
+        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+    }
     if (objType == ObjectType::Monster && hitObject == nullptr) 
     {
+        hitObject = other;
+        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+
         auto info = GetComponent<InfoComponent<ItemInfo>>();
         auto collision = GetComponent<CollisionComponent>();
 
         float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + info->GetInfo().value;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
-        hitObject = other;
-        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
 
         auto monster = static_cast<Monster*>(other);
         monster->SetHit(true);
