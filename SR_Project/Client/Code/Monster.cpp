@@ -78,6 +78,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, bool isB
         HpBarBack->GetComponent<TransformComponent>()->SetScale(1.485f, 0.8f);
         owner->AddUIObject(HpBarBack);
     }
+    IsHit = nullptr;
 
     return S_OK;
 }
@@ -117,6 +118,16 @@ _float Monster::GetHp()
 {
     auto  statcomponent = GetComponent<InfoComponent<EnemyInfo>>();
     return statcomponent->GetInfo().curHp;
+}
+
+void Monster::BackStep(_vec3* dir, _float dt)
+{
+    auto Transform = GetComponent<TransformComponent>();
+    auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
+
+    if (State != MonsterState::Walk) State = MonsterState::Walk;
+    D3DXVec3Normalize(dir, dir);
+    Transform->Translate(*dir * dt * Stat->GetInfo().speed);
 }
 
 void Monster::SetHit(_bool Hit)

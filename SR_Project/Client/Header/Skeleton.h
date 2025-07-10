@@ -36,5 +36,8 @@ protected:
 
 protected:
     void Free() override;
+
+private:
+    _float* NearDistance = nullptr;
 };
 

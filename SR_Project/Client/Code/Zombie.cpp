@@ -83,8 +83,8 @@ void Zombie::Attack(Object* target)
         AttackAnim.ElapsedTime = 0;
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
-        IsAttackDamage = false;
         *IsAttack = true;
+        IsAttackDamage = false;
     }
 }
 
@@ -138,7 +138,7 @@ void Zombie::InitTransform(ObjectType objType)
     collision->SetSize(_vec3(3.5f, 7.f, 3.5f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
-    transform->SetPosition(_vec3(5.f, 150.f, 5.f));
+    transform->SetPosition(_vec3(15.f, 150.f, 50.f));
 }
 
 void Zombie::InitTree()
@@ -406,7 +406,7 @@ void Zombie::OnCollisionStay(Object* other)
         if (State == MonsterState::Attack && !IsAttackDamage)
         {
             playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
-            player->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
+            //player->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
             IsAttackDamage = true;
         }
     }

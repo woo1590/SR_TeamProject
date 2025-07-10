@@ -175,12 +175,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\BackStep.h" />
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
     <ClInclude Include="..\Header\EnemyHPBarBack.h" />
     <ClInclude Include="..\Header\EnemyHPBarFront.h" />
     <ClInclude Include="..\Header\FilterTooltip.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
+    <ClInclude Include="..\Header\IsTargetClose.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
     <ClInclude Include="..\Header\IsTimerOn.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
@@ -192,6 +194,8 @@
     <ClInclude Include="..\Header\QuestPanel.h" />
     <ClInclude Include="..\Header\QuestTextObj.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
+    <ClInclude Include="..\Header\Spawner.h" />
+    <ClInclude Include="..\Header\SpawnTriggerBox.h" />
     <ClInclude Include="..\Header\TooltipObj.h" />
     <ClInclude Include="..\Header\WolfArmor.h" />
     <ClInclude Include="..\Header\ArmorFilter.h" />
@@ -277,12 +281,14 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\BackStep.cpp" />
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarFront.cpp" />
     <ClCompile Include="..\Code\FilterTooltip.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
+    <ClCompile Include="..\Code\IsTargetClose.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
@@ -294,6 +300,8 @@
     <ClCompile Include="..\Code\QuestPanel.cpp" />
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />
+    <ClCompile Include="..\Code\Spawner.cpp" />
+    <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />
     <ClCompile Include="..\Code\TooltipObj.cpp" />
     <ClCompile Include="..\Code\WolfArmor.cpp" />
     <ClCompile Include="..\Code\ArmorFilter.cpp" />

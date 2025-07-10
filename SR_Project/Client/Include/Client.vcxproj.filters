@@ -351,6 +351,15 @@
     </Filter>
     <Filter Include="02. Object\UIObj\HpBar\BossHPBarFront">
       <UniqueIdentifier>{e4750e43-6aaa-47e2-9554-37a9542559c4}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\Spawner">
+      <UniqueIdentifier>{dabd5484-e365-4db5-816b-900c42f87975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Spawner\Spawner">
+      <UniqueIdentifier>{2cd76ed9-5c7e-440b-8d99-74c70ba62af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Spawner\TriggerBox">
+      <UniqueIdentifier>{665aef6e-3cea-46d9-802e-d8a174d15bbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -553,9 +562,6 @@
     <ClInclude Include="..\Header\ItemSlot.h">
       <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\InventoryUIBuilder.h">
-      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\InventoryEmerald.h">
       <Filter>02. Object\UIObj\InventoryEmerald</Filter>
     </ClInclude>
@@ -664,6 +670,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\BossHPBarFront.h">
       <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\Spawner.h">
+      <Filter>02. Object\Spawner\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpawnTriggerBox.h">
+      <Filter>02. Object\Spawner\TriggerBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryUIBuilder.h">
+      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsTargetClose.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BackStep.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -977,6 +998,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossHPBarFront.cpp">
       <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\Spawner.cpp">
+      <Filter>02. Object\Spawner\Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpawnTriggerBox.cpp">
+      <Filter>02. Object\Spawner\TriggerBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsTargetClose.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BackStep.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

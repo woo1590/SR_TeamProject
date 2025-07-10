@@ -71,8 +71,7 @@ void Sword::SetCollisionEnter(Object* other)
     auto collision = GetComponent<CollisionComponent>();
 
     if (objType == ObjectType::Monster && 
-        static_cast<Player*>(ownerObject)->GetPlayerState() == Player::ePlayerState::ATTACK && 
-        static_cast<Monster*>(other)->GetHit() == false) 
+        static_cast<Player*>(ownerObject)->GetPlayerState() == Player::ePlayerState::ATTACK) 
     {
         float swordAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
 

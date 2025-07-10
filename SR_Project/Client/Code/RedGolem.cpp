@@ -73,7 +73,7 @@ void RedGolem::MoveTo(_vec3* dir, _float dt)
     auto stat = GetComponent<InfoComponent<EnemyInfo>>();
     if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
-    Transform->Translate(*dir * dt * stat->GetInfo().speed * 0.5f);
+    Transform->Translate(*dir * dt * stat->GetInfo().speed);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
@@ -108,7 +108,7 @@ void RedGolem::InitTransform(ObjectType objType)
 {
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
-    transform->SetPosition(20.f, 100.f, 10.f);
+    transform->SetPosition(50.f, 100.f, 10.f);
     //
     transform->SetRotate(0.f, D3DXToRadian(90.f), 0.f);
     //
@@ -209,12 +209,12 @@ void RedGolem::InitAnimation()
 
     //LeftAttack
     LeftAttackAnim.ElapsedTime = 0.f;
-    LeftAttackAnim.TotalTime = 1.8f;
+    LeftAttackAnim.TotalTime = 1.f;
     LeftAttackAnim.DelayTime = 0.f;
 
     //RightAttack
     RightAttackAnim.ElapsedTime = 0.f;
-    RightAttackAnim.TotalTime = 1.8f;
+    RightAttackAnim.TotalTime = 1.f;
     RightAttackAnim.DelayTime = 0.f;
 
     //SuperAttack
@@ -273,17 +273,14 @@ void RedGolem::PlayWalk(_float dt)
     float LegAngle = D3DXToRadian(20.f) * Angle;
     float ArmAngle = D3DXToRadian(30.f) * Angle;
 
-    SetRotation({ LegAngle, 0.f, 0.f }, "LLeg");
-    SetRotation({ -LegAngle, 0.f, 0.f }, "RLeg");
+    SetRotation({ LegAngle/4, 0.f, 0.f }, "LLeg");
+    SetRotation({ -LegAngle/4, 0.f, 0.f }, "RLeg");
 
     SetRotation({ -ArmAngle, 0.f, 0.f }, "LArm");
     SetRotation({ ArmAngle, 0.f, 0.f }, "RArm");
 
     auto transform = GetComponent<TransformComponent>();
     _vec3 pos = transform->GetPosition();
-
-    float bodyBob = Angle * 0.015f;
-    transform->SetPosition(_vec3(pos.x, pos.y + bodyBob, pos.z));
 
     float bodyYaw = D3DXToRadian(2.f) * sinf(Angle * D3DX_PI * 2);
     SetRotation({ 0.f, bodyYaw, 0.f }, "Body");
