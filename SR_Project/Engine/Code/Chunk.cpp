@@ -355,6 +355,7 @@ void Chunk::BuildCollisionBlock()
 
                 // const _vec3& pos = block.Pos;
                 _vec3 pos = block.Pos - _vec3(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
+
                 if (IsAir(x, y + 1, z) || IsAir(x, y - 1, z) ||
                     IsAir(x + 1, y, z) || IsAir(x - 1, y, z) ||
                     IsAir(x, y, z + 1) || IsAir(x, y, z - 1))
