@@ -42,7 +42,11 @@
 #include "DynamicBlock.h"
 #include "RedGolem.h"
 #include "Chunk.h"
+<<<<<<< Updated upstream
 #include "SpawnTriggerBox.h"
+=======
+#include "Tnt.h"
+>>>>>>> Stashed changes
 
 //component
 #include "TransformComponent.h"
@@ -110,6 +114,7 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	//ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
 
+<<<<<<< Updated upstream
 	auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	ObjectMgr->AddObject(ObjectType::Neutral, trigger);
 
@@ -123,6 +128,10 @@ void TestScene::Load()
 	trigger->AddSpawner(SpawnType::Creeper, _vec3(30.f, 10.f, 50.f), _vec3(0.f, 0.f, 0.f));
 	//trigger->AddSpawner(SpawnType::RedGolem, _vec3(5.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
 
+=======
+	ObjectMgr->AddObject(ObjectType::Item, Tnt::Create(ObjectMgr, ObjectType::Item));
+	static_cast<Tnt*>(ObjectMgr->GetObjectList(ObjectType::Item).back())->TntToPlayer(ObjectMgr->GetFrontObject(ObjectType::Player));
+>>>>>>> Stashed changes
 	UILoader loader;
 	loader.LoadUI(ObjectMgr);
 }
