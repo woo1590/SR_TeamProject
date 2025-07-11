@@ -295,6 +295,9 @@
     <Filter Include="07. Object Component\ParticleSystem">
       <UniqueIdentifier>{08be6929-8d56-40a2-a302-d7c5b6b060c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\QuadMesh">
+      <UniqueIdentifier>{65abbc90-b0dd-4d65-aa0e-90ba79415400}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -601,6 +604,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ParticleSystem.cpp">
       <Filter>07. Object Component\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuadMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\QuadMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -934,6 +940,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\ParticleSystem.h">
       <Filter>07. Object Component\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuadMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\QuadMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

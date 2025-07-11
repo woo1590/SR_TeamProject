@@ -370,6 +370,15 @@
     <Filter Include="02. Object\Effect">
       <UniqueIdentifier>{06797bd7-8b13-4b94-a26f-7776f56a54a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\Stage1">
+      <UniqueIdentifier>{57c8f4d5-8d90-497f-84e9-167970730719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Stage2">
+      <UniqueIdentifier>{c4b8c4d7-89dd-4bcd-82bd-8c392ddabda4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Village">
+      <UniqueIdentifier>{709b7437-123b-4b7f-ad28-c76b2d030fd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">

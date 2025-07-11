@@ -31,7 +31,33 @@ void Sprite::Update(_float dt)
 	{
 		timer += dt * speed;
 	}
+	
+	if (timer >= 1.f)
+	{
+		currFrame++;
+		timer = 0.f;
+	}
 
+	if (currFrame >= totalFrame)
+	{
+		if (isRepeat)
+		{
+			currFrame = 0.f;	
+		}
+		else
+		{
+			currFrame--;
+		}
+	}
+
+}
+
+void Sprite::Render()
+{
+	if (shader)
+	{
+
+	}
 }
 
 void Sprite::Reset()

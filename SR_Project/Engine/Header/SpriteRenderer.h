@@ -3,6 +3,7 @@
 
 BEGIN(Engine)
 
+class Shader;
 class ENGINE_DLL Sprite : public Base
 {
 private:
@@ -13,12 +14,16 @@ public:
 	static Sprite* Create();
 	HRESULT Ready_Sprite();
 	void Update(_float dt);
+	void Render();
+
+	void SetTexture(const std::string& texName);
 	void Reset();
 
 private:
 	void Free()override;
 
-	LPDIRECT3DBASETEXTURE9 texture;
+	Shader* shader = nullptr;
+	LPDIRECT3DBASETEXTURE9 texture = nullptr;
 	_uint currFrame;
 	_uint totalFrame;
 	_float timer = 0.f;
