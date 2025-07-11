@@ -150,10 +150,8 @@ Chunk* ChunkManager::GetChunk(int chunkX, int chunkZ)
 
 void ChunkManager::Free()
 {
-    // std::for_each(worldChunks.begin(), worldChunks.end(), [](auto& pair)
-    //     {
-    //         Safe_Delete(pair.second);
-    //     });
-    // 
-    // worldChunks.clear();
+    for (auto& [pos, chunkPtr] : worldChunks)
+        Safe_Release(chunkPtr);
+
+    worldChunks.clear();
 }

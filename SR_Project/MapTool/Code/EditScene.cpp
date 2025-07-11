@@ -80,31 +80,36 @@ void EditScene::Update(float dt)
 
 	// 좌&우클릭에 따른 블럭 생성&제거
 	_vec3 rayOrigin, rayDir;
+	ImGuiIO& io = ImGui::GetIO();
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
-	if (isDown)
+
+	if (!io.WantCaptureMouse)
 	{
-		if (Input->IsKeyDown(LBUTTON))
+		if (isDown)
 		{
-			MakePickingRay(rayOrigin, rayDir);
-			OnLeftClick(rayOrigin, rayDir);
+			if (Input->IsKeyDown(LBUTTON))
+			{
+				MakePickingRay(rayOrigin, rayDir);
+				OnLeftClick(rayOrigin, rayDir);
+			}
+			if (Input->IsKeyDown(RBUTTON))
+			{
+				MakePickingRay(rayOrigin, rayDir);
+				OnRightClick(rayOrigin, rayDir);
+			}
 		}
-		if (Input->IsKeyDown(RBUTTON))
+		else
 		{
-			MakePickingRay(rayOrigin, rayDir);
-			OnRightClick(rayOrigin, rayDir);
-		}
-	}
-	else
-	{
-		if (Input->IsKeyPressed(LBUTTON))
-		{
-			MakePickingRay(rayOrigin, rayDir);
-			OnLeftClick(rayOrigin, rayDir);
-		}
-		if (Input->IsKeyPressed(RBUTTON))
-		{
-			MakePickingRay(rayOrigin, rayDir);
-			OnRightClick(rayOrigin, rayDir);
+			if (Input->IsKeyPressed(LBUTTON))
+			{
+				MakePickingRay(rayOrigin, rayDir);
+				OnLeftClick(rayOrigin, rayDir);
+			}
+			if (Input->IsKeyPressed(RBUTTON))
+			{
+				MakePickingRay(rayOrigin, rayDir);
+				OnRightClick(rayOrigin, rayDir);
+			}
 		}
 	}
 }
@@ -716,12 +721,12 @@ _vec3 EditScene::GetLocalCoordInChunk(const _vec3& pos, int chunkX, int chunkZ)
 
 void EditScene::Free()
 {
+	Safe_Release(ChunkMgr);
 	Safe_Release(ObjectMgr);
 	Safe_Release(CollisionSys);
 	Safe_Release(CameraMgr);
 
 	Safe_Release(BlockMgr);
-	Safe_Release(ChunkMgr);
 	Safe_Release(Terrain);
 
 	staticBlocks.clear();

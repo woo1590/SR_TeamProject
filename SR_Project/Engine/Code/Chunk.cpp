@@ -48,6 +48,8 @@ HRESULT Chunk::Ready_Object()
 
 void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
 {
+    if (position.x < 0 || position.z < 0) return;
+
     int localX = static_cast<int>(position.x) % CHUNK_SIZE / BLOCK_SIZE;
     int localY = static_cast<int>(position.y) / BLOCK_SIZE;
     int localZ = static_cast<int>(position.z) % CHUNK_SIZE / BLOCK_SIZE;
@@ -64,16 +66,13 @@ void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxi
 
 Chunk* Chunk::GetNeighborChunk(int x, int z)
 {
-    Scene* scene = owner->GetOwner();
-    if (!scene) return nullptr;
-
-    ChunkManager* chunkMgr = scene->GetChunkManager();
-    if (!chunkMgr) return nullptr;
+    if (!owner->GetOwner()) return nullptr;
+    if (!owner->GetOwner()->GetChunkManager()) return nullptr;
 
     int neighborChunkX = ChunkX + x;
     int neighborChunkZ = ChunkZ + z;
 
-    auto& chunks = chunkMgr->GetChunks();
+    auto& chunks = owner->GetOwner()->GetChunkManager()->GetChunks();
     auto it = chunks.find({ neighborChunkX, neighborChunkZ });
 
     if (it != chunks.end())
@@ -283,14 +282,12 @@ void Chunk::SetUV(const SB& sb, int faceDir)
             TexUVs[2] = { 0.375f, 0.125f };
             TexUVs[3] = { 0.25f, 0.125f };
             break;
-        
         case Face_Bottom:
             TexUVs[0] = { 0.f, 0.f };
             TexUVs[1] = { 0.125f, 0.f };
             TexUVs[2] = { 0.125f, 0.125f };
             TexUVs[3] = { 0.f, 0.125f };
             break;
-
         default:
             TexUVs[0] = { 0.125f, 0.f };
             TexUVs[1] = { 0.25f, 0.f };
@@ -302,32 +299,29 @@ void Chunk::SetUV(const SB& sb, int faceDir)
 
     case Wood:
     {
-        bool isRingFace = false;
-        const float texSize = 0.125f;
-        const _vec2 ringTexStart = { 0.125f, 0.25f };
-        const _vec2 sideTexStart = { 0.0f, 0.25f };
+        bool isRingFace(false);
+        const float texSize(0.125f);
+        const _vec2 ringTexStart{ 0.125f, 0.25f };
+        const _vec2 sideTexStart{ 0.0f, 0.25f };
 
         switch (sb.Axis)
         {
         case sAX:
             if (faceDir == Face_Left || faceDir == Face_Right) isRingFace = true;
             break;
-
         case sAY:
             if (faceDir == Face_Top || faceDir == Face_Bottom) isRingFace = true;
             break;
-
         case sAZ:
             if (faceDir == Face_Front || faceDir == Face_Behind) isRingFace = true;
             break;
         }
 
         _vec2 uv = isRingFace ? ringTexStart : sideTexStart;
-
-        TexUVs[0] = { uv.x, uv.y };
-        TexUVs[1] = { uv.x + texSize, uv.y };
-        TexUVs[2] = { uv.x + texSize, uv.y + texSize };
-        TexUVs[3] = { uv.x, uv.y + texSize };
+        TexUVs[0] = { uv.x, uv.y + texSize };
+        TexUVs[1] = { uv.x, uv.y };
+        TexUVs[2] = { uv.x + texSize, uv.y };
+        TexUVs[3] = { uv.x + texSize, uv.y + texSize };
     }
     break;
     }
