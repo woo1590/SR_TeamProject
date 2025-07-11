@@ -15,8 +15,8 @@ public:
 
     void LoadTexture();
 
-    void SaveStage(const char* saveStage);
-    void LoadStage(const char* loadStage);
+    void SaveDB(const char* saveStage);
+    void LoadDB(const char* loadStage);
 
     void SaveChunk(const char* saveStage);
     void LoadChunk(const char* loadStage);

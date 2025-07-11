@@ -15,8 +15,11 @@ public:
 
 public:
     static Chunk* Create(ObjectManager* owner, int chunkX, int chunkZ);
+
+private:
     HRESULT Ready_Object()override;
 
+public:
     // 블럭 추가 (월드 좌표 -> 로컬 좌표)
     void AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
 

@@ -48,8 +48,6 @@ HRESULT Chunk::Ready_Object()
 
 void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
 {
-    if (position.x < 0 || position.z < 0) return;
-
     int localX = static_cast<int>(position.x) % CHUNK_SIZE / BLOCK_SIZE;
     int localY = static_cast<int>(position.y) / BLOCK_SIZE;
     int localZ = static_cast<int>(position.z) % CHUNK_SIZE / BLOCK_SIZE;
@@ -153,7 +151,7 @@ void Chunk::BuildChunkFace()
                 if (block.Type == StaticBlockType::Air)
                     continue;
 
-                _vec3 pos = block.Pos - _vec3(ChunkX * CHUNK_SIZE, 0.f, ChunkZ * CHUNK_SIZE);
+                _vec3 pos = block.Pos -_vec3(ChunkX * CHUNK_SIZE, 0.f, ChunkZ * CHUNK_SIZE);
                 if (IsAir(x, y + 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Top, block);
                 if (IsAir(x, y - 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Bottom, block);
                 if (IsAir(x + 1, y, z)) AddFace(vertices, indices, pos, FaceDir::Face_Right, block);
@@ -164,7 +162,7 @@ void Chunk::BuildChunkFace()
         }
     }
 
-    Safe_Release(mesh);
+    //Safe_Release(mesh);
 
     mesh = ChunkMesh::Create();
     if (FAILED(mesh->Ready_Mesh(vertices, indices)))
@@ -357,6 +355,6 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 
 void Chunk::Free()
 {
-    Safe_Delete(mesh);
+    Safe_Release(mesh);
     Object::Free();
 }

@@ -112,6 +112,15 @@ void EditScene::Update(float dt)
 			}
 		}
 	}
+
+	if (Input->IsKeyPressed(Q))
+	{
+		for (auto& Dst : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			if (static_cast<DynamicBlock*>(Dst)->GetType() == LeverSwitch)
+				static_cast<DynamicBlock*>(Dst)->SetActivate();
+		}
+	}
 }
 
 void EditScene::Late_Update(float dt)
@@ -144,6 +153,7 @@ void EditScene::ImGui_Info()
 
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
+	ImGui::Text("Dynamic Block Count : %d", dynamicBlocks.size());
 }
 
 void EditScene::ImGui_SaveLoad()
@@ -151,7 +161,11 @@ void EditScene::ImGui_SaveLoad()
 	// 청크 저장하기
 	static char save[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE", save, sizeof(save)); ImGui::SameLine();
-	if (ImGui::Button("SAVE CHUNK")) BlockMgr->SaveChunk(save);
+	if (ImGui::Button("SAVE CHUNK"))
+	{
+		BlockMgr->SaveDB(save);
+		BlockMgr->SaveChunk(save);
+	}
 
 	// 청크 불러오기
 	static char load[16]{}; ImGui::SetNextItemWidth(150);
@@ -163,8 +177,10 @@ void EditScene::ImGui_SaveLoad()
 		ChunkMgr->ClearAllChunks();
 
 		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 
+		BlockMgr->LoadDB(load);
 		BlockMgr->LoadChunk(load);
 
 		for (auto& chunk : ChunkMgr->GetChunks())
@@ -200,6 +216,7 @@ void EditScene::ImGui_SaveLoad()
 
 		selectedSBlockType = 0;
 		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 	}
 	ImGui::SameLine();
@@ -210,6 +227,7 @@ void EditScene::ImGui_SaveLoad()
 		ChunkMgr->ClearAllChunks();
 
 		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 	}
 }
@@ -680,6 +698,8 @@ void EditScene::Place(_vec3& position)
 	
 	if (staticBlockType != StaticBlockType::Air)
 	{
+		if (position.x < 0 || position.z < 0) return;
+
 		// ================ 청크 생성 ================
 		int chunkX = static_cast<int>(floorf(position.x / CHUNK_SIZE));
 		int chunkZ = static_cast<int>(floorf(position.z / CHUNK_SIZE));

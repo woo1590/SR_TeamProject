@@ -167,5 +167,5 @@ void Lever::Operate()
 
 void Lever::Free()
 {
-    Object::Free();
+    DynamicBlock::Free();
 }

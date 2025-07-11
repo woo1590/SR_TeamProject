@@ -16,6 +16,7 @@ Part::~Part()
 Part* Part::Create(ObjectManager* owner, ObjectType objType, _vec3 scale, Object* parent, const std::string& mtrl)
 {
     Part* Instance = new Part(owner, objType);
+    Instance->AddRef();
 
     if (FAILED(Instance->Ready_Object(parent, scale, mtrl)))
     {

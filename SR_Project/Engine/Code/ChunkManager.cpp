@@ -29,7 +29,9 @@ Chunk* ChunkManager::CreateChunk(int chunkX, int chunkZ)
         return it->second;
 
     Chunk* newChunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkZ);
+    newChunk->AddRef();
     worldChunks[key] = newChunk;
+
     return newChunk;
 }
 
@@ -65,7 +67,7 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
         return;
     }
 
-    DWORD dwByte = 0;
+    DWORD dwByte(0);
     int chunkCount = worldChunks.size();
     WriteFile(hFile, &chunkCount, sizeof(chunkCount), &dwByte, nullptr);
 
@@ -101,7 +103,7 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
     }
 
     CloseHandle(hFile);
-    MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", "Success", MB_OK);
+    // MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", "Success", MB_OK);
 }
 
 void ChunkManager::LoadChunk(const std::wstring& loadPath)
@@ -139,7 +141,7 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
     }
 
     CloseHandle(hFile);
-    MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", "Success", MB_OK);
+    // MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", "Success", MB_OK);
 }
 
 Chunk* ChunkManager::GetChunk(int chunkX, int chunkZ)
@@ -152,6 +154,6 @@ void ChunkManager::Free()
 {
     for (auto& [pos, chunkPtr] : worldChunks)
         Safe_Release(chunkPtr);
-
+    
     worldChunks.clear();
 }

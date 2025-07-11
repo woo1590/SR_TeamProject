@@ -68,7 +68,7 @@ HRESULT Bridge::Ready_Object(ObjectManager* owner, ObjectType objType)
     }
 
     for (auto& part : Parts)
-        owner->AddObject(objType, part.second);
+        owner->AddObject(ObjectType::Part, part.second);
 
     return S_OK;
 }
@@ -128,5 +128,5 @@ void Bridge::Operate()
 
 void Bridge::Free()
 {
-    Object::Free();
+    DynamicBlock::Free();
 }

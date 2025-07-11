@@ -15,6 +15,9 @@ public:
     // 블럭 지형 생성
     void CreateBlockTerrain(int terX, int terZ, int terY);
 
+    // 마우스 위치, 일정 반경으로 높이 재조정
+    void SetHeight(int cx, int cy, int distance, unsigned char amount);
+
     void SaveHeightmapAsImage(const std::string& filepath);     // 높이맵 저장하기
     bool LoadHeightmapFromImage(const std::string& filepath);   // 높이맵 불러오기
 

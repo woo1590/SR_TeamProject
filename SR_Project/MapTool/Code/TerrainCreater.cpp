@@ -38,6 +38,28 @@ void TerrainCreater::CreateHeightmap(int width, int height, float scale)
     }
 }
 
+void TerrainCreater::SetHeight(int cx, int cy, int distance, unsigned char amount)
+{
+    for (int y = -distance; y <= distance; ++y)
+    {
+        for (int x = -distance; x <= distance; ++x)
+        {
+            int nx = cx + x;
+            int ny = cy + y;
+            if (nx < 0 || ny < 0 || nx >= Wid || ny >= Hei)
+                continue;
+
+            float dist = sqrtf(x * x + y * y);
+            if (dist > distance)
+                continue;
+
+            int idx = ny * Wid + nx;
+            int newHeight = min(255, heightMap[idx] + amount);
+            heightMap[idx] = static_cast<unsigned char>(newHeight);
+        }
+    }
+}
+
 void TerrainCreater::SaveHeightmapAsImage(const std::string& filename)
 {
     int width = Wid;

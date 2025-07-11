@@ -32,7 +32,7 @@ public:
     void SetID(int id) { ID = id; }
     void SetCount(int count) { Count = count; }
 
-private:
+protected:
     void Free() override;
 
 protected:

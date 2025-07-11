@@ -87,7 +87,7 @@ HRESULT IronCage::Ready_Object(ObjectManager* owner, ObjectType objType, Dynamic
     }
 
     for (auto& part : Parts)
-        owner->AddObject(objType, part.second);
+        owner->AddObject(ObjectType::Part, part.second);
 
     return S_OK;
 }
@@ -157,5 +157,5 @@ void IronCage::Operate()
 
 void IronCage::Free()
 {
-    Object::Free();
+    DynamicBlock::Free();
 }
