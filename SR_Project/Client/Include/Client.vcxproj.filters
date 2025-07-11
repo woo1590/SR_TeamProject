@@ -354,7 +354,7 @@
     </Filter>
     <Filter Include="02. Object\Spawner\TriggerBox">
       <UniqueIdentifier>{665aef6e-3cea-46d9-802e-d8a174d15bbd}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\Icon\07. BossIcon">
       <UniqueIdentifier>{5c469025-e009-4574-819f-577182eb469f}</UniqueIdentifier>
     </Filter>
@@ -366,6 +366,9 @@
     </Filter>
     <Filter Include="02. Object\UIObj\HpBar\HPBarWhite">
       <UniqueIdentifier>{a770cd5a-670d-4d7a-9836-e1dfc3253900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect">
+      <UniqueIdentifier>{06797bd7-8b13-4b94-a26f-7776f56a54a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -691,7 +694,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. Object\Item\Arrow</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\BossIcon.h">
       <Filter>02. Object\UIObj\Icon\07. BossIcon</Filter>
     </ClInclude>
@@ -703,6 +706,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\HPBarWhite.h">
       <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect.h">
+      <Filter>02. Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1028,7 +1034,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. Object\Item\Arrow</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\BossIcon.cpp">
       <Filter>02. Object\UIObj\Icon\07. BossIcon</Filter>
     </ClCompile>
@@ -1040,6 +1046,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\HPBarWhite.cpp">
       <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>02. Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
