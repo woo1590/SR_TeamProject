@@ -1,15 +1,17 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "Tnt.h"
-
 #include "Scene.h"
 #include "PhysicsSystem.h"
 #include "ObjectManager.h"
+
 #include "InfoComponent.h"
+#include "MeshRendererComponent.h"
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
 #include "CollisionComponent.h"
 
 #include "Player.h"
+#include "Monster.h"
 
 Tnt::Tnt(ObjectManager* owner, ObjectType objType) : Item(owner, objType){}
 
@@ -37,7 +39,7 @@ HRESULT Tnt::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     auto i = info->GetInfo();
-    i.value = 10.f;
+    i.value = 50.f;
     info->SetInfo(i);
 
     SetMesh("Cube_Mesh");
@@ -50,7 +52,7 @@ HRESULT Tnt::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     /////////////////////////////////////////////////
     auto physics = AddComponent<PhysicsComponent>();
-    physics->SetMass(1.f);
+    physics->SetMass(0.2f);
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);
 
     return S_OK;
@@ -81,7 +83,37 @@ void Tnt::Update(_float dt)
         }
         if (TntTime >= TntBoom)
         {
-            //µ¥¹ÌÁö ·ÎÁ÷
+            auto transform = GetComponent<TransformComponent>();
+            auto pos = transform->GetWorldPosition();
+            auto TntDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
+
+            auto player = owner->GetFrontObject(ObjectType::Player);
+            auto playerPos = player->GetComponent<TransformComponent>()->GetWorldPosition();
+
+            _vec3 distanceVec = playerPos - pos;
+            _float distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
+            if (distance <= TntRange)
+            {
+                player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-TntDamage);
+            }
+
+            auto monsters = owner->GetObjectList(ObjectType::Monster);
+            for (auto& monster : monsters)
+            {
+                
+                auto monsterPos = monster->GetComponent<TransformComponent>()->GetWorldPosition();
+
+                distanceVec = monsterPos - pos;
+                distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
+                if (distance <= TntRange)
+                {
+                    auto mon = dynamic_cast<Monster*>(monster);
+                    mon->SetHit(true);
+                    mon->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), TntDamage);
+                    monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-TntDamage);
+                }
+            }
+            //SetDead();
         }
     }
 }
@@ -95,6 +127,8 @@ void Tnt::TntToPlayer(Object* player)
 {
     ownerObject = player;
     GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetWorldPosition() + tntOffset);
+    auto physics = GetComponent<PhysicsComponent>();
+    physics->SetGround(true);
 }
 
 void Tnt::TntInfo()
@@ -108,8 +142,8 @@ void Tnt::TntInfo()
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     auto collision = AddComponent<CollisionComponent>();
-    collision->SetLayer(CollisionComponent::LAYER_PLAYER);
-    collision->SetMask(CollisionComponent::LAYER_DEFAULT);
+    collision->SetLayer(LAYER_PLAYER);
+    collision->SetMask(LAYER_DEFAULT);
     collision->SetSize(_vec3(1.f, 1.f, 1.f));
 }
 
@@ -125,6 +159,7 @@ void Tnt::ThrowTnt()
 
     _vec3 velocity = physics->GetVelocity();
     velocity.x = throwDirection.x * throwSpeed;
+    velocity.y = 10.f;
     velocity.z = throwDirection.z * throwSpeed;
     physics->SetVelocity(velocity);
 }

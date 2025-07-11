@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Item.h"
 class Tnt :
     public Item
@@ -23,10 +23,11 @@ private:
     _vec3 tntOffset = { 0.f, 5.f, 0.f };
 
     bool throwTnt = false;
-    const float throwSpeed = 3.f;
+    const float throwSpeed = 10.f;
     _vec3 throwDirection = { 0.f,0.f,0.f };
 
     float TntTime = 0.f;
     const float TntBoom = 3.f;
+    const float TntRange = 10.f;
 };
 

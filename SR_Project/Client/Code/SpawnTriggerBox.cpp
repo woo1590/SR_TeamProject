@@ -77,7 +77,7 @@ void SpawnTriggerBox::SetTriggerPosition(_vec3 pos)
 
 void SpawnTriggerBox::AddSpawner(SpawnType type, _vec3 pos, _vec3 rot)
 {
-    spawners.push_back(Spawner::Create(owner, ObjectType::Monster, type, pos, rot));
+    spawners.push_back(Spawner::Create(owner, ObjectType::Neutral, type, pos, rot));
 }
 
 void SpawnTriggerBox::OnCollisionEnter(Object* other)
