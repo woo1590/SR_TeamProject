@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "SpawnTriggerBox.h"
 
 #include "CollisionComponent.h"
@@ -38,7 +38,7 @@ HRESULT SpawnTriggerBox::Ready_Object(ObjectManager* owner, ObjectType objType)
     transform->SetPosition(50.f, 0.f, 50.f);
 
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
-    collision->SetLayer(LAYER_ENEMY);
+    collision->SetLayer(LAYER_DEFAULT);
     collision->SetMask(LAYER_PLAYER);
     collision->SetCollisionEnter([this](Object* other) {this->OnCollisionEnter(other); });
     collision->SetSize(_vec3(10.f, 10.f, 10.f));
