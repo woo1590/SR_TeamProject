@@ -328,7 +328,6 @@
     <Filter Include="02. Object\UIObj\Tooltip\TooltipObj">
       <UniqueIdentifier>{791f16c4-7087-4ad4-8813-882cccd29a7d}</UniqueIdentifier>
     </Filter>
-<<<<<<< Updated upstream
     <Filter Include="02. Object\UIObj\Tooltip\FilterTooltip">
       <UniqueIdentifier>{0b274195-08ee-43af-ae39-a76c1d5eef38}</UniqueIdentifier>
     </Filter>
@@ -367,10 +366,6 @@
     </Filter>
     <Filter Include="02. Object\UIObj\HpBar\HPBarWhite">
       <UniqueIdentifier>{a770cd5a-670d-4d7a-9836-e1dfc3253900}</UniqueIdentifier>
-=======
-    <Filter Include="02. Object\Item\Tnt">
-      <UniqueIdentifier>{40a1c0d4-1383-499b-a661-06cb9721a443}</UniqueIdentifier>
->>>>>>> Stashed changes
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -709,9 +704,6 @@
     <ClInclude Include="..\Header\HPBarWhite.h">
       <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Tnt.h">
-      <Filter>02. Object\Item\Tnt</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1048,9 +1040,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\HPBarWhite.cpp">
       <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Tnt.cpp">
-      <Filter>02. Object\Item\Tnt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
