@@ -704,8 +704,7 @@ void EditScene::Place(_vec3& position)
 		int chunkX = static_cast<int>(floorf(position.x / CHUNK_SIZE));
 		int chunkZ = static_cast<int>(floorf(position.z / CHUNK_SIZE));
 
-		ChunkMgr->CreateChunk(chunkX, chunkZ);
-		ChunkMgr->GetChunk(chunkX, chunkZ)->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
+		ChunkMgr->CreateChunk(chunkX, chunkZ)->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
 		if (!CreateTer) ChunkMgr->GetChunk(chunkX, chunkZ)->BuildChunkFace();
 
 		// ================ 벡터에 블럭 정보 삽입 ================

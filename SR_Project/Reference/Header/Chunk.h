@@ -49,6 +49,7 @@ private:
 private:
     int ChunkX = 0, ChunkZ = 0;
     _vec2 TexUVs[4]{};
+
     ChunkMesh* mesh = nullptr;
     SB Blocks[CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
 };

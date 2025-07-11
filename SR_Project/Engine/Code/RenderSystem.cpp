@@ -203,6 +203,7 @@ void RenderSystem::DebugPass()
 
 void RenderSystem::AlphaPass()
 {
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -210,6 +211,7 @@ void RenderSystem::AlphaPass()
 	for (const auto& r : RenderList[(int)RENDER_ID::Render_Alpha])
 		r->Render();
 
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 

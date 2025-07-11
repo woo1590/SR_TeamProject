@@ -74,7 +74,7 @@ HRESULT ChunkMesh::CreateBuffer(const std::vector<VTXTEX>& vertices, const std::
     void* idx = nullptr;
     if (FAILED(IB->Lock(0, 0, &idx, 0)))
         return E_FAIL;
-    memcpy_s(idx, IndexCnt * sizeof(int), indices.data(), IndexCnt * sizeof(_ulong));
+    memcpy_s(idx, IndexCnt * sizeof(_ulong), indices.data(), IndexCnt * sizeof(_ulong));
     IB->Unlock();
 
     return S_OK;

@@ -48,11 +48,13 @@ HRESULT Chunk::Ready_Object()
 
 void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
 {
-    int localX = static_cast<int>(position.x) % CHUNK_SIZE / BLOCK_SIZE;
+    int localX = (static_cast<int>(position.x) - ChunkX * CHUNK_SIZE) / BLOCK_SIZE;
     int localY = static_cast<int>(position.y) / BLOCK_SIZE;
-    int localZ = static_cast<int>(position.z) % CHUNK_SIZE / BLOCK_SIZE;
+    int localZ = (static_cast<int>(position.z) - ChunkZ * CHUNK_SIZE) / BLOCK_SIZE;
 
-    if (localY >= (CHUNK_HEIGHT / BLOCK_SIZE)) return;
+    if (localY < 0 || localY >= CHUNK_HEIGHT / BLOCK_SIZE) return;
+    if (localX < 0 || localX >= CHUNK_SIZE / BLOCK_SIZE) return;
+    if (localZ < 0 || localZ >= CHUNK_SIZE / BLOCK_SIZE) return;
 
     auto& block = Blocks[localX][localY][localZ];
     block.Pos = position;
@@ -316,10 +318,10 @@ void Chunk::SetUV(const SB& sb, int faceDir)
         }
 
         _vec2 uv = isRingFace ? ringTexStart : sideTexStart;
-        TexUVs[0] = { uv.x, uv.y + texSize };
-        TexUVs[1] = { uv.x, uv.y };
-        TexUVs[2] = { uv.x + texSize, uv.y };
-        TexUVs[3] = { uv.x + texSize, uv.y + texSize };
+        TexUVs[0] = { uv.x + texSize, uv.y + texSize };
+        TexUVs[1] = { uv.x, uv.y + texSize };
+        TexUVs[2] = { uv.x, uv.y };
+        TexUVs[3] = { uv.x + texSize, uv.y };
     }
     break;
     }
