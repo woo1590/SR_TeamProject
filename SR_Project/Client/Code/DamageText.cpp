@@ -23,7 +23,7 @@ HRESULT DamageText::Ready_Object()
 
 	font->UseTransform(true, DT_CENTER | DT_BOTTOM);
 	RECT rc = {0, 0, 200, 80};
-	font->AddText(L"", rc, D3DXCOLOR(1, 0.2f, 0.2f, 1),DT_CENTER | DT_VCENTER,FontType::QuestTitle);
+	font->AddText(L"", rc, D3DXCOLOR(1, 0.2f, 0.2f, 1), DT_CENTER | DT_VCENTER ,FontType::QuestTitle);
 	renderer->SetTexture(L"debugui");
 
 	return S_OK;

@@ -60,6 +60,6 @@ void UIDebugObj::Update(float dt)
 
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	
-	if (input->IsKeyPressed(KEY::LBUTTON))
-		playerInfo->AddHp(-5);
+	//if (input->IsKeyPressed(KEY::LBUTTON))
+	//	playerInfo->AddHp(-5);
 }
