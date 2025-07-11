@@ -79,7 +79,7 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType, DynamicBlo
     }
 
     for (auto& part : Parts)
-        owner->AddObject(objType, part.second);
+        owner->AddObject(ObjectType::Part, part.second);
 
     return S_OK;
 }
@@ -162,5 +162,5 @@ void Chest::Operate()
 
 void Chest::Free()
 {
-    Object::Free();
+    DynamicBlock::Free();
 }

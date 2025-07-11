@@ -32,11 +32,12 @@ void BlockManager::LoadTexture()
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 
 	resource->LoadMesh("Cube_Mesh", cube);
+	resource->LoadShader("../../Client/Resource/Shader/ChunkShader.fx","ChunkShader");
 	resource->LoadShader("../../Client/Resource/Shader/BasicShader.fx","BasicShader");
 	resource->LoadMaterial("../../Client/Resource/Material/Blocks.json");
 }
 
-void BlockManager::SaveStage(const char* saveStage)
+void BlockManager::SaveDB(const char* saveStage)
 {
 	HANDLE hFile(nullptr);
 	string path = "../../Reference/MapData/"; path += saveStage; path += ".dat";
@@ -54,11 +55,8 @@ void BlockManager::SaveStage(const char* saveStage)
 	}
 
 	DWORD dwByte(0);
-	DWORD SBSize(owner->GetStaticBlocks().size());
 	DWORD DBSize(owner->GetDynamicBlocks().size());
-	WriteFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr);
 	WriteFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr);
-	for (auto& block : owner->GetStaticBlocks()) WriteFile(hFile, &block, sizeof(SB), &dwByte, nullptr);
 	for (auto& block : owner->GetDynamicBlocks())
 	{
 		WriteFile(hFile, &block, sizeof(DB), &dwByte, nullptr);
@@ -103,10 +101,10 @@ void BlockManager::SaveStage(const char* saveStage)
 	}
 
 	CloseHandle(hFile);
-	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", _T("Success"), MB_OK);
+	// MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", _T("Success"), MB_OK);
 }
 
-void BlockManager::LoadStage(const char* loadStage)
+void BlockManager::LoadDB(const char* loadStage)
 {
 	HANDLE hFile(nullptr);
 	string path = "../../Reference/MapData/"; path += loadStage; path += ".dat";
@@ -123,26 +121,12 @@ void BlockManager::LoadStage(const char* loadStage)
 		return;
 	}
 
-	owner->GetObjectManager()->ClearList(ObjectType::StaticBlock); owner->GetObjectManager()->GetObjectList(ObjectType::StaticBlock).clear();
 	owner->GetObjectManager()->ClearList(ObjectType::DynamicBlock); owner->GetObjectManager()->GetObjectList(ObjectType::DynamicBlock).clear();
 
-	DWORD dwByte(0), dwSBTot(0), dwDBTot(0);
-	DWORD SBSize(0), DBSize(0);
-	SB newSBlock; DB newDBlock;
+	DWORD dwByte(0), dwDBTot(0), DBSize(0);
+	DB newDBlock;
 
-	if (!ReadFile(hFile, &SBSize, sizeof(DWORD), &dwByte, nullptr)) return;
 	if (!ReadFile(hFile, &DBSize, sizeof(DWORD), &dwByte, nullptr)) return;
-
-	for (DWORD i = 0; i < SBSize; ++i)
-	{
-		if (!ReadFile(hFile, &newSBlock, sizeof(SB), &dwByte, nullptr)) return;
-
-		auto sBlock = StaticBlock::Create(owner->GetObjectManager(), ObjectType::StaticBlock, newSBlock.Type, newSBlock.Axis, newSBlock.Rot, newSBlock.Usage);
-		sBlock->GetComponent<TransformComponent>()->SetPosition(newSBlock.Pos);
-
-		owner->GetObjectManager()->AddObject(ObjectType::StaticBlock, sBlock);
-		owner->GetStaticBlocks().push_back(newSBlock);
-	}
 
 	for (DWORD i = 0; i < DBSize; ++i)
 	{
@@ -186,7 +170,7 @@ void BlockManager::LoadStage(const char* loadStage)
 	}
 
 	CloseHandle(hFile);
-	MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", _T("Success"), MB_OK);
+	// MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", _T("Success"), MB_OK);
 }
 
 void BlockManager::SaveChunk(const char* saveStage)

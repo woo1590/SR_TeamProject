@@ -95,7 +95,7 @@ HRESULT Bridge::Ready_Object(ObjectManager* owner, ObjectType objType)
     BriPar->SetPivot(_vec3(0.f, 0.f, 0.f));
 
     for (auto& part : Parts)
-        owner->AddObject(objType, part.second);
+        owner->AddObject(ObjectType::Part, part.second);
 
     return S_OK;
 }
@@ -155,5 +155,5 @@ void Bridge::Operate()
 
 void Bridge::Free()
 {
-    Object::Free();
+    DynamicBlock::Free();
 }

@@ -61,7 +61,7 @@ HRESULT ChunkMesh::CreateBuffer(const std::vector<VTXTEX>& vertices, const std::
     memcpy_s(vtx, VertexCnt * sizeof(VTXTEX), vertices.data(), VertexCnt * sizeof(VTXTEX));
     VB->Unlock();
 
-    if (FAILED(Device->CreateIndexBuffer(IndexCnt * sizeof(int),
+    if (FAILED(Device->CreateIndexBuffer(IndexCnt * sizeof(_ulong),
         D3DUSAGE_WRITEONLY,
         D3DFMT_INDEX32,
         D3DPOOL_MANAGED,
@@ -74,7 +74,7 @@ HRESULT ChunkMesh::CreateBuffer(const std::vector<VTXTEX>& vertices, const std::
     void* idx = nullptr;
     if (FAILED(IB->Lock(0, 0, &idx, 0)))
         return E_FAIL;
-    memcpy_s(idx, IndexCnt * sizeof(int), indices.data(), IndexCnt * sizeof(int));
+    memcpy_s(idx, IndexCnt * sizeof(_ulong), indices.data(), IndexCnt * sizeof(_ulong));
     IB->Unlock();
 
     return S_OK;

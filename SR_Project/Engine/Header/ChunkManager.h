@@ -3,7 +3,7 @@
 
 BEGIN(Engine)
 class Chunk;
-class Scene;
+class Scene;    
 class ENGINE_DLL ChunkManager : public Base
 {
 private:
@@ -20,12 +20,14 @@ public:
     static ChunkManager* Create(Scene* owner);
 
 public:
+    Chunk* CreateChunk(int chunkX, int chunkZ);     // Key 값의 청크 있으면 해당 청크 반환, 없으면 생성 후 반환
+    void RemoveChunk(int chunkX, int chunkZ);       // Key 값의 청크 있으면 제거
+    void ClearAllChunks();                          // 모든 청크 클리어 및 하나의 청크만 남기고 메모리 해제
+
     void SaveChunk(const std::wstring& saveStage);
     void LoadChunk(const std::wstring& loadStage);
-    
-    Chunk* CreateChunk(int chunkX, int chunkZ);
-    void RemoveChunk(int chunkX, int chunkZ);
 
+    Chunk* GetChunk(int chunkX, int chunkZ);        // Key 값의 청크 있으면 해당 청크 반환
     const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() { return worldChunks; }
 
 private:

@@ -7,11 +7,11 @@
 //component
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
+#include "ChunkManager.h"
 #include "StaticBlock.h"
-#include "DynamicBlock.h"
+#include "Scene.h"
 
-Chunk::Chunk(ObjectManager* owner, int chunkX, int chunkZ)
-    :Object(owner,ObjectType::Chunk)
+Chunk::Chunk(ObjectManager* owner, int chunkX, int chunkZ) : Object(owner,ObjectType::Chunk)
 {
     ChunkX = chunkX;
     ChunkZ = chunkZ;
@@ -23,7 +23,7 @@ Chunk::~Chunk()
 
 Chunk* Chunk::Create(ObjectManager* owner, int chunkX, int chunkZ)
 {
-    Chunk* Instance = new Chunk(owner,chunkX, chunkZ);
+    Chunk* Instance = new Chunk(owner, chunkX, chunkZ);
 
     if (FAILED(Instance->Ready_Object()))
     {
@@ -37,7 +37,7 @@ Chunk* Chunk::Create(ObjectManager* owner, int chunkX, int chunkZ)
 HRESULT Chunk::Ready_Object()
 {
     auto transform = AddComponent<TransformComponent>();
-    transform->SetPosition(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
+    transform->SetPosition(ChunkX * CHUNK_SIZE, 0.f, ChunkZ * CHUNK_SIZE);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMaterial("Chunk_Mtrl");
@@ -47,23 +47,39 @@ HRESULT Chunk::Ready_Object()
     return S_OK;
 }
 
-void Chunk::AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
+void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
 {
-    int localX = static_cast<int>(pos.x / 2) % CHUNK_SIZE;
-    int localY = static_cast<int>(pos.y / 2);
-    int localZ = static_cast<int>(pos.z / 2) % CHUNK_SIZE;
+    int localX = (static_cast<int>(position.x) - ChunkX * CHUNK_SIZE) / BLOCK_SIZE;
+    int localY = static_cast<int>(position.y) / BLOCK_SIZE;
+    int localZ = (static_cast<int>(position.z) - ChunkZ * CHUNK_SIZE) / BLOCK_SIZE;
 
-    if (localX < 0 || localX >= CHUNK_SIZE ||
-        localY < 0 || localY >= CHUNK_HEIGHT ||
-        localZ < 0 || localZ >= CHUNK_SIZE)
-        return;
+    if (localY < 0 || localY >= CHUNK_HEIGHT / BLOCK_SIZE) return;
+    if (localX < 0 || localX >= CHUNK_SIZE / BLOCK_SIZE) return;
+    if (localZ < 0 || localZ >= CHUNK_SIZE / BLOCK_SIZE) return;
 
-    StaticBlockData& block = Blocks[localX][localY][localZ];
-    block.Pos = pos;
+    auto& block = Blocks[localX][localY][localZ];
+    block.Pos = position;
     block.Type = type;
     block.Axis = axis;
     block.Rot = rot;
     block.Usage = usage;
+}
+
+Chunk* Chunk::GetNeighborChunk(int x, int z)
+{
+    if (!owner->GetOwner()) return nullptr;
+    if (!owner->GetOwner()->GetChunkManager()) return nullptr;
+
+    int neighborChunkX = ChunkX + x;
+    int neighborChunkZ = ChunkZ + z;
+
+    auto& chunks = owner->GetOwner()->GetChunkManager()->GetChunks();
+    auto it = chunks.find({ neighborChunkX, neighborChunkZ });
+
+    if (it != chunks.end())
+        return it->second;
+
+    return nullptr;
 }
 
 void Chunk::InitializeAirBlocks()
@@ -87,9 +103,46 @@ void Chunk::BuildChunkFace()
 
     auto IsAir = [&](int x, int y, int z) -> bool
         {
-        if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return true;
-        return Blocks[x][y][z].Type == StaticBlockType::Air;
+            if (y < 0 || y >= CHUNK_HEIGHT) return true;
+            if (x >= 0 && x < CHUNK_SIZE && z >= 0 && z < CHUNK_SIZE)
+            {
+                return Blocks[x][y][z].Type == StaticBlockType::Air;
+            }
+            //else
+            //{
+            //    int offsetX(0), offsetZ(0);
+            //    int localX(x), localZ(z);
+            //
+            //    if (x < 0)
+            //    {
+            //        offsetX = -1;
+            //        localX = CHUNK_SIZE - 1;
+            //    }
+            //    else if (x >= CHUNK_SIZE)
+            //    {
+            //        offsetX = 1;
+            //        localX = 0;
+            //    }
+            //
+            //    if (z < 0)
+            //    {
+            //        offsetZ = -1;
+            //        localZ = CHUNK_SIZE - 1;
+            //    }
+            //    else if (z >= CHUNK_SIZE)
+            //    {
+            //        offsetZ = 1;
+            //        localZ = 0;
+            //    }
+            //
+            //    Chunk* neighborChunk = GetNeighborChunk(offsetX, offsetZ);
+            //
+            //    if (!neighborChunk)
+            //        return true;
+            //    return neighborChunk->GetBlock(localX, y, localZ).Type == StaticBlockType::Air;
+            //}
         };
+
 
     for (int y = 0; y < CHUNK_HEIGHT; ++y)
     {
@@ -101,20 +154,18 @@ void Chunk::BuildChunkFace()
                 if (block.Type == StaticBlockType::Air)
                     continue;
 
-                // const _vec3& pos = block.Pos;
-                _vec3 pos = block.Pos - _vec3(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
-                if (IsAir(x, y + 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Top);
-                if (IsAir(x, y - 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Bottom);
-                if (IsAir(x + 1, y, z)) AddFace(vertices, indices, pos, FaceDir::Face_Right);
-                if (IsAir(x - 1, y, z)) AddFace(vertices, indices, pos, FaceDir::Face_Left);
-                if (IsAir(x, y, z + 1)) AddFace(vertices, indices, pos, FaceDir::Face_Front);
-                if (IsAir(x, y, z - 1)) AddFace(vertices, indices, pos, FaceDir::Face_Behind);
+                _vec3 pos = block.Pos -_vec3(ChunkX * CHUNK_SIZE, 0.f, ChunkZ * CHUNK_SIZE);
+                if (IsAir(x, y + 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Top, block);
+                if (IsAir(x, y - 1, z)) AddFace(vertices, indices, pos, FaceDir::Face_Bottom, block);
+                if (IsAir(x + 1, y, z)) AddFace(vertices, indices, pos, FaceDir::Face_Right, block);
+                if (IsAir(x - 1, y, z)) AddFace(vertices, indices, pos, FaceDir::Face_Left, block);
+                if (IsAir(x, y, z + 1)) AddFace(vertices, indices, pos, FaceDir::Face_Front, block);
+                if (IsAir(x, y, z - 1)) AddFace(vertices, indices, pos, FaceDir::Face_Behind, block);
             }
         }
     }
 
-    Safe_Release(mesh);
-    if (vertices.empty() || indices.empty()) return;
+    //Safe_Release(mesh);
 
     mesh = ChunkMesh::Create();
     if (FAILED(mesh->Ready_Mesh(vertices, indices)))
@@ -127,12 +178,12 @@ void Chunk::BuildChunkFace()
     renderer->SetMesh(mesh);
 }
 
-void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir)
+void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir, const SB& sb)
 {
     static const _vec3 offsets[6][4] =
     {
         { {-1.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, -1.f}, {-1.f, 1.f, -1.f} },
-        { {-1.f, -1.f, 1.f}, {1.f, -1.f, 1.f}, {1.f, -1.f, -1.f}, {-1.f, -1.f, -1.f} },
+        { {1.f, -1.f, 1.f}, {-1.f, -1.f, 1.f}, {-1.f, -1.f, -1.f}, {1.f, -1.f, -1.f} },
         { {-1.f, 1.f, 1.f}, {-1.f, 1.f, -1.f}, {-1.f, -1.f, -1.f}, {-1.f, -1.f, 1.f} },
         { {1.f, 1.f, -1.f}, {1.f, 1.f, 1.f}, {1.f, -1.f, 1.f}, {1.f, -1.f, -1.f} },
         { {1.f, 1.f, 1.f}, {-1.f, 1.f, 1.f}, {-1.f, -1.f, 1.f}, {1.f, -1.f, 1.f} },
@@ -149,14 +200,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
         { 0.f, 0.f, -1.f },  // -Z (Back)
     };
 
-    static const _vec2 uvs[4] = // 아틀라스 이미지 UV 지정
-    {
-        { 0.f, 1.f },
-        { 0.f, 0.f },
-        { 1.f, 0.f },
-        { 1.f, 1.f }
-    };
-
+    SetUV(sb, faceDir);
     int startIndex = static_cast<int>(vertices.size());
 
     for (int i = 0; i < 4; ++i)
@@ -164,7 +208,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
         VTXTEX v;
         v.vPosition = blockPos + offsets[faceDir][i];
         v.vNormal = faceOffsets[faceDir];
-        v.vTexUV = uvs[i];
+        v.vTexUV = TexUVs[i];
         vertices.push_back(v);
     }
 
@@ -175,6 +219,113 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     indices.push_back(startIndex + 0);
     indices.push_back(startIndex + 2);
     indices.push_back(startIndex + 3);
+}
+
+void Chunk::SetUV(const SB& sb, int faceDir)
+{
+    switch (sb.Type)
+    {
+    case Dirt:
+        TexUVs[0] = { 0.f, 0.f };
+        TexUVs[1] = { 0.125f, 0.f };
+        TexUVs[2] = { 0.125f, 0.125f };
+        TexUVs[3] = { 0.125f, 0.f };
+        break;
+    
+    case WoodPlank:
+        TexUVs[0] = { 0.25f, 0.25f };
+        TexUVs[1] = { 0.375f, 0.25f };
+        TexUVs[2] = { 0.375f, 0.375f };
+        TexUVs[3] = { 0.25f, 0.375f };
+        break;
+
+    case Stone:
+        TexUVs[0] = { 0.125f, 0.125f };
+        TexUVs[1] = { 0.25f, 0.125f };
+        TexUVs[2] = { 0.25f, 0.25f };
+        TexUVs[3] = { 0.125f, 0.25f };
+        break;
+
+    case CobbleStone:
+        TexUVs[0] = { 0.f, 0.125f };
+        TexUVs[1] = { 0.125f, 0.125f };
+        TexUVs[2] = { 0.125f, 0.25f };
+        TexUVs[3] = { 0.f, 0.25f };
+        break;
+
+    case SmoothStone:
+        TexUVs[0] = { 0.25f, 0.125f };
+        TexUVs[1] = { 0.375f, 0.125f };
+        TexUVs[2] = { 0.375f, 0.25f };
+        TexUVs[3] = { 0.25f, 0.25f };
+        break;
+    
+    case StoneBrick:
+        TexUVs[0] = { 0.375f, 0.125f };
+        TexUVs[1] = { 0.5f, 0.125f };
+        TexUVs[2] = { 0.5f, 0.25f };
+        TexUVs[3] = { 0.375f, 0.25f };
+        break;
+    
+    case MossyStoneBrick:
+        TexUVs[0] = { 0.5f, 0.125f };
+        TexUVs[1] = { 0.625f, 0.125f };
+        TexUVs[2] = { 0.625f, 0.25f };
+        TexUVs[3] = { 0.5f, 0.25f };
+        break;
+
+    case GrassDirt:
+        switch (faceDir)
+        {
+        case Face_Top:
+            TexUVs[0] = { 0.25f, 0.f };
+            TexUVs[1] = { 0.375f, 0.f };
+            TexUVs[2] = { 0.375f, 0.125f };
+            TexUVs[3] = { 0.25f, 0.125f };
+            break;
+        case Face_Bottom:
+            TexUVs[0] = { 0.f, 0.f };
+            TexUVs[1] = { 0.125f, 0.f };
+            TexUVs[2] = { 0.125f, 0.125f };
+            TexUVs[3] = { 0.f, 0.125f };
+            break;
+        default:
+            TexUVs[0] = { 0.125f, 0.f };
+            TexUVs[1] = { 0.25f, 0.f };
+            TexUVs[2] = { 0.25f, 0.125f };
+            TexUVs[3] = { 0.125f, 0.125f };
+            break;
+        }
+        break;
+
+    case Wood:
+    {
+        bool isRingFace(false);
+        const float texSize(0.125f);
+        const _vec2 ringTexStart{ 0.125f, 0.25f };
+        const _vec2 sideTexStart{ 0.0f, 0.25f };
+
+        switch (sb.Axis)
+        {
+        case sAX:
+            if (faceDir == Face_Left || faceDir == Face_Right) isRingFace = true;
+            break;
+        case sAY:
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isRingFace = true;
+            break;
+        case sAZ:
+            if (faceDir == Face_Front || faceDir == Face_Behind) isRingFace = true;
+            break;
+        }
+
+        _vec2 uv = isRingFace ? ringTexStart : sideTexStart;
+        TexUVs[0] = { uv.x + texSize, uv.y + texSize };
+        TexUVs[1] = { uv.x, uv.y + texSize };
+        TexUVs[2] = { uv.x, uv.y };
+        TexUVs[3] = { uv.x + texSize, uv.y };
+    }
+    break;
+    }
 }
 
 StaticBlockData Chunk::GetBlock(int x, int y, int z) const
@@ -228,13 +379,9 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 {
     for (const auto& block : flatBlocks)
     {
-        int blockX = static_cast<int>(floor(block.Pos.x / 2.f));
-        int blockZ = static_cast<int>(floor(block.Pos.z / 2.f));
-
-        int localX = blockX - ChunkX * CHUNK_SIZE;
-        int localZ = blockZ - ChunkZ * CHUNK_SIZE;
-
-        int localY = static_cast<int>(block.Pos.y / 2);
+        int localX = static_cast<int>(block.Pos.x) % CHUNK_SIZE / BLOCK_SIZE;
+        int localY = static_cast<int>(block.Pos.y) / BLOCK_SIZE;
+        int localZ = static_cast<int>(block.Pos.z) % CHUNK_SIZE / BLOCK_SIZE;
 
         if (localX < 0 || localX >= CHUNK_SIZE || localY < 0 || localY >= CHUNK_HEIGHT || localZ < 0 || localZ >= CHUNK_SIZE) continue;
 
@@ -244,7 +391,6 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 
 void Chunk::Free()
 {
-    Object::Free();
-    memset(Blocks, 0, sizeof(Blocks));
     Safe_Release(mesh);
+    Object::Free();
 }

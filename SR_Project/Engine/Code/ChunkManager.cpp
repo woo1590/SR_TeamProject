@@ -20,6 +20,43 @@ ChunkManager* ChunkManager::Create(Scene* owner)
 	return Instance;
 }
 
+Chunk* ChunkManager::CreateChunk(int chunkX, int chunkZ)
+{
+    auto key = std::make_pair(chunkX, chunkZ);
+    auto it = worldChunks.find(key);
+
+    if (it != worldChunks.end())
+        return it->second;
+
+    Chunk* newChunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkZ);
+    newChunk->AddRef();
+    worldChunks[key] = newChunk;
+
+    return newChunk;
+}
+
+void ChunkManager::RemoveChunk(int chunkX, int chunkZ)
+{
+    auto key = std::make_pair(chunkX, chunkZ);
+    auto it = worldChunks.find(key);
+    if (it != worldChunks.end())
+    {
+        Safe_Release(it->second);
+        worldChunks.erase(it);
+    }
+}
+
+void ChunkManager::ClearAllChunks()
+{
+    for (auto& iter : worldChunks) if (worldChunks.size() > 1) Safe_Release(iter.second);
+    for (auto& iter : worldChunks)
+    {
+        iter.second->InitializeAirBlocks();
+        iter.second->BuildChunkFace();
+    }
+    worldChunks.clear();
+}
+
 void ChunkManager::SaveChunk(const std::wstring& saveStage)
 {
     HANDLE hFile = CreateFileW(saveStage.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
@@ -30,7 +67,7 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
         return;
     }
 
-    DWORD dwByte = 0;
+    DWORD dwByte(0);
     int chunkCount = worldChunks.size();
     WriteFile(hFile, &chunkCount, sizeof(chunkCount), &dwByte, nullptr);
 
@@ -38,7 +75,6 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
     {
         int chunkX = pair.first.first;
         int chunkZ = pair.first.second;
-        Chunk* chunk = pair.second;
 
         WriteFile(hFile, &chunkX, sizeof(int), &dwByte, nullptr);
         WriteFile(hFile, &chunkZ, sizeof(int), &dwByte, nullptr);
@@ -51,7 +87,7 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
             {
                 for (int z = 0; z < CHUNK_SIZE; ++z)
                 {
-                    SB block = chunk->GetBlock(x, y, z);
+                    SB block = pair.second->GetBlock(x, y, z);
                     if (block.Type != StaticBlockType::Air)
                     {
                         nonAirBlocks.push_back(block);
@@ -67,7 +103,7 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
     }
 
     CloseHandle(hFile);
-    MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", "Success", MB_OK);
+    // MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", "Success", MB_OK);
 }
 
 void ChunkManager::LoadChunk(const std::wstring& loadPath)
@@ -79,13 +115,6 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
         MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Fail", "Fail", MB_OK);
         return;
     }
-
-    owner->GetObjectManager()->ClearList(ObjectType::StaticBlock);
-    owner->GetObjectManager()->GetObjectList(ObjectType::StaticBlock).clear();
-
-    for (auto& pair : worldChunks)
-        Safe_Delete(pair.second);
-    worldChunks.clear();
 
     DWORD dwByte = 0;
     int chunkCount = 0;
@@ -114,35 +143,19 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
     }
 
     CloseHandle(hFile);
-    MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", "Success", MB_OK);
+    // MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", "Success", MB_OK);
 }
 
-Chunk* ChunkManager::CreateChunk(int chunkX, int chunkZ)
+Chunk* ChunkManager::GetChunk(int chunkX, int chunkZ)
 {
-    auto key = std::make_pair(chunkX, chunkZ);
-    auto it = worldChunks.find(key);
-    if (it != worldChunks.end())
-        return it->second;
-
-    Chunk* newChunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkZ);
-    worldChunks[key] = newChunk;
-    return newChunk;
-}
-
-void ChunkManager::RemoveChunk(int chunkX, int chunkZ)
-{
-    auto key = std::make_pair(chunkX, chunkZ);
-    auto it = worldChunks.find(key);
-    if (it != worldChunks.end())
-    {
-        Safe_Release(it->second);
-        worldChunks.erase(it);
-    }
+    auto it = worldChunks.find({ chunkX, chunkZ });
+    return (it != worldChunks.end()) ? it->second : nullptr;
 }
 
 void ChunkManager::Free()
 {
-	for (auto& pair : worldChunks)
-		Safe_Release(pair.second);
-	worldChunks.clear();
+    for (auto& [pos, chunkPtr] : worldChunks)
+        Safe_Release(chunkPtr);
+    
+    worldChunks.clear();
 }

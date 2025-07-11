@@ -38,7 +38,7 @@ HRESULT BasicBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     StaticBlock::Ready_Object();
 
-   /* auto transform = GetComponent<TransformComponent>();
+    /*auto transform = GetComponent<TransformComponent>();
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMesh("Cube_Mesh");
 

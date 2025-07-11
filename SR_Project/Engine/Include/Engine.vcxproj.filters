@@ -262,7 +262,7 @@
     <Filter Include="06. Object\00. Parts">
       <UniqueIdentifier>{83c3baa4-bd33-422b-955d-3c25050183d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\Chunk">
+    <Filter Include="06. Object\03. Chunk">
       <UniqueIdentifier>{516bf75c-515a-4e4c-a73b-d6a653ee1289}</UniqueIdentifier>
     </Filter>
     <Filter Include="07. Object Component\UIComponent\10. HoverButtonComponent">
@@ -516,7 +516,7 @@
       <Filter>06. Object\02. DynamicBlock\IronCage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Chunk.cpp">
-      <Filter>06. Object\Chunk</Filter>
+      <Filter>06. Object\03. Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ChunkManager.cpp">
       <Filter>05. Scene Component\ChunkManager</Filter>
@@ -833,7 +833,7 @@
       <Filter>06. Object\02. DynamicBlock\IronCage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Chunk.h">
-      <Filter>06. Object\Chunk</Filter>
+      <Filter>06. Object\03. Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BlockManager.h">
       <Filter>05. Scene Component\BlockManager</Filter>

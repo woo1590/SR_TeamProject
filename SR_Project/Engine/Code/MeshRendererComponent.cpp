@@ -46,6 +46,9 @@ void MeshRenderer::Late_Update(_float dt)
 
 void MeshRenderer::Render()
 {
+	if (!mesh)
+		return;
+
 	auto transform = owner->GetComponent<TransformComponent>();
 	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
 	auto shader = mtrl->GetShader();

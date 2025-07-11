@@ -7,6 +7,8 @@ class ENGINE_DLL ChunkMesh : public Mesh
 {
 private:
     ChunkMesh();
+
+public:
     virtual ~ChunkMesh();
 
 public:
