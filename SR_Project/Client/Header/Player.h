@@ -62,6 +62,7 @@ public:
     Object* GetBone(std::string boneName);
     ePlayerState GetPlayerState();
     void RevivePlayer();
+    _vec3 GetAttackDirection();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
