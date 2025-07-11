@@ -46,17 +46,6 @@ void MeshRenderer::Late_Update(_float dt)
 
 void MeshRenderer::Render()
 {
-	//auto device = EngineCore::GetInstance()->GetRenderSystem()->GetDevice();
-	//
-	//// 💡 알파 블렌딩 상태 강제 설정
-	//device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	//device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	//device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	//
-	//// 💡 텍스처 알파 사용 설정
-	//device->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-	//device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
-
 	auto transform = owner->GetComponent<TransformComponent>();
 	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
 	auto shader = mtrl->GetShader();
