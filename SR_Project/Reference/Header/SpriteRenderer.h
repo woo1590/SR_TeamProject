@@ -12,7 +12,8 @@ private:
 public:
 	static Sprite* Create();
 	HRESULT Ready_Sprite();
-	Sprite* Clone();
+	void Update(_float dt);
+	void Reset();
 
 private:
 	void Free()override;
@@ -21,6 +22,7 @@ private:
 	_uint currFrame;
 	_uint totalFrame;
 	_float timer = 0.f;
+	_float speed;
 	_bool isRepeat = false;
 };
 
@@ -33,10 +35,12 @@ private:
 
 public:
     static SpriteRenderer* Create(Object* owner, RENDER_ID id);
+	void Update(_float dt)override;
     void Render()override;
 
 private:
-	Sprite* sprite = nullptr;
+	std::unordered_map<std::string, Sprite*> SpriteMap;
+	std::string playSprite;
 };
 
 END

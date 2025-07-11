@@ -67,7 +67,7 @@ SpriteRenderer* SpriteRenderer::Create(Object* owner, RENDER_ID id)
 
 void SpriteRenderer::Update(_float dt)
 {
-	sprite->Update(dt);
+	SpriteMap[playSprite]->Update(dt);
 }
 
 void SpriteRenderer::Render()
