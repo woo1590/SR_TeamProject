@@ -13,7 +13,7 @@ Boss::~Boss()
 
 HRESULT Boss::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-	Monster::Ready_Object(owner, objType, true);
+	Monster::Ready_Object(owner, objType, MonsterType::Boss);
 	
 	return S_OK;
 }

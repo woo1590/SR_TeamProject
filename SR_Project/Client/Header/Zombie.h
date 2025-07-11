@@ -33,7 +33,6 @@ protected:
     void PlayHit(_float dt) override;
 
     void OnCollisionStay(Object* other) override;
-
 protected:
     void Free() override;
 

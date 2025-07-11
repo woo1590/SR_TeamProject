@@ -6,6 +6,7 @@
 #include "HoverComponent.h"
 #include "FontComponent.h"
 #include "ObjectManager.h"
+#include "DamageText.h"
 
 
 #include "EngineCore.h"
@@ -40,4 +41,46 @@ HRESULT HPBarFront::Ready_Object()
 		});
 
 	return S_OK;
+}
+
+void HPBarFront::Update(float dt)
+{
+	Object::Update(dt);
+
+	auto playerInfo = owner->GetFrontObject(ObjectType::Player)->GetComponent<InfoComponent<PlayerInfo>>();
+
+	int curHp = playerInfo->GetInfo().curHp;
+
+	if (prevHp >= 0 && curHp < prevHp)
+		OnHPChanged(prevHp - curHp);
+
+	prevHp = curHp;
+}
+
+void HPBarFront::OnHPChanged(int damage)
+{
+	auto dmgText = DamageText::Create(owner);
+	if (!dmgText) return;
+
+	auto tf = GetComponent<TransformComponent>();
+	_vec3 pos = tf->GetWorldPosition();
+	_vec3 scale = tf->GetScale();
+
+	pos.x -= 250.f;
+	pos.z -= 150.f;
+	pos.y += 250.f;
+
+	dmgText->worldPos = pos;
+
+	dmgText->screenDir = _vec2(0.5f,0.5f);
+
+	auto font = dmgText->GetComponent<FontComponent>();
+	font->ClearText();
+	RECT rc = {0, 0, 200, 80};
+	font->AddText(L"-" + to_wstring(damage), rc,
+		Color::White,
+		DT_CENTER | DT_VCENTER,
+		FontType::DmgText);
+
+	owner->AddUIObject(dmgText);
 }

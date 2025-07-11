@@ -38,6 +38,7 @@ protected:
     void SetWeapon(Object* parent,ObjectType objType, const string& mtrl);
     void DetachParent(string str = "Body");
 
+    void SetDead()override;
 protected:
     void Free() override;
 

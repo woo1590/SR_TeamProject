@@ -100,6 +100,7 @@ void Zombie::Die()
         SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+       // SetDead();
     }
 }
 
@@ -121,6 +122,8 @@ void Zombie::Hit(_vec3 dir, _float power)
         
         HitDir = dir;
         HitPower = power;
+
+        Monster::Hit(dir, power);
     }
 }
 
@@ -299,6 +302,8 @@ void Zombie::PlayDie(_float dt)
     {
       //  DieAnim.ElapsedTime = 0.f;
         DieAnim.IsEnd = true;
+
+       // DeleteBar();
     }
 }
 

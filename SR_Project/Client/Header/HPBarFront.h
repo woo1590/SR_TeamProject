@@ -11,4 +11,10 @@ private:
 public:
 	static HPBarFront* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
+	void Update(float dt) override;
+
+	void OnHPChanged(int newHp);
+
+private:
+	int prevHp = -1;
 };

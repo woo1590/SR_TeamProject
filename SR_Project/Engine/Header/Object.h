@@ -22,6 +22,9 @@ public:
     ObjectManager* GetOwner()const;
     Scene* GetScene()const;
     void UnRegister();
+    
+    void AddChild(Object* child) { children.push_back(child); }
+    const vector<Object*>& GetChildren() const { return children; }
 
     template<typename T,typename... Args>
     T* AddComponent(Args&&... args)
@@ -66,6 +69,8 @@ protected:
 
     std::vector<ObjectComponent*> Components;
     std::unordered_map<std::type_index, ObjectComponent*> ComponentMap;
+
+    vector<Object*> children;
 };
 
 END

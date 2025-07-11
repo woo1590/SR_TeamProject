@@ -46,11 +46,6 @@ void UIDebugObj::Update(float dt)
 		L"\nspeed: " + to_wstring((int)info.speed),
 		debugRect, Color::Cyan, DT_LEFT, FontType::Title);
 
-	// --------------------------------
-	//const auto& monsterInfo = owner->GetObjectList(ObjectType::Monster).back()->GetComponent<InfoComponent<EnemyInfo>>()->GetInfo();
-	
-	//font->AddText(L"MonsterHP: " + to_wstring(monsterInfo.curHp)	+ L"/" + to_wstring(monsterInfo.maxHp),{200,100,400,200});
-	// -------------------------------
 	accTime += dt;
 	++frameCount;
 
@@ -62,11 +57,9 @@ void UIDebugObj::Update(float dt)
 	}
 
 	font->AddText(L"FPS: " + to_wstring((int)fps), { 900,250,1250,450 }, Color::Cyan,DT_LEFT, FontType::Title);
-	
+
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
+	
 	if (input->IsKeyPressed(KEY::LBUTTON))
-	{
-		//playerInfo->AddExp(1);
-		//playerInfo->AddHp(-2);
-	}
+		playerInfo->AddHp(-5);
 }

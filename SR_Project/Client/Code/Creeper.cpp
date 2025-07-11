@@ -41,7 +41,7 @@ Creeper* Creeper::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Creeper::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Monster::Ready_Object(owner, objType);
+    Monster::Ready_Object(owner, objType, MonsterType::Creeper);
 
     //InitTransform
     auto transform = AddComponent<TransformComponent>();
