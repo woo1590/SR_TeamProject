@@ -10,6 +10,8 @@
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
 
+#include "Monster.h"
+
 Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType) 
 {
 }
@@ -78,8 +80,9 @@ void Arrow::Update(_float dt)
     auto info = GetComponent<InfoComponent<ItemInfo>>()->GetInfo();
 
     if (hitObject == nullptr)
+    {
         transform->Translate(arrowDirection * arrowSpeed * dt);
-
+    }
     else 
     {
         hitTime += dt;
@@ -102,18 +105,28 @@ void Arrow::Late_Update(_float dt)
 void Arrow::SetCollisionEnter(Object* other)
 {
     if (hitObject != nullptr) return;
-    ObjectType objType = other->GetObjectType();
+    
     arrowSpeed = 0.f;
 
+    ObjectType objType = other->GetObjectType();
+    if (objType == ObjectType::StaticBlock && hitObject==nullptr) {
+        hitObject = other;
+        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+    }
     if (objType == ObjectType::Monster && hitObject == nullptr) 
     {
+        hitObject = other;
+        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+
         auto info = GetComponent<InfoComponent<ItemInfo>>();
         auto collision = GetComponent<CollisionComponent>();
 
         float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + info->GetInfo().value;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
-        hitObject = other;
-        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+
+        auto monster = static_cast<Monster*>(other);
+        monster->SetHit(true);
+        monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), arrowAttackDamage);
     }
 
     if (objType == ObjectType::Player && hitObject == nullptr)
@@ -157,7 +170,7 @@ void Arrow::ArrowRotateSet()
 
 void Arrow::PlayerArrowInfo()
 {
-    arrowSpeed = 50.f;
+    arrowSpeed = 120.f;
 
     SetScale(1.f);
     SetScaleRatio(_vec3(0.1f, 1.f, 1.f));
@@ -175,7 +188,7 @@ void Arrow::PlayerArrowInfo()
 
 void Arrow::MonsterArrowInfo()
 {
-    arrowSpeed = 50.f;
+    arrowSpeed = 120.f;
 
     SetScale(1.f);
     SetScaleRatio(_vec3(0.1f, 1.f, 1.f));

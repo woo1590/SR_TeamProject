@@ -40,7 +40,7 @@ protected:
     
     std::string meshType;
     std::string material;
-    Engine::RENDER_ID renderId = Engine::RENDER_ID::Render_NonAlpha;
+    Engine::RENDER_ID renderId = Engine::RENDER_ID::Render_Alpha;
 
     Object* ownerObject = nullptr;
 };

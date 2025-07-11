@@ -276,6 +276,9 @@
     </Filter>
     <Filter Include="06. Object\03. CollisionBlock">
       <UniqueIdentifier>{19e1774f-52c3-4e4d-8d83-606dd19febe3}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\ArrowMesh">
+      <UniqueIdentifier>{058a5e8d-4f54-4f56-b821-1f0c5ec1a1b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -565,6 +568,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CollisionBlock.cpp">
       <Filter>06. Object\03. CollisionBlock</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\ArrowMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -880,6 +886,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CollisionBlock.h">
       <Filter>06. Object\03. CollisionBlock</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\ArrowMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

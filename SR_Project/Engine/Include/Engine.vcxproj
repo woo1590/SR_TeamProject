@@ -217,6 +217,7 @@
     <ClInclude Include="..\Header\AIController.h" />
     <ClInclude Include="..\Header\AlphaBlock.h" />
     <ClInclude Include="..\Header\AnimatorComponent.h" />
+    <ClInclude Include="..\Header\ArrowMesh.h" />
     <ClInclude Include="..\Header\BasicBlock.h" />
     <ClInclude Include="..\Header\BehaviorTree.h" />
     <ClInclude Include="..\Header\BlackBoard.h" />
@@ -356,6 +357,7 @@
     <ClCompile Include="..\Code\AIController.cpp" />
     <ClCompile Include="..\Code\AlphaBlock.cpp" />
     <ClCompile Include="..\Code\AnimatorComponent.cpp" />
+    <ClCompile Include="..\Code\ArrowMesh.cpp" />
     <ClCompile Include="..\Code\BasicBlock.cpp" />
     <ClCompile Include="..\Code\BehaviorTree.cpp" />
     <ClCompile Include="..\Code\BlackBoard.cpp" />

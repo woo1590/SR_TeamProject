@@ -37,7 +37,7 @@ private:
     void AlphaPass();
     void UIPass();
     void DebugPass();
-    void Reset();
+    void Reset();   
 
     void Free()override;
 
@@ -45,7 +45,7 @@ private:
     CameraComponent* Camera;
    
     ID3DXSprite* spriteBatch = nullptr;
-    std::list<CollisionComponent*> DebugRender; //µð¹ö±×¿ë
+    std::list<CollisionComponent*> DebugRender; //ï¿½ï¿½ï¿½ï¿½×¿ï¿½
 
     _matrix CurrView;
     _matrix CurrProj;

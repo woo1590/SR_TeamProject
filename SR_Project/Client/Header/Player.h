@@ -11,7 +11,8 @@ public:
         ROLL,
         ATTACK,
         SHOOT,
-        DEAD
+        DEAD,
+        REVIVE
     };
     enum class ePlayerBone :int
     {
@@ -60,6 +61,7 @@ public:
     void UnEquipItem(Item::ItemType itemType);
     Object* GetBone(std::string boneName);
     ePlayerState GetPlayerState();
+    void RevivePlayer();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -77,6 +79,7 @@ private:
     void UpdateAttack(_float dt);
     void UpdateShoot(_float dt);
     void UpdateDead(_float dt);
+    void UpdateRevive(_float dt);
 
     void SaveStartRotation();
     void SetUpFirstAttackPhaseRotations();
@@ -84,6 +87,7 @@ private:
     void SetUpLastAttackPhaseRotations();
     void SetUpShootPhaseRotations();
     void SetUpDeadPhaseRotations();
+    void SetUpRevivePhaseRotations();
     void SetAttackTypeNext();
 
     _vec3 MatrixToEulerAngles(const _matrix& mat);
@@ -100,35 +104,39 @@ private:
     float GetStringAngleX(const string& frontBack = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
     float GetStringAngleZ(const string& leftRight = "", const string& upDown = "", bool clockwise = true, float offset = 0.f);
     float GetStringAngleY(const string& leftRight = "", const string& frontBack = "", bool clockwise = true, float offset = 0.f);
+    _float WrapAngle(_float fAngle);
 private:
     ePlayerState State = ePlayerState::IDLE;
     ePlayerAttackType attackType = ePlayerAttackType::FIRST;
 
-    float IdleTime = 0.f;
-    float IdleSmoothingSpeed = 5.f;
+    _float IdleTime = 0.f;
+    _float IdleSmoothingSpeed = 5.f;
 
-    float WalkTime = 0.f;
-    const float WalkSwingSpeed = 10.f;
+    _float WalkTime = 0.f;
+    const _float WalkSwingSpeed = 10.f;
 
-    float RollTime = 0.f;
-    const float RollDuration = 0.5f;
+    _float RollTime = 0.f;
+    const _float RollDuration = 0.5f;
 
-    float AttackTime = 0.f;
-    const float AttackDuration = 0.3f;
-    const float ShootDuration = 0.6f;
+    _float AttackTime = 0.f;
+    const _float AttackDuration = 0.3f;
+    const _float ShootDuration = 0.6f;
 
-    float DeadTime = 0.f;
-    const float DeadDuration = 1.0f;
+    _float DeadTime = 0.f;
+    const _float DeadDuration = 1.0f;
 
-    float comboTime = 0.f;
-    const float comboLimit = 0.5f;
+    _float comboTime = 0.f;
+    const _float comboLimit = 0.5f;
+
+    _float ReviveTime = 0.f;
+    const _float reviveDuration = 1.f;
 
     std::unordered_map<std::string, _vec3> StartRotations;
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 DestinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
 
-    _float SwordRange = 4.f;
+    _float SwordRange = 6.f;
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
 

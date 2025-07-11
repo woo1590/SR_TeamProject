@@ -77,7 +77,7 @@ void Sword::SetCollisionEnter(Object* other)
 
         auto monster = static_cast<Monster*>(other);
         monster->SetHit(true);
-        monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), swordAttackDamage);
+        monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), swordAttackDamage);
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
     }
 }
@@ -95,5 +95,6 @@ void Sword::PlayerSwordInfo()
     auto collision = AddComponent<CollisionComponent>();
     collision->SetLayer(LAYER_PLAYER);
     collision->SetMask(LAYER_ENEMY);
+    collision->SetSize(_vec3(0.1f, 1.f, 6.f));
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
 }
