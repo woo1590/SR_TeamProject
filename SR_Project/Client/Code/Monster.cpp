@@ -22,6 +22,7 @@
 #include "WorldUIComponent.h"
 #include "DamageText.h"
 #include "Fontcomponent.h"
+#include "HPBarWhite.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -64,14 +65,21 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         enemyBack = EnemyHPBarBack::Create(owner);
         auto frontTf = enemyFront->GetComponent<TransformComponent>();
         auto backTf = enemyBack->GetComponent<TransformComponent>();
-       
+
+        auto whiteBack = HPBarWhite::Create(owner);
+        auto* backBar = whiteBack->GetComponent<ProgressBar<EnemyInfo>>();
+        statcomponent->Attach(backBar);
+
+        whiteBack->GetComponent<TransformComponent>()->SetParent(frontTf);
         backTf->SetParent(frontTf);
         backTf->SetPosition({0.f, 0.f, 0.f});
         backTf->SetScale({0.2f, 0.2f, 1.f});
     
         enemyFront->AddChild(enemyBack);
+        enemyFront->AddChild(whiteBack);
        
         owner->AddUIObject(enemyBack);
+        owner->AddUIObject(whiteBack);
     }
     else if (type == MonsterType::Boss)
     {
@@ -80,24 +88,33 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         bossHpComp->AppearAnimation(2.f);
         statcomponent->Attach(bossHpComp);
         owner->AddUIObject(bossFront);
-    
+
         bossBack = ExpBarBack::Create(owner);
         bossBack->GetComponent<TransformComponent>()->SetPosition(300.f, 100.f);
         bossBack->GetComponent<TransformComponent>()->SetScale(2.38f, 3.f);
         owner->AddUIObject(bossBack);
-    
+
+        auto whiteBack = HPBarWhite::Create(owner);
+        auto* whiteBar = whiteBack->GetComponent<ProgressBar<EnemyInfo>>();
+        statcomponent->Attach(whiteBar);
+
+        auto whiteTf = whiteBack->GetComponent<TransformComponent>();
+        whiteTf->SetParent(bossFront);
+        whiteTf->SetPosition(0.f, 0.f); 
+        whiteTf->SetScale(4.75f, 1.5f);
+
+        bossFront->AddChild(whiteBack);
+        owner->AddUIObject(whiteBack);
+
         auto bossIcon = BossIcon::Create(owner);
         bossIcon->GetComponent<TransformComponent>()->SetParent(bossFront);
         owner->AddUIObject(bossIcon);
 
         auto particle = ParticleObj::Create(owner);
         auto particleTf = particle->GetComponent<TransformComponent>();
-       // particleTf->SetParent(bossFront);
-        //particleTf->SetPosition(200.f,100.f);
         owner->AddUIObject(particle);
-    
+
         bossFront->AddChild(bossBack);
-       // bossFront->AddChild(particle);
     }
 
     return S_OK;

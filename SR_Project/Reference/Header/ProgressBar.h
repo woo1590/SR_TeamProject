@@ -7,12 +7,12 @@
 #include "InfoComponent.h"
 #include "Subject.h"
 
-enum class RenderPolicy {Always, HideWhenFull};
+enum class RenderPolicy { Always, HideWhenFull };
 
 BEGIN(Engine)
 
 template<typename T>
-class ProgressBar: public ObjectComponent, public IObserver<UIEvent<T>>
+class ProgressBar : public ObjectComponent, public IObserver<UIEvent<T>>
 {
 protected:
 	explicit ProgressBar(Object* owner) :ObjectComponent(owner) {}
@@ -20,7 +20,7 @@ protected:
 public:
 	static ProgressBar* Create(Object* owner);
 	HRESULT Ready_Component();
-	
+
 	void SetEventType(UIEventType type) { eventType = type; }
 	void SetBarDirection(BarDirection _dir) { barDir = _dir; }
 	void SetRenderPolicy(RenderPolicy policy) { renderPolicy = policy; }
@@ -29,6 +29,9 @@ public:
 	void OnNotify(const UIEvent<T>& event) override;
 
 	void AppearAnimation(float duration = 1.f);
+
+	void SetLerpSpeed(float _speed) { lerpSpeed = max(0.f, _speed); }
+	void SetDelay(float _delay) { delay = max(0.f, _delay); }
 
 private:
 	void ApplyRatio(float ratio);
@@ -41,16 +44,19 @@ protected:
 
 	float targetRatio = 1.f;
 	float curRatio = 1.f;
-	const float speed = 8.f;
 
 	UIEventType eventType = UIEventType::HP_Changed;
-	BarDirection barDir   = BarDirection::Vertical;
+	BarDirection barDir = BarDirection::Vertical;
 	RenderPolicy renderPolicy = RenderPolicy::Always;
 
 	bool isAppearing = false;
 	float appearElapsed = 0.f;
 	float appearDuration = 1.f;
 	float actualTargetRatio = 1.f;
+
+	float lerpSpeed = 8.f;
+	float delay = 0.f;
+	float delayLeft = 0.f;
 };
 
 END
@@ -98,9 +104,12 @@ void ProgressBar<T>::OnNotify(const UIEvent<T>& event)
 	if (!isAppearing)
 		targetRatio = actualTargetRatio;
 
-	if (event.type == UIEventType::HP_Changed && curValue <= 0)
+	if (event.type == UIEventType::HP_Changed)
 	{
-
+		if (actualTargetRatio < curRatio)
+			delayLeft = delay;
+		else
+			delayLeft = 0.f, targetRatio = actualTargetRatio;
 	}
 }
 
@@ -138,9 +147,16 @@ void ProgressBar<T>::Update(float dt)
 			isAppearing = false;
 	}
 
+	if (delayLeft > 0.f)
+	{
+		delayLeft = max(0.f, delayLeft - dt);
+		if (delayLeft <= 0.f)
+			targetRatio = actualTargetRatio;
+	}
+
 	if (fabs(curRatio - targetRatio) > 0.01f)
 	{
-		float t = clamp(dt * speed, 0.f, 1.f);
+		float t = clamp(dt * lerpSpeed, 0.f, 1.f);
 		curRatio += (targetRatio - curRatio) * t;
 		ApplyRatio(curRatio);
 	}
@@ -155,7 +171,7 @@ void ProgressBar<T>::ApplyRatio(float ratio)
 	{
 	case BarDirection::Vertical:
 		renderer->ApplyRatioVertical(ratio);
-		break;         
+		break;
 
 	case BarDirection::Horizontal:
 		renderer->ApplyRatioHorizontal(ratio);

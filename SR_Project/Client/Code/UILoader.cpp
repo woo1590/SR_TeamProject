@@ -65,6 +65,7 @@
 #include "BowItem.h"
 #include "HPBarBack.h"
 #include "ParticleObj.h"
+#include "HPBarWhite.h"
 
 
 #define ADD(obj) objMgr->AddUIObject(obj)
@@ -128,6 +129,15 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
 
     auto hpback = HPBarBack::Create(objMgr);
     ADD(hpback);
+
+    //auto hpWhite = HPBarWhite::Create(objMgr);
+    //auto whiteBar = hpWhite->AddComponent<ProgressBar<PlayerInfo>>();
+    //playerInfo->Attach(whiteBar);
+    //ADD(hpWhite);
+    //
+    //auto frontTf = hpFront->GetComponent<TransformComponent>();
+    //hpback->GetComponent<TransformComponent>()->SetParent(frontTf);
+    //hpWhite->GetComponent<TransformComponent>()->SetParent(frontTf);
 
     auto expFront = ExpBarFront::Create(objMgr);
     playerInfo->Attach(expFront->GetComponent<ProgressBar<PlayerInfo>>());

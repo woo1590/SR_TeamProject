@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\EnemyHPBarFront.h" />
     <ClInclude Include="..\Header\FilterTooltip.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
+    <ClInclude Include="..\Header\HPBarWhite.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
     <ClInclude Include="..\Header\IsTimerOn.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="..\Code\EnemyHPBarFront.cpp" />
     <ClCompile Include="..\Code\FilterTooltip.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
+    <ClCompile Include="..\Code\HPBarWhite.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />

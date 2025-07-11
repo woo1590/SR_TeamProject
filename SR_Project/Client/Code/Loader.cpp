@@ -113,6 +113,7 @@ HRESULT Loader::load_UIResources()
 		{L"Logo",               eUI},
 		{L"hpbar_front",        eUI},
 		{L"hpbar_back",         eUI},
+		{L"hpbar_white",        eUI},
 		{L"loadingscene",       eUI},
 		{L"Cursor",             eUI},
 		{L"InventoryPanel",     eUI},
@@ -220,7 +221,7 @@ HRESULT Loader::load_UIResources()
 		{L"gearslot_hover",      2},
 		{L"debugui",             5},
 		{L"emerald_sword",       10},
-								 
+		{L"hpbar_white",         1},
 		{L"InventoryPanel",     -1},  
 		{L"exitbtn",           101},
 		{L"exitbtn_hover",     101},

@@ -361,6 +361,9 @@
     <Filter Include="02. Object\UIObj\DamageText">
       <UniqueIdentifier>{51f9e712-51a5-4d13-af14-844000a64020}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\HpBar\HPBarWhite">
+      <UniqueIdentifier>{a770cd5a-670d-4d7a-9836-e1dfc3253900}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -683,6 +686,9 @@
     <ClInclude Include="..\Header\DamageText.h">
       <Filter>02. Object\UIObj\DamageText</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\HPBarWhite.h">
+      <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1004,6 +1010,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DamageText.cpp">
       <Filter>02. Object\UIObj\DamageText</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HPBarWhite.cpp">
+      <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
