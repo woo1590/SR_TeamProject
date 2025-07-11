@@ -197,6 +197,7 @@ void Monster::BackStep(_vec3* dir, _float dt)
 
     if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
+    Transform->SetForward(*dir * -1);
     Transform->Translate(*dir * dt * Stat->GetInfo().speed);
 }
 

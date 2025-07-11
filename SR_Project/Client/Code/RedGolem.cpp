@@ -98,6 +98,14 @@ void RedGolem::Attack(Object* target)
 
 void RedGolem::Die()
 {
+    if (State != MonsterState::Die)
+    {
+        State = MonsterState::Die;
+
+        DieAnim.IsRunning = true;
+        DieAnim.IsEnd = false;
+        DieAnim.DelayTime = 0.0f;
+    }
 }
 
 void RedGolem::Hit(_vec3 dir, _float power)
@@ -231,7 +239,7 @@ void RedGolem::InitAnimation()
 
     //Die
     DieAnim.Start = 0;                  //start angle
-    DieAnim.End = 270.f;                //end angle
+    DieAnim.End = 90.f;                //end angle
     DieAnim.ElapsedTime = 0.f;
     DieAnim.TotalTime = 0.5f;          //play animation total time
 }
@@ -304,6 +312,28 @@ void RedGolem::PlayAttack(_float dt)
 
 void RedGolem::PlayDie(_float dt)
 {
+    DieAnim.ElapsedTime += dt;
+
+    float t = clamp(DieAnim.ElapsedTime / DieAnim.TotalTime, 0.f, 1.f);
+    float angle = lerp(DieAnim.Start, DieAnim.End, t);
+
+    auto collision = GetComponent<CollisionComponent>();
+    collision->SetSize(_vec3(0.1, 0.1, 0.1));
+
+    SetRotation({ -D3DXToRadian(angle), 0.f, 0.f }, "Body");
+
+    if (DieAnim.ElapsedTime > DieAnim.TotalTime)
+    {
+        DieAnim.IsEnd = true;
+
+        SetRotation(_vec3(0.f, 0.f, D3DXToRadian(-20.f)), "LArm");
+        SetRotation(_vec3(0.f, 0.f, D3DXToRadian(20.f)), "RArm");
+      
+        SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "LLeg");
+        SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "RLeg");
+        //SetDead();
+        //DeleteBar();
+    }
 }
 
 void RedGolem::PlayHit(_float dt)
