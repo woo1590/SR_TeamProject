@@ -37,6 +37,8 @@ protected:
 
     void OnCollisionStay(Object* other) override;
 
+    void Hit(_vec3 dir, _float power) override {}
+
 private:
     void SetEmissive(_bool On);
 

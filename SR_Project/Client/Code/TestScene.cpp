@@ -113,15 +113,16 @@ void TestScene::Load()
 	auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	ObjectMgr->AddObject(ObjectType::Neutral, trigger);
 
-	trigger->AddSpawner(SpawnType::Zombie, _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Zombie, _vec3(70.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Zombie, _vec3(40.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Skeleton, _vec3(20.f, 10.f, 20.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Skeleton, _vec3(80.f, 10.f, 80.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Creeper, _vec3(30.f, 10.f, 30.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Creeper, _vec3(30.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Creeper, _vec3(30.f, 10.f, 50.f), _vec3(0.f, 0.f, 0.f));
-	//trigger->AddSpawner(SpawnType::RedGolem, _vec3(5.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	trigger->AddSpawner(SpawnType::Zombie,   _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	trigger->AddSpawner(SpawnType::Zombie,   _vec3(70.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	trigger->AddSpawner(SpawnType::Zombie,   _vec3(40.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	trigger->AddSpawner(SpawnType::Zombie,   _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Skeleton, _vec3(20.f, 10.f, 20.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Skeleton, _vec3(80.f, 10.f, 80.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 30.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 50.f), _vec3(0.f, 0.f, 0.f));
+	trigger->AddSpawner(SpawnType::RedGolem, _vec3(5.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
 
 	UILoader loader;
 	loader.LoadUI(ObjectMgr);

@@ -23,6 +23,7 @@ void UIRenderer::SetTexture(const wstring& key)
 {
     auto* rm = EngineCore::GetInstance()->GetResourceManager();
     texture = rm->GetTexture(key);
+    texture->AddRef();
 
     assert(texture && "UIRenderer::SetTexture - texture not found");
 
@@ -54,6 +55,8 @@ void UIRenderer::ApplyRatioVertical(float _ratio)
 
     UpdateCenter();
 }
+
+void UIRenderer::Free() { Safe_Release(tex2D); Safe_Release(texture); }
 
 void UIRenderer::ApplyRatioHorizontal(float _ratio)
 {
@@ -89,12 +92,6 @@ void UIRenderer::UpdateCenter()
     case UIPivot::Left:    center = {0.f, height * 0.5f, 0.f};          break;
     case UIPivot::Right:   center = {width, height * 0.5f, 0.f};        break;
     }
-}
-
-void UIRenderer::Free()
-{
-    Safe_Release(tex2D);
-    Safe_Release(texture);
 }
 
 void UIRenderer::Render() 

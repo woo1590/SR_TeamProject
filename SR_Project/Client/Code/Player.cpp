@@ -60,11 +60,11 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     SetScale(1.f);
 
-    SetMaterial("playerBody_Mtrl", "Body");
-    SetMaterial("playerHead_Mtrl", "Head");
-    SetMaterial("playerLeftArm_Mtrl", "LArm");
+    SetMaterial("playerBody_Mtrl",     "Body");
+    SetMaterial("playerHead_Mtrl",     "Head");
+    SetMaterial("playerLeftArm_Mtrl",  "LArm");
     SetMaterial("playerRightArm_Mtrl", "RArm");
-    SetMaterial("playerLeftLeg_Mtrl", "LLeg");
+    SetMaterial("playerLeftLeg_Mtrl",  "LLeg");
     SetMaterial("playerRightLeg_Mtrl", "RLeg");
 
     Bones["LHand"] = nullptr;
@@ -72,12 +72,14 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     return S_OK;
 }
-void Player::Update(_float dt) {
+void Player::Update(_float dt) 
+{
     BaseCharacter::Update(dt);
 
     KeyInput(dt);
 
-    switch (State) {
+    switch (State) 
+    {
     case ePlayerState::IDLE:
         UpdateIdle(dt);
         break;
@@ -91,7 +93,7 @@ void Player::Update(_float dt) {
         UpdateAttack(dt);
         break;
     case ePlayerState::SHOOT:
-        UpdateShoot(dt);
+        UpdateShoot(dt);   
         break;
     case ePlayerState::DEAD:
         UpdateDead(dt);
@@ -234,7 +236,7 @@ void Player::SaveStartRotation()
 }
 void Player::SetUpFirstAttackPhaseRotations()
 {
-    vector<float> phase = { 0.1f,0.45f,1.f };
+    vector<float> phase = { 0.1f, 0.45f, 1.f };
 
     PhaseRotation headRot;
     headRot.name = "Head";
@@ -255,8 +257,8 @@ void Player::SetUpFirstAttackPhaseRotations()
     {
         StartRotations["LArm"],
         { GetStringAngleX("front","down"),   0.f, GetStringAngleZ("left","down")},
-        { GetStringAngleX("","down"),                  0.f, GetStringAngleZ("left","down")},
-        { GetStringAngleX("","down"),    0.f, GetStringAngleZ("left","down")}
+        { GetStringAngleX("","down"),        0.f, GetStringAngleZ("left","down")},
+        { GetStringAngleX("","down"),        0.f, GetStringAngleZ("left","down")}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LARM, LeftArmRot);
 
@@ -266,8 +268,8 @@ void Player::SetUpFirstAttackPhaseRotations()
     RightArmRot.destinations =
     {
         StartRotations["RArm"],
-        { GetStringAngleX("","up"),      0.f, GetStringAngleZ("left","down")},
-        { GetStringAngleX("front","up"),      0.f, GetStringAngleZ("left","down") },
+        { GetStringAngleX("","up"),         0.f, GetStringAngleZ("left","down")},
+        { GetStringAngleX("front","up"),    0.f, GetStringAngleZ("left","down") },
         { GetStringAngleX("front","down"),  0.f, GetStringAngleZ("left","down") }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
@@ -278,8 +280,8 @@ void Player::SetUpFirstAttackPhaseRotations()
     LeftLegRot.destinations =
     {
         StartRotations["LLeg"],
-        { GetStringAngleX("front","down") * 0.5f,   0.f, 0.f },
-        { 0.f,                                      0.f, -5.f },
+        { GetStringAngleX("front","down") * 0.5f,    0.f, 0.f },
+        { 0.f,                                       0.f,-5.f },
         { GetStringAngleX("back","down") * 0.5f,     0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LLEG, LeftLegRot);
@@ -290,7 +292,7 @@ void Player::SetUpFirstAttackPhaseRotations()
     RightLegRot.destinations =
     {
         StartRotations["RLeg"],
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
+        { GetStringAngleX("back","down")  * 0.5f, 0.f, 0.f },
         { 0.f, 0.f, 5.f },
         { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f }
     };
@@ -301,10 +303,10 @@ void Player::SetUpFirstAttackPhaseRotations()
     bodyRot.phaseVec = phase;
     bodyRot.destinations =
     {
-        { 0.f, atan2f(-AttackDirection.x, AttackDirection.z), 0.f },
+        {0.f, atan2f(-AttackDirection.x, AttackDirection.z), 0.f },
         {0.f, GetStringAngleY("right","front"), 0.f},
         {0.f, 0.f, 0.f},
-        {0.f, GetStringAngleY("left","front"), 0.f}
+        {0.f, GetStringAngleY("left","front"),  0.f}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::BODY, bodyRot);
 
@@ -329,10 +331,10 @@ void Player::SetUpSecondAttackPhaseRotations() {
     headRot.phaseVec = phase;
     headRot.destinations =
     {
-        {0.f, -GetStringAngleY("left","front"), 0.f},
-        { 0.f, -GetStringAngleY("left","front"), 0.f },
-        { 0.f,  -GetStringAngleY("","front"), 0.f },
-        { 0.f,  -GetStringAngleY("right","front"), 0.f }
+        {0.f, -GetStringAngleY("left","front"),  0.f},
+        {0.f, -GetStringAngleY("left","front"),  0.f },
+        {0.f, -GetStringAngleY("","front"),      0.f },
+        {0.f, -GetStringAngleY("right","front"), 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::HEAD, headRot);
 
@@ -341,9 +343,9 @@ void Player::SetUpSecondAttackPhaseRotations() {
     LeftArmRot.phaseVec = phase;
     LeftArmRot.destinations = 
     {
-        { GetStringAngleX("back","down"),      0.f, GetStringAngleZ("left","down") * 0.2f},
-        { GetStringAngleX("","down"),    0.f, GetStringAngleZ("left","down")},
-        { GetStringAngleX("front","down"),            0.f, GetStringAngleZ("left","down")},
+        { GetStringAngleX("back","down"),     0.f, GetStringAngleZ("left","down") * 0.2f},
+        { GetStringAngleX("","down"),         0.f, GetStringAngleZ("left","down")},
+        { GetStringAngleX("front","down"),    0.f, GetStringAngleZ("left","down")},
         { GetStringAngleX("front","down"),    0.f, GetStringAngleZ("left","")}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LARM, LeftArmRot);
@@ -353,43 +355,46 @@ void Player::SetUpSecondAttackPhaseRotations() {
     RightArmRot.phaseVec = phase;
     RightArmRot.destinations = 
     {
-        { GetStringAngleX("front","down"),  0.f,                            GetStringAngleZ("left","down")},
-        { GetStringAngleX("front","down"), GetStringAngleY("","back"),      GetStringAngleZ("left","down") },
-        { GetStringAngleX("front","up") *0.75f, GetStringAngleY("","back"),   GetStringAngleZ("left","down")},
-        { GetStringAngleX("front","down") + GetStringAngleX("","up"), GetStringAngleY("","back"),          GetStringAngleZ("left","down") }
+        { GetStringAngleX("front","down"),  0.f,                           GetStringAngleZ("left","down")},
+        { GetStringAngleX("front","down"),     GetStringAngleY("","back"), GetStringAngleZ("left","down") },
+        { GetStringAngleX("front","up") *0.75f,GetStringAngleY("","back"), GetStringAngleZ("left","down")},
+        { GetStringAngleX("front","down") +    GetStringAngleX("","up"),   GetStringAngleY("","back"),          GetStringAngleZ("left","down") }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
 
     PhaseRotation LeftLegRot;
     LeftLegRot.name = "LLeg";
     LeftLegRot.phaseVec = phase;
-    LeftLegRot.destinations = {
-        { GetStringAngleX("back","down") * 0.5f,     0.f, 0.f },
+    LeftLegRot.destinations =
+    {
+        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
         { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
         { 0.f, 0.f, -5.f },
-        { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f }
+        { GetStringAngleX("front","down")* 0.5f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LLEG, LeftLegRot);
 
     PhaseRotation RightLegRot;
     RightLegRot.name = "RLeg";
     RightLegRot.phaseVec = phase;
-    RightLegRot.destinations = {
+    RightLegRot.destinations = 
+    {
         { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f },
         { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f },
         { 0.f, 0.f, 5.f },
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f }
+        { GetStringAngleX("back","down")  * 0.5f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RLEG, RightLegRot);
 
     PhaseRotation bodyRot;
     bodyRot.name = "Body";
     bodyRot.phaseVec = phase;
-    bodyRot.destinations = {
-        {0.f, GetStringAngleY("left","front"), 0.f},
-        { 0.f, GetStringAngleY("left","front"), 0.f },
-        { 0.f,  GetStringAngleY("","front"), 0.f },
-        { 0.f,  GetStringAngleY("right","front"), 0.f }
+    bodyRot.destinations =
+    {
+        {0.f, GetStringAngleY("left","front"),   0.f},
+        {0.f, GetStringAngleY("left","front"),   0.f },
+        {0.f,  GetStringAngleY("","front"),      0.f },
+        {0.f,  GetStringAngleY("right","front"), 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::BODY, bodyRot);
 
@@ -406,7 +411,8 @@ void Player::SetUpSecondAttackPhaseRotations() {
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RHAND, RightHandRot);
 }
-void Player::SetUpLastAttackPhaseRotations() {
+void Player::SetUpLastAttackPhaseRotations()
+{
     vector<float> phase = { 0.1f, 0.45f, 1.f };
 
     PhaseRotation headRot;
@@ -414,9 +420,9 @@ void Player::SetUpLastAttackPhaseRotations() {
     headRot.phaseVec = phase;
     headRot.destinations =
     {
-        { 0.f,  -GetStringAngleY("right","front"), 0.f },
+        { 0.f, -GetStringAngleY("right","front"), 0.f },
         { 0.f, -GetStringAngleY("right","front"), 0.f},
-        { 0.f, -GetStringAngleY("", "front"), 0.f},
+        { 0.f, -GetStringAngleY("", "front"),     0.f},
         { 0.f, -GetStringAngleY("left", "front"), 0.f}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::HEAD, headRot);
@@ -440,8 +446,8 @@ void Player::SetUpLastAttackPhaseRotations() {
     {
         { GetStringAngleX("front","down") + GetStringAngleX("","up"), GetStringAngleY("","back"), GetStringAngleZ("left","down") },
         { GetStringAngleX("back","down"), 0.f, GetStringAngleZ("right","down") * 0.5f},
-        { GetStringAngleX("","down"), 0.f, GetStringAngleZ("right","down") },
-        { GetStringAngleX("front","down"), GetStringAngleY("right","up"), GetStringAngleZ("right","")}
+        { GetStringAngleX("","down"),     0.f, GetStringAngleZ("right","down") },
+        { GetStringAngleX("front","down"),     GetStringAngleY("right","up"), GetStringAngleZ("right","")}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
 
@@ -453,16 +459,17 @@ void Player::SetUpLastAttackPhaseRotations() {
         { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f },
         { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f },
         { 0.f, 0.f, -5.f },
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f }
+        { GetStringAngleX("back","down")  * 0.5f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LLEG, LeftLegRot);
 
     PhaseRotation RightLegRot;
     RightLegRot.name = "RLeg";
     RightLegRot.phaseVec = phase;
-    RightLegRot.destinations = {
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
+    RightLegRot.destinations = 
+    {
+        { GetStringAngleX("back","down")  * 0.5f, 0.f, 0.f },
+        { GetStringAngleX("back","down")  * 0.5f, 0.f, 0.f },
         { 0.f, 0.f, 5.f },
         { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f }
     };
@@ -471,7 +478,8 @@ void Player::SetUpLastAttackPhaseRotations() {
     PhaseRotation bodyRot;
     bodyRot.name = "Body";
     bodyRot.phaseVec = phase;
-    bodyRot.destinations = {
+    bodyRot.destinations =
+    {
         { 0.f,  GetStringAngleY("right","front"), 0.f },
         { 0.f, GetStringAngleY("right","front"), 0.f},
         { 0.f, GetStringAngleY("", "front"), 0.f},
@@ -762,16 +770,14 @@ void Player::UpdateWalk(_float dt) {
         IdleSmoothing(dt, "LHand");
         IdleSmoothing(dt, "RHand");
     }
-    //Rotate Bones
-    float fAngle = sinf(WalkTime * WalkSwingSpeed);
+    float fAngle = sinf(WalkTime * WalkSwingSpeed); //Rotate Bones
 
     SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
     SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
     SetRotation({ -fAngle, 0.f, 0.f }, "LArm");
     SetRotation({ fAngle, 0.f, 0.f }, "RArm");
 
-    //Move Player
-    auto transform = GetComponent<TransformComponent>();
+    auto transform = GetComponent<TransformComponent>(); //Move Player
     if (moveToAttack)
     {
         PlayerDirection = moveToObject->GetComponent<TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();

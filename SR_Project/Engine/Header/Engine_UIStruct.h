@@ -9,8 +9,8 @@ namespace Engine
 		int maxHp = 100;
 		int curExp = 0;
 		int maxExp = 10;
-		int power = 10;
-		float speed = 6.f;
+		int power = 100;
+		float speed = 25.f;
 	};
 
 	enum class ItemType{ Sword, Armor, Arrow, Potion, Enchant, Costume };

@@ -66,7 +66,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         auto frontTf = enemyFront->GetComponent<TransformComponent>();
         auto backTf = enemyBack->GetComponent<TransformComponent>();
 
-        auto whiteBack = HPBarWhite::Create(owner);
+        whiteBack = HPBarWhite::Create(owner);
         auto* backBar = whiteBack->GetComponent<ProgressBar<EnemyInfo>>();
         statcomponent->Attach(backBar);
 
@@ -94,7 +94,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         bossBack->GetComponent<TransformComponent>()->SetScale(2.38f, 3.f);
         owner->AddUIObject(bossBack);
 
-        auto whiteBack = HPBarWhite::Create(owner);
+        whiteBack = HPBarWhite::Create(owner);
         auto* whiteBar = whiteBack->GetComponent<ProgressBar<EnemyInfo>>();
         statcomponent->Attach(whiteBar);
 
@@ -150,7 +150,16 @@ void Monster::Die()
 
 void Monster::DeleteBar()
 {
-
+    if (enemyFront)
+        enemyFront->SetDead();
+    if (enemyBack)
+        enemyBack->SetDead();
+    if (bossFront)
+        bossFront->SetDead();
+    if (bossBack)
+        bossBack->SetDead();
+    if (whiteBack)
+        whiteBack->SetDead();
 }
 
 void Monster::ShowDmgText(int dmg, const _vec3& hitDir)

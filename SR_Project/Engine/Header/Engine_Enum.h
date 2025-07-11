@@ -29,11 +29,11 @@ namespace Engine
 		Projectile,
 		SkyBox,
 		Camera,
-		UI,
 		StaticBlock,
 		DynamicBlock,
 		Part,
 		Neutral,
+		UI,
 		Count
 	};
 

@@ -210,5 +210,6 @@ void BaseCharacter::DetachParent(string str)
 
 void BaseCharacter::SetDead()
 {
+    Object::SetDead();
     std::for_each(Bones.begin(), Bones.end(), [](auto& pair) {pair.second->SetDead(); });
 }

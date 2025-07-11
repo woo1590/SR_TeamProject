@@ -79,7 +79,11 @@ void Arrow::Update(_float dt)
     auto transform = GetComponent<TransformComponent>();
     auto info = GetComponent<InfoComponent<ItemInfo>>()->GetInfo();
 
-    if (hitObject == nullptr)
+    if (hitObject && hitObject->IsDead())
+    {
+        SetDead();
+    }
+    else if (hitObject == nullptr)
     {
         transform->Translate(arrowDirection * arrowSpeed * dt);
     }

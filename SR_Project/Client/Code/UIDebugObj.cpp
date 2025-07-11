@@ -57,4 +57,8 @@ void UIDebugObj::Update(float dt)
 	}
 
 	font->AddText(L"FPS: " + to_wstring((int)fps), { 900,250,1250,450 }, Color::Cyan,DT_LEFT, FontType::Title);
+
+	const auto& input = EngineCore::GetInstance()->GetInputSystem();
+	if (input->IsKeyPressed(KEY::ESC))
+		exit(0);
 }

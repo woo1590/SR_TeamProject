@@ -9,6 +9,7 @@ class EnemyHPBarFront;
 class EnemyHPBarBack;
 class BossHPBarFront;
 class ExpBarBack;
+class HPBarWhite;
 
 struct Animation
 {
@@ -97,5 +98,6 @@ protected:
     EnemyHPBarBack* enemyBack = nullptr;
     BossHPBarFront* bossFront = nullptr;
     ExpBarBack*     bossBack = nullptr;
+    HPBarWhite*     whiteBack = nullptr;
 };
 
