@@ -415,14 +415,14 @@ void Skeleton::PlayDie(_float dt)
     {
         auto transform = GetComponent<TransformComponent>();
         _vec3 pos = transform->GetPosition();
-        //for (auto& bone : Bones)
-        //{
-        //    auto transform = bone.second->GetComponent< //TransformComponent>();
-        //    _vec3 bonepos = transform->GetPosition();
-        //
-        //    DetachParent(bone.first);
-        //    transform->SetPosition(pos + bonepos);
-        //}
+        for (auto& bone : Bones)
+        {
+            auto transform = bone.second->GetComponent<TransformComponent>();
+            _vec3 bonepos = transform->GetPosition();
+        
+            DetachParent(bone.first);
+            transform->SetPosition(pos + bonepos);
+        }
         DieAnim.IsEnd = true;
         DieAnim.IsRunning = false;
         SetDead();
