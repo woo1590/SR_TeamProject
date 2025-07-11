@@ -42,7 +42,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
     auto collision = AddComponent<CollisionComponent>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_ENEMY);
-    collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT | LAYER_PROJECTILE);
+    collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT | LAYER_PROJECTILE | LAYER_ENEMY);
     collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other); });
     
     auto physics = AddComponent<PhysicsComponent>();

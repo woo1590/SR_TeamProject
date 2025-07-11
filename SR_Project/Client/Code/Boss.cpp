@@ -46,6 +46,7 @@ void Boss::Die()
 
 void Boss::Hit(_vec3 dir, _float power)
 {
+	Monster::Hit(dir, power);
 }
 
 void Boss::InitAnimation()

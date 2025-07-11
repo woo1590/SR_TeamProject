@@ -131,6 +131,8 @@ void Skeleton::Hit(_vec3 dir, _float power)
 
         HitDir = dir;
         HitPower = power;
+
+        Monster::Hit(dir, power);
     }
 }
 
@@ -401,7 +403,10 @@ void Skeleton::PlayHit(float dt)
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
         *IsHit = false;
+
+
     }
+
 }
 
 void Skeleton::PlayDie(_float dt)
