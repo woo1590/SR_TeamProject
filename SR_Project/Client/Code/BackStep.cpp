@@ -33,7 +33,7 @@ BTStatus BackStepNode::Tick(float dt, BlackBoard* bb)
 
 	if (D3DXVec3Length(&Dir) < *(static_cast<float*>(bb->GetValue("NearDistance"))))
 	{
-		//Dir.y = 0;
+		Dir.y = 0;
 		static_cast<Monster*>(self)->BackStep(D3DXVec3Normalize(&Dir, &Dir), dt);
 		return BTStatus::Running;
 	}
