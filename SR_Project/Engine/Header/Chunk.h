@@ -31,8 +31,14 @@ public:
 
     // ����� �̿��� �鸸 �߷�����
     void BuildChunkFace();
+
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir, const SB& sb);
+    void AddBox(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir);
+    void AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir);
+
     void SetUV(const SB& sb, int faceDir);
+    void SetUVTile(int tileX, int tileY);
+    void SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage);
 
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);
@@ -49,6 +55,7 @@ private:
 
 private:
     int ChunkX = 0, ChunkZ = 0;
+
     _vec2 TexUVs[4]{};
 
     ChunkMesh* mesh = nullptr;
