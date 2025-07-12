@@ -2,6 +2,7 @@
 #include "Loader.h"
 #include "EngineCore.h"
 #include "ResourceManager.h"
+#include "SoundManager.h"
 #include "StaticMesh.h"
 #include "TerrainMesh.h"
 #include "CubeMesh.h"
@@ -88,7 +89,7 @@ _uint __stdcall Loader::LoaderMain(void* arg)
 HRESULT Loader::Load_TestScene()
 {
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
-
+	auto sound = EngineCore::GetInstance()->GetSoundManager();
 	/*----------------------Load Mesh----------------------------*/
 	{
 		auto cube = CubeMesh::Create();
@@ -112,6 +113,11 @@ HRESULT Loader::Load_TestScene()
 		resource->LoadMaterial("../Resource/Material/Player.json");
 		resource->LoadMaterial("../Resource/Material/Blocks.json");
 		resource->LoadMaterial("../Resource/Material/Items.json");
+	}
+
+	/*----------------------Load Sound-----------------------------*/
+	{
+		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
 	}
 	return S_OK;
 }

@@ -379,6 +379,9 @@
     <Filter Include="01. Scene\Village">
       <UniqueIdentifier>{709b7437-123b-4b7f-ad28-c76b2d030fd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Particle">
+      <UniqueIdentifier>{3115f21d-70de-419c-a0f7-6e3a886fa98a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">

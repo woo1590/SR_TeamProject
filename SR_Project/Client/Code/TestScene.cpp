@@ -16,6 +16,7 @@
 #include "ChunkManager.h"
 #include "UIManager.h"
 #include "ChunkManager.h"
+#include "SoundManager.h"
 
 //object
 #include "TestObject.h"
@@ -73,6 +74,7 @@ void TestScene::Load()
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"TestSceneUI", [this]() {this->TestSceneImGui();});
 
 #endif
+	EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");
 
 	Grid			= StaticGrid::Create(this);
 	ObjectMgr		= ObjectManager::Create(this);

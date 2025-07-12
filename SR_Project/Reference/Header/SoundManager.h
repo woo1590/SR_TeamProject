@@ -14,7 +14,7 @@ public:
     HRESULT Ready_SoundManager();
     void Update();
 
-    void LoadSound(const std::string& key, const TCHAR* filepath, bool loop = false);
+    void LoadSound(const std::string& key, const std::string& filepath, bool loop = false);
     void PlaySFX(const std::string& key);
     void PlayBGM(const std::string& key);
     void Stop(const std::string& key);

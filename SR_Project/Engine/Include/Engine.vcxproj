@@ -239,6 +239,7 @@
     <ClInclude Include="..\Header\CubeMesh.h" />
     <ClInclude Include="..\Header\DecoratorNode.h" />
     <ClInclude Include="..\Header\DynamicBlock.h" />
+    <ClInclude Include="..\Header\Emitter.h" />
     <ClInclude Include="..\Header\EngineCore.h" />
     <ClInclude Include="..\Header\EnginePCH.h" />
     <ClInclude Include="..\Header\Engine_Enum.h" />
@@ -283,6 +284,7 @@
     <ClInclude Include="..\Header\PhysicsSystem.h" />
     <ClInclude Include="..\Header\QuadMesh.h" />
     <ClInclude Include="..\Header\QuestSystem.h" />
+    <ClInclude Include="..\Header\Random.h" />
     <ClInclude Include="..\Header\RandomSelectorNode.h" />
     <ClInclude Include="..\Header\ProgressBar.h" />
     <ClInclude Include="..\Header\RendererComponent.h" />
@@ -384,6 +386,7 @@
     <ClCompile Include="..\Code\CubeMesh.cpp" />
     <ClCompile Include="..\Code\DecoratorNode.cpp" />
     <ClCompile Include="..\Code\DynamicBlock.cpp" />
+    <ClCompile Include="..\Code\Emitter.cpp" />
     <ClCompile Include="..\Code\EngineCore.cpp" />
     <ClCompile Include="..\Code\EnginePCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -428,6 +431,7 @@
     <ClCompile Include="..\Code\PhysicsSystem.cpp" />
     <ClCompile Include="..\Code\QuadMesh.cpp" />
     <ClCompile Include="..\Code\QuestSystem.cpp" />
+    <ClCompile Include="..\Code\Random.cpp" />
     <ClCompile Include="..\Code\RandomSelectorNode.cpp" />
     <ClCompile Include="..\Code\ProgressBar.cpp" />
     <ClCompile Include="..\Code\RendererComponent.cpp" />

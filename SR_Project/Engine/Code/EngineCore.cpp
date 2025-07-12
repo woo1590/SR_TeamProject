@@ -81,7 +81,7 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 void EngineCore::Tick(float dt)
 {
 	InputSys->BeginFrame();
-
+	SoundMgr->Update();
 #ifdef USE_IMGUI
 	ImGuiMgr->BeginFrame();
 #endif
