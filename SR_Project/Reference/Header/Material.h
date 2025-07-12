@@ -28,9 +28,6 @@ public:
 private:
     void Free()override;
 
-    D3DMATERIAL9 Mtrl{};
-    LPDIRECT3DBASETEXTURE9 Texture = nullptr;
-
     /*---------------Shader---------------*/
     Shader* shader = nullptr;
     std::unordered_map<std::string, int> IntParam;
@@ -39,9 +36,9 @@ private:
     std::unordered_map<std::string, _vec4> Vec4Param;
     std::unordered_map<std::string, _matrix> MatParam;
     std::unordered_map<std::string, LPDIRECT3DBASETEXTURE9> TexParam;
-    /*------------------------------------*/
 
     LPDIRECT3DDEVICE9 Device = nullptr;
+    /*------------------------------------*/
 };
 
 END

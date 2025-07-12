@@ -3,49 +3,40 @@
 
 BEGIN(Engine)
 
-class Shader;
-class ENGINE_DLL Sprite : public Base
+class Material;
+class Mesh;
+class ENGINE_DLL SpriteRenderer :
+    public RendererComponent
 {
 private:
-	Sprite();
-	virtual ~Sprite();
+	SpriteRenderer(Object* owner, RENDER_ID id,
+				   const std::string& name, _uint total, _bool repeat);
+
+    virtual ~SpriteRenderer();
 
 public:
-	static Sprite* Create();
-	HRESULT Ready_Sprite();
-	void Update(_float dt);
-	void Render();
+	static SpriteRenderer* Create(Object* owner, RENDER_ID id,
+							      const std::string& name, _uint total, _bool repeat);
+	HRESULT Ready_Component()override;
+	void Update(_float dt)override;
+    void Render()override;
 
-	void SetTexture(const std::string& texName);
-	void Reset();
+	void SetMaterial(std::string& key);
+	void SetMesh(const std::string& key);
 
+	_uint GetCurrFrame()const { return currFrame; }
 private:
 	void Free()override;
+	
+	Material* mtrl = nullptr;
+	Mesh* quadMesh = nullptr;
 
-	Shader* shader = nullptr;
-	LPDIRECT3DBASETEXTURE9 texture = nullptr;
+	std::string spriteName;
 	_uint currFrame;
 	_uint totalFrame;
 	_float timer = 0.f;
 	_float speed;
 	_bool isRepeat = false;
-};
-
-class ENGINE_DLL SpriteRenderer :
-    public RendererComponent
-{
-private:
-    SpriteRenderer(Object* owner, RENDER_ID id);
-    virtual ~SpriteRenderer();
-
-public:
-    static SpriteRenderer* Create(Object* owner, RENDER_ID id);
-	void Update(_float dt)override;
-    void Render()override;
-
-private:
-	std::unordered_map<std::string, Sprite*> SpriteMap;
-	std::string playSprite;
 };
 
 END

@@ -23,6 +23,8 @@ public:
     void LoadTexture(const std::wstring& filePath, const std::wstring& key, TEXTURE texType);
     LPDIRECT3DBASETEXTURE9 LoadTexture(const std::string& key, TEXTURE texType);
 
+    void LoadSprite(const std::string & key, _uint totalFrame);
+
     Mesh *                 GetMesh(const std::string& key);
     Material*              GetMaterial(const std::string& key);
     Shader*                GetShader(const std::string& key);
@@ -35,11 +37,12 @@ public:
 private:
     void Free()override;
 
-    std::unordered_map<std::string, Mesh*>                  MeshContainer;
-    std::unordered_map<std::string, Material*>              MaterialContainer;
-    std::unordered_map<std::string, LPDIRECT3DBASETEXTURE9> TextureContainer;
+    std::unordered_map<std::string, Mesh*>                   MeshContainer;
+    std::unordered_map<std::string, Material*>               MaterialContainer;
+    std::unordered_map<std::string, LPDIRECT3DBASETEXTURE9>  TextureContainer;
     std::unordered_map<std::wstring, LPDIRECT3DBASETEXTURE9> UITextureContainer;
-    std::unordered_map<std::string, Shader*>                ShaderContainer;
+    std::unordered_map<std::string, Shader*>                 ShaderContainer; 
+    std::unordered_map<std::string, LPDIRECT3DBASETEXTURE9>  SpriteContainer;
 
     unordered_map<wstring, int> uiLayerTable;
 };
