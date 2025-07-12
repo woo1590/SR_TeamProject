@@ -34,7 +34,8 @@ struct Emitter
     _vec4 color;
     _vec4 colorFade;
     _vec3 position;
-    _vec3 velocity;
+    _vec3 velocityMin;
+    _vec3 velocityMax;
     _float size;
     _float life;
 
