@@ -11,6 +11,7 @@
 #include "SoundManager.h"
 #include "ImGuiManager.h"
 #include "CollisionSystem.h"
+#include "Random.h"
 
 #include "Mesh.h"
 #include "Material.h"
@@ -60,6 +61,10 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 
 	InputSys = InputSystem::Create();
 	if (!InputSys)
+		return E_FAIL;
+
+	random = Random::Create();
+	if (!random)
 		return E_FAIL;
 
 #ifdef USE_IMGUI
@@ -147,6 +152,11 @@ LightSystem* EngineCore::GetLightSystem() const
 InputSystem* EngineCore::GetInputSystem() const
 {
 	return InputSys;
+}
+
+Random* EngineCore::GetRandom() const
+{
+	return random;
 }
 
 HWND EngineCore::GetWindowHandle() const
