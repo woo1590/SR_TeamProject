@@ -2,6 +2,12 @@
 #include "ParticleSystem.h"
 #include "EngineCore.h"
 #include "Random.h"
+#include "CameraManager.h"
+#include "Scene.h"
+#include "Object.h"
+
+//component
+#include "TransformComponent.h"
 
 ParticleSystem::ParticleSystem(Object* owner)
 	:ObjectComponent(owner)
@@ -14,8 +20,18 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update(_float dt)
 {
-	if (emitter.alive)
-		emitter.Spawn(particles, dt);
+	_vec3 spawnPos;
+	if (emitter.followCam)
+	{
+		auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
+		spawnPos = owner->GetComponent<TransformComponent>()->GetPosition();
+	}
+	else
+	{
+		spawnPos = owner->GetComponent<TransformComponent>()->GetPosition();
+	}
+
+	emitter.Spawn(particles, spawnPos, dt);
 
 	for (auto& p : particles)
 	{

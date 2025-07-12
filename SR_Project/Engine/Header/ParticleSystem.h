@@ -22,16 +22,66 @@ struct Emitter
     _bool looping = false;
     _bool followCam = false;
 
-    _float timer = 0.f;
+    _float acc = 0.f;
     _bool alive = true;
 
     _vec3 spawnPos;
     _vec3 spawnAreaMin;
     _vec3 spawnAreaMax;
 
-    void Spawn(std::vector<Particle>& particles, _float dt)
-    {
+    /*-------Particle param-------*/
 
+    _vec4 color;
+    _vec4 colorFade;
+    _vec3 position;
+    _vec3 velocity;
+    _float size;
+    _float life;
+
+    void Spawn(std::vector<Particle>& particles, _vec3 spawnPos, _float dt)
+    {
+        if (!alive) return;
+
+        int want = 0;
+
+        if (burstCount > 0)
+        {
+            want = burstCount;
+
+            burstCount = 0;
+            alive = false;
+        }
+
+        if (ratePerSec > 0 && looping)
+        {
+            acc += ratePerSec * dt;
+            int n = static_cast<_uint>(acc);
+
+            if (n)
+            {
+                want += n;
+                acc -= n;
+            }
+        }
+
+        for (auto& p : particles)
+        {
+            if (!want)
+                break;
+
+            if (p.isActive)
+                continue;
+
+
+            --want;
+        }
+    }
+    
+    void InitParitcle(Particle& p, _vec3 pos)
+    {
+        p.color = color;
+        p.colorFade = colorFade;
+        p.position = pos;
     }
 };
 

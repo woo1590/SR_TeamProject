@@ -31,7 +31,10 @@ struct Emitter
 
     void Spawn(std::vector<Particle>& particles, _float dt)
     {
+        if (burstCount > 0)
+        {
 
+        }
     }
 };
 
