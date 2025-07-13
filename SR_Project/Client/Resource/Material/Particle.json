@@ -18,7 +18,8 @@
 
   "materials":{
     "Rain_Mtrl" :{
-        "fx":"ParticleShader"
+        "fx":"ParticleShader",
+        "textures":{"AlbedoMap":"../Resource/Texture/Effect/Rain.png"}
     }
   }
 

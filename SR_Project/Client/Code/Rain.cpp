@@ -32,7 +32,7 @@ HRESULT Rain::Ready_Object()
 	rain.looping = true;
 	rain.followCam = true;
 	rain.ratePerSec = 100.f;
-	rain.size = 10.f;
+	rain.size = 50.f;
 	rain.life = 10.f;
 	rain.spawnAreaMin = { -30.f,20.f,-30.f };
 	rain.spawnAreaMax = { 30.f,20.f,30.f };
