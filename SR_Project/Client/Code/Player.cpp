@@ -24,6 +24,8 @@
 #include "Bow.h"
 #include "Arrow.h"
 #include "Firework.h"
+#include "Spear.h"
+#include "Crossbow.h"
 
 #include "StaticGrid.h"
 
@@ -702,6 +704,16 @@ void Player::EquipItem(Item::ItemType itemType)
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "sword", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
         break;
+    case Item::ItemType::ITEM_SPEAR:
+        Bones["RHand"] = Spear::Create(owner, ObjectType::Item);
+        Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
+        itemBaseRotOffset.insert({ "spear", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        break;
+    case Item::ItemType::ITEM_CROSSBOW:
+        Bones["LHand"] = Crossbow::Create(owner, ObjectType::Item);
+        Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
+        itemBaseRotOffset.insert({ "crossbow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        break;
     }
 }
 void Player::UnEquipItem(Item::ItemType itemType)
@@ -711,7 +723,15 @@ void Player::UnEquipItem(Item::ItemType itemType)
         Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
+    case Item::ItemType::ITEM_CROSSBOW:
+        Safe_Release(Bones["LHand"]);
+        Bones["LHand"] = nullptr;
+        break;
     case Item::ItemType::ITEM_SWORD:
+        Safe_Release(Bones["RHand"]);
+        Bones["RHand"] = nullptr;
+        break;
+    case Item::ItemType::ITEM_SPEAR:
         Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
@@ -820,8 +840,8 @@ void Player::UpdateWalk(_float dt) {
     auto blockPos = transform->GetWorldPosition() + moveVec + blockVec * blockOffset;
 
     auto grid = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetStaticGrid();
-    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y + 1), grid->WorldToCell(blockPos.z));
-    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - 1), grid->WorldToCell(blockPos.z));
+    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y + 2), grid->WorldToCell(blockPos.z));
+    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z));
 
     if (blockUp == nullptr && blockDown == nullptr)
     {
@@ -1029,7 +1049,27 @@ void Player::UpdateShoot(_float dt) {
         switch (shootType)
         {
         case ePlayerShootType::ARROW:
-            Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
+            switch (dynamic_cast<Item*>(Bones["LHand"])->GetItemType())
+            {
+            case Item::ItemType::ITEM_BOW:
+                Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
+                break;
+            case Item::ItemType::ITEM_CROSSBOW:
+                Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
+
+                _matrix matRotY;
+                D3DXMatrixRotationY(&matRotY, D3DXToRadian(10.f));
+                D3DXVECTOR3 vResult;
+                D3DXVec3TransformNormal(&vResult, &shootDir, &matRotY); 
+                D3DXVec3Normalize(&vResult, &vResult);
+                Arrow::Create(owner, ObjectType::Projectile, this, vResult);
+
+                D3DXMatrixRotationY(&matRotY, D3DXToRadian(-10.f));
+                D3DXVec3TransformNormal(&vResult, &shootDir, &matRotY); 
+                D3DXVec3Normalize(&vResult, &vResult);
+                Arrow::Create(owner, ObjectType::Projectile, this, vResult);
+                break;
+            }
             break;
         case ePlayerShootType::FIREWORK:
             Firework::Create(owner, ObjectType::Projectile, this, shootDir);
@@ -1447,7 +1487,8 @@ float Player::GetStringAngleY(const string& leftRight, const string& frontBack, 
         fAngle += 90;
     }
 
-    if (leftRight == "") {
+    if (leftRight == "") 
+    {
         if (frontBack == "back") fAngle = -180.f;
         else if (frontBack == "front") fAngle = 0.f;
     }

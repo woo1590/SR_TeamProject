@@ -181,6 +181,7 @@
     <ClInclude Include="..\Header\BossHPBarFront.h" />
     <ClInclude Include="..\Header\BossIcon.h" />
     <ClInclude Include="..\Header\Circle.h" />
+    <ClInclude Include="..\Header\Crossbow.h" />
     <ClInclude Include="..\Header\DamageText.h" />
     <ClInclude Include="..\Header\DeathFrame.h" />
     <ClInclude Include="..\Header\EnemyHPBarBack.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="..\Header\RocketItem.h" />
     <ClInclude Include="..\Header\Spawner.h" />
     <ClInclude Include="..\Header\SpawnTriggerBox.h" />
+    <ClInclude Include="..\Header\Spear.h" />
     <ClInclude Include="..\Header\Tnt.h" />
     <ClInclude Include="..\Header\TooltipObj.h" />
     <ClInclude Include="..\Header\WolfArmor.h" />
@@ -296,6 +298,7 @@
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
     <ClCompile Include="..\Code\BossIcon.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
+    <ClCompile Include="..\Code\Crossbow.cpp" />
     <ClCompile Include="..\Code\DamageText.cpp" />
     <ClCompile Include="..\Code\DeathFrame.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
@@ -320,6 +323,7 @@
     <ClCompile Include="..\Code\RocketItem.cpp" />
     <ClCompile Include="..\Code\Spawner.cpp" />
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />
+    <ClCompile Include="..\Code\Spear.cpp" />
     <ClCompile Include="..\Code\Tnt.cpp" />
     <ClCompile Include="..\Code\TooltipObj.cpp" />
     <ClCompile Include="..\Code\WolfArmor.cpp" />

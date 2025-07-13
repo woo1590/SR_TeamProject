@@ -6,7 +6,10 @@ class Item :
 public:
     enum class ItemType {
         ITEM_SWORD,
-        ITEM_BOW
+        ITEM_BOW,
+        ITEM_SPEAR,
+        ITEM_CROSSBOW,
+        ITEM_PROJECTILE
     };
 protected:
     Item(ObjectManager* owner, ObjectType objType);
@@ -30,6 +33,7 @@ public:
 
     void ApplyComponents();
 
+    ItemType GetItemType();
 protected:
     float itemScale = 1.f;
     _vec3 itemScaleRatio = { 1.f,1.f,1.f };
@@ -41,6 +45,7 @@ protected:
     std::string meshType;
     std::string material;
     Engine::RENDER_ID renderId = Engine::RENDER_ID::Render_Alpha;
+    ItemType itemType = ItemType::ITEM_PROJECTILE;
 
     Object* ownerObject = nullptr;
 };

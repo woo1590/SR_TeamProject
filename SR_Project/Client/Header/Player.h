@@ -35,7 +35,8 @@ public:
     enum class ePlayerShootType : int
     {
         ARROW,
-        FIREWORK
+        FIREWORK,
+        CROSSBOW
     };
     struct PhaseRotation
     {
@@ -115,7 +116,7 @@ private:
 private:
     ePlayerState State = ePlayerState::IDLE;
     ePlayerAttackType attackType = ePlayerAttackType::FIRST;
-    ePlayerShootType shootType = ePlayerShootType::FIREWORK;
+    ePlayerShootType shootType = ePlayerShootType::ARROW;
 
     _float IdleTime = 0.f;
     _float IdleSmoothingSpeed = 5.f;

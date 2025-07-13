@@ -43,7 +43,16 @@
         "textures":{
             "CubeMap":"../Resource/Asset/JW/firework.dds"
         }
+    },
+    "spear_Mtrl":{
+        "textures":{
+            "CubeMap":"../Resource/Asset/JW/spear.dds"
+        }
+    },
+    "crossbow_Mtrl":{
+        "textures":{
+            "CubeMap":"../Resource/Asset/JW/crossbow.dds"
+        }
     }
-
   }
 }
