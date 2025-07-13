@@ -13,7 +13,7 @@
 #include "Material.h"
 #include "InfoComponent.h"
 #include "Player.h"
-#include "Scene.h"
+#include "Circle.h"
 #include "PhysicsSystem.h"
 
 GolemProjectile::GolemProjectile(ObjectManager* owner, ObjectType objType)
@@ -65,16 +65,17 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
     mtrl->SetFloat("emissive", 1);
     mtrl->SetVec3("emissivecolor", _vec3(1.0, 0.1, 0));
     mtrl->SetFloat("emissivePow", 3);
+    circle = Circle::Create(owner, ObjectType::Projectile, this);
 
     SetOn(false);
     owner->AddObject(objType, this);
+
     return S_OK;
 }
 
 void GolemProjectile::Update(_float dt)
 {
     Object::Update(dt);
-
     PlayScaleAnimation(dt);
 }
 
@@ -89,6 +90,7 @@ void GolemProjectile::SetOn(_bool On)
 
     auto renderer = GetComponent<MeshRenderer>();
     auto collision = GetComponent<CollisionComponent>();
+
     if (!IsOn)
     {
         ElapsedTime = 0.f;
@@ -98,8 +100,10 @@ void GolemProjectile::SetOn(_bool On)
     else
     {
         collision->SetSize(_vec3(5.f, 5.f, 5.f));
-        renderer->SetRenderID(RENDER_ID::Render_NonAlpha);
+        renderer->SetRenderID(RENDER_ID::Render_Alpha);
     }
+
+    static_cast<Circle*>(circle)->SetOn(IsOn);
 }
 
 void GolemProjectile::PlayScaleAnimation(_float dt)

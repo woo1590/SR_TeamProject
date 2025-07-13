@@ -16,28 +16,28 @@
     }
   },
 
-  "materials":{
-    "ZombieBody_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/Body2.dds"
+  "materials": {
+    "ZombieBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Body2.dds"
       }
     },
-    "ZombieHead_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/ZombieHead.dds"
+    "ZombieHead_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/ZombieHead.dds"
       }
     },
-    "ZombieArm_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/Arm.dds"
+    "ZombieArm_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Arm.dds"
       }
     },
-    "ZombieLeg_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/Leg.dds"
+    "ZombieLeg_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Leg.dds"
       }
     },
-     "CreeperFace_Mtrl": {
+    "CreeperFace_Mtrl": {
       "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Creeper_Face.dds"
@@ -71,46 +71,53 @@
         "CubeMap": "../Resource/Asset/HY/Skeleton_Bone.dds"
       }
     },
-    "Bow_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/bow.dds"
+    "Bow_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/bow.dds"
       }
     },
 
-    "RedGolemBody_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/redgolem_body.dds"
+    "RedGolemBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/redgolem_body.dds"
       }
     },
 
-    "RedGolemFace_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/redgolem_face.dds"
-      }
-    },
-  
-    "RedGolemArm_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/redgolem_arm.dds"
+    "RedGolemFace_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/redgolem_face.dds"
       }
     },
 
-    "RedGolemFoot_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/redgolem_foot.dds"
+    "RedGolemArm_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/redgolem_arm.dds"
       }
     },
 
-    "RedGolemLightblock_Mtrl":{
- "fx": "ColorShader",
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/redgolem_lightblock.dds"
+    "RedGolemFoot_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/redgolem_foot.dds"
       }
     },
 
-    "RedGolemHand_Mtrl":{
-      "textures":{
-        "CubeMap":"../Resource/Asset/HY/redgolem_hand.dds"
+    "RedGolemLightblock_Mtrl": {
+      "fx": "ColorShader",
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/redgolem_lightblock.dds"
+      }
+    },
+
+    "RedGolemHand_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/redgolem_hand.dds"
+      }
+    },
+
+    "Circle_Mtrl": {
+      "fx": "MaskShader",
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Circle.dds"
       }
     }
   }

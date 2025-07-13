@@ -180,6 +180,7 @@
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
     <ClInclude Include="..\Header\BossIcon.h" />
+    <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\DamageText.h" />
     <ClInclude Include="..\Header\EnemyHPBarBack.h" />
     <ClInclude Include="..\Header\EnemyHPBarFront.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
     <ClCompile Include="..\Code\BossIcon.cpp" />
+    <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\DamageText.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarFront.cpp" />

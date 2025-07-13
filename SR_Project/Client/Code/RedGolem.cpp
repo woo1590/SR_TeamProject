@@ -57,9 +57,9 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void RedGolem::Update(_float dt)
 {
-    Monster::Update(dt);
     *AttackTimer -= dt;
     PlayAnimation(dt);
+    Monster::Update(dt);
 }
 
 void RedGolem::Late_Update(_float dt)
@@ -530,7 +530,7 @@ void RedGolem::InitProjectile(ObjectType objType)
 
     for (int i = 0; i < 10; ++i)
     {
-        BoxProjectile.push_back(GolemProjectile::Create(owner, objType));
+        BoxProjectile.push_back(GolemProjectile::Create(owner, ObjectType::Projectile));
     }
 }
 
