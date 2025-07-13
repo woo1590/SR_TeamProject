@@ -61,7 +61,7 @@ HRESULT ParticleRenderer::Ready_Component()
 }
 
 void ParticleRenderer::Late_Update(_float dt)
-{
+{ 
 	RendererComponent::Late_Update(dt);
 	
 	auto particles = owner->GetComponent<ParticleSystem>()->GetParticles();
@@ -86,6 +86,9 @@ void ParticleRenderer::Render()
 {
 	auto shader = mtrl->GetShader();
 	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
+
+	if (!cam)
+		return;
 
 	_matrix view = cam->GetViewMatrix();
 	_matrix proj = cam->GetProjMatrix();

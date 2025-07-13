@@ -59,6 +59,8 @@ CameraComponent* CameraManager::GetMainCamera()
 {
 	if (MainCamera)
 		return MainCamera->GetComponent<CameraComponent>();
+	else
+		return nullptr;
 }
 
 void CameraManager::Free()
