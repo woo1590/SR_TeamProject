@@ -108,7 +108,7 @@ void TestScene::Load()
 	CameraMgr->AddCamera(L"Third_Camera", tCam);
 	tCam->SetTarget(player);
 	
-	CameraMgr->SetMainCamera(L"First_Camera");
+	CameraMgr->SetMainCamera(L"Third_Camera");
 	
 	ObjectMgr->AddObject(ObjectType::Camera, fCam);
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);

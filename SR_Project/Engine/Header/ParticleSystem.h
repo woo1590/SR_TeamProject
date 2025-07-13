@@ -88,9 +88,9 @@ struct Emitter
         p.size = size;
         p.life = life;
 
-        _float spawnX = r->get<_float>(pos.x - spawnAreaMin.x, pos.x + spawnAreaMax.x);
-        _float spawnY = r->get<_float>(pos.y - spawnAreaMin.y, pos.y + spawnAreaMax.y);
-        _float spawnZ = r->get<_float>(pos.z - spawnAreaMin.z, pos.z + spawnAreaMax.z);
+        _float spawnX = r->get<_float>(pos.x + spawnAreaMin.x, pos.x + spawnAreaMax.x);
+        _float spawnY = r->get<_float>(pos.y + spawnAreaMin.y, pos.y + spawnAreaMax.y);
+        _float spawnZ = r->get<_float>(pos.z + spawnAreaMin.z, pos.z + spawnAreaMax.z);
         p.position = _vec3(spawnX, spawnY, spawnZ);
 
         _float velocityX = r->get<_float>(velocityMin.x, velocityMax.x);

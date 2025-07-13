@@ -90,6 +90,8 @@ void ParticleRenderer::Render()
 	_matrix view = cam->GetViewMatrix();
 	_matrix proj = cam->GetProjMatrix();
 
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
 	shader->SetConstant("g_View", view);
 	shader->SetConstant("g_Proj", proj);
 
@@ -101,6 +103,8 @@ void ParticleRenderer::Render()
 	Device->DrawPrimitive(D3DPT_POINTLIST, 0, particleCnt);
 
 	shader->End();
+
+	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 void ParticleRenderer::SetMaterial(const std::string& key)
