@@ -44,6 +44,7 @@
 #include "RedGolem.h"
 #include "Chunk.h"
 #include "SpawnTriggerBox.h"
+#include "Rain.h"
 
 //component
 #include "TransformComponent.h"
@@ -125,6 +126,8 @@ void TestScene::Load()
 	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
 	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 50.f), _vec3(0.f, 0.f, 0.f));
 	trigger->AddSpawner(SpawnType::RedGolem, _vec3(5.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+
+	ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
 	UILoader loader;
 	loader.LoadUI(ObjectMgr);

@@ -8,6 +8,7 @@
 
 //component
 #include "TransformComponent.h"
+#include "CameraComponent.h"
 
 ParticleSystem::ParticleSystem(Object* owner)
 	:ObjectComponent(owner)
@@ -24,7 +25,7 @@ void ParticleSystem::Update(_float dt)
 	if (emitter.followCam)
 	{
 		auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
-		spawnPos = owner->GetComponent<TransformComponent>()->GetPosition();
+		spawnPos = cam->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
 	}
 	else
 	{

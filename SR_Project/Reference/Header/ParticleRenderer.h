@@ -3,6 +3,7 @@
 
 BEGIN(Engine)
 
+class Material;
 class ENGINE_DLL ParticleRenderer :
     public RendererComponent
 {
@@ -16,10 +17,13 @@ public:
     void Late_Update(_float dt);
     void Render()override;
 
+    void SetMaterial(const std::string& key);
 private:
     LPDIRECT3DVERTEXBUFFER9 VB = nullptr;
     LPDIRECT3DVERTEXDECLARATION9 Decl = nullptr;
     _uint particleCnt = 0;
+
+    Material* mtrl = nullptr;
 
 };
 

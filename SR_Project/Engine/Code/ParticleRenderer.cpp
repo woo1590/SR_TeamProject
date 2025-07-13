@@ -1,9 +1,15 @@
 #include "EnginePCH.h"
 #include "ParticleRenderer.h"
 #include "EngineCore.h"
+#include "Scene.h"
+#include "CameraManager.h"
+#include "ResourceManager.h"
 #include "Object.h"
+#include "Material.h"
+#include "Shader.h"
 
 //component
+#include "CameraComponent.h"
 #include "ParticleSystem.h"
 
 ParticleRenderer::ParticleRenderer(Object* owner, RENDER_ID id)
@@ -36,6 +42,8 @@ HRESULT ParticleRenderer::Ready_Component()
 										D3DDECLUSAGE_POSITION, 0 },
 		{ 0, 12, D3DDECLTYPE_FLOAT1, D3DDECLMETHOD_DEFAULT,
 										D3DDECLUSAGE_PSIZE,   0 },
+		{ 0, 16, D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT,
+										D3DDECLUSAGE_COLOR,   0 },
 		D3DDECL_END()
 	};
 
@@ -58,7 +66,7 @@ void ParticleRenderer::Late_Update(_float dt)
 	
 	auto particles = owner->GetComponent<ParticleSystem>()->GetParticles();
 	VTXPOINT* verts = nullptr;
-
+	particleCnt = 0;
 	VB->Lock(0, 0, (void**)&verts, 0);
 	for (const auto& p : particles)
 	{
@@ -68,12 +76,34 @@ void ParticleRenderer::Late_Update(_float dt)
 		verts[particleCnt].position = p.position;
 		verts[particleCnt].size = p.size;
 		verts[particleCnt].color = p.color;
+
+		++particleCnt;
 	}
+	VB->Unlock();
 }
 
 void ParticleRenderer::Render()
 {
+	auto shader = mtrl->GetShader();
+	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
+
+	_matrix view = cam->GetViewMatrix();
+	_matrix proj = cam->GetProjMatrix();
+
+	shader->SetConstant("g_View", view);
+	shader->SetConstant("g_Proj", proj);
+
+	shader->Begin(0);
+	mtrl->Apply();
 	Device->SetStreamSource(0, VB, 0, sizeof(VTXPOINT));
 	Device->SetVertexDeclaration(Decl);
+
 	Device->DrawPrimitive(D3DPT_POINTLIST, 0, particleCnt);
+
+	shader->End();
+}
+
+void ParticleRenderer::SetMaterial(const std::string& key)
+{
+	mtrl = EngineCore::GetInstance()->GetResourceManager()->GetMaterial(key);
 }

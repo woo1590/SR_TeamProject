@@ -104,6 +104,7 @@ HRESULT Loader::Load_TestScene()
 		resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
 		resource->LoadShader("../Resource/Shader/ChunkShader.fx", "ChunkShader");
 		resource->LoadShader("../Resource/Shader/ColorShader.fx", "ColorShader");
+		resource->LoadShader("../Resource/Shader/ParticleShader.fx", "ParticleShader");
 	}
 
 	/*---------------------Load Material--------------------------*/
@@ -113,6 +114,7 @@ HRESULT Loader::Load_TestScene()
 		resource->LoadMaterial("../Resource/Material/Player.json");
 		resource->LoadMaterial("../Resource/Material/Blocks.json");
 		resource->LoadMaterial("../Resource/Material/Items.json");
+		resource->LoadMaterial("../Resource/Material/Particle.json");
 	}
 
 	/*----------------------Load Sound-----------------------------*/
