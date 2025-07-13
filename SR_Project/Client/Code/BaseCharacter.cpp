@@ -110,7 +110,7 @@ void BaseCharacter::Add_Bone(string str, ObjectType objType, Object* parent, con
 {
     Bones[str] = Bone::Create(owner, objType, _vec3(1.f, 1.f, 1.f), parent, mtrl);
 
-    owner->AddObject(objType, Bones[str]);
+    owner->AddObject(ObjectType::Bone, Bones[str]);
     //scale position 따로 설정하셈
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+
 class GolemProjectile :
     public Object
 {
@@ -26,5 +27,7 @@ protected:
 private:
     _float          ElapsedTime = 0.f;
     _bool           IsOn = false;
+
+    Object*         circle;
 };
 
