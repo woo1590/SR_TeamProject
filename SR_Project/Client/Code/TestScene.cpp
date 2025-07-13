@@ -49,6 +49,7 @@
 #include "Slime.h"
 #include "JungleZombie.h"
 #include "JungleSkeleton.h"
+#include "HitEffect.h"
 
 //component
 #include "TransformComponent.h"
@@ -58,6 +59,7 @@
 #include "ThirdcamComponent.h"
 
 TestScene::TestScene()
+	:Scene()
 {
 }
 
@@ -162,6 +164,15 @@ void TestScene::Update(float dt)
 			if (static_cast<DynamicBlock*>(Dst)->GetType() == LeverSwitch)
 				static_cast<DynamicBlock*>(Dst)->SetActivate();
 		}
+	}
+
+	if (Input->IsKeyPressed(NUM5))
+	{
+		auto effect = HitEffect::Create(ObjectMgr, ObjectType::Effect);
+		_vec3 playerPos = player->GetComponent<TransformComponent>()->GetPosition();
+
+		effect->GetComponent<TransformComponent>()->SetPosition(playerPos);
+		ObjectMgr->AddObject(ObjectType::Effect, effect);
 	}
 }
 

@@ -169,9 +169,6 @@
     <Filter Include="02. Object\Spawner\TriggerBox">
       <UniqueIdentifier>{665aef6e-3cea-46d9-802e-d8a174d15bbd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\Icon\07. BossIcon">
-      <UniqueIdentifier>{5c469025-e009-4574-819f-577182eb469f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState">
       <UniqueIdentifier>{15cab445-551b-40b2-84c9-721bd19d4553}</UniqueIdentifier>
     </Filter>
@@ -396,7 +393,7 @@
     </Filter>
     <Filter Include="02. Object\Monster\RedGolem\Projectile\Circle">
       <UniqueIdentifier>{74b35a4c-cb27-46ce-933c-02e7b3ef297e}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Item\Tnt">
       <UniqueIdentifier>{c7ae8fc4-f564-4573-9ab0-a7c495fb5d51}</UniqueIdentifier>
     </Filter>
@@ -432,6 +429,9 @@
     </Filter>
     <Filter Include="02. Object\Monster\Skeleton\JungleSkeleton">
       <UniqueIdentifier>{e3e0baca-4c41-4e54-b6c0-1cfb55454cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\HitEffect">
+      <UniqueIdentifier>{f773bc8f-4f8d-4ff6-a1bf-137cb24113fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -772,7 +772,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Circle.h">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\Tnt.h">
       <Filter>02. Object\Item\Tnt</Filter>
     </ClInclude>
@@ -799,6 +799,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\JungleSkeleton.h">
       <Filter>02. Object\Monster\Skeleton\JungleSkeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Village.h">
+      <Filter>01. Scene\Village</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage1.h">
+      <Filter>01. Scene\Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage2.h">
+      <Filter>01. Scene\Stage2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HitEffect.h">
+      <Filter>02. Object\Effect\HitEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1139,7 +1151,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Circle.cpp">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\Tnt.cpp">
       <Filter>02. Object\Item\Tnt</Filter>
     </ClCompile>
@@ -1166,6 +1178,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\JungleSkeleton.cpp">
       <Filter>02. Object\Monster\Skeleton\JungleSkeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Village.cpp">
+      <Filter>01. Scene\Village</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage1.cpp">
+      <Filter>01. Scene\Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage2.cpp">
+      <Filter>01. Scene\Stage2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HitEffect.cpp">
+      <Filter>02. Object\Effect\HitEffect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -64,9 +64,11 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->SetRenderState(D3DRS_POINTSPRITEENABLE, TRUE);
 	Device->SetRenderState(D3DRS_POINTSCALEENABLE, TRUE);
 
-	Device->SetRenderState(D3DRS_POINTSCALE_A, DWORD(0.f));
-	Device->SetRenderState(D3DRS_POINTSCALE_B, DWORD(0.f));
-	Device->SetRenderState(D3DRS_POINTSCALE_C, DWORD(1.f));
+	_float v = 0.f;
+	Device->SetRenderState(D3DRS_POINTSCALE_A, *(DWORD*)&v);
+	Device->SetRenderState(D3DRS_POINTSCALE_B, *(DWORD*)&v);
+	v = 1.f;
+	Device->SetRenderState(D3DRS_POINTSCALE_C, *(DWORD*)&v); 
 
 	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))
 		return E_FAIL;
