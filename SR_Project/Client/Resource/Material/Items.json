@@ -38,6 +38,11 @@
         "textures":{
             "CubeMap":"../Resource/Asset/JW/tnt.dds"
         }
+    },
+    "firework_Mtrl":{
+        "textures":{
+            "CubeMap":"../Resource/Asset/JW/firework.dds"
+        }
     }
 
   }

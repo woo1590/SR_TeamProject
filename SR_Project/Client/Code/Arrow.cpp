@@ -165,7 +165,6 @@ void Arrow::ArrowRotateSet()
     _float roll = sqrtf(2.f) * asinf(finalDir.y);
     roll *= arrowDirection.x;
     SetRotation(_vec3(-pitch, -yaw, roll));
-
 }
 
 void Arrow::PlayerArrowInfo()

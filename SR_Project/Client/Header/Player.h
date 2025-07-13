@@ -32,6 +32,11 @@ public:
         LAST,
         COUNT
     };
+    enum class ePlayerShootType : int
+    {
+        ARROW,
+        FIREWORK
+    };
     struct PhaseRotation
     {
         string name;
@@ -63,6 +68,7 @@ public:
     ePlayerState GetPlayerState();
     void RevivePlayer();
     _vec3 GetAttackDirection();
+    void ChangeShootType();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -109,6 +115,7 @@ private:
 private:
     ePlayerState State = ePlayerState::IDLE;
     ePlayerAttackType attackType = ePlayerAttackType::FIRST;
+    ePlayerShootType shootType = ePlayerShootType::FIREWORK;
 
     _float IdleTime = 0.f;
     _float IdleSmoothingSpeed = 5.f;
