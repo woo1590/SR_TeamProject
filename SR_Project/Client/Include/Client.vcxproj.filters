@@ -373,6 +373,9 @@
     <Filter Include="02. Object\Item\Tnt">
       <UniqueIdentifier>{c7ae8fc4-f564-4573-9ab0-a7c495fb5d51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Item\Firework">
+      <UniqueIdentifier>{7ceda82d-4af3-458c-9d5f-e48196b39503}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -716,6 +719,9 @@
     <ClInclude Include="..\Header\Tnt.h">
       <Filter>02. Object\Item\Tnt</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Firework.h">
+      <Filter>02. Object\Item\Firework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1058,6 +1064,9 @@
     </ClCompile>  
     <ClCompile Include="..\Code\Tnt.cpp">
       <Filter>02. Object\Item\Tnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Firework.cpp">
+      <Filter>02. Object\Item\Firework</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -49,7 +49,7 @@ void ObjectManager::Late_Update(float dt)
 	{
 		for (auto iter = Objects[type].begin(); iter != Objects[type].end();)
 		{
-			(*iter)->Late_Update(dt);
+ 			
 
 			if ((*iter)->IsDead())
 			{
@@ -58,7 +58,10 @@ void ObjectManager::Late_Update(float dt)
 				iter = Objects[type].erase(iter);
 			}
 			else
+			{
+				(*iter)->Late_Update(dt);
 				++iter;
+			}
 		}
 	}
 }

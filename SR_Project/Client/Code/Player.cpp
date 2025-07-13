@@ -22,6 +22,7 @@
 #include "Sword.h"
 #include "Bow.h"
 #include "Arrow.h"
+#include "Firework.h"
 
 #include "StaticGrid.h"
 
@@ -741,6 +742,19 @@ _vec3 Player::GetAttackDirection()
     return AttackDirection;
 }
 
+void Player::ChangeShootType()
+{
+    switch (shootType)
+    {
+    case ePlayerShootType::ARROW:
+        shootType = ePlayerShootType::FIREWORK;
+        break;
+    case ePlayerShootType::FIREWORK:
+        shootType = ePlayerShootType::ARROW;
+        break;
+    }
+}
+
 void Player::UpdateIdle(_float dt)
 {
     if (comboTime < comboLimit)
@@ -1011,7 +1025,15 @@ void Player::UpdateShoot(_float dt) {
     if (prePhase < phaseVec.at(0) && fProgress >= phaseVec.at(0)) {
         auto shootDir = AttackDirection;
         D3DXVec3Normalize(&shootDir, &shootDir);
-        Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
+        switch (shootType)
+        {
+        case ePlayerShootType::ARROW:
+            Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
+            break;
+        case ePlayerShootType::FIREWORK:
+            Firework::Create(owner, ObjectType::Projectile, this, shootDir);
+            break;
+        }
     }
     prePhase = fProgress;
 
