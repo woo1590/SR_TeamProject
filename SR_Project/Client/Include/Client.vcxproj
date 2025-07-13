@@ -190,6 +190,8 @@
     <ClInclude Include="..\Header\HPBarWhite.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
     <ClInclude Include="..\Header\IsTimerOn.h" />
+    <ClInclude Include="..\Header\JungleSkeleton.h" />
+    <ClInclude Include="..\Header\JungleZombie.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
     <ClInclude Include="..\Header\Locked_Node.h" />
     <ClInclude Include="..\Header\LockNode_Back.h" />
@@ -200,6 +202,7 @@
     <ClInclude Include="..\Header\QuestPanel.h" />
     <ClInclude Include="..\Header\QuestTextObj.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
+    <ClInclude Include="..\Header\Slime.h" />
     <ClInclude Include="..\Header\Spawner.h" />
     <ClInclude Include="..\Header\SpawnTriggerBox.h" />
     <ClInclude Include="..\Header\TooltipObj.h" />
@@ -301,6 +304,8 @@
     <ClCompile Include="..\Code\HPBarWhite.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
+    <ClCompile Include="..\Code\JungleSkeleton.cpp" />
+    <ClCompile Include="..\Code\JungleZombie.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
     <ClCompile Include="..\Code\Locked_Node.cpp" />
     <ClCompile Include="..\Code\LockNode_Back.cpp" />
@@ -311,6 +316,7 @@
     <ClCompile Include="..\Code\QuestPanel.cpp" />
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />
+    <ClCompile Include="..\Code\Slime.cpp" />
     <ClCompile Include="..\Code\Spawner.cpp" />
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />
     <ClCompile Include="..\Code\TooltipObj.cpp" />

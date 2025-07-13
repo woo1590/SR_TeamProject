@@ -370,6 +370,21 @@
     <Filter Include="02. Object\Monster\RedGolem\Projectile\Circle">
       <UniqueIdentifier>{74b35a4c-cb27-46ce-933c-02e7b3ef297e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\Slime">
+      <UniqueIdentifier>{49ff0f33-1bf9-400f-bfae-c1ceabcc3dac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Zombie\BasicZombie">
+      <UniqueIdentifier>{79a01097-dcc5-43a4-935a-a052eb0c35ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Zombie\JungleZombie">
+      <UniqueIdentifier>{a9dc0abf-8a90-440b-bd0c-0218c0069ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Skeleton\BasicSkeleton">
+      <UniqueIdentifier>{3cbebb75-4c0b-47f7-b653-bb021a72eb7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Skeleton\JungleSkeleton">
+      <UniqueIdentifier>{e3e0baca-4c41-4e54-b6c0-1cfb55454cc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -463,12 +478,6 @@
       <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarBack.h" />
-    <ClInclude Include="..\Header\Skeleton.h">
-      <Filter>02. Object\Monster\Skeleton</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Zombie.h">
-      <Filter>02. Object\Monster\Zombie</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\InventoryBtn.h">
       <Filter>02. Object\UIObj\Button\InventoryBtn</Filter>
     </ClInclude>
@@ -710,6 +719,21 @@
     <ClInclude Include="..\Header\Circle.h">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Slime.h">
+      <Filter>02. Object\Monster\Slime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Zombie.h">
+      <Filter>02. Object\Monster\Zombie\BasicZombie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\JungleZombie.h">
+      <Filter>02. Object\Monster\Zombie\JungleZombie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Skeleton.h">
+      <Filter>02. Object\Monster\Skeleton\BasicSkeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\JungleSkeleton.h">
+      <Filter>02. Object\Monster\Skeleton\JungleSkeleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -803,12 +827,6 @@
       <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarBack.cpp" />
-    <ClCompile Include="..\Code\Skeleton.cpp">
-      <Filter>02. Object\Monster\Skeleton</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Zombie.cpp">
-      <Filter>02. Object\Monster\Zombie</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\InventoryBtn.cpp">
       <Filter>02. Object\UIObj\Button\InventoryBtn</Filter>
     </ClCompile>
@@ -1049,6 +1067,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\Circle.cpp">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Slime.cpp">
+      <Filter>02. Object\Monster\Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Zombie.cpp">
+      <Filter>02. Object\Monster\Zombie\BasicZombie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\JungleZombie.cpp">
+      <Filter>02. Object\Monster\Zombie\JungleZombie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skeleton.cpp">
+      <Filter>02. Object\Monster\Skeleton\BasicSkeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\JungleSkeleton.cpp">
+      <Filter>02. Object\Monster\Skeleton\JungleSkeleton</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

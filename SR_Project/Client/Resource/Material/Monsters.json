@@ -119,6 +119,72 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Circle.dds"
       }
+    },
+
+    "SlimeIn_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Slime_In.dds"
+      }
+    },
+
+    "SlimeOut_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Slime_Out.dds"
+      }
+    },
+
+    "JungleArm_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Jungle_Arm.dds"
+      }
+    },
+
+    "JungleFace_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Jungle_Face.dds"
+      }
+    },
+
+    "JungleFaceikki_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Jungle_Faceikki.dds"
+      }
+    },
+
+    "JungleBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Jungle_Body.dds"
+      }
+    },
+
+    "JungleLeg_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Jungle_Leg.dds"
+      }
+    },
+
+    "JungleSkeletonArm_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Arm.dds"
+      }
+    },
+
+    "JungleSkeletonFace_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Face.dds"
+      }
+    },
+
+    "JungleSkeletonBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Body.dds"
+      }
+    },
+
+    "JungleSkeletonLeg_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Leg.dds"
+      }
     }
   }
 }
