@@ -192,6 +192,8 @@ HRESULT Loader::load_UIResources()
 		{L"boss_icon",          eUI},
 		{L"debugui",            eUI},
 		{L"particle",           eUI},
+		{L"player_deathui",     eUI},
+		{L"deathframe",         eUI},
 
 	};
 
@@ -277,6 +279,8 @@ HRESULT Loader::load_UIResources()
 		{L"boss_hpbarfront",     4},
 		{L"boss_icon",           2},
 		{L"particle",            6},
+		{L"player_deathui",     -1},
+		{L"deathframe",          0},
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

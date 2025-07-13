@@ -50,14 +50,16 @@ HRESULT FontComponent::CreateFontResource()
 		};
 
 	create(FontType::Regular,    24, FW_NORMAL, L"Noto Sans JP Medium");
-	create(FontType::QuestTitle, 36, FW_BOLD, L"Noto Sans JP Medium");
+	create(FontType::QuestTitle, 36, FW_BOLD,   L"Noto Sans JP Medium");
 	create(FontType::Small,      12, FW_NORMAL, L"Noto Sans KR Medium");
 	create(FontType::Custom,     16, FW_BOLD,   L"Noto Sans Mono Bold");
 	create(FontType::Title,      28, FW_BOLD,   L"Noto Sans SC Medium");
 	create(FontType::Large,      28, FW_NORMAL, L"Noto Sans TC Medium");
 	create(FontType::Bold,       26, FW_BOLD,   L"Perfect DOS VGA 437");
-	create(FontType::VeryLarge,  32, FW_BOLD, L"Perfect DOS VGA 437");
-	create(FontType::DmgText,    44, FW_BOLD, L"Noto Sans JP Medium");
+	create(FontType::VeryLarge,  32, FW_BOLD,   L"Perfect DOS VGA 437");
+	create(FontType::DmgText,    44, FW_BOLD,   L"Noto Sans JP Medium");
+	create(FontType::DeathText,  64, FW_BOLD,   L"Noto Sans JP Medium");
+	create(FontType::DeathCount, 48, FW_BOLD,    L"Roboto-Regular");
 	return S_OK;
 }
 

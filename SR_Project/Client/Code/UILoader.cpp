@@ -67,6 +67,11 @@
 #include "ParticleObj.h"
 #include "HPBarWhite.h"
 
+// DeathUI
+#include "PlayerDeathUI.h"
+#include "DeathFrame.h"
+#include "BossIcon.h"
+
 
 #define ADD(obj) objMgr->AddUIObject(obj)
 
@@ -87,6 +92,7 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     BuildQuestUI(objMgr);
     BuildMiscUI(objMgr);
     BuildWorldMapUI(objMgr);
+    BuildDeathUI(objMgr);
 
   //  ADD(ParticleObj::Create(objMgr));
 }
@@ -349,4 +355,19 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
     ADD(worldTooltip);
 
     tooltip->SetWorldTooltip(worldTooltip);
+}
+
+void UILoader::BuildDeathUI(ObjectManager* objMgr)
+{
+    auto playerDeathUI = PlayerDeathUI::Create(objMgr);
+    ADD(playerDeathUI);
+
+    auto deathFrame = DeathFrame::Create(objMgr);
+    ADD(deathFrame);
+
+    auto bossIcon = BossIcon::Create(objMgr);
+    bossIcon->GetComponent<UIRenderer>()->SetRenderType(UIRenderType::DeathUI);
+    bossIcon->GetComponent<TransformComponent>()->SetPosition(645.f, 260.f);
+    bossIcon->GetComponent<TransformComponent>()->SetScale(0.7f, 1.3f);
+    ADD(bossIcon);
 }

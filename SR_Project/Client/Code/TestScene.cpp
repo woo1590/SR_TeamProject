@@ -90,7 +90,7 @@ void TestScene::Load()
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
+	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);

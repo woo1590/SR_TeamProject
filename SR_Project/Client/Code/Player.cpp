@@ -12,6 +12,7 @@
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
 #include "EngineCore.h"
+#include "RenderSystem.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "CameraComponent.h"
@@ -1212,6 +1213,8 @@ void Player::CheckDead()
     {
         State = ePlayerState::DEAD;
         SaveStartRotation();
+
+        EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::DeathUI);
     }
 }
 

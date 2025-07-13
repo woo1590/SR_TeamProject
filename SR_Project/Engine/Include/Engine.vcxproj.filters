@@ -276,7 +276,7 @@
     </Filter>
     <Filter Include="06. Object\03. CollisionBlock">
       <UniqueIdentifier>{19e1774f-52c3-4e4d-8d83-606dd19febe3}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="01. Engine Component\ResourceManager\Mesh\ArrowMesh">
       <UniqueIdentifier>{058a5e8d-4f54-4f56-b821-1f0c5ec1a1b7}</UniqueIdentifier>
     </Filter>
@@ -285,6 +285,12 @@
     </Filter>
     <Filter Include="07. Object Component\UIComponent\13. WorldUIComponent">
       <UniqueIdentifier>{8b43eb02-72ab-4471-a11b-922d8d4dfbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\PoolingManager">
+      <UniqueIdentifier>{42c224d8-e490-4a1e-9d48-313fd496c6b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\PoolingManager\ObjectPool">
+      <UniqueIdentifier>{e1ccee49-3494-4e3f-abb1-0b077ba3846b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -574,7 +580,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CollisionBlock.cpp">
       <Filter>06. Object\03. CollisionBlock</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ArrowMesh.cpp">
       <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
     </ClCompile>
@@ -583,6 +589,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\WorldUIComponent.cpp">
       <Filter>07. Object Component\UIComponent\13. WorldUIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PoolingManager.cpp">
+      <Filter>05. Scene Component\PoolingManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObjectPool.cpp">
+      <Filter>05. Scene Component\PoolingManager\ObjectPool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -898,7 +910,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\CollisionBlock.h">
       <Filter>06. Object\03. CollisionBlock</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ArrowMesh.h">
       <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
     </ClInclude>
@@ -907,6 +919,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\WorldUIComponent.h">
       <Filter>07. Object Component\UIComponent\13. WorldUIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PoolingManager.h">
+      <Filter>05. Scene Component\PoolingManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObjectPool.h">
+      <Filter>05. Scene Component\PoolingManager\ObjectPool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

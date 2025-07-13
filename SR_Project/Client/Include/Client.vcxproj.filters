@@ -55,12 +55,6 @@
     <Filter Include="02. Object\CameraActor">
       <UniqueIdentifier>{787cf409-8411-4408-97c8-8ddd782499c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\LoadingUI">
-      <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Cursor">
-      <UniqueIdentifier>{921a1788-6987-4885-b04c-ad1d1ef2bf8b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Monster">
       <UniqueIdentifier>{ecf0c0f9-ae92-4dc2-97c0-5d3da51e58da}</UniqueIdentifier>
     </Filter>
@@ -79,47 +73,8 @@
     <Filter Include="02. Object\UIObj\UIDebugObj">
       <UniqueIdentifier>{82419094-d92a-4d7d-8f56-5b4d4c56fcfe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\HotBar">
-      <UniqueIdentifier>{4c6908b3-1f5b-46ac-b116-07162d908392}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HotBar\HotBarBack">
-      <UniqueIdentifier>{ff32a50f-0cee-4a9e-9413-9fa0992313bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\ExpBar">
-      <UniqueIdentifier>{16799f8c-2f47-4ef2-a16b-c70cfaa1aabe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HpBar">
-      <UniqueIdentifier>{7f8466f6-7329-46f7-a639-08e72bf16f1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HpBar\HPBarBack">
-      <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HpBar\HPBarFront">
-      <UniqueIdentifier>{f48f0958-d4af-4bfd-a97b-e2af1b555b5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot">
-      <UniqueIdentifier>{eaed2440-bd7f-4420-8fde-f3ffe8ab7a75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Dash">
-      <UniqueIdentifier>{eb00f7b4-9125-4f29-9595-578ffdc8f4bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Emerald">
-      <UniqueIdentifier>{b55a1429-2e13-414d-9c7a-24a3cf430b44}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Monster\BTNode\Action">
       <UniqueIdentifier>{039f5f30-0e5b-4c77-a75e-6c7120cc6b01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\ArrowSlot">
-      <UniqueIdentifier>{d32685e0-1474-41ae-a3c4-64252e815624}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\ExpBar\ExpBarFront">
-      <UniqueIdentifier>{993abded-2230-4bec-9061-b762825a580f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\ExpBar\ExpBarBack">
-      <UniqueIdentifier>{b273c10f-7d6f-4c1f-bd24-49fd9bf361dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\QuickSlot">
-      <UniqueIdentifier>{5f79b9a4-77fb-4a3c-9d72-515676a39030}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Monster\Zombie">
       <UniqueIdentifier>{29a25081-9fe3-41d0-8766-63fd5707b964}</UniqueIdentifier>
@@ -127,23 +82,8 @@
     <Filter Include="02. Object\Monster\Skeleton">
       <UniqueIdentifier>{d76c092f-c541-47a0-8c8a-5013da963e4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\MouseUI">
-      <UniqueIdentifier>{96f0d89b-7188-4aaf-b15b-f705b662d974}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\MouseUI\MouseLeft">
-      <UniqueIdentifier>{e92ad393-db1a-42ca-8663-10f08e54878a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\MouseUI\MouseRight">
-      <UniqueIdentifier>{1493f90a-9921-45e5-9e59-33bacb915c94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\QuickSlotPlus">
-      <UniqueIdentifier>{7e9c9aed-302b-4824-8e55-68e7f95e92f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\Button">
       <UniqueIdentifier>{073d1e37-323a-41f4-b127-9bd0965346fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Panel">
-      <UniqueIdentifier>{1f7c4e3f-0c7e-4901-be40-d26d94e1d709}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\UIObj\Button\InventoryBtn">
       <UniqueIdentifier>{145e7493-1b5b-42f0-9e61-dcc44989f99a}</UniqueIdentifier>
@@ -172,51 +112,6 @@
     <Filter Include="02. Object\Item\Bow">
       <UniqueIdentifier>{e8969dd1-2bc7-497b-add4-2cb1bc657a17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\Panel\InventoryPanel">
-      <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\GearSlot">
-      <UniqueIdentifier>{81605eca-a69b-48fd-a392-028277a5bc75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\GearSlotPlus">
-      <UniqueIdentifier>{018d9042-ff23-4620-b39d-ad6c2e05d416}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\GearStrength">
-      <UniqueIdentifier>{4303a188-27b0-4efe-a87c-4aaf7f963b84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\GearStrengthPlus">
-      <UniqueIdentifier>{04ae4508-3493-4cdb-9c92-568add98188a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\LevelFront">
-      <UniqueIdentifier>{cf0f129f-7032-4883-89f2-3d6c2c27da9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon">
-      <UniqueIdentifier>{f3604252-e813-433c-90a1-585e6d9ac2b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon\00. FilterIcon">
-      <UniqueIdentifier>{9ac9d311-cdcf-4186-afdc-8c52ba293b9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon\01. Swordfilter">
-      <UniqueIdentifier>{f3e6ec11-90cb-4fdc-8782-eae295d796ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon\02. Arrowfilter">
-      <UniqueIdentifier>{38c62860-553a-488b-a688-11e1798f3fb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon\03. Armorfilter">
-      <UniqueIdentifier>{662c24ad-d98d-4d36-84d5-ce595cb28a53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon\04. Potionfilter">
-      <UniqueIdentifier>{86e8f850-db48-4e41-9833-e6b96289ef05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon\05. EnchantFilter">
-      <UniqueIdentifier>{f3a38c53-1ff0-47e3-892b-07e2ff3c1787}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Icon\06. CostumeFilter">
-      <UniqueIdentifier>{449e87c8-923d-467d-a95a-b23160440968}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Slot\InventorySlot">
-      <UniqueIdentifier>{d914f399-5087-4522-bc85-0f2b25e7eb73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Monster\Creeper">
       <UniqueIdentifier>{55568c30-c6cf-4688-ad2b-9ca5d546b10d}</UniqueIdentifier>
     </Filter>
@@ -229,50 +124,11 @@
     <Filter Include="02. Object\Monster\RedGolem\Projectile">
       <UniqueIdentifier>{14456796-8f96-4088-a27a-aa13642bd049}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\Slot\ItemSlot">
-      <UniqueIdentifier>{18112d4c-19ea-41a9-9f17-c8ddf317460a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\InventoryEmerald">
-      <UniqueIdentifier>{f4b4d265-4135-4773-b627-ae21d2c2c3a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\InventoryEnchant">
-      <UniqueIdentifier>{915546ff-5811-4797-b5e9-a3945d768751}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\ScrollBack">
-      <UniqueIdentifier>{0be50c81-d2b4-4ac1-a9d2-25fe070e8716}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item">
-      <UniqueIdentifier>{f9baad88-dcfe-443d-bdda-9b55567d7652}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\InventoryUI">
-      <UniqueIdentifier>{81d7d4dd-f144-4abb-92e7-4e4ea2ee6b33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\00. SwordItem">
-      <UniqueIdentifier>{7465cec9-c470-453c-a104-8ce5a8019618}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\UIManager">
       <UniqueIdentifier>{97af0672-8d0a-43fd-96df-c5a46fe31bd8}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\UIManager\InventoryUIBuilder">
       <UniqueIdentifier>{a6970c45-6bb9-4dbf-982e-928b72f75291}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\01. BowItem">
-      <UniqueIdentifier>{253139af-b937-4340-b766-da94797aec04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\04. HP_Potion">
-      <UniqueIdentifier>{f2a2d80a-c29e-48d0-a186-6ddcd89eea08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\02. WolfArmor">
-      <UniqueIdentifier>{e01fdcd5-31ae-4ffb-b8b7-856d2b88c10a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\03. RocketItem">
-      <UniqueIdentifier>{4378acd1-1adc-42b0-8df0-7aa24c4b787a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\Sword">
-      <UniqueIdentifier>{32b85a88-8d78-4c98-9462-c2ac5d47d87d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\QuestTextObj">
-      <UniqueIdentifier>{91e2b8b4-72bd-44be-8e7d-a8269d158f4f}</UniqueIdentifier>
     </Filter>
     <Filter Include="99. Etc\Shader/Fx">
       <UniqueIdentifier>{23c39b64-fa09-4d84-bbba-49cff170b28d}</UniqueIdentifier>
@@ -292,15 +148,6 @@
     <Filter Include="02. Object\Monster\BTNode\Decorator\Boss">
       <UniqueIdentifier>{f09359cc-229b-419e-a55b-5dfb052caba8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\Panel\QuestPanel">
-      <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Panel\WorldMapPanel">
-      <UniqueIdentifier>{a7a57302-6f01-41e2-8414-0a3f207e141c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\UIManager\UILoader">
-      <UniqueIdentifier>{782f7a20-b6f3-44db-94e8-12e7eb8b2021}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\Button\Locked_Node">
       <UniqueIdentifier>{d12dcb0c-bc08-4a42-8847-bbef7d269a00}</UniqueIdentifier>
     </Filter>
@@ -312,39 +159,6 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Button\MapNode_Front">
       <UniqueIdentifier>{c25954a4-4c89-454a-bf96-7596365b67fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\LoadingUI\LoadingStone">
-      <UniqueIdentifier>{a0df6aec-5ee3-450b-89ff-618aae2eeef3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Panel\WorldMapTextPanel">
-      <UniqueIdentifier>{bffa4f9e-6c08-4779-b144-0a868dc4d049}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Tooltip">
-      <UniqueIdentifier>{d489bb1f-85d1-4718-b812-87db22ed94e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Tooltip\WorldTooltip">
-      <UniqueIdentifier>{34b8dd7a-b589-493e-ac80-b8b33dbda7b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Tooltip\TooltipObj">
-      <UniqueIdentifier>{791f16c4-7087-4ad4-8813-882cccd29a7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Tooltip\FilterTooltip">
-      <UniqueIdentifier>{0b274195-08ee-43af-ae39-a76c1d5eef38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\06. PigItem">
-      <UniqueIdentifier>{a260439e-c6f4-486f-a93d-3f6d153faf58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Item\05. FishingItem">
-      <UniqueIdentifier>{86943bb5-011a-4051-a90d-f9010908dd21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HpBar\EnemyHPBarFront">
-      <UniqueIdentifier>{066ddb7d-9d39-446f-b729-30254a23fd58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HpBar\EnemyHPBarBack">
-      <UniqueIdentifier>{5b234947-6b40-436f-b0cd-83e90f3f9562}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\HpBar\BossHPBarFront">
-      <UniqueIdentifier>{e4750e43-6aaa-47e2-9554-37a9542559c4}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Spawner">
       <UniqueIdentifier>{dabd5484-e365-4db5-816b-900c42f87975}</UniqueIdentifier>
@@ -358,14 +172,227 @@
     <Filter Include="02. Object\UIObj\Icon\07. BossIcon">
       <UniqueIdentifier>{5c469025-e009-4574-819f-577182eb469f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\ParticleObj">
+    <Filter Include="02. Object\UIObj\UIRenderState">
+      <UniqueIdentifier>{15cab445-551b-40b2-84c9-721bd19d4553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Always">
+      <UniqueIdentifier>{7312d19e-ebea-47dd-9168-18171091c974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Always\Cursor">
+      <UniqueIdentifier>{921a1788-6987-4885-b04c-ad1d1ef2bf8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame">
+      <UniqueIdentifier>{1f730721-229e-48ac-8939-4c5a086f721f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\QuestPanel">
+      <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\QuestTextObj">
+      <UniqueIdentifier>{91e2b8b4-72bd-44be-8e7d-a8269d158f4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\ArrowSlot">
+      <UniqueIdentifier>{d32685e0-1474-41ae-a3c4-64252e815624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\QuickSlot">
+      <UniqueIdentifier>{5f79b9a4-77fb-4a3c-9d72-515676a39030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\QuickSlotPlus">
+      <UniqueIdentifier>{7e9c9aed-302b-4824-8e55-68e7f95e92f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory">
+      <UniqueIdentifier>{ef203a35-764d-4b7c-8205-550e9183edef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\InventoryPanel">
+      <UniqueIdentifier>{975edd8f-7629-40fe-89cb-a57e5e41f728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\GearStrength">
+      <UniqueIdentifier>{4303a188-27b0-4efe-a87c-4aaf7f963b84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\LevelFront">
+      <UniqueIdentifier>{cf0f129f-7032-4883-89f2-3d6c2c27da9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap">
+      <UniqueIdentifier>{fb4f8236-852b-46ce-90e6-e7ac5b50635f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\DeathUI">
+      <UniqueIdentifier>{e73cc959-1b31-4a4c-9f6a-de4d04b81e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\DeathUI\PlayerDeathUI">
+      <UniqueIdentifier>{a9f7aac0-fb27-45e1-8212-de079f7ca4e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\WorldMapPanel">
+      <UniqueIdentifier>{a7a57302-6f01-41e2-8414-0a3f207e141c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\WorldMapTextPanel">
+      <UniqueIdentifier>{bffa4f9e-6c08-4779-b144-0a868dc4d049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\ParticleObj">
       <UniqueIdentifier>{ecd64471-9daa-439e-ad9f-45bd10feffc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\DamageText">
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\WorldTooltip">
+      <UniqueIdentifier>{34b8dd7a-b589-493e-ac80-b8b33dbda7b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\ScrollBack">
+      <UniqueIdentifier>{0be50c81-d2b4-4ac1-a9d2-25fe070e8716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\MouseUI">
+      <UniqueIdentifier>{96f0d89b-7188-4aaf-b15b-f705b662d974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\MouseUI\MouseLeft">
+      <UniqueIdentifier>{e92ad393-db1a-42ca-8663-10f08e54878a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\MouseUI\MouseRight">
+      <UniqueIdentifier>{1493f90a-9921-45e5-9e59-33bacb915c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Loading">
+      <UniqueIdentifier>{a0410c20-c555-4c7c-ad6d-746cb5b20d31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingUI">
+      <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone">
+      <UniqueIdentifier>{a0df6aec-5ee3-450b-89ff-618aae2eeef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item">
+      <UniqueIdentifier>{95b869b5-1ad8-4d5c-9c1b-c7d1c940080c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Slot">
+      <UniqueIdentifier>{276830a9-030b-47ae-8304-df7ba7b52499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Slot\ItemSlot">
+      <UniqueIdentifier>{18112d4c-19ea-41a9-9f17-c8ddf317460a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Slot\InventorySlot">
+      <UniqueIdentifier>{d914f399-5087-4522-bc85-0f2b25e7eb73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlotPlus">
+      <UniqueIdentifier>{018d9042-ff23-4620-b39d-ad6c2e05d416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Slot\GearStrengthPlus">
+      <UniqueIdentifier>{04ae4508-3493-4cdb-9c92-568add98188a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlot">
+      <UniqueIdentifier>{81605eca-a69b-48fd-a392-028277a5bc75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Tooltip">
+      <UniqueIdentifier>{f8507519-1c0b-4856-aeb7-55eabaddcfd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Tooltip\FilterTooltip">
+      <UniqueIdentifier>{0b274195-08ee-43af-ae39-a76c1d5eef38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Tooltip\TooltipObj">
+      <UniqueIdentifier>{791f16c4-7087-4ad4-8813-882cccd29a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\00. SwordItem">
+      <UniqueIdentifier>{7465cec9-c470-453c-a104-8ce5a8019618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\01. BowItem">
+      <UniqueIdentifier>{253139af-b937-4340-b766-da94797aec04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\02. WolfArmor">
+      <UniqueIdentifier>{e01fdcd5-31ae-4ffb-b8b7-856d2b88c10a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\03. RocketItem">
+      <UniqueIdentifier>{4378acd1-1adc-42b0-8df0-7aa24c4b787a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\06. PigItem">
+      <UniqueIdentifier>{a260439e-c6f4-486f-a93d-3f6d153faf58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\05. FishingItem">
+      <UniqueIdentifier>{86943bb5-011a-4051-a90d-f9010908dd21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\Sword">
+      <UniqueIdentifier>{32b85a88-8d78-4c98-9462-c2ac5d47d87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\InventoryUI">
+      <UniqueIdentifier>{81d7d4dd-f144-4abb-92e7-4e4ea2ee6b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\InventoryEnchant">
+      <UniqueIdentifier>{915546ff-5811-4797-b5e9-a3945d768751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\InventoryEmerald">
+      <UniqueIdentifier>{f4b4d265-4135-4773-b627-ae21d2c2c3a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon">
+      <UniqueIdentifier>{b0dc6a98-16e1-4942-b640-f4e79bb1c249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon\00. FilterIcon">
+      <UniqueIdentifier>{9ac9d311-cdcf-4186-afdc-8c52ba293b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon\01. Swordfilter">
+      <UniqueIdentifier>{f3e6ec11-90cb-4fdc-8782-eae295d796ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon\02. Arrowfilter">
+      <UniqueIdentifier>{38c62860-553a-488b-a688-11e1798f3fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon\03. Armorfilter">
+      <UniqueIdentifier>{662c24ad-d98d-4d36-84d5-ce595cb28a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon\04. Potionfilter">
+      <UniqueIdentifier>{86e8f850-db48-4e41-9833-e6b96289ef05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon\05. EnchantFilter">
+      <UniqueIdentifier>{f3a38c53-1ff0-47e3-892b-07e2ff3c1787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Icon\06. CostumeFilter">
+      <UniqueIdentifier>{449e87c8-923d-467d-a95a-b23160440968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HPBar">
+      <UniqueIdentifier>{b4703de2-d3f0-49fb-a937-57974d994715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HPBar\BossHPBarFront">
+      <UniqueIdentifier>{e4750e43-6aaa-47e2-9554-37a9542559c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HPBar\EnemyHPBarBack">
+      <UniqueIdentifier>{5b234947-6b40-436f-b0cd-83e90f3f9562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HPBar\EnemyHPBarFront">
+      <UniqueIdentifier>{066ddb7d-9d39-446f-b729-30254a23fd58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarBack">
+      <UniqueIdentifier>{26c44d7d-72eb-4213-ad73-d0d7dcc24ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarFront">
+      <UniqueIdentifier>{f48f0958-d4af-4bfd-a97b-e2af1b555b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarWhite">
+      <UniqueIdentifier>{a770cd5a-670d-4d7a-9836-e1dfc3253900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\BossIcon">
+      <UniqueIdentifier>{5c469025-e009-4574-819f-577182eb469f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HP_Potion">
+      <UniqueIdentifier>{f2a2d80a-c29e-48d0-a186-6ddcd89eea08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HotBar">
+      <UniqueIdentifier>{4c6908b3-1f5b-46ac-b116-07162d908392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HotBar\HotBarBack">
+      <UniqueIdentifier>{ff32a50f-0cee-4a9e-9413-9fa0992313bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\ExpBar">
+      <UniqueIdentifier>{16799f8c-2f47-4ef2-a16b-c70cfaa1aabe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront">
+      <UniqueIdentifier>{993abded-2230-4bec-9061-b762825a580f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarBack">
+      <UniqueIdentifier>{b273c10f-7d6f-4c1f-bd24-49fd9bf361dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\Emerald">
+      <UniqueIdentifier>{b55a1429-2e13-414d-9c7a-24a3cf430b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\Dash">
+      <UniqueIdentifier>{eb00f7b4-9125-4f29-9595-578ffdc8f4bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\DamageText">
       <UniqueIdentifier>{51f9e712-51a5-4d13-af14-844000a64020}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\HpBar\HPBarWhite">
-      <UniqueIdentifier>{a770cd5a-670d-4d7a-9836-e1dfc3253900}</UniqueIdentifier>
+    <Filter Include="02. Object\UIObj\UIRenderState\DeathUI\DeathFrame">
+      <UniqueIdentifier>{a2944326-fafa-4067-a560-560eadd3ccc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UILoader">
+      <UniqueIdentifier>{782f7a20-b6f3-44db-94e8-12e7eb8b2021}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Monster\RedGolem\Projectile\Circle">
       <UniqueIdentifier>{74b35a4c-cb27-46ce-933c-02e7b3ef297e}</UniqueIdentifier>
@@ -415,10 +442,10 @@
       <Filter>02. Object\BaseCharacter\Bone</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HPBarFront.h">
-      <Filter>02. Object\UIObj\HpBar\HPBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HPBarBack.h">
-      <Filter>02. Object\UIObj\HpBar\HPBarBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarBack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CameraActor.h">
       <Filter>02. Object\CameraActor</Filter>
@@ -427,13 +454,13 @@
       <Filter>02. Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LoadingUI.h">
-      <Filter>02. Object\UIObj\LoadingUI</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Cursor.h">
-      <Filter>02. Object\UIObj\Cursor</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Always\Cursor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InventoryPanel.h">
-      <Filter>02. Object\UIObj\Panel\InventoryPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02. Object\Monster</Filter>
@@ -448,25 +475,25 @@
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HotBarBack.h">
-      <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HotBar\HotBarBack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DashUI.h">
-      <Filter>02. Object\UIObj\Dash</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Dash</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Emerald.h">
-      <Filter>02. Object\UIObj\Emerald</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Emerald</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ArrowSlot.h">
-      <Filter>02. Object\UIObj\Slot\ArrowSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ArrowSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuickSlot.h">
-      <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuickSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarBack.h" />
     <ClInclude Include="..\Header\Skeleton.h">
@@ -482,13 +509,13 @@
       <Filter>02. Object\UIObj\Button\MapBtn</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MouseLeftUI.h">
-      <Filter>02. Object\UIObj\MouseUI\MouseLeft</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\MouseUI\MouseLeft</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MouseRightUI.h">
-      <Filter>02. Object\UIObj\MouseUI\MouseRight</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\MouseUI\MouseRight</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuickSlotPlus.h">
-      <Filter>02. Object\UIObj\Slot\QuickSlotPlus</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuickSlotPlus</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExitBtn.h">
       <Filter>02. Object\UIObj\Button\ExitBtn</Filter>
@@ -509,49 +536,49 @@
       <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearSlot.h">
-      <Filter>02. Object\UIObj\Slot\GearSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EmeraldSword.h">
-      <Filter>02. Object\UIObj\Item\Sword</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\Sword</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearSlotPlus.h">
-      <Filter>02. Object\UIObj\Slot\GearSlotPlus</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlotPlus</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HP_Potion.h">
-      <Filter>02. Object\UIObj\Item\04. HP_Potion</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HP_Potion</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearStrength.h">
-      <Filter>02. Object\UIObj\Slot\GearStrength</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\GearStrength</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearStrengthBack.h">
-      <Filter>02. Object\UIObj\Slot\GearStrengthPlus</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearStrengthPlus</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LevelFront.h">
-      <Filter>02. Object\UIObj\Slot\LevelFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\LevelFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Filter.h">
-      <Filter>02. Object\UIObj\Icon\00. FilterIcon</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\00. FilterIcon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SwordFilter.h">
-      <Filter>02. Object\UIObj\Icon\01. Swordfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\01. Swordfilter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ArrowFilter.h">
-      <Filter>02. Object\UIObj\Icon\02. Arrowfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\02. Arrowfilter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ArmorFilter.h">
-      <Filter>02. Object\UIObj\Icon\03. Armorfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\03. Armorfilter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PotionFilter.h">
-      <Filter>02. Object\UIObj\Icon\04. Potionfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\04. Potionfilter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EnchantFilter.h">
-      <Filter>02. Object\UIObj\Icon\05. EnchantFilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\05. EnchantFilter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CostumeFilter.h">
-      <Filter>02. Object\UIObj\Icon\06. CostumeFilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\06. CostumeFilter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InventorySlot.h">
-      <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\InventorySlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Creeper.h">
       <Filter>02. Object\Monster\Creeper</Filter>
@@ -572,43 +599,43 @@
       <Filter>02. Object\Item\Arrow</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ItemSlot.h">
-      <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\ItemSlot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InventoryEmerald.h">
-      <Filter>02. Object\UIObj\InventoryEmerald</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryEmerald</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InventoryEnchant.h">
-      <Filter>02. Object\UIObj\InventoryEnchant</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryEnchant</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ScrollBack.h">
-      <Filter>02. Object\UIObj\ScrollBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\ScrollBack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InventoryUI.h">
-      <Filter>02. Object\UIObj\InventoryUI</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SwordItem.h">
-      <Filter>02. Object\UIObj\Item\00. SwordItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\00. SwordItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BowItem.h">
-      <Filter>02. Object\UIObj\Item\01. BowItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\01. BowItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\WolfArmor.h">
-      <Filter>02. Object\UIObj\Item\02. WolfArmor</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\02. WolfArmor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\RocketItem.h">
-      <Filter>02. Object\UIObj\Item\03. RocketItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\03. RocketItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TooltipObj.h">
-      <Filter>02. Object\UIObj\Tooltip\TooltipObj</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Tooltip\TooltipObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FishingItem.h">
-      <Filter>02. Object\UIObj\Item\05. FishingItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\05. FishingItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuestPanel.h">
-      <Filter>02. Object\UIObj\Panel\QuestPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuestTextObj.h">
-      <Filter>02. Object\UIObj\QuestTextObj</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestTextObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Attack.h">
       <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
@@ -641,7 +668,7 @@
       <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\WorldMapPanel.h">
-      <Filter>02. Object\UIObj\Panel\WorldMapPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Locked_Node.h">
       <Filter>02. Object\UIObj\Button\Locked_Node</Filter>
@@ -656,32 +683,32 @@
       <Filter>02. Object\UIObj\Button\MapNode_Front</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LoadingStone.h">
-      <Filter>02. Object\UIObj\LoadingUI\LoadingStone</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\WorldMapTextPanel.h">
-      <Filter>02. Object\UIObj\Panel\WorldMapTextPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapTextPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="..\Header\WorldTooltip.h">
-      <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldTooltip</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UILoader.h">
       <Filter>01. Scene\UIManager\UILoader</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FilterTooltip.h">
-      <Filter>02. Object\UIObj\Tooltip\FilterTooltip</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Tooltip\FilterTooltip</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PigItem.h">
-      <Filter>02. Object\UIObj\Item\06. PigItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\06. PigItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EnemyHPBarFront.h">
-      <Filter>02. Object\UIObj\HpBar\EnemyHPBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\EnemyHPBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EnemyHPBarBack.h">
-      <Filter>02. Object\UIObj\HpBar\EnemyHPBarBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\EnemyHPBarBack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BossHPBarFront.h">
-      <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\BossHPBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Spawner.h">
       <Filter>02. Object\Spawner\Spawner</Filter>
@@ -702,16 +729,22 @@
       <Filter>02. Object\Item\Arrow</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BossIcon.h">
-      <Filter>02. Object\UIObj\Icon\07. BossIcon</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\BossIcon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ParticleObj.h">
-      <Filter>02. Object\UIObj\ParticleObj</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ParticleObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DamageText.h">
-      <Filter>02. Object\UIObj\DamageText</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\DamageText</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HPBarWhite.h">
-      <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarWhite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerDeathUI.h">
+      <Filter>02. Object\UIObj\UIRenderState\DeathUI\PlayerDeathUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DeathFrame.h">
+      <Filter>02. Object\UIObj\UIRenderState\DeathUI\DeathFrame</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Circle.h">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>
@@ -758,10 +791,10 @@
       <Filter>02. Object\BaseCharacter\Bone</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HPBarFront.cpp">
-      <Filter>02. Object\UIObj\HpBar\HPBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HPBarBack.cpp">
-      <Filter>02. Object\UIObj\HpBar\HPBarBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarBack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player.cpp">
       <Filter>02. Object\Player</Filter>
@@ -770,13 +803,13 @@
       <Filter>02. Object\CameraActor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LoadingUI.cpp">
-      <Filter>02. Object\UIObj\LoadingUI</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Cursor.cpp">
-      <Filter>02. Object\UIObj\Cursor</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Always\Cursor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryPanel.cpp">
-      <Filter>02. Object\UIObj\Panel\InventoryPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FirstCam.cpp">
       <Filter>02. Object\CameraActor\FirstCam</Filter>
@@ -788,31 +821,31 @@
       <Filter>02. Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HotBarBack.cpp">
-      <Filter>02. Object\UIObj\HotBar\HotBarBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HotBar\HotBarBack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DashUI.cpp">
-      <Filter>02. Object\UIObj\Dash</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Dash</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Emerald.cpp">
-      <Filter>02. Object\UIObj\Emerald</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Emerald</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>100. Executable</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ArrowSlot.cpp">
-      <Filter>02. Object\UIObj\Slot\ArrowSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ArrowSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIDebugObj.cpp">
       <Filter>02. Object\UIObj\UIDebugObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuickSlot.cpp">
-      <Filter>02. Object\UIObj\Slot\QuickSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuickSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarBack.cpp" />
     <ClCompile Include="..\Code\Skeleton.cpp">
@@ -828,13 +861,13 @@
       <Filter>02. Object\UIObj\Button\MapBtn</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MouseLeftUI.cpp">
-      <Filter>02. Object\UIObj\MouseUI\MouseLeft</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\MouseUI\MouseLeft</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MouseRightUI.cpp">
-      <Filter>02. Object\UIObj\MouseUI\MouseRight</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\MouseUI\MouseRight</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuickSlotPlus.cpp">
-      <Filter>02. Object\UIObj\Slot\QuickSlotPlus</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuickSlotPlus</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExitBtn.cpp">
       <Filter>02. Object\UIObj\Button\ExitBtn</Filter>
@@ -855,49 +888,49 @@
       <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearSlot.cpp">
-      <Filter>02. Object\UIObj\Slot\GearSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EmeraldSword.cpp">
-      <Filter>02. Object\UIObj\Item\Sword</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\Sword</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearSlotPlus.cpp">
-      <Filter>02. Object\UIObj\Slot\GearSlotPlus</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlotPlus</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HP_Potion.cpp">
-      <Filter>02. Object\UIObj\Item\04. HP_Potion</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HP_Potion</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearStrength.cpp">
-      <Filter>02. Object\UIObj\Slot\GearStrength</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\GearStrength</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearStrengthBack.cpp">
-      <Filter>02. Object\UIObj\Slot\GearStrengthPlus</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearStrengthPlus</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LevelFront.cpp">
-      <Filter>02. Object\UIObj\Slot\LevelFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\LevelFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Filter.cpp">
-      <Filter>02. Object\UIObj\Icon\00. FilterIcon</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\00. FilterIcon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SwordFilter.cpp">
-      <Filter>02. Object\UIObj\Icon\01. Swordfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\01. Swordfilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ArrowFilter.cpp">
-      <Filter>02. Object\UIObj\Icon\02. Arrowfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\02. Arrowfilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ArmorFilter.cpp">
-      <Filter>02. Object\UIObj\Icon\03. Armorfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\03. Armorfilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PotionFilter.cpp">
-      <Filter>02. Object\UIObj\Icon\04. Potionfilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\04. Potionfilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EnchantFilter.cpp">
-      <Filter>02. Object\UIObj\Icon\05. EnchantFilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\05. EnchantFilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CostumeFilter.cpp">
-      <Filter>02. Object\UIObj\Icon\06. CostumeFilter</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Icon\06. CostumeFilter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventorySlot.cpp">
-      <Filter>02. Object\UIObj\Slot\InventorySlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\InventorySlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Creeper.cpp">
       <Filter>02. Object\Monster\Creeper</Filter>
@@ -918,46 +951,46 @@
       <Filter>02. Object\Item\Arrow</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ItemSlot.cpp">
-      <Filter>02. Object\UIObj\Slot\ItemSlot</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\ItemSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryUIBuilder.cpp">
       <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryEmerald.cpp">
-      <Filter>02. Object\UIObj\InventoryEmerald</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryEmerald</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryEnchant.cpp">
-      <Filter>02. Object\UIObj\InventoryEnchant</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryEnchant</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ScrollBack.cpp">
-      <Filter>02. Object\UIObj\ScrollBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\ScrollBack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryUI.cpp">
-      <Filter>02. Object\UIObj\InventoryUI</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SwordItem.cpp">
-      <Filter>02. Object\UIObj\Item\00. SwordItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\00. SwordItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BowItem.cpp">
-      <Filter>02. Object\UIObj\Item\01. BowItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\01. BowItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\WolfArmor.cpp">
-      <Filter>02. Object\UIObj\Item\02. WolfArmor</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\02. WolfArmor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\RocketItem.cpp">
-      <Filter>02. Object\UIObj\Item\03. RocketItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\03. RocketItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TooltipObj.cpp">
-      <Filter>02. Object\UIObj\Tooltip\TooltipObj</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Tooltip\TooltipObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FishingItem.cpp">
-      <Filter>02. Object\UIObj\Item\05. FishingItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\05. FishingItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuestPanel.cpp">
-      <Filter>02. Object\UIObj\Panel\QuestPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuestTextObj.cpp">
-      <Filter>02. Object\UIObj\QuestTextObj</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestTextObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Attack.cpp">
       <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
@@ -990,7 +1023,7 @@
       <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\WorldMapPanel.cpp">
-      <Filter>02. Object\UIObj\Panel\WorldMapPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Locked_Node.cpp">
       <Filter>02. Object\UIObj\Button\Locked_Node</Filter>
@@ -1005,32 +1038,32 @@
       <Filter>02. Object\UIObj\Button\MapNode_Front</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LoadingStone.cpp">
-      <Filter>02. Object\UIObj\LoadingUI\LoadingStone</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\WorldMapTextPanel.cpp">
-      <Filter>02. Object\UIObj\Panel\WorldMapTextPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapTextPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\WorldTooltip.cpp">
-      <Filter>02. Object\UIObj\Tooltip\WorldTooltip</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldTooltip</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp">
       <Filter>01. Scene\UIManager\UILoader</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FilterTooltip.cpp">
-      <Filter>02. Object\UIObj\Tooltip\FilterTooltip</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Tooltip\FilterTooltip</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PigItem.cpp">
-      <Filter>02. Object\UIObj\Item\06. PigItem</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\06. PigItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EnemyHPBarFront.cpp">
-      <Filter>02. Object\UIObj\HpBar\EnemyHPBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\EnemyHPBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp">
-      <Filter>02. Object\UIObj\HpBar\EnemyHPBarBack</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\EnemyHPBarBack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BossHPBarFront.cpp">
-      <Filter>02. Object\UIObj\HpBar\BossHPBarFront</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\BossHPBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Spawner.cpp">
       <Filter>02. Object\Spawner\Spawner</Filter>
@@ -1048,16 +1081,22 @@
       <Filter>02. Object\Item\Arrow</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BossIcon.cpp">
-      <Filter>02. Object\UIObj\Icon\07. BossIcon</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\BossIcon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ParticleObj.cpp">
-      <Filter>02. Object\UIObj\ParticleObj</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ParticleObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DamageText.cpp">
-      <Filter>02. Object\UIObj\DamageText</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\DamageText</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HPBarWhite.cpp">
-      <Filter>02. Object\UIObj\HpBar\HPBarWhite</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\HPBar\HPBarWhite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerDeathUI.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\DeathUI\PlayerDeathUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DeathFrame.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\DeathUI\DeathFrame</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Circle.cpp">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>

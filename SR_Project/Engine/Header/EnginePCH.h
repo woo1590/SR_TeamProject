@@ -20,10 +20,14 @@
 #include <fstream>
 #include <tchar.h>
 #include <ranges>
+#include <mutex>
+#include <cstddef>
+
 //stl
 #include <vector>
 #include <list>
 #include <map>
+#include <stack>
 #include <set>
 #include <algorithm>
 #include <functional>
@@ -35,6 +39,7 @@
 #include <random>
 #include <cassert>
 #include <variant>
+
 
 //Header
 #include "Base.h"

@@ -10,9 +10,10 @@ namespace Engine
 		int curExp = 0;
 		int maxExp = 10;
 		int power = 100;
-		float speed = 25.f;
+		float speed = 15.f;
 	};
 
+	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Loading, DeathUI, Always };
 	enum class ItemType{ Sword, Armor, Arrow, Potion, Enchant, Costume };
 	enum class Rarity { Default, Rare};
 

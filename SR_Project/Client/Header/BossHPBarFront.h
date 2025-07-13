@@ -11,5 +11,12 @@ private:
 public:
 	static BossHPBarFront* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
+
+	void Update(float dt) override;
+
+private:
+	float elapsedTime = 0.f;
+	float fadeDuration = 2.f;
+	bool fadeCompleted = false;
 };
 
