@@ -110,9 +110,11 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         bossIcon->GetComponent<TransformComponent>()->SetParent(bossFront);
         owner->AddUIObject(bossIcon);
 
-        auto particle = ParticleObj::Create(owner);
-        auto particleTf = particle->GetComponent<TransformComponent>();
-        owner->AddUIObject(particle);
+        //bossFront->AddChild(bossIcon);
+
+        //auto particle = ParticleObj::Create(owner);
+        //auto particleTf = particle->GetComponent<TransformComponent>();
+        //owner->AddUIObject(particle);
 
         bossFront->AddChild(bossBack);
     }

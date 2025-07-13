@@ -59,7 +59,7 @@ namespace Engine
 
 	enum class SlotSize {Small, Default, Large};
 
-	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Loading, Always };
+
 
 
 	enum class Color
@@ -92,6 +92,8 @@ namespace Engine
 		QuestTitle,
 		VeryLarge,
 		DmgText,
+		DeathText,
+		DeathCount,
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)

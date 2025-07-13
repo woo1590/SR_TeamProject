@@ -12,6 +12,7 @@
 #include "Object.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "RenderSystem.h"
 
 
 UIDebugObj* UIDebugObj::Create(ObjectManager* owner)
@@ -61,4 +62,7 @@ void UIDebugObj::Update(float dt)
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::ESC))
 		exit(0);
+	if (input->IsKeyPressed(KEY::D))
+		playerInfo->SetHp(0);
+
 }

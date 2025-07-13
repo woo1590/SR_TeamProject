@@ -260,6 +260,7 @@
     <ClInclude Include="..\Header\InventoryManager.h" />
     <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\ItemComponent.h" />
+    <ClInclude Include="..\Header\ObjectPool.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\ParticleComponent.h" />
     <ClInclude Include="..\Header\PhysicsComponent.h" />
@@ -279,6 +280,7 @@
     <ClInclude Include="..\Header\ObjectManager.h" />
     <ClInclude Include="..\Header\ParallelNode.h" />
     <ClInclude Include="..\Header\PhysicsSystem.h" />
+    <ClInclude Include="..\Header\PoolingManager.h" />
     <ClInclude Include="..\Header\QuestSystem.h" />
     <ClInclude Include="..\Header\RandomSelectorNode.h" />
     <ClInclude Include="..\Header\ProgressBar.h" />
@@ -402,6 +404,7 @@
     <ClCompile Include="..\Code\InventoryManager.cpp" />
     <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\ItemComponent.cpp" />
+    <ClCompile Include="..\Code\ObjectPool.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\ParticleComponent.cpp" />
     <ClCompile Include="..\Code\PhysicsComponent.cpp" />
@@ -420,6 +423,7 @@
     <ClCompile Include="..\Code\ObjectManager.cpp" />
     <ClCompile Include="..\Code\ParallelNode.cpp" />
     <ClCompile Include="..\Code\PhysicsSystem.cpp" />
+    <ClCompile Include="..\Code\PoolingManager.cpp" />
     <ClCompile Include="..\Code\QuestSystem.cpp" />
     <ClCompile Include="..\Code\RandomSelectorNode.cpp" />
     <ClCompile Include="..\Code\ProgressBar.cpp" />

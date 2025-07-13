@@ -21,4 +21,5 @@ private:
     void BuildQuestUI(ObjectManager* objMgr);
     void BuildMiscUI(ObjectManager* objMgr);
     void BuildWorldMapUI(ObjectManager* objMgr);
+    void BuildDeathUI(ObjectManager* objMgr);
 };

@@ -89,7 +89,7 @@ void TestScene::Load()
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
+	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
@@ -109,6 +109,7 @@ void TestScene::Load()
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	//ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
 
 	auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	ObjectMgr->AddObject(ObjectType::Neutral, trigger);
