@@ -46,6 +46,9 @@
 #include "SpawnTriggerBox.h"
 #include "Tnt.h"
 #include "Rain.h"
+#include "Slime.h"
+#include "JungleZombie.h"
+#include "JungleSkeleton.h"
 
 //component
 #include "TransformComponent.h"
@@ -115,7 +118,7 @@ void TestScene::Load()
 	
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, JungleZombie::Create(ObjectMgr, ObjectType::Monster));
 
 	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);
