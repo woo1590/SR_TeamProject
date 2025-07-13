@@ -17,6 +17,7 @@ public:
     void Late_Update(_float dt)override;
     
 public:
+    StaticBlockType GetType() { return Type; }
     _vec3 GetPosition() { return AddComponent<TransformComponent>()->GetPosition(); }
 
 private:

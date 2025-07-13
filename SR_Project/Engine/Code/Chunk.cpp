@@ -3,6 +3,7 @@
 #include "ChunkMesh.h"
 #include "ObjectManager.h"
 #include "CollisionBlock.h"
+#include "AlphaBlock.h"
 
 //component
 #include "TransformComponent.h"
@@ -42,27 +43,61 @@ HRESULT Chunk::Ready_Object()
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMaterial("Chunk_Mtrl");
     renderer->SetMesh(mesh);
-    
+
     owner->AddObject(ObjectType::Chunk, this);
     return S_OK;
 }
 
 void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
 {
-    int localX = (static_cast<int>(position.x) - ChunkX * CHUNK_SIZE) / BLOCK_SIZE;
-    int localY = static_cast<int>(position.y) / BLOCK_SIZE;
-    int localZ = (static_cast<int>(position.z) - ChunkZ * CHUNK_SIZE) / BLOCK_SIZE;
+    if (usage == Alpha)
+    {
+        auto block = StaticBlock::Create(owner, ObjectType::AlphaBlock, type, axis, rot, usage);
+        block->GetComponent<TransformComponent>()->SetPosition(position);
+        AlphaBlocks.push_back(block);
+        owner->AddObject(ObjectType::AlphaBlock, block);
+    }
+    else
+    {
+        int localX = (static_cast<int>(position.x) - ChunkX * CHUNK_SIZE) / BLOCK_SIZE;
+        int localY = static_cast<int>(position.y) / BLOCK_SIZE;
+        int localZ = (static_cast<int>(position.z) - ChunkZ * CHUNK_SIZE) / BLOCK_SIZE;
 
-    if (localY < 0 || localY >= CHUNK_HEIGHT / BLOCK_SIZE) return;
-    if (localX < 0 || localX >= CHUNK_SIZE / BLOCK_SIZE) return;
-    if (localZ < 0 || localZ >= CHUNK_SIZE / BLOCK_SIZE) return;
+        if (localY < 0 || localY >= CHUNK_HEIGHT / BLOCK_SIZE) return;
+        if (localX < 0 || localX >= CHUNK_SIZE / BLOCK_SIZE) return;
+        if (localZ < 0 || localZ >= CHUNK_SIZE / BLOCK_SIZE) return;
 
-    auto& block = Blocks[localX][localY][localZ];
-    block.Pos = position;
-    block.Type = type;
-    block.Axis = axis;
-    block.Rot = rot;
-    block.Usage = usage;
+        SB block;
+        block.Pos = position;
+        block.Type = type;
+        block.Axis = axis;
+        block.Rot = rot;
+        block.Usage = usage;
+
+        Blocks[localX][localY][localZ] = block;
+    }
+}
+
+void Chunk::RemoveAlpha(const _vec3& pos)
+{
+    for (auto iter = AlphaBlocks.begin(); iter != AlphaBlocks.end();)
+    {
+        Object* obj = *iter;
+
+        if (obj->GetComponent<TransformComponent>()->GetPosition() == pos)
+        {
+            iter = AlphaBlocks.erase(iter);
+            owner->RemoveObject(ObjectType::AlphaBlock, pos);
+        }
+        else ++iter;
+    }
+}
+
+void Chunk::ClearAlpha()
+{
+    for (auto& iter : AlphaBlocks)
+        Safe_Release(iter);
+    AlphaBlocks.clear();
 }
 
 Chunk* Chunk::GetNeighborChunk(int x, int z)
@@ -188,7 +223,6 @@ void Chunk::BuildChunkFace()
             return false;
         };
 
-
     for (int y = 0; y < CHUNK_HEIGHT; ++y)
     {
         for (int z = 0; z < CHUNK_SIZE; ++z)
@@ -227,7 +261,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     if (sb.Usage == Stair)
     {
         _vec3 bottomScale = { 1.f, 0.5f, 1.f }, bottomOffset = { 0.f, -0.5f, 0.f };
-        AddBox(vertices, indices, blockPos + bottomOffset, bottomScale, sb, faceDir);
+        AddQuad(vertices, indices, blockPos + bottomOffset, bottomScale, sb, faceDir);
 
         _vec3 topScale, topOffset;
         switch (sb.Rot)
@@ -250,7 +284,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
             break;
         }
 
-        AddBox(vertices, indices, blockPos + topOffset, topScale, sb, faceDir);
+        AddQuad(vertices, indices, blockPos + topOffset, topScale, sb, faceDir);
         return;
     }
 
@@ -265,11 +299,6 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
 
     _vec3 scale{ 1.f, scaleY, 1.f };
     _vec3 center(blockPos + offsetY);
-    AddQuad(vertices, indices, center, scale, sb, faceDir);
-}
-
-void Chunk::AddBox(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir)
-{
     AddQuad(vertices, indices, center, scale, sb, faceDir);
 }
 
@@ -360,6 +389,37 @@ void Chunk::SetUV(const SB& sb, int faceDir)
             break;
         default:
             SetUVTile(1, 0);
+            break;
+        }
+        break;
+    case DirtPath:
+        switch (faceDir)
+        {
+        case Face_Top:
+            SetUVTile(4, 0);
+            break;
+        case Face_Bottom:
+            SetUVTile(0, 0);
+            break;
+        default:
+            SetUVTile(3, 0);
+            break;
+        }
+        break;
+    case Oak:
+        SetUVTile(3, 2);
+        break;
+    case Furnace:
+        switch (faceDir)
+        {
+        case Face_Top: case Face_Bottom:
+            SetUVTile(2, 4);
+            break;
+        case Face_Front:
+            SetUVTile(0, 4);
+            break;
+        default:
+            SetUVTile(1, 4);
             break;
         }
         break;
@@ -554,5 +614,9 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 void Chunk::Free()
 {
     Safe_Release(mesh);
+
+    for (auto& alpha : AlphaBlocks)
+        Safe_Release(alpha);
+
     Object::Free();
 }

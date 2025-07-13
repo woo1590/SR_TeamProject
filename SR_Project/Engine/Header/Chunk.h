@@ -20,20 +20,17 @@ private:
     HRESULT Ready_Object()override;
 
 public:
-    // ���� �߰� (���� ��ǥ -> ���� ��ǥ)
     void AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
+    void RemoveAlpha(const _vec3& pos);
+    void ClearAlpha();
 
-    // �̿��� ûũ ��ȯ
     Chunk* GetNeighborChunk(int x, int z);
 
-    // ûũ �� ���ϵ� ����� �ʱ�ȭ
     void InitializeAirBlocks();
 
-    // ����� �̿��� �鸸 �߷�����
     void BuildChunkFace();
 
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir, const SB& sb);
-    void AddBox(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir);
     void AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir);
 
     void SetUV(const SB& sb, int faceDir);
@@ -41,11 +38,14 @@ public:
     void SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage);
 
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
+    void AddAlphaBlock(Object* alphaBlock) { AlphaBlocks.push_back(alphaBlock); }
+
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);
 
     int GetChunkX() const { return ChunkX; }
     int GetChunkZ() const { return ChunkZ; }
     StaticBlockData GetBlock(int x, int y, int z) const;
+    vector<Object*> GetAlphaBlocks() const { return AlphaBlocks; }
 
     void BuildCollisionBlock();
     void SetBlockAir(int x, int y, int z) { Blocks[x][y][z].Type = Air; }
@@ -55,10 +55,10 @@ private:
 
 private:
     int ChunkX = 0, ChunkZ = 0;
+    ChunkMesh* mesh = nullptr;
 
     _vec2 TexUVs[4]{};
-
-    ChunkMesh* mesh = nullptr;
     SB Blocks[CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
+    std::vector<Object*> AlphaBlocks;
 };
 END

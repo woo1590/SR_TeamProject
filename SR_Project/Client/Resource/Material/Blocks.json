@@ -23,10 +23,10 @@
         },
 
         "Glass_Mtrl": {
-            "textures": { "AlbedoMap": "../Resource/Texture/Block/Glass.dds" }
+            "textures": { "CubeMap": "../Resource/Texture/Block/Glass.dds" }
         },
         "Leaf_Mtrl": {
-            "textures": { "AlbedoMap": "../Resource/Texture/Block/Leaf.dds" }
+            "textures": { "CubeMap": "../Resource/Texture/Block/Leaf.dds" }
         },
 
         "ChestBottom_Mtrl": {
@@ -44,6 +44,9 @@
 
         "Lever_Mtrl": {
             "textures": { "CubeMap": "../Resource/Texture/Block/Lever.dds" }
+        },
+        "Stone_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/Stone.dds" }
         },
 
         "IronCage_Mtrl": {

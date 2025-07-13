@@ -134,6 +134,7 @@ void EditScene::ImGui_Main()
 	ImGui::SetNextWindowPos({ 0.f, 0.f });
 	ImGui::Begin("==== MineCraft Dungeon Map Editor ====", NULL, 0);
 	ImGui_Info();
+	ImGui_Terrain();
 	ImGui_SaveLoad();
 	ImGui_SetBlockType();
 	ImGui_SetBlockUsage();
@@ -148,12 +149,51 @@ void EditScene::ImGui_Main()
 
 void EditScene::ImGui_Info()
 {
-	static bool isChecked(false);
-	if (ImGui::Checkbox(" : MOUSE DOWN", &isChecked)) isDown = isChecked;
+	static bool checkMouse(false);
+	if (ImGui::Checkbox(" : MOUSE DOWN", &checkMouse)) isDown = checkMouse;
 
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
 	ImGui::Text("Dynamic Block Count : %d", dynamicBlocks.size());
+}
+
+void EditScene::ImGui_Terrain()
+{
+	// 생성할 지형 넓이 지정
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthZ", &WidthZ);
+
+	// 생성할 지형 높이와 굴곡도 지정
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
+
+	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
+	{
+		Terrain->Free();
+		staticBlocks.clear();
+		ChunkMgr->ClearAllChunks();
+
+		// CreateTerrain("heightMap");
+		PlaceTerrainBlocks("heightMap");
+
+		selectedSBlockType = 0;
+		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
+		ObjectMgr->ClearList(ObjectType::AlphaBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("CLEAR TERRAIN"))
+	{
+		Terrain->Free();
+		staticBlocks.clear();
+		ChunkMgr->ClearAllChunks();
+
+		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
+		ObjectMgr->ClearList(ObjectType::AlphaBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+	}
 }
 
 void EditScene::ImGui_SaveLoad()
@@ -178,10 +218,11 @@ void EditScene::ImGui_SaveLoad()
 
 		dynamicBlocks.clear();
 		ObjectMgr->ClearList(ObjectType::Part);
+		ObjectMgr->ClearList(ObjectType::AlphaBlock);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 
 		BlockMgr->LoadDB(load);
-		BlockMgr->LoadChunk(load);
+		BlockMgr->LoadChunk(load, TRUE);
 
 		for (auto& chunk : ChunkMgr->GetChunks())
 		{
@@ -196,88 +237,19 @@ void EditScene::ImGui_SaveLoad()
 			}
 		}
 	}
-
-	// 생성할 지형 넓이 지정
-	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
-	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthZ", &WidthZ);
-
-	// 생성할 지형 높이와 굴곡도 지정
-	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
-	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
-
-	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
-	{
-		Terrain->Free();
-		staticBlocks.clear();
-		ChunkMgr->ClearAllChunks();
-
-		CreateTerrain("heightMap");
-		PlaceTerrainBlocks("heightMap");
-
-		selectedSBlockType = 0;
-		dynamicBlocks.clear();
-		ObjectMgr->ClearList(ObjectType::Part);
-		ObjectMgr->ClearList(ObjectType::DynamicBlock);
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("CLEAR TERRAIN"))
-	{
-		Terrain->Free();
-		staticBlocks.clear();
-		ChunkMgr->ClearAllChunks();
-
-		dynamicBlocks.clear();
-		ObjectMgr->ClearList(ObjectType::Part);
-		ObjectMgr->ClearList(ObjectType::DynamicBlock);
-	}
-}
-
-void EditScene::ImGui_SetBlockUsage()
-{
-	if (staticBlockType == StaticBlockType::Air) return;
-
-	std::vector<const char*> usageOptions;
-	std::vector<StaticBlockUsage> usageEnums;
-
-	// 블럭 모양 결정
-	switch (staticBlockType)
-	{
-	case StaticBlockType::Dirt: case StaticBlockType::GrassDirt: case StaticBlockType::Wood:
-	case StaticBlockType::StoneBrick: case StaticBlockType::MossyStoneBrick:
-		staticBlockUsage = StaticBlockUsage::Basic;
-		return;
-
-	case StaticBlockType::WoodPlank: case StaticBlockType::Stone: case StaticBlockType::CobbleStone: case StaticBlockType::SmoothStone:
-		usageOptions = { "BASIC", "HALF", "STAIR" };
-		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair };
-		break;
-
-	case StaticBlockType::Glass: case StaticBlockType::Leaf:
-		staticBlockUsage = StaticBlockUsage::Alpha;
-		return;
-	}
-
-	if (!usageOptions.empty())
-	{
-		if (ImGui::Combo(" : Usage", &selectedSBlockUsage, usageOptions.data(), static_cast<int>(usageOptions.size())))
-		{
-			staticBlockUsage = usageEnums[selectedSBlockUsage];
-			staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
-			staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
-		}
-	}
 }
 
 void EditScene::ImGui_SetBlockType()
 {
 	if (dynamicBlockType == DynamicBlockType::dBlockNone)
 	{
-		// 청크 종류 선택
+		// 블럭 종류 선택
 		const char* staticBlockNames[] =
 		{
-			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK",
+			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK", 
 			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
-			"GLASS", "LEAF"
+			"GLASS", "LEAF",
+			"OAK", "DIRTPATH", "FURNACE",
 		};
 
 		// 선택할 때마다, 다른 값들 초기화
@@ -296,6 +268,44 @@ void EditScene::ImGui_SetBlockType()
 
 		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
 			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
+	}
+}
+
+void EditScene::ImGui_SetBlockUsage()
+{
+	if (staticBlockType == StaticBlockType::Air) return;
+
+	std::vector<const char*> usageOptions;
+	std::vector<StaticBlockUsage> usageEnums;
+
+	// 블럭 모양 결정
+	switch (staticBlockType)
+	{
+	case Dirt: case GrassDirt: case DirtPath: case Wood: case Oak:
+	case StoneBrick: case MossyStoneBrick: case Furnace:
+		staticBlockUsage = StaticBlockUsage::Basic;
+		return;
+	case StaticBlockType::WoodPlank: case StaticBlockType::Stone: case StaticBlockType::CobbleStone:
+		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE" };
+		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair, StaticBlockUsage::Fence };
+		break;
+	case StaticBlockType::SmoothStone:
+		usageOptions = { "BASIC", "HALF", "STAIR" };
+		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair };
+		break;
+	case StaticBlockType::Glass: case StaticBlockType::Leaf:
+		staticBlockUsage = StaticBlockUsage::Alpha;
+		return;
+	}
+
+	if (!usageOptions.empty())
+	{
+		if (ImGui::Combo(" : Usage", &selectedSBlockUsage, usageOptions.data(), static_cast<int>(usageOptions.size())))
+		{
+			staticBlockUsage = usageEnums[selectedSBlockUsage];
+			staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
+			staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
+		}
 	}
 }
 
@@ -616,6 +626,8 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 
 	if (found)
 	{
+		bool isAlpha(false);
+
 		// 충돌한 블럭의 인덱스로 구한 위치로 청크 좌표 구하기
 		auto [chunkX, chunkZ] = GetChunkCoordFromWorldPos(selectedBlockPos);
 		auto targetChunk = ChunkMgr->GetChunk(chunkX, chunkZ);
@@ -624,6 +636,7 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 		{
 			if (iter->Pos == selectedBlockPos)
 			{
+				isAlpha = (iter->Usage == Alpha);
 				iter = staticBlocks.erase(iter);
 				break;
 			}
@@ -635,16 +648,23 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 
 		if (targetChunk)
 		{
-			_vec3 localPos = GetLocalCoordInChunk(selectedBlockPos, chunkX, chunkZ);
-
-			int lx = static_cast<int>(localPos.x);
-			int ly = static_cast<int>(localPos.y);
-			int lz = static_cast<int>(localPos.z);
-
-			if (lx >= 0 && lx < CHUNK_SIZE && ly >= 0 && ly < CHUNK_HEIGHT && lz >= 0 && lz < CHUNK_SIZE)
+			if (isAlpha)
 			{
-				targetChunk->SetBlockAir(lx, ly, lz);
-				targetChunk->BuildChunkFace();
+				targetChunk->RemoveAlpha(selectedBlockPos);
+			}
+			else
+			{
+				_vec3 localPos = GetLocalCoordInChunk(selectedBlockPos, chunkX, chunkZ);
+
+				int lx = static_cast<int>(localPos.x);
+				int ly = static_cast<int>(localPos.y);
+				int lz = static_cast<int>(localPos.z);
+
+				if (lx >= 0 && lx < CHUNK_SIZE && ly >= 0 && ly < CHUNK_HEIGHT && lz >= 0 && lz < CHUNK_SIZE)
+				{
+					targetChunk->SetBlockAir(lx, ly, lz);
+					targetChunk->BuildChunkFace();
+				}
 			}
 		}
 	}
@@ -704,9 +724,16 @@ void EditScene::Place(_vec3& position)
 		int chunkX = static_cast<int>(floorf(position.x / CHUNK_SIZE));
 		int chunkZ = static_cast<int>(floorf(position.z / CHUNK_SIZE));
 
-		ChunkMgr->CreateChunk(chunkX, chunkZ)->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
-		if (!CreateTer) ChunkMgr->GetChunk(chunkX, chunkZ)->BuildChunkFace();
-
+		if (staticBlockType == StaticBlockType::Glass || staticBlockType == StaticBlockType::Leaf)
+		{
+			ChunkMgr->CreateChunk(chunkX, chunkZ)->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
+		}
+		else
+		{
+			ChunkMgr->CreateChunk(chunkX, chunkZ)->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
+			if (!CreateTer) ChunkMgr->GetChunk(chunkX, chunkZ)->BuildChunkFace();
+		}
+		
 		// ================ 벡터에 블럭 정보 삽입 ================
 		staticBlocks.push_back({ position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage });
 	}

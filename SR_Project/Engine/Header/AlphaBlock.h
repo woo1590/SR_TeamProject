@@ -7,12 +7,12 @@ class ENGINE_DLL AlphaBlock : public StaticBlock
 {
     friend class StaticBlock;
 private:
-    AlphaBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
+    AlphaBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type);
     virtual ~AlphaBlock();
 
 public:
-    static AlphaBlock* Create(ObjectManager* owner, ObjectType objType, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
-    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
+    static AlphaBlock* Create(ObjectManager* owner, ObjectType objType, StaticBlockType type);
+    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType, StaticBlockType type);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 

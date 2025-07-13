@@ -48,24 +48,24 @@ void ChunkManager::RemoveChunk(int chunkX, int chunkZ)
 
 void ChunkManager::ClearAllChunks()
 {
-    for (auto& iter : worldChunks) if (worldChunks.size() > 1) Safe_Release(iter.second);
     for (auto& iter : worldChunks)
     {
+        iter.second->ClearAlpha();
         iter.second->InitializeAirBlocks();
         iter.second->BuildChunkFace();
     }
+
+    for (auto& iter : worldChunks)
+        if (worldChunks.size() > 1)
+            Safe_Release(iter.second);
+    
     worldChunks.clear();
 }
 
 void ChunkManager::SaveChunk(const std::wstring& saveStage)
 {
     HANDLE hFile = CreateFileW(saveStage.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
-        MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Fail", "Fail", MB_OK);
-        return;
-    }
+    if (hFile == INVALID_HANDLE_VALUE) return;
 
     DWORD dwByte(0);
     int chunkCount = worldChunks.size();
@@ -100,21 +100,36 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
         WriteFile(hFile, &blockCount, sizeof(blockCount), &dwByte, nullptr);
         if (blockCount > 0)
             WriteFile(hFile, nonAirBlocks.data(), sizeof(SB) * blockCount, &dwByte, nullptr);
+
+        const auto& alphaList = pair.second->GetAlphaBlocks();
+        int alphaCount = static_cast<int>(alphaList.size());
+        WriteFile(hFile, &alphaCount, sizeof(int), &dwByte, nullptr);
+
+        for (auto obj : alphaList)
+        {
+            auto tf = obj->GetComponent<TransformComponent>();
+            _vec3 pos = tf->GetPosition();
+
+            auto* alphaBlock = static_cast<StaticBlock*>(obj);  // 타입 안전성 보장 필요
+            StaticBlockData data =
+            {
+                pos,
+                alphaBlock->GetType(),
+                sAEnd,
+                sREnd,
+                Alpha
+            };
+            WriteFile(hFile, &data, sizeof(StaticBlockData), &dwByte, nullptr);
+        }
     }
 
     CloseHandle(hFile);
-    // MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", "Success", MB_OK);
 }
 
-void ChunkManager::LoadChunk(const std::wstring& loadPath)
+void ChunkManager::LoadChunk(const std::wstring& loadPath, bool isEditor)
 {
     HANDLE hFile = CreateFileW(loadPath.c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
-        MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Fail", "Fail", MB_OK);
-        return;
-    }
+    if (hFile == INVALID_HANDLE_VALUE) return;
 
     DWORD dwByte = 0;
     int chunkCount = 0;
@@ -136,14 +151,31 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath)
         Chunk* chunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkZ);
         chunk->InitializeAirBlocks();
         chunk->SetBlocksFromFlatVector(blocks);
+
+        int alphaCount(0);
+        if (!ReadFile(hFile, &alphaCount, sizeof(int), &dwByte, nullptr)) return;
+
+        for (int j = 0; j < alphaCount; ++j)
+        {
+            StaticBlockData data{};
+            if (!ReadFile(hFile, &data, sizeof(StaticBlockData), &dwByte, nullptr)) return;
+
+            auto alphaObj = StaticBlock::Create(owner->GetObjectManager(), ObjectType::StaticBlock, data.Type, data.Axis, data.Rot, data.Usage);
+            alphaObj->GetComponent<TransformComponent>()->SetPosition(data.Pos);
+            owner->GetObjectManager()->AddObject(ObjectType::AlphaBlock, alphaObj);
+
+            chunk->AddAlphaBlock(alphaObj);
+            owner->GetStaticBlocks().push_back(data);
+        }
+
         chunk->BuildChunkFace();
-        chunk->BuildCollisionBlock();//wooseok
+        if (!isEditor)
+            chunk->BuildCollisionBlock();//wooseok
         chunk->AddRef();
         worldChunks[{chunkX, chunkZ}] = chunk;
     }
 
     CloseHandle(hFile);
-    // MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", "Success", MB_OK);
 }
 
 Chunk* ChunkManager::GetChunk(int chunkX, int chunkZ)
