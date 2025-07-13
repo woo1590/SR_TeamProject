@@ -369,6 +369,9 @@
     </Filter>
     <Filter Include="02. Object\Monster\RedGolem\Projectile\Circle">
       <UniqueIdentifier>{74b35a4c-cb27-46ce-933c-02e7b3ef297e}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\Item\Tnt">
+      <UniqueIdentifier>{c7ae8fc4-f564-4573-9ab0-a7c495fb5d51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -709,6 +712,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\Circle.h">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\Tnt.h">
+      <Filter>02. Object\Item\Tnt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1049,6 +1055,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Circle.cpp">
       <Filter>02. Object\Monster\RedGolem\Projectile\Circle</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\Tnt.cpp">
+      <Filter>02. Object\Item\Tnt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

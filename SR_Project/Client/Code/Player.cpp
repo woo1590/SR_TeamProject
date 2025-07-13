@@ -736,6 +736,11 @@ void Player::RevivePlayer()
     info->AddHp(info->GetInfo().maxHp);
 }
 
+_vec3 Player::GetAttackDirection()
+{
+    return AttackDirection;
+}
+
 void Player::UpdateIdle(_float dt)
 {
     if (comboTime < comboLimit)

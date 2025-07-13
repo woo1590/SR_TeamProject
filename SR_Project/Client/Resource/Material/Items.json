@@ -33,6 +33,12 @@
         "textures":{
             "CubeMap":"../Resource/Asset/JW/arrow.dds"
         }
+    },
+    "tnt_Mtrl":{
+        "textures":{
+            "CubeMap":"../Resource/Asset/JW/tnt.dds"
+        }
     }
+
   }
 }
