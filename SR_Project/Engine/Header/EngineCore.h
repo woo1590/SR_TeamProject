@@ -14,6 +14,7 @@ class SoundManager;
 class ImGuiManager;
 class EventSystem;
 class CollisionSystem;
+class Random;
 
 class ENGINE_DLL EngineCore :
     public Base
@@ -45,6 +46,8 @@ public:
     LightSystem*        GetLightSystem()const;
     InputSystem*        GetInputSystem()const;
 
+    Random* GetRandom()const;
+
     HWND GetWindowHandle()const;
 
 #ifdef USE_IMGUI
@@ -58,6 +61,7 @@ private:
     SceneManager* SceneMgr;
     ResourceManager* ResourceMgr;
     SoundManager* SoundMgr;
+    Random* random;
 
 #ifdef USE_IMGUI
     ImGuiManager* ImGuiMgr;

@@ -36,7 +36,7 @@ void SoundManager::Update() {
         m_System->update();
 }
 
-void SoundManager::LoadSound(const std::string& key, const TCHAR* filepath, bool loop)
+void SoundManager::LoadSound(const std::string& key, const std::string& filepath, bool loop)
 {
     if (m_SoundMap.count(key)) return;
 
@@ -46,7 +46,7 @@ void SoundManager::LoadSound(const std::string& key, const TCHAR* filepath, bool
     WideCharToMultiByte(CP_UTF8, 0, filepath, -1, &converted[0], len, nullptr, nullptr);
     const char* finalPath = converted.c_str();
 #else
-    const char* finalPath = filepath;
+    const char* finalPath = filepath.c_str();
 #endif
 
     FMOD::Sound* sound = nullptr;

@@ -1,0 +1,26 @@
+{
+"template" :{
+    "fx" : "BasicShader",
+    "constants": {
+    "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],      
+    "MatSpecular"  : [1.0, 1.0, 1.0],        
+    "Shininess"    : 32.0,                   
+
+    "Emissive"     : [0.0, 0.0, 0.0],        
+    "EmissivePow"  : 1.0,
+
+    "AlphaCut"     : 0.4,
+
+    "UVScale"      : [1.0, 1.0],             
+    "UVOffset"     : [0.0, 0.0]       
+    }
+  },
+
+  "materials":{
+    "Rain_Mtrl" :{
+        "fx":"ParticleShader",
+        "textures":{"AlbedoMap" : "../Resource/Texture/Effect/Rain.png"}
+    }
+  }
+
+}

@@ -2,6 +2,7 @@
 #include "Loader.h"
 #include "EngineCore.h"
 #include "ResourceManager.h"
+#include "SoundManager.h"
 #include "StaticMesh.h"
 #include "TerrainMesh.h"
 #include "CubeMesh.h"
@@ -88,23 +89,38 @@ _uint __stdcall Loader::LoaderMain(void* arg)
 HRESULT Loader::Load_TestScene()
 {
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
-
-	auto cube = CubeMesh::Create();
-	resource->LoadMesh("Cube_Mesh", cube);
-	auto arrow = ArrowMesh::Create();
-	resource->LoadMesh("Arrow_Mesh", arrow);
+	auto sound = EngineCore::GetInstance()->GetSoundManager();
+	/*----------------------Load Mesh----------------------------*/
+	{
+		auto cube = CubeMesh::Create();
+		resource->LoadMesh("Cube_Mesh", cube);
+		auto arrow = ArrowMesh::Create();
+		resource->LoadMesh("Arrow_Mesh", arrow);
+	}
 	/*--------------------Load Shader---------------------------------*/
-	resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
-	resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
-	resource->LoadShader("../Resource/Shader/ChunkShader.fx", "ChunkShader");
-	resource->LoadShader("../Resource/Shader/ColorShader.fx", "ColorShader");
-	resource->LoadShader("../Resource/Shader/MaskShader.fx", "MaskShader");
+	{
+		resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
+		resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
+		resource->LoadShader("../Resource/Shader/ChunkShader.fx", "ChunkShader");
+		resource->LoadShader("../Resource/Shader/ColorShader.fx", "ColorShader");
+		resource->LoadShader("../Resource/Shader/MaskShader.fx", "MaskShader");
+		resource->LoadShader("../Resource/Shader/ParticleShader.fx", "ParticleShader");
+	}
 
-	resource->LoadMaterial("../Resource/Material/SkyBox.json");
-	resource->LoadMaterial("../Resource/Material/Monsters.json");
-	resource->LoadMaterial("../Resource/Material/Player.json");
-	resource->LoadMaterial("../Resource/Material/Blocks.json");
-	resource->LoadMaterial("../Resource/Material/Items.json");
+	/*---------------------Load Material--------------------------*/
+	{
+		resource->LoadMaterial("../Resource/Material/SkyBox.json");
+		resource->LoadMaterial("../Resource/Material/Monsters.json");
+		resource->LoadMaterial("../Resource/Material/Player.json");
+		resource->LoadMaterial("../Resource/Material/Blocks.json");
+		resource->LoadMaterial("../Resource/Material/Items.json");
+		resource->LoadMaterial("../Resource/Material/Particle.json");
+	}
+
+	/*----------------------Load Sound-----------------------------*/
+	{
+		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
+	}
 	return S_OK;
 }
 

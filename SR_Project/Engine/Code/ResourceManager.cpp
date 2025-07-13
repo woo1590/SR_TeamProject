@@ -163,6 +163,25 @@ LPDIRECT3DBASETEXTURE9 ResourceManager::LoadTexture(const std::string& key, TEXT
     }
 }
 
+void ResourceManager::LoadSprite(const std::string& key, _uint totalFrame)
+{
+    auto device = GraphicDevice::GetInstance()->GetDevice();
+    HWND hwnd = EngineCore::GetInstance()->GetWindowHandle();
+    for (int i = 0; i < totalFrame; ++i)
+    {
+        std::string path = "../Resource/Texture/Effect/" + key + "/" + std::to_string(i);
+        LPDIRECT3DTEXTURE9 tex = nullptr;
+
+        if (FAILED(D3DXCreateTextureFromFile(device, path.c_str(), &tex)))
+        {
+            MessageBox(hwnd, "Texture Load Failed", "Error", MB_OK);
+            return;
+        }
+
+        TextureContainer[key] = tex;
+    }
+}
+
 Mesh* ResourceManager::GetMesh(const std::string& key)
 {
     auto iter = MeshContainer.find(key);
