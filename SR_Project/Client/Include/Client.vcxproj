@@ -176,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Arrow.h" />
+    <ClInclude Include="..\Header\BabySlime.h" />
     <ClInclude Include="..\Header\BackStep.h" />
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
@@ -296,6 +297,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Arrow.cpp" />
+    <ClCompile Include="..\Code\BabySlime.cpp" />
     <ClCompile Include="..\Code\BackStep.cpp" />
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Slime.h"
+#include "BabySlime.h"
 #include "CollisionComponent.h"
 #include "TransformComponent.h"
 #include "InfoComponent.h"
@@ -12,23 +12,22 @@
 #include "Die.h"
 #include "IsTargetInAttackRange.h"
 #include "ObjectManager.h"
-#include "BabySlime.h"
 #include "PhysicsComponent.h"
 
-Slime::Slime(ObjectManager* owner, ObjectType objType)
-	:Monster(owner, objType)
+BabySlime::BabySlime(ObjectManager* owner, ObjectType objType)
+    :Monster(owner, objType)
 {
 }
 
-Slime::~Slime()
+BabySlime::~BabySlime()
 {
 }
 
-Slime* Slime::Create(ObjectManager* owner, ObjectType objType)
+BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType, _vec3 pos)
 {
-    Slime* Instance = new Slime(owner, objType);
+    BabySlime* Instance = new BabySlime(owner, objType);
 
-    if (FAILED(Instance->Ready_Object(owner, objType)))
+    if (FAILED(Instance->Ready_Object(owner, objType, pos)))
     {
         Safe_Release(Instance);
 
@@ -38,9 +37,12 @@ Slime* Slime::Create(ObjectManager* owner, ObjectType objType)
     return Instance;
 }
 
-HRESULT Slime::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT BabySlime::Ready_Object(ObjectManager* owner, ObjectType objType, _vec3 pos)
 {
     Monster::Ready_Object(owner, objType);
+
+    auto transform = GetComponent<TransformComponent>();
+    transform->SetPosition(pos);
 
     InitTransform(objType);
 
@@ -56,45 +58,45 @@ HRESULT Slime::Ready_Object(ObjectManager* owner, ObjectType objType)
     return S_OK;
 }
 
-void Slime::Update(_float dt)
+void BabySlime::Update(_float dt)
 {
     Monster::Update(dt);
     PlayAnimation(dt);
 }
 
-void Slime::Late_Update(_float dt)
+void BabySlime::Late_Update(_float dt)
 {
     Monster::Late_Update(dt);
 }
 
-void Slime::MoveTo(_vec3* dir, _float dt)
+void BabySlime::MoveTo(_vec3* dir, _float dt)
 {
     auto Transform = GetComponent<TransformComponent>();
     auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
 
     if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
-    Transform->Translate(*dir * dt * Stat->GetInfo().speed *0.6);
+    Transform->Translate(*dir * dt * Stat->GetInfo().speed * 0.6);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
-void Slime::RotateTo(_vec3* dir, float dt)
+void BabySlime::RotateTo(_vec3* dir, float dt)
 {
 }
 
-void Slime::Attack(Object* target)
+void BabySlime::Attack(Object* target)
 {
 }
 
-void Slime::Die()
+void BabySlime::Die()
 {
 }
 
-void Slime::Hit(_vec3 dir, _float power)
+void BabySlime::Hit(_vec3 dir, _float power)
 {
 }
 
-void Slime::InitTransform(ObjectType objType)
+void BabySlime::InitTransform(ObjectType objType)
 {
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
@@ -109,14 +111,14 @@ void Slime::InitTransform(ObjectType objType)
     Bones["RLeg"]->SetDead();
 
     //head
-    Scale = 0.35f;
+    Scale = 0.1f;
     SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
     SetPosition(_vec3(0.f * Scale, 0.f * Scale, 0.f * Scale), "Head");
     //body
     SetScale(_vec3(10.f * Scale, 10.f * Scale, 10.f * Scale), "Body");
 }
 
-void Slime::InitTree()
+void BabySlime::InitTree()
 {
     //blackboard
     BlackBoard* bb = BlackBoard::Create();
@@ -151,7 +153,7 @@ void Slime::InitTree()
     auto AI = AddComponent<AIController>(bt, bb);
 }
 
-void Slime::InitAnimation()
+void BabySlime::InitAnimation()
 {
     WalkAnim.Phase = Action;
     WalkAnim.ElapsedTime = 0.f;
@@ -159,7 +161,7 @@ void Slime::InitAnimation()
     WalkAnim.IsRunning = true;
 }
 
-void Slime::PlayAnimation(_float dt)
+void BabySlime::PlayAnimation(_float dt)
 {
     switch (State)
     {
@@ -184,11 +186,11 @@ void Slime::PlayAnimation(_float dt)
     }
 }
 
-void Slime::PlayIdle(_float dt)
+void BabySlime::PlayIdle(_float dt)
 {
 }
 
-void Slime::PlayWalk(_float dt)
+void BabySlime::PlayWalk(_float dt)
 {
     WalkAnim.ElapsedTime += dt;
     _float t = clamp(WalkAnim.ElapsedTime / WalkAnim.TotalTime, 0.f, 1.f);
@@ -208,7 +210,7 @@ void Slime::PlayWalk(_float dt)
         }
         break;
     }
-    case Phase::Recover: 
+    case Phase::Recover:
     {
         _float curSize = lerp(3.5f, 4.5f, t);
         SetScale(_vec3(curSize, curSize, curSize), "Body");
@@ -222,36 +224,27 @@ void Slime::PlayWalk(_float dt)
         {
             WalkAnim.Phase = Phase::Action;
             WalkAnim.ElapsedTime = 0.f;
-            WalkAnim.TotalTime = 0.3f; 
+            WalkAnim.TotalTime = 0.3f;
         }
         break;
     }
     }
 }
 
-void Slime::PlayAttack(_float dt)
+void BabySlime::PlayAttack(_float dt)
 {
     //
 }
 
-void Slime::PlayDie(_float dt)
-{
-    //
-    if (DieAnim.ElapsedTime > DieAnim.TotalTime)
-    {
-        _vec3 pos = GetComponent<TransformComponent>()->GetPosition();
-
-        BabySlime::Create(owner, ObjectType::Monster, _vec3(pos.x, pos.y, pos.z));
-        BabySlime::Create(owner, ObjectType::Monster, _vec3(pos.x + 5, pos.y, pos.z + 5));
-        BabySlime::Create(owner, ObjectType::Monster, _vec3(pos.x - 5, pos.y, pos.z - 5));
-    }
-}
-
-void Slime::OnCollisionStay(Object* other)
+void BabySlime::PlayDie(_float dt)
 {
 }
 
-void Slime::Free()
+void BabySlime::OnCollisionStay(Object* other)
+{
+}
+
+void BabySlime::Free()
 {
     Monster::Free();
 }
