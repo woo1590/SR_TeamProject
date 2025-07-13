@@ -88,8 +88,8 @@ void Spear::PlayerSpearInfo()
 {
     SetScale(1.f);
     SetScaleRatio(_vec3(0.1f, 2.f, 2.f));
-    SetPosition(_vec3(0.f, 0.2f, 1.f));
-    SetPivot(true, _vec3(0.f, 0.8f, 0.f));
+    SetPosition(_vec3(0.f, 0.2f, 1.5f));
+    SetPivot(true, _vec3(0.f, 0.8f, -0.5f));
     SetRotation(_vec3(0.8f, 0.f, 0.f));
     SetOwnerObject(owner->GetFrontObject(ObjectType::Player));
     SetRenderId(Engine::RENDER_ID::Render_Alpha);

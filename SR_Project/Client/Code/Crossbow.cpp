@@ -68,9 +68,9 @@ void Crossbow::PlayerCrossbowInfo()
 {
     SetScale(1.f); // 다른 아이템이랑 동일, 문제없음
     SetScaleRatio(_vec3(1.f, 0.1f, 1.f)); // 스케일 1,1,1해도 동일, 문제없음
-    SetPosition(_vec3(0.25, -1.2f, -0.2f)); // 포지션 0,0,0해도 동일, 문제없음
-    SetPivot(true, _vec3(-0.25f, 0.8f, -0.2f)); // 피벗 fale해도 동일, 문제없음
-    SetRotation(_vec3(D3DXToRadian(30.f), D3DXToRadian(30.f), 0.f)); // 회전값 무슨값을 넣어도 적용안됨, 값 문제없음
+    SetPosition(_vec3(0.25, -2.f, 0.4f)); // 포지션 0,0,0해도 동일, 문제없음
+    SetPivot(true, _vec3(-0.25f, 1.6f, -0.8f)); // 피벗 fale해도 동일, 문제없음
+    SetRotation(_vec3(D3DXToRadian(90.f), D3DXToRadian(135.f), 0.f)); // 회전값 무슨값을 넣어도 적용안됨, 값 문제없음
     SetOwnerObject(owner->GetFrontObject(ObjectType::Player)); // 다른 아이템이랑 동일, 문제없음
     SetRenderId(Engine::RENDER_ID::Render_None); // 랜더값 Alpha해도 동일, 문제없음
 }

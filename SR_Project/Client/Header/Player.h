@@ -96,6 +96,7 @@ private:
     void SetUpShootPhaseRotations();
     void SetUpDeadPhaseRotations();
     void SetUpRevivePhaseRotations();
+    void SetUpSpearAttackPhaseRotations();
     void SetAttackTypeNext();
 
     _vec3 MatrixToEulerAngles(const _matrix& mat);

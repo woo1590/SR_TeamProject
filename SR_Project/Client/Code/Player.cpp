@@ -676,6 +676,9 @@ void Player::SetUpRevivePhaseRotations()
     };
     SetPhaseRotations(ePlayerState::REVIVE, ePlayerBone::RLEG, RightLegPhaseRot);
 }
+void Player::SetUpSpearAttackPhaseRotations()
+{
+}
 void Player::SetAttackTypeNext()
 {
     switch (attackType)
@@ -1293,8 +1296,14 @@ void Player::IdleSmoothing(_float dt, std::string bone) {
     if (bone == "RHand" && itemBaseRotOffset.find("sword") != itemBaseRotOffset.end()) {
         vTargetRot = itemBaseRotOffset.at("sword");
     }
+    else if (bone == "RHand" && itemBaseRotOffset.find("spear") != itemBaseRotOffset.end()) {
+        vTargetRot = itemBaseRotOffset.at("spear");
+    }
     else if (bone == "LHand" && itemBaseRotOffset.find("bow") != itemBaseRotOffset.end()) {
         vTargetRot = itemBaseRotOffset.at("bow");
+    }
+    else if (bone == "LHand" && itemBaseRotOffset.find("crossbow") != itemBaseRotOffset.end()) {
+        vTargetRot = itemBaseRotOffset.at("crossbow");
     }
     else {
         vTargetRot = { 0.f, 0.f, 0.f };
