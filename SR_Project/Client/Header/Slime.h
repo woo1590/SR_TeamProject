@@ -35,5 +35,8 @@ protected:
 
 protected:
     void Free() override;
+
+private:
+    _vec3 InitialPos;
 };
 

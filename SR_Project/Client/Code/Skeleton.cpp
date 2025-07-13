@@ -425,8 +425,8 @@ void Skeleton::PlayDie(_float dt)
         }
         DieAnim.IsEnd = true;
         DieAnim.IsRunning = false;
-        SetDead();
-        DeleteBar();
+       // SetDead();
+      //  DeleteBar();
     }
 }
 

@@ -118,7 +118,7 @@ void TestScene::Load()
 	
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Monster, JungleZombie::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Slime::Create(ObjectMgr, ObjectType::Monster));
 
 	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);
