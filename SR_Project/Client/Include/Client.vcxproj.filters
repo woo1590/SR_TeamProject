@@ -379,8 +379,8 @@
     <Filter Include="01. Scene\Village">
       <UniqueIdentifier>{709b7437-123b-4b7f-ad28-c76b2d030fd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Particle">
-      <UniqueIdentifier>{3115f21d-70de-419c-a0f7-6e3a886fa98a}</UniqueIdentifier>
+    <Filter Include="02. Object\Effect\Rain">
+      <UniqueIdentifier>{8335210a-038f-417a-9da2-d7e475a79861}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -722,6 +722,9 @@
     <ClInclude Include="..\Header\Effect.h">
       <Filter>02. Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Rain.h">
+      <Filter>02. Object\Effect\Rain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1061,6 +1064,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>02. Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rain.cpp">
+      <Filter>02. Object\Effect\Rain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

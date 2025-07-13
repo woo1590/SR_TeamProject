@@ -199,6 +199,7 @@
     <ClInclude Include="..\Header\PigItem.h" />
     <ClInclude Include="..\Header\QuestPanel.h" />
     <ClInclude Include="..\Header\QuestTextObj.h" />
+    <ClInclude Include="..\Header\Rain.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
     <ClInclude Include="..\Header\Spawner.h" />
     <ClInclude Include="..\Header\SpawnTriggerBox.h" />
@@ -310,6 +311,7 @@
     <ClCompile Include="..\Code\PigItem.cpp" />
     <ClCompile Include="..\Code\QuestPanel.cpp" />
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
+    <ClCompile Include="..\Code\Rain.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />
     <ClCompile Include="..\Code\Spawner.cpp" />
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />

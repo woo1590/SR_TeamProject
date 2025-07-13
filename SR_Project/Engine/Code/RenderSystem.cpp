@@ -60,14 +60,13 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	/*---------------Texture Setting-------------------------*/
-	Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_POINT);
-	Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_POINT);
-	Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+	/*---------------Point Sprite Setting---------------*/
+	Device->SetRenderState(D3DRS_POINTSPRITEENABLE, TRUE);
+	Device->SetRenderState(D3DRS_POINTSCALEENABLE, TRUE);
 
-	Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-	Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-	Device->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+	Device->SetRenderState(D3DRS_POINTSCALE_A, DWORD(0.f));
+	Device->SetRenderState(D3DRS_POINTSCALE_B, DWORD(0.f));
+	Device->SetRenderState(D3DRS_POINTSCALE_C, DWORD(1.f));
 
 	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))
 		return E_FAIL;

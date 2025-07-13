@@ -5,6 +5,14 @@
 
 namespace Engine
 {
+	typedef struct tagVertexPoint
+	{
+		_vec3 position;
+		_float size;
+		_vec4 color;
+
+	}VTXPOINT;
+
 	typedef struct tagVertexColor
 	{
 		_vec3	vPosition;

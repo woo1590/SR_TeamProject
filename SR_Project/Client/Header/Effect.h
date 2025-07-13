@@ -4,16 +4,16 @@
 class Effect :
     public Object
 {
-private:
+protected:
     Effect(ObjectManager* owner, ObjectType objType);
     virtual ~Effect();
 
 public:
-    virtual HRESULT Ready_Object()override {};
+    virtual HRESULT Ready_Object()override { return S_OK; };
     virtual void Update(_float dt)override {};
     virtual void Late_Update(_float dt)override {};
     
-private:
-    virtual void Free()override;
+protected:
+    virtual void Free()override{}
 };
 
