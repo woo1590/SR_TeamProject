@@ -50,6 +50,7 @@
 #include "JungleZombie.h"
 #include "JungleSkeleton.h"
 #include "BloodEffect.h"
+#include "PurpleSlime.h"
 
 //component
 #include "TransformComponent.h"
@@ -120,7 +121,7 @@ void TestScene::Load()
 	
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	ObjectMgr->AddObject(ObjectType::Monster, JungleZombie::Create(ObjectMgr, ObjectType::Monster));
+	ObjectMgr->AddObject(ObjectType::Monster, Slime::Create(ObjectMgr, ObjectType::Monster));
 
 	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);
@@ -136,7 +137,7 @@ void TestScene::Load()
 	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 50.f), _vec3(0.f, 0.f, 0.f));
 	//trigger->AddSpawner(SpawnType::RedGolem, _vec3(5.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
 
-	ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
+	//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
 	UILoader loader;
 	loader.LoadUI(ObjectMgr);

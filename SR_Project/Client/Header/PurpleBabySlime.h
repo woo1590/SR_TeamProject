@@ -1,14 +1,14 @@
 #pragma once
 #include "Monster.h"
-class Slime :
+class PurpleBabySlime :
     public Monster
 {
 protected:
-    Slime(ObjectManager* owner, ObjectType objType);
-    virtual ~Slime();
+    PurpleBabySlime(ObjectManager* owner, ObjectType objType);
+    virtual ~PurpleBabySlime();
 
 public:
-    static Slime* Create(ObjectManager* owner, ObjectType objType);
+    static PurpleBabySlime* Create(ObjectManager* owner, ObjectType objType);
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
@@ -29,9 +29,8 @@ protected:
     void PlayIdle(_float dt) override;
     void PlayWalk(_float dt) override;
     void PlayAttack(_float dt) override;
-    void PlayDie(_float dt) override;
+    void PlayDie(_float dt)override;
     void PlayHit(_float dt) override;
-
     void OnCollisionStay(Object* other) override;
 
 protected:
