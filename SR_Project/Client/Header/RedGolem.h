@@ -3,6 +3,8 @@
 class RedGolem :
     public Boss
 {
+    friend class ObjectPool<RedGolem>;
+
 protected:
     RedGolem(ObjectManager* owner, ObjectType objType);
     virtual ~RedGolem();

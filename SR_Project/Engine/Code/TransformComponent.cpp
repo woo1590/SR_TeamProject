@@ -43,7 +43,6 @@ void TransformComponent::SetPosition(_vec3 position)
     Position = position;
 }
 
-
 void TransformComponent::SetWorldPosition(const _vec3 worldPos)
 {
     if (!Parent)

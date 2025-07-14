@@ -9,6 +9,8 @@ namespace Engine
 class Creeper :
     public Monster
 {
+    friend class ObjectPool<Creeper>;
+
 protected:
     Creeper(ObjectManager* owner, ObjectType objType);
     virtual ~Creeper();

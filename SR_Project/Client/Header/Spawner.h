@@ -13,7 +13,6 @@ private:
 
 public:
 	static Spawner* Create(Scene* scene, ObjectManager* objMgr, SpawnType type, _vec3 pos = {}, _vec3 rot = {});
-
 	Monster* Spawn();
 
 private:

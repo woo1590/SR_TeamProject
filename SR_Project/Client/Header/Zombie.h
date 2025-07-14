@@ -3,6 +3,8 @@
 class Zombie :
     public Monster
 {
+    friend class ObjectPool<Zombie>;
+
 protected:
     Zombie(ObjectManager* owner, ObjectType objType);
     virtual ~Zombie();

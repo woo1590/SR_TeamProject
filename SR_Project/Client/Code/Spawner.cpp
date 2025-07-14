@@ -26,13 +26,11 @@ Monster* Spawner::Spawn()
 
 	switch (spawnType)
 	{
-	case SpawnType::Zombie:   monster = pool->Acquire<Zombie>(owner, ObjectType::Monster); break;
+	case SpawnType::Zombie:   monster = pool->Acquire<Zombie>  (owner, ObjectType::Monster); break;
 	case SpawnType::Skeleton: monster = pool->Acquire<Skeleton>(owner, ObjectType::Monster); break;
-	case SpawnType::Creeper:  monster = pool->Acquire<Creeper>(owner, ObjectType::Monster); break;
+	case SpawnType::Creeper:  monster = pool->Acquire<Creeper> (owner, ObjectType::Monster); break;
 	case SpawnType::RedGolem: monster = pool->Acquire<RedGolem>(owner, ObjectType::Monster); break;
-	}
-
-	//monster->Reset();
+	}	
 
 	auto tf = monster->GetComponent<TransformComponent>();
 	tf->SetPosition(pos);

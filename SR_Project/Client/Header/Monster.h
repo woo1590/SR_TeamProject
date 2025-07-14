@@ -2,6 +2,7 @@
 #include "BaseCharacter.h"
 #include "Scene.h"
 #include "PoolingManager.h"
+#include "TransformComponent.h"
 
 
 enum MonsterState { Idle, Walk, AttackReady, Attack, Hit, Die, };
@@ -13,7 +14,6 @@ class EnemyHPBarBack;
 class BossHPBarFront;
 class ExpBarBack;
 class HPBarWhite;
-
 
 struct Animation
 {
@@ -71,12 +71,14 @@ public:
     template<typename T>
     void ReturnToPool() 
     { 
+        SetActive(false);
         GetScene()->GetPoolManager()->Release(static_cast<T*>(this));
     }
 
     void ResetDieTimer() { DieElapsed = 0.f; }
-
-    virtual void Reset() {}
+    void Reset();
+    void SetActive(bool _isActive) { isActive = _isActive; }
+    bool IsActive() const { return isActive; }
    
 protected:
     // ------------------------------
@@ -117,5 +119,7 @@ protected:
 
     float DieElapsed = 0.f;
     float dieDelay = 2.f;
+
+    bool isActive = true;
 };
 

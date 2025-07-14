@@ -413,7 +413,6 @@ void Skeleton::PlayHit(float dt)
 
 void Skeleton::PlayDie(_float dt)
 {
-    
     if (!DieAnim.IsEnd)
     {
         auto transform = GetComponent<TransformComponent>();
@@ -433,8 +432,8 @@ void Skeleton::PlayDie(_float dt)
     DieElapsed += dt;
     if (DieElapsed >= dieDelay)
     {
-        ResetDieTimer();
-        ReturnToPool<Skeleton>();
+       ResetDieTimer();
+       ReturnToPool<Skeleton>();
     }
 }
 

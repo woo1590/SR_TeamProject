@@ -3,7 +3,9 @@
 class Skeleton :
     public Monster
 {
-public:
+    friend class ObjectPool<Skeleton>;
+
+protected:
     Skeleton(ObjectManager* owner, ObjectType objType);
     virtual ~Skeleton();
 

@@ -9,7 +9,6 @@
 #include "InfoDetector.h"
 #include "ProgressBar.h"
 #include "EnemyHPBarFront.h"
-#include "TransformComponent.h"
 #include "ObjectManager.h"
 #include "EngineCore.h"
 #include "GraphicDevice.h"
@@ -110,13 +109,6 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         auto bossIcon = BossIcon::Create(owner);
         bossIcon->GetComponent<TransformComponent>()->SetParent(bossFront);
         owner->AddUIObject(bossIcon);
-
-        //bossFront->AddChild(bossIcon);
-
-        //auto particle = ParticleObj::Create(owner);
-        //auto particleTf = particle->GetComponent<TransformComponent>();
-        //owner->AddUIObject(particle);
-
         bossFront->AddChild(bossBack);
     }
     IsHit = nullptr;
@@ -126,11 +118,13 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
 
 void Monster::Update(_float dt)
 {
+    if (!isActive) return;
     BaseCharacter::Update(dt);
 }
 
 void Monster::Late_Update(_float dt)
 {
+    if (!isActive) return;
     BaseCharacter::Late_Update(dt);
 }
 
@@ -172,6 +166,26 @@ void Monster::Attack(Object* target)
 void Monster::Die()
 {
    
+}
+
+void Monster::Reset()
+{
+    if (auto stat = GetComponent<InfoComponent<EnemyInfo>>())
+    {
+        auto info = stat->GetInfo();
+        info.curHp = info.maxHp;
+        stat->SetInfo(info);
+    }
+
+    State = MonsterState::Idle;
+    DieElapsed = 0.f;
+
+    WalkAnim = {};
+    AttackAnim = {};
+    HitAnim = {};
+    DieAnim = {};
+
+    SetBarVisible(true);
 }
 
 void Monster::ShowDmgText(int dmg, const _vec3& hitDir)
