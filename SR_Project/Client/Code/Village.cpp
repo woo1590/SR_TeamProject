@@ -52,6 +52,7 @@
 #include "JungleZombie.h"
 #include "JungleSkeleton.h"
 #include "BloodEffect.h"
+#include "Npc.h"
 
 //component
 #include "TransformComponent.h"
@@ -139,6 +140,7 @@ void Village::Load()
 		trigger2->AddSpawner(SpawnType::Zombie, _vec3(120.f, 5.f, 90.f), _vec3(0.f, 0.f, 0.f));
 		trigger2->AddSpawner(SpawnType::RedGolem, _vec3(200.f, 5.f, 200.f), _vec3(0.f, 0.f, 0.f));
 
+		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 	}
 }
 

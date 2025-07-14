@@ -52,7 +52,7 @@ void Npc::InitTransform()
 {
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
-    transform->SetPosition(5.f, 100.f, 100.f);
+    transform->SetPosition(30.f, 30.f, 30.f);
     transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f));
     SetMaterial("VillageBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetScale(_vec3(8.f * Scale, 16.f * Scale, 4.f * Scale), "Body");
@@ -85,7 +85,7 @@ void Npc::InitCollision()
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     collision->SetLayer(LAYER_TRRIGER);
-    collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT);
+    collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT );
 }
 
 void Npc::InitPhysics()

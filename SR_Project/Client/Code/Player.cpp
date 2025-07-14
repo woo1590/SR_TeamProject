@@ -50,7 +50,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
 
     collision->SetLayer(LAYER_PLAYER);
-    collision->SetMask(LAYER_ENEMY | LAYER_DEFAULT | LAYER_PROJECTILE);
+    collision->SetMask(LAYER_ENEMY | LAYER_DEFAULT | LAYER_PROJECTILE |LAYER_TRRIGER);
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other);});
 
