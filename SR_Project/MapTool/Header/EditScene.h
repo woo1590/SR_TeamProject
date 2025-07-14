@@ -5,6 +5,8 @@
 namespace Engine
 {
     class Chunk;
+    class Prefab;
+    class PrefabManager;
 }
 
 class TerrainCreater;
@@ -33,6 +35,7 @@ private:
     void ImGui_SetBlockType();
     void ImGui_SetBlockUsage();
     void ImGui_SetBlockInfo();
+    void ImGui_SetPrefab();
     void ImGui_LinkLever();
 #endif
     void CreateTerrain(const std::string& filename);
@@ -47,8 +50,8 @@ private:
     // 충돌한 면의 법선 반환
     _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax);
 
-    // 블럭 설치
-    void Place(_vec3& position);
+    void PlaceBlock(_vec3& position);   // 블럭 설치
+    void PlacePrefab(_vec3& position);  // 프리펩 설치
 
     void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);  // 좌클릭
     void OnRightClick(_vec3& rayOrigin, _vec3& rayDir); // 우클릭
@@ -63,7 +66,9 @@ private:
     void Free() override;
 
 private:
-    bool isDown = false;
+    bool isDown = false, isPrefab = false;
+    Prefab* selectedPrefab = nullptr;
+    PrefabManager* PrefabMgr = nullptr;
 
     // ================ 지형 생성 ================
     bool CreateTer = false;             // 지형 생성 여부

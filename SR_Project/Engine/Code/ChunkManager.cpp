@@ -24,9 +24,7 @@ Chunk* ChunkManager::CreateChunk(int chunkX, int chunkZ)
 {
     auto key = std::make_pair(chunkX, chunkZ);
     auto it = worldChunks.find(key);
-
-    if (it != worldChunks.end())
-        return it->second;
+    if (it != worldChunks.end()) return it->second;
 
     Chunk* newChunk = Chunk::Create(owner->GetObjectManager(), chunkX, chunkZ);
     newChunk->AddRef();
@@ -57,7 +55,7 @@ void ChunkManager::ClearAllChunks()
 
     for (auto& iter : worldChunks)
         if (worldChunks.size() > 1)
-            Safe_Release(iter.second);
+            Safe_Delete(iter.second);
     
     worldChunks.clear();
 }
@@ -110,7 +108,7 @@ void ChunkManager::SaveChunk(const std::wstring& saveStage)
             auto tf = obj->GetComponent<TransformComponent>();
             _vec3 pos = tf->GetPosition();
 
-            auto* alphaBlock = static_cast<StaticBlock*>(obj);  // 타입 안전성 보장 필요
+            auto* alphaBlock = static_cast<StaticBlock*>(obj);
             StaticBlockData data =
             {
                 pos,

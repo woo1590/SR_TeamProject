@@ -28,7 +28,7 @@ public:
     void LoadChunk(const std::wstring& loadStage, bool isEditor = false);
 
     Chunk* GetChunk(int chunkX, int chunkZ);        // Key 값의 청크 있으면 해당 청크 반환
-    const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() { return worldChunks; }
+    const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() const { return worldChunks; }
 
 private:
     void Free()override;

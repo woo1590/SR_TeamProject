@@ -83,7 +83,6 @@ void Chunk::RemoveAlpha(const _vec3& pos)
     for (auto iter = AlphaBlocks.begin(); iter != AlphaBlocks.end();)
     {
         Object* obj = *iter;
-
         if (obj->GetComponent<TransformComponent>()->GetPosition() == pos)
         {
             iter = AlphaBlocks.erase(iter);
@@ -220,7 +219,7 @@ void Chunk::BuildChunkFace()
             }
             }
 
-            return false;
+            return true;
         };
 
     for (int y = 0; y < CHUNK_HEIGHT; ++y)
@@ -230,8 +229,7 @@ void Chunk::BuildChunkFace()
             for (int x = 0; x < CHUNK_SIZE; ++x)
             {
                 const auto& block = Blocks[x][y][z];
-                if (block.Type == StaticBlockType::Air)
-                    continue;
+                if (block.Type == StaticBlockType::Air) continue;
 
                 _vec3 pos = block.Pos -_vec3(ChunkX * CHUNK_SIZE, 0.f, ChunkZ * CHUNK_SIZE);
                 if (IsFaceExposed(x, y + 1, z, Face_Top, block)) AddFace(vertices, indices, pos, Face_Top, block);
@@ -288,6 +286,35 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
         return;
     }
 
+    if (sb.Usage == Fence)
+    {
+        bool isCon(true);
+        _vec3 stickScale = { 0.25f, 1.f, 0.25f }, stickOffset = { 0.f, 0.f, 0.f };
+        AddQuad(vertices, indices, blockPos + stickOffset, stickScale, sb, faceDir, TRUE);
+
+        _vec3 conScale, conOffset;
+        switch (sb.Rot)
+        {
+        case sZP: case sZM:
+            conScale = { 0.2f, 0.2f, 1.f };
+            conOffset = { 0.f, 0.5f, 0.f };
+            break;
+        case sXP: case sXM:
+            conScale = { 1.f, 0.2f, 0.2f };
+            conOffset = { 0.f, 0.5f, 0.f };
+            break;
+        case sREnd:
+            isCon = false;
+            break;
+        }
+
+        if (!isCon) return;
+        _vec3 offset{ 0.f, 0.8f, 0.f };
+        AddQuad(vertices, indices, blockPos + conOffset, conScale, sb, faceDir);
+        AddQuad(vertices, indices, blockPos + conOffset - offset, conScale, sb, faceDir);
+        return;
+    }
+
     float scaleY(1.f);
     _vec3 offsetY{ 0.f, 0.f, 0.f };
 
@@ -302,7 +329,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     AddQuad(vertices, indices, center, scale, sb, faceDir);
 }
 
-void Chunk::AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir)
+void Chunk::AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir, bool parts)
 {
     static const _vec3 offsets[6][4] =
     {
@@ -324,7 +351,7 @@ void Chunk::AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
         { 0.f, 0.f, -1.f },
     };
 
-    SetUV(sb, faceDir);
+    SetUV(sb, faceDir, parts);
     int startIndex = static_cast<int>(vertices.size());
 
     for (int i = 0; i < 4; ++i)
@@ -349,7 +376,7 @@ void Chunk::AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     indices.push_back(startIndex + 3);
 }
 
-void Chunk::SetUV(const SB& sb, int faceDir)
+void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
 {
     switch (sb.Type)
     {
@@ -357,7 +384,8 @@ void Chunk::SetUV(const SB& sb, int faceDir)
         SetUVTile(0, 0);
         break;
     case WoodPlank:
-        if (sb.Usage == Half) SetUVTile(2, 2, 0, 3, faceDir, Half);
+        if (sb.Usage == Half) SetUVTile(2, 2, 0, 3, faceDir, sb.Usage);
+        else if (sb.Usage == Fence) SetUVTile(4, 2, 5, 2, faceDir, sb.Usage, parts);
         else SetUVTile(2, 2);
         break;
     case Stone:
@@ -416,10 +444,20 @@ void Chunk::SetUV(const SB& sb, int faceDir)
             SetUVTile(2, 4);
             break;
         case Face_Front:
-            SetUVTile(0, 4);
+            if (sb.Rot == sZP) SetUVTile(0, 4);
+            else SetUVTile(1, 4);
             break;
-        default:
-            SetUVTile(1, 4);
+        case Face_Behind:
+            if (sb.Rot == sZM) SetUVTile(0, 4);
+            else SetUVTile(1, 4);
+            break;
+        case Face_Right:
+            if (sb.Rot == sXP) SetUVTile(0, 4);
+            else SetUVTile(1, 4);
+            break;
+        case Face_Left:
+            if (sb.Rot == sXM) SetUVTile(0, 4);
+            else SetUVTile(1, 4);
             break;
         }
         break;
@@ -477,10 +515,11 @@ void Chunk::SetUVTile(int tileX, int tileY)
     TexUVs[3] = { u, v + tileSize };
 }
 
-void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage)
+void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage, bool scale)
 {
     float tileSize(0.125f);
     float halfSize(0.0625f);
+    float quarterSize(0.03125f);
     float u(tileX * tileSize);
     float v(tileY * tileSize);
 
@@ -493,6 +532,29 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
         TexUVs[1] = { u + tileSize, v };
         TexUVs[2] = { u + tileSize, v + halfSize };
         TexUVs[3] = { u, v + halfSize };
+    }
+    else if (usage == Fence)
+    {
+        if (scale)
+        {
+            u = tileX * tileSize;
+            v = tileY * tileSize;
+
+            TexUVs[0] = { u, v };
+            TexUVs[1] = { u + quarterSize, v };
+            TexUVs[2] = { u + quarterSize, v + tileSize };
+            TexUVs[3] = { u, v + tileSize };
+        }
+        else
+        {
+            u = halfX * tileSize;
+            v = halfY * tileSize;
+
+            TexUVs[0] = { u, v };
+            TexUVs[1] = { u + tileSize, v };
+            TexUVs[2] = { u + tileSize, v + quarterSize };
+            TexUVs[3] = { u, v + quarterSize };
+        }
     }
     else
     {

@@ -31,11 +31,11 @@ public:
     void BuildChunkFace();
 
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir, const SB& sb);
-    void AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir);
+    void AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir, bool parts = false);
 
-    void SetUV(const SB& sb, int faceDir);
+    void SetUV(const SB& sb, int faceDir, bool parts);
     void SetUVTile(int tileX, int tileY);
-    void SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage);
+    void SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage, bool parts = false);
 
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
     void AddAlphaBlock(Object* alphaBlock) { AlphaBlocks.push_back(alphaBlock); }

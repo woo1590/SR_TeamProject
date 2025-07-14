@@ -279,6 +279,8 @@
     <ClInclude Include="..\Header\ObjectManager.h" />
     <ClInclude Include="..\Header\ParallelNode.h" />
     <ClInclude Include="..\Header\PhysicsSystem.h" />
+    <ClInclude Include="..\Header\Prefab.h" />
+    <ClInclude Include="..\Header\PrefabManager.h" />
     <ClInclude Include="..\Header\QuestSystem.h" />
     <ClInclude Include="..\Header\RandomSelectorNode.h" />
     <ClInclude Include="..\Header\ProgressBar.h" />
@@ -420,6 +422,8 @@
     <ClCompile Include="..\Code\ObjectManager.cpp" />
     <ClCompile Include="..\Code\ParallelNode.cpp" />
     <ClCompile Include="..\Code\PhysicsSystem.cpp" />
+    <ClCompile Include="..\Code\Prefab.cpp" />
+    <ClCompile Include="..\Code\PrefabManager.cpp" />
     <ClCompile Include="..\Code\QuestSystem.cpp" />
     <ClCompile Include="..\Code\RandomSelectorNode.cpp" />
     <ClCompile Include="..\Code\ProgressBar.cpp" />

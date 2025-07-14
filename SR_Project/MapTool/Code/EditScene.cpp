@@ -12,6 +12,7 @@
 #include "CollisionSystem.h"
 #include "BlockManager.h"
 #include "ChunkManager.h"
+#include "PrefabManager.h"
 
 //object
 #include "Camera.h"
@@ -28,6 +29,7 @@
 #include "Material.h"
 #include "TerrainCreater.h"
 #include "GraphicDevice.h"
+#include "Prefab.h"
 
 EditScene::EditScene()
 {
@@ -56,8 +58,10 @@ void EditScene::Load()
 	Terrain = new TerrainCreater;
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
+	PrefabMgr = PrefabManager::Create(this);
 	
-	BlockMgr->LoadTexture(); // 이미지 불러오기
+	BlockMgr->LoadTexture();								// 이미지 불러오기
+	PrefabMgr->LoadAllPrefabs("../Resource/Prefab/");		// 프리펩 불러오기
 
 	// 지형 생성 위한 블럭 1개 추가
 	ChunkMgr->CreateChunk(0, 0);
@@ -85,6 +89,17 @@ void EditScene::Update(float dt)
 
 	if (!io.WantCaptureMouse)
 	{
+		if (isPrefab)
+		{
+			if (Input->IsKeyDown(LBUTTON))
+			{
+				MakePickingRay(rayOrigin, rayDir);
+				OnLeftClick(rayOrigin, rayDir);
+			}
+
+			return;
+		}
+
 		if (isDown)
 		{
 			if (Input->IsKeyDown(LBUTTON))
@@ -139,9 +154,10 @@ void EditScene::ImGui_Main()
 	ImGui_SetBlockType();
 	ImGui_SetBlockUsage();
 	ImGui_SetBlockInfo();
+	ImGui_SetPrefab();
 	ImGui::End();
 
-	ImGui::SetNextWindowPos({ 0.f, 300.f });
+	ImGui::SetNextWindowPos({ 0.f, 350.f });
 	ImGui::Begin("==== Link IronCage & Lever ====");
 	ImGui_LinkLever();
 	ImGui::End();
@@ -149,12 +165,16 @@ void EditScene::ImGui_Main()
 
 void EditScene::ImGui_Info()
 {
-	static bool checkMouse(false);
+	static bool checkMouse(false), checkPrefab(false);
 	if (ImGui::Checkbox(" : MOUSE DOWN", &checkMouse)) isDown = checkMouse;
+	ImGui::SameLine();
+	if (ImGui::Checkbox(" : PREFAB MODE", &checkPrefab)) isPrefab = checkPrefab;
 
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
 	ImGui::Text("Dynamic Block Count : %d", dynamicBlocks.size());
+
+	if (ImGui::Button("Load All Prefabs")) PrefabMgr->LoadAllPrefabs("../Resource/Prefab/");
 }
 
 void EditScene::ImGui_Terrain()
@@ -192,6 +212,13 @@ void EditScene::ImGui_Terrain()
 		dynamicBlocks.clear();
 		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::AlphaBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("CLEAR DB"))
+	{
+		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 	}
 }
@@ -241,6 +268,8 @@ void EditScene::ImGui_SaveLoad()
 
 void EditScene::ImGui_SetBlockType()
 {
+	if (isPrefab) return;
+
 	if (dynamicBlockType == DynamicBlockType::dBlockNone)
 	{
 		// 블럭 종류 선택
@@ -314,14 +343,22 @@ void EditScene::ImGui_SetBlockInfo()
 	if (staticBlockType != StaticBlockType::Air)
 	{
 		const char* axisNames[] = { "X", "Y", "Z" };
-		const char* rotNames[] = { "+Z", "-Z", "+X", "-X" };
+		const char* rotNames[] = { "+Z", "-Z", "+X", "-X", "None"};
 
 		// 블럭 방향 및 회전 지정
 		switch (staticBlockUsage)
 		{
 		case StaticBlockUsage::Basic:
-			if (ImGui::Combo(" : Axis", &selectedSBlockAxis, axisNames, IM_ARRAYSIZE(axisNames)))
-				staticBlockAxis = static_cast<StaticBlockAxis>(selectedSBlockAxis);
+			if (staticBlockType == Furnace)
+			{
+				if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
+					staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
+			}
+			else
+			{
+				if (ImGui::Combo(" : Axis", &selectedSBlockAxis, axisNames, IM_ARRAYSIZE(axisNames)))
+					staticBlockAxis = static_cast<StaticBlockAxis>(selectedSBlockAxis);
+			}
 			break;
 
 		case StaticBlockUsage::Stair: case StaticBlockUsage::Fence:
@@ -345,6 +382,60 @@ void EditScene::ImGui_SetBlockInfo()
 				ImGui::InputInt(" : Count", &Count);
 			break;
 		}
+	}
+}
+
+void EditScene::ImGui_SetPrefab()
+{
+	static char prefabNameBuf[64]{};
+	ImGui::SetNextItemWidth(100); ImGui::InputText(" : PREFAB NAME", prefabNameBuf, sizeof(prefabNameBuf)); ImGui::SameLine();
+	if (ImGui::Button("SAVE PREFAB"))
+	{
+		std::string name = prefabNameBuf;
+		std::vector<PREFAB> prefabBlocks;
+		_vec3 basePos{ FLT_MAX, 0.f, FLT_MAX };
+
+		for (const auto& sb : staticBlocks)
+		{
+			basePos.x = min(basePos.x, sb.Pos.x);
+			basePos.y = 1.f;
+			basePos.z = min(basePos.z, sb.Pos.z);
+		}
+		for (const auto& sb : staticBlocks)
+		{
+			PREFAB p;
+			p.localPos = sb.Pos - basePos;
+			p.Type = sb.Type;
+			p.Axis = sb.Axis;
+			p.Rot = sb.Rot;
+			p.Usage = sb.Usage;
+			prefabBlocks.push_back(p);
+		}
+
+		Prefab* newPrefab = new Prefab(name);
+		for (auto& p : prefabBlocks) newPrefab->AddBlock(p);
+		newPrefab->SaveToFile("../Resource/Prefab/" + name + ".json");
+		PrefabMgr->AddPrefab(name, newPrefab);
+	}
+
+	if (!isPrefab) return;
+
+	static int selectedIndex(0);
+	auto& prefabMap = PrefabMgr->GetMap();
+
+	std::vector<std::string> prefabNames;
+	std::vector<const char*> prefabNameCStrs;
+
+	for (auto& [name, _] : prefabMap) prefabNames.push_back(name);
+	prefabNameCStrs.reserve(prefabNames.size());
+	for (const auto& name : prefabNames) prefabNameCStrs.push_back(name.c_str());
+
+	if (!prefabNames.empty())
+	{
+		ImGui::Combo(" : SELECT PREFAB", &selectedIndex, prefabNameCStrs.data(), prefabNameCStrs.size());
+
+		std::string selectedKey = prefabNames[selectedIndex];
+		selectedPrefab = PrefabMgr->GetPrefab(selectedKey);
 	}
 }
 
@@ -489,7 +580,7 @@ void EditScene::PlaceTerrainBlocks(const std::string& filename)
 		staticBlockAxis = block.Axis;
 		staticBlockRot = block.Rot;
 
-		Place(position);
+		PlaceBlock(position);
 	}
 
 	CreateTer = false;
@@ -595,7 +686,8 @@ void EditScene::OnLeftClick(_vec3& rayOrigin, _vec3& rayDir)
 	// 구한 법선에 블럭 크기를 곱하여 다음 블럭 위치 구하기
 	_vec3 newBlockPos = selectedBlockPos + normal * BLOCK_SIZE;
 
-	Place(newBlockPos);
+	if (isPrefab) PlacePrefab(newBlockPos);
+	else PlaceBlock(newBlockPos);
 }
 
 void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
@@ -710,7 +802,7 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 	return _vec3(0, 0, 0);
 }
 
-void EditScene::Place(_vec3& position)
+void EditScene::PlaceBlock(_vec3& position)
 {
 	// 새로 설치하려는 블럭의 위치에 이미 다른 블럭이 존재하면 바로 리턴
 	for (const auto& block : staticBlocks) if (block.Pos == position) return;
@@ -747,6 +839,51 @@ void EditScene::Place(_vec3& position)
 		ObjectMgr->AddObject(ObjectType::DynamicBlock, newBlockObj);
 	
 		dynamicBlocks.push_back({ position, dynamicBlockType, dynamicBlockCol, dynamicBlockRot });
+	}
+}
+
+void EditScene::PlacePrefab(_vec3& position)
+{
+	if (!selectedPrefab) return;
+	const auto& blocks(selectedPrefab->GetBlocks());
+
+	for (const auto& p : blocks)
+	{
+		bool occupied(false);
+		_vec3 worldPos(position + p.localPos);
+
+		for (const auto& sb : staticBlocks)
+		{
+			if (sb.Pos == worldPos)
+			{
+				occupied = true;
+				break;
+			}
+		}
+
+		if (!occupied)
+		{
+			for (const auto& db : dynamicBlocks)
+			{
+				if (db.Pos == worldPos)
+				{
+					occupied = true;
+					break;
+				}
+			}
+		}
+
+		if (occupied) continue;
+		if (worldPos.x < 0 || worldPos.z < 0) continue;
+
+		int chunkX = static_cast<int>(floorf(worldPos.x / CHUNK_SIZE));
+		int chunkZ = static_cast<int>(floorf(worldPos.z / CHUNK_SIZE));
+
+		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkZ);
+		chunk->AddBlock(worldPos, p.Type, p.Axis, p.Rot, p.Usage);
+
+		if (p.Type != StaticBlockType::Glass && p.Type != StaticBlockType::Leaf && !CreateTer) chunk->BuildChunkFace();
+		staticBlocks.push_back({ worldPos, p.Type, p.Axis, p.Rot, p.Usage });
 	}
 }
 
