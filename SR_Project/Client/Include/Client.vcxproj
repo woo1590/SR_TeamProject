@@ -189,6 +189,7 @@
     <ClInclude Include="..\Header\FilterTooltip.h" />
     <ClInclude Include="..\Header\Firework.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
+    <ClInclude Include="..\Header\BloodEffect.h" />
     <ClInclude Include="..\Header\IsTargetClose.h" />
     <ClInclude Include="..\Header\HPBarWhite.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
@@ -210,8 +211,11 @@
     <ClInclude Include="..\Header\Slime.h" />
     <ClInclude Include="..\Header\Spawner.h" />
     <ClInclude Include="..\Header\SpawnTriggerBox.h" />
+    <ClInclude Include="..\Header\Stage1.h" />
+    <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\Tnt.h" />
     <ClInclude Include="..\Header\TooltipObj.h" />
+    <ClInclude Include="..\Header\Village.h" />
     <ClInclude Include="..\Header\WolfArmor.h" />
     <ClInclude Include="..\Header\ArmorFilter.h" />
     <ClInclude Include="..\Header\ArrowFilter.h" />
@@ -309,6 +313,7 @@
     <ClCompile Include="..\Code\FilterTooltip.cpp" />
     <ClCompile Include="..\Code\Firework.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
+    <ClCompile Include="..\Code\BloodEffect.cpp" />
     <ClCompile Include="..\Code\IsTargetClose.cpp" />
     <ClCompile Include="..\Code\HPBarWhite.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />
@@ -330,8 +335,11 @@
     <ClCompile Include="..\Code\Slime.cpp" />
     <ClCompile Include="..\Code\Spawner.cpp" />
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />
+    <ClCompile Include="..\Code\Stage1.cpp" />
+    <ClCompile Include="..\Code\Stage2.cpp" />
     <ClCompile Include="..\Code\Tnt.cpp" />
     <ClCompile Include="..\Code\TooltipObj.cpp" />
+    <ClCompile Include="..\Code\Village.cpp" />
     <ClCompile Include="..\Code\WolfArmor.cpp" />
     <ClCompile Include="..\Code\ArmorFilter.cpp" />
     <ClCompile Include="..\Code\ArrowFilter.cpp" />
@@ -417,6 +425,50 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Resource\Shader\BasicShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\ChunkShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\ColorShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\HitParticleShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\MaskShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\ParticleShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\SkyBox.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

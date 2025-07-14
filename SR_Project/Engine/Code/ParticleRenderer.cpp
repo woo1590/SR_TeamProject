@@ -93,12 +93,11 @@ void ParticleRenderer::Render()
 	_matrix view = cam->GetViewMatrix();
 	_matrix proj = cam->GetProjMatrix();
 
-	Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	shader->Begin(0);
 
 	shader->SetConstant("g_View", view);
 	shader->SetConstant("g_Proj", proj);
 
-	shader->Begin(0);
 	mtrl->Apply();
 	Device->SetStreamSource(0, VB, 0, sizeof(VTXPOINT));
 	Device->SetVertexDeclaration(Decl);
@@ -107,7 +106,6 @@ void ParticleRenderer::Render()
 
 	shader->End();
 
-	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 void ParticleRenderer::SetMaterial(const std::string& key)

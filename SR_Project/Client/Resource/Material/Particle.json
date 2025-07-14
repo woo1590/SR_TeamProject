@@ -1,6 +1,6 @@
 {
 "template" :{
-    "fx" : "BasicShader",
+    "fx" : "ParticleShader",
     "constants": {
     "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],      
     "MatSpecular"  : [1.0, 1.0, 1.0],        
@@ -18,8 +18,12 @@
 
   "materials":{
     "Rain_Mtrl" :{
-        "fx":"ParticleShader",
         "textures":{"AlbedoMap":"../Resource/Texture/Effect/Rain.png"}
+    },
+
+    "Hit_Mtrl":{
+      "fx":"HitParticleShader",
+      "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
     }
   }
 
