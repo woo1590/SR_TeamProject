@@ -124,8 +124,8 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-		player->EquipItem(Item::ItemType::ITEM_SWORD);
-		player->EquipItem(Item::ItemType::ITEM_BOW);
+		//player->EquipItem(ItemType::Sword);
+		//player->EquipItem(ItemType::Bow);
 		player->GetComponent<TransformComponent>()->SetPosition(30.f, 30.f, 30.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
