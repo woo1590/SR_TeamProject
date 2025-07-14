@@ -29,11 +29,15 @@ protected:
     void PlayIdle(_float dt) override;
     void PlayWalk(_float dt) override;
     void PlayAttack(_float dt) override;
-    void PlayDie(_float dt)override;
+    void PlayDie(_float dt) override;
+    void PlayHit(_float dt) override;
 
     void OnCollisionStay(Object* other) override;
 
 protected:
     void Free() override;
+
+private:
+    bool IsAttackDamage = false;
 };
 

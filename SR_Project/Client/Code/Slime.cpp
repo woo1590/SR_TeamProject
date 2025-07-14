@@ -15,6 +15,7 @@
 #include "BabySlime.h"
 #include "PhysicsComponent.h"
 #include "MeshRendererComponent.h"
+#include "Player.h"
 
 Slime::Slime(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -54,6 +55,8 @@ HRESULT Slime::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     //Animation
     InitAnimation();
+
+    GetComponent<InfoComponent<EnemyInfo>>()->SetInfo({ 1,120,120, 0, 0, 15, 0, 6 });
     return S_OK;
 }
 
@@ -85,6 +88,15 @@ void Slime::RotateTo(_vec3* dir, float dt)
 
 void Slime::Attack(Object* target)
 {
+    if (State != MonsterState::Attack)
+    {
+        State = MonsterState::Attack;
+        AttackAnim.DelayTime = 0.f;
+        AttackAnim.ElapsedTime = 0;
+        SetRotation({ 0.f, 0.f, 0.f }, "Body");
+        *IsAttack = true;
+        IsAttackDamage = false;
+    }
 }
 
 void Slime::Die()
@@ -99,6 +111,17 @@ void Slime::Die()
 
 void Slime::Hit(_vec3 dir, _float power)
 {
+    if (State != MonsterState::Hit)
+    {
+        State = MonsterState::Hit;
+
+        *IsHit = true;
+
+        HitDir = dir;
+        HitPower = power;
+
+        Monster::Hit(dir, power);
+    }
 }
 
 void Slime::InitTransform(ObjectType objType)
@@ -129,7 +152,7 @@ void Slime::InitTree()
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(5.f);
+    Distance = new float(7.f);
     bb->SetValue("Distance", Distance);
     IsHit = new _bool(false);
     bb->SetValue("IsDamaged", IsHit);
@@ -165,6 +188,13 @@ void Slime::InitAnimation()
     WalkAnim.TotalTime = 0.3f;
     WalkAnim.IsRunning = true;
 
+    AttackAnim.Phase = Action;
+    AttackAnim.ElapsedTime = 0.f;
+    AttackAnim.TotalTime = 0.2f;
+
+    HitAnim.ElapsedTime = 0.f;
+    HitAnim.TotalTime = 0.2f;
+
     DieAnim.ElapsedTime = 0.f;
     DieAnim.TotalTime = 0.3f;
 }
@@ -191,6 +221,11 @@ void Slime::PlayAnimation(_float dt)
         if (!DieAnim.IsRunning) DieAnim.IsRunning = true;
         PlayDie(dt);
         break;
+    }
+    if (State != MonsterState::Attack)
+    {
+        auto Transform = GetComponent<TransformComponent>();
+        SetRotation(_vec3(Transform->GetRotate().x, 0.f, Transform->GetRotate().z), "Body");
     }
 }
 
@@ -241,7 +276,43 @@ void Slime::PlayWalk(_float dt)
 
 void Slime::PlayAttack(_float dt)
 {
-    //
+    AttackAnim.DelayTime -= dt;
+    if (AttackAnim.DelayTime > 0) return;
+
+    AttackAnim.ElapsedTime += dt;
+    _float t = clamp(AttackAnim.ElapsedTime / AttackAnim.TotalTime, 0.f, 1.f);
+
+    switch (AttackAnim.Phase)
+    {
+    case Phase::Action:
+    {
+        _float Angle = lerp(0.f, 40.f, t);
+        
+        SetRotation(_vec3(D3DXToRadian(Angle), 0.f, 0.f), "Body");
+
+        if (t >= 1.f)
+        {
+            AttackAnim.Phase = Phase::Recover;
+            AttackAnim.ElapsedTime = 0.f;
+            AttackAnim.TotalTime = 0.2f;
+        }
+        break;
+    }
+    case Phase::Recover:
+    {
+        _float Angle = lerp(40.f, 0.f, t);
+        SetRotation(_vec3(D3DXToRadian(Angle), 0.f, 0.f), "Body");
+        if (t >= 1.f)
+        {
+            AttackAnim.Phase = Phase::Action;
+            AttackAnim.ElapsedTime = 0.f;
+            AttackAnim.TotalTime = 0.2f;
+            AttackAnim.DelayTime = 1.f;
+            *IsAttack = false;
+        }
+        break;
+    }
+    }
 }
 
 void Slime::PlayDie(_float dt)
@@ -270,8 +341,8 @@ void Slime::PlayDie(_float dt)
         transform = babyslime->GetComponent<TransformComponent>();
         transform->SetPosition(_vec3(pos.x + 5, pos.y, pos.z + 5));
         
-       Bones["Head"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
-       Bones["Body"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
+        Bones["Head"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
+        Bones["Body"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
 
         //SetDead();
         //DeleteBar();
@@ -280,8 +351,37 @@ void Slime::PlayDie(_float dt)
     }
 }
 
+void Slime::PlayHit(_float dt)
+{
+    HitAnim.ElapsedTime += dt;
+
+    PlayKnockBack(HitDir, HitPower, dt);
+
+    if (HitAnim.ElapsedTime >= HitAnim.TotalTime)
+    {
+        *IsHit = false;
+    }
+}
+
 void Slime::OnCollisionStay(Object* other)
 {
+    ObjectType objType = other->GetObjectType();
+    auto collision = GetComponent<CollisionComponent>();
+    auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
+    auto transform = GetComponent<TransformComponent>();
+
+    if (objType == ObjectType::Player)
+    {
+        auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
+        auto playertransform = other->GetComponent<TransformComponent>();
+
+        auto player = static_cast<Player*>(other);
+        if (State == MonsterState::Attack && !IsAttackDamage)
+        {
+            playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
+            IsAttackDamage = true;
+        }
+    }
 }
 
 void Slime::Free()
