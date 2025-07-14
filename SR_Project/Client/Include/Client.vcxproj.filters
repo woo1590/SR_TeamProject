@@ -430,7 +430,7 @@
     <Filter Include="02. Object\Monster\Skeleton\JungleSkeleton">
       <UniqueIdentifier>{e3e0baca-4c41-4e54-b6c0-1cfb55454cc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Effect\HitEffect">
+    <Filter Include="02. Object\Effect\BloodEffect">
       <UniqueIdentifier>{f773bc8f-4f8d-4ff6-a1bf-137cb24113fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -809,8 +809,8 @@
     <ClInclude Include="..\Header\Stage2.h">
       <Filter>01. Scene\Stage2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\HitEffect.h">
-      <Filter>02. Object\Effect\HitEffect</Filter>
+    <ClInclude Include="..\Header\BloodEffect.h">
+      <Filter>02. Object\Effect\BloodEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1188,8 +1188,31 @@
     <ClCompile Include="..\Code\Stage2.cpp">
       <Filter>01. Scene\Stage2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\HitEffect.cpp">
-      <Filter>02. Object\Effect\HitEffect</Filter>
+    <ClCompile Include="..\Code\BloodEffect.cpp">
+      <Filter>02. Object\Effect\BloodEffect</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Resource\Shader\BasicShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\ChunkShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\ColorShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\HitParticleShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\MaskShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\ParticleShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\SkyBox.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

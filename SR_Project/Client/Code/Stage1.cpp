@@ -10,6 +10,13 @@ Stage1::~Stage1()
 {
 }
 
+Stage1* Stage1::Create()
+{
+	Stage1* Instance = new Stage1;
+
+	return Instance;
+}
+
 void Stage1::Load()
 {
 }

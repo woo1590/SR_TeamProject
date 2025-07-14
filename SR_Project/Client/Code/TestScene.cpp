@@ -49,7 +49,7 @@
 #include "Slime.h"
 #include "JungleZombie.h"
 #include "JungleSkeleton.h"
-#include "HitEffect.h"
+#include "BloodEffect.h"
 
 //component
 #include "TransformComponent.h"
@@ -168,7 +168,7 @@ void TestScene::Update(float dt)
 
 	if (Input->IsKeyPressed(NUM5))
 	{
-		auto effect = HitEffect::Create(ObjectMgr, ObjectType::Effect);
+		auto effect = BloodEffect::Create(ObjectMgr, ObjectType::Effect);
 		_vec3 playerPos = player->GetComponent<TransformComponent>()->GetPosition();
 
 		effect->GetComponent<TransformComponent>()->SetPosition(playerPos);

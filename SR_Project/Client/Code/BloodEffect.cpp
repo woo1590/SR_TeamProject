@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "HitEffect.h"
+#include "BloodEffect.h"
 #include "Scene.h"
 #include "ObjectManager.h"
 
@@ -8,18 +8,18 @@
 #include "ParticleSystem.h"
 #include "ParticleRenderer.h"
 
-HitEffect::HitEffect(ObjectManager* owner, ObjectType objType)
+BloodEffect::BloodEffect(ObjectManager* owner, ObjectType objType)
 	:Effect(owner,objType)
 {
 }
 
-HitEffect::~HitEffect()
+BloodEffect::~BloodEffect()
 {
 }
 
-HitEffect* HitEffect::Create(ObjectManager* owner, ObjectType objType)
+BloodEffect* BloodEffect::Create(ObjectManager* owner, ObjectType objType)
 {
-	HitEffect* Instance = new HitEffect(owner, objType);
+	BloodEffect* Instance = new BloodEffect(owner, objType);
 	if (FAILED(Instance->Ready_Object()))
 	{
 		Safe_Release(Instance);
@@ -28,7 +28,7 @@ HitEffect* HitEffect::Create(ObjectManager* owner, ObjectType objType)
 	return Instance;
 }
 
-HRESULT HitEffect::Ready_Object()
+HRESULT BloodEffect::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 
@@ -63,7 +63,7 @@ HRESULT HitEffect::Ready_Object()
 	return S_OK;
 }
 
-void HitEffect::Update(_float dt)
+void BloodEffect::Update(_float dt)
 {
 	Object::Update(dt);
 
@@ -73,12 +73,12 @@ void HitEffect::Update(_float dt)
 
 }
 
-void HitEffect::Late_Update(_float dt)
+void BloodEffect::Late_Update(_float dt)
 {
 	Object::Late_Update(dt);
 }
 
-void HitEffect::Free()
+void BloodEffect::Free()
 {
 	Object::Free();
 }

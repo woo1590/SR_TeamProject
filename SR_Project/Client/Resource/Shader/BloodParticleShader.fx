@@ -1,4 +1,4 @@
-//HitParticle Shader
+//BloodParticle Shader
 
 //Albedo Texture and Sampler
 texture AlbedoMap : register(t0);

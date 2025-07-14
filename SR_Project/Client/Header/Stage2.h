@@ -9,6 +9,8 @@ private:
     virtual ~Stage2();
 
 public:
+    static Stage2* Create();
+
     void Load()override;
     void Update(_float dt)override;
     void Late_Update(_float dt)override;

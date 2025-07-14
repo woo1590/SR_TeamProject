@@ -9,6 +9,9 @@
 //scene
 #include "TestScene.h"
 #include "LogoScene.h"
+#include "Village.h"
+#include "Stage1.h"
+#include "Stage2.h"
 
 //Objects
 #include "LoadingUI.h"
@@ -57,6 +60,15 @@ void LoadingScene::Update(_float dt)
 			{
 			case LOADID::TestScene:
 				nextScene = TestScene::Create();
+				break;
+			case LOADID::Village:
+				nextScene = Village::Create();
+				break;
+			case LOADID::Stage1:
+				nextScene = Stage1::Create();
+				break;
+			case LOADID::Stage2:
+				nextScene = Stage2::Create();
 				break;
 			default:
 				break;
