@@ -34,15 +34,15 @@ HRESULT BloodEffect::Ready_Object()
 
 	auto particle = AddComponent<ParticleSystem>();
 	Emitter hit;
-	hit.ratePerSec = 20.f;
+	hit.burstCount = 20;
 	hit.looping = true;
 	hit.followCam = false;
 
-	hit.life = 5.f;
+	hit.life = 0.5f;
 	hit.size = 15.f;
 
-	hit.velocityMin = { -10.f,-10.f,-10.f };
-	hit.velocityMax = { 10.f,10.f,10.f };
+	hit.velocityMin = { -10.f,-15.f,-15.f };
+	hit.velocityMax = { 15.f,15.f,15.f };
 	hit.spawnAreaMin = { -0.1f,-0.1f,-0.1f };
 	hit.spawnAreaMax = { 0.1f,0.1f,0.1f };
 
@@ -67,10 +67,17 @@ void BloodEffect::Update(_float dt)
 {
 	Object::Update(dt);
 
-	auto player = owner->GetFrontObject(ObjectType::Player);
-	_vec3 pos = player->GetComponent<TransformComponent>()->GetPosition();
-	GetComponent<TransformComponent>()->SetPosition(pos);
+	if (effectOwner)
+	{
+		_vec3 pos = effectOwner->GetPosition();
+		GetComponent<TransformComponent>()->SetPosition(pos);
+	}
 
+	//if (timer >= deadTime)
+	//	SetDead();
+	//
+	//if (deadTime)
+	//	timer += dt;
 }
 
 void BloodEffect::Late_Update(_float dt)

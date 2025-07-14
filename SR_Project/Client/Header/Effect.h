@@ -1,6 +1,11 @@
 #pragma once
 #include "Object.h"
 
+namespace Engine
+{
+    class TransformComponent;
+}
+
 class Effect :
     public Object
 {
@@ -9,11 +14,11 @@ protected:
     virtual ~Effect();
 
 public:
-    virtual HRESULT Ready_Object()override { return S_OK; };
-    virtual void Update(_float dt)override {};
-    virtual void Late_Update(_float dt)override {};
-    
+    void SetDeadTime(_float time) { deadTime = time; }
+    void SetOwner(TransformComponent* o) { effectOwner = o; }
 protected:
-    virtual void Free()override{}
+    TransformComponent* effectOwner = nullptr;
+    _float deadTime = 0.f;
+    _float timer = 0.f;
 };
 
