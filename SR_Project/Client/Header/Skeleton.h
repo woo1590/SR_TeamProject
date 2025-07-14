@@ -3,7 +3,7 @@
 class Skeleton :
     public Monster
 {
-protected:
+public:
     Skeleton(ObjectManager* owner, ObjectType objType);
     virtual ~Skeleton();
 

@@ -16,6 +16,7 @@
 #include "ChunkManager.h"
 #include "UIManager.h"
 #include "ChunkManager.h"
+#include "PoolingManager.h"
 
 //object
 #include "TestObject.h"
@@ -43,6 +44,7 @@
 #include "RedGolem.h"
 #include "Chunk.h"
 #include "SpawnTriggerBox.h"
+#include "DamageText.h"
 
 //component
 #include "TransformComponent.h"
@@ -50,6 +52,8 @@
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
+#include "WorldUIComponent.h"
+#include "FontComponent.h"
 
 TestScene::TestScene()
 {
@@ -81,6 +85,7 @@ void TestScene::Load()
 	PhysicsSys		= PhysicsSystem::Create(this);
 	BlockMgr		= BlockManager::Create(this);
 	ChunkMgr		= ChunkManager::Create(this);
+	poolMgr         = PoolingManager::Create(this);
 
 	BlockMgr->LoadChunk("testScene");
 
@@ -93,6 +98,42 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Player, player);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
+
+	// -------------------------------------------
+
+	poolMgr->Reserve<Skeleton>(10);
+	poolMgr->Reserve<Zombie>  (10);
+	poolMgr->Reserve<RedGolem>(3);
+	poolMgr->Reserve<Creeper> (10);
+
+	auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger);
+
+	struct SpawnData
+	{
+		SpawnType type;
+		_vec3 pos;
+		_vec3 rot;
+	};
+
+	vector<SpawnData> spawnList = 
+	{
+		//{SpawnType::Zombie,   {10.f, 10.f, 10.f}, {0.f, 0.f, 0.f}},
+		//{SpawnType::Zombie,   {70.f, 10.f, 10.f}, {0.f, 0.f, 0.f}},
+		//{SpawnType::Zombie,   {40.f, 10.f, 10.f}, {0.f, 0.f, 0.f}},
+		//{SpawnType::Zombie,   {10.f, 10.f, 10.f}, {0.f, 0.f, 0.f}},
+		{SpawnType::Skeleton, {20.f, 10.f, 20.f}, {0.f, 0.f, 0.f}},
+		{SpawnType::Skeleton, {80.f, 10.f, 80.f}, {0.f, 0.f, 0.f}},
+		{SpawnType::Skeleton, {30.f, 10.f ,85.f}, {0.f, 0.f, 0.f}},
+		{SpawnType::Skeleton, {30.f, 10.f, 10.f}, {0.f, 0.f, 0.f}},
+		{SpawnType::Skeleton, {30.f, 10.f, 50.f}, {0.f, 0.f, 0.f}},
+		//{SpawnType::RedGolem, { 5.f, 10.f, 10.f}, {0.f, 0.f, 0.f}}, 
+	};
+
+	for (const auto& spawn : spawnList)
+		trigger->AddSpawner(spawn.type, spawn.pos, spawn.rot);
+
+	// -------------------------------------------
 
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
@@ -107,23 +148,26 @@ void TestScene::Load()
 	ObjectMgr->AddObject(ObjectType::Camera, tCam);
 	
 	/*------------------------------------------------*/
-	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+	//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	//ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
-	ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
 
-	auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-	ObjectMgr->AddObject(ObjectType::Neutral, trigger);
-
-	trigger->AddSpawner(SpawnType::Zombie,   _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Zombie,   _vec3(70.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Zombie,   _vec3(40.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Zombie,   _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Skeleton, _vec3(20.f, 10.f, 20.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::Skeleton, _vec3(80.f, 10.f, 80.f), _vec3(0.f, 0.f, 0.f));
+	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);
+	//
+	//trigger->AddSpawner(SpawnType::Zombie,   _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Zombie,   _vec3(70.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Zombie,   _vec3(40.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Zombie,   _vec3(10.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Skeleton, _vec3(20.f, 10.f, 20.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::Skeleton, _vec3(80.f, 10.f, 80.f), _vec3(0.f, 0.f, 0.f));
 	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 30.f), _vec3(0.f, 0.f, 0.f));
 	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
 	//trigger->AddSpawner(SpawnType::Creeper,  _vec3(30.f, 10.f, 50.f), _vec3(0.f, 0.f, 0.f));
-	trigger->AddSpawner(SpawnType::RedGolem, _vec3(5.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+	//trigger->AddSpawner(SpawnType::RedGolem, _vec3(5.f, 10.f, 10.f), _vec3(0.f, 0.f, 0.f));
+
+
+
 
 	UILoader loader;
 	loader.LoadUI(ObjectMgr);
@@ -150,6 +194,18 @@ void TestScene::Update(float dt)
 		{
 			if (static_cast<DynamicBlock*>(Dst)->GetType() == LeverSwitch)
 				static_cast<DynamicBlock*>(Dst)->SetActivate();
+		}
+	}
+
+	if (Input->IsKeyPressed(H))
+	{
+		const auto& triggers = ObjectMgr->GetObjectList(ObjectType::Neutral);
+
+		for (auto* obj : triggers)
+		{
+			auto* trigger = dynamic_cast<SpawnTriggerBox*>(obj);
+			if (trigger)
+				trigger->ForceSpawn();
 		}
 	}
 }
@@ -220,6 +276,8 @@ void TestScene::Free()
 	Safe_Release(Grid);
 	Safe_Release(uiMgr);
 	Safe_Release(ChunkMgr);
+
+	//Safe_Release(poolMgr);
 
 	Scene::Free();
 }

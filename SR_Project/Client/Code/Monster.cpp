@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
-#include "Scene.h"
 #include "Monster.h"
+#include "Scene.h"
 #include "CollisionSystem.h"
 #include "PhysicsSystem.h"
 #include "CollisionComponent.h"
@@ -23,6 +23,7 @@
 #include "DamageText.h"
 #include "Fontcomponent.h"
 #include "HPBarWhite.h"
+#include "PoolingManager.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -133,6 +134,29 @@ void Monster::Late_Update(_float dt)
     BaseCharacter::Late_Update(dt);
 }
 
+void Monster::SetBarVisible(bool visible)
+{
+    auto setVisible = [visible](Object* obj)
+        {
+            if (!obj) return;
+
+            if (auto* renderer = obj->GetComponent<UIRenderer>())
+                renderer->SetVisible(visible);
+
+            for (auto* child : obj->GetChildren())
+            {
+                if (auto* r = child->GetComponent<UIRenderer>())
+                    r->SetVisible(visible);
+            }
+        };
+
+    setVisible(enemyFront);
+    setVisible(enemyBack);
+    setVisible(bossFront);
+    setVisible(bossBack);
+    setVisible(whiteBack);
+}
+
 void Monster::MoveTo(_vec3* dir, _float dt)
 {
 }
@@ -150,20 +174,6 @@ void Monster::Die()
    
 }
 
-void Monster::DeleteBar()
-{
-    if (enemyFront)
-        enemyFront->SetDead();
-    if (enemyBack)
-        enemyBack->SetDead();
-    if (bossFront)
-        bossFront->SetDead();
-    if (bossBack)
-        bossBack->SetDead();
-    if (whiteBack)
-        whiteBack->SetDead();
-}
-
 void Monster::ShowDmgText(int dmg, const _vec3& hitDir)
 {
     auto headTf = Bones["Head"]->GetComponent<TransformComponent>();
@@ -179,7 +189,6 @@ void Monster::ShowDmgText(int dmg, const _vec3& hitDir)
     owner->AddUIObject(dmgText);
 }
 
-
 void Monster::Hit(_vec3 dir, _float power)
 {
     auto stat = GetComponent<InfoComponent<EnemyInfo>>();
@@ -188,7 +197,7 @@ void Monster::Hit(_vec3 dir, _float power)
 
 _float Monster::GetHp()
 {
-    auto  statcomponent = GetComponent<InfoComponent<EnemyInfo>>();
+    auto   statcomponent = GetComponent<InfoComponent<EnemyInfo>>();
     return statcomponent->GetInfo().curHp;
 }
 

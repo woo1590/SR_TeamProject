@@ -1,27 +1,23 @@
 #pragma once
+
 #include "Object.h"
+#include "Scene.h"
 
 class Monster;
 
-class Spawner :
-    public Object
+class Spawner : public Object
 {
-protected:
-    Spawner(ObjectManager* owner, ObjectType objType);
-    virtual ~Spawner();
+private:
+	Spawner(Scene* scene, ObjectManager* objMgr, ObjectType objType)
+		:Object(objMgr, objType), scene(scene) {}
 
 public:
-    static Spawner* Create(ObjectManager* owner, ObjectType objType,
-        SpawnType type, _vec3 position, _vec3 rotation);
-    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType,
-        SpawnType type, _vec3 position, _vec3 rotation);
+	static Spawner* Create(Scene* scene, ObjectManager* objMgr, SpawnType type, _vec3 pos = {}, _vec3 rot = {});
 
-public:
-    Monster* Spawn();
+	Monster* Spawn();
 
 private:
-    _vec3 Position;
-    _vec3 Rotation;
-    SpawnType spawntype;
+	Scene* scene;
+	SpawnType spawnType{};
+	_vec3 pos{}, rot{};
 };
-

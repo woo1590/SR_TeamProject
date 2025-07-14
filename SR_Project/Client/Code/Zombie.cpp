@@ -303,7 +303,7 @@ void Zombie::PlayDie(_float dt)
         DieAnim.IsEnd = true;
         
         SetDead();
-        DeleteBar();
+        SetBarVisible(false);
     }
 }
 

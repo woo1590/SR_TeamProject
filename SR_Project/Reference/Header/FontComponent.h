@@ -10,7 +10,7 @@ struct ENGINE_DLL TextEntry
 	RECT rect;
 	DWORD format = DT_LEFT | DT_TOP;
 	D3DXCOLOR color = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	FontType fontType = FontType::Title;
+	FontType fontType = FontType::DeathCount;
 };
 
 class ENGINE_DLL FontComponent: public ObjectComponent

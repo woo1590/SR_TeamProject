@@ -67,9 +67,9 @@ void DeathFrame::Update(float dt)
 
 	RECT deathRect = {
 		(int)(640 - 150 * scale),
-		(int)(450 - 75 * scale),
+		(int)(450 - 75  * scale),
 		(int)(640 + 150 * scale),
-		(int)(450 + 75 * scale)
+		(int)(450 + 75  * scale)
 	};
 	
 	font->AddText(L"사망했습니다", deathRect,

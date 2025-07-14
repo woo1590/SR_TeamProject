@@ -27,19 +27,20 @@ Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
 
 Skeleton::~Skeleton()
 {
-}
+
+} 
 
 Skeleton* Skeleton::Create(ObjectManager* owner, ObjectType objType)
 {
     Skeleton* Instance = new Skeleton(owner, objType);
-
+    
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {
         Safe_Release(Instance);
-
+    
         Instance = nullptr;
     }
-
+    
     return Instance;
 }
 
@@ -78,7 +79,8 @@ void Skeleton::MoveTo(_vec3* dir, _float dt)
     auto Transform = GetComponent<TransformComponent>();
     auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
 
-    if (State != MonsterState::Walk) State = MonsterState::Walk;
+    if (State != MonsterState::Walk)
+        State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
     Transform->Translate(*dir * dt * Stat->GetInfo().speed);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
@@ -110,8 +112,10 @@ void Skeleton::Die()
     if (State != MonsterState::Die)
     {
         State = MonsterState::Die;
-
         DieAnim.ElapsedTime = 0;
+        DieAnim.IsRunning = true; //
+        DieAnim.IsEnd = false; //
+        SetBarVisible(false);
     }
 }
 
@@ -403,14 +407,13 @@ void Skeleton::PlayHit(float dt)
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
         *IsHit = false;
-
-
     }
 
 }
 
 void Skeleton::PlayDie(_float dt)
 {
+    
     if (!DieAnim.IsEnd)
     {
         auto transform = GetComponent<TransformComponent>();
@@ -425,8 +428,13 @@ void Skeleton::PlayDie(_float dt)
         }
         DieAnim.IsEnd = true;
         DieAnim.IsRunning = false;
-        SetDead();
-        DeleteBar();
+    }
+
+    DieElapsed += dt;
+    if (DieElapsed >= dieDelay)
+    {
+        ResetDieTimer();
+        ReturnToPool<Skeleton>();
     }
 }
 

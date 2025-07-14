@@ -2,6 +2,7 @@
 #include "Spawner.h"
 #include "Monster.h"
 #include "ObjectManager.h"
+#include "PoolingManager.h"
 
 #include "Zombie.h"
 #include "Skeleton.h"
@@ -9,69 +10,34 @@
 #include "Creeper.h"
 #include "TransformComponent.h"
 
-Spawner::Spawner(ObjectManager* owner, ObjectType objType)
-    :Object(owner, objType)
+Spawner* Spawner::Create(Scene* scene, ObjectManager* objMgr, SpawnType type, _vec3 pos, _vec3 rot)
 {
-}
-
-Spawner::~Spawner()
-{
-}
-
-Spawner* Spawner::Create(ObjectManager* owner, ObjectType objType, SpawnType type, _vec3 position, _vec3 rotation)
-{
-    Spawner* Instance = new Spawner(owner, objType);
-
-    if (FAILED(Instance->Ready_Object(owner, objType, type, position, rotation)))
-    {
-        Safe_Release(Instance);
-
-        Instance = nullptr;
-    }
-
-    return Instance;
-}
-
-HRESULT Spawner::Ready_Object(ObjectManager* owner, ObjectType objType, SpawnType type, _vec3 position, _vec3 rotation)
-{
-    spawntype = type;
-    Position = position;
-    Rotation = rotation;
-
-    return S_OK;
+	auto* instance = new Spawner(scene, objMgr, ObjectType::Neutral);
+	instance->spawnType = type;
+	instance->pos = pos;
+	instance->rot = rot;
+	return instance;
 }
 
 Monster* Spawner::Spawn()
 {
-    Monster* monster = nullptr;
-    switch (spawntype)
-    {
-    case SpawnType::Zombie:
-        monster = Zombie::Create(owner, ObjectType::Monster);
-        break; 
+	auto* pool = scene->GetPoolManager();
+	Monster* monster = nullptr;
 
-    case SpawnType::Creeper:
-        monster = Creeper::Create(owner, ObjectType::Monster);
-        break;
+	switch (spawnType)
+	{
+	case SpawnType::Zombie:   monster = pool->Acquire<Zombie>(owner, ObjectType::Monster); break;
+	case SpawnType::Skeleton: monster = pool->Acquire<Skeleton>(owner, ObjectType::Monster); break;
+	case SpawnType::Creeper:  monster = pool->Acquire<Creeper>(owner, ObjectType::Monster); break;
+	case SpawnType::RedGolem: monster = pool->Acquire<RedGolem>(owner, ObjectType::Monster); break;
+	}
 
-    case SpawnType::Skeleton:
-        monster = Skeleton::Create(owner, ObjectType::Monster);
-        break;
+	//monster->Reset();
 
-    case SpawnType::RedGolem:
-        monster = RedGolem::Create(owner, ObjectType::Monster);
-        break;
-    }
+	auto tf = monster->GetComponent<TransformComponent>();
+	tf->SetPosition(pos);
+	tf->SetRotate(rot);
 
-    auto transform = monster->GetComponent<TransformComponent>();
-
-    if (transform)
-    {
-        transform->SetPosition(Position);
-        transform->SetRotate(Rotation);
-    }
-
-    owner->AddObject(ObjType, monster);
-
-    return monster;
+	owner->AddObject(ObjectType::Monster, monster);
+	return monster;
 }

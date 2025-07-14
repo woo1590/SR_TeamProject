@@ -52,6 +52,11 @@ UIManager* Scene::GetUIManager() const
 	return uiMgr;
 }
 
+PoolingManager* Scene::GetPoolManager() const
+{
+	return poolMgr;
+}
+
 void Scene::Free()
 {
 

@@ -10,6 +10,7 @@ class StaticGrid;
 class BlockManager;
 class ChunkManager;
 class Object;
+class PoolingManager;
 
 class ENGINE_DLL Scene : public Base
 {
@@ -47,6 +48,7 @@ public:
     BlockManager*       GetBlockManager()const;
     ChunkManager*       GetChunkManager()const;
     UIManager*          GetUIManager()const;
+    PoolingManager*     GetPoolManager()const;
     
 public:
     vector<SB>& GetStaticBlocks() { return staticBlocks; }
@@ -68,6 +70,7 @@ protected:
     BlockManager* BlockMgr = nullptr;
     ChunkManager* ChunkMgr = nullptr;
     UIManager* uiMgr = nullptr;
+    PoolingManager* poolMgr = nullptr;
 };
 
 END

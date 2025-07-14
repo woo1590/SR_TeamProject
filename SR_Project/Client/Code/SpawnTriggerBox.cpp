@@ -7,6 +7,11 @@
 #include "PhysicsSystem.h"
 #include "Scene.h"
 #include "Spawner.h"
+#include "ObjectManager.h"
+#include "UIRenderer.h"
+#include "FontComponent.h"
+#include "DamageText.h"
+#include "WorldUIComponent.h"
 
 SpawnTriggerBox::SpawnTriggerBox(ObjectManager* owner, ObjectType objType)
 	:Object(owner, objType)
@@ -47,6 +52,7 @@ HRESULT SpawnTriggerBox::Ready_Object(ObjectManager* owner, ObjectType objType)
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test
     physics->SetKinematic(true);
     physics->SetMass(1.f);
+
     return S_OK;
 }
 
@@ -77,7 +83,8 @@ void SpawnTriggerBox::SetTriggerPosition(_vec3 pos)
 
 void SpawnTriggerBox::AddSpawner(SpawnType type, _vec3 pos, _vec3 rot)
 {
-    spawners.push_back(Spawner::Create(owner, ObjectType::Monster, type, pos, rot));
+    Spawner* spawner = Spawner::Create(owner->GetOwner(), owner, type, pos, rot);
+    spawners.push_back(spawner);
 }
 
 void SpawnTriggerBox::OnCollisionEnter(Object* other)
@@ -105,4 +112,14 @@ void SpawnTriggerBox::Free()
         {
             Safe_Release(spawner);
         });
+}
+
+void SpawnTriggerBox::ForceSpawn()
+{
+    if (SpawnOn) return;
+
+    for (auto& spawner : spawners)
+        spawner->Spawn();
+
+    SpawnOn = true;
 }

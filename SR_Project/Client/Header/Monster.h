@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include "BaseCharacter.h"
+#include "Scene.h"
+#include "PoolingManager.h"
+
 
 enum MonsterState { Idle, Walk, AttackReady, Attack, Hit, Die, };
 enum Phase {Ready, Action, Recover, };
@@ -10,6 +13,7 @@ class EnemyHPBarBack;
 class BossHPBarFront;
 class ExpBarBack;
 class HPBarWhite;
+
 
 struct Animation
 {
@@ -61,10 +65,21 @@ public:
     _bool GetHit();
 
     // ------------------------------
-    void DeleteBar();
+    void SetBarVisible(bool visible);
     void ShowDmgText(int dmg, const _vec3& hitDir);
-    // ------------------------------
+    
+    template<typename T>
+    void ReturnToPool() 
+    { 
+        GetScene()->GetPoolManager()->Release(static_cast<T*>(this));
+    }
+
+    void ResetDieTimer() { DieElapsed = 0.f; }
+
+    virtual void Reset() {}
+   
 protected:
+    // ------------------------------
     virtual void InitAnimation();
     virtual void PlayAnimation(_float dt);
 
@@ -95,9 +110,12 @@ protected:
     _float              HitPower;
 
     EnemyHPBarFront* enemyFront = nullptr;
-    EnemyHPBarBack* enemyBack = nullptr;
-    BossHPBarFront* bossFront = nullptr;
-    ExpBarBack*     bossBack = nullptr;
-    HPBarWhite*     whiteBack = nullptr;
+    EnemyHPBarBack*  enemyBack = nullptr;
+    BossHPBarFront*  bossFront = nullptr;
+    ExpBarBack*      bossBack = nullptr;
+    HPBarWhite*      whiteBack = nullptr;
+
+    float DieElapsed = 0.f;
+    float dieDelay = 2.f;
 };
 
