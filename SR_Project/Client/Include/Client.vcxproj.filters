@@ -432,7 +432,7 @@
     </Filter>
     <Filter Include="02. Object\Effect\BloodEffect">
       <UniqueIdentifier>{f773bc8f-4f8d-4ff6-a1bf-137cb24113fe}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Monster\Slime\GreenSlime">
       <UniqueIdentifier>{3bf923af-3b17-40db-b065-09fb36a03953}</UniqueIdentifier>
     </Filter>
@@ -444,6 +444,9 @@
     </Filter>
     <Filter Include="02. Object\Monster\Slime\PurpleSlime\BabySlime">
       <UniqueIdentifier>{a7c2cae7-e6ea-4afc-999d-7141f499d621}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\NPC">
+      <UniqueIdentifier>{a1d94d96-e1f6-4c9c-b60b-a5806772e39f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -820,7 +823,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\BloodEffect.h">
       <Filter>02. Object\Effect\BloodEffect</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\BabySlime.h">
       <Filter>02. Object\Monster\Slime\GreenSlime\BabySlime</Filter>
     </ClInclude>
@@ -832,6 +835,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\PurpleBabySlime.h">
       <Filter>02. Object\Monster\Slime\PurpleSlime\BabySlime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Npc.h">
+      <Filter>02. Object\NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1208,6 +1214,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\BloodEffect.cpp">
       <Filter>02. Object\Effect\BloodEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Npc.cpp">
+      <Filter>02. Object\NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

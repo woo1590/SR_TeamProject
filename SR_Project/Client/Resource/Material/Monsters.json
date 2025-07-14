@@ -196,6 +196,48 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Leg.dds"
       }
+    },
+
+    "VillageNose_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/VillageNose.dds"
+      }
+    },
+
+    "VillageBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/VillageBody.dds"
+      }
+    },
+
+    "VillageArm_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/VillageArm.dds"
+      }
+    },
+
+    "VillageHead_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/VillageHead.dds"
+      }
+    },
+
+    "VillageLeftHand_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/VillageLeftHand.dds"
+      }
+    },
+
+    "VillageRightHand_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/VillageRightHand.dds"
+      }
+    },
+
+    "VillageLeg_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/VillageLeg.dds"
+      }
     }
   }
 }
