@@ -285,6 +285,8 @@
     <ClInclude Include="..\Header\PhysicsSystem.h" />
     <ClInclude Include="..\Header\PoolingManager.h" />
     <ClInclude Include="..\Header\QuadMesh.h" />
+    <ClInclude Include="..\Header\Prefab.h" />
+    <ClInclude Include="..\Header\PrefabManager.h" />
     <ClInclude Include="..\Header\QuestSystem.h" />
     <ClInclude Include="..\Header\Random.h" />
     <ClInclude Include="..\Header\RandomSelectorNode.h" />
@@ -434,6 +436,8 @@
     <ClCompile Include="..\Code\PhysicsSystem.cpp" />
     <ClCompile Include="..\Code\PoolingManager.cpp" />
     <ClCompile Include="..\Code\QuadMesh.cpp" />
+    <ClCompile Include="..\Code\Prefab.cpp" />
+    <ClCompile Include="..\Code\PrefabManager.cpp" />
     <ClCompile Include="..\Code\QuestSystem.cpp" />
     <ClCompile Include="..\Code\Random.cpp" />
     <ClCompile Include="..\Code\RandomSelectorNode.cpp" />

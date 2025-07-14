@@ -31,6 +31,7 @@ namespace Engine
 		Camera,
 		StaticBlock,
 		DynamicBlock,
+		AlphaBlock,
 		Part,
 		Neutral,
 		UI,
@@ -129,9 +130,10 @@ namespace Engine
 		Dirt, GrassDirt, Wood, WoodPlank,
 		Stone, CobbleStone, SmoothStone, StoneBrick, MossyStoneBrick,
 		Glass, Leaf,
+		Oak, DirtPath, Furnace,
 		sBlockEnd
 	};
-	enum StaticBlockUsage { Basic, Half, Stair, Alpha, Fence };
+	enum StaticBlockUsage { Basic, Half, Stair, Fence, Alpha };
 
 	enum DynamicBlockCol { dZP, dZM, dXP, dXM, dYP, dAEnd };
 	enum DynamicBlockRot { drXP, drXM, drZP, drZM, dREnd };

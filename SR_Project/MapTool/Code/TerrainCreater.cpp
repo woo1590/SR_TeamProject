@@ -1,17 +1,16 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "../Include/stb_image_write.h"
+#include "stb_image_write.h"
 
 #define STB_PERLIN_IMPLEMENTATION
-#include "../Include/stb_perlin.h"
+#include "stb_perlin.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "../Include/stb_image.h"
+#include "stb_image.h"
 
 #include "TerrainCreater.h"
 
 TerrainCreater::TerrainCreater()
 {
-    // ���̸� ���� ������ ���� Rand
     srand(static_cast<unsigned int>(time(0)));
 }
 
@@ -34,28 +33,6 @@ void TerrainCreater::CreateHeightmap(int width, int height, float scale)
             float noise = stb_perlin_noise3(x * scale, y * scale, randomZ, 0, 0, 0);
             noise = (noise + 1.0f) * 0.5f;
             heightMap[y * width + x] = static_cast<unsigned char>(noise * 255.f);
-        }
-    }
-}
-
-void TerrainCreater::SetHeight(int cx, int cy, int distance, unsigned char amount)
-{
-    for (int y = -distance; y <= distance; ++y)
-    {
-        for (int x = -distance; x <= distance; ++x)
-        {
-            int nx = cx + x;
-            int ny = cy + y;
-            if (nx < 0 || ny < 0 || nx >= Wid || ny >= Hei)
-                continue;
-
-            float dist = sqrtf(x * x + y * y);
-            if (dist > distance)
-                continue;
-
-            int idx = ny * Wid + nx;
-            int newHeight = min(255, heightMap[idx] + amount);
-            heightMap[idx] = static_cast<unsigned char>(newHeight);
         }
     }
 }
@@ -139,7 +116,7 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
 {
     if (y <= 1) return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.2f) return StaticBlockType::Stone;
+    else if (y < maxHeight * 0.4f) return StaticBlockType::Stone;
     else if (y < maxHeight * 0.5f) return StaticBlockType::Dirt;
     else return StaticBlockType::Dirt;
 }

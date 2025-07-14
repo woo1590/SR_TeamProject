@@ -19,7 +19,7 @@ public:
     void LoadDB(const char* loadStage);
 
     void SaveChunk(const char* saveStage);
-    void LoadChunk(const char* loadStage);
+    void LoadChunk(const char* loadStage, bool isEditor = false);
 
 private:
     void Free()override;

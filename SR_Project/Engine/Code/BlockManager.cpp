@@ -101,7 +101,6 @@ void BlockManager::SaveDB(const char* saveStage)
 	}
 
 	CloseHandle(hFile);
-	// MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Save Success", _T("Success"), MB_OK);
 }
 
 void BlockManager::LoadDB(const char* loadStage)
@@ -170,7 +169,6 @@ void BlockManager::LoadDB(const char* loadStage)
 	}
 
 	CloseHandle(hFile);
-	// MessageBox(EngineCore::GetInstance()->GetWindowHandle(), "Load Success", _T("Success"), MB_OK);
 }
 
 void BlockManager::SaveChunk(const char* saveStage)
@@ -186,7 +184,7 @@ void BlockManager::SaveChunk(const char* saveStage)
 	owner->GetChunkManager()->SaveChunk(wpath);
 }
 
-void BlockManager::LoadChunk(const char* loadStage)
+void BlockManager::LoadChunk(const char* loadStage, bool isEditor)
 {
 	std::string path = "../../Reference/MapData/";
 	path += loadStage;
@@ -196,7 +194,7 @@ void BlockManager::LoadChunk(const char* loadStage)
 	std::wstring wpath(len, 0);
 	MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, &wpath[0], len);
 
-	owner->GetChunkManager()->LoadChunk(wpath);
+	owner->GetChunkManager()->LoadChunk(wpath, isEditor);
 }
 
 Scene* BlockManager::GetOwner() const

@@ -11,8 +11,8 @@
 #include "MeshRendererComponent.h"
 #include "CollisionComponent.h"
 
-AlphaBlock::AlphaBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
-    : StaticBlock(owner, objType, type, axis, rot, usage)
+AlphaBlock::AlphaBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type)
+    : StaticBlock(owner, objType, type, sAEnd, sREnd, Alpha)
 {
 }
 
@@ -20,11 +20,11 @@ AlphaBlock::~AlphaBlock()
 {
 }
 
-AlphaBlock* AlphaBlock::Create(ObjectManager* owner, ObjectType objType, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
+AlphaBlock* AlphaBlock::Create(ObjectManager* owner, ObjectType objType, StaticBlockType type)
 {
-    AlphaBlock* Instance = new AlphaBlock(owner, objType, type, axis, rot, usage);
+    AlphaBlock* Instance = new AlphaBlock(owner, objType, type);
 
-    if (FAILED(Instance->Ready_Object(owner, objType)))
+    if (FAILED(Instance->Ready_Object(owner, objType, type)))
     {
         Safe_Release(Instance);
         MessageBoxW(nullptr, L"AlphaBlock Created Failed", L"Fail", MB_OK);
@@ -34,15 +34,14 @@ AlphaBlock* AlphaBlock::Create(ObjectManager* owner, ObjectType objType, StaticB
     return Instance;
 }
 
-HRESULT AlphaBlock::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT AlphaBlock::Ready_Object(ObjectManager* owner, ObjectType objType, StaticBlockType type)
 {
     StaticBlock::Ready_Object();
 
-    auto transform = GetComponent<TransformComponent>();
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_Alpha);
     renderer->SetMesh("Cube_Mesh");
 
-    switch (Type)
+    switch (type)
     {
     case StaticBlockType::Glass:
         renderer->SetMaterial("Glass_Mtrl");
