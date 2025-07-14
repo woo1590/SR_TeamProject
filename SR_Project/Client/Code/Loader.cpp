@@ -106,6 +106,7 @@ HRESULT Loader::Load_TestScene()
 		resource->LoadShader("../Resource/Shader/MaskShader.fx", "MaskShader");
 		resource->LoadShader("../Resource/Shader/ParticleShader.fx", "ParticleShader");
 		resource->LoadShader("../Resource/Shader/BloodParticleShader.fx", "BloodParticleShader");
+		resource->LoadShader("../Resource/Shader/SpriteShader.fx", "SpriteShader");
 	}
 
 	/*---------------------Load Material--------------------------*/
@@ -121,6 +122,11 @@ HRESULT Loader::Load_TestScene()
 	/*----------------------Load Sound-----------------------------*/
 	{
 		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
+	}
+
+	/*----------------------Load Sprite----------------------------*/
+	{
+		resource->LoadSprite("Explosion", 90);
 	}
 	return S_OK;
 }

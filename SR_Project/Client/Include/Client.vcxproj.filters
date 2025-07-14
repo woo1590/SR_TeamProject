@@ -433,6 +433,9 @@
     <Filter Include="02. Object\Effect\BloodEffect">
       <UniqueIdentifier>{f773bc8f-4f8d-4ff6-a1bf-137cb24113fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Effect\SpriteEffect">
+      <UniqueIdentifier>{cfdb6699-1199-4ab3-b188-9df03563f3d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -811,6 +814,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\BloodEffect.h">
       <Filter>02. Object\Effect\BloodEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpriteEffect.h">
+      <Filter>02. Object\Effect\SpriteEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1191,6 +1197,9 @@
     <ClCompile Include="..\Code\BloodEffect.cpp">
       <Filter>02. Object\Effect\BloodEffect</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\SpriteEffect.cpp">
+      <Filter>02. Object\Effect\SpriteEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">
@@ -1212,6 +1221,9 @@
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\SkyBox.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
   </ItemGroup>

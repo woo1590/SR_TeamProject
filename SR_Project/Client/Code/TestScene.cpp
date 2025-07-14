@@ -50,6 +50,7 @@
 #include "JungleZombie.h"
 #include "JungleSkeleton.h"
 #include "BloodEffect.h"
+#include "SpriteEffect.h"
 
 //component
 #include "TransformComponent.h"
@@ -57,6 +58,7 @@
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 #include "ThirdcamComponent.h"
+#include "SpriteRenderer.h"
 
 TestScene::TestScene()
 	:Scene()
@@ -103,8 +105,12 @@ void TestScene::Load()
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
 
-	ObjectMgr->AddObject(ObjectType::Item, Tnt::Create(ObjectMgr, ObjectType::Item));
-	static_cast<Tnt*>(ObjectMgr->GetObjectList(ObjectType::Item).back())->TntToPlayer(ObjectMgr->GetFrontObject(ObjectType::Player));
+	//ObjectMgr->AddObject(ObjectType::Item, Tnt::Create(ObjectMgr, ObjectType::Item));//여기서 tnt를 오브젝트 매니저에 두번 추가함 item에 기본 addobject를 빼던지 해야될듯
+	//static_cast<Tnt*>(ObjectMgr->GetObjectList(ObjectType::Item).back())->TntToPlayer(ObjectMgr->GetFrontObject(ObjectType::Player));
+
+	//수정코드 예시
+	auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
+	tnt->TntToPlayer(ObjectMgr->GetFrontObject(ObjectType::Player));
 
 	auto fCam = FirstCam::Create(ObjectMgr);
 	auto tCam = ThirdCam::Create(ObjectMgr);
@@ -121,6 +127,11 @@ void TestScene::Load()
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, JungleZombie::Create(ObjectMgr, ObjectType::Monster));
+	
+	auto effect = SpriteEffect::Create(ObjectMgr, ObjectType::SpriteEffect);
+	effect->AddComponent<SpriteRenderer>("Explosion", 90, 40.f, true);
+	effect->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 100.f);
+	ObjectMgr->AddObject(ObjectType::SpriteEffect, effect);
 
 	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);

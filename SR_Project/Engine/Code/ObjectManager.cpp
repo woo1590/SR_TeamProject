@@ -50,7 +50,6 @@ void ObjectManager::Late_Update(float dt)
 		for (auto iter = Objects[type].begin(); iter != Objects[type].end();)
 		{
  			
-
 			if ((*iter)->IsDead())
 			{
 				(*iter)->UnRegister();
