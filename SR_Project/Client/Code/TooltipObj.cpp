@@ -66,7 +66,7 @@ void TooltipObj::Update(float dt)
 	case ItemType::Potion:
 		font->AddText(to_wstring(info.value) + L" 초 쿨타임", valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
-	case ItemType::Arrow:
+	case ItemType::Bow:
 		font->AddText(L"원거리 공격력:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	default:

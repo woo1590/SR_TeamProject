@@ -689,30 +689,30 @@ void Player::SetAttackTypeNext()
         break;
     }
 }
-void Player::EquipItem(Item::ItemType itemType)
+void Player::EquipItem(ItemType itemType)
 {
     switch (itemType) {
-    case Item::ItemType::ITEM_BOW:
+    case ItemType::Bow:
         Bones["LHand"] = Bow::Create(owner, ObjectType::Item);
         Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "bow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
         break;
-    case Item::ItemType::ITEM_SWORD:
+    case ItemType::Sword:
         Bones["RHand"] = Sword::Create(owner, ObjectType::Item);
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "sword", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
         break;
     }
 }
-void Player::UnEquipItem(Item::ItemType itemType)
+void Player::UnEquipItem(ItemType itemType)
 {
     switch (itemType) {
-    case Item::ItemType::ITEM_BOW:
-        Safe_Release(Bones["LHand"]);
+    case ItemType::Bow:
+        Bones["LHand"]->SetDead();
         Bones["LHand"] = nullptr;
         break;
-    case Item::ItemType::ITEM_SWORD:
-        Safe_Release(Bones["RHand"]);
+    case ItemType::Sword:
+        Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
         break;
     }

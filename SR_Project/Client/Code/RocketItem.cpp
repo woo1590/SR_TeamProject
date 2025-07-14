@@ -26,6 +26,7 @@ HRESULT RocketItem::Ready_Object()
 		L"TNT의 폭팔하는 가루가 화살의 고속 이동과 결합 되었습니다. 잘못될 일이 뭐가 있겠어요?"});
 
 	auto item = AddComponent<ItemComponent>();
+	item->SetOriginalScale({0.3f, 0.3f});
 
 	return S_OK;
 }

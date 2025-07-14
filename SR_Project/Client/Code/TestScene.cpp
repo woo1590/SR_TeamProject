@@ -102,10 +102,10 @@ void TestScene::Load()
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
+	player->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 100.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
-	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
-	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
+	//static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
+	//static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
 
 	ObjectMgr->AddObject(ObjectType::Item, Tnt::Create(ObjectMgr, ObjectType::Item));
 	static_cast<Tnt*>(ObjectMgr->GetObjectList(ObjectType::Item).back())->TntToPlayer(ObjectMgr->GetFrontObject(ObjectType::Player));

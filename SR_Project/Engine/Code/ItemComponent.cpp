@@ -21,33 +21,11 @@ HRESULT ItemComponent::Ready_Component()
 
 void ItemComponent::Use(Object* user)
 {
-	assert(user && "Use: user is null");
-
 	auto playerInfo = user->GetComponent<InfoComponent<PlayerInfo>>();
-	assert(playerInfo && "Use: user missing PlayerInfo");
+	assert(playerInfo && L"missing Info");
 
-	const auto& info = itemInfo->GetInfo();
-
-	switch (info.type)
-	{
-	case ItemType::Sword:
-	case ItemType::Armor:
-	case ItemType::Arrow:
-		Equip(user);
-		break;
-
-	case ItemType::Potion:
-		playerInfo->AddHp(info.value);
-		break;
-
-	default:
-		break;
-	}
-}
-
-void ItemComponent::Equip(Object* user)
-{
-
+	if (itemType == ItemType::Potion)
+		playerInfo->AddHp(itemInfo->GetInfo().value);
 }
 
 void ItemComponent::Drop()

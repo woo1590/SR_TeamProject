@@ -26,6 +26,7 @@ HRESULT FishingItem::Ready_Object()
 		L"진정한 모험자가 신뢰할 수 있는 동료인 낚싯대는 낚시에만 유용한 것은 아닙니다."});
 
 	auto item = AddComponent<ItemComponent>();
+	item->SetOriginalScale({0.3f, 0.3f});
 
 	return S_OK;
 }

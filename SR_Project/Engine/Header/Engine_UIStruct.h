@@ -14,10 +14,10 @@ namespace Engine
 	};
 
 	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Loading, DeathUI, Always };
-	enum class ItemType{ Sword, Armor, Arrow, Potion, Enchant, Costume };
+	enum class ItemType{ Sword, Spear, Armor, Bow, CrossBow, Potion, Enchant, Costume, };
 	enum class Rarity { Default, Rare};
 
-	enum class SlotItemType {Any, Sword, Armor, Arrow, Potion};
+	enum class SlotItemType {Any, MeleeWeapon, Armor, RangeWeapon, Potion};
 
 	struct ItemInfo 
 	{

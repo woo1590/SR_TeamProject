@@ -30,6 +30,8 @@ HRESULT SwordItem::Ready_Object()
 	auto info = AddComponent<InfoComponent<ItemInfo>>();
 	auto item = AddComponent<ItemComponent>();
 
+	item->SetOriginalScale({0.4f, 0.4f});
+
 	info->SetInfo({L"검", L"inventory_sword",ItemType::Sword, Rarity::Default, 10, L"튼튼하고 믿고 쓸 수 있는 검입니다"});
 
 	return S_OK;

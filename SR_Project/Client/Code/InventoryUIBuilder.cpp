@@ -9,11 +9,12 @@
 #include "QuickSlotPlus.h"
 #include "TransformComponent.h"
 #include "InventorySlot.h"
+#include "UIRenderer.h"
 
 void InventoryUIBuilder::BuildInventoryUI(ObjectManager* objMgr, InventoryManager* invMgr)
 {
 	BuildGearAndItemSlots(objMgr, invMgr);
-	BuildQuickSlots(objMgr);
+	BuildQuickSlots(objMgr,invMgr);
 	BuildInventorySlots(objMgr, invMgr);
 }
 
@@ -41,9 +42,9 @@ void InventoryUIBuilder::BuildGearAndItemSlots(ObjectManager* objMgr, InventoryM
 
 			switch (i)
 			{
-			case 0: slotType = SlotItemType::Sword; break;
+			case 0: slotType = SlotItemType::MeleeWeapon; break;
 			case 1: slotType = SlotItemType::Armor; break;
-			case 2: slotType = SlotItemType::Arrow; break;
+			case 2: slotType = SlotItemType::RangeWeapon; break;
 			}
 		}
 		else
@@ -51,30 +52,39 @@ void InventoryUIBuilder::BuildGearAndItemSlots(ObjectManager* objMgr, InventoryM
 			slot = ItemSlot::Create(objMgr);
 			slotType = SlotItemType::Potion;
 		}
-
 		slot->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 		objMgr->AddUIObject(slot);
-
-		invMgr->RegisterSlot(slot, slotType);
+		invMgr->RegisterSlot(slot, slotType,plus);
 	}
 }
 
-void InventoryUIBuilder::BuildQuickSlots(ObjectManager* objMgr)
+void InventoryUIBuilder::BuildQuickSlots(ObjectManager* objMgr, InventoryManager* invMgr)
 {
 	vector<_vec2> slotPos = {
 		{380.f, 650.f}, {450.f, 650.f}, {520.f, 650.f}, {700.f, 650.f}
 	};
 
-	for (const auto& pos : slotPos)
+	for (int i = 0; i < 3; ++i)
 	{
 		auto plus = QuickSlotPlus::Create(objMgr);
-		plus->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
+		plus->GetComponent<TransformComponent>()->SetPosition(slotPos[i].x, slotPos[i].y);
+		plus->GetComponent<UIRenderer>()->SetScale(0.2f, 0.2f);
 		objMgr->AddUIObject(plus);
 
 		auto slot = QuickSlot::Create(objMgr);
-		slot->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
+		slot->GetComponent<TransformComponent>()->SetPosition(slotPos[i].x, slotPos[i].y);
 		objMgr->AddUIObject(slot);
+
+		invMgr->RegisterSlot(slot, SlotItemType::Potion, plus);
 	}
+
+	auto hpPotionSlot = QuickSlot::Create(objMgr);
+	hpPotionSlot->GetComponent<TransformComponent>()->SetPosition(slotPos[3].x, slotPos[3].y);
+	objMgr->AddUIObject(hpPotionSlot);
+
+	auto hpPotionPlus = QuickSlotPlus::Create(objMgr);
+	hpPotionPlus->GetComponent<TransformComponent>()->SetPosition(slotPos[3].x, slotPos[3].y);
+	objMgr->AddUIObject(hpPotionPlus);
 }
 
 void InventoryUIBuilder::BuildInventorySlots(ObjectManager* objMgr, InventoryManager* invMgr)
@@ -91,6 +101,11 @@ void InventoryUIBuilder::BuildInventorySlots(ObjectManager* objMgr, InventoryMan
 		{
 			const float px = topLeft.x + x * slotSpacingX;
 			const float py = topLeft.y + y * slotSpacingY;
+
+			//auto plus = GearSlotPlus::Create(objMgr);
+			//plus->GetComponent<TransformComponent>()->SetPosition(px, py);
+			//plus->GetComponent<TransformComponent>()->SetScale(0.2f, 0.2f);
+			//objMgr->AddUIObject(plus);
 
 			auto slot = InventorySlot::Create(objMgr);
 			slot->GetComponent<TransformComponent>()->SetPosition(px, py);
