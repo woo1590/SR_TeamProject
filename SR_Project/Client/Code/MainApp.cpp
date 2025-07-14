@@ -47,7 +47,7 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
    
 
     /*---------Start Scene----------*/
-    Scene* Start = LoadingScene::Create(LOADID::TestScene);
+    Scene* Start = LoadingScene::Create(LOADID::Village);
     Core->GetSceneManager()->SetActiveScene(Start);
 
     isRunning = true;

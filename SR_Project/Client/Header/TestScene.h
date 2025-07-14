@@ -5,8 +5,6 @@ class Player;
 
 class TestScene : public Scene
 {
-    friend class Scene;
-
 private:
     explicit TestScene();
     virtual ~TestScene();

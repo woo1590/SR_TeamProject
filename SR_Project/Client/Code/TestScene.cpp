@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "TestScene.h"
 #include "EngineCore.h"
+#include "LoadingScene.h"
+#include "SceneManager.h"
 
 //system
 #include "ObjectManager.h"
@@ -91,7 +93,7 @@ void TestScene::Load()
 	BlockMgr		= BlockManager::Create(this);
 	ChunkMgr		= ChunkManager::Create(this);
 
-	BlockMgr->LoadChunk("testScene");
+	BlockMgr->LoadChunk("VillageMap");
 
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
@@ -174,6 +176,12 @@ void TestScene::Update(float dt)
 		effect->GetComponent<TransformComponent>()->SetPosition(playerPos);
 		ObjectMgr->AddObject(ObjectType::Effect, effect);
 	}
+
+	if (Input->IsKeyPressed(TAB))
+	{
+		Scene* load = LoadingScene::Create(LOADID::Village);
+		EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(load);
+	}
 }
 
 void TestScene::Late_Update(float dt)
@@ -190,6 +198,9 @@ void TestScene::Unload()
 void TestScene::TestSceneImGui()
 {
 	ImGui::Begin("Player Inspector", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+	if (!player)
+		return;
 
 	_vec3 pos = player->GetComponent<TransformComponent>()->GetPosition();
 	_vec3 camPos = CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
@@ -242,6 +253,6 @@ void TestScene::Free()
 	Safe_Release(Grid);
 	Safe_Release(uiMgr);
 	Safe_Release(ChunkMgr);
-
 	Scene::Free();
+	player = nullptr;
 }

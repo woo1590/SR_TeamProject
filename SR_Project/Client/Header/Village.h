@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 
+class Player;
 class Village :
     public Scene
 {
@@ -18,6 +19,6 @@ public:
 
 private:
     void Free()override;
-    
+    Player* player = nullptr;
 };
 

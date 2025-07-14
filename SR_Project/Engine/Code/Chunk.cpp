@@ -677,8 +677,8 @@ void Chunk::Free()
 {
     Safe_Release(mesh);
 
-    for (auto& alpha : AlphaBlocks)
-        Safe_Release(alpha);
+    //for (auto& alpha : AlphaBlocks)
+    //    Safe_Release(alpha);
 
     Object::Free();
 }

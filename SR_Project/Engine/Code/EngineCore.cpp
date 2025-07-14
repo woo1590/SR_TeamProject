@@ -9,7 +9,11 @@
 #include "LightSystem.h"
 #include "InputSystem.h"
 #include "SoundManager.h"
+
+#ifdef USE_IMGUI
 #include "ImGuiManager.h"
+#endif
+
 #include "CollisionSystem.h"
 #include "Random.h"
 

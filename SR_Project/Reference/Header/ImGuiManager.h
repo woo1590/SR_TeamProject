@@ -27,6 +27,8 @@ public:
     void UnRegisterWindow(const std::wstring& key);
 
     _bool WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+    void ClearWindow() { Gui_WindowMap.clear(); };
 private:
     void Free()override;
 
