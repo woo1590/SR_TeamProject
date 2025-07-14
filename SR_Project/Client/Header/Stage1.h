@@ -9,7 +9,7 @@ private:
     virtual ~Stage1();
 
 public:
-    static Stage1* Create();''
+    static Stage1* Create();
 
     void Load()override;
     void Update(_float dt)override;

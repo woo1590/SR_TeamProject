@@ -105,7 +105,7 @@ HRESULT Loader::Load_TestScene()
 		resource->LoadShader("../Resource/Shader/ColorShader.fx", "ColorShader");
 		resource->LoadShader("../Resource/Shader/MaskShader.fx", "MaskShader");
 		resource->LoadShader("../Resource/Shader/ParticleShader.fx", "ParticleShader");
-		resource->LoadShader("../Resource/Shader/HitParticleShader.fx", "HitParticleShader");
+		resource->LoadShader("../Resource/Shader/BloodParticleShader.fx", "BloodParticleShader");
 	}
 
 	/*---------------------Load Material--------------------------*/

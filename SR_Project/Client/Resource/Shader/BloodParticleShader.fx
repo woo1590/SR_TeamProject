@@ -50,7 +50,7 @@ float4 PS_Main(VS_OUTPUT input, float2 uv :TEXCOORD0) : COLOR0
     
     tex.a *= 1.0f - dot(uv - 0.5f, uv - 0.5f) * 4.0f;
     
-    return tex*input.color;
+    return tex * input.color;
 }
 
 technique Particle

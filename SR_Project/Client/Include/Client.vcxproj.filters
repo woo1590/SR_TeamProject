@@ -1202,7 +1202,7 @@
     <FxCompile Include="..\Resource\Shader\ColorShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
-    <FxCompile Include="..\Resource\Shader\HitParticleShader.fx">
+    <FxCompile Include="..\Resource\Shader\BloodParticleShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\MaskShader.fx">

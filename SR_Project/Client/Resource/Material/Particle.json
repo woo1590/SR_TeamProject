@@ -22,7 +22,7 @@
     },
 
     "Hit_Mtrl":{
-      "fx":"HitParticleShader",
+      "fx":"BloodParticleShader",
       "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
     }
   }
