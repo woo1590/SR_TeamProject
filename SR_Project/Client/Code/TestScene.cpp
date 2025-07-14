@@ -168,11 +168,11 @@ void TestScene::Update(float dt)
 
 	if (Input->IsKeyPressed(NUM5))
 	{
-		auto effect = BloodEffect::Create(ObjectMgr, ObjectType::Effect);
+		auto effect = BloodEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
 		_vec3 playerPos = player->GetComponent<TransformComponent>()->GetPosition();
 
 		effect->GetComponent<TransformComponent>()->SetPosition(playerPos);
-		ObjectMgr->AddObject(ObjectType::Effect, effect);
+		ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);
 	}
 }
 

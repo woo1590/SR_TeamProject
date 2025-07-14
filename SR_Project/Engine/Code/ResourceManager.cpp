@@ -169,7 +169,7 @@ void ResourceManager::LoadSprite(const std::string& key, _uint totalFrame)
     HWND hwnd = EngineCore::GetInstance()->GetWindowHandle();
     for (int i = 0; i < totalFrame; ++i)
     {
-        std::string path = "../Resource/Texture/Effect/" + key + "/" + std::to_string(i);
+        std::string path = "../Resource/Texture/ParticleEffect/" + key + "/" + std::to_string(i);
         LPDIRECT3DTEXTURE9 tex = nullptr;
 
         if (FAILED(D3DXCreateTextureFromFile(device, path.c_str(), &tex)))

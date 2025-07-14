@@ -34,7 +34,8 @@ namespace Engine
 		Part,
 		Neutral,
 		UI,
-		Effect,
+		SpriteEffect,
+		ParticleEffect,
 		BackGroundEffect,
 		Count
 	};
