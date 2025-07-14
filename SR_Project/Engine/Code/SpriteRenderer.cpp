@@ -83,6 +83,17 @@ void SpriteRenderer::Render()
 
 	_matrix worldMat = transform->GetWorldMatrix();
 	_matrix viewMat = cam->GetViewMatrix();
+
+	//Billboard
+	_matrix billMat;
+	D3DXMatrixIdentity(&billMat);
+	billMat._11 = viewMat._11;
+	billMat._13 = viewMat._13;
+	billMat._31 = viewMat._31;
+	billMat._33 = viewMat._33;
+	D3DXMatrixInverse(&billMat, nullptr, &billMat);
+	worldMat = billMat * worldMat;
+
 	_matrix projMat = cam->GetProjMatrix();
 
 	shader->Begin(0);
