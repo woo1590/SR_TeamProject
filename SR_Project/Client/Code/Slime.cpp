@@ -14,6 +14,7 @@
 #include "ObjectManager.h"
 #include "BabySlime.h"
 #include "PhysicsComponent.h"
+#include "MeshRendererComponent.h"
 
 Slime::Slime(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -88,6 +89,12 @@ void Slime::Attack(Object* target)
 
 void Slime::Die()
 {
+    if (State != MonsterState::Die)
+    {
+        State = MonsterState::Die;
+        DieAnim.IsRunning = true;
+        DieAnim.IsEnd = false;
+    }
 }
 
 void Slime::Hit(_vec3 dir, _float power)
@@ -157,6 +164,9 @@ void Slime::InitAnimation()
     WalkAnim.ElapsedTime = 0.f;
     WalkAnim.TotalTime = 0.3f;
     WalkAnim.IsRunning = true;
+
+    DieAnim.ElapsedTime = 0.f;
+    DieAnim.TotalTime = 0.3f;
 }
 
 void Slime::PlayAnimation(_float dt)
@@ -237,13 +247,36 @@ void Slime::PlayAttack(_float dt)
 void Slime::PlayDie(_float dt)
 {
     //
-    if (DieAnim.ElapsedTime > DieAnim.TotalTime)
+    DieAnim.ElapsedTime += dt;
+    if (DieAnim.ElapsedTime > DieAnim.TotalTime && DieAnim.IsEnd == false)
     {
         _vec3 pos = GetComponent<TransformComponent>()->GetPosition();
 
-        BabySlime::Create(owner, ObjectType::Monster, _vec3(pos.x, pos.y, pos.z));
-        BabySlime::Create(owner, ObjectType::Monster, _vec3(pos.x + 5, pos.y, pos.z + 5));
-        BabySlime::Create(owner, ObjectType::Monster, _vec3(pos.x - 5, pos.y, pos.z - 5));
+        auto babyslime = BabySlime::Create(owner, ObjectType::Monster);
+        owner->AddObject(ObjectType::Monster, babyslime);
+        
+        auto transform = babyslime->GetComponent<TransformComponent>();
+        transform->SetPosition(pos);
+
+        babyslime = BabySlime::Create(owner, ObjectType::Monster);
+        owner->AddObject(ObjectType::Monster, babyslime);
+
+        transform = babyslime->GetComponent<TransformComponent>();
+        transform->SetPosition(_vec3(pos.x - 5, pos.y, pos.z - 5));
+
+        babyslime = BabySlime::Create(owner, ObjectType::Monster);
+        owner->AddObject(ObjectType::Monster, babyslime);
+
+        transform = babyslime->GetComponent<TransformComponent>();
+        transform->SetPosition(_vec3(pos.x + 5, pos.y, pos.z + 5));
+        
+       Bones["Head"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
+       Bones["Body"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
+
+        //SetDead();
+        //DeleteBar();
+
+        DieAnim.IsEnd = true;
     }
 }
 

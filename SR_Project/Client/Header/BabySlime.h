@@ -8,8 +8,8 @@ protected:
     virtual ~BabySlime();
 
 public:
-    static BabySlime* Create(ObjectManager* owner, ObjectType objType, _vec3 pos);
-    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType, _vec3 pos);
+    static BabySlime* Create(ObjectManager* owner, ObjectType objType);
+    HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 

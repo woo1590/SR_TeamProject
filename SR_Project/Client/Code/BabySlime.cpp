@@ -23,11 +23,11 @@ BabySlime::~BabySlime()
 {
 }
 
-BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType, _vec3 pos)
+BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType)
 {
     BabySlime* Instance = new BabySlime(owner, objType);
 
-    if (FAILED(Instance->Ready_Object(owner, objType, pos)))
+    if (FAILED(Instance->Ready_Object(owner, objType)))
     {
         Safe_Release(Instance);
 
@@ -37,18 +37,16 @@ BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType, _vec3 pos
     return Instance;
 }
 
-HRESULT BabySlime::Ready_Object(ObjectManager* owner, ObjectType objType, _vec3 pos)
+HRESULT BabySlime::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     Monster::Ready_Object(owner, objType);
 
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetPosition(pos);
 
     InitTransform(objType);
 
     //Init Collision
     auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(10.f, 10.f, 10.f));
+    collision->SetSize(_vec3(4.f, 4.f, 4.f));
 
     //Create BT
     InitTree();
@@ -102,7 +100,7 @@ void BabySlime::InitTransform(ObjectType objType)
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     transform->SetPosition(_vec3(5.f, 100.f, 5.f));
-    SetMaterial("SlimeOut_Mtrl", "Body", RENDER_ID::Render_NonAlpha);
+    SetMaterial("SlimeOut_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial("SlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
 
     Bones["LArm"]->SetDead();
@@ -110,12 +108,11 @@ void BabySlime::InitTransform(ObjectType objType)
     Bones["LLeg"]->SetDead();
     Bones["RLeg"]->SetDead();
 
-    //head
     Scale = 0.1f;
     SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
     SetPosition(_vec3(0.f * Scale, 0.f * Scale, 0.f * Scale), "Head");
-    //body
     SetScale(_vec3(10.f * Scale, 10.f * Scale, 10.f * Scale), "Body");
+    //body
 }
 
 void BabySlime::InitTree()
@@ -200,7 +197,7 @@ void BabySlime::PlayWalk(_float dt)
     {
     case Phase::Action:
     {
-        _float curSize = lerp(4.5f, 3.5f, t);
+        _float curSize = lerp(1.5f, 1.f, t);
         SetScale(_vec3(curSize, curSize, curSize), "Body");
         if (t >= 1.f)
         {
@@ -212,12 +209,12 @@ void BabySlime::PlayWalk(_float dt)
     }
     case Phase::Recover:
     {
-        _float curSize = lerp(3.5f, 4.5f, t);
+        _float curSize = lerp(1.f, 1.5f, t);
         SetScale(_vec3(curSize, curSize, curSize), "Body");
         if (physics->IsGrounded())
         {
             physics->SetGround(false);
-            physics->SetVelocity(_vec3(0.0f, 20.f, 0.f));
+            physics->SetVelocity(_vec3(0.0f, 12.f, 0.f));
         }
 
         if (t >= 1.f)
