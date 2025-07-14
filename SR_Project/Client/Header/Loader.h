@@ -15,6 +15,7 @@ public:
     static _uint __stdcall LoaderMain(void* arg);
 private:
     HRESULT Load_TestScene();
+    HRESULT Load_Village();
     HRESULT load_UIResources();
 
     void Free()override;

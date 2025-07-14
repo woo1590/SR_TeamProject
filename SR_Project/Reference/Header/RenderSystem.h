@@ -31,6 +31,8 @@ public:
     const _matrix& GetCachedViewMatrix() const { return cachedView; }
     const _matrix& GetCachedProjMatrix() const { return cachedProj; }
 
+    void ClearSystem();
+
 private:
     void PriorityPass();
     void NonAlphaPass();

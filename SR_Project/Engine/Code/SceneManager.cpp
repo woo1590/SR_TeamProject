@@ -1,5 +1,8 @@
 #include "EnginePCH.h"
 #include "SceneManager.h"
+#include "EngineCore.h"
+#include "RenderSystem.h"
+#include "ImGuiManager.h"
 #include "Scene.h"
 
 SceneManager::SceneManager()
@@ -51,6 +54,10 @@ void SceneManager::SetActiveScene(Scene* nextScene)
     {
         ActiveScene->Unload();
         Safe_Release(ActiveScene);
+        EngineCore::GetInstance()->GetRenderSystem()->ClearSystem();
+#ifdef USE_IMGUI
+        EngineCore::GetInstance()->GetImGuiManager()->ClearWindow();
+#endif
     }
 
     ActiveScene = nextScene;

@@ -120,6 +120,15 @@ void RenderSystem::SetUIRenderState(UIRenderType newType)
 	UIRenderer::SetCurRenderType(newType);
 }
 
+void RenderSystem::ClearSystem()
+{
+	for (auto& list : RenderList)
+	{
+		list.clear();
+	}
+	Camera = nullptr;
+}
+
 void RenderSystem::PriorityPass()
 {
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, false);

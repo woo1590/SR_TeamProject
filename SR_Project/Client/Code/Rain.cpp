@@ -31,9 +31,9 @@ HRESULT Rain::Ready_Object()
 	Emitter rain;
 	rain.looping = true;
 	rain.followCam = true;
-	rain.ratePerSec = 100.f;
-	rain.size = 50.f;
-	rain.life = 10.f;
+	rain.ratePerSec = 250.f;
+	rain.size = 80.f;
+	rain.life = 5.f;
 	rain.spawnAreaMin = { -50.f,19.f,-50.f };
 	rain.spawnAreaMax = { 50.f,20.f,50.f };
 	rain.velocityMin = { 0.f,-60.f,0.f };

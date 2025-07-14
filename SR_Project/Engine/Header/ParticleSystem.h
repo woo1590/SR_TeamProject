@@ -122,7 +122,7 @@ public:
 private:
     void Free()override;
 
-    static constexpr int MAX_PARTICLES = 1024;
+    static constexpr int MAX_PARTICLES = 2048;
     static constexpr float GRAVITY = 9.8f;
 
     std::vector<Particle> particles;
