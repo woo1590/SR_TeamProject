@@ -28,7 +28,6 @@ HRESULT ArrowFilter::Ready_Object()
 	auto button = AddComponent<ButtonComponent>();
 
 	transform->SetPosition(720.f, 100.f);
-
 	base->SetRenderType(UIRenderType::Inventory);
 
 	button->SetRenderer(base);
@@ -36,7 +35,7 @@ HRESULT ArrowFilter::Ready_Object()
 
 	button->SetOnClick([]() {
 		auto* inv = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetUIManager()->GetInventory();
-		inv->ApplyFilter(ItemType::Arrow);
+		inv->ApplyFilter(ItemType::Bow);
 		});
 
 	return S_OK;

@@ -3,11 +3,6 @@
 class Item :
     public Object
 {
-public:
-    enum class ItemType {
-        ITEM_SWORD,
-        ITEM_BOW
-    };
 protected:
     Item(ObjectManager* owner, ObjectType objType);
     virtual ~Item();

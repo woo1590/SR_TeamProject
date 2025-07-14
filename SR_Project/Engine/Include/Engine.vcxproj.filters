@@ -235,9 +235,6 @@
     <Filter Include="06. Object\01. StaticBlock\AlphaBlock">
       <UniqueIdentifier>{aad07e88-6a31-48b7-bb95-cd4f6b63f1fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07. Object Component\UIComponent\09. InfoDetector">
-      <UniqueIdentifier>{cea1dd51-900c-41e5-87ec-2b922ce7b780}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05. Scene Component\StaticGrid">
       <UniqueIdentifier>{dd9ea417-9f3b-4c80-b4a6-259d6dc81fbc}</UniqueIdentifier>
     </Filter>
@@ -291,12 +288,9 @@
     </Filter>
     <Filter Include="05. Scene Component\PoolingManager\ObjectPool">
       <UniqueIdentifier>{e1ccee49-3494-4e3f-abb1-0b077ba3846b}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="07. Object Component\Renderer\ParticleRenderer">
       <UniqueIdentifier>{074f5be5-f779-4916-ad10-9fd02d7c2d27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07. Object Component\Renderer\SpriteRenderer">
-      <UniqueIdentifier>{af9db076-9ef3-4390-962e-cf1f3af57986}</UniqueIdentifier>
     </Filter>
     <Filter Include="07. Object Component\ParticleSystem">
       <UniqueIdentifier>{08be6929-8d56-40a2-a302-d7c5b6b060c2}</UniqueIdentifier>
@@ -309,7 +303,7 @@
     </Filter>
     <Filter Include="07. Object Component\ParticleSystem\Emitter">
       <UniqueIdentifier>{323f56f4-ecd6-4c55-abdf-1423d3830423}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="05. Scene Component\PrefabManager">
       <UniqueIdentifier>{1c9bf401-1b65-461c-b2a0-2123f58b4f99}</UniqueIdentifier>
     </Filter>
@@ -318,6 +312,12 @@
     </Filter>
     <Filter Include="05. Scene Component\PrefabManager\PrefabManager">
       <UniqueIdentifier>{af7e0b75-57ce-479a-9e4e-b918043ed264}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\09. InfoDetector">
+      <UniqueIdentifier>{cea1dd51-900c-41e5-87ec-2b922ce7b780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Renderer\SpriteRenderer">
+      <UniqueIdentifier>{af9db076-9ef3-4390-962e-cf1f3af57986}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -622,7 +622,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\ObjectPool.cpp">
       <Filter>05. Scene Component\PoolingManager\ObjectPool</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ParticleRenderer.cpp">
       <Filter>07. Object Component\Renderer\ParticleRenderer</Filter>
     </ClCompile>
@@ -640,7 +640,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Emitter.cpp">
       <Filter>07. Object Component\ParticleSystem\Emitter</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\Prefab.cpp">
       <Filter>05. Scene Component\PrefabManager\PreFab</Filter>
     </ClCompile>
@@ -976,7 +976,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\ObjectPool.h">
       <Filter>05. Scene Component\PoolingManager\ObjectPool</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ParticleRenderer.h">
       <Filter>07. Object Component\Renderer\ParticleRenderer</Filter>
     </ClInclude>
@@ -994,7 +994,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Emitter.h">
       <Filter>07. Object Component\ParticleSystem\Emitter</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\Prefab.h">
       <Filter>05. Scene Component\PrefabManager\PreFab</Filter>
     </ClInclude>

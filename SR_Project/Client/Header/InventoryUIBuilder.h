@@ -14,7 +14,7 @@ public:
 
 private:
 	static void BuildGearAndItemSlots(ObjectManager* objMgr, InventoryManager* invMgr);
-	static void BuildQuickSlots(ObjectManager* objMgr); 
+	static void BuildQuickSlots(ObjectManager* objMgr, InventoryManager* invMgr); 
 	static void BuildInventorySlots(ObjectManager* objMgr, InventoryManager* invMgr);
 };
 

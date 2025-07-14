@@ -514,9 +514,6 @@
       <Filter>02. Object\UIObj\UIRenderState\MainGame\Emerald</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
-      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ArrowSlot.h">
@@ -525,7 +522,6 @@
     <ClInclude Include="..\Header\QuickSlot.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\QuickSlot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ExpBarBack.h" />
     <ClInclude Include="..\Header\InventoryBtn.h">
       <Filter>02. Object\UIObj\Button\InventoryBtn</Filter>
     </ClInclude>
@@ -712,7 +708,6 @@
     <ClInclude Include="..\Header\WorldMapTextPanel.h">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapTextPanel</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="..\Header\WorldTooltip.h">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldTooltip</Filter>
     </ClInclude>
@@ -812,6 +807,15 @@
     <ClInclude Include="..\Header\BloodEffect.h">
       <Filter>02. Object\Effect\BloodEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UILoader.h">
+      <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarBack.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarFront.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -890,9 +894,6 @@
       <Filter>100. Executable</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ArrowSlot.cpp">
@@ -904,7 +905,6 @@
     <ClCompile Include="..\Code\QuickSlot.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\QuickSlot</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ExpBarBack.cpp" />
     <ClCompile Include="..\Code\InventoryBtn.cpp">
       <Filter>02. Object\UIObj\Button\InventoryBtn</Filter>
     </ClCompile>
@@ -1094,7 +1094,6 @@
     <ClCompile Include="..\Code\WorldMapTextPanel.cpp">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapTextPanel</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\WorldTooltip.cpp">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldTooltip</Filter>
     </ClCompile>
@@ -1190,6 +1189,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\BloodEffect.cpp">
       <Filter>02. Object\Effect\BloodEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UILoader.cpp">
+      <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarBack.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarFront.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

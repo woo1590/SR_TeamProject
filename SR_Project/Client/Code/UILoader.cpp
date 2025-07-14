@@ -16,6 +16,7 @@
 #include "InventoryManager.h"
 #include "ProgressBar.h"
 #include "InfoComponent.h"
+#include "ItemComponent.h"
 
 /* --- UI Object ------------------------------*/
 #include "Cursor.h"
@@ -112,12 +113,22 @@ void UILoader::BuildInventory(ObjectManager* objMgr,InventoryManager* invMgr)
         FishingItem::Create(objMgr), PigItem::Create(objMgr),
     };
 
+    auto* player = dynamic_cast<Player*>(objMgr->GetFrontObject(ObjectType::Player));
+    assert(player && "Player must exist in scene");
+
     for (auto* it : items) 
     {
-        ADD(it);
-        invMgr->InsertItem(it); 
-    }
+        auto* itemComp = it->GetComponent<ItemComponent>();
+        if (itemComp)
+        {
+            ItemType itemType = itemComp->GetItemType();
 
+            itemComp->SetEquipCallBack([player, itemType](Object* user) { player->EquipItem(itemType);});
+            itemComp->SetUnEquipCallBack([player, itemType](Object* user) { player->UnEquipItem(itemType);});
+        }
+        ADD(it);
+        invMgr->InsertItem(it);
+    }
     ADD(InventoryUI::Create(objMgr));
     ADD(InventoryPanel::Create(objMgr));
     ADD(InventoryBtn::Create(objMgr));
@@ -218,7 +229,7 @@ void UILoader::BuildFilters(ObjectManager* objMgr, InventoryManager* invMgr, Too
     {
         {Filter::Create(objMgr), nullopt},
         {SwordFilter::Create(objMgr),   ItemType::Sword},
-        {ArrowFilter::Create(objMgr),   ItemType::Arrow},
+        {ArrowFilter::Create(objMgr),   ItemType::Bow},
         {ArmorFilter::Create(objMgr),   ItemType::Armor},
         {PotionFilter::Create(objMgr),  ItemType::Potion},
         {EnchantFilter::Create(objMgr), ItemType::Enchant},
@@ -248,7 +259,7 @@ void UILoader::BuildFilters(ObjectManager* objMgr, InventoryManager* invMgr, Too
                     switch (typeOpt.value())
                     {
                     case ItemType::Sword:   name = L"근접"; break;
-                    case ItemType::Arrow:   name = L"원거리"; break;
+                    case ItemType::Bow:     name = L"원거리"; break;
                     case ItemType::Armor:   name = L"방어구"; break;
                     case ItemType::Potion:  name = L"유물"; break;
                     case ItemType::Enchant: name = L"효과 부여됨"; break;

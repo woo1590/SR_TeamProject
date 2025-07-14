@@ -62,8 +62,8 @@ public:
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 
-    void EquipItem(Item::ItemType itemType);
-    void UnEquipItem(Item::ItemType itemType);
+    void EquipItem(ItemType itemType);
+    void UnEquipItem(ItemType itemType);
     Object* GetBone(std::string boneName);
     ePlayerState GetPlayerState();
     void RevivePlayer();

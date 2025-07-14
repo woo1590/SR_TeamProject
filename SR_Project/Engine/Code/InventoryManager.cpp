@@ -11,8 +11,9 @@
 #include "UIRenderer.h"
 #include "ObjectManager.h"
 #include "TransformComponent.h"
+#include "UIManager.h"
 
-void InventoryManager::RegisterSlot(Object* slotObj, SlotItemType acceptType)
+void InventoryManager::RegisterSlot(Object* slotObj, SlotItemType acceptType, Object* plusObj)
 {
 	slotObjs.push_back(slotObj);
 
@@ -21,12 +22,17 @@ void InventoryManager::RegisterSlot(Object* slotObj, SlotItemType acceptType)
 
 	slotComp->SetAllowedType(acceptType);
 
-	if (auto hover = slotObj->GetComponent<HoverComponent>())
+	if (plusObj)
+		slotToPlusMap[slotComp] = plusObj;
+
+	if (acceptType == SlotItemType::Potion)
 	{
-		hover->SetRightClickCallBack([this]() {
-			this->RightClick();
-			});
+		if (quickSlotCount < 3)
+			quickSlots[quickSlotCount++] = slotComp;
 	}
+
+	if (auto hover = slotObj->GetComponent<HoverComponent>())
+		hover->SetRightClickCallBack([this]() { this->RightClick();});
 }
 
 void InventoryManager::SelectSlot(SlotComponent* newSlot)
@@ -56,15 +62,29 @@ void InventoryManager::RightClick()
 	if (!itemComp) return;
 
 	const ItemType itemType = itemComp->GetItemType();
+	const SlotItemType requiredSlotType = GetSlotCategory(itemType);
 
-	auto IsSlotAcceptable = [itemType](SlotItemType type)
+	auto IsSlotAcceptable = [requiredSlotType](SlotItemType slotType) {return slotType == requiredSlotType; };
+
+	auto* player = ui->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player);
+
+	if (requiredSlotType == SlotItemType::Potion)
+	{
+		for (auto* quickSlot : quickSlots)
 		{
-			return
-				(type == SlotItemType::Sword && itemType == ItemType::Sword) ||
-				(type == SlotItemType::Armor && itemType == ItemType::Armor) ||
-				(type == SlotItemType::Arrow && itemType == ItemType::Arrow) ||
-				(type == SlotItemType::Potion && itemType == ItemType::Potion);
-		};
+			if (!quickSlot || quickSlot->HasItem()) continue;
+
+			selected->ClearItem();
+			quickSlot->SetItem(itemObj);
+
+			auto pos = quickSlot->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
+			itemObj->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
+
+			itemComp->Equip(player);
+			DeselectAll();
+			return;
+		}
+	}
 
 	if (IsSlotAcceptable(selected->GetAllowedType()))
 	{
@@ -74,13 +94,14 @@ void InventoryManager::RightClick()
 			if (!slot || slot->HasItem()) continue;
 			if (slot->GetAllowedType() != SlotItemType::Any) continue;
 
+			ClearFromQuickSlot(itemObj);
 			selected->ClearItem();
-
 			slot->SetItem(itemObj);
 
 			auto pos = slot->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
 			itemObj->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 
+			itemComp->UnEquip(player);
 			DeselectAll();
 			return;
 		}
@@ -89,10 +110,8 @@ void InventoryManager::RightClick()
 	for (auto* obj : slotObjs)
 	{
 		auto* slot = obj->GetComponent<SlotComponent>();
-		if (!slot || slot->HasItem())
-			continue;
-		if (!IsSlotAcceptable(slot->GetAllowedType()))
-			continue;
+		if (!slot || slot->HasItem()) continue;
+		if (!IsSlotAcceptable(slot->GetAllowedType())) continue;
 
 		selected->ClearItem();
 		slot->SetItem(itemObj);
@@ -100,12 +119,10 @@ void InventoryManager::RightClick()
 		auto pos = slot->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
 		itemObj->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 
-		DeselectAll();
+		itemComp->Equip(player);
 
-		auto* player = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetObjectManager()->GetFrontObject(ObjectType::Player);
-		itemComp->Use(player);
-		
-		return; 
+		DeselectAll();
+		return;
 	}
 }
 
@@ -122,6 +139,18 @@ SlotComponent* InventoryManager::FindFirstEmptySlot()
 			return slot;
 	}
 	return nullptr;
+}
+
+void InventoryManager::ClearFromQuickSlot(Object* item)
+{
+	for (auto* quickSlot : quickSlots)
+	{
+		if (quickSlot && quickSlot->GetItem() == item)
+		{
+			quickSlot->ClearItem();
+			break;
+		}
+	}
 }
 
 void InventoryManager::ApplyFilter(optional<ItemType> type)
@@ -172,8 +201,7 @@ void InventoryManager::ApplyFilter(optional<ItemType> type)
 bool InventoryManager::InsertItem(Object* item)
 {
 	auto* emptySlot = FindFirstEmptySlot();
-	if (!emptySlot)
-		return false;
+	if (!emptySlot) return false;
 
 	emptySlot->SetItem(item);
 
@@ -185,4 +213,50 @@ bool InventoryManager::InsertItem(Object* item)
 void InventoryManager::Update(float dt)
 {
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
+
+	UIRenderType curRenderType = UIRenderer::GetCurRenderType();
+
+	for (int i = 0; i < quickSlots.size(); ++i)
+	{
+		auto* quickSlot = quickSlots[i];
+		if (!quickSlot) continue;
+
+		Object* item = quickSlot->GetItem();
+		if (!item) continue;
+
+		auto* renderer = item->GetComponent<UIRenderer>();
+		auto* transform = item->GetComponent<TransformComponent>();
+		auto* itemComp = item->GetComponent<ItemComponent>();
+
+		if (!renderer || !transform) continue;
+		
+		const auto& baseScale = itemComp->GetOriginalScale();
+
+		if (curRenderType == UIRenderType::MainGame)
+		{
+			renderer->SetRenderType(UIRenderType::MainGame);
+
+			const _vec2& pos = quickSlotPos[i];
+			transform->SetPosition(pos.x, pos.y);
+			transform->SetScale(baseScale.x * 0.6f,baseScale.y * 0.6f);
+		}
+		else
+		{
+			renderer->SetRenderType(UIRenderType::Inventory);
+			
+			const _vec2& pos = quickSlotPosInv[i];
+			transform->SetPosition(pos.x, pos.y);
+			transform->SetScale(baseScale.x,baseScale.y);
+		}
+	}
+
+	for (auto& [slot, plusObj] : slotToPlusMap)
+	{
+		if (!plusObj) continue;
+
+		auto* plusRenderer = plusObj->GetComponent<UIRenderer>();
+		if (!plusRenderer) continue;
+
+		plusRenderer->SetVisible(!slot->HasItem());
+	}
 }

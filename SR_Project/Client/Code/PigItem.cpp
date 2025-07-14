@@ -26,6 +26,7 @@ HRESULT PigItem::Ready_Object()
 		L"지금 이 즐거운 꿀꿀 소리는 여러분이 내는 건가요, 아님 이 사랑스러운 아기 돼지가 내는 건가요? 새로운 반려동물이 얼마나 귀여운지 정말 깨물어 주고 싶네요! 하지만 그러면 안되겠죠"});
 
 	auto item = AddComponent<ItemComponent>();
+	item->SetOriginalScale({0.3f, 0.3f});
 
 	return S_OK;
 }
