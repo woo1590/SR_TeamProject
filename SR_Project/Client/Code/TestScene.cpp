@@ -91,7 +91,7 @@ void TestScene::Load()
 	BlockMgr		= BlockManager::Create(this);
 	ChunkMgr		= ChunkManager::Create(this);
 
-	BlockMgr->LoadChunk("TestTerrain");
+	BlockMgr->LoadChunk("testScene");
 
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
