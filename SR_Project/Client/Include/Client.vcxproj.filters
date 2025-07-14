@@ -430,8 +430,17 @@
     <Filter Include="02. Object\Monster\Skeleton\JungleSkeleton">
       <UniqueIdentifier>{e3e0baca-4c41-4e54-b6c0-1cfb55454cc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Monster\Slime\BabySlime">
+    <Filter Include="02. Object\Monster\Slime\GreenSlime">
+      <UniqueIdentifier>{3bf923af-3b17-40db-b065-09fb36a03953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Slime\GreenSlime\BabySlime">
       <UniqueIdentifier>{b1e3d8be-779c-4606-81c8-fef357a02729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Slime\PurpleSlime">
+      <UniqueIdentifier>{2c6d2790-dfa9-4d57-b2e3-6f0f222cb1c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Slime\PurpleSlime\BabySlime">
+      <UniqueIdentifier>{a7c2cae7-e6ea-4afc-999d-7141f499d621}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -785,9 +794,6 @@
     <ClInclude Include="..\Header\Rain.h">
       <Filter>02. Object\Effect\Rain</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Slime.h">
-      <Filter>02. Object\Monster\Slime</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Zombie.h">
       <Filter>02. Object\Monster\Zombie\BasicZombie</Filter>
     </ClInclude>
@@ -801,7 +807,16 @@
       <Filter>02. Object\Monster\Skeleton\JungleSkeleton</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BabySlime.h">
-      <Filter>02. Object\Monster\Slime\BabySlime</Filter>
+      <Filter>02. Object\Monster\Slime\GreenSlime\BabySlime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Slime.h">
+      <Filter>02. Object\Monster\Slime\GreenSlime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PurpleSlime.h">
+      <Filter>02. Object\Monster\Slime\PurpleSlime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PurpleBabySlime.h">
+      <Filter>02. Object\Monster\Slime\PurpleSlime\BabySlime</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1155,9 +1170,6 @@
     <ClCompile Include="..\Code\Rain.cpp">
       <Filter>02. Object\Effect\Rain</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Slime.cpp">
-      <Filter>02. Object\Monster\Slime</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Zombie.cpp">
       <Filter>02. Object\Monster\Zombie\BasicZombie</Filter>
     </ClCompile>
@@ -1171,7 +1183,16 @@
       <Filter>02. Object\Monster\Skeleton\JungleSkeleton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BabySlime.cpp">
-      <Filter>02. Object\Monster\Slime\BabySlime</Filter>
+      <Filter>02. Object\Monster\Slime\GreenSlime\BabySlime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Slime.cpp">
+      <Filter>02. Object\Monster\Slime\GreenSlime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PurpleSlime.cpp">
+      <Filter>02. Object\Monster\Slime\PurpleSlime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PurpleBabySlime.cpp">
+      <Filter>02. Object\Monster\Slime\PurpleSlime\BabySlime</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

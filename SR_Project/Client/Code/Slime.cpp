@@ -134,9 +134,13 @@ void Slime::InitTransform(ObjectType objType)
     SetMaterial("SlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
 
     Bones["LArm"]->SetDead();
+    Bones["LArm"] = nullptr;
     Bones["RArm"]->SetDead();
+    Bones["RArm"] = nullptr;
     Bones["LLeg"]->SetDead();
+    Bones["LLeg"] = nullptr;
     Bones["RLeg"]->SetDead();
+    Bones["RLeg"] = nullptr;
 
     //head
     Scale = 0.35f;
@@ -340,12 +344,9 @@ void Slime::PlayDie(_float dt)
 
         transform = babyslime->GetComponent<TransformComponent>();
         transform->SetPosition(_vec3(pos.x + 5, pos.y, pos.z + 5));
-        
-        Bones["Head"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
-        Bones["Body"]-> GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
-
-        //SetDead();
-        //DeleteBar();
+    
+        SetDead();
+        DeleteBar();
 
         DieAnim.IsEnd = true;
     }

@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "BabySlime.h"
+#include "PurpleBabySlime.h"
 #include "CollisionComponent.h"
 #include "TransformComponent.h"
 #include "InfoComponent.h"
@@ -16,18 +16,18 @@
 #include "MeshRendererComponent.h"
 #include "Player.h"
 
-BabySlime::BabySlime(ObjectManager* owner, ObjectType objType)
+PurpleBabySlime::PurpleBabySlime(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
 {
 }
 
-BabySlime::~BabySlime()
+PurpleBabySlime::~PurpleBabySlime()
 {
 }
 
-BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType)
+PurpleBabySlime* PurpleBabySlime::Create(ObjectManager* owner, ObjectType objType)
 {
-    BabySlime* Instance = new BabySlime(owner, objType);
+    PurpleBabySlime* Instance = new PurpleBabySlime(owner, objType);
 
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {
@@ -39,10 +39,9 @@ BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType)
     return Instance;
 }
 
-HRESULT BabySlime::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT PurpleBabySlime::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     Monster::Ready_Object(owner, objType);
-
 
     InitTransform(objType);
 
@@ -58,18 +57,18 @@ HRESULT BabySlime::Ready_Object(ObjectManager* owner, ObjectType objType)
     return S_OK;
 }
 
-void BabySlime::Update(_float dt)
+void PurpleBabySlime::Update(_float dt)
 {
     Monster::Update(dt);
     PlayAnimation(dt);
 }
 
-void BabySlime::Late_Update(_float dt)
+void PurpleBabySlime::Late_Update(_float dt)
 {
     Monster::Late_Update(dt);
 }
 
-void BabySlime::MoveTo(_vec3* dir, _float dt)
+void PurpleBabySlime::MoveTo(_vec3* dir, _float dt)
 {
     auto Transform = GetComponent<TransformComponent>();
     auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
@@ -80,11 +79,11 @@ void BabySlime::MoveTo(_vec3* dir, _float dt)
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
-void BabySlime::RotateTo(_vec3* dir, float dt)
+void PurpleBabySlime::RotateTo(_vec3* dir, float dt)
 {
 }
 
-void BabySlime::Attack(Object* target)
+void PurpleBabySlime::Attack(Object* target)
 {
     if (State != MonsterState::Attack)
     {
@@ -97,7 +96,7 @@ void BabySlime::Attack(Object* target)
     }
 }
 
-void BabySlime::Die()
+void PurpleBabySlime::Die()
 {
     if (State != MonsterState::Die)
     {
@@ -107,7 +106,7 @@ void BabySlime::Die()
     }
 }
 
-void BabySlime::Hit(_vec3 dir, _float power)
+void PurpleBabySlime::Hit(_vec3 dir, _float power)
 {
     if (State != MonsterState::Hit)
     {
@@ -122,14 +121,14 @@ void BabySlime::Hit(_vec3 dir, _float power)
     }
 }
 
-void BabySlime::InitTransform(ObjectType objType)
+void PurpleBabySlime::InitTransform(ObjectType objType)
 {
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     transform->SetPosition(_vec3(5.f, 100.f, 5.f));
-    SetMaterial("SlimeOut_Mtrl", "Body", RENDER_ID::Render_Alpha);
-    SetMaterial("SlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
+    SetMaterial("PurpleSlimeOut_Mtrl", "Body", RENDER_ID::Render_Alpha);
+    SetMaterial("PurpleSlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
 
     Bones["LArm"]->SetDead();
     Bones["LArm"] = nullptr;
@@ -147,7 +146,7 @@ void BabySlime::InitTransform(ObjectType objType)
     //body
 }
 
-void BabySlime::InitTree()
+void PurpleBabySlime::InitTree()
 {
     //blackboard
     BlackBoard* bb = BlackBoard::Create();
@@ -182,7 +181,7 @@ void BabySlime::InitTree()
     auto AI = AddComponent<AIController>(bt, bb);
 }
 
-void BabySlime::InitAnimation()
+void PurpleBabySlime::InitAnimation()
 {
     WalkAnim.Phase = Action;
     WalkAnim.ElapsedTime = 0.f;
@@ -200,7 +199,7 @@ void BabySlime::InitAnimation()
     DieAnim.TotalTime = 0.3f;
 }
 
-void BabySlime::PlayAnimation(_float dt)
+void PurpleBabySlime::PlayAnimation(_float dt)
 {
     switch (State)
     {
@@ -230,11 +229,11 @@ void BabySlime::PlayAnimation(_float dt)
     }
 }
 
-void BabySlime::PlayIdle(_float dt)
+void PurpleBabySlime::PlayIdle(_float dt)
 {
 }
 
-void BabySlime::PlayWalk(_float dt)
+void PurpleBabySlime::PlayWalk(_float dt)
 {
     WalkAnim.ElapsedTime += dt;
     _float t = clamp(WalkAnim.ElapsedTime / WalkAnim.TotalTime, 0.f, 1.f);
@@ -275,7 +274,7 @@ void BabySlime::PlayWalk(_float dt)
     }
 }
 
-void BabySlime::PlayAttack(_float dt)
+void PurpleBabySlime::PlayAttack(_float dt)
 {
     AttackAnim.DelayTime -= dt;
     if (AttackAnim.DelayTime > 0) return;
@@ -316,7 +315,7 @@ void BabySlime::PlayAttack(_float dt)
     }
 }
 
-void BabySlime::PlayDie(_float dt)
+void PurpleBabySlime::PlayDie(_float dt)
 {
     DieAnim.ElapsedTime += dt;
     if (DieAnim.ElapsedTime > DieAnim.TotalTime && DieAnim.IsEnd == false)
@@ -328,7 +327,7 @@ void BabySlime::PlayDie(_float dt)
     }
 }
 
-void BabySlime::PlayHit(_float dt)
+void PurpleBabySlime::PlayHit(_float dt)
 {
     HitAnim.ElapsedTime += dt;
 
@@ -340,7 +339,7 @@ void BabySlime::PlayHit(_float dt)
     }
 }
 
-void BabySlime::OnCollisionStay(Object* other)
+void PurpleBabySlime::OnCollisionStay(Object* other)
 {
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
@@ -361,7 +360,7 @@ void BabySlime::OnCollisionStay(Object* other)
     }
 }
 
-void BabySlime::Free()
+void PurpleBabySlime::Free()
 {
     Monster::Free();
 }

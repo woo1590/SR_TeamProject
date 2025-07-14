@@ -49,6 +49,7 @@
 #include "Slime.h"
 #include "JungleZombie.h"
 #include "JungleSkeleton.h"
+#include "PurpleSlime.h"
 
 //component
 #include "TransformComponent.h"

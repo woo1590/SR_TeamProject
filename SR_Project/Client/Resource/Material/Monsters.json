@@ -133,6 +133,17 @@
       }
     },
 
+    "PurpleSlimeIn_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/SlimePurple_In.dds"
+      }
+    },
+
+    "PurpleSlimeOut_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/SlimePurple_Out.dds"
+      }
+    },
     "JungleArm_Mtrl": {
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Jungle_Arm.dds"

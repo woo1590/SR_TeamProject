@@ -204,6 +204,8 @@
     <ClInclude Include="..\Header\ParticleObj.h" />
     <ClInclude Include="..\Header\PigItem.h" />
     <ClInclude Include="..\Header\PlayerDeathUI.h" />
+    <ClInclude Include="..\Header\PurpleBabySlime.h" />
+    <ClInclude Include="..\Header\PurpleSlime.h" />
     <ClInclude Include="..\Header\QuestPanel.h" />
     <ClInclude Include="..\Header\QuestTextObj.h" />
     <ClInclude Include="..\Header\Rain.h" />
@@ -325,6 +327,8 @@
     <ClCompile Include="..\Code\ParticleObj.cpp" />
     <ClCompile Include="..\Code\PigItem.cpp" />
     <ClCompile Include="..\Code\PlayerDeathUI.cpp" />
+    <ClCompile Include="..\Code\PurpleBabySlime.cpp" />
+    <ClCompile Include="..\Code\PurpleSlime.cpp" />
     <ClCompile Include="..\Code\QuestPanel.cpp" />
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
     <ClCompile Include="..\Code\Rain.cpp" />

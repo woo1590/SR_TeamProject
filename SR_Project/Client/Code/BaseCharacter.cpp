@@ -211,5 +211,9 @@ void BaseCharacter::DetachParent(string str)
 void BaseCharacter::SetDead()
 {
     Object::SetDead();
-    std::for_each(Bones.begin(), Bones.end(), [](auto& pair) {pair.second->SetDead(); });
+    std::for_each(Bones.begin(), Bones.end(), [](auto& pair) {
+        if (pair.second != nullptr)
+        {
+            pair.second->SetDead();
+        }});
 }

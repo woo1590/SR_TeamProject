@@ -38,6 +38,6 @@ protected:
     void Free() override;
 
 private:
-    bool IsAttackDamage = false;
+    _bool IsAttackDamage = false;
 };
 

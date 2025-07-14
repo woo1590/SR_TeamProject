@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "BabySlime.h"
+#include "PurpleSlime.h"
 #include "CollisionComponent.h"
 #include "TransformComponent.h"
 #include "InfoComponent.h"
@@ -12,22 +12,24 @@
 #include "Die.h"
 #include "IsTargetInAttackRange.h"
 #include "ObjectManager.h"
+#include "PurpleBabySlime.h"
 #include "PhysicsComponent.h"
 #include "MeshRendererComponent.h"
 #include "Player.h"
 
-BabySlime::BabySlime(ObjectManager* owner, ObjectType objType)
+
+PurpleSlime::PurpleSlime(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
 {
 }
 
-BabySlime::~BabySlime()
+PurpleSlime::~PurpleSlime()
 {
 }
 
-BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType)
+PurpleSlime* PurpleSlime::Create(ObjectManager* owner, ObjectType objType)
 {
-    BabySlime* Instance = new BabySlime(owner, objType);
+    PurpleSlime* Instance = new PurpleSlime(owner, objType);
 
     if (FAILED(Instance->Ready_Object(owner, objType)))
     {
@@ -39,37 +41,38 @@ BabySlime* BabySlime::Create(ObjectManager* owner, ObjectType objType)
     return Instance;
 }
 
-HRESULT BabySlime::Ready_Object(ObjectManager* owner, ObjectType objType)
+HRESULT PurpleSlime::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     Monster::Ready_Object(owner, objType);
-
 
     InitTransform(objType);
 
     //Init Collision
     auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(4.f, 4.f, 4.f));
+    collision->SetSize(_vec3(10.f, 10.f, 10.f));
 
     //Create BT
     InitTree();
 
     //Animation
     InitAnimation();
+
+    GetComponent<InfoComponent<EnemyInfo>>()->SetInfo({ 1,100,100, 0, 0, 15, 0, 6 });
     return S_OK;
 }
 
-void BabySlime::Update(_float dt)
+void PurpleSlime::Update(_float dt)
 {
     Monster::Update(dt);
     PlayAnimation(dt);
 }
 
-void BabySlime::Late_Update(_float dt)
+void PurpleSlime::Late_Update(_float dt)
 {
     Monster::Late_Update(dt);
 }
 
-void BabySlime::MoveTo(_vec3* dir, _float dt)
+void PurpleSlime::MoveTo(_vec3* dir, _float dt)
 {
     auto Transform = GetComponent<TransformComponent>();
     auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
@@ -80,11 +83,11 @@ void BabySlime::MoveTo(_vec3* dir, _float dt)
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
-void BabySlime::RotateTo(_vec3* dir, float dt)
+void PurpleSlime::RotateTo(_vec3* dir, float dt)
 {
 }
 
-void BabySlime::Attack(Object* target)
+void PurpleSlime::Attack(Object* target)
 {
     if (State != MonsterState::Attack)
     {
@@ -97,7 +100,7 @@ void BabySlime::Attack(Object* target)
     }
 }
 
-void BabySlime::Die()
+void PurpleSlime::Die()
 {
     if (State != MonsterState::Die)
     {
@@ -107,7 +110,7 @@ void BabySlime::Die()
     }
 }
 
-void BabySlime::Hit(_vec3 dir, _float power)
+void PurpleSlime::Hit(_vec3 dir, _float power)
 {
     if (State != MonsterState::Hit)
     {
@@ -116,20 +119,20 @@ void BabySlime::Hit(_vec3 dir, _float power)
         *IsHit = true;
 
         HitDir = dir;
-        HitPower = power * 0.5;
+        HitPower = power;
 
-        Monster::Hit(dir, power * 0.5);
+        Monster::Hit(dir, power);
     }
 }
 
-void BabySlime::InitTransform(ObjectType objType)
+void PurpleSlime::InitTransform(ObjectType objType)
 {
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     transform->SetPosition(_vec3(5.f, 100.f, 5.f));
-    SetMaterial("SlimeOut_Mtrl", "Body", RENDER_ID::Render_Alpha);
-    SetMaterial("SlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
+    SetMaterial("PurpleSlimeOut_Mtrl", "Body", RENDER_ID::Render_NonAlpha);
+    SetMaterial("PurpleSlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
 
     Bones["LArm"]->SetDead();
     Bones["LArm"] = nullptr;
@@ -140,20 +143,21 @@ void BabySlime::InitTransform(ObjectType objType)
     Bones["RLeg"]->SetDead();
     Bones["RLeg"] = nullptr;
 
-    Scale = 0.1f;
+    //head
+    Scale = 0.35f;
     SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
     SetPosition(_vec3(0.f * Scale, 0.f * Scale, 0.f * Scale), "Head");
-    SetScale(_vec3(10.f * Scale, 10.f * Scale, 10.f * Scale), "Body");
     //body
+    SetScale(_vec3(10.f * Scale, 10.f * Scale, 10.f * Scale), "Body");
 }
 
-void BabySlime::InitTree()
+void PurpleSlime::InitTree()
 {
     //blackboard
     BlackBoard* bb = BlackBoard::Create();
     bb->SetValue("Self", this);
     bb->SetValue("Target", owner->GetObjectList(ObjectType::Player).back());
-    Distance = new float(3.5f);
+    Distance = new float(7.f);
     bb->SetValue("Distance", Distance);
     IsHit = new _bool(false);
     bb->SetValue("IsDamaged", IsHit);
@@ -182,7 +186,7 @@ void BabySlime::InitTree()
     auto AI = AddComponent<AIController>(bt, bb);
 }
 
-void BabySlime::InitAnimation()
+void PurpleSlime::InitAnimation()
 {
     WalkAnim.Phase = Action;
     WalkAnim.ElapsedTime = 0.f;
@@ -200,7 +204,7 @@ void BabySlime::InitAnimation()
     DieAnim.TotalTime = 0.3f;
 }
 
-void BabySlime::PlayAnimation(_float dt)
+void PurpleSlime::PlayAnimation(_float dt)
 {
     switch (State)
     {
@@ -230,11 +234,11 @@ void BabySlime::PlayAnimation(_float dt)
     }
 }
 
-void BabySlime::PlayIdle(_float dt)
+void PurpleSlime::PlayIdle(_float dt)
 {
 }
 
-void BabySlime::PlayWalk(_float dt)
+void PurpleSlime::PlayWalk(_float dt)
 {
     WalkAnim.ElapsedTime += dt;
     _float t = clamp(WalkAnim.ElapsedTime / WalkAnim.TotalTime, 0.f, 1.f);
@@ -244,7 +248,7 @@ void BabySlime::PlayWalk(_float dt)
     {
     case Phase::Action:
     {
-        _float curSize = lerp(1.5f, 1.f, t);
+        _float curSize = lerp(4.5f, 3.5f, t);
         SetScale(_vec3(curSize, curSize, curSize), "Body");
         if (t >= 1.f)
         {
@@ -256,12 +260,12 @@ void BabySlime::PlayWalk(_float dt)
     }
     case Phase::Recover:
     {
-        _float curSize = lerp(1.f, 1.5f, t);
+        _float curSize = lerp(3.5f, 4.5f, t);
         SetScale(_vec3(curSize, curSize, curSize), "Body");
         if (physics->IsGrounded())
         {
             physics->SetGround(false);
-            physics->SetVelocity(_vec3(0.0f, 12.f, 0.f));
+            physics->SetVelocity(_vec3(0.0f, 20.f, 0.f));
         }
 
         if (t >= 1.f)
@@ -275,7 +279,7 @@ void BabySlime::PlayWalk(_float dt)
     }
 }
 
-void BabySlime::PlayAttack(_float dt)
+void PurpleSlime::PlayAttack(_float dt)
 {
     AttackAnim.DelayTime -= dt;
     if (AttackAnim.DelayTime > 0) return;
@@ -316,11 +320,32 @@ void BabySlime::PlayAttack(_float dt)
     }
 }
 
-void BabySlime::PlayDie(_float dt)
+void PurpleSlime::PlayDie(_float dt)
 {
+    //
     DieAnim.ElapsedTime += dt;
     if (DieAnim.ElapsedTime > DieAnim.TotalTime && DieAnim.IsEnd == false)
     {
+        _vec3 pos = GetComponent<TransformComponent>()->GetPosition();
+
+        auto babyslime = PurpleBabySlime::Create(owner, ObjectType::Monster);
+        owner->AddObject(ObjectType::Monster, babyslime);
+
+        auto transform = babyslime->GetComponent<TransformComponent>();
+        transform->SetPosition(pos);
+
+        babyslime = PurpleBabySlime::Create(owner, ObjectType::Monster);
+        owner->AddObject(ObjectType::Monster, babyslime);
+
+        transform = babyslime->GetComponent<TransformComponent>();
+        transform->SetPosition(_vec3(pos.x - 5, pos.y, pos.z - 5));
+
+        babyslime = PurpleBabySlime::Create(owner, ObjectType::Monster);
+        owner->AddObject(ObjectType::Monster, babyslime);
+
+        transform = babyslime->GetComponent<TransformComponent>();
+        transform->SetPosition(_vec3(pos.x + 5, pos.y, pos.z + 5));
+
         SetDead();
         DeleteBar();
 
@@ -328,7 +353,7 @@ void BabySlime::PlayDie(_float dt)
     }
 }
 
-void BabySlime::PlayHit(_float dt)
+void PurpleSlime::PlayHit(_float dt)
 {
     HitAnim.ElapsedTime += dt;
 
@@ -340,7 +365,7 @@ void BabySlime::PlayHit(_float dt)
     }
 }
 
-void BabySlime::OnCollisionStay(Object* other)
+void PurpleSlime::OnCollisionStay(Object* other)
 {
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
@@ -355,13 +380,13 @@ void BabySlime::OnCollisionStay(Object* other)
         auto player = static_cast<Player*>(other);
         if (State == MonsterState::Attack && !IsAttackDamage)
         {
-            playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power * 0.5);
+            playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
             IsAttackDamage = true;
         }
     }
 }
 
-void BabySlime::Free()
+void PurpleSlime::Free()
 {
     Monster::Free();
 }

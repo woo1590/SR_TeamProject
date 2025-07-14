@@ -1,14 +1,14 @@
 #pragma once
 #include "Monster.h"
-class BabySlime :
+class PurpleBabySlime :
     public Monster
 {
 protected:
-    BabySlime(ObjectManager* owner, ObjectType objType);
-    virtual ~BabySlime();
+    PurpleBabySlime(ObjectManager* owner, ObjectType objType);
+    virtual ~PurpleBabySlime();
 
 public:
-    static BabySlime* Create(ObjectManager* owner, ObjectType objType);
+    static PurpleBabySlime* Create(ObjectManager* owner, ObjectType objType);
     HRESULT Ready_Object(ObjectManager* owner, ObjectType objType);
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
