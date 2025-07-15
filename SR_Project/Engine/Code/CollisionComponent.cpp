@@ -293,6 +293,9 @@ void CollisionComponent::OnCollisionExit(CollisionComponent*other)
 
 void CollisionComponent::Render()
 {
+	if (!DebugMode)
+		return;
+
 	auto device = GraphicDevice::GetInstance()->GetDevice();
 	_vec3 pos = owner->GetComponent<TransformComponent>()->GetWorldPosition() + Offset;
 	_matrix worldMat;

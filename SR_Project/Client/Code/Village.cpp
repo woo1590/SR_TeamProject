@@ -164,12 +164,11 @@ void Village::Update(_float dt)
 
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 
-	if (Input->IsKeyPressed(NUM0))
-	{
-		auto cam = CameraMgr->GetMainCamera();
-		cam->GetOwner()->GetComponent<ThirdcamComponent>()->SetShake(5.f, 0.4f);
-	}
+	if (Input->IsKeyPressed(NUM9))
+		EngineCore::GetInstance()->SetDebugMode(false);
 
+	if (Input->IsKeyPressed(NUM0))
+		EngineCore::GetInstance()->SetDebugMode(true);
 }
 
 void Village::Late_Update(_float dt)

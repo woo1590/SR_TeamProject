@@ -55,6 +55,7 @@ public:
 
     /*-------------------------------------------*/
     void Render();  //Debug
+    void SetDebugMode(bool debug) { DebugMode = debug; }
 private:
 
     void Free()override;
@@ -63,6 +64,7 @@ private:
 
     LPD3DXMESH BoundingBox = nullptr;   //����׿� �޽� 
     BoundingBoxType BBType = BoundingBoxType::Box;
+    _bool DebugMode = true;
 
     _vec3 LocalMin{ -1.f,-1.f,-1.f };
     _vec3 LocalMax{ 1.f,1.f,1.f };

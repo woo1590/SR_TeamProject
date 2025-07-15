@@ -55,6 +55,7 @@ public:
     void DebugSetting_IMGUI();
 #endif
     _bool IsDebugMode()const { return Debug_Mode; }
+    void SetDebugMode(bool debug) { Debug_Mode = debug; }
 private:
     TimerManager* TimerMgr;
     FrameManager* FrameMgr;
