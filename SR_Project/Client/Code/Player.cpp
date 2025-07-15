@@ -1081,8 +1081,11 @@ void Player::UpdateShoot(_float dt) {
             WalkTime = 0.f;
             State = ePlayerState::WALK;
         }
-        Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
-        Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
+        if(Bones["LHand"])
+            Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
+
+        if(Bones["RHand"])
+            Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
         prePhase = 0.f;
     }
 }

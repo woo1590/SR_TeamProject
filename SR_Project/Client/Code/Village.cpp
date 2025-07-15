@@ -52,6 +52,7 @@
 #include "JungleZombie.h"
 #include "JungleSkeleton.h"
 #include "BloodEffect.h"
+#include "PurpleSlime.h"
 #include "Npc.h"
 
 //component
@@ -135,11 +136,18 @@ void Village::Load()
 
 		auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger2->SetTriggerPosition(_vec3(124.f, 5.f, 86.f));
-		trigger2->AddSpawner(SpawnType::Skeleton, _vec3(124.f, 5.f, 90.f), _vec3(0.f, 0.f, 0.f));
-		trigger2->AddSpawner(SpawnType::Creeper, _vec3(124.f, 5.f, 90.f), _vec3(0.f, 0.f, 0.f));
-		trigger2->AddSpawner(SpawnType::Zombie, _vec3(120.f, 5.f, 90.f), _vec3(0.f, 0.f, 0.f));
-		trigger2->AddSpawner(SpawnType::RedGolem, _vec3(200.f, 5.f, 200.f), _vec3(0.f, 0.f, 0.f));
+		trigger2->AddSpawner(SpawnType::Skeleton, _vec3(154.f, 30.f, 120.f), _vec3(0.f, 0.f, 0.f));
+		trigger2->AddSpawner(SpawnType::Creeper, _vec3(174.f, 30.f, 100.f), _vec3(0.f, 0.f, 0.f));
+		trigger2->AddSpawner(SpawnType::Zombie, _vec3(120.f, 30.f, 90.f), _vec3(0.f, 0.f, 0.f));
+		trigger2->AddSpawner(SpawnType::RedGolem, _vec3(150.f, 30.f, 200.f), _vec3(0.f, 0.f, 0.f));
 
+		auto slime = Slime::Create(ObjectMgr, ObjectType::Monster);
+		slime->GetComponent<TransformComponent>()->SetPosition(50.f, 30.f, 50.f);
+		auto purpleSlime = PurpleSlime::Create(ObjectMgr, ObjectType::Monster);
+		purpleSlime->GetComponent<TransformComponent>()->SetPosition(50.f, 50.f, 50.f);
+
+		ObjectMgr->AddObject(ObjectType::Monster, slime);
+		ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
 		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 	}
 }

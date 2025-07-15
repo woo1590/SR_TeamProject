@@ -130,7 +130,7 @@ void Slime::InitTransform(ObjectType objType)
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     transform->SetPosition(_vec3(5.f, 100.f, 5.f));
-    SetMaterial("SlimeOut_Mtrl", "Body", RENDER_ID::Render_NonAlpha);
+    SetMaterial("SlimeOut_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial("SlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
 
     Bones["LArm"]->SetDead();

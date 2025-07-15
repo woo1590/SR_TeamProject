@@ -131,7 +131,7 @@ void PurpleSlime::InitTransform(ObjectType objType)
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     transform->SetPosition(_vec3(5.f, 100.f, 5.f));
-    SetMaterial("PurpleSlimeOut_Mtrl", "Body", RENDER_ID::Render_NonAlpha);
+    SetMaterial("PurpleSlimeOut_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial("PurpleSlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
 
     Bones["LArm"]->SetDead();
