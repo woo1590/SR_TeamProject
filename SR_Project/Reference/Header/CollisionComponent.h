@@ -23,6 +23,7 @@ public:
 
     void SetBoudingBox(BoundingBoxType bbType);
     void SetSize(_vec3 size);
+    _vec3 GetSize()const;
 
     void SetLayer(CollisionLayer layer);
     void SetMask(_ulong mask);

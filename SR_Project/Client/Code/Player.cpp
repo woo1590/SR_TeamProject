@@ -781,6 +781,7 @@ void Player::UpdateIdle(_float dt)
 }
 void Player::UpdateWalk(_float dt) {
     WalkTime += dt;
+    walkEffectTimer += dt;
 
     if (comboTime < comboLimit)
     {
@@ -802,6 +803,7 @@ void Player::UpdateWalk(_float dt) {
     auto transform = GetComponent<TransformComponent>(); //Move Player
     if (moveToAttack)
     {
+        //이동하는 순간 오브젝트가 죽으면 버그 생김
         PlayerDirection = moveToObject->GetComponent<TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
         PlayerDirection.y = 0.f;
     }
@@ -832,6 +834,17 @@ void Player::UpdateWalk(_float dt) {
     else if (blockUp == nullptr && blockDown->GetOwner()->GetObjectType() == ObjectType::StaticBlock) {
         transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
     }
+
+    //////////////////////////////////////////Walk Effect
+    if (walkEffectTimer >= 0.3f)
+    {
+        auto effect = SpriteEffect::Create(owner, ObjectType::SpriteEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition() - _vec3(0.f, 2.f, 0.f));
+        effect->AddComponent<SpriteRenderer>("Walk", 7, 10.f, 2.f);
+        owner->AddObject(ObjectType::SpriteEffect, effect);
+        walkEffectTimer = 0.f;
+    }
+    //////////////////////////////////////////
 
     auto blockOn1 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
     auto blockOn2 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
@@ -883,12 +896,6 @@ void Player::UpdateWalk(_float dt) {
         WalkTime = 0.f;
     }
 
-    //////////////////////////////////////////Walk Effect
-    auto effect = SpriteEffect::Create(owner, ObjectType::SpriteEffect);
-    effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition() - _vec3(0.f, -3.f, 0.f));
-    effect->AddComponent<SpriteRenderer>("Walk", 7, 10.f);
-    owner->AddObject(ObjectType::SpriteEffect, effect);
-    //////////////////////////////////////////
 }
 void Player::UpdateRoll(_float dt)
 {

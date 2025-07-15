@@ -131,11 +131,6 @@ void TestScene::Load()
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, JungleZombie::Create(ObjectMgr, ObjectType::Monster));
-	
-	auto effect = SpriteEffect::Create(ObjectMgr, ObjectType::SpriteEffect);
-	effect->AddComponent<SpriteRenderer>("Explosion", 90, 40.f, true);
-	effect->GetComponent<TransformComponent>()->SetPosition(0.f, 20.f, 100.f);
-	ObjectMgr->AddObject(ObjectType::SpriteEffect, effect);
 
 	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);

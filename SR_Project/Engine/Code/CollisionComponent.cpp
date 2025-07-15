@@ -93,6 +93,11 @@ void CollisionComponent::SetSize(_vec3 size)
 	D3DXCreateBox(device, size.x, size.y, size.z, &BoundingBox, nullptr);
 }
 
+_vec3 CollisionComponent::GetSize() const
+{
+	return LocalMax * 2.f;
+}
+
 void CollisionComponent::SetLayer(CollisionLayer layer)
 {
 	Collision_Layer = layer;

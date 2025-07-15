@@ -16,6 +16,11 @@
 #include "InfoComponent.h"
 #include "Material.h"
 
+#include "Scene.h"
+#include "ThirdcamComponent.h"
+#include "CameraManager.h"
+#include "CameraComponent.h"
+
 Creeper::Creeper(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
 {
@@ -268,9 +273,13 @@ void Creeper::PlayDie(_float dt)
         if (D3DXVec3Length(&length) < 10)
             player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-15);
         
-       // SetDead();
-       // for (auto bone : Bones)
-       //     bone.second->SetDead();
+        SetDead();
+        ///////////////////////////////Shake Cam
+        auto cam = GetScene()->GetCameraManager()->GetMainCamera()->
+                   GetOwner()->GetComponent<ThirdcamComponent>();
+        if (cam)
+            cam->SetShake(8.f, 0.4f);
+        ///////////////////////////////
     }
 }
 

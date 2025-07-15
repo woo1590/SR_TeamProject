@@ -53,6 +53,7 @@
 #include "JungleSkeleton.h"
 #include "BloodEffect.h"
 #include "PurpleSlime.h"
+#include "SpriteEffect.h"
 #include "Npc.h"
 
 //component
@@ -60,6 +61,7 @@
 #include "CollisionComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
+#include "SpriteRenderer.h"
 #include "ThirdcamComponent.h"
 
 
@@ -127,12 +129,14 @@ void Village::Load()
 
 		//player->EquipItem(ItemType::Sword);
 		//player->EquipItem(ItemType::Bow);
-		player->GetComponent<TransformComponent>()->SetPosition(30.f, 30.f, 30.f);
+		player->GetComponent<TransformComponent>()->SetPosition(30.f, 60.f, 30.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
 		trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
 		trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+		trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+		trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
 
 		auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger2->SetTriggerPosition(_vec3(124.f, 5.f, 86.f));
@@ -149,6 +153,7 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::Monster, slime);
 		ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
 		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
+
 	}
 }
 
@@ -156,6 +161,14 @@ void Village::Update(_float dt)
 {
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
+
+	auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (Input->IsKeyPressed(NUM0))
+	{
+		auto cam = CameraMgr->GetMainCamera();
+		cam->GetOwner()->GetComponent<ThirdcamComponent>()->SetShake(5.f, 0.4f);
+	}
 
 }
 

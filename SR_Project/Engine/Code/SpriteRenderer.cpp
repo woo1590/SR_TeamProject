@@ -13,8 +13,8 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 
-SpriteRenderer::SpriteRenderer(Object* owner, const std::string& name, _uint total, _float speed, _bool repeat)
-	:RendererComponent(owner, RENDER_ID::Render_Alpha), spriteName(name), totalFrame(total),speed(speed), isRepeat(repeat)
+SpriteRenderer::SpriteRenderer(Object* owner, const std::string& name, _uint total, _float speed, _float size, _bool repeat)
+	:RendererComponent(owner, RENDER_ID::Render_Alpha), spriteName(name), totalFrame(total), speed(speed), isRepeat(repeat), size(size)
 {
 
 }
@@ -23,9 +23,9 @@ SpriteRenderer::~SpriteRenderer()
 {
 }
 
-SpriteRenderer* SpriteRenderer::Create(Object* owner, const std::string& name, _uint total, _float speed, _bool repeat)
+SpriteRenderer* SpriteRenderer::Create(Object* owner, const std::string& name, _uint total, _float speed, _float size, _bool repeat)
 {
-	SpriteRenderer* Instance = new SpriteRenderer(owner, name, total, speed, repeat);
+	SpriteRenderer* Instance = new SpriteRenderer(owner, name, total, speed, size, repeat);
 	if (FAILED(Instance->Ready_Component()))
 	{
 		Safe_Release(Instance);
@@ -36,7 +36,7 @@ SpriteRenderer* SpriteRenderer::Create(Object* owner, const std::string& name, _
 
 HRESULT SpriteRenderer::Ready_Component()
 {
-	quadMesh = QuadMesh::Create();
+	quadMesh = QuadMesh::Create(size);
 	shader = EngineCore::GetInstance()->GetResourceManager()->GetShader("SpriteShader");
 
 	return S_OK;
@@ -64,6 +64,7 @@ void SpriteRenderer::Update(_float dt)
 		else
 		{
 			currFrame--;
+			isSpriteEnd = true;
 		}
 	}
 }
@@ -85,14 +86,23 @@ void SpriteRenderer::Render()
 	_matrix viewMat = cam->GetViewMatrix();
 
 	//Billboard
-	_matrix billMat;
-	D3DXMatrixIdentity(&billMat);
-	billMat._11 = viewMat._11;
-	billMat._13 = viewMat._13;
-	billMat._31 = viewMat._31;
-	billMat._33 = viewMat._33;
-	D3DXMatrixInverse(&billMat, nullptr, &billMat);
-	worldMat = billMat * worldMat;
+	_matrix invRotY, invRotX;
+	D3DXMatrixIdentity(&invRotY);
+	D3DXMatrixIdentity(&invRotX);
+
+	invRotY._11 = viewMat._11;
+	invRotY._13 = viewMat._13;
+	invRotY._31 = viewMat._31;
+	invRotY._33 = viewMat._33;
+
+	invRotX._22 = viewMat._22;
+	invRotX._23 = viewMat._23;
+	invRotX._32 = viewMat._32;
+	invRotX._33 = viewMat._33;
+
+	D3DXMatrixInverse(&invRotY, nullptr, &invRotY);
+	D3DXMatrixInverse(&invRotX, nullptr, &invRotX);
+	worldMat = invRotY * invRotX * worldMat;
 
 	_matrix projMat = cam->GetProjMatrix();
 

@@ -115,7 +115,7 @@ private:
 private:
     ePlayerState State = ePlayerState::IDLE;
     ePlayerAttackType attackType = ePlayerAttackType::FIRST;
-    ePlayerShootType shootType = ePlayerShootType::FIREWORK;
+    ePlayerShootType shootType = ePlayerShootType::ARROW;
 
     _float IdleTime = 0.f;
     _float IdleSmoothingSpeed = 5.f;
@@ -150,4 +150,9 @@ private:
 
     std::unordered_map<std::pair<int, int>, PhaseRotation, PairHash> PhaseRotations;
     std::unordered_map<std::string, _vec3> itemBaseRotOffset;
+
+
+    ///////////////////////Effect
+    _float walkEffectTimer = 0.f;
+    //////////////////////
 };

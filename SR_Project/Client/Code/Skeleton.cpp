@@ -20,6 +20,13 @@
 #include "IsTargetClose.h"
 #include "BackStep.h"
 
+#include "PhysicsComponent.h"
+#include "CollisionComponent.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
+#include "Random.h"
+#include "EngineCore.h"
+
 Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
 {
@@ -411,23 +418,48 @@ void Skeleton::PlayHit(float dt)
 
 void Skeleton::PlayDie(_float dt)
 {
-    if (!DieAnim.IsEnd)
+    if (!isDetachBones)
     {
+        auto r = EngineCore::GetInstance()->GetRandom();
+
         auto transform = GetComponent<TransformComponent>();
         _vec3 pos = transform->GetPosition();
         for (auto& bone : Bones)
         {
             auto transform = bone.second->GetComponent<TransformComponent>();
             _vec3 bonepos = transform->GetPosition();
-        
+
+            _vec3 randomOffset{ 0.f,0.f,0.f };
+
+            if (bone.first != "Head")
+            {
+                randomOffset.x = r->get<_float>(-3.f, 3.f);
+                randomOffset.y = 0.f;
+                randomOffset.z = r->get<_float>(-3.f, 3.f);
+            }
+
             DetachParent(bone.first);
-            transform->SetPosition(pos + bonepos);
+            transform->SetPosition(pos + bonepos + randomOffset);
+
+            auto physics = bone.second->AddComponent<PhysicsComponent>();
+            physics->SetMass(1.f);
+            GetScene()->GetPhysicsStstem()->RegisterBody(physics);
+            auto collision = bone.second->AddComponent<CollisionComponent>();
+            collision->SetLayer(LAYER_ENEMY);
+            collision->SetMask(LAYER_DEFAULT | LAYER_PLAYER);
         }
+        isDetachBones = true;
+    }
+
+    if (!DieAnim.IsEnd && deadTimer>=3.f)
+    {
         DieAnim.IsEnd = true;
         DieAnim.IsRunning = false;
-       // SetDead();
-      //  DeleteBar();
+        SetDead();
+        DeleteBar();
     }
+
+    deadTimer += dt;
 }
 
 void Skeleton::OnCollisionStay(Object* other)
