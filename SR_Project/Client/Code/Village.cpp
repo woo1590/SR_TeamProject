@@ -55,6 +55,7 @@
 #include "PurpleSlime.h"
 #include "SpriteEffect.h"
 #include "Npc.h"
+#include "Ender.h"
 
 //component
 #include "TransformComponent.h"
@@ -154,6 +155,9 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
 		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 
+		auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
+		ender->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
+		ObjectMgr->AddObject(ObjectType::Monster, ender);
 	}
 }
 
