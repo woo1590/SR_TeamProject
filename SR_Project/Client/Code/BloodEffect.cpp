@@ -34,15 +34,15 @@ HRESULT BloodEffect::Ready_Object()
 
 	auto particle = AddComponent<ParticleSystem>();
 	Emitter hit;
-	hit.burstCount = 20;
+	hit.burstCount = 10;
 	hit.looping = true;
 	hit.followCam = false;
 
 	hit.life = 0.5f;
 	hit.size = 15.f;
 
-	hit.velocityMin = { -10.f,-15.f,-15.f };
-	hit.velocityMax = { 15.f,15.f,15.f };
+	hit.velocityMin = { -10.f,-10.f,-10.f };
+	hit.velocityMax = { 10.f,10.f,10.f };
 	hit.spawnAreaMin = { -0.1f,-0.1f,-0.1f };
 	hit.spawnAreaMax = { 0.1f,0.1f,0.1f };
 

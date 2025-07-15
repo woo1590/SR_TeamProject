@@ -26,7 +26,7 @@ void Effect::Update(_float dt)
 	else
 	{
 		auto sprite = GetComponent<SpriteRenderer>();
-		if (sprite->IsSpriteEnd() && !isDeadBySpriteEnd)
+		if (sprite->IsSpriteEnd() && isDeadBySpriteEnd)
 		{
 			SetDead();
 		}

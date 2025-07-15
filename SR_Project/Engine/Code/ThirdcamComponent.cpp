@@ -49,7 +49,7 @@ void ThirdcamComponent::Update(_float dt)
 
     ObjectComponent::Update(dt);
 
-    _vec3 targetPos = FollowTarget->GetPosition();
+    _vec3 targetPos = FollowTarget->GetPosition() + shakeOffset;
     _vec3 camPos = targetPos + Offset;
 
 

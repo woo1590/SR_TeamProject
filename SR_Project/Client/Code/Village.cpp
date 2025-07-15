@@ -53,6 +53,7 @@
 #include "JungleSkeleton.h"
 #include "BloodEffect.h"
 #include "PurpleSlime.h"
+#include "SpriteEffect.h"
 #include "Npc.h"
 
 //component
@@ -60,6 +61,7 @@
 #include "CollisionComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
+#include "SpriteRenderer.h"
 #include "ThirdcamComponent.h"
 
 
@@ -127,7 +129,7 @@ void Village::Load()
 
 		//player->EquipItem(ItemType::Sword);
 		//player->EquipItem(ItemType::Bow);
-		player->GetComponent<TransformComponent>()->SetPosition(30.f, 30.f, 30.f);
+		player->GetComponent<TransformComponent>()->SetPosition(30.f, 60.f, 30.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
@@ -149,6 +151,7 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::Monster, slime);
 		ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
 		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
+
 	}
 }
 

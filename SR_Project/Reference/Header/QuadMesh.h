@@ -7,11 +7,11 @@ class ENGINE_DLL QuadMesh :
     public Mesh
 {
 private:
-    QuadMesh();
+    QuadMesh(_float size);
     virtual ~QuadMesh();
 
 public:
-    static QuadMesh* Create();
+    static QuadMesh* Create(_float size);
     HRESULT Ready_Mesh();
     void Draw();
 private:
@@ -21,6 +21,8 @@ private:
     LPDIRECT3DINDEXBUFFER9 IB = nullptr;
 
     LPDIRECT3DVERTEXDECLARATION9 Decl = nullptr;
+
+    _float size = 1.f;
 };
 
 END

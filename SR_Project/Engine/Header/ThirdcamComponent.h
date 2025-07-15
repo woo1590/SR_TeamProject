@@ -29,6 +29,10 @@ private:
 
     _vec3 Offset{ 15.f,25.f,-15.f };
     _vec3 Direction{ 0.f,0.f,0.f };
+
+    _vec3 shakeOffset{ 0.f,0.f,0.f };
+    _float shakeDuration = 0.f;
+    _float shakeTimer = 0.f;
 };
 
 END

@@ -1,7 +1,7 @@
 #include "EnginePCH.h"
 #include "QuadMesh.h"
 
-QuadMesh::QuadMesh()
+QuadMesh::QuadMesh(_float size):size(size)
 {
 }
 
@@ -9,9 +9,9 @@ QuadMesh::~QuadMesh()
 {
 }
 
-QuadMesh* QuadMesh::Create()
+QuadMesh* QuadMesh::Create(_float size)
 {
-	QuadMesh* Instance = new QuadMesh;
+	QuadMesh* Instance = new QuadMesh(size);
 	if (FAILED(Instance->Ready_Mesh()))
 	{
 		Safe_Release(Instance);
@@ -25,10 +25,10 @@ HRESULT QuadMesh::Ready_Mesh()
 	std::vector<VTXTEX> vertices;
 	std::vector<INDEX32> indices;
 
-	vertices.push_back({ { -0.5f,-0.5,0.f },{0.f,0.f,0.f},{0.f,1.f} });
-	vertices.push_back({ { -0.5f,0.5,0.f },{0.f,0.f,0.f},{0.f,0.f} });
-	vertices.push_back({ { 0.5f,0.5,0.f },{0.f,0.f,0.f},{1.f,0.f} });
-	vertices.push_back({ { 0.5f,-0.5,0.f },{0.f,0.f,0.f},{1.f,1.f} });
+	vertices.push_back({ { -size * 0.5f, -size * 0.5f,0.f },{0.f,0.f,0.f},{0.f,1.f} });
+	vertices.push_back({ { -size * 0.5f, size * 0.5f,0.f },{0.f,0.f,0.f},{0.f,0.f} });
+	vertices.push_back({ { size * 0.5f, size * 0.5f,0.f },{0.f,0.f,0.f},{1.f,0.f} });
+	vertices.push_back({ { size * 0.5f, -size * 0.5f,0.f },{0.f,0.f,0.f},{1.f,1.f} });
 
 	indices.push_back({ 0,1,2 });
 	indices.push_back({ 0,2,3 });

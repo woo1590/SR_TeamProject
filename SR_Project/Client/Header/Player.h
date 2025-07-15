@@ -150,4 +150,9 @@ private:
 
     std::unordered_map<std::pair<int, int>, PhaseRotation, PairHash> PhaseRotations;
     std::unordered_map<std::string, _vec3> itemBaseRotOffset;
+
+
+    ///////////////////////Effect
+    _float walkEffectTimer = 0.f;
+    //////////////////////
 };
