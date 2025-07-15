@@ -447,6 +447,9 @@
     </Filter>
     <Filter Include="02. Object\NPC">
       <UniqueIdentifier>{a1d94d96-e1f6-4c9c-b60b-a5806772e39f}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\Effect\SpriteEffect">
+      <UniqueIdentifier>{cfdb6699-1199-4ab3-b188-9df03563f3d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -842,6 +845,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\SpriteEffect.h">
+      <Filter>02. Object\Effect\SpriteEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1225,6 +1231,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\SpriteEffect.cpp">
+      <Filter>02. Object\Effect\SpriteEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1261,5 +1270,9 @@
     <ClCompile Include="..\Code\PurpleBabySlime.cpp">
       <Filter>02. Object\Monster\Slime\PurpleSlime\BabySlime</Filter>
     </ClCompile>
+    </FxCompile>  
+    <FxCompile Include="SpriteShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

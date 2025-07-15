@@ -3,40 +3,39 @@
 
 BEGIN(Engine)
 
-class Material;
+class Shader;
 class Mesh;
 class ENGINE_DLL SpriteRenderer :
-    public RendererComponent
+	public RendererComponent
 {
 private:
-	SpriteRenderer(Object* owner, RENDER_ID id,
-				   const std::string& name, _uint total, _bool repeat);
+	SpriteRenderer(Object* owner,
+		const std::string& name, _uint total, _float speed, _bool repeat);
 
-    virtual ~SpriteRenderer();
+	virtual ~SpriteRenderer();
 
 public:
-	static SpriteRenderer* Create(Object* owner, RENDER_ID id,
-							      const std::string& name, _uint total, _bool repeat);
+	static SpriteRenderer* Create(Object* owner,
+							      const std::string& name, _uint total, _float speed, _bool repeat = false);
 	HRESULT Ready_Component()override;
 	void Update(_float dt)override;
-    void Render()override;
-
-	void SetMaterial(std::string& key);
-	void SetMesh(const std::string& key);
+	void Render()override;
 
 	_uint GetCurrFrame()const { return currFrame; }
+	_bool IsSpriteEnd()const { return !isRepeat && isSpriteEnd; }
 private:
 	void Free()override;
 	
-	Material* mtrl = nullptr;
+	Shader* shader = nullptr;
 	Mesh* quadMesh = nullptr;
 
 	std::string spriteName;
-	_uint currFrame;
+	_uint currFrame = 0.f;
 	_uint totalFrame;
 	_float timer = 0.f;
-	_float speed;
-	_bool isRepeat = false;
+	_float speed = 2.f;
+	_bool isRepeat = true;
+	_bool isSpriteEnd = false;
 };
 
 END

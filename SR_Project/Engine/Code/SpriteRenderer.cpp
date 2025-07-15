@@ -13,8 +13,8 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 
-SpriteRenderer::SpriteRenderer(Object* owner, RENDER_ID id, const std::string& name, _uint total, _bool repeat)
-	:RendererComponent(owner,id),spriteName(name), totalFrame(total), isRepeat(repeat)
+SpriteRenderer::SpriteRenderer(Object* owner, const std::string& name, _uint total, _float speed, _bool repeat)
+	:RendererComponent(owner, RENDER_ID::Render_Alpha), spriteName(name), totalFrame(total),speed(speed), isRepeat(repeat)
 {
 
 }
@@ -23,9 +23,9 @@ SpriteRenderer::~SpriteRenderer()
 {
 }
 
-SpriteRenderer* SpriteRenderer::Create(Object* owner, RENDER_ID id, const std::string& name, _uint total, _bool repeat)
+SpriteRenderer* SpriteRenderer::Create(Object* owner, const std::string& name, _uint total, _float speed, _bool repeat)
 {
-	SpriteRenderer* Instance = new SpriteRenderer(owner, id, name, total, repeat);
+	SpriteRenderer* Instance = new SpriteRenderer(owner, name, total, speed, repeat);
 	if (FAILED(Instance->Ready_Component()))
 	{
 		Safe_Release(Instance);
@@ -36,7 +36,8 @@ SpriteRenderer* SpriteRenderer::Create(Object* owner, RENDER_ID id, const std::s
 
 HRESULT SpriteRenderer::Ready_Component()
 {
-	
+	quadMesh = QuadMesh::Create();
+	shader = EngineCore::GetInstance()->GetResourceManager()->GetShader("SpriteShader");
 
 	return S_OK;
 }
@@ -69,12 +70,11 @@ void SpriteRenderer::Update(_float dt)
 
 void SpriteRenderer::Render()
 {
-	if (!mtrl || !quadMesh) return;
+	if (!shader || !quadMesh) return;
 
 	auto tex = EngineCore::GetInstance()->GetResourceManager()->GetTexture(spriteName + std::to_string(currFrame));
-	mtrl->SetTexture("AlbedoMap", tex);
+	shader->SetTexture("AlbedoMap", tex);
 
-	auto shader = mtrl->GetShader();
 	auto transform = owner->GetComponent<TransformComponent>();
 	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
 
@@ -83,6 +83,17 @@ void SpriteRenderer::Render()
 
 	_matrix worldMat = transform->GetWorldMatrix();
 	_matrix viewMat = cam->GetViewMatrix();
+
+	//Billboard
+	_matrix billMat;
+	D3DXMatrixIdentity(&billMat);
+	billMat._11 = viewMat._11;
+	billMat._13 = viewMat._13;
+	billMat._31 = viewMat._31;
+	billMat._33 = viewMat._33;
+	D3DXMatrixInverse(&billMat, nullptr, &billMat);
+	worldMat = billMat * worldMat;
+
 	_matrix projMat = cam->GetProjMatrix();
 
 	shader->Begin(0);
@@ -91,26 +102,13 @@ void SpriteRenderer::Render()
 	shader->SetConstant("g_View", viewMat);
 	shader->SetConstant("g_Proj", projMat);
 
-	mtrl->Apply();
 	quadMesh->Draw();
 
 	shader->End();
 }
 
-void SpriteRenderer::SetMaterial(std::string& key)
-{
-	mtrl = EngineCore::GetInstance()->GetResourceManager()->GetMaterial(key);
-}
-
-void SpriteRenderer::SetMesh(const std::string& key)
-{
-	quadMesh = EngineCore::GetInstance()->GetResourceManager()->GetMesh(key);
-	quadMesh->AddRef();
-}
-
 void SpriteRenderer::Free()
 {
 	Safe_Release(quadMesh);
-	Safe_Release(mtrl);
 }
 

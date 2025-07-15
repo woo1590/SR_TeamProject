@@ -17,6 +17,9 @@
 #include "Die.h"
 #include "MeshRendererComponent.h"
 
+//effect
+#include "BloodEffect.h"
+
 JungleZombie::JungleZombie(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
 {
@@ -125,6 +128,14 @@ void JungleZombie::Hit(_vec3 dir, _float power)
         HitDir = dir;
         HitPower = power;
 
+        ///////////////////////////////////////////Add BloodEffect
+        auto effect = BloodEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->SetDeadTime(1.f);
+        effect->SetOwner(GetComponent<TransformComponent>());
+        auto effectTransform = effect->GetComponent<TransformComponent>();
+        effectTransform->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+        ///////////////////////////////////////////
         Monster::Hit(dir, power);
     }
 }

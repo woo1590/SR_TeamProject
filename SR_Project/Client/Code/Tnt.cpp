@@ -113,7 +113,7 @@ void Tnt::Update(_float dt)
             //        monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-TntDamage);
             //    }
             //}
-            //SetDead();
+            SetDead();
         }
     }
 }
