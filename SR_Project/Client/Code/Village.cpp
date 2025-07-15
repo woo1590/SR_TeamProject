@@ -118,7 +118,7 @@ void Village::Load()
 
 	/*-------------------------Create Objects----------------------------*/
 	{
-		BlockMgr->LoadChunk("Plain");
+		BlockMgr->LoadChunk("VillageMap");
 		Grid->InsertBlock();
 
 		UILoader loader;
@@ -135,6 +135,8 @@ void Village::Load()
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
 		trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
 		trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+		trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+		trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
 
 		auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger2->SetTriggerPosition(_vec3(124.f, 5.f, 86.f));
@@ -165,7 +167,7 @@ void Village::Update(_float dt)
 	if (Input->IsKeyPressed(NUM0))
 	{
 		auto cam = CameraMgr->GetMainCamera();
-		cam->GetOwner()->GetComponent<ThirdcamComponent>()->SetShake(1000.f, 1.f);
+		cam->GetOwner()->GetComponent<ThirdcamComponent>()->SetShake(5.f, 0.4f);
 	}
 
 }

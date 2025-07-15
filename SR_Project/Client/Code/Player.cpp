@@ -803,6 +803,7 @@ void Player::UpdateWalk(_float dt) {
     auto transform = GetComponent<TransformComponent>(); //Move Player
     if (moveToAttack)
     {
+        //이동하는 순간 오브젝트가 죽으면 버그 생김
         PlayerDirection = moveToObject->GetComponent<TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
         PlayerDirection.y = 0.f;
     }

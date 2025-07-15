@@ -66,8 +66,8 @@ void ThirdcamComponent::Update(_float dt)
         if (progress < 0.f)
             progress = 0.f;
 
-        shakeOffset.x = r->get<_float>(-power, power) * progress * progress * 0.5f;
-        shakeOffset.z = r->get<_float>(-power, power) * progress * progress * 0.5f;
+        shakeOffset.x = r->get<_float>(-power, power) * progress * progress * 0.1f;
+        shakeOffset.z = r->get<_float>(-power, power) * progress * progress * 0.1f;
 
         shakeTimer += dt;
     }
