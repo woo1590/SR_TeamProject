@@ -133,6 +133,7 @@ HRESULT Loader::Load_TestScene()
 	/*----------------------Load Sprite----------------------------*/
 	{
 		resource->LoadSprite("Explosion", 90);
+		resource->LoadSprite("Walk", 7);
 	}
 	return S_OK;
 }

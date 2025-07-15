@@ -1270,7 +1270,6 @@
     <ClCompile Include="..\Code\PurpleBabySlime.cpp">
       <Filter>02. Object\Monster\Slime\PurpleSlime\BabySlime</Filter>
     </ClCompile>
-    </FxCompile>  
     <FxCompile Include="SpriteShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>

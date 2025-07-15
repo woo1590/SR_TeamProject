@@ -9,6 +9,7 @@
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
 #include "InfoComponent.h"
+#include "BloodEffect.h"
 #include "Player.h"
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
@@ -122,6 +123,12 @@ void Zombie::Hit(_vec3 dir, _float power)
         HitDir = dir;
         HitPower = power;
 
+        ////////////////////////////////////////////////Blood Effect
+        auto effect = BloodEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->SetDeadTime(1.f);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+        ////////////////////////////////////////////////
         Monster::Hit(dir, power);
     }
 }

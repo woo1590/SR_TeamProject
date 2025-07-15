@@ -26,6 +26,8 @@
 #include "Firework.h"
 
 #include "StaticGrid.h"
+#include "SpriteRenderer.h"
+#include "SpriteEffect.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) {}
 Player::~Player() {}
@@ -880,6 +882,13 @@ void Player::UpdateWalk(_float dt) {
         State = ePlayerState::IDLE;
         WalkTime = 0.f;
     }
+
+    //////////////////////////////////////////Walk Effect
+    auto effect = SpriteEffect::Create(owner, ObjectType::SpriteEffect);
+    effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition() - _vec3(0.f, -3.f, 0.f));
+    effect->AddComponent<SpriteRenderer>("Walk", 7, 10.f);
+    owner->AddObject(ObjectType::SpriteEffect, effect);
+    //////////////////////////////////////////
 }
 void Player::UpdateRoll(_float dt)
 {
