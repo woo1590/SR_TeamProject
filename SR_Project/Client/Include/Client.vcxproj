@@ -185,6 +185,7 @@
     <ClInclude Include="..\Header\DamageText.h" />
     <ClInclude Include="..\Header\DeathFrame.h" />
     <ClInclude Include="..\Header\Effect.h" />
+    <ClInclude Include="..\Header\Ender.h" />
     <ClInclude Include="..\Header\EnemyHPBarBack.h" />
     <ClInclude Include="..\Header\EnemyHPBarFront.h" />
     <ClInclude Include="..\Header\FilterTooltip.h" />
@@ -314,6 +315,7 @@
     <ClCompile Include="..\Code\DamageText.cpp" />
     <ClCompile Include="..\Code\DeathFrame.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\Ender.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarFront.cpp" />
     <ClCompile Include="..\Code\FilterTooltip.cpp" />

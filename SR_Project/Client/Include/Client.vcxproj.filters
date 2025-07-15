@@ -447,9 +447,12 @@
     </Filter>
     <Filter Include="02. Object\NPC">
       <UniqueIdentifier>{a1d94d96-e1f6-4c9c-b60b-a5806772e39f}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Effect\SpriteEffect">
       <UniqueIdentifier>{cfdb6699-1199-4ab3-b188-9df03563f3d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Ender">
+      <UniqueIdentifier>{1a44899b-d7af-4f84-9264-ea0051b08200}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -531,9 +534,6 @@
     <ClInclude Include="..\Header\Emerald.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\Emerald</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ExpBarFront.h">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ArrowSlot.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ArrowSlot</Filter>
     </ClInclude>
@@ -569,9 +569,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Bow.h">
       <Filter>02. Object\Item\Bow</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ExpBarBack.h">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearSlot.h">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlot</Filter>
@@ -729,9 +726,6 @@
     <ClInclude Include="..\Header\WorldTooltip.h">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldTooltip</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UILoader.h">
-      <Filter>01. Scene\UIManager\UILoader</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\FilterTooltip.h">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Tooltip\FilterTooltip</Filter>
     </ClInclude>
@@ -836,7 +830,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Npc.h">
       <Filter>02. Object\NPC</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\UILoader.h">
       <Filter>02. Object\UIObj\UILoader</Filter>
     </ClInclude>
@@ -845,9 +839,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarFront.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\SpriteEffect.h">
       <Filter>02. Object\Effect\SpriteEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarBack.h" />
+    <ClInclude Include="..\Header\ExpBarFront.h" />
+    <ClInclude Include="..\Header\UILoader.h" />
+    <ClInclude Include="..\Header\Ender.h">
+      <Filter>02. Object\Monster\Ender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -926,9 +926,6 @@
     <ClCompile Include="Client.cpp">
       <Filter>100. Executable</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ExpBarFront.cpp">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarFront</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ArrowSlot.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ArrowSlot</Filter>
     </ClCompile>
@@ -967,9 +964,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bow.cpp">
       <Filter>02. Object\Item\Bow</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ExpBarBack.cpp">
-      <Filter>02. Object\UIObj\ExpBar\ExpBarBack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearSlot.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlot</Filter>
@@ -1130,9 +1124,6 @@
     <ClCompile Include="..\Code\WorldTooltip.cpp">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldTooltip</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UILoader.cpp">
-      <Filter>01. Scene\UIManager\UILoader</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\FilterTooltip.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Tooltip\FilterTooltip</Filter>
     </ClCompile>
@@ -1222,7 +1213,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Npc.cpp">
       <Filter>02. Object\NPC</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp">
       <Filter>02. Object\UIObj\UILoader</Filter>
     </ClCompile>
@@ -1231,9 +1222,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarFront.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\SpriteEffect.cpp">
       <Filter>02. Object\Effect\SpriteEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarBack.cpp" />
+    <ClCompile Include="..\Code\ExpBarFront.cpp" />
+    <ClCompile Include="..\Code\UILoader.cpp" />
+    <ClCompile Include="..\Code\Ender.cpp">
+      <Filter>02. Object\Monster\Ender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
