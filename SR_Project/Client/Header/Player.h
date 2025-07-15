@@ -70,6 +70,7 @@ public:
     void RevivePlayer();
     _vec3 GetAttackDirection();
     void ChangeShootType();
+    bool IsMovingToAttack();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -90,18 +91,22 @@ private:
     void UpdateRevive(_float dt);
 
     void SaveStartRotation();
-    void SetUpFirstAttackPhaseRotations();
-    void SetUpSecondAttackPhaseRotations();
-    void SetUpLastAttackPhaseRotations();
+    void SetUpSwordFirstAttackPhaseRotations();
+    void SetUpSwordSecondAttackPhaseRotations();
+    void SetUpSwordLastAttackPhaseRotations();
     void SetUpShootPhaseRotations();
     void SetUpDeadPhaseRotations();
     void SetUpRevivePhaseRotations();
-    void SetUpSpearAttackPhaseRotations();
+    void SetUpSpearFirstAttackPhaseRotations();
+    void SetUpSpearSecondAttackPhaseRotations();
+    void SetUpSpearLastAttackPhaseRotations();
     void SetAttackTypeNext();
+    void SetUpIdleRotations();
+    void UpdateNewIdleRotations();
 
     _vec3 MatrixToEulerAngles(const _matrix& mat);
     void OnCollisionStay(Object* other);
-    void IdleSmoothing(_float dt, std::string bone);
+    void IdleSmoothing(_float dt, ePlayerBone bone);
     float NormalizeAngle(_float angle);
     float OffsetLerp(const _float& start, const _float& offset, float ratio);
     _vec3 OffsetLerp(const _vec3& start, const _vec3& offset, float ratio);
@@ -129,7 +134,7 @@ private:
     const _float RollDuration = 0.5f;
 
     _float AttackTime = 0.f;
-    const _float AttackDuration = 0.3f;
+    const _float AttackDuration = 0.3f * 20;
     const _float ShootDuration = 0.6f;
 
     _float DeadTime = 0.f;
@@ -141,7 +146,6 @@ private:
     _float ReviveTime = 0.f;
     const _float reviveDuration = 1.f;
 
-    std::unordered_map<std::string, _vec3> StartRotations;
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 DestinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
@@ -150,6 +154,8 @@ private:
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
 
+    std::unordered_map<std::string, _vec3> StartRotations;
     std::unordered_map<std::pair<int, int>, PhaseRotation, PairHash> PhaseRotations;
     std::unordered_map<std::string, _vec3> itemBaseRotOffset;
+    std::unordered_map<std::pair<int, int>, _vec3, PairHash> idleRot;
 };

@@ -4,12 +4,14 @@ class Item :
     public Object
 {
 public:
-    enum class ItemType {
+    enum class ItemType : int
+    {
         ITEM_SWORD,
         ITEM_BOW,
         ITEM_SPEAR,
         ITEM_CROSSBOW,
-        ITEM_PROJECTILE
+        ITEM_PROJECTILE,
+        ITEM_NONE
     };
 protected:
     Item(ObjectManager* owner, ObjectType objType);
