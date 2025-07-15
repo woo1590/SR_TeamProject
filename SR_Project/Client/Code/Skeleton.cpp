@@ -429,10 +429,14 @@ void Skeleton::PlayDie(_float dt)
             auto transform = bone.second->GetComponent<TransformComponent>();
             _vec3 bonepos = transform->GetPosition();
 
-            _vec3 randomOffset;
-            randomOffset.x = r->get<_float>(-2.f, 2.f);
-            randomOffset.y = 0.f;
-            randomOffset.z = r->get<_float>(-2.f, 2.f);
+            _vec3 randomOffset{ 0.f,0.f,0.f };
+
+            if (bone.first != "Head")
+            {
+                randomOffset.x = r->get<_float>(-3.f, 3.f);
+                randomOffset.y = 0.f;
+                randomOffset.z = r->get<_float>(-3.f, 3.f);
+            }
 
             DetachParent(bone.first);
             transform->SetPosition(pos + bonepos + randomOffset);
