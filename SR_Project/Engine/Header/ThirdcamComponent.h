@@ -21,6 +21,7 @@ public:
     void SetOffset(_vec3 offset);
     void SetOffset(_float x, _float y, _float z);
 
+    void SetShake(_float power, _float duration);
 private:
     void Free()override;
 
@@ -33,6 +34,7 @@ private:
     _vec3 shakeOffset{ 0.f,0.f,0.f };
     _float shakeDuration = 0.f;
     _float shakeTimer = 0.f;
+    _float power = 0.f;
 };
 
 END

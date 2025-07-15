@@ -34,6 +34,8 @@ private:
     _float MinZ = 0.1f;
     _float MaxZ = 1000.f;
 
+    _vec3 shakeOffset{ 0.f,0.f,0.f };
+
     TransformComponent* Target = nullptr;
 };
 

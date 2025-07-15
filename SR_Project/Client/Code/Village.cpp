@@ -118,7 +118,7 @@ void Village::Load()
 
 	/*-------------------------Create Objects----------------------------*/
 	{
-		BlockMgr->LoadChunk("VillageMap");
+		BlockMgr->LoadChunk("Plain");
 		Grid->InsertBlock();
 
 		UILoader loader;
@@ -159,6 +159,14 @@ void Village::Update(_float dt)
 {
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
+
+	auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (Input->IsKeyPressed(NUM0))
+	{
+		auto cam = CameraMgr->GetMainCamera();
+		cam->GetOwner()->GetComponent<ThirdcamComponent>()->SetShake(1000.f, 1.f);
+	}
 
 }
 
