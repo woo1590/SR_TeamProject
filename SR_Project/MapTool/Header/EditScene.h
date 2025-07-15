@@ -40,6 +40,7 @@ private:
 #endif
     void CreateTerrain(const std::string& filename);
     void PlaceTerrainBlocks(const std::string& filename);
+    void UpdateCreateTerrain();
 
     // 광선 위치와 방향 초기화
     void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);
@@ -66,17 +67,26 @@ private:
     void Free() override;
 
 private:
-    bool isDown = false, isPrefab = false;
+    bool isDown = false;
+
+    int maxChunkX = -1;
+    int maxChunkZ = -1;
+
+    // ================ Prefab ================
+    bool isPrefab = false;
     Prefab* selectedPrefab = nullptr;
     PrefabManager* PrefabMgr = nullptr;
 
     // ================ 지형 생성 ================
-    bool CreateTer = false;             // 지형 생성 여부
+    bool isCreate = false;              // 지형 생성 여부
     int WidthX = 0;                     // 지형 생성할 때, X 길이
     int WidthZ = 0;                     // 지형 생성할 때, Z 길이
     int Height = 0;                     // 지형 생성할 때, Y 높이
     float Scale = 0.f;                  // 지형 굴곡의 정도
     TerrainCreater* Terrain = nullptr;  // 지형 생성 함수 사용을 위한 변수
+
+    int PreChunkX = -1;                 // 카메라 이전 청크 X
+    int PreChunkZ = -1;                 // 카메라 이전 청크 Z
 
     // ================ Static Block ================
     // 블럭 모양 결정

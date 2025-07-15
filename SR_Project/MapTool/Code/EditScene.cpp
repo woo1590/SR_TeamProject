@@ -81,6 +81,7 @@ void EditScene::Load()
 void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
+	UpdateCreateTerrain();
 	ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
 
 	// 좌&우클릭에 따른 블럭 생성&제거
@@ -96,6 +97,23 @@ void EditScene::Update(float dt)
 			{
 				MakePickingRay(rayOrigin, rayDir);
 				OnLeftClick(rayOrigin, rayDir);
+			}
+
+			if (isDown)
+			{
+				if (Input->IsKeyDown(RBUTTON))
+				{
+					MakePickingRay(rayOrigin, rayDir);
+					OnRightClick(rayOrigin, rayDir);
+				}
+			}
+			else
+			{
+				if (Input->IsKeyPressed(RBUTTON))
+				{
+					MakePickingRay(rayOrigin, rayDir);
+					OnRightClick(rayOrigin, rayDir);
+				}
 			}
 
 			return;
@@ -571,26 +589,61 @@ void EditScene::CreateTerrain(const std::string& filename)
 
 void EditScene::PlaceTerrainBlocks(const std::string& filename)
 {
-	CreateTer = true;
 	ChunkMgr->ClearAllChunks();
 
 	if (!Terrain->LoadHeightmapFromImage(filename)) return;
 	Terrain->CreateBlockTerrain(WidthX, WidthZ, Height);
 
-	for (const auto& block : Terrain->GetBlocks())
+	isCreate = true;
+
+	maxChunkX = WidthX / CHUNK_SIZE;
+	maxChunkZ = WidthZ / CHUNK_SIZE;
+}
+
+void EditScene::UpdateCreateTerrain()
+{
+	if (!isCreate) return;
+
+	static bool placeBlock(false);
+	static int curChunkX = 0;
+	static int curChunkZ = 0;
+
+	if (!placeBlock)
 	{
-		_vec3 position = block.Pos;
-		staticBlockUsage = block.Usage;
-		staticBlockType = block.Type;
-		staticBlockAxis = block.Axis;
-		staticBlockRot = block.Rot;
+		for (const auto& block : Terrain->GetBlocks())
+		{
+			_vec3 position = block.Pos;
 
-		PlaceBlock(position);
+			int blockChunkX = static_cast<int>(floor(position.x / CHUNK_SIZE));
+			int blockChunkZ = static_cast<int>(floor(position.z / CHUNK_SIZE));
+
+			if (blockChunkX == curChunkX && blockChunkZ == curChunkZ)
+			{
+				staticBlockUsage = block.Usage;
+				staticBlockType = block.Type;
+				staticBlockAxis = block.Axis;
+				staticBlockRot = block.Rot;
+
+				PlaceBlock(position);
+			}
+		}
+
+		placeBlock = true;
 	}
+	else
+	{
+		ChunkMgr->CreateChunk(curChunkX, curChunkZ)->BuildChunkFace();
 
-	CreateTer = false;
-	for (auto& iter : ChunkMgr->GetChunks())
-		iter.second->BuildChunkFace();
+		++curChunkX;
+		if (curChunkX >= maxChunkX)
+		{
+			curChunkX = 0;
+			++curChunkZ;
+		}
+		if (curChunkZ >= maxChunkZ) isCreate = false;
+
+		placeBlock = false;
+	}
 }
 
 void EditScene::MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir)
@@ -826,7 +879,7 @@ void EditScene::PlaceBlock(_vec3& position)
 		else
 		{
 			ChunkMgr->CreateChunk(chunkX, chunkZ)->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
-			if (!CreateTer) ChunkMgr->GetChunk(chunkX, chunkZ)->BuildChunkFace();
+			if (!isCreate) ChunkMgr->GetChunk(chunkX, chunkZ)->BuildChunkFace();
 		}
 		
 		// ================ 벡터에 블럭 정보 삽입 ================
@@ -885,7 +938,7 @@ void EditScene::PlacePrefab(_vec3& position)
 		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkZ);
 		chunk->AddBlock(worldPos, p.Type, p.Axis, p.Rot, p.Usage);
 
-		if (p.Type != StaticBlockType::Glass && p.Type != StaticBlockType::Leaf && !CreateTer) chunk->BuildChunkFace();
+		if (p.Type != StaticBlockType::Glass && p.Type != StaticBlockType::Leaf && !isCreate) chunk->BuildChunkFace();
 		staticBlocks.push_back({ worldPos, p.Type, p.Axis, p.Rot, p.Usage });
 	}
 }

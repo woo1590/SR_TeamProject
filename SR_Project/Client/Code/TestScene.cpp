@@ -91,6 +91,7 @@ void TestScene::Load()
 	BlockMgr		= BlockManager::Create(this);
 	ChunkMgr		= ChunkManager::Create(this);
 
+	BlockMgr->LoadDB("testScene");
 	BlockMgr->LoadChunk("testScene");
 
 	Grid->InsertBlock();
@@ -98,7 +99,7 @@ void TestScene::Load()
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
+	player->GetComponent<TransformComponent>()->SetPosition(0.f, 200.f, 200.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
@@ -147,6 +148,7 @@ void TestScene::Update(float dt)
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
 	uiMgr->Update(dt);
+	ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
 
 	/*-------------ī�޶� ��ȯ �׽�Ʈ �ڵ�-------------*/
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
