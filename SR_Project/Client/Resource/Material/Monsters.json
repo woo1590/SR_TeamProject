@@ -238,6 +238,24 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/VillageLeg.dds"
       }
+    },
+
+    "EnderTopHead_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Ender_TopHead.dds"
+      }
+    },
+
+    "EnderBottomHead_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Ender_BottomHead.dds"
+      }
+    },
+
+    "EnderBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Ender_Body.dds"
+      }
     }
   }
 }
