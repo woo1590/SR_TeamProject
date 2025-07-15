@@ -120,6 +120,7 @@ void Player::Update(_float dt)
         UpdateRevive(dt);
         break;
     }
+    CheckTargetDead();
 }
 
 void Player::Late_Update(_float dt)
@@ -540,8 +541,8 @@ void Player::SetUpShootPhaseRotations()
     LeftArmRot.destinations =
     {
         StartRotations["LArm"],
-        { -100.f, 0.f, -30.f },
-        { -100.f, 0.f, -30.f },
+        { GetStringAngleX("front",""), 0.f, GetStringAngleZ("","down")},
+        { GetStringAngleX("front",""), 0.f, GetStringAngleZ("","down")},
         { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::LARM, LeftArmRot);
@@ -552,8 +553,8 @@ void Player::SetUpShootPhaseRotations()
     RightArmRot.destinations =
     {
         StartRotations["RArm"],
-        { -100.f, 0.f, 60.f },
-        { -100.f, 0.f, 60.f },
+        { GetStringAngleX("front","up") * 0.9f, GetStringAngleY("right",""), GetStringAngleZ("right","")},
+        { GetStringAngleX("front","") * 0.9f, 0.f, GetStringAngleZ("right","down") },
         { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::RARM, RightArmRot);
@@ -587,12 +588,24 @@ void Player::SetUpShootPhaseRotations()
     bodyRot.phaseVec = phase;
     bodyRot.destinations =
     {
-        GetComponent<TransformComponent>()->GetRotate(),
+        D3DXToDegree(StartRotations["Body"]),
         { 0.f, 10.f, 0.f },
         { 0.f, 0.f, 0.f },
         { 0.f, -10.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::BODY, bodyRot);
+
+    PhaseRotation headRot;
+    headRot.name = "Head";
+    headRot.phaseVec = phase;
+    headRot.destinations =
+    {
+        D3DXToDegree(StartRotations["Head"]),
+        { 0.f, 0.f, 0.f},
+        { 0.f,  0.f, 0.f},
+        { 0.f,  0.f, 0.f}
+    };
+    SetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::HEAD, headRot);
 }
 
 void Player::SetUpDeadPhaseRotations()
@@ -706,7 +719,7 @@ void Player::SetUpRevivePhaseRotations()
 
 void Player::SetUpSpearFirstAttackPhaseRotations()
 {
-    vector<float> phase = { 0.15f, 0.45f, 1.f };
+    vector<float> phase = { 0.2f, 0.3f, 1.f };
 
     PhaseRotation bodyRot;
     bodyRot.name = "Body";
@@ -714,8 +727,8 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
     bodyRot.destinations =
     {
         {0.f, 60.f, 0.f},
-        {0.f, GetStringAngleY("right","front"), 0.f},
-        {0.f, GetStringAngleY("left","front"), 0.f},
+        {0.f, 60.f, 0.f},
+        {0.f, GetStringAngleY("","front"), 0.f},
         {0.f, 60.f, 0.f}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::BODY, bodyRot);
@@ -726,8 +739,8 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
     headRot.destinations =
     {
         {0.f, -60.f, 0.f},
-        { 0.f, -GetStringAngleY("right","front"), 0.f},
-        { 0.f, -GetStringAngleY("left","front"), 0.f},
+        { 0.f, -60.f, 0.f},
+        { 0.f, -GetStringAngleY("","front"), 0.f},
         {0.f, -60.f, 0.f}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::HEAD, headRot);
@@ -738,8 +751,8 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
     LeftArmRot.destinations =
     {
         D3DXToDegree(StartRotations["LArm"]),
-        { GetStringAngleX("front","down"),   0.f, GetStringAngleZ("left","down")},
-        { GetStringAngleX("","down"),        0.f, GetStringAngleZ("left","down")},
+        { GetStringAngleX("front","down"),   GetStringAngleY("left",""), GetStringAngleZ("left","down")},
+        { GetStringAngleX("front","") * 0.8f,        GetStringAngleY("left","") * 0.75f, GetStringAngleZ("right","") * 0.75f},
         D3DXToDegree(StartRotations["LArm"])
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LARM, LeftArmRot);
@@ -750,8 +763,8 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
     RightArmRot.destinations =
     {
        D3DXToDegree(StartRotations["RArm"]),
-        { GetStringAngleX("back","down"),   0.f, GetStringAngleZ("right","down")},
-        { GetStringAngleX("front","down"),    0.f, GetStringAngleZ("right","") },
+        { GetStringAngleX("front","down"),   GetStringAngleY("left",""), GetStringAngleZ("","down")},
+        { GetStringAngleX("front","") * 0.8f,    GetStringAngleY("left","") * 0.75f, GetStringAngleZ("left","") * 0.75f},
         D3DXToDegree(StartRotations["RArm"])
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
@@ -761,10 +774,10 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
     LeftLegRot.phaseVec = phase;
     LeftLegRot.destinations =
     {
-        StartRotations["LLeg"],
-        { GetStringAngleX("front","down") * 0.5f,    0.f, 0.f },
-        { 0.f,                                       0.f,-5.f },
-        { GetStringAngleX("back","down") * 0.5f,     0.f, 0.f }
+        D3DXToDegree(StartRotations["LLeg"]),
+        { GetStringAngleX("front","down") * 0.2f, 0.f, GetStringAngleZ("left","down") * 0.2f },
+        { GetStringAngleX("back","down") * 0.2f, 0.f, GetStringAngleZ("left","down") * 0.2f },
+        { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LLEG, LeftLegRot);
 
@@ -773,10 +786,10 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
     RightLegRot.phaseVec = phase;
     RightLegRot.destinations =
     {
-        StartRotations["RLeg"],
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
-        { 0.f, 0.f, 5.f },
-        { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f }
+        D3DXToDegree(StartRotations["RLeg"]),
+        { GetStringAngleX("back","down") * 0.2f, 0.f, GetStringAngleZ("right","down") * 0.2f },
+        { GetStringAngleX("front","down") * 0.2f, 0.f, GetStringAngleZ("right","down") * 0.2f },
+        { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RLEG, RightLegRot);
 
@@ -787,7 +800,7 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
     RightHandRot.destinations =
     {
         {baseOffset.x, 0.f, 0.f },
-        {baseOffset.x + GetStringAngleX("front","down"), 0.f, 0.f},
+        {baseOffset.x, 0.f, 0.f},
         {baseOffset.x + GetStringAngleX("back",""), 0.f, 0.f},
         {baseOffset.x , 0.f, 0.f}
     };
@@ -796,7 +809,7 @@ void Player::SetUpSpearFirstAttackPhaseRotations()
 
 void Player::SetUpSpearSecondAttackPhaseRotations()
 {
-    vector<float> phase = { 0.15f, 0.45f, 1.f };
+    vector<float> phase = { 0.2f, 0.3f, 1.f };
 
     PhaseRotation bodyRot;
     bodyRot.name = "Body";
@@ -804,8 +817,8 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
     bodyRot.destinations =
     {
         {0.f, 60.f, 0.f},
-        {0.f, GetStringAngleY("right","front"), 0.f},
-        {0.f, GetStringAngleY("left","front"), 0.f},
+        {0.f, 60.f, 0.f},
+        {0.f, GetStringAngleY("","front"), 0.f},
         {0.f, 60.f, 0.f}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::BODY, bodyRot);
@@ -816,8 +829,8 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
     headRot.destinations =
     {
         {0.f, -60.f, 0.f},
-        { 0.f, -GetStringAngleY("right","front"), 0.f},
-        { 0.f, -GetStringAngleY("left","front"), 0.f},
+        { 0.f, -60.f, 0.f},
+        { 0.f, -GetStringAngleY("","front"), 0.f},
         {0.f, -60.f, 0.f}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::HEAD, headRot);
@@ -828,8 +841,8 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
     LeftArmRot.destinations =
     {
         D3DXToDegree(StartRotations["LArm"]),
-        { GetStringAngleX("front","down"),   0.f, GetStringAngleZ("left","down")},
-        { GetStringAngleX("","down"),        0.f, GetStringAngleZ("left","down")},
+        { GetStringAngleX("front","down"),   GetStringAngleY("left",""), GetStringAngleZ("left","down")},
+        { GetStringAngleX("","down"),       GetStringAngleY("left",""), GetStringAngleZ("left","down")},
         D3DXToDegree(StartRotations["LArm"])
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LARM, LeftArmRot);
@@ -840,8 +853,8 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
     RightArmRot.destinations =
     {
        D3DXToDegree(StartRotations["RArm"]),
-        { GetStringAngleX("back","down"),   0.f, GetStringAngleZ("right","down")},
-        { GetStringAngleX("front","down"),    0.f, GetStringAngleZ("right","") },
+        { GetStringAngleX("front","down") * 0.5f,   GetStringAngleY("left",""), GetStringAngleZ("right","down")},
+        { GetStringAngleX("front",""),    GetStringAngleY("left",""), GetStringAngleZ("","down") },
         D3DXToDegree(StartRotations["RArm"])
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
@@ -851,10 +864,10 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
     LeftLegRot.phaseVec = phase;
     LeftLegRot.destinations =
     {
-        StartRotations["LLeg"],
-        { GetStringAngleX("front","down") * 0.5f,    0.f, 0.f },
-        { 0.f,                                       0.f,-5.f },
-        { GetStringAngleX("back","down") * 0.5f,     0.f, 0.f }
+        D3DXToDegree(StartRotations["LLeg"]),
+        { GetStringAngleX("front","down") * 0.3f,    0.f, GetStringAngleZ("left","down") * 0.3f },
+        { GetStringAngleX("back","down") * 0.3f,    0.f, GetStringAngleZ("left","down") * 0.3f },
+        { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LLEG, LeftLegRot);
 
@@ -863,10 +876,10 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
     RightLegRot.phaseVec = phase;
     RightLegRot.destinations =
     {
-        StartRotations["RLeg"],
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
-        { 0.f, 0.f, 5.f },
-        { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f }
+        D3DXToDegree(StartRotations["RLeg"]),
+        { GetStringAngleX("back","down") * 0.3f, 0.f, GetStringAngleZ("right","down") * 0.3f },
+        { GetStringAngleX("front","down") * 0.3f, 0.f, GetStringAngleZ("right","down") * 0.3f },
+        { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RLEG, RightLegRot);
 
@@ -877,7 +890,7 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
     RightHandRot.destinations =
     {
         {baseOffset.x, 0.f, 0.f },
-        {baseOffset.x + GetStringAngleX("front","down"), 0.f, 0.f},
+        {baseOffset.x + GetStringAngleX("front","") * 0.2f, 0.f, 0.f},
         {baseOffset.x + GetStringAngleX("back",""), 0.f, 0.f},
         {baseOffset.x , 0.f, 0.f}
     };
@@ -886,7 +899,7 @@ void Player::SetUpSpearSecondAttackPhaseRotations()
 
 void Player::SetUpSpearLastAttackPhaseRotations()
 {
-    vector<float> phase = { 0.15f, 0.45f, 1.f };
+    vector<float> phase = { 0.2f, 0.3f, 1.f };
 
     PhaseRotation bodyRot;
     bodyRot.name = "Body";
@@ -894,7 +907,7 @@ void Player::SetUpSpearLastAttackPhaseRotations()
     bodyRot.destinations =
     {
         {0.f, 60.f, 0.f},
-        {0.f, GetStringAngleY("right","front"), 0.f},
+        {0.f, 60.f, 0.f},
         {0.f, GetStringAngleY("left","front"), 0.f},
         {0.f, 60.f, 0.f}
     };
@@ -906,7 +919,7 @@ void Player::SetUpSpearLastAttackPhaseRotations()
     headRot.destinations =
     {
         {0.f, -60.f, 0.f},
-        { 0.f, -GetStringAngleY("right","front"), 0.f},
+        { 0.f, -60.f, 0.f},
         { 0.f, -GetStringAngleY("left","front"), 0.f},
         {0.f, -60.f, 0.f}
     };
@@ -918,8 +931,8 @@ void Player::SetUpSpearLastAttackPhaseRotations()
     LeftArmRot.destinations =
     {
         D3DXToDegree(StartRotations["LArm"]),
-        { GetStringAngleX("front","down"),   0.f, GetStringAngleZ("left","down")},
-        { GetStringAngleX("","down"),        0.f, GetStringAngleZ("left","down")},
+       { GetStringAngleX("front","down"),   GetStringAngleY("left",""), GetStringAngleZ("left","down")},
+        { GetStringAngleX("back","down"),    GetStringAngleY("left",""), GetStringAngleZ("left","down")},
         D3DXToDegree(StartRotations["LArm"])
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LARM, LeftArmRot);
@@ -930,8 +943,8 @@ void Player::SetUpSpearLastAttackPhaseRotations()
     RightArmRot.destinations =
     {
        D3DXToDegree(StartRotations["RArm"]),
-        { GetStringAngleX("back","down"),   0.f, GetStringAngleZ("right","down")},
-        { GetStringAngleX("front","down"),    0.f, GetStringAngleZ("right","") },
+        { GetStringAngleX("front","down") * 0.5f,   GetStringAngleY("left","front"), GetStringAngleZ("right","down")},
+        { GetStringAngleX("front","") * 0.8f,    GetStringAngleY("left","front"), GetStringAngleZ("right","down") },
         D3DXToDegree(StartRotations["RArm"])
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RARM, RightArmRot);
@@ -941,10 +954,10 @@ void Player::SetUpSpearLastAttackPhaseRotations()
     LeftLegRot.phaseVec = phase;
     LeftLegRot.destinations =
     {
-        StartRotations["LLeg"],
-        { GetStringAngleX("front","down") * 0.5f,    0.f, 0.f },
-        { 0.f,                                       0.f,-5.f },
-        { GetStringAngleX("back","down") * 0.5f,     0.f, 0.f }
+        D3DXToDegree(StartRotations["LLeg"]),
+        { GetStringAngleX("front","down") * 0.3f,    0.f, GetStringAngleZ("left","down") * 0.3f },
+        { GetStringAngleX("back","down") * 0.3f,    0.f, GetStringAngleZ("right","down") * 0.3f },
+        { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::LLEG, LeftLegRot);
 
@@ -953,12 +966,14 @@ void Player::SetUpSpearLastAttackPhaseRotations()
     RightLegRot.phaseVec = phase;
     RightLegRot.destinations =
     {
-        StartRotations["RLeg"],
-        { GetStringAngleX("back","down") * 0.5f, 0.f, 0.f },
-        { 0.f, 0.f, 5.f },
-        { GetStringAngleX("front","down") * 0.5f, 0.f, 0.f }
+        D3DXToDegree(StartRotations["RLeg"]),
+        { GetStringAngleX("back","down") * 0.3f, 0.f, GetStringAngleZ("right","down") * 0.3f },
+        { GetStringAngleX("front","down") * 0.3f, 0.f, GetStringAngleZ("left","down") * 0.3f },
+        { 0.f, 0.f, 0.f }
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RLEG, RightLegRot);
+
+    phase = { 0.2f, 0.3f, 0.8f, 1.f };
 
     _vec3 baseOffset = D3DXToDegree(itemBaseRotOffset.at("spear"));
     PhaseRotation RightHandRot;
@@ -967,8 +982,9 @@ void Player::SetUpSpearLastAttackPhaseRotations()
     RightHandRot.destinations =
     {
         {baseOffset.x, 0.f, 0.f },
-        {baseOffset.x + GetStringAngleX("front","down"), 0.f, 0.f},
+        {baseOffset.x + GetStringAngleX("front","") * 0.2f, 0.f, 0.f},
         {baseOffset.x + GetStringAngleX("back",""), 0.f, 0.f},
+        {baseOffset.x , 0.f, 0.f},
         {baseOffset.x , 0.f, 0.f}
     };
     SetPhaseRotations(ePlayerState::ATTACK, ePlayerBone::RHAND, RightHandRot);
@@ -1011,8 +1027,8 @@ void Player::SetUpIdleRotations()
 
     idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, D3DXToRadian(60.f), 0.f};
     idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::HEAD)}] = _vec3(0.f, -D3DXToRadian(60.f), 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::LARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front", "down") * 0.7f), D3DXToRadian(GetStringAngleY("left", "")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front","down") * 0.7f), D3DXToRadian(GetStringAngleY("left","")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
+    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::LARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front", "down") * 0.5f), D3DXToRadian(GetStringAngleY("left", "")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
+    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front","down") * 0.5f), D3DXToRadian(GetStringAngleY("left","")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
     idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::LLEG)}] = _vec3(0.f, 0.f, 0.f);
     idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RLEG)}] = _vec3(0.f, 0.f, 0.f);
     idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::LHAND)}] = _vec3(0.f, 0.f, 0.f);
@@ -1033,6 +1049,33 @@ void Player::UpdateNewIdleRotations()
         idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RHAND)}] = itemBaseRotOffset.at("spear");
     else
         idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
+}
+
+void Player::CheckJump()
+{
+    if (State != ePlayerState::IDLE && State != ePlayerState::WALK)
+        return;
+
+    auto input = EngineCore::GetInstance()->GetInputSystem();
+    static const KEY keyJump = X;
+
+    auto physics = GetComponent<PhysicsComponent>();
+    if (input->IsKeyPressed(keyJump) && physics->IsGrounded() == true)
+    {
+        _vec3 velocity = physics->GetVelocity();
+        velocity.y = jumpPower;
+        physics->SetVelocity(velocity);
+        physics->SetGround(false);
+    }
+}
+
+void Player::CheckTargetDead()
+{
+    if (moveToObject->IsDead())
+    {
+        moveToObject = nullptr;
+        moveToAttack = false;
+    }
 }
 
 void Player::EquipItem(Item::ItemType itemType)
@@ -1432,37 +1475,50 @@ void Player::UpdateShoot(_float dt) {
 
     vector<float> phaseVec = { 0.15f, 0.4f, 0.9f, 1.f };
     static float prePhase = 0.f;
-    if (prePhase < phaseVec.at(0) && fProgress >= phaseVec.at(0)) {
-        auto shootDir = AttackDirection;
-        D3DXVec3Normalize(&shootDir, &shootDir);
-        switch (shootType)
+    if (prePhase <= phaseVec.at(0) && fProgress > phaseVec.at(0)) {
+        auto input = EngineCore::GetInstance()->GetInputSystem();
+        Item::ItemType leftHandType = dynamic_cast<Item*>(Bones["LHand"])->GetItemType();
+        if (input->IsKeyDown(RBUTTON) && leftHandType == Item::ItemType::ITEM_BOW)
         {
-        case ePlayerShootType::ARROW:
-            switch (dynamic_cast<Item*>(Bones["LHand"])->GetItemType())
+            fProgress = phaseVec.at(0);
+            chargedTime += dt;
+            AttackTime -= dt;
+        }
+        else
+        {
+            auto shootDir = AttackDirection;
+            D3DXVec3Normalize(&shootDir, &shootDir);
+            switch (shootType)
             {
-            case Item::ItemType::ITEM_BOW:
-                Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
+            case ePlayerShootType::ARROW:
+                switch (leftHandType)
+                {
+                case Item::ItemType::ITEM_BOW:
+                    chargedTime = std::clamp(chargedTime, 0.f, MaxChargeTime);
+                    Arrow::Create(owner, ObjectType::Projectile, this, shootDir, (1.f + chargedTime));
+                    chargedTime = 0.f;
+                    break;
+                case Item::ItemType::ITEM_CROSSBOW:
+                    Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
+
+                    _matrix matRotY;
+                    D3DXMatrixRotationY(&matRotY, D3DXToRadian(10.f));
+                    D3DXVECTOR3 vResult;
+                    D3DXVec3TransformNormal(&vResult, &shootDir, &matRotY);
+                    D3DXVec3Normalize(&vResult, &vResult);
+                    Arrow::Create(owner, ObjectType::Projectile, this, vResult);
+
+                    D3DXMatrixRotationY(&matRotY, D3DXToRadian(-10.f));
+                    D3DXVec3TransformNormal(&vResult, &shootDir, &matRotY);
+                    D3DXVec3Normalize(&vResult, &vResult);
+                    Arrow::Create(owner, ObjectType::Projectile, this, vResult);
+                    break;
+                }
                 break;
-            case Item::ItemType::ITEM_CROSSBOW:
-                Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
-
-                _matrix matRotY;
-                D3DXMatrixRotationY(&matRotY, D3DXToRadian(10.f));
-                D3DXVECTOR3 vResult;
-                D3DXVec3TransformNormal(&vResult, &shootDir, &matRotY); 
-                D3DXVec3Normalize(&vResult, &vResult);
-                Arrow::Create(owner, ObjectType::Projectile, this, vResult);
-
-                D3DXMatrixRotationY(&matRotY, D3DXToRadian(-10.f));
-                D3DXVec3TransformNormal(&vResult, &shootDir, &matRotY); 
-                D3DXVec3Normalize(&vResult, &vResult);
-                Arrow::Create(owner, ObjectType::Projectile, this, vResult);
+            case ePlayerShootType::FIREWORK:
+                Firework::Create(owner, ObjectType::Projectile, this, shootDir);
                 break;
             }
-            break;
-        case ePlayerShootType::FIREWORK:
-            Firework::Create(owner, ObjectType::Projectile, this, shootDir);
-            break;
         }
     }
     prePhase = fProgress;
@@ -1478,6 +1534,7 @@ void Player::UpdateShoot(_float dt) {
     ApplyPhasedRotation(fProgress, GetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::RARM));
     ApplyPhasedRotation(fProgress, GetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::LLEG));
     ApplyPhasedRotation(fProgress, GetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::RLEG));
+    ApplyPhasedRotation(fProgress, GetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::HEAD));
 
     //Rotate Player
     _vec3 vCurrentRot = GetPhasedRotation(fProgress, GetPhaseRotations(ePlayerState::SHOOT, ePlayerBone::BODY));
@@ -1621,6 +1678,7 @@ void Player::KeyInput(_float dt)
     PickingTerrain();
     CheckStateRoll(dt);
     CheckDead();
+    CheckJump();
 }
 
 void Player::CheckStateRoll(_float dt)

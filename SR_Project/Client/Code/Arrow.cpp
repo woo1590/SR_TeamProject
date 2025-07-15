@@ -12,8 +12,12 @@
 
 #include "Monster.h"
 
-Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType) 
+Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
 {
+}
+Arrow::Arrow(ObjectManager* owner, ObjectType objType, float _damagePercent) : Item(owner, objType)
+{
+    damagePercent = _damagePercent;
 }
 Arrow::~Arrow() 
 {
@@ -26,6 +30,19 @@ void Arrow::Free()
 Arrow* Arrow::Create(ObjectManager* owner, ObjectType objType, Object* shooter, _vec3 normalDirection)
 {
     Arrow* Instance = new Arrow(owner, objType);
+
+    if (FAILED(Instance->Ready_Object(owner, objType, shooter, normalDirection)))
+    {
+        Safe_Release(Instance);
+        Instance = nullptr;
+    }
+
+    return Instance;
+}
+
+Arrow* Arrow::Create(ObjectManager* owner, ObjectType objType, Object* shooter, _vec3 normalDirection, float _damagePercent)
+{
+    Arrow* Instance = new Arrow(owner, objType, _damagePercent);
 
     if (FAILED(Instance->Ready_Object(owner, objType, shooter, normalDirection)))
     {
@@ -139,6 +156,7 @@ void Arrow::SetCollisionEnter(Object* other)
         auto collision = GetComponent<CollisionComponent>();
 
         float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<EnemyInfo>>()->GetInfo().power + info->GetInfo().value;
+        arrowAttackDamage *= damagePercent;
         other->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-arrowAttackDamage);
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();

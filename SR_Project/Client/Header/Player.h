@@ -81,6 +81,8 @@ private:
     void PickingTerrain();
     void CheckStateRoll(_float dt);
     void CheckDead();
+    void CheckJump();
+    void CheckTargetDead();
 
     void UpdateIdle(_float dt);
     void UpdateWalk(_float dt);
@@ -134,8 +136,11 @@ private:
     const _float RollDuration = 0.5f;
 
     _float AttackTime = 0.f;
-    const _float AttackDuration = 0.3f * 20;
+    const _float AttackDuration = 0.5f;
     const _float ShootDuration = 0.6f;
+
+    _float chargedTime = 0.f;
+    const _float MaxChargeTime = 1.f;
 
     _float DeadTime = 0.f;
     const _float DeadDuration = 1.0f;
@@ -146,6 +151,7 @@ private:
     _float ReviveTime = 0.f;
     const _float reviveDuration = 1.f;
 
+    std::unordered_map<std::string, _vec3> StartRotations;
     _vec3 PlayerDirection = { 0.f, 0.f , 0.f };
     _vec3 DestinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
@@ -154,8 +160,9 @@ private:
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
 
-    std::unordered_map<std::string, _vec3> StartRotations;
     std::unordered_map<std::pair<int, int>, PhaseRotation, PairHash> PhaseRotations;
     std::unordered_map<std::string, _vec3> itemBaseRotOffset;
     std::unordered_map<std::pair<int, int>, _vec3, PairHash> idleRot;
+
+    const float jumpPower = 15.f;
 };

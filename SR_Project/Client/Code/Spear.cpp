@@ -87,9 +87,9 @@ void Spear::SetCollisionEnter(Object* other)
 void Spear::PlayerSpearInfo()
 {
     SetScale(1.f);
-    SetScaleRatio(_vec3(0.1f, 2.8f, 2.8f));
+    SetScaleRatio(_vec3(0.1f, 2.5f, 2.5f));
 
-    SetPosition(_vec3(0.f, 0.8f, 2.2f));
+    SetPosition(_vec3(0.f, 0.5f, 1.9f));
     SetPivot(true, _vec3(0.f, 1.f, -0.4f));
     SetRotation(_vec3(0.8f, 0.f, 0.f));
 

@@ -93,7 +93,7 @@ void TestScene::Load()
 	player->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 80.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SPEAR);
-	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_CROSSBOW);
+	static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
 
 	ObjectMgr->AddObject(ObjectType::Item, Tnt::Create(ObjectMgr, ObjectType::Item));
 	static_cast<Tnt*>(ObjectMgr->GetObjectList(ObjectType::Item).back())->TntToPlayer(ObjectMgr->GetFrontObject(ObjectType::Player));
