@@ -9,14 +9,14 @@ public:
     virtual ~TerrainCreater();
 
 public:
+    void SaveHeightmapAsImage(const std::string& filepath);     // 높이맵 저장하기
+    bool LoadHeightmapFromImage(const std::string& filepath);   // 높이맵 불러오기
+
     // 높이맵 생성
     void CreateHeightmap(int width, int height, float scale = 0.05f);
 
     // 블럭 지형 생성
     void CreateBlockTerrain(int terX, int terZ, int terY);
-
-    void SaveHeightmapAsImage(const std::string& filepath);     // 높이맵 저장하기
-    bool LoadHeightmapFromImage(const std::string& filepath);   // 높이맵 불러오기
 
     const std::vector<SB>& GetBlocks() const { return blocks; }                     // 블럭 정보 가져오기
     const std::vector<unsigned char>& GetHeightmap() const { return heightMap; }    // 높이맵 가져오기

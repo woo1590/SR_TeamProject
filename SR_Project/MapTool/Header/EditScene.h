@@ -60,7 +60,7 @@ private:
     std::pair<int, int> GetChunkCoordFromWorldPos(const _vec3& pos);
    
     // 월드 좌표를 청크 내 로컬 좌표로 반환
-    _vec3 GetLocalCoordInChunk(const _vec3& pos, int chunkX, int chunkZ);
+    _vec3 GetLocalCoordInChunk(const _vec3& pos);
 
 private:
     void Free() override;

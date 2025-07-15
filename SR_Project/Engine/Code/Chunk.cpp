@@ -38,7 +38,8 @@ Chunk* Chunk::Create(ObjectManager* owner, int chunkX, int chunkZ)
 HRESULT Chunk::Ready_Object()
 {
     auto transform = AddComponent<TransformComponent>();
-    transform->SetPosition(ChunkX * CHUNK_SIZE, 0.f, ChunkZ * CHUNK_SIZE);
+    _vec3 chunkPos{ float(ChunkX * CHUNK_SIZE), 0.f, float(ChunkZ * CHUNK_SIZE) };
+    transform->SetPosition(chunkPos);
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
     renderer->SetMaterial("Chunk_Mtrl");
@@ -46,6 +47,20 @@ HRESULT Chunk::Ready_Object()
 
     owner->AddObject(ObjectType::Chunk, this);
     return S_OK;
+}
+
+void Chunk::InitializeAirBlocks()
+{
+    for (int y = 0; y < CHUNK_HEIGHT; ++y)
+    {
+        for (int z = 0; z < CHUNK_SIZE; ++z)
+        {
+            for (int x = 0; x < CHUNK_SIZE; ++x)
+            {
+                Blocks[x][y][z].Type = StaticBlockType::Air;
+            }
+        }
+    }
 }
 
 void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage)
@@ -78,6 +93,13 @@ void Chunk::AddBlock(const _vec3& position, StaticBlockType type, StaticBlockAxi
     }
 }
 
+void Chunk::ClearAlpha()
+{
+    for (auto& iter : AlphaBlocks)
+        Safe_Release(iter);
+    AlphaBlocks.clear();
+}
+
 void Chunk::RemoveAlpha(const _vec3& pos)
 {
     for (auto iter = AlphaBlocks.begin(); iter != AlphaBlocks.end();)
@@ -90,13 +112,6 @@ void Chunk::RemoveAlpha(const _vec3& pos)
         }
         else ++iter;
     }
-}
-
-void Chunk::ClearAlpha()
-{
-    for (auto& iter : AlphaBlocks)
-        Safe_Release(iter);
-    AlphaBlocks.clear();
 }
 
 Chunk* Chunk::GetNeighborChunk(int x, int z)
@@ -116,15 +131,81 @@ Chunk* Chunk::GetNeighborChunk(int x, int z)
     return nullptr;
 }
 
-void Chunk::InitializeAirBlocks()
+void Chunk::BuildCollisionBlock()
 {
+    auto IsAir = [&](int x, int y, int z) -> bool
+        {
+            if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return true;
+            return Blocks[x][y][z].Type == StaticBlockType::Air;
+        };
+
     for (int y = 0; y < CHUNK_HEIGHT; ++y)
     {
         for (int z = 0; z < CHUNK_SIZE; ++z)
         {
             for (int x = 0; x < CHUNK_SIZE; ++x)
             {
-                Blocks[x][y][z].Type = StaticBlockType::Air;
+                const auto& block = Blocks[x][y][z];
+                if (block.Type == StaticBlockType::Air) continue;
+
+                _vec3 pos = block.Pos - _vec3(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
+                if (IsAir(x, y + 1, z) || IsAir(x, y - 1, z) ||
+                    IsAir(x + 1, y, z) || IsAir(x - 1, y, z) ||
+                    IsAir(x, y, z + 1) || IsAir(x, y, z - 1))
+                {
+                    switch (block.Usage)
+                    {
+                    case Basic:
+                    {
+                        auto cb = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        cb->GetComponent<TransformComponent>()->SetPosition(block.Pos);
+                        owner->AddObject(ObjectType::StaticBlock, cb);
+                        break;
+                    }
+                    case Half:
+                    {
+                        auto cb = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        cb->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
+                        cb->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
+                        owner->AddObject(ObjectType::StaticBlock, cb);
+                        break;
+                    }
+                    case Stair:
+                    {
+                        auto cbBottom = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        cbBottom->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
+                        cbBottom->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
+                        owner->AddObject(ObjectType::StaticBlock, cbBottom);
+
+                        _vec3 offset{}, scale{};
+                        switch (block.Rot)
+                        {
+                        case sZP:
+                            offset = { 0.f, 0.5f, 0.5f };
+                            scale = { 1.f, 0.5f, 0.5f };
+                            break;
+                        case sZM:
+                            offset = { 0.f, 0.5f, -0.5f };
+                            scale = { 1.f, 0.5f, 0.5f };
+                            break;
+                        case sXP:
+                            offset = { 0.5f, 0.5f, 0.f };
+                            scale = { 0.5f, 0.5f, 1.f };
+                            break;
+                        case sXM:
+                            offset = { -0.5f, 0.5f, 0.f };
+                            scale = { 0.5f, 0.5f, 1.f };
+                            break;
+                        }
+
+                        auto cbTop = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        cbTop->GetComponent<TransformComponent>()->SetPosition(block.Pos + offset);
+                        cbTop->GetComponent<TransformComponent>()->SetScale(scale);
+                        owner->AddObject(ObjectType::StaticBlock, cbTop);
+                        break;
+                    }
+                    }
+                }
             }
         }
     }
@@ -134,13 +215,32 @@ void Chunk::BuildChunkFace()
 {
     std::vector<VTXTEX> vertices;
     std::vector<uint32_t> indices;
-    
+
     auto IsFaceExposed = [&](int x, int y, int z, FaceDir faceDir, const SB& currentBlock) -> bool
         {
-            if (y < 0 || y >= CHUNK_HEIGHT || x < 0 || x >= CHUNK_SIZE || z < 0 || z >= CHUNK_SIZE) return true;
+            const SB* neighborBlock(nullptr);
+            if (x < 0 || x >= CHUNK_SIZE / BLOCK_SIZE || z < 0 || z >= CHUNK_SIZE / BLOCK_SIZE)
+            {
+                int offsetX(0), offsetZ(0);
+                int localX(x), localZ(z);
 
-            const auto& neighbor = Blocks[x][y][z];
+                if (x < 0) { offsetX = -1; localX = CHUNK_SIZE / BLOCK_SIZE - 1; }
+                else if (x >= CHUNK_SIZE / BLOCK_SIZE) { offsetX = 1; localX = 0; }
 
+                if (z < 0) { offsetZ = -1; localZ = CHUNK_SIZE / BLOCK_SIZE - 1; }
+                else if (z >= CHUNK_SIZE / BLOCK_SIZE) { offsetZ = 1; localZ = 0; }
+
+                Chunk* neighborChunk = GetNeighborChunk(offsetX, offsetZ);
+                if (!neighborChunk || y < 0 || y >= CHUNK_HEIGHT / BLOCK_SIZE) return true;
+                neighborBlock = &neighborChunk->Blocks[localX][y][localZ];
+            }
+            else
+            {
+                if (y < 0 || y >= CHUNK_HEIGHT / BLOCK_SIZE) return true;
+                neighborBlock = &Blocks[x][y][z];
+            }
+
+            const SB& neighbor(*neighborBlock);
             if (neighbor.Type == Air) return true;
             if (neighbor.Usage == Half && currentBlock.Usage == Half)
             {
@@ -157,7 +257,6 @@ void Chunk::BuildChunkFace()
                     if (faceDir == Face_Top) return false;
                     else return true;
                 }
-
                 if (neighbor.Usage == Stair)
                 {
                     if (faceDir == Face_Top) return false;
@@ -174,7 +273,6 @@ void Chunk::BuildChunkFace()
                     return true;
                 }
                 break;
-
             case Half:
                 switch (faceDir)
                 {
@@ -183,7 +281,6 @@ void Chunk::BuildChunkFace()
                 default: return false;
                 }
                 break;
-
             case Stair:
             {
                 if (neighbor.Usage == Half) return true;
@@ -199,7 +296,6 @@ void Chunk::BuildChunkFace()
                     }
                     return true;
                 }
-
                 if (neighbor.Usage == Stair)
                 {
                     if (currentBlock.Rot == neighbor.Rot)
@@ -214,11 +310,9 @@ void Chunk::BuildChunkFace()
                         (neighbor.Rot == sZM && currentBlock.Rot == sZP && faceDir == Face_Front))
                         return false;
                 }
-
                 return true;
             }
             }
-
             return true;
         };
 
@@ -461,46 +555,9 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
             break;
         }
         break;
-    case Wood:
-    {
-        bool isRingFace(false), isSideways(false);
-        float texSize(0.125f);
-
-        _vec2 uvStart;
-        _vec2 ringTexStart{ 0.125f, 0.25f }, sideTexStart{ 0.f, 0.25f };
-
-        switch (sb.Axis)
-        {
-        case sAX:
-            isSideways = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isRingFace = true;
-            break;
-        case sAY:
-            if (faceDir == Face_Top || faceDir == Face_Bottom) isRingFace = true;
-            break;
-        case sAZ:
-            if (faceDir == Face_Front || faceDir == Face_Behind) isRingFace = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isSideways = true;
-            break;
-        }
-
-        uvStart = isRingFace ? ringTexStart : sideTexStart;
-        if (!isRingFace && isSideways)
-        {
-            TexUVs[0] = { uvStart.x, uvStart.y + texSize };
-            TexUVs[1] = { uvStart.x, uvStart.y };
-            TexUVs[2] = { uvStart.x + texSize, uvStart.y };
-            TexUVs[3] = { uvStart.x + texSize, uvStart.y + texSize };
-        }
-        else
-        {
-            TexUVs[0] = { uvStart.x + texSize, uvStart.y + texSize };
-            TexUVs[1] = { uvStart.x, uvStart.y + texSize };
-            TexUVs[2] = { uvStart.x, uvStart.y };
-            TexUVs[3] = { uvStart.x + texSize, uvStart.y };
-        }
-    }
-    break;
+    case Haybale: case Wood:
+        SetUVAxisBlock(sb.Type, sb.Axis, faceDir);
+        break;
     }
 }
 
@@ -565,90 +622,66 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
     }
 }
 
-StaticBlockData Chunk::GetBlock(int x, int y, int z) const
+void Chunk::SetUVAxisBlock(StaticBlockType type, StaticBlockAxis axis, int faceDir)
 {
-    if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return SB{};
-    
-    return Blocks[x][y][z];
-}
+    bool isTop(false), isSide(false);
+    float texSize(0.125f);
 
-void Chunk::BuildCollisionBlock()
-{
-    auto IsAir = [&](int x, int y, int z) -> bool
-        {
-            if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return true;
-            return Blocks[x][y][z].Type == StaticBlockType::Air;
-        };
+    _vec2 uvStart;
+    _vec2 haybaleSideTex{ 0.f, 0.625f }, haybaleTopTex{ 0.125f, 0.625f };
+    _vec2 woodSideTex{ 0.f, 0.25f }, woodRingTex{ 0.125f, 0.25f };
 
-    for (int y = 0; y < CHUNK_HEIGHT; ++y)
+    switch (type)
     {
-        for (int z = 0; z < CHUNK_SIZE; ++z)
+    case Haybale:
+        switch (axis)
         {
-            for (int x = 0; x < CHUNK_SIZE; ++x)
-            {
-                const auto& block = Blocks[x][y][z];
-                if (block.Type == StaticBlockType::Air) continue;
-
-                _vec3 pos = block.Pos - _vec3(ChunkX * CHUNK_SIZE * 2.f, 0.f, ChunkZ * CHUNK_SIZE * 2.f);
-                if (IsAir(x, y + 1, z) || IsAir(x, y - 1, z) ||
-                    IsAir(x + 1, y, z) || IsAir(x - 1, y, z) ||
-                    IsAir(x, y, z + 1) || IsAir(x, y, z - 1))
-                {
-                    switch (block.Usage)
-                    {
-                    case Basic:
-                    {
-                        auto cb = CollisionBlock::Create(owner, ObjectType::StaticBlock);
-                        cb->GetComponent<TransformComponent>()->SetPosition(block.Pos);
-                        owner->AddObject(ObjectType::StaticBlock, cb);
-                        break;
-                    }
-                    case Half:
-                    {
-                        auto cb = CollisionBlock::Create(owner, ObjectType::StaticBlock);
-                        cb->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
-                        cb->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
-                        owner->AddObject(ObjectType::StaticBlock, cb);
-                        break;
-                    }
-                    case Stair:
-                    {
-                        auto cbBottom = CollisionBlock::Create(owner, ObjectType::StaticBlock);
-                        cbBottom->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
-                        cbBottom->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
-                        owner->AddObject(ObjectType::StaticBlock, cbBottom);
-
-                        _vec3 offset{}, scale{};
-                        switch (block.Rot)
-                        {
-                        case sZP:
-                            offset = { 0.f, 0.5f, 0.5f };
-                            scale = { 1.f, 0.5f, 0.5f };
-                            break;
-                        case sZM:
-                            offset = { 0.f, 0.5f, -0.5f };
-                            scale = { 1.f, 0.5f, 0.5f };
-                            break;
-                        case sXP:
-                            offset = { 0.5f, 0.5f, 0.f };
-                            scale = { 0.5f, 0.5f, 1.f };
-                            break;
-                        case sXM:
-                            offset = { -0.5f, 0.5f, 0.f };
-                            scale = { 0.5f, 0.5f, 1.f };
-                            break;
-                        }
-
-                        auto cbTop = CollisionBlock::Create(owner, ObjectType::StaticBlock);
-                        cbTop->GetComponent<TransformComponent>()->SetPosition(block.Pos + offset);
-                        cbTop->GetComponent<TransformComponent>()->SetScale(scale);
-                        owner->AddObject(ObjectType::StaticBlock, cbTop);
-                        break;
-                    }
-                    }
-                }
-            }
+        case sAX:
+            isSide = true;
+            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true;
+            break;
+        case sAY:
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true;
+            break;
+        case sAZ:
+            if (faceDir == Face_Front || faceDir == Face_Behind) isTop = true;
+            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true;
+            break;
         }
+        uvStart = isTop ? haybaleTopTex : haybaleSideTex;
+        break;
+    case Wood:
+        switch (axis)
+        {
+        case sAX:
+            isSide = true;
+            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true;
+            break;
+        case sAY:
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true;
+            break;
+        case sAZ:
+            if (faceDir == Face_Front || faceDir == Face_Behind) isTop = true;
+            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true;
+            break;
+        }
+        uvStart = isTop ? woodRingTex : woodSideTex;
+        break;
+    }
+
+    if (!isTop && isSide)
+    {
+        TexUVs[0] = { uvStart.x, uvStart.y + texSize };
+        TexUVs[1] = { uvStart.x, uvStart.y };
+        TexUVs[2] = { uvStart.x + texSize, uvStart.y };
+        TexUVs[3] = { uvStart.x + texSize, uvStart.y + texSize };
+    }
+    else
+    {
+        TexUVs[0] = { uvStart.x + texSize, uvStart.y + texSize };
+        TexUVs[1] = { uvStart.x, uvStart.y + texSize };
+        TexUVs[2] = { uvStart.x, uvStart.y };
+        TexUVs[3] = { uvStart.x + texSize, uvStart.y };
     }
 }
 
@@ -671,6 +704,22 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 
         Blocks[localX][localY][localZ] = block;
     }   
+}
+
+void Chunk::SetChunkRender(bool render)
+{
+    mesh->SetRender(render);
+}
+
+bool Chunk::GetChunkRender()
+{
+    return mesh->GetRender();
+}
+
+StaticBlockData Chunk::GetBlock(int x, int y, int z) const
+{
+    if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return SB{};
+    return Blocks[x][y][z];
 }
 
 void Chunk::Free()

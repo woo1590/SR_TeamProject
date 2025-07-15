@@ -116,7 +116,7 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
 {
     if (y <= 1) return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.4f) return StaticBlockType::Stone;
+    else if (y < maxHeight * 0.2f) return StaticBlockType::Stone;
     else if (y < maxHeight * 0.5f) return StaticBlockType::Dirt;
     else return StaticBlockType::Dirt;
 }

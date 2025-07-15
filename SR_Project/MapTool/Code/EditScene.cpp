@@ -81,6 +81,7 @@ void EditScene::Load()
 void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
+	ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
 
 	// 좌&우클릭에 따른 블럭 생성&제거
 	_vec3 rayOrigin, rayDir;
@@ -91,7 +92,7 @@ void EditScene::Update(float dt)
 	{
 		if (isPrefab)
 		{
-			if (Input->IsKeyDown(LBUTTON))
+			if (Input->IsKeyPressed(LBUTTON))
 			{
 				MakePickingRay(rayOrigin, rayDir);
 				OnLeftClick(rayOrigin, rayDir);
@@ -193,7 +194,7 @@ void EditScene::ImGui_Terrain()
 		staticBlocks.clear();
 		ChunkMgr->ClearAllChunks();
 
-		// CreateTerrain("heightMap");
+		CreateTerrain("heightMap");
 		PlaceTerrainBlocks("heightMap");
 
 		selectedSBlockType = 0;
@@ -259,7 +260,6 @@ void EditScene::ImGui_SaveLoad()
 			{
 				auto bInfo = chunk.second->GetBlock(x, y, z);
 				if (bInfo.Type == StaticBlockType::Air) continue;
-
 				staticBlocks.push_back({ bInfo.Pos, bInfo.Type, bInfo.Axis, bInfo.Rot, bInfo.Usage });
 			}
 		}
@@ -278,7 +278,7 @@ void EditScene::ImGui_SetBlockType()
 			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK", 
 			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
 			"GLASS", "LEAF",
-			"OAK", "DIRTPATH", "FURNACE",
+			"OAK", "DIRTPATH", "FURNACE", "HAYBALE"
 		};
 
 		// 선택할 때마다, 다른 값들 초기화
@@ -391,15 +391,20 @@ void EditScene::ImGui_SetPrefab()
 	ImGui::SetNextItemWidth(100); ImGui::InputText(" : PREFAB NAME", prefabNameBuf, sizeof(prefabNameBuf)); ImGui::SameLine();
 	if (ImGui::Button("SAVE PREFAB"))
 	{
+		float closestDis(FLT_MAX);
 		std::string name = prefabNameBuf;
 		std::vector<PREFAB> prefabBlocks;
 		_vec3 basePos{ FLT_MAX, 0.f, FLT_MAX };
 
 		for (const auto& sb : staticBlocks)
 		{
-			basePos.x = min(basePos.x, sb.Pos.x);
-			basePos.y = 1.f;
-			basePos.z = min(basePos.z, sb.Pos.z);
+			if (closestDis > basePos.y)
+			{
+				closestDis = basePos.y;
+				basePos.x = min(basePos.x, sb.Pos.x);
+				basePos.y = 1.f;
+				basePos.z = min(basePos.z, sb.Pos.z);
+			}
 		}
 		for (const auto& sb : staticBlocks)
 		{
@@ -732,10 +737,7 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 				iter = staticBlocks.erase(iter);
 				break;
 			}
-			else
-			{
-				++iter;
-			}
+			else ++iter;
 		}
 
 		if (targetChunk)
@@ -746,13 +748,14 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 			}
 			else
 			{
-				_vec3 localPos = GetLocalCoordInChunk(selectedBlockPos, chunkX, chunkZ);
-
+				_vec3 localPos = GetLocalCoordInChunk(selectedBlockPos);
 				int lx = static_cast<int>(localPos.x);
 				int ly = static_cast<int>(localPos.y);
 				int lz = static_cast<int>(localPos.z);
 
-				if (lx >= 0 && lx < CHUNK_SIZE && ly >= 0 && ly < CHUNK_HEIGHT && lz >= 0 && lz < CHUNK_SIZE)
+				if (lx >= 0 && lx <= CHUNK_SIZE / (int)BLOCK_SIZE &&
+					ly >= 0 && ly <= CHUNK_HEIGHT / (int)BLOCK_SIZE &&
+					lz >= 0 && lz <= CHUNK_SIZE / (int)BLOCK_SIZE)
 				{
 					targetChunk->SetBlockAir(lx, ly, lz);
 					targetChunk->BuildChunkFace();
@@ -894,11 +897,11 @@ std::pair<int, int> EditScene::GetChunkCoordFromWorldPos(const _vec3& pos)
 	return { chunkX, chunkZ };
 }
 
-_vec3 EditScene::GetLocalCoordInChunk(const _vec3& pos, int chunkX, int chunkZ)
+_vec3 EditScene::GetLocalCoordInChunk(const _vec3& pos)
 {
-	int localX = static_cast<int>(pos.x / BLOCK_SIZE) % CHUNK_SIZE;
+	int localX = static_cast<int>(pos.x / BLOCK_SIZE) % (CHUNK_SIZE / (int)BLOCK_SIZE);
 	int localY = static_cast<int>(pos.y / BLOCK_SIZE);
-	int localZ = static_cast<int>(pos.z / BLOCK_SIZE) % CHUNK_SIZE;
+	int localZ = static_cast<int>(pos.z / BLOCK_SIZE) % (CHUNK_SIZE / (int)BLOCK_SIZE);
 	return { (float)localX, (float)localY, (float)localZ };
 }
 

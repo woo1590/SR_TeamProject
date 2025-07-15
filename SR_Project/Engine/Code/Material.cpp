@@ -109,7 +109,7 @@ Material* Material::Clone()
     for (auto& [key, tex] : TexParam)
         tex->AddRef();
 
-    Instance->shader = this->shader;
+    Instance->shader = this->shader->Clone();
     shader->AddRef();
 
     return Instance;
