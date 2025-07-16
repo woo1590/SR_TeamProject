@@ -66,5 +66,11 @@ namespace Engine
 		Inventory, Equip, Gear , Item , Quick, Storage, Count
 	};
 
-	
+	struct SkillInfo
+	{
+		int level = 1;
+		int MaxTarget = 1;
+		float DamagePercent = 1.f;
+		float SkillRange = 10.f;
+	};
 }
