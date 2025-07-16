@@ -1522,9 +1522,31 @@ void Player::UpdateShoot(_float dt) {
         ItemType leftHandType = static_cast<Item*>(Bones["LHand"])->GetItemType();
         if (input->IsKeyDown(RBUTTON) && leftHandType == ItemType::Bow)
         {
+            auto input = EngineCore::GetInstance()->GetInputSystem();
+            auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
+            auto mainCam = curScene->GetCameraManager()->GetMainCamera();
+            auto collision = curScene->GetCollisionSystem();
+
             fProgress = phaseVec.at(0);
             chargedTime += dt;
             AttackTime -= dt;
+            Ray ray = mainCam->ScreenPointRay();
+            HitInfo hit = collision->Raycast(ray);
+
+            if (hit.IsHit)
+            {
+                auto transform = GetComponent<TransformComponent>();
+                auto collision = GetComponent<CollisionComponent>();
+                auto curPos = transform->GetWorldPosition();
+                auto attackPos = hit.Position;
+
+                AttackDirection = attackPos - curPos;
+                _vec3 distanceVec = DestinationPos - curPos;
+                _float distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.z * distanceVec.z);
+
+                if(distance < 1.f)
+                    PlayerDirection = attackPos - curPos;
+            }
         }
         else
         {
