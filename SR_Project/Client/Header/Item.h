@@ -37,7 +37,7 @@ protected:
     std::string meshType;
     std::string material;
     Engine::RENDER_ID renderId = Engine::RENDER_ID::Render_Alpha;
-    ItemType itemType = ItemType::ITEM_PROJECTILE;
+    ItemType itemType = ItemType::Projectile;
 
     Object* ownerObject = nullptr;
 };

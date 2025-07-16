@@ -113,7 +113,7 @@ void Item::ApplyComponents()
     mesh->SetRenderID(renderId);
 }
 
-Item::ItemType Item::GetItemType()
+ItemType Item::GetItemType()
 {
     return itemType;
 }

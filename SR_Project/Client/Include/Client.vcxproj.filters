@@ -1282,7 +1282,6 @@
     <FxCompile Include="SpriteShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
-    </ClCompile>
     <ClCompile Include="..\Code\Spear.cpp">
       <Filter>02. Object\Item\Spear</Filter>
     </ClCompile>

@@ -1010,47 +1010,47 @@ void Player::SetAttackTypeNext()
 
 void Player::SetUpIdleRotations()
 {
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, 0.f, 0.f };
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::HEAD)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::LARM)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::RARM)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::LLEG)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::RLEG)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::LHAND)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, 0.f, 0.f };
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::HEAD)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::LARM)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::RARM)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::LLEG)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::RLEG)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::LHAND)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
 
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, 0.f, 0.f };
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::HEAD)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::LARM)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::RARM)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::LLEG)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::RLEG)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::LHAND)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, 0.f, 0.f };
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::HEAD)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::LARM)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::RARM)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::LLEG)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::RLEG)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::LHAND)}] = _vec3(0.f, 0.f, 0.f);
 
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, D3DXToRadian(60.f), 0.f};
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::HEAD)}] = _vec3(0.f, -D3DXToRadian(60.f), 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::LARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front", "down") * 0.5f), D3DXToRadian(GetStringAngleY("left", "")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front","down") * 0.5f), D3DXToRadian(GetStringAngleY("left","")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::LLEG)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RLEG)}] = _vec3(0.f, 0.f, 0.f);
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::LHAND)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, D3DXToRadian(60.f), 0.f};
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::HEAD)}] = _vec3(0.f, -D3DXToRadian(60.f), 0.f);
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::LARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front", "down") * 0.5f), D3DXToRadian(GetStringAngleY("left", "")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::RARM)}] = _vec3(D3DXToRadian(GetStringAngleX("front","down") * 0.5f), D3DXToRadian(GetStringAngleY("left","")), D3DXToRadian(GetStringAngleZ("right", "down") * 0.2f));
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::LLEG)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::RLEG)}] = _vec3(0.f, 0.f, 0.f);
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::LHAND)}] = _vec3(0.f, 0.f, 0.f);
 }
 
 void Player::UpdateNewIdleRotations()
 {
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_NONE), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, atan2f(PlayerDirection.x, PlayerDirection.z), 0.f };
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, atan2f(PlayerDirection.x, PlayerDirection.z), 0.f };
-    idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, atan2f(PlayerDirection.x, PlayerDirection.z) + D3DXToRadian(60.f), 0.f };
+    idleRot[{static_cast<int>(ItemType::None), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, atan2f(PlayerDirection.x, PlayerDirection.z), 0.f };
+    idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, atan2f(PlayerDirection.x, PlayerDirection.z), 0.f };
+    idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::BODY)}] = { 0.f, atan2f(PlayerDirection.x, PlayerDirection.z) + D3DXToRadian(60.f), 0.f };
     
     if (itemBaseRotOffset.find("sword") != itemBaseRotOffset.end())
-        idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::RHAND)}] = itemBaseRotOffset.at("sword");
+        idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::RHAND)}] = itemBaseRotOffset.at("sword");
     else
-        idleRot[{static_cast<int>(Item::ItemType::ITEM_SWORD), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
+        idleRot[{static_cast<int>(ItemType::Sword), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
 
     if (itemBaseRotOffset.find("spear") != itemBaseRotOffset.end())
-        idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RHAND)}] = itemBaseRotOffset.at("spear");
+        idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::RHAND)}] = itemBaseRotOffset.at("spear");
     else
-        idleRot[{static_cast<int>(Item::ItemType::ITEM_SPEAR), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
+        idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
 }
 
 void Player::CheckJump()
@@ -1073,14 +1073,14 @@ void Player::CheckJump()
 
 void Player::CheckTargetDead()
 {
-    if (moveToObject->IsDead())
+    if (moveToObject && moveToObject->IsDead())
     {
         moveToObject = nullptr;
         moveToAttack = false;
     }
 }
 
-void Player::EquipItem(Item::ItemType itemType)
+void Player::EquipItem(ItemType itemType)
 {
     switch (itemType) {
     case ItemType::Bow:
@@ -1093,12 +1093,12 @@ void Player::EquipItem(Item::ItemType itemType)
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "sword", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
         break;
-    case Item::ItemType::ITEM_SPEAR:
+    case ItemType::Spear:
         Bones["RHand"] = Spear::Create(owner, ObjectType::Item);
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "spear", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
         break;
-    case Item::ItemType::ITEM_CROSSBOW:
+    case ItemType::CrossBow:
         Bones["LHand"] = Crossbow::Create(owner, ObjectType::Item);
         Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "crossbow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
@@ -1106,22 +1106,22 @@ void Player::EquipItem(Item::ItemType itemType)
     }
 }
 
-void Player::UnEquipItem(Item::ItemType itemType)
+void Player::UnEquipItem(ItemType itemType)
 {
     switch (itemType) {
     case ItemType::Bow:
         Bones["LHand"]->SetDead();
         Bones["LHand"] = nullptr;
         break;
-    case Item::ItemType::ITEM_CROSSBOW:
+    case ItemType::CrossBow:
         Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
-    case Item::ItemType::ITEM_SWORD:
+    case ItemType::Sword:
         Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
-    case Item::ItemType::ITEM_SPEAR:
+    case ItemType::Spear:
         Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
@@ -1214,7 +1214,7 @@ void Player::UpdateWalk(_float dt) {
     float fAngle = sinf(WalkTime * WalkSwingSpeed);
     SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
     SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
-    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() != Item::ItemType::ITEM_SPEAR)
+    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() != ItemType::Spear)
     {
         SetRotation({ -fAngle, 0.f, 0.f }, "LArm");
         SetRotation({ fAngle, 0.f, 0.f }, "RArm");
@@ -1278,7 +1278,7 @@ void Player::UpdateWalk(_float dt) {
     const float fRotateDuration = 0.05f;
     
     float TargetAngle;
-    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() != Item::ItemType::ITEM_SPEAR)
+    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() != ItemType::Spear)
     {
         TargetAngle = atan2f(vDir.x, vDir.z);
     }
@@ -1408,10 +1408,10 @@ void Player::UpdateAttack(_float dt) {
     if (AttackTime == dt)
     {
         SaveStartRotation();
-        Item::ItemType type = static_cast<Item*>(Bones["RHand"])->GetItemType();
+        ItemType type = static_cast<Item*>(Bones["RHand"])->GetItemType();
         switch (type)
         {
-        case Item::ItemType::ITEM_SWORD:
+        case ItemType::Sword:
             switch (attackType)
             {
             case ePlayerAttackType::FIRST:
@@ -1425,7 +1425,7 @@ void Player::UpdateAttack(_float dt) {
                 break;
             }
             break;
-        case Item::ItemType::ITEM_SPEAR:
+        case ItemType::Spear:
             switch (attackType)
             {
             case ePlayerAttackType::FIRST:
@@ -1493,8 +1493,8 @@ void Player::UpdateShoot(_float dt) {
     static float prePhase = 0.f;
     if (prePhase <= phaseVec.at(0) && fProgress > phaseVec.at(0)) {
         auto input = EngineCore::GetInstance()->GetInputSystem();
-        Item::ItemType leftHandType = dynamic_cast<Item*>(Bones["LHand"])->GetItemType();
-        if (input->IsKeyDown(RBUTTON) && leftHandType == Item::ItemType::ITEM_BOW)
+        ItemType leftHandType = dynamic_cast<Item*>(Bones["LHand"])->GetItemType();
+        if (input->IsKeyDown(RBUTTON) && leftHandType == ItemType::Bow)
         {
             fProgress = phaseVec.at(0);
             chargedTime += dt;
@@ -1509,12 +1509,12 @@ void Player::UpdateShoot(_float dt) {
             case ePlayerShootType::ARROW:
                 switch (leftHandType)
                 {
-                case Item::ItemType::ITEM_BOW:
+                case ItemType::Bow:
                     chargedTime = std::clamp(chargedTime, 0.f, MaxChargeTime);
                     Arrow::Create(owner, ObjectType::Projectile, this, shootDir, (1.f + chargedTime));
                     chargedTime = 0.f;
                     break;
-                case Item::ItemType::ITEM_CROSSBOW:
+                case ItemType::CrossBow:
                     Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
 
                     _matrix matRotY;
@@ -1784,18 +1784,18 @@ void Player::IdleSmoothing(_float dt, ePlayerBone bone) {
     }
     if (Bones[strBone] == nullptr) return;
 
-    Item::ItemType rHandType;
+    ItemType rHandType;
     if (Bones["RHand"] && itemBaseRotOffset.find("sword") != itemBaseRotOffset.end())
     {
-        rHandType = Item::ItemType::ITEM_SWORD;
+        rHandType = ItemType::Sword;
     }
     else if (Bones["RHand"] && itemBaseRotOffset.find("spear") != itemBaseRotOffset.end())
     {
-        rHandType = Item::ItemType::ITEM_SPEAR;
+        rHandType = ItemType::Spear;
     }
     else
     {
-        rHandType = Item::ItemType::ITEM_NONE;
+        rHandType = ItemType::None;
     }
 
     _vec3 vTargetRot;

@@ -56,6 +56,7 @@
 #include "SpriteEffect.h"
 #include "Npc.h"
 #include "Ender.h"
+#include "Spear.h"
 
 //component
 #include "TransformComponent.h"
@@ -103,6 +104,7 @@ void Village::Load()
 		player = Player::Create(ObjectMgr, ObjectType::Player);
 		player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
 		ObjectMgr->AddObject(ObjectType::Player, player);
+		player->EquipItem(ItemType::Spear);
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);

@@ -34,7 +34,7 @@ HRESULT Bow::Ready_Object(ObjectManager* owner, ObjectType objType)
     if (FAILED(Item::Ready_Object(owner, objType)))
         return E_FAIL;
 
-    itemType = ItemType::ITEM_BOW;
+    itemType = ItemType::Bow;
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     auto i = info->GetInfo();
     i.value = 10.f;
