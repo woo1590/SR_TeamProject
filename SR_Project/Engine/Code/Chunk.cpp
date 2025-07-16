@@ -46,6 +46,7 @@ HRESULT Chunk::Ready_Object()
     renderer->SetMesh(mesh);
 
     owner->AddObject(ObjectType::Chunk, this);
+
     return S_OK;
 }
 
@@ -139,7 +140,7 @@ void Chunk::BuildCollisionBlock()
             return Blocks[x][y][z].Type == StaticBlockType::Air;
         };
 
-    for (int y = 0; y < CHUNK_HEIGHT; ++y)
+    for (int y = 0; y < 20; ++y)
     {
         for (int z = 0; z < CHUNK_SIZE; ++z)
         {
@@ -157,17 +158,19 @@ void Chunk::BuildCollisionBlock()
                     {
                     case Basic:
                     {
-                        auto cb = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        auto cb = CollisionBlock::Create(owner, ObjectType::CollisionBlock);
                         cb->GetComponent<TransformComponent>()->SetPosition(block.Pos);
-                        owner->AddObject(ObjectType::StaticBlock, cb);
+                        owner->AddObject(ObjectType::CollisionBlock, cb);
+
                         break;
                     }
                     case Half:
                     {
-                        auto cb = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        auto cb = CollisionBlock::Create(owner, ObjectType::CollisionBlock);
                         cb->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
                         cb->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
-                        owner->AddObject(ObjectType::StaticBlock, cb);
+                        owner->AddObject(ObjectType::CollisionBlock, cb);
+
                         break;
                     }
                     case Stair:

@@ -36,6 +36,9 @@ void ObjectManager::Update(float dt)
 {
 	for (int type = 0; type < static_cast<int>(ObjectType::Count); ++type)
 	{
+		if (type == static_cast<int>(ObjectType::CollisionBlock))
+			continue;
+
 		for (const auto& object : Objects[type])
 		{
 			object->Update(dt);
@@ -47,6 +50,9 @@ void ObjectManager::Late_Update(float dt)
 {
 	for (int type = 0; type < static_cast<int>(ObjectType::Count); ++type)
 	{
+		if (type == static_cast<int>(ObjectType::CollisionBlock))
+			continue;
+
 		for (auto iter = Objects[type].begin(); iter != Objects[type].end();)
 		{
 			if ((*iter)->IsDead())

@@ -102,7 +102,6 @@ void Village::Load()
 	/*-------------------------Create Camera-----------------------------*/
 	{
 		player = Player::Create(ObjectMgr, ObjectType::Player);
-		player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
 		ObjectMgr->AddObject(ObjectType::Player, player);
 		
 		auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
@@ -123,6 +122,7 @@ void Village::Load()
 
 	/*-------------------------Create Objects----------------------------*/
 	{
+		BlockMgr->LoadDB("VillageMap");
 		BlockMgr->LoadChunk("VillageMap");
 		Grid->InsertBlock();
 
@@ -132,7 +132,7 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-		player->GetComponent<TransformComponent>()->SetPosition(30.f, 60.f, 30.f);
+		player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
@@ -167,19 +167,31 @@ void Village::Update(_float dt)
 {
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
+	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
+	//ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
+	
 
-	auto Input = EngineCore::GetInstance()->GetInputSystem();
+	{
+		auto Input = EngineCore::GetInstance()->GetInputSystem();
 
-	if (Input->IsKeyPressed(NUM9))
-		EngineCore::GetInstance()->SetDebugMode(false);
+		if (Input->IsKeyPressed(NUM1))
+			CameraMgr->SetMainCamera(L"First_Camera");
 
-	if (Input->IsKeyPressed(NUM0))
-		EngineCore::GetInstance()->SetDebugMode(true);
+		if (Input->IsKeyPressed(NUM2))
+			CameraMgr->SetMainCamera(L"Third_Camera");
+
+		if (Input->IsKeyPressed(NUM9))
+			EngineCore::GetInstance()->SetDebugMode(false);
+
+		if (Input->IsKeyPressed(NUM0))
+			EngineCore::GetInstance()->SetDebugMode(true);
+	}
 }
 
 void Village::Late_Update(_float dt)
 {
 	ObjectMgr->Late_Update(dt);
+	
 }
 
 void Village::Unload()

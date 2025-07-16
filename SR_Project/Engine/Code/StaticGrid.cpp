@@ -43,9 +43,11 @@ int StaticGrid::WorldToCell(_float v)
 
 void StaticGrid::InsertBlock()
 {
-	auto staticBlocks = owner->GetObjectManager()->GetObjectList(ObjectType::StaticBlock);
+	Cells.clear();
+
+	auto collisionBlocks = owner->GetObjectManager()->GetObjectList(ObjectType::CollisionBlock);
 	
-	for (const auto& block : staticBlocks)
+	for (const auto& block : collisionBlocks)
 	{
 		_vec3 pos = block->GetComponent<TransformComponent>()->GetPosition();
 		auto collision = block->GetComponent<CollisionComponent>();
@@ -57,7 +59,6 @@ void StaticGrid::InsertBlock()
 		UINT64 key = HashCell(cx, cy, cz);
 
 		Cells[key] = collision;
-		collision->AddRef();
 	}
 }
 
@@ -72,10 +73,7 @@ CollisionComponent* StaticGrid::QueryCell(int cx, int cy, int cz)
 
 void StaticGrid::Free()
 {
-	std::for_each(Cells.begin(), Cells.end(), [](auto& pair)
-		{
-			Safe_Release(pair.second);
-		});
+
 }
 
 UINT64 StaticGrid::HashCell(int cx, int cy, int cz)

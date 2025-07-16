@@ -59,14 +59,16 @@ public:
 private:
     void ApplyGravity(_float dt);
     void ApplyVelocity(_float dt);
-    void CollectAABBEntry();
+    void Dynamic_vs_Dynamic();
+    void Dynamic_vs_Static();
     void BroadPhase();
     void SolvePosition();
     void CollisionEvent();
 
     void Free()override;
     std::vector<PhysicsComponent*> DynamicBodies;
-    std::vector<AABBEntry> AABBEntries;
+    std::vector<AABBEntry> AABBEntries_Dynamics;
+    std::vector<AABBEntry> AABBEntries_Statics;
     StaticGrid* Grid = nullptr;
 
     std::set<CollisionPair> CurrCollisions;

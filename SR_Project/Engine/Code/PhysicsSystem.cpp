@@ -43,7 +43,11 @@ void PhysicsSystem::Update(_float dt)
 {
 	ApplyGravity(dt);
 	ApplyVelocity(dt);
-	CollectAABBEntry();
+
+	CurrCollisions.clear();
+
+	Dynamic_vs_Dynamic();
+	Dynamic_vs_Static();
 	BroadPhase();
 	SolvePosition();
 	CollisionEvent();
@@ -95,10 +99,9 @@ void PhysicsSystem::ApplyVelocity(_float dt)
 	}
 }
 
-void PhysicsSystem::CollectAABBEntry()
+void PhysicsSystem::Dynamic_vs_Dynamic()
 {
-	AABBEntries.clear();
-	std::set<CollisionComponent*> chache;
+	AABBEntries_Dynamics.clear();
 
 	//Dynamic vs Dynamic
 	for (const auto& body : DynamicBodies)
@@ -107,15 +110,23 @@ void PhysicsSystem::CollectAABBEntry()
 		_float minX, maxX;
 		collision->GetWorldX(&minX, &maxX);
 
-		AABBEntries.push_back({ collision,minX,maxX });
+		AABBEntries_Dynamics.push_back({ collision,minX,maxX });
 	}
 
+	std::sort(AABBEntries_Dynamics.begin(), AABBEntries_Dynamics.end(), [](const AABBEntry& a, const AABBEntry& b)
+		{
+			return a.minX < b.minX;
+		});
+}
+
+void PhysicsSystem::Dynamic_vs_Static()
+{
 	//Static vs Dynamic
 	for (const auto& body : DynamicBodies)
 	{
-		auto collision = body->GetOwner()->GetComponent<CollisionComponent>();
+		auto a = body->GetOwner()->GetComponent<CollisionComponent>();
 		_vec3 worldMin, worldMax;
- 		collision->GetWorldAABB(&worldMin, &worldMax);
+		a->GetWorldAABB(&worldMin, &worldMax);
 
 		int minX, maxX;
 		int minY, maxY;
@@ -128,41 +139,44 @@ void PhysicsSystem::CollectAABBEntry()
 		maxY = Grid->WorldToCell(worldMax.y);
 		maxZ = Grid->WorldToCell(worldMax.z);
 
-		for(int cz = minZ; cz<=maxZ; ++cz)
-			for(int cy = minY; cy<=maxY; ++cy)
+		for (int cz = minZ; cz <= maxZ; ++cz)
+			for (int cy = minY; cy <= maxY; ++cy)
 				for (int cx = minX; cx <= maxX; ++cx)
 				{
 					const auto& c = Grid->QueryCell(cx, cy, cz);
 					if (!c) continue;
 
-					if (!chache.insert(c).second) continue;	//Already Exist
-
 					_float min, max;
 					c->GetWorldX(&min, &max);
 
-					AABBEntries.push_back({ c,min,max });
-					collision->GetWorldX(&min, &max);
-					AABBEntries.push_back({ collision,min,max });
+					AABBEntries_Statics.push_back({ c,min,max });
 				}
-	}
 
-	std::sort(AABBEntries.begin(), AABBEntries.end(), [](AABBEntry& a, AABBEntry& b) {
-		return a.minX < b.minX;
-		});
+		for (int i = 0; i < AABBEntries_Statics.size();++i)
+		{
+			CollisionComponent* b = AABBEntries_Statics[i].comp;
+
+			if (a->CanCollision(b) && b->CanCollision(a))
+			{
+				if (a->CheckAABBCollision(b))
+					CurrCollisions.emplace(a, b);
+			}
+		}
+
+		AABBEntries_Statics.clear();
+	}
 }
 
 void PhysicsSystem::BroadPhase()
 {
-	CurrCollisions.clear();
-
-	for (_uint i = 0; i < AABBEntries.size(); ++i)
+	for (_uint i = 0; i < AABBEntries_Dynamics.size(); ++i)
 	{
-		CollisionComponent* a = AABBEntries[i].comp;
-		for (_uint j = i + 1; j < AABBEntries.size();++j)
+		CollisionComponent* a = AABBEntries_Dynamics[i].comp;
+		for (_uint j = i + 1; j < AABBEntries_Dynamics.size();++j)
 		{
-			CollisionComponent* b = AABBEntries[j].comp;
+			CollisionComponent* b = AABBEntries_Dynamics[j].comp;
 
-			if (AABBEntries[j].minX > AABBEntries[i].maxX)
+			if (AABBEntries_Dynamics[j].minX > AABBEntries_Dynamics[i].maxX)
 				break;
 
 			if (a->CanCollision(b) && b->CanCollision(a))
@@ -172,6 +186,7 @@ void PhysicsSystem::BroadPhase()
 			}
 		}
 	}
+
 }
 
 void PhysicsSystem::SolvePosition()

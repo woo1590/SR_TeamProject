@@ -166,10 +166,14 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath, bool isEditor)
             owner->GetStaticBlocks().push_back(data);
         }
 
-        chunk->BuildChunkFace();
-        if (!isEditor) chunk->BuildCollisionBlock();
         chunk->AddRef();
         worldChunks[{chunkX, chunkZ}] = chunk;
+    }
+
+    for (auto& [pair, chunk] : worldChunks)
+    {
+        chunk->BuildChunkFace();
+        chunk->BuildCollisionBlock();
     }
 
     CloseHandle(hFile);
@@ -184,7 +188,7 @@ void ChunkManager::IsChunkBoundary(_vec3 playerPos)
     {
         preChunkX = chunkX;
         preChunkZ = chunkZ;
-        UpdateRenderChunk(chunkX, chunkZ, 3);
+        UpdateRenderChunk(chunkX, chunkZ, 5);
     }
 }
 
