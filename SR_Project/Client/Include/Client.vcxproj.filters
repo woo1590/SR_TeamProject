@@ -454,6 +454,9 @@
     <Filter Include="02. Object\Monster\Ender">
       <UniqueIdentifier>{1a44899b-d7af-4f84-9264-ea0051b08200}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\BTNode\Decorator\Boss\Ender">
+      <UniqueIdentifier>{6cc6603c-8449-4dd4-971a-899dd3b70dde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -849,6 +852,21 @@
     <ClInclude Include="..\Header\Ender.h">
       <Filter>02. Object\Monster\Ender</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\IsChangingState.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CheckStateChangeCount.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ChangeState.h">
+      <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StateAttack.h">
+      <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IsRandomMoveCheck.h">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1231,6 +1249,21 @@
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\Ender.cpp">
       <Filter>02. Object\Monster\Ender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsChangingState.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CheckStateChangeCount.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ChangeState.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StateAttack.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IsRandomMoveCheck.cpp">
+      <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
