@@ -139,7 +139,7 @@ private:
     const _float RollDuration = 0.5f;
 
     _float AttackTime = 0.f;
-    const _float AttackDuration = 0.3f;
+    const _float AttackDuration = 0.4f;
     const _float ShootDuration = 0.6f;
 
     _float chargedTime = 0.f;
@@ -172,4 +172,6 @@ private:
     const float jumpPower = 15.f;
 
     _bool StatikkMode = false;
+
+    std::string soundBefore = "WalkOnDefault2";
 };

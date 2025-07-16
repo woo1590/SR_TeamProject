@@ -16,6 +16,8 @@
 #include "AIController.h"
 #include "IsAlive.h"
 #include "Die.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 Zombie::Zombie(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -93,6 +95,7 @@ void Zombie::Die()
 {
     if (State != MonsterState::Die)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathZombie");
         State = MonsterState::Die;
 
         DieAnim.IsRunning = true;

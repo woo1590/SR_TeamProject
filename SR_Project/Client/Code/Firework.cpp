@@ -12,6 +12,9 @@
 
 #include "Monster.h"
 
+#include "EngineCore.h"
+#include "SoundManager.h"
+
 Firework::Firework(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
 {
 }
@@ -117,6 +120,7 @@ void Firework::SetCollisionEnter(Object* other)
     //        monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-fireworkDamage);
     //    }
     //}
+    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomFirework");
     SetDead();
 }
 

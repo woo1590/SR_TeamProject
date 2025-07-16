@@ -12,6 +12,9 @@
 
 #include "Monster.h"
 
+#include "EngineCore.h"
+#include "SoundManager.h"
+
 Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
 {
 }
@@ -125,6 +128,7 @@ void Arrow::Late_Update(_float dt)
 
 void Arrow::SetCollisionEnter(Object* other)
 {
+    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitArrow");
     if (hitObject != nullptr) return;
     
     arrowSpeed = 0.f;

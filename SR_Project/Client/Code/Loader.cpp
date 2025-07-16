@@ -173,7 +173,64 @@ HRESULT Loader::Load_Village()
 
 	/*----------------------Load Sound-----------------------------*/
 	{
+		//BGM
 		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
+
+		//Player
+		sound->LoadSound("ShootArrow", "../Resource/Sound/SFX/ShootArrow.mp3", false);
+		sound->LoadSound("HitArrow", "../Resource/Sound/SFX/HitArrow.mp3", false);
+		sound->LoadSound("ShootFirework", "../Resource/Sound/SFX/ShootFirework.mp3", false);
+		sound->LoadSound("BoomFirework", "../Resource/Sound/SFX/BoomFirework.mp3", false);
+		sound->LoadSound("SwingSword", "../Resource/Sound/SFX/SwingSword.mp3", false);
+		sound->LoadSound("HitSword", "../Resource/Sound/SFX/HitSword.mp3", false);
+		sound->LoadSound("Roll", "../Resource/Sound/SFX/Roll.mp3", false);
+		sound->LoadSound("BoomTNT", "../Resource/Sound/SFX/BoomTNT.mp3", false);
+		sound->LoadSound("DeathPlayer", "../Resource/Sound/SFX/DeathPlayer.mp3", false);
+		sound->LoadSound("RevivePlayer", "../Resource/Sound/SFX/RevivePlayer.mp3", false);
+		sound->LoadSound("WalkOnDefault1", "../Resource/Sound/SFX/WalkOnDefault1.mp3", false);
+		sound->LoadSound("WalkOnDefault2", "../Resource/Sound/SFX/WalkOnDefault2.mp3", false);
+		//sound->LoadSound("WalkOnGrass1", "../Resource/Sound/SFX/WalkOnGrass1.mp3", false);
+		//sound->LoadSound("WalkOnGrass2", "../Resource/Sound/SFX/WalkOnGrass2.mp3", false);
+		//sound->LoadSound("WalkOnWood1", "../Resource/Sound/SFX/WalkOnWood1.mp3", false);
+		//sound->LoadSound("WalkOnWood2", "../Resource/Sound/SFX/WalkOnWood2.mp3", false);
+		//sound->LoadSound("WalkOnCloth1", "../Resource/Sound/SFX/WalkOnCloth1.mp3", false);
+		//sound->LoadSound("WalkOnCloth2", "../Resource/Sound/SFX/WalkOnCloth2.mp3", false);
+		//sound->LoadSound("WalkOnSand1", "../Resource/Sound/SFX/WalkOnSand1.mp3", false);
+		//sound->LoadSound("WalkOnSand2", "../Resource/Sound/SFX/WalkOnSand2.mp3", false);
+		//sound->LoadSound("HitPlayer", "../Resource/Sound/SFX/HitPlayer.mp3", false);
+
+		//Monster
+		//sound->LoadSound("WalkZombie1", "../Resource/Sound/SFX/WalkZombie1.mp3", false);
+		//sound->LoadSound("WalkZombie2", "../Resource/Sound/SFX/WalkZombie2.mp3", false);
+		//sound->LoadSound("HitZombie", "../Resource/Sound/SFX/HitZombie.mp3", false);
+		sound->LoadSound("DeathZombie", "../Resource/Sound/SFX/DeathZombie.mp3", false);
+
+		//sound->LoadSound("WalkSkeleton1", "../Resource/Sound/SFX/WalkSkeleton1.mp3", false);
+		//sound->LoadSound("WalkSkeleton2", "../Resource/Sound/SFX/WalkSkeleton2.mp3", false);
+		sound->LoadSound("DeathSkeleton", "../Resource/Sound/SFX/DeathSkeleton.mp3", false);
+
+		//sound->LoadSound("WalkSlime1", "../Resource/Sound/SFX/WalkSlime1.mp3", false);
+		//sound->LoadSound("WalkSlime2", "../Resource/Sound/SFX/WalkSlime2.mp3", false);
+
+		//sound->LoadSound("HitGolem", "../Resource/Sound/SFX/HitGolem.mp3", false);
+		sound->LoadSound("DeathGolem", "../Resource/Sound/SFX/DeathGolem.mp3", false);
+
+		sound->LoadSound("DeathCreeper", "../Resource/Sound/SFX/DeathCreeper.mp3", false);
+
+		//sound->LoadSound("DeathEnder", "../Resource/Sound/SFX/DeathEnder.mp3", false);
+
+		//Map
+		//sound->LoadSound("OpenChest", "../Resource/Sound/SFX/OpenChest.mp3", false);
+		//sound->LoadSound("CloseChest", "../Resource/Sound/SFX/CloseChest.mp3", false);
+
+		//UI
+		//sound->LoadSound("UsePotion", "../Resource/Sound/SFX/UsePotion.mp3", false);
+		//sound->LoadSound("SuccessEnhance", "../Resource/Sound/SFX/SuccessEnhance.mp3", false);
+		//sound->LoadSound("FailEnhance", "../Resource/Sound/SFX/FailEnhance.mp3", false);
+		//sound->LoadSound("SuccessTrade", "../Resource/Sound/SFX/SuccessTrade.mp3", false);
+		//sound->LoadSound("FailTrade", "../Resource/Sound/SFX/FailTrade.mp3", false);
+		//sound->LoadSound("QuestClear", "../Resource/Sound/SFX/QuestClear.mp3", false);
+		//sound->LoadSound("TalkNPC", "../Resource/Sound/SFX/TalkNPC.mp3", false);
 	}
 
 	/*----------------------Load Sprite----------------------------*/
