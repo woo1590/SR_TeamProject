@@ -104,7 +104,6 @@ void Village::Load()
 		player = Player::Create(ObjectMgr, ObjectType::Player);
 		player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
 		ObjectMgr->AddObject(ObjectType::Player, player);
-		player->EquipItem(ItemType::Spear);
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
@@ -130,8 +129,6 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-		//player->EquipItem(ItemType::Sword);
-		//player->EquipItem(ItemType::Bow);
 		player->GetComponent<TransformComponent>()->SetPosition(30.f, 60.f, 30.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
