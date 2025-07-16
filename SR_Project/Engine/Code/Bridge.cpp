@@ -19,6 +19,7 @@
 Bridge::Bridge(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, int Count)
     : DynamicBlock(owner, objType, type, col, Rot, Count)
 {
+    AddRef();
 }
 
 Bridge::~Bridge()

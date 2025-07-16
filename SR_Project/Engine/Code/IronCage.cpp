@@ -19,6 +19,7 @@
 IronCage::IronCage(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count)
     : DynamicBlock(owner, objType, type, col, rot, Count)
 {
+    AddRef();
 }
 
 IronCage::~IronCage()

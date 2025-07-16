@@ -46,15 +46,13 @@ void MeshRenderer::Late_Update(_float dt)
 
 void MeshRenderer::Render()
 {
-	if (!mesh)
-		return;
+	if (!mesh || !mesh->GetRender()) return;
 
 	auto transform = owner->GetComponent<TransformComponent>();
 	auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
 	auto shader = mtrl->GetShader();
 
-	if (!cam)
-		return;
+	if (!cam) return;
 
 	_matrix worldMat = transform->GetWorldMatrix();
 	_matrix viewMat = cam->GetViewMatrix();

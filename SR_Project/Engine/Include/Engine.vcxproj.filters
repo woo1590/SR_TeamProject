@@ -208,18 +208,6 @@
     <Filter Include="06. Object\01. StaticBlock">
       <UniqueIdentifier>{bbc9d575-2fc9-4605-b283-7ee75aafcb01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\02. DynamicBlock">
-      <UniqueIdentifier>{f70839ee-bc53-45ee-884e-c96eb4549b31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Object\02. DynamicBlock\Lever">
-      <UniqueIdentifier>{53b62e63-5598-4ba3-a495-27ee499e9405}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Object\02. DynamicBlock\Chest">
-      <UniqueIdentifier>{f7afe70f-0ab2-4267-bae3-d88524793da8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Object\02. DynamicBlock\IronCage">
-      <UniqueIdentifier>{737313a0-01ca-42c8-92d5-f2e601ad1e4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06. Object\01. StaticBlock\BasicBlock">
       <UniqueIdentifier>{feff293c-aa6c-4b44-bf9a-2db6a0eaac2c}</UniqueIdentifier>
     </Filter>
@@ -228,9 +216,6 @@
     </Filter>
     <Filter Include="06. Object\01. StaticBlock\StairBlock">
       <UniqueIdentifier>{33ab373c-7a1f-44af-8802-f6b8a2e7aed4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Object\02. DynamicBlock\Bridge">
-      <UniqueIdentifier>{2f87178e-b4b1-4dc2-b258-9f66e73005ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="06. Object\01. StaticBlock\AlphaBlock">
       <UniqueIdentifier>{aad07e88-6a31-48b7-bb95-cd4f6b63f1fc}</UniqueIdentifier>
@@ -318,6 +303,21 @@
     </Filter>
     <Filter Include="07. Object Component\Renderer\SpriteRenderer">
       <UniqueIdentifier>{af9db076-9ef3-4390-962e-cf1f3af57986}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="06. Object\02. DynamicBlock">
+      <UniqueIdentifier>{f70839ee-bc53-45ee-884e-c96eb4549b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\02. DynamicBlock\Lever">
+      <UniqueIdentifier>{53b62e63-5598-4ba3-a495-27ee499e9405}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\02. DynamicBlock\Chest">
+      <UniqueIdentifier>{f7afe70f-0ab2-4267-bae3-d88524793da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\02. DynamicBlock\IronCage">
+      <UniqueIdentifier>{737313a0-01ca-42c8-92d5-f2e601ad1e4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\02. DynamicBlock\Bridge">
+      <UniqueIdentifier>{2f87178e-b4b1-4dc2-b258-9f66e73005ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -131,10 +131,11 @@ namespace Engine
 		Dirt, GrassDirt, Wood, WoodPlank,
 		Stone, CobbleStone, SmoothStone, StoneBrick, MossyStoneBrick,
 		Glass, Leaf,
-		Oak, DirtPath, Furnace,
+		Oak, DirtPath, Furnace, Haybale, DarkWoodPlank,
+		WhiteWool, YellowWool, Terracota,
 		sBlockEnd
 	};
-	enum StaticBlockUsage { Basic, Half, Stair, Fence, Alpha };
+	enum StaticBlockUsage { Basic, Half, Stair, Fence, Alpha, Door };
 
 	enum DynamicBlockCol { dZP, dZM, dXP, dXM, dYP, dAEnd };
 	enum DynamicBlockRot { drXP, drXM, drZP, drZM, dREnd };

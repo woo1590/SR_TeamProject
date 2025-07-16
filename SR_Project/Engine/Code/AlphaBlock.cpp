@@ -14,6 +14,7 @@
 AlphaBlock::AlphaBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type)
     : StaticBlock(owner, objType, type, sAEnd, sREnd, Alpha)
 {
+    AddRef();
 }
 
 AlphaBlock::~AlphaBlock()

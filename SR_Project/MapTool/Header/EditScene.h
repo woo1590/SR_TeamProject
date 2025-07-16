@@ -40,6 +40,7 @@ private:
 #endif
     void CreateTerrain(const std::string& filename);
     void PlaceTerrainBlocks(const std::string& filename);
+    void UpdateCreateTerrain();
 
     // 광선 위치와 방향 초기화
     void MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir);
@@ -50,7 +51,7 @@ private:
     // 충돌한 면의 법선 반환
     _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax);
 
-    void PlaceBlock(_vec3& position);   // 블럭 설치
+    void PlaceBlock(const _vec3& position);   // 블럭 설치
     void PlacePrefab(_vec3& position);  // 프리펩 설치
 
     void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);  // 좌클릭
@@ -60,23 +61,38 @@ private:
     std::pair<int, int> GetChunkCoordFromWorldPos(const _vec3& pos);
    
     // 월드 좌표를 청크 내 로컬 좌표로 반환
-    _vec3 GetLocalCoordInChunk(const _vec3& pos, int chunkX, int chunkZ);
+    _vec3 GetLocalCoordInChunk(const _vec3& pos);
+
+    static void SetCurChunkZero() { CurChunkX = 0; CurChunkZ = 0; }
 
 private:
     void Free() override;
 
 private:
-    bool isDown = false, isPrefab = false;
+    bool isDown = false;
+    bool isLoading = false;
+
+    int maxChunkX = -1;
+    int maxChunkZ = -1;
+
+    static int CurChunkX;
+    static int CurChunkZ;
+
+    // ================ Prefab ================
+    bool isPrefab = false;
     Prefab* selectedPrefab = nullptr;
     PrefabManager* PrefabMgr = nullptr;
 
     // ================ 지형 생성 ================
-    bool CreateTer = false;             // 지형 생성 여부
+    bool isCreate = false;              // 지형 생성 여부
     int WidthX = 0;                     // 지형 생성할 때, X 길이
     int WidthZ = 0;                     // 지형 생성할 때, Z 길이
     int Height = 0;                     // 지형 생성할 때, Y 높이
     float Scale = 0.f;                  // 지형 굴곡의 정도
     TerrainCreater* Terrain = nullptr;  // 지형 생성 함수 사용을 위한 변수
+
+    int PreChunkX = -1;                 // 카메라 이전 청크 X
+    int PreChunkZ = -1;                 // 카메라 이전 청크 Z
 
     // ================ Static Block ================
     // 블럭 모양 결정

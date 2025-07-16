@@ -26,6 +26,9 @@ public:
 
     void SaveChunk(const std::wstring& saveStage);
     void LoadChunk(const std::wstring& loadStage, bool isEditor = false);
+    
+    void IsChunkBoundary(_vec3 playerPos);                             // Player가 청크 경계를 넘었는지
+    void UpdateRenderChunk(int playerChunkX, int playerChunkZ, int count);        // 청크 로딩 (Player가 속한 청크 중심 3 x 3 청크만 렌더링)
 
     Chunk* GetChunk(int chunkX, int chunkZ);        // Key 값의 청크 있으면 해당 청크 반환
     const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() const { return worldChunks; }
@@ -34,7 +37,9 @@ private:
     void Free()override;
 
 private:
+    int preChunkX = -1, preChunkZ = -1;
     Scene* owner = nullptr;
+    std::vector<std::pair<int, int>> renderChunks;
     std::unordered_map<std::pair<int, int>, Chunk*, PairHash> worldChunks;
 };
 END

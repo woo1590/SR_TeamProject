@@ -31,6 +31,9 @@
 #include "GraphicDevice.h"
 #include "Prefab.h"
 
+int EditScene::CurChunkX = 0;
+int EditScene::CurChunkZ = 0;
+
 EditScene::EditScene()
 {
 }
@@ -81,6 +84,8 @@ void EditScene::Load()
 void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
+	UpdateCreateTerrain();
+	if (isLoading) ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
 
 	// 좌&우클릭에 따른 블럭 생성&제거
 	_vec3 rayOrigin, rayDir;
@@ -91,10 +96,27 @@ void EditScene::Update(float dt)
 	{
 		if (isPrefab)
 		{
-			if (Input->IsKeyDown(LBUTTON))
+			if (Input->IsKeyPressed(LBUTTON))
 			{
 				MakePickingRay(rayOrigin, rayDir);
 				OnLeftClick(rayOrigin, rayDir);
+			}
+
+			if (isDown)
+			{
+				if (Input->IsKeyDown(RBUTTON))
+				{
+					MakePickingRay(rayOrigin, rayDir);
+					OnRightClick(rayOrigin, rayDir);
+				}
+			}
+			else
+			{
+				if (Input->IsKeyPressed(RBUTTON))
+				{
+					MakePickingRay(rayOrigin, rayDir);
+					OnRightClick(rayOrigin, rayDir);
+				}
 			}
 
 			return;
@@ -165,10 +187,12 @@ void EditScene::ImGui_Main()
 
 void EditScene::ImGui_Info()
 {
-	static bool checkMouse(false), checkPrefab(false);
+	static bool checkMouse(false), checkPrefab(false), checkLoading(false);
 	if (ImGui::Checkbox(" : MOUSE DOWN", &checkMouse)) isDown = checkMouse;
 	ImGui::SameLine();
 	if (ImGui::Checkbox(" : PREFAB MODE", &checkPrefab)) isPrefab = checkPrefab;
+	ImGui::SameLine();
+	if (ImGui::Checkbox(" : CHUNK LOADING", &checkLoading)) isLoading = checkLoading;
 
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
@@ -187,14 +211,32 @@ void EditScene::ImGui_Terrain()
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
 	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
 
-	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
+	if (ImGui::Button("CREATE HEIGHTMAP")) CreateTerrain("heightMap");
+	ImGui::SameLine();
+	if (ImGui::Button("CREATE TERRAIN"))
 	{
 		Terrain->Free();
 		staticBlocks.clear();
 		ChunkMgr->ClearAllChunks();
 
-		// CreateTerrain("heightMap");
+		SetCurChunkZero();
+
+		selectedSBlockType = 0;
+		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
+		ObjectMgr->ClearList(ObjectType::AlphaBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+
 		PlaceTerrainBlocks("heightMap");
+	}
+
+	if (ImGui::Button("CLEAR TERRAIN"))
+	{
+		Terrain->Free();
+		staticBlocks.clear();
+		ChunkMgr->ClearAllChunks();
+
+		SetCurChunkZero();
 
 		selectedSBlockType = 0;
 		dynamicBlocks.clear();
@@ -203,16 +245,10 @@ void EditScene::ImGui_Terrain()
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("CLEAR TERRAIN"))
+	if (ImGui::Button("CLEAR ALPHA"))
 	{
-		Terrain->Free();
-		staticBlocks.clear();
-		ChunkMgr->ClearAllChunks();
-
-		dynamicBlocks.clear();
-		ObjectMgr->ClearList(ObjectType::Part);
+		for (auto& iter : ChunkMgr->GetChunks()) iter.second->ClearAlpha();
 		ObjectMgr->ClearList(ObjectType::AlphaBlock);
-		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("CLEAR DB"))
@@ -220,6 +256,11 @@ void EditScene::ImGui_Terrain()
 		dynamicBlocks.clear();
 		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("BUILDCHUNKFACE"))
+	{
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 	}
 }
 
@@ -259,10 +300,11 @@ void EditScene::ImGui_SaveLoad()
 			{
 				auto bInfo = chunk.second->GetBlock(x, y, z);
 				if (bInfo.Type == StaticBlockType::Air) continue;
-
 				staticBlocks.push_back({ bInfo.Pos, bInfo.Type, bInfo.Axis, bInfo.Rot, bInfo.Usage });
 			}
 		}
+
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 	}
 }
 
@@ -278,7 +320,8 @@ void EditScene::ImGui_SetBlockType()
 			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK", 
 			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
 			"GLASS", "LEAF",
-			"OAK", "DIRTPATH", "FURNACE",
+			"OAK", "DIRTPATH", "FURNACE", "HAYBALE", "DARKWOODPLANK",
+			"WHITEWOOL", "YELLOWWOOL", "TERRACOTA"
 		};
 
 		// 선택할 때마다, 다른 값들 초기화
@@ -311,19 +354,24 @@ void EditScene::ImGui_SetBlockUsage()
 	switch (staticBlockType)
 	{
 	case Dirt: case GrassDirt: case DirtPath: case Wood: case Oak:
-	case StoneBrick: case MossyStoneBrick: case Furnace:
-		staticBlockUsage = StaticBlockUsage::Basic;
+	case StoneBrick: case MossyStoneBrick: case Furnace: case DarkWoodPlank:
+	case WhiteWool: case YellowWool: case Terracota:
+		staticBlockUsage = Basic;
 		return;
-	case StaticBlockType::WoodPlank: case StaticBlockType::Stone: case StaticBlockType::CobbleStone:
-		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE" };
-		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair, StaticBlockUsage::Fence };
+	case StaticBlockType::WoodPlank: 
+		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE", "DOOR"};
+		usageEnums = { Basic, Half, Stair, Fence, Door };
+		break;
+	case StaticBlockType::Stone: case StaticBlockType::CobbleStone:
+		usageOptions = { "BASIC", "HALF", "STAIR" };
+		usageEnums = { Basic, Half, Stair, Fence };
 		break;
 	case StaticBlockType::SmoothStone:
 		usageOptions = { "BASIC", "HALF", "STAIR" };
-		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair };
+		usageEnums = { Basic, Half, Stair };
 		break;
 	case StaticBlockType::Glass: case StaticBlockType::Leaf:
-		staticBlockUsage = StaticBlockUsage::Alpha;
+		staticBlockUsage = Alpha;
 		return;
 	}
 
@@ -360,7 +408,6 @@ void EditScene::ImGui_SetBlockInfo()
 					staticBlockAxis = static_cast<StaticBlockAxis>(selectedSBlockAxis);
 			}
 			break;
-
 		case StaticBlockUsage::Stair: case StaticBlockUsage::Fence:
 			if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
 				staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
@@ -377,7 +424,6 @@ void EditScene::ImGui_SetBlockInfo()
 		case DynamicBlockType::BasicChest: case DynamicBlockType::IronCages:
 			if (ImGui::Combo(" : Rotation", &selectedDBlockRot, dynamicRotNames, IM_ARRAYSIZE(dynamicRotNames)))
 				dynamicBlockRot = static_cast<DynamicBlockRot>(selectedDBlockRot);
-
 			if (dynamicBlockType == DynamicBlockType::IronCages)
 				ImGui::InputInt(" : Count", &Count);
 			break;
@@ -391,15 +437,20 @@ void EditScene::ImGui_SetPrefab()
 	ImGui::SetNextItemWidth(100); ImGui::InputText(" : PREFAB NAME", prefabNameBuf, sizeof(prefabNameBuf)); ImGui::SameLine();
 	if (ImGui::Button("SAVE PREFAB"))
 	{
+		float closestDis(FLT_MAX);
 		std::string name = prefabNameBuf;
 		std::vector<PREFAB> prefabBlocks;
 		_vec3 basePos{ FLT_MAX, 0.f, FLT_MAX };
 
 		for (const auto& sb : staticBlocks)
 		{
-			basePos.x = min(basePos.x, sb.Pos.x);
-			basePos.y = 1.f;
-			basePos.z = min(basePos.z, sb.Pos.z);
+			if (closestDis > basePos.y)
+			{
+				closestDis = basePos.y;
+				basePos.x = min(basePos.x, sb.Pos.x);
+				basePos.y = 1.f;
+				basePos.z = min(basePos.z, sb.Pos.z);
+			}
 		}
 		for (const auto& sb : staticBlocks)
 		{
@@ -566,26 +617,62 @@ void EditScene::CreateTerrain(const std::string& filename)
 
 void EditScene::PlaceTerrainBlocks(const std::string& filename)
 {
-	CreateTer = true;
 	ChunkMgr->ClearAllChunks();
 
 	if (!Terrain->LoadHeightmapFromImage(filename)) return;
 	Terrain->CreateBlockTerrain(WidthX, WidthZ, Height);
 
-	for (const auto& block : Terrain->GetBlocks())
+	isCreate = true;
+
+	maxChunkX = WidthX / CHUNK_SIZE;
+	maxChunkZ = WidthZ / CHUNK_SIZE;
+}
+
+void EditScene::UpdateCreateTerrain()
+{
+	if (!isCreate) return;
+
+	static bool placeBlock(false);
+
+	if (!placeBlock)
 	{
-		_vec3 position = block.Pos;
-		staticBlockUsage = block.Usage;
-		staticBlockType = block.Type;
-		staticBlockAxis = block.Axis;
-		staticBlockRot = block.Rot;
+		const auto& blocks = Terrain->GetBlocksInChunk(CurChunkX, CurChunkZ);
 
-		PlaceBlock(position);
+		for (const auto& block : blocks)
+		{
+			staticBlockUsage = block.Usage;
+			staticBlockType = block.Type;
+			staticBlockAxis = block.Axis;
+			staticBlockRot = block.Rot;
+
+			PlaceBlock(block.Pos);
+		}
+
+		placeBlock = true;
 	}
+	else
+	{
+		ChunkMgr->CreateChunk(CurChunkX, CurChunkZ)->BuildChunkFace();
+		// ChunkMgr->GetChunk(CurChunkX, CurChunkZ)->SetChunkRender(FALSE);
 
-	CreateTer = false;
-	for (auto& iter : ChunkMgr->GetChunks())
-		iter.second->BuildChunkFace();
+		++CurChunkX;
+		if (CurChunkX >= maxChunkX)
+		{
+			CurChunkX = 0;
+			++CurChunkZ;
+		}
+		if (CurChunkZ >= maxChunkZ)
+		{
+			for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
+			isCreate = false;
+			staticBlockType = Air;
+			staticBlockAxis = sAEnd;
+			staticBlockRot = sREnd;
+			staticBlockUsage = Basic;
+		}
+
+		placeBlock = false;
+	}
 }
 
 void EditScene::MakePickingRay(_vec3& outRayOrigin, _vec3& outRayDir)
@@ -732,10 +819,7 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 				iter = staticBlocks.erase(iter);
 				break;
 			}
-			else
-			{
-				++iter;
-			}
+			else ++iter;
 		}
 
 		if (targetChunk)
@@ -746,13 +830,14 @@ void EditScene::OnRightClick(_vec3& rayOrigin, _vec3& rayDir)
 			}
 			else
 			{
-				_vec3 localPos = GetLocalCoordInChunk(selectedBlockPos, chunkX, chunkZ);
-
+				_vec3 localPos = GetLocalCoordInChunk(selectedBlockPos);
 				int lx = static_cast<int>(localPos.x);
 				int ly = static_cast<int>(localPos.y);
 				int lz = static_cast<int>(localPos.z);
 
-				if (lx >= 0 && lx < CHUNK_SIZE && ly >= 0 && ly < CHUNK_HEIGHT && lz >= 0 && lz < CHUNK_SIZE)
+				if (lx >= 0 && lx <= CHUNK_SIZE / (int)BLOCK_SIZE &&
+					ly >= 0 && ly <= CHUNK_HEIGHT / (int)BLOCK_SIZE &&
+					lz >= 0 && lz <= CHUNK_SIZE / (int)BLOCK_SIZE)
 				{
 					targetChunk->SetBlockAir(lx, ly, lz);
 					targetChunk->BuildChunkFace();
@@ -802,7 +887,7 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 	return _vec3(0, 0, 0);
 }
 
-void EditScene::PlaceBlock(_vec3& position)
+void EditScene::PlaceBlock(const _vec3& position)
 {
 	// 새로 설치하려는 블럭의 위치에 이미 다른 블럭이 존재하면 바로 리턴
 	for (const auto& block : staticBlocks) if (block.Pos == position) return;
@@ -823,7 +908,7 @@ void EditScene::PlaceBlock(_vec3& position)
 		else
 		{
 			ChunkMgr->CreateChunk(chunkX, chunkZ)->AddBlock(position, staticBlockType, staticBlockAxis, staticBlockRot, staticBlockUsage);
-			if (!CreateTer) ChunkMgr->GetChunk(chunkX, chunkZ)->BuildChunkFace();
+			if (!isCreate) ChunkMgr->GetChunk(chunkX, chunkZ)->BuildChunkFace();
 		}
 		
 		// ================ 벡터에 블럭 정보 삽입 ================
@@ -831,8 +916,7 @@ void EditScene::PlaceBlock(_vec3& position)
 	}
 	else if (dynamicBlockType != DynamicBlockType::dBlockNone)
 	{
-		auto newBlockObj = DynamicBlock::Create(ObjectMgr,
-			ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockCol,dynamicBlockRot, Count);
+		auto newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockCol,dynamicBlockRot, Count);
 		if (!newBlockObj) return;
 
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);
@@ -882,7 +966,7 @@ void EditScene::PlacePrefab(_vec3& position)
 		Chunk* chunk = ChunkMgr->CreateChunk(chunkX, chunkZ);
 		chunk->AddBlock(worldPos, p.Type, p.Axis, p.Rot, p.Usage);
 
-		if (p.Type != StaticBlockType::Glass && p.Type != StaticBlockType::Leaf && !CreateTer) chunk->BuildChunkFace();
+		if (p.Type != StaticBlockType::Glass && p.Type != StaticBlockType::Leaf && !isCreate) chunk->BuildChunkFace();
 		staticBlocks.push_back({ worldPos, p.Type, p.Axis, p.Rot, p.Usage });
 	}
 }
@@ -894,11 +978,11 @@ std::pair<int, int> EditScene::GetChunkCoordFromWorldPos(const _vec3& pos)
 	return { chunkX, chunkZ };
 }
 
-_vec3 EditScene::GetLocalCoordInChunk(const _vec3& pos, int chunkX, int chunkZ)
+_vec3 EditScene::GetLocalCoordInChunk(const _vec3& pos)
 {
-	int localX = static_cast<int>(pos.x / BLOCK_SIZE) % CHUNK_SIZE;
+	int localX = static_cast<int>(pos.x / BLOCK_SIZE) % (CHUNK_SIZE / (int)BLOCK_SIZE);
 	int localY = static_cast<int>(pos.y / BLOCK_SIZE);
-	int localZ = static_cast<int>(pos.z / BLOCK_SIZE) % CHUNK_SIZE;
+	int localZ = static_cast<int>(pos.z / BLOCK_SIZE) % (CHUNK_SIZE / (int)BLOCK_SIZE);
 	return { (float)localX, (float)localY, (float)localZ };
 }
 

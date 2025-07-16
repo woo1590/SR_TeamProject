@@ -20,35 +20,41 @@ private:
     HRESULT Ready_Object()override;
 
 public:
+    void InitializeAirBlocks();
     void AddBlock(const _vec3& pos, StaticBlockType type, StaticBlockAxis axis, StaticBlockRot rot, StaticBlockUsage usage);
-    void RemoveAlpha(const _vec3& pos);
+    
     void ClearAlpha();
+    void RemoveAlpha(const _vec3& pos);
+    void AddAlphaBlock(Object* alphaBlock) { AlphaBlocks.push_back(alphaBlock); }
 
     Chunk* GetNeighborChunk(int x, int z);
 
-    void InitializeAirBlocks();
+    void BuildCollisionBlock();
 
     void BuildChunkFace();
-
     void AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir, const SB& sb);
     void AddQuad(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& center, const _vec3& scale, const SB& sb, int faceDir, bool parts = false);
 
     void SetUV(const SB& sb, int faceDir, bool parts);
     void SetUVTile(int tileX, int tileY);
     void SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage, bool parts = false);
+    void SetUVAxisBlock(StaticBlockType type, StaticBlockAxis axis, int faceDir);
 
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
-    void AddAlphaBlock(Object* alphaBlock) { AlphaBlocks.push_back(alphaBlock); }
-
+    void SetBlockAir(int x, int y, int z)
+    {
+        if (Blocks[x][y - 1][z].Type == Dirt && Blocks[x][y][z].Type == GrassDirt) Blocks[x][y - 1][z].Type = GrassDirt;
+        Blocks[x][y][z].Type = Air;
+    }
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);
+
+    void SetChunkRender(bool render);
+    bool GetChunkRender();
 
     int GetChunkX() const { return ChunkX; }
     int GetChunkZ() const { return ChunkZ; }
     StaticBlockData GetBlock(int x, int y, int z) const;
     vector<Object*> GetAlphaBlocks() const { return AlphaBlocks; }
-
-    void BuildCollisionBlock();
-    void SetBlockAir(int x, int y, int z) { Blocks[x][y][z].Type = Air; }
 
 private:
     void Free()override;

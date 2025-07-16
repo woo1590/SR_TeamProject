@@ -97,14 +97,15 @@ void TestScene::Load()
 	BlockMgr		= BlockManager::Create(this);
 	ChunkMgr		= ChunkManager::Create(this);
 
-	BlockMgr->LoadChunk("VillageMap");
+	BlockMgr->LoadDB("testScene");
+	BlockMgr->LoadChunk("testScene");
 
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 80.f);
+	player->GetComponent<TransformComponent>()->SetPosition(0.f, 200.f, 200.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
 
 	//수정코드 예시
@@ -153,6 +154,7 @@ void TestScene::Update(float dt)
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
 	uiMgr->Update(dt);
+	ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
 
 	/*-------------ī�޶� ��ȯ �׽�Ʈ �ڵ�-------------*/
 	auto Input = EngineCore::GetInstance()->GetInputSystem();

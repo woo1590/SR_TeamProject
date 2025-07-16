@@ -55,7 +55,7 @@ void ChunkManager::ClearAllChunks()
 
     for (auto& iter : worldChunks)
         if (worldChunks.size() > 1)
-            Safe_Delete(iter.second);
+            Safe_Release(iter.second);
     
     worldChunks.clear();
 }
@@ -167,13 +167,42 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath, bool isEditor)
         }
 
         chunk->BuildChunkFace();
-        if (!isEditor)
-            chunk->BuildCollisionBlock();//wooseok
+        if (!isEditor) chunk->BuildCollisionBlock();
         chunk->AddRef();
         worldChunks[{chunkX, chunkZ}] = chunk;
     }
 
     CloseHandle(hFile);
+}
+
+void ChunkManager::IsChunkBoundary(_vec3 playerPos)
+{
+    int chunkX = static_cast<int>(floor(playerPos.x / CHUNK_SIZE));
+    int chunkZ = static_cast<int>(floor(playerPos.z / CHUNK_SIZE));
+
+    if (chunkX != preChunkX || chunkZ != preChunkZ)
+    {
+        preChunkX = chunkX;
+        preChunkZ = chunkZ;
+        UpdateRenderChunk(chunkX, chunkZ, 3);
+    }
+}
+
+void ChunkManager::UpdateRenderChunk(int playerChunkX, int playerChunkZ, int count)
+{
+    if (worldChunks.empty()) return;
+
+    for (auto& chunk : worldChunks)
+        chunk.second->SetChunkRender(FALSE);
+
+    for (int x = -count; x <= count; ++x)
+    {
+        for (int z = -count; z <= count; ++z)
+        {
+            if (playerChunkX + x < 0 || playerChunkZ + z < 0) continue;
+            if (GetChunk(playerChunkX + x, playerChunkZ + z)) GetChunk(playerChunkX + x, playerChunkZ + z)->SetChunkRender(TRUE);
+        }
+    }
 }
 
 Chunk* ChunkManager::GetChunk(int chunkX, int chunkZ)
