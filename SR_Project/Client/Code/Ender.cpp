@@ -213,6 +213,11 @@ void Ender::InitTree()
     IsAttack = new _bool(false);
     bb->SetValue("IsAttack", IsAttack);
 
+    auto transform = GetComponent<TransformComponent>();
+    _vec3 startPos = transform->GetPosition();
+    TargetPos = new _vec3(startPos.x - 10, startPos.y, startPos.z);
+    bb->SetValue("targetPos", TargetPos);
+
     CheckStateChangeCount* changeCount = new CheckStateChangeCount(new StateAttackNode());
     SelectorNode* behaviorNode = new SelectorNode();
     behaviorNode->AddChild(changeCount);
