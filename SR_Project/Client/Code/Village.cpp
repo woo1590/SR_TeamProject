@@ -158,7 +158,7 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 
 		auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
-		ender->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
+		ender->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
 		ObjectMgr->AddObject(ObjectType::Monster, ender);
 	}
 }
