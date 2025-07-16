@@ -41,6 +41,15 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     i.value = 10.f;
     info->SetInfo(i);
 
+    auto skillInfo = AddComponent<InfoComponent<SkillInfo>>();
+    auto ii = skillInfo->GetInfo();
+    ii.level = 1;
+    ii.MaxTarget = 4;
+    ii.DamagePercent = 0.5f;
+    ii.SkillRange = 200.f;
+    skillInfo->SetInfo(ii);
+
+
     SetMesh("Cube_Mesh");
     SetMaterial("sword_Mtrl");
     SetRenderId(renderId);
@@ -59,6 +68,29 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Sword::Update(_float dt)
 {
     Item::Update(dt);
+
+    if (targetMonsters.empty()) return;
+    
+    delayTimer += dt;
+    int target = static_cast<int>(delayTimer / damageTerm);
+
+    if (target <= preTarget) return;
+    if (target >= targetMonsters.size())
+    {
+        targetMonsters.clear();
+        return;
+    }
+    if (!targetMonsters.at(target)) return;
+
+    float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
+    auto skillInfo = GetComponent<InfoComponent<SkillInfo>>()->GetInfo();
+
+    auto pEnemyInfo = targetMonsters.at(target)->GetComponent<InfoComponent<EnemyInfo>>();
+    if (!pEnemyInfo) return;
+
+    pEnemyInfo->AddHp( - playerPower * skillInfo.DamagePercent);
+
+    preTarget = target;
 }
 
 void Sword::Late_Update(_float dt)
@@ -70,16 +102,31 @@ void Sword::SetCollisionEnter(Object* other)
 {
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
-
+    auto player = static_cast<Player*>(ownerObject);
     if (objType == ObjectType::Monster && 
-        static_cast<Player*>(ownerObject)->GetPlayerState() == Player::ePlayerState::ATTACK) 
+        player->GetPlayerState() == Player::ePlayerState::ATTACK)
     {
-        float swordAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
+        float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
+        float weaponValue = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
+        float swordAttackDamage = playerPower + weaponValue;
 
-        auto monster = static_cast<Monster*>(other);
-        monster->SetHit(true);
-        monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), swordAttackDamage);
+        auto targetMonster = static_cast<Monster*>(other);
+        targetMonster->SetHit(true);
+        targetMonster->Hit(targetMonster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), swordAttackDamage);
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
+
+        if (player->IsStatikkMode())
+        {
+            auto skillInfo = GetComponent<InfoComponent<SkillInfo>>()->GetInfo();
+            targetMonsters.push_back(targetMonster);
+
+            FindNextTarget(targetMonster);
+
+            targetMonster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-playerPower * skillInfo.DamagePercent);
+
+            delayTimer = 0.f;
+            player->SetStatikkMode(false);
+        }
     }
 }
 
@@ -98,4 +145,43 @@ void Sword::PlayerSwordInfo()
     collision->SetMask(LAYER_ENEMY);
     collision->SetSize(_vec3(0.1f, 1.f, 6.f));
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });
+}
+
+void Sword::FindNextTarget(Object* targetMonster)
+{
+    auto skillInfo = GetComponent<InfoComponent<SkillInfo>>()->GetInfo();
+    if (targetMonsters.size() >= skillInfo.MaxTarget) return;
+
+    auto targetPos = targetMonster->GetComponent<TransformComponent>()->GetWorldPosition();
+    float distance = skillInfo.SkillRange;
+    Object* nextTargetMonster = nullptr;
+
+    auto monsters = owner->GetObjectList(ObjectType::Monster);
+    for (auto& monster : monsters)
+    {
+        if (monster->GetObjectType() == ObjectType::Bone) continue;
+        _bool includedMonster = false;
+        for (auto& m : targetMonsters)
+        {
+            if (monster == m)
+            {
+                includedMonster = true;
+                break;
+            }
+        }
+        if (includedMonster) continue;
+
+        _vec3 distanceVec = monster->GetComponent<TransformComponent>()->GetWorldPosition() - targetPos;
+        float curDistance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
+        if (curDistance < distance)
+        {
+            distance = curDistance;
+            nextTargetMonster = monster;
+        }
+    }
+    if (nextTargetMonster)
+    {
+        targetMonsters.push_back(nextTargetMonster);
+        FindNextTarget(nextTargetMonster);
+    }
 }

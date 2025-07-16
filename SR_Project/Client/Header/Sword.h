@@ -16,5 +16,13 @@ private:
     void SetCollisionEnter(Object* other);
 
     void PlayerSwordInfo();
+
+    void FindNextTarget(Object* targetMonster);
+
+    std::vector<Object*> targetMonsters;
+    _float delayTimer = 0.f;
+    const _float damageTerm = 0.1f;
+
+    _int preTarget = 0;
 };
 
