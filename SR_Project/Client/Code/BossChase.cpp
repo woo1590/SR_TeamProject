@@ -37,4 +37,5 @@ BTStatus BossChase::Tick(float dt, BlackBoard* bb)
 
 void BossChase::Free()
 {
+	ActionNode::Free();
 }

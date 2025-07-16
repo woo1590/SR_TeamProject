@@ -9,7 +9,6 @@
 #include "ObjectManager.h"
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
-#include "CollisionComponent.h"
 #include "InfoComponent.h"
 #include "AIController.h"
 #include "IsAlive.h"

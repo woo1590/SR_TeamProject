@@ -1,5 +1,8 @@
 #pragma once
 #include "Monster.h"
+
+enum class EnderState {CrawlToStand, StandToCrawl, Crawl, Stand, Hidden, Sprout, CrossLaser, LineLaser, Projectile};
+
 class Ender :
     public Monster
 {
@@ -21,5 +24,52 @@ protected:
 
 protected:
     void Free() override;
+
+public:
+    void        Crawl();
+    void        Stand();
+    void        Hide();
+    void        Sprout();
+    void        CrawlToStand();
+    void        StandToCrawl();
+    void        LineLaserAttack();
+    void        CrossLaserAttack();
+    void        ProjectileAttack();
+
+    EnderState  GetState();
+    int         GetCurChangeStateCount();
+private:
+    void        PlayCrawl(_float dt);
+    void        PlayCrawlToStand(_float dt);
+    void        PlayStandToCrawl(_float dt);
+    void        PlayStand(_float dt);
+    void        PlayHide(_float dt);
+    void        PlaySprout(_float dt);
+    void        PlayLineLaserAttack(_float dt);
+    void        PlayCrossLaserAttack(_float dt);
+    void        PlayProjectileAttack(_float dt);
+
+    void        SetBoneSize();
+    
+    _float      EasedT(_float t);
+
+private:
+    Animation   CrawlAnim;
+    Animation   CrawlToStandAnim;
+    Animation   StandToCrawlAnim;
+    Animation   StandAnim;
+    Animation   HideAnim;
+    Animation   SproutAnim;
+
+    Animation   LaserAttackAnim;
+    Animation   HeadAttackAnim;
+    Animation   ProjectileAttackAnim;
+
+    EnderState  enderState;
+
+    _float      HideStartY;
+    int         CurChangeStateCount;
+    int*        ChangeStateCount = nullptr;
+    _vec3*      TargetPos = nullptr;
 };
 

@@ -181,6 +181,8 @@
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
     <ClInclude Include="..\Header\BossIcon.h" />
+    <ClInclude Include="..\Header\ChangeState.h" />
+    <ClInclude Include="..\Header\CheckStateChangeCount.h" />
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\Crossbow.h" />
     <ClInclude Include="..\Header\DamageText.h" />
@@ -193,6 +195,8 @@
     <ClInclude Include="..\Header\Firework.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
     <ClInclude Include="..\Header\BloodEffect.h" />
+    <ClInclude Include="..\Header\IsChangingState.h" />
+    <ClInclude Include="..\Header\IsRandomMoveCheck.h" />
     <ClInclude Include="..\Header\IsTargetClose.h" />
     <ClInclude Include="..\Header\HPBarWhite.h" />
     <ClInclude Include="..\Header\IsTargetInRange.h" />
@@ -221,6 +225,7 @@
     <ClInclude Include="..\Header\Stage1.h" />
     <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\Spear.h" />
+    <ClInclude Include="..\Header\StateAttack.h" />
     <ClInclude Include="..\Header\Tnt.h" />
     <ClInclude Include="..\Header\TooltipObj.h" />
     <ClInclude Include="..\Header\Village.h" />
@@ -313,6 +318,8 @@
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
     <ClCompile Include="..\Code\BossIcon.cpp" />
+    <ClCompile Include="..\Code\ChangeState.cpp" />
+    <ClCompile Include="..\Code\CheckStateChangeCount.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\Crossbow.cpp" />
     <ClCompile Include="..\Code\DamageText.cpp" />
@@ -325,6 +332,8 @@
     <ClCompile Include="..\Code\Firework.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
     <ClCompile Include="..\Code\BloodEffect.cpp" />
+    <ClCompile Include="..\Code\IsChangingState.cpp" />
+    <ClCompile Include="..\Code\IsRandomMoveCheck.cpp" />
     <ClCompile Include="..\Code\IsTargetClose.cpp" />
     <ClCompile Include="..\Code\HPBarWhite.cpp" />
     <ClCompile Include="..\Code\IsTargetInRange.cpp" />
@@ -353,6 +362,7 @@
     <ClCompile Include="..\Code\Stage1.cpp" />
     <ClCompile Include="..\Code\Stage2.cpp" />
     <ClCompile Include="..\Code\Spear.cpp" />
+    <ClCompile Include="..\Code\StateAttack.cpp" />
     <ClCompile Include="..\Code\Tnt.cpp" />
     <ClCompile Include="..\Code\TooltipObj.cpp" />
     <ClCompile Include="..\Code\Village.cpp" />
