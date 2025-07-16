@@ -16,6 +16,8 @@
 #include "IsAlive.h"
 #include "Die.h"
 #include "MeshRendererComponent.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 //effect
 #include "BloodEffect.h"
@@ -98,6 +100,7 @@ void JungleZombie::Die()
 {
     if (State != MonsterState::Die)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathZombie");
         State = MonsterState::Die;
 
         DieAnim.IsRunning = true;

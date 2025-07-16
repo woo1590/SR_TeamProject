@@ -26,6 +26,7 @@
 #include "PhysicsSystem.h"
 #include "Random.h"
 #include "EngineCore.h"
+#include "SoundManager.h"
 
 Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -116,6 +117,7 @@ void Skeleton::Die()
 {
     if (State != MonsterState::Die)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathSkeleton");
         State = MonsterState::Die;
 
         DieAnim.ElapsedTime = 0;

@@ -20,6 +20,8 @@
 #include "ThirdcamComponent.h"
 #include "CameraManager.h"
 #include "CameraComponent.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 Creeper::Creeper(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -104,6 +106,7 @@ void Creeper::Die()
 {
     if (State != MonsterState::Die)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathCreeper");
         State = MonsterState::Die;
 
         DieAnim.IsRunning = true;

@@ -19,6 +19,8 @@
 #include "Arrow.h"
 #include "IsTargetClose.h"
 #include "BackStep.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 JungleSkeleton::JungleSkeleton(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -111,6 +113,7 @@ void JungleSkeleton::Die()
 {
     if (State != MonsterState::Die)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathSkeleton");
         State = MonsterState::Die;
 
         DieAnim.ElapsedTime = 0;

@@ -13,6 +13,9 @@
 #include "Player.h"
 #include "Monster.h"
 
+#include "EngineCore.h"
+#include "SoundManager.h"
+
 Tnt::Tnt(ObjectManager* owner, ObjectType objType) : Item(owner, objType){}
 
 Tnt::~Tnt() {}
@@ -113,6 +116,7 @@ void Tnt::Update(_float dt)
             //        monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-TntDamage);
             //    }
             //}
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomTNT");
             SetDead();
         }
     }

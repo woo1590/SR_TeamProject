@@ -12,6 +12,9 @@
 #include "Player.h"
 #include "Monster.h"
 
+#include "EngineCore.h"
+#include "SoundManager.h"
+
 Sword::Sword(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
 
 Sword::~Sword() {}
@@ -106,6 +109,7 @@ void Sword::SetCollisionEnter(Object* other)
     if (objType == ObjectType::Monster && 
         player->GetPlayerState() == Player::ePlayerState::ATTACK)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitSword");
         float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
         float weaponValue = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
         float swordAttackDamage = playerPower + weaponValue;

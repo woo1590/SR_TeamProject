@@ -16,6 +16,8 @@
 #include "IsAlive.h"
 #include "GolemProjectile.h"
 #include "Die.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 RedGolem::RedGolem(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -100,6 +102,7 @@ void RedGolem::Die()
 {
     if (State != MonsterState::Die)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathGolem");
         State = MonsterState::Die;
 
         DieAnim.IsRunning = true;

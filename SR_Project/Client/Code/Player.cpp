@@ -31,6 +31,8 @@
 #include "SpriteRenderer.h"
 #include "SpriteEffect.h"
 
+#include "SoundManager.h"
+
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) 
 {
 }
@@ -180,6 +182,7 @@ void Player::PickingTerrain()
                 
                 if (distance <= MeleeRange)
                 {
+                    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("SwingSword");
                     State = ePlayerState::ATTACK;
                     AttackTime = 0.f;
 
@@ -1153,7 +1156,7 @@ Player::ePlayerState Player::GetPlayerState()
 void Player::RevivePlayer()
 {
     if (DeadTime < DeadDuration) return;
-
+    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("RevivePlayer");
     State = ePlayerState::REVIVE;
     DeadTime = 0.f;
     ReviveTime = 0.f;
@@ -1288,6 +1291,16 @@ void Player::UpdateWalk(_float dt) {
     //////////////////////////////////////////Walk Effect
     if (walkEffectTimer >= 0.3f)
     {
+        if (soundBefore == "WalkOnDefault2")
+        {
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnDefault1");
+            soundBefore = "WalkOnDefault1";
+        }
+        else if (soundBefore == "WalkOnDefault1")
+        {
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnDefault2");
+            soundBefore = "WalkOnDefault2";
+        }
         auto effect = SpriteEffect::Create(owner, ObjectType::SpriteEffect);
         effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition() - _vec3(0.f, 2.f, 0.f));
         effect->AddComponent<SpriteRenderer>("Walk", 7, 10.f, 2.f);
@@ -1336,6 +1349,7 @@ void Player::UpdateWalk(_float dt) {
         auto distance = sqrtf(AttackDirection.x * AttackDirection.x + AttackDirection.z * AttackDirection.z);
         if (distance <= MeleeRange)
         {
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("SwingSword");
             State = ePlayerState::ATTACK;
             AttackTime = 0.f;
 
@@ -1437,6 +1451,7 @@ void Player::UpdateAttack(_float dt) {
     if (AttackTime == dt)
     {
         SaveStartRotation();
+        if (!Bones["RHand"]) return;
         ItemType type = static_cast<Item*>(Bones["RHand"])->GetItemType();
         switch (type)
         {
@@ -1561,11 +1576,13 @@ void Player::UpdateShoot(_float dt) {
                 switch (leftHandType)
                 {
                 case ItemType::Bow:
+                    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("ShootArrow");
                     chargedTime = std::clamp(chargedTime, 0.f, MaxChargeTime);
                     Arrow::Create(owner, ObjectType::Projectile, this, shootDir, (1.f + chargedTime));
                     chargedTime = 0.f;
                     break;
                 case ItemType::CrossBow:
+                    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("ShootArrow");
                     Arrow::Create(owner, ObjectType::Projectile, this, shootDir);
 
                     _matrix matRotY;
@@ -1583,6 +1600,7 @@ void Player::UpdateShoot(_float dt) {
                 }
                 break;
             case ePlayerShootType::FIREWORK:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("ShootFirework");
                 Firework::Create(owner, ObjectType::Projectile, this, shootDir);
                 break;
             }
@@ -1646,8 +1664,8 @@ void Player::UpdateDead(_float dt) {
         State = ePlayerState::DEAD;
         physics->SetGround(true);
 
-        auto input = EngineCore::GetInstance()->GetInputSystem();
-        if (input->IsKeyPressed(R)) RevivePlayer();
+        //auto input = EngineCore::GetInstance()->GetInputSystem();
+        //if (input->IsKeyPressed(R)) RevivePlayer();
         return;
     }
 
@@ -1759,6 +1777,7 @@ void Player::CheckStateRoll(_float dt)
         switch (State)
         {
         case ePlayerState::WALK:
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Roll");
             State = ePlayerState::ROLL;
             SaveStartRotation();
             break;
@@ -1770,6 +1789,7 @@ void Player::CheckDead()
 {
     if (GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().curHp <= 0.f && DeadTime == 0)
     {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathPlayer");
         State = ePlayerState::DEAD;
         SaveStartRotation();
 
