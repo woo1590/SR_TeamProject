@@ -47,7 +47,6 @@ VS_OUTPUT VS_Main(VS_INPUT input)
 float4 PS_Main(VS_OUTPUT input, float2 uv :TEXCOORD0) :COLOR0
 {
     float4 tex = tex2D(AlbedoSampler, uv);
-    //input.color.a *= 1.0f - dot(uv - 0.5f, uv - 0.5f) * 4.0f;
     
     return tex*input.color;
 }

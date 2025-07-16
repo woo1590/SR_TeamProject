@@ -453,12 +453,15 @@
     </Filter>
     <Filter Include="02. Object\Monster\Ender">
       <UniqueIdentifier>{1a44899b-d7af-4f84-9264-ea0051b08200}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Item\Spear">
       <UniqueIdentifier>{b64383e0-38f9-4b91-9926-5fcb1ee86b1a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\Item\Crossbow">
       <UniqueIdentifier>{9a54118a-cc33-463e-9d34-c072e59284f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\DeadEffect">
+      <UniqueIdentifier>{fefade3a-c97c-4d08-b277-3d7ec983d93d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -854,12 +857,15 @@
     <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="..\Header\Ender.h">
       <Filter>02. Object\Monster\Ender</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\Spear.h">
       <Filter>02. Object\Item\Spear</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Crossbow.h">
       <Filter>02. Object\Item\Crossbow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DeadEffect.h">
+      <Filter>02. Object\Effect\DeadEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1244,6 +1250,9 @@
     <ClCompile Include="..\Code\Ender.cpp">
       <Filter>02. Object\Monster\Ender</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\DeadEffect.cpp">
+      <Filter>02. Object\Effect\DeadEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">
@@ -1288,5 +1297,8 @@
     <ClCompile Include="..\Code\Crossbow.cpp">
       <Filter>02. Object\Item\Crossbow</Filter>
     </ClCompile>
+    <FxCompile Include="..\Resource\Shader\AnimationPaticle.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

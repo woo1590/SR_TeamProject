@@ -18,6 +18,7 @@
 #include "Die.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "DeadEffect.h"
 
 Zombie::Zombie(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -312,6 +313,11 @@ void Zombie::PlayDie(_float dt)
       //  DieAnim.ElapsedTime = 0.f;
         DieAnim.IsEnd = true;
         
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+
         SetDead();
         DeleteBar();
     }

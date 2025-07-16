@@ -184,6 +184,7 @@
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\Crossbow.h" />
     <ClInclude Include="..\Header\DamageText.h" />
+    <ClInclude Include="..\Header\DeadEffect.h" />
     <ClInclude Include="..\Header\DeathFrame.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Ender.h" />
@@ -316,6 +317,7 @@
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\Crossbow.cpp" />
     <ClCompile Include="..\Code\DamageText.cpp" />
+    <ClCompile Include="..\Code\DeadEffect.cpp" />
     <ClCompile Include="..\Code\DeathFrame.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Ender.cpp" />
@@ -443,6 +445,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\Resource\Shader\AnimationPaticle.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
