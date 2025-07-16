@@ -31,6 +31,9 @@
 #include "GraphicDevice.h"
 #include "Prefab.h"
 
+int EditScene::CurChunkX = 0;
+int EditScene::CurChunkZ = 0;
+
 EditScene::EditScene()
 {
 }
@@ -82,7 +85,7 @@ void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
 	UpdateCreateTerrain();
-	ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
+	// ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
 
 	// 좌&우클릭에 따른 블럭 생성&제거
 	_vec3 rayOrigin, rayDir;
@@ -212,6 +215,8 @@ void EditScene::ImGui_Terrain()
 		staticBlocks.clear();
 		ChunkMgr->ClearAllChunks();
 
+		SetCurChunkZero();
+
 		CreateTerrain("heightMap");
 		PlaceTerrainBlocks("heightMap");
 
@@ -227,6 +232,8 @@ void EditScene::ImGui_Terrain()
 		Terrain->Free();
 		staticBlocks.clear();
 		ChunkMgr->ClearAllChunks();
+
+		SetCurChunkZero();
 
 		dynamicBlocks.clear();
 		ObjectMgr->ClearList(ObjectType::Part);
@@ -296,7 +303,8 @@ void EditScene::ImGui_SetBlockType()
 			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK", 
 			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
 			"GLASS", "LEAF",
-			"OAK", "DIRTPATH", "FURNACE", "HAYBALE"
+			"OAK", "DIRTPATH", "FURNACE", "HAYBALE", "DARKWOODPLANK",
+			"WHITEWOOL", "YELLOWWOOL", "TERRACOTA"
 		};
 
 		// 선택할 때마다, 다른 값들 초기화
@@ -329,19 +337,24 @@ void EditScene::ImGui_SetBlockUsage()
 	switch (staticBlockType)
 	{
 	case Dirt: case GrassDirt: case DirtPath: case Wood: case Oak:
-	case StoneBrick: case MossyStoneBrick: case Furnace:
-		staticBlockUsage = StaticBlockUsage::Basic;
+	case StoneBrick: case MossyStoneBrick: case Furnace: case DarkWoodPlank:
+	case WhiteWool: case YellowWool: case Terracota:
+		staticBlockUsage = Basic;
 		return;
-	case StaticBlockType::WoodPlank: case StaticBlockType::Stone: case StaticBlockType::CobbleStone:
-		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE" };
-		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair, StaticBlockUsage::Fence };
+	case StaticBlockType::WoodPlank: 
+		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE", "DOOR"};
+		usageEnums = { Basic, Half, Stair, Fence, Door };
+		break;
+	case StaticBlockType::Stone: case StaticBlockType::CobbleStone:
+		usageOptions = { "BASIC", "HALF", "STAIR" };
+		usageEnums = { Basic, Half, Stair, Fence };
 		break;
 	case StaticBlockType::SmoothStone:
 		usageOptions = { "BASIC", "HALF", "STAIR" };
-		usageEnums = { StaticBlockUsage::Basic, StaticBlockUsage::Half, StaticBlockUsage::Stair };
+		usageEnums = { Basic, Half, Stair };
 		break;
 	case StaticBlockType::Glass: case StaticBlockType::Leaf:
-		staticBlockUsage = StaticBlockUsage::Alpha;
+		staticBlockUsage = Alpha;
 		return;
 	}
 
@@ -378,7 +391,6 @@ void EditScene::ImGui_SetBlockInfo()
 					staticBlockAxis = static_cast<StaticBlockAxis>(selectedSBlockAxis);
 			}
 			break;
-
 		case StaticBlockUsage::Stair: case StaticBlockUsage::Fence:
 			if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
 				staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
@@ -395,7 +407,6 @@ void EditScene::ImGui_SetBlockInfo()
 		case DynamicBlockType::BasicChest: case DynamicBlockType::IronCages:
 			if (ImGui::Combo(" : Rotation", &selectedDBlockRot, dynamicRotNames, IM_ARRAYSIZE(dynamicRotNames)))
 				dynamicBlockRot = static_cast<DynamicBlockRot>(selectedDBlockRot);
-
 			if (dynamicBlockType == DynamicBlockType::IronCages)
 				ImGui::InputInt(" : Count", &Count);
 			break;
@@ -605,8 +616,6 @@ void EditScene::UpdateCreateTerrain()
 	if (!isCreate) return;
 
 	static bool placeBlock(false);
-	static int curChunkX = 0;
-	static int curChunkZ = 0;
 
 	if (!placeBlock)
 	{
@@ -617,7 +626,7 @@ void EditScene::UpdateCreateTerrain()
 			int blockChunkX = static_cast<int>(floor(position.x / CHUNK_SIZE));
 			int blockChunkZ = static_cast<int>(floor(position.z / CHUNK_SIZE));
 
-			if (blockChunkX == curChunkX && blockChunkZ == curChunkZ)
+			if (blockChunkX == CurChunkX && blockChunkZ == CurChunkZ)
 			{
 				staticBlockUsage = block.Usage;
 				staticBlockType = block.Type;
@@ -632,15 +641,16 @@ void EditScene::UpdateCreateTerrain()
 	}
 	else
 	{
-		ChunkMgr->CreateChunk(curChunkX, curChunkZ)->BuildChunkFace();
+		ChunkMgr->CreateChunk(CurChunkX, CurChunkZ)->BuildChunkFace();
+		//ChunkMgr->GetChunk(CurChunkX, CurChunkZ)->SetChunkRender(FALSE);
 
-		++curChunkX;
-		if (curChunkX >= maxChunkX)
+		++CurChunkX;
+		if (CurChunkX >= maxChunkX)
 		{
-			curChunkX = 0;
-			++curChunkZ;
+			CurChunkX = 0;
+			++CurChunkZ;
 		}
-		if (curChunkZ >= maxChunkZ) isCreate = false;
+		if (CurChunkZ >= maxChunkZ) isCreate = false;
 
 		placeBlock = false;
 	}
@@ -887,8 +897,7 @@ void EditScene::PlaceBlock(_vec3& position)
 	}
 	else if (dynamicBlockType != DynamicBlockType::dBlockNone)
 	{
-		auto newBlockObj = DynamicBlock::Create(ObjectMgr,
-			ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockCol,dynamicBlockRot, Count);
+		auto newBlockObj = DynamicBlock::Create(ObjectMgr, ObjectType::DynamicBlock, dynamicBlockType, dynamicBlockCol,dynamicBlockRot, Count);
 		if (!newBlockObj) return;
 
 		newBlockObj->GetComponent<TransformComponent>()->SetPosition(position);

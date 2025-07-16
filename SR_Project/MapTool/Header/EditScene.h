@@ -63,6 +63,8 @@ private:
     // 월드 좌표를 청크 내 로컬 좌표로 반환
     _vec3 GetLocalCoordInChunk(const _vec3& pos);
 
+    static void SetCurChunkZero() { CurChunkX = 0; CurChunkZ = 0; }
+
 private:
     void Free() override;
 
@@ -71,6 +73,9 @@ private:
 
     int maxChunkX = -1;
     int maxChunkZ = -1;
+
+    static int CurChunkX;
+    static int CurChunkZ;
 
     // ================ Prefab ================
     bool isPrefab = false;

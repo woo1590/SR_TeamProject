@@ -130,7 +130,8 @@ namespace Engine
 		Dirt, GrassDirt, Wood, WoodPlank,
 		Stone, CobbleStone, SmoothStone, StoneBrick, MossyStoneBrick,
 		Glass, Leaf,
-		Oak, DirtPath, Furnace, Haybale,
+		Oak, DirtPath, Furnace, Haybale, DarkWoodPlank,
+		WhiteWool, YellowWool, Terracota,
 		sBlockEnd
 	};
 	enum StaticBlockUsage { Basic, Half, Stair, Fence, Alpha, Door };

@@ -1,0 +1,2576 @@
+[
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            0.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            0.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            0.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            0.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            0.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            0.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            0.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            0.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            0.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            0.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            0.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            0.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            0.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            0.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            0.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            0.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            0.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            0.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            0.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            0.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            0.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            0.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            0.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            0.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            0.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            0.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            0.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            0.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            0.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            0.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            0.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            0.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            0.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            0.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            0.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            0.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            0.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            0.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 2,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            0.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 6,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            0.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            8.0,
+            2.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            10.0,
+            2.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 1,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            12.0,
+            2.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 12,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            2.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 12,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            2.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            2.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            4.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            6.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            2.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            4.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            6.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            2.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            4.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            6.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            2.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            4.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            6.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 0,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            8.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            8.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            8.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            8.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            8.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 2,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            8.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            2.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            4.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            6.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            2.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            4.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            6.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            6.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            2.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            6.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            2.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            4.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            6.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 10,
+        "Usage": 4,
+        "localPos": [
+            8.0,
+            4.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            2.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            2.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            2.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            4.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            4.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            6.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            6.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            6.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 10,
+        "Usage": 4,
+        "localPos": [
+            0.0,
+            4.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 10,
+        "Usage": 4,
+        "localPos": [
+            12.0,
+            4.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            2.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            2.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            4.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            6.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            6.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            2.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            4.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            12.0,
+            6.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            2.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            2.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            2.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            2.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            2.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            4.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            4.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            4.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            4.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            4.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            6.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            6.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            6.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            6.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            6.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            10.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            10.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            10.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            10.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            10.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            10.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 5,
+        "localPos": [
+            4.0,
+            2.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 1,
+        "localPos": [
+            0.0,
+            0.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 1,
+        "localPos": [
+            2.0,
+            0.0,
+            -12.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            12.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            12.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            12.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            12.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            12.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            12.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            14.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            14.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 3,
+        "Usage": 0,
+        "localPos": [
+            0.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            14.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            14.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            2.0,
+            12.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            2.0,
+            12.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            0.0,
+            10.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            0.0,
+            10.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            2.0,
+            12.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            0.0,
+            10.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            -2.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            -2.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            -2.0,
+            8.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            -2.0,
+            8.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            -2.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            14.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            14.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            2.0,
+            12.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            0.0,
+            10.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            -2.0,
+            8.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            10.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            10.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            10.0,
+            10.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            8.0,
+            14.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            10.0,
+            12.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            12.0,
+            10.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            8.0,
+            14.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            10.0,
+            12.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            12.0,
+            10.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            14.0,
+            8.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            14.0,
+            8.0,
+            0.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            14.0,
+            8.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            14.0,
+            8.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            14.0,
+            8.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            12.0,
+            10.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            12.0,
+            10.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            12.0,
+            10.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            8.0,
+            14.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            8.0,
+            14.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            8.0,
+            14.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            10.0,
+            12.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            10.0,
+            12.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            10.0,
+            12.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            14.0,
+            8.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            12.0,
+            10.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            10.0,
+            12.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            8.0,
+            14.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            14.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            12.0,
+            10.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            8.0,
+            14.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            14.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            14.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            14.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            14.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            14.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            14.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            4.0,
+            14.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            2.0,
+            12.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            2.0,
+            12.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            2.0,
+            12.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            0.0,
+            10.0,
+            -6.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            0.0,
+            10.0,
+            -4.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            0.0,
+            10.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            -2.0,
+            8.0,
+            -2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 19,
+        "Usage": 0,
+        "localPos": [
+            2.0,
+            10.0,
+            -8.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            2.0,
+            10.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            10.0,
+            10.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            10.0,
+            10.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            8.0,
+            10.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            6.0,
+            10.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            4.0,
+            10.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            2.0,
+            10.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            8.0,
+            12.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            6.0,
+            12.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            4.0,
+            12.0,
+            2.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            6.0,
+            12.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            8.0,
+            12.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            4.0,
+            12.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 4,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            14.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 3,
+        "Type": 4,
+        "Usage": 2,
+        "localPos": [
+            10.0,
+            12.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            0.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            2.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            4.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            6.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            8.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            10.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 2,
+        "Type": 4,
+        "Usage": 3,
+        "localPos": [
+            12.0,
+            8.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 17,
+        "Usage": 0,
+        "localPos": [
+            4.0,
+            10.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 17,
+        "Usage": 0,
+        "localPos": [
+            8.0,
+            10.0,
+            -10.0
+        ]
+    },
+    {
+        "Axis": 1,
+        "Rot": 0,
+        "Type": 18,
+        "Usage": 0,
+        "localPos": [
+            6.0,
+            10.0,
+            -10.0
+        ]
+    }
+]

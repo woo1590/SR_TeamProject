@@ -32,7 +32,6 @@ private:
     int Wid = 0;
     int Hei = 0;
 
-    //std::unordered_map<std::pair<int, int>, std::vector<SB>> chunkBlocks;
     std::vector<SB> blocks;
     std::vector<unsigned char> heightMap;
 };

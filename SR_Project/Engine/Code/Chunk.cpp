@@ -418,6 +418,14 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
         offsetY = { 0.f, -0.5f, 0.f };
     }
 
+    if (sb.Usage == Door)
+    {
+        _vec3 scale = { 1.f, 2.f, 0.1f };
+        _vec3 offset = { 0.f, 1.f, 0.f };
+        AddQuad(vertices, indices, blockPos + offset, scale, sb, faceDir, TRUE);
+        return;
+    }
+
     _vec3 scale{ 1.f, scaleY, 1.f };
     _vec3 center(blockPos + offsetY);
     AddQuad(vertices, indices, center, scale, sb, faceDir);
@@ -480,7 +488,11 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
     case WoodPlank:
         if (sb.Usage == Half) SetUVTile(2, 2, 0, 3, faceDir, sb.Usage);
         else if (sb.Usage == Fence) SetUVTile(4, 2, 5, 2, faceDir, sb.Usage, parts);
+        else if (sb.Usage == Door) SetUVTile(6, 2, 7, 2, faceDir, sb.Usage, parts);
         else SetUVTile(2, 2);
+        break;
+    case DarkWoodPlank:
+        SetUVTile(1, 6);
         break;
     case Stone:
         if (sb.Usage == Half) SetUVTile(1, 1, 2, 3, faceDir, Half);
@@ -558,6 +570,15 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
     case Haybale: case Wood:
         SetUVAxisBlock(sb.Type, sb.Axis, faceDir);
         break;
+    case WhiteWool:
+        SetUVTile(2, 5);
+        break;
+    case YellowWool:
+        SetUVTile(3, 5);
+        break;
+    case Terracota:
+        SetUVTile(0, 6);
+        break;
     }
 }
 
@@ -613,6 +634,27 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
             TexUVs[3] = { u, v + quarterSize };
         }
     }
+    else if (usage == Door)
+    {
+        if (faceDir == Face_Top || faceDir == Face_Bottom || faceDir == Face_Left || faceDir == Face_Right)
+        {
+            u = halfX * tileSize;
+            v = halfY * tileSize;
+
+            TexUVs[0] = { u, v };
+            TexUVs[1] = { u + quarterSize, v };
+            TexUVs[2] = { u + quarterSize, v + tileSize };
+            TexUVs[3] = { u, v + tileSize };
+        }
+        else
+        {
+            TexUVs[0] = { u, v };
+            TexUVs[1] = { u + tileSize, v };
+            TexUVs[2] = { u + tileSize, v + tileSize };
+            TexUVs[3] = { u, v + tileSize };
+        }
+    }
+
     else
     {
         TexUVs[0] = { u, v };
