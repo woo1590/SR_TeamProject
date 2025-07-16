@@ -71,6 +71,8 @@ public:
     _vec3 GetAttackDirection();
     void ChangeShootType();
     bool IsMovingToAttack();
+    void SetStatikkMode(_bool _statikk);
+    _bool IsStatikkMode();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -83,6 +85,7 @@ private:
     void CheckDead();
     void CheckJump();
     void CheckTargetDead();
+    void CheckSkill();
 
     void UpdateIdle(_float dt);
     void UpdateWalk(_float dt);
@@ -136,7 +139,7 @@ private:
     const _float RollDuration = 0.5f;
 
     _float AttackTime = 0.f;
-    const _float AttackDuration = 0.5f;
+    const _float AttackDuration = 0.3f;
     const _float ShootDuration = 0.6f;
 
     _float chargedTime = 0.f;
@@ -156,7 +159,7 @@ private:
     _vec3 DestinationPos = { 0.f, 0.f, 0.f };
     _vec3 AttackDirection = { 0.f, 0.f, 0.f };
 
-    _float SwordRange = 6.f;
+    _float MeleeRange = 8.f;
     bool moveToAttack = false;
     Object* moveToObject = nullptr;
 
@@ -167,4 +170,6 @@ private:
     std::unordered_map<std::pair<int, int>, _vec3, PairHash> idleRot;
 
     const float jumpPower = 15.f;
+
+    _bool StatikkMode = false;
 };

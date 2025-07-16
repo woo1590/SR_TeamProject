@@ -176,9 +176,9 @@ void Player::PickingTerrain()
                 DestinationPos.y = 0.f;
                 curPos.y = 0.f;
                 PlayerDirection = DestinationPos - curPos;
-                auto distance = sqrtf(PlayerDirection.x * PlayerDirection.x + PlayerDirection.z * PlayerDirection.z);
+                auto distance = sqrtf(PlayerDirection.x * PlayerDirection.x + PlayerDirection.y * PlayerDirection.y + PlayerDirection.z * PlayerDirection.z);
                 
-                if (distance <= SwordRange)
+                if (distance <= MeleeRange)
                 {
                     State = ePlayerState::ATTACK;
                     AttackTime = 0.f;
@@ -1080,6 +1080,18 @@ void Player::CheckTargetDead()
     }
 }
 
+void Player::CheckSkill()
+{
+    auto input = EngineCore::GetInstance()->GetInputSystem();
+    static const KEY keySkill = C;
+
+    auto physics = GetComponent<PhysicsComponent>();
+    if (input->IsKeyPressed(keySkill))
+    {
+        SetStatikkMode(true);
+    }
+}
+
 void Player::EquipItem(ItemType itemType)
 {
     switch (itemType) {
@@ -1172,6 +1184,16 @@ bool Player::IsMovingToAttack()
     return moveToAttack;
 }
 
+void Player::SetStatikkMode(_bool _statickk)
+{
+    StatikkMode = _statickk;
+}
+
+_bool Player::IsStatikkMode()
+{
+    return StatikkMode;
+}
+
 void Player::UpdateIdle(_float dt)
 {
     if (comboTime < comboLimit)
@@ -1203,18 +1225,20 @@ void Player::UpdateWalk(_float dt) {
         comboTime += dt;
         if (comboTime >= comboLimit) attackType = ePlayerAttackType::FIRST;
     }
-    else
-    {
-        IdleSmoothing(dt, ePlayerBone::LHAND);
-        IdleSmoothing(dt, ePlayerBone::RHAND);
-        IdleSmoothing(dt, ePlayerBone::HEAD);
-    }
+
+    IdleSmoothing(dt, ePlayerBone::HEAD);
+    IdleSmoothing(dt, ePlayerBone::BODY);
+    IdleSmoothing(dt, ePlayerBone::LHAND);
+    IdleSmoothing(dt, ePlayerBone::RHAND);
 
     //Rotate Bones
     float fAngle = sinf(WalkTime * WalkSwingSpeed);
     SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
     SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
-    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() != ItemType::Spear)
+    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() == ItemType::Spear)
+    {
+    }
+    else
     {
         SetRotation({ -fAngle, 0.f, 0.f }, "LArm");
         SetRotation({ fAngle, 0.f, 0.f }, "RArm");
@@ -1241,18 +1265,20 @@ void Player::UpdateWalk(_float dt) {
 
     _vec3 blockVec;
     D3DXVec3Normalize(&blockVec, &moveVec);
-    float blockOffset = sqrtf(moveVec.x * moveVec.x + moveVec.z * moveVec.z);
+    float blockOffset = max(sqrtf(2.f), sqrtf(moveVec.x * moveVec.x + moveVec.z * moveVec.z));
     auto blockPos = transform->GetWorldPosition() + moveVec + blockVec * blockOffset;
+    _vec3 playerHalfSize = GetComponent<CollisionComponent>()->GetSize() / 2;
 
     auto grid = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetStaticGrid();
-    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y + 2), grid->WorldToCell(blockPos.z));
-    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z));
+    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y + playerHalfSize.y + -1), grid->WorldToCell(blockPos.z));
+    auto blockFront = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y), grid->WorldToCell(blockPos.z));
+    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - playerHalfSize.y + 1), grid->WorldToCell(blockPos.z));
 
-    if (blockUp == nullptr && blockDown == nullptr)
+    if (blockUp == nullptr && blockFront == nullptr && blockDown == nullptr)
     {
         transform->Translate(moveVec);
     }
-    else if (blockUp == nullptr && blockDown->GetOwner()->GetObjectType() == ObjectType::StaticBlock) {
+    else if (blockUp == nullptr && blockFront == nullptr && blockDown->GetOwner()->GetObjectType() == ObjectType::StaticBlock) {
         transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
     }
 
@@ -1278,13 +1304,13 @@ void Player::UpdateWalk(_float dt) {
     const float fRotateDuration = 0.05f;
     
     float TargetAngle;
-    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() != ItemType::Spear)
+    if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() == ItemType::Spear)
     {
-        TargetAngle = atan2f(vDir.x, vDir.z);
+        TargetAngle = atan2f(vDir.x, vDir.z) + D3DXToRadian(60.f);
     }
     else
     {
-        TargetAngle = atan2f(vDir.x, vDir.z) + D3DXToRadian(60.f);
+        TargetAngle = atan2f(vDir.x, vDir.z);
     }
     _vec3 vCurRot = transform->GetRotate();
 
@@ -1305,7 +1331,7 @@ void Player::UpdateWalk(_float dt) {
         curPos.y = 0.f;
 
         auto distance = sqrtf(AttackDirection.x * AttackDirection.x + AttackDirection.z * AttackDirection.z);
-        if (distance <= SwordRange)
+        if (distance <= MeleeRange)
         {
             State = ePlayerState::ATTACK;
             AttackTime = 0.f;
@@ -1493,7 +1519,7 @@ void Player::UpdateShoot(_float dt) {
     static float prePhase = 0.f;
     if (prePhase <= phaseVec.at(0) && fProgress > phaseVec.at(0)) {
         auto input = EngineCore::GetInstance()->GetInputSystem();
-        ItemType leftHandType = dynamic_cast<Item*>(Bones["LHand"])->GetItemType();
+        ItemType leftHandType = static_cast<Item*>(Bones["LHand"])->GetItemType();
         if (input->IsKeyDown(RBUTTON) && leftHandType == ItemType::Bow)
         {
             fProgress = phaseVec.at(0);
@@ -1695,6 +1721,7 @@ void Player::KeyInput(_float dt)
     CheckStateRoll(dt);
     CheckDead();
     CheckJump();
+    CheckSkill();
 }
 
 void Player::CheckStateRoll(_float dt)
