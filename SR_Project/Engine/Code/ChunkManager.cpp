@@ -184,20 +184,20 @@ void ChunkManager::IsChunkBoundary(_vec3 playerPos)
     {
         preChunkX = chunkX;
         preChunkZ = chunkZ;
-        UpdateRenderChunk(chunkX, chunkZ);
+        UpdateRenderChunk(chunkX, chunkZ, 3);
     }
 }
 
-void ChunkManager::UpdateRenderChunk(int playerChunkX, int playerChunkZ)
+void ChunkManager::UpdateRenderChunk(int playerChunkX, int playerChunkZ, int count)
 {
     if (worldChunks.empty()) return;
 
     for (auto& chunk : worldChunks)
         chunk.second->SetChunkRender(FALSE);
 
-    for (int x = -2; x <= 2; ++x)
+    for (int x = -count; x <= count; ++x)
     {
-        for (int z = -2; z <= 2; ++z)
+        for (int z = -count; z <= count; ++z)
         {
             if (playerChunkX + x < 0 || playerChunkZ + z < 0) continue;
             if (GetChunk(playerChunkX + x, playerChunkZ + z)) GetChunk(playerChunkX + x, playerChunkZ + z)->SetChunkRender(TRUE);

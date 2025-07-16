@@ -41,7 +41,11 @@ public:
     void SetUVAxisBlock(StaticBlockType type, StaticBlockAxis axis, int faceDir);
 
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
-    void SetBlockAir(int x, int y, int z) { Blocks[x][y][z].Type = Air; }
+    void SetBlockAir(int x, int y, int z)
+    {
+        if (Blocks[x][y - 1][z].Type == Dirt && Blocks[x][y][z].Type == GrassDirt) Blocks[x][y - 1][z].Type = GrassDirt;
+        Blocks[x][y][z].Type = Air;
+    }
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);
 
     void SetChunkRender(bool render);

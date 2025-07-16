@@ -68,46 +68,56 @@ bool TerrainCreater::LoadHeightmapFromImage(const std::string& filename)
 
 void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 {
-    blocks.clear();
-    blocks.resize(terX * terY * terZ);
+    chunkedBlocks.clear();
 
-    auto GetIndex = [&](int x, int y, int z) { return y * terX * terZ + z * terX + x; };
+    int blocksX = terX * (CHUNK_SIZE / BLOCK_SIZE);
+    int blocksZ = terZ * (CHUNK_SIZE / BLOCK_SIZE);
 
-    for (int z = 0; z < terZ; ++z)
-    {
-        for (int x = 0; x < terX; ++x)
+    auto GetHeightIndex = [&](int x, int z)
         {
             int mapX = min(x, Wid - 1);
             int mapZ = min(z, Hei - 1);
+            return heightMap[mapZ * Wid + mapX];
+        };
 
-            unsigned char heightValue = heightMap[mapZ * Wid + mapX];
+    for (int z = 0; z < blocksZ; ++z)
+    {
+        for (int x = 0; x < blocksX; ++x)
+        {
+            unsigned char heightValue = GetHeightIndex(x, z);
             int blockHeight = (heightValue * terY) / 255;
 
-            int topY(-1);
+            int topY = -1;
             for (int y = 0; y < terY; ++y)
             {
-                int index = GetIndex(x, y, z);
+                if (y >= blockHeight) break;
 
                 StaticBlockData block;
-                block.Pos = { x * 2.f + BLOCK_SIZE * 0.5f, y * 2.f + BLOCK_SIZE * 0.5f, z * 2.f + BLOCK_SIZE * 0.5f };
+                block.Pos =
+                {
+                    x * BLOCK_SIZE + BLOCK_SIZE * 0.5f,
+                    y * BLOCK_SIZE + BLOCK_SIZE * 0.5f,
+                    z * BLOCK_SIZE + BLOCK_SIZE * 0.5f
+                };
                 block.Axis = StaticBlockAxis::sAY;
                 block.Rot = StaticBlockRot::sREnd;
                 block.Usage = StaticBlockUsage::Basic;
+                block.Type = GetBlockTypeByHeight(y, terY);
 
-                if (y < blockHeight)
-                {
-                    topY = y;
-                    block.Type = GetBlockTypeByHeight(y, terY);
-                }
-                else block.Type = StaticBlockType::Air;
+                topY = y;
 
-                blocks[index] = block;
+                int chunkX = x / (CHUNK_SIZE / BLOCK_SIZE);
+                int chunkZ = z / (CHUNK_SIZE / BLOCK_SIZE);
+                chunkedBlocks[{chunkX, chunkZ}].push_back(block);
             }
 
             if (topY != -1)
             {
-                int topIndex = GetIndex(x, topY, z);
-                blocks[topIndex].Type = StaticBlockType::GrassDirt;
+                int chunkX = x / (CHUNK_SIZE / BLOCK_SIZE);
+                int chunkZ = z / (CHUNK_SIZE / BLOCK_SIZE);
+
+                auto& vec = chunkedBlocks[{chunkX, chunkZ}];
+                vec.back().Type = StaticBlockType::GrassDirt;
             }
         }
     }
@@ -115,17 +125,20 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 
 StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
 {
-    if (y <= 1) return StaticBlockType::Stone;
-    else if (y < maxHeight * 0.2f) return StaticBlockType::Stone;
+    if (y <= 1) return StaticBlockType::Dirt;
     else if (y < maxHeight * 0.5f) return StaticBlockType::Dirt;
+    else if (y < maxHeight * 0.65f) return StaticBlockType::Stone;
     else return StaticBlockType::Dirt;
+}
+
+const std::vector<SB>& TerrainCreater::GetBlocksInChunk(int chunkX, int chunkZ) const
+{
+    auto it = chunkedBlocks.find({ chunkX, chunkZ });
+    return it->second;
 }
 
 void TerrainCreater::Free()
 {
-    blocks.clear();
-    blocks.shrink_to_fit();
-
     heightMap.clear();
     heightMap.shrink_to_fit();
 }

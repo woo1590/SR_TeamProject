@@ -21,6 +21,7 @@ Lever::Lever(ObjectManager* owner, ObjectType objType, DynamicBlockType type, Dy
     : DynamicBlock(owner, objType, type, col, Rot, Count)
 {
     ID = totID++;
+    AddRef();
 }
 
 Lever::~Lever()

@@ -51,7 +51,7 @@ private:
     // 충돌한 면의 법선 반환
     _vec3 GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const _vec3& boxMax);
 
-    void PlaceBlock(_vec3& position);   // 블럭 설치
+    void PlaceBlock(const _vec3& position);   // 블럭 설치
     void PlacePrefab(_vec3& position);  // 프리펩 설치
 
     void OnLeftClick(_vec3& rayOrigin, _vec3& rayDir);  // 좌클릭
@@ -70,6 +70,7 @@ private:
 
 private:
     bool isDown = false;
+    bool isLoading = false;
 
     int maxChunkX = -1;
     int maxChunkZ = -1;

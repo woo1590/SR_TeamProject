@@ -18,6 +18,7 @@
 Chest::Chest(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockRot rot)
     : DynamicBlock(owner, objType, type, Col, rot, Count)
 {
+    AddRef();
 }
 
 Chest::~Chest()

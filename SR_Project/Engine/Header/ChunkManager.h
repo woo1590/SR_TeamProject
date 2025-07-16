@@ -28,7 +28,7 @@ public:
     void LoadChunk(const std::wstring& loadStage, bool isEditor = false);
     
     void IsChunkBoundary(_vec3 playerPos);                             // Player가 청크 경계를 넘었는지
-    void UpdateRenderChunk(int playerChunkX, int playerChunkZ);        // 청크 로딩 (Player가 속한 청크 중심 3 x 3 청크만 렌더링)
+    void UpdateRenderChunk(int playerChunkX, int playerChunkZ, int count);        // 청크 로딩 (Player가 속한 청크 중심 3 x 3 청크만 렌더링)
 
     Chunk* GetChunk(int chunkX, int chunkZ);        // Key 값의 청크 있으면 해당 청크 반환
     const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() const { return worldChunks; }

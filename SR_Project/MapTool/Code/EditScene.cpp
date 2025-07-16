@@ -85,7 +85,7 @@ void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
 	UpdateCreateTerrain();
-	// ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
+	if (isLoading) ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
 
 	// 좌&우클릭에 따른 블럭 생성&제거
 	_vec3 rayOrigin, rayDir;
@@ -187,10 +187,12 @@ void EditScene::ImGui_Main()
 
 void EditScene::ImGui_Info()
 {
-	static bool checkMouse(false), checkPrefab(false);
+	static bool checkMouse(false), checkPrefab(false), checkLoading(false);
 	if (ImGui::Checkbox(" : MOUSE DOWN", &checkMouse)) isDown = checkMouse;
 	ImGui::SameLine();
 	if (ImGui::Checkbox(" : PREFAB MODE", &checkPrefab)) isPrefab = checkPrefab;
+	ImGui::SameLine();
+	if (ImGui::Checkbox(" : CHUNK LOADING", &checkLoading)) isLoading = checkLoading;
 
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
@@ -209,7 +211,9 @@ void EditScene::ImGui_Terrain()
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
 	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
 
-	if (ImGui::Button("IMD CREATE HEIGHTMAP"))
+	if (ImGui::Button("CREATE HEIGHTMAP")) CreateTerrain("heightMap");
+	ImGui::SameLine();
+	if (ImGui::Button("CREATE TERRAIN"))
 	{
 		Terrain->Free();
 		staticBlocks.clear();
@@ -217,16 +221,15 @@ void EditScene::ImGui_Terrain()
 
 		SetCurChunkZero();
 
-		CreateTerrain("heightMap");
-		PlaceTerrainBlocks("heightMap");
-
 		selectedSBlockType = 0;
 		dynamicBlocks.clear();
 		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::AlphaBlock);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+
+		PlaceTerrainBlocks("heightMap");
 	}
-	ImGui::SameLine();
+
 	if (ImGui::Button("CLEAR TERRAIN"))
 	{
 		Terrain->Free();
@@ -235,10 +238,17 @@ void EditScene::ImGui_Terrain()
 
 		SetCurChunkZero();
 
+		selectedSBlockType = 0;
 		dynamicBlocks.clear();
 		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::AlphaBlock);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("CLEAR ALPHA"))
+	{
+		for (auto& iter : ChunkMgr->GetChunks()) iter.second->ClearAlpha();
+		ObjectMgr->ClearList(ObjectType::AlphaBlock);
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("CLEAR DB"))
@@ -246,6 +256,11 @@ void EditScene::ImGui_Terrain()
 		dynamicBlocks.clear();
 		ObjectMgr->ClearList(ObjectType::Part);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("BUILDCHUNKFACE"))
+	{
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 	}
 }
 
@@ -288,6 +303,8 @@ void EditScene::ImGui_SaveLoad()
 				staticBlocks.push_back({ bInfo.Pos, bInfo.Type, bInfo.Axis, bInfo.Rot, bInfo.Usage });
 			}
 		}
+
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 	}
 }
 
@@ -619,22 +636,16 @@ void EditScene::UpdateCreateTerrain()
 
 	if (!placeBlock)
 	{
-		for (const auto& block : Terrain->GetBlocks())
+		const auto& blocks = Terrain->GetBlocksInChunk(CurChunkX, CurChunkZ);
+
+		for (const auto& block : blocks)
 		{
-			_vec3 position = block.Pos;
+			staticBlockUsage = block.Usage;
+			staticBlockType = block.Type;
+			staticBlockAxis = block.Axis;
+			staticBlockRot = block.Rot;
 
-			int blockChunkX = static_cast<int>(floor(position.x / CHUNK_SIZE));
-			int blockChunkZ = static_cast<int>(floor(position.z / CHUNK_SIZE));
-
-			if (blockChunkX == CurChunkX && blockChunkZ == CurChunkZ)
-			{
-				staticBlockUsage = block.Usage;
-				staticBlockType = block.Type;
-				staticBlockAxis = block.Axis;
-				staticBlockRot = block.Rot;
-
-				PlaceBlock(position);
-			}
+			PlaceBlock(block.Pos);
 		}
 
 		placeBlock = true;
@@ -642,7 +653,7 @@ void EditScene::UpdateCreateTerrain()
 	else
 	{
 		ChunkMgr->CreateChunk(CurChunkX, CurChunkZ)->BuildChunkFace();
-		//ChunkMgr->GetChunk(CurChunkX, CurChunkZ)->SetChunkRender(FALSE);
+		// ChunkMgr->GetChunk(CurChunkX, CurChunkZ)->SetChunkRender(FALSE);
 
 		++CurChunkX;
 		if (CurChunkX >= maxChunkX)
@@ -650,7 +661,15 @@ void EditScene::UpdateCreateTerrain()
 			CurChunkX = 0;
 			++CurChunkZ;
 		}
-		if (CurChunkZ >= maxChunkZ) isCreate = false;
+		if (CurChunkZ >= maxChunkZ)
+		{
+			for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
+			isCreate = false;
+			staticBlockType = Air;
+			staticBlockAxis = sAEnd;
+			staticBlockRot = sREnd;
+			staticBlockUsage = Basic;
+		}
 
 		placeBlock = false;
 	}
@@ -868,7 +887,7 @@ _vec3 EditScene::GetHitNormal(const _vec3& hitPoint, const _vec3& boxMin, const 
 	return _vec3(0, 0, 0);
 }
 
-void EditScene::PlaceBlock(_vec3& position)
+void EditScene::PlaceBlock(const _vec3& position)
 {
 	// 새로 설치하려는 블럭의 위치에 이미 다른 블럭이 존재하면 바로 리턴
 	for (const auto& block : staticBlocks) if (block.Pos == position) return;

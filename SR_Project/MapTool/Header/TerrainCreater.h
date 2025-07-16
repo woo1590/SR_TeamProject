@@ -4,6 +4,17 @@
 
 class TerrainCreater : public Base
 {
+private:
+    struct pair_hash {
+        template <class T1, class T2>
+        std::size_t operator () (const std::pair<T1, T2>& p) const
+        {
+            auto h1 = std::hash<T1>{}(p.first);
+            auto h2 = std::hash<T2>{}(p.second);
+            return h1 ^ (h2 << 1);
+        }
+    };
+
 public:
     TerrainCreater();
     virtual ~TerrainCreater();
@@ -18,9 +29,9 @@ public:
     // 블럭 지형 생성
     void CreateBlockTerrain(int terX, int terZ, int terY);
 
-    const std::vector<SB>& GetBlocks() const { return blocks; }                     // 블럭 정보 가져오기
     const std::vector<unsigned char>& GetHeightmap() const { return heightMap; }    // 높이맵 가져오기
-    
+    const std::vector<SB>& GetBlocksInChunk(int chunkX, int chunkZ) const;
+
     void Free() override;
 
 private:
@@ -32,6 +43,6 @@ private:
     int Wid = 0;
     int Hei = 0;
 
-    std::vector<SB> blocks;
     std::vector<unsigned char> heightMap;
+    std::unordered_map<std::pair<int, int>, std::vector<SB>, pair_hash> chunkedBlocks;
 };
