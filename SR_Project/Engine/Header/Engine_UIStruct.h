@@ -5,8 +5,8 @@ namespace Engine
 	struct PlayerInfo
 	{
 		int level = 1;
-		int curHp = 100;
-		int maxHp = 100;
+		int curHp = 100999999;
+		int maxHp = 100999999;
 		int curExp = 0;
 		int maxExp = 10;
 		int power = 100;
@@ -19,13 +19,13 @@ namespace Engine
 
 	enum class SlotItemType {Any, MeleeWeapon, Armor, RangeWeapon, Potion};
 
-	struct ItemInfo 
+	struct ItemInfo
 	{
 		std::wstring name;
 		std::wstring renderKey;
 		ItemType type;
 		Rarity rarity;
-		int value; 
+		int value;
 		std::wstring description;
 	};
 
@@ -39,8 +39,8 @@ namespace Engine
 	struct EnemyInfo
 	{
 		int level;
-		int curHp = 100;
-		int maxHp = 100;
+		int curHp = 100999;
+		int maxHp = 100999;
 		int curExp = 0;
 		int maxExp = 0;
 		int power = 10;

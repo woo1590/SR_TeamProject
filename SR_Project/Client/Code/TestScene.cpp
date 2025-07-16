@@ -104,13 +104,8 @@ void TestScene::Load()
 
 	/*----------------Load Camera---------------------*/
 	player = Player::Create(ObjectMgr, ObjectType::Player);
-	player->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 100.f);
+	player->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 80.f);
 	ObjectMgr->AddObject(ObjectType::Player, player);
-	//static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_SWORD);
-	//static_cast<Player*>(ObjectMgr->GetFrontObject(ObjectType::Player))->EquipItem(Item::ItemType::ITEM_BOW);
-
-	//ObjectMgr->AddObject(ObjectType::Item, Tnt::Create(ObjectMgr, ObjectType::Item));//여기서 tnt를 오브젝트 매니저에 두번 추가함 item에 기본 addobject를 빼던지 해야될듯
-	//static_cast<Tnt*>(ObjectMgr->GetObjectList(ObjectType::Item).back())->TntToPlayer(ObjectMgr->GetFrontObject(ObjectType::Player));
 
 	//수정코드 예시
 	auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
@@ -131,6 +126,7 @@ void TestScene::Load()
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 	ObjectMgr->AddObject(ObjectType::Monster, JungleZombie::Create(ObjectMgr, ObjectType::Monster));
+	//ObjectMgr->AddObject(ObjectType::Monster, RedGolem::Create(ObjectMgr, ObjectType::Monster));
 
 	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);

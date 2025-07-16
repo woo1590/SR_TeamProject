@@ -182,6 +182,7 @@
     <ClInclude Include="..\Header\BossHPBarFront.h" />
     <ClInclude Include="..\Header\BossIcon.h" />
     <ClInclude Include="..\Header\Circle.h" />
+    <ClInclude Include="..\Header\Crossbow.h" />
     <ClInclude Include="..\Header\DamageText.h" />
     <ClInclude Include="..\Header\DeathFrame.h" />
     <ClInclude Include="..\Header\Effect.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="..\Header\SpriteEffect.h" />
     <ClInclude Include="..\Header\Stage1.h" />
     <ClInclude Include="..\Header\Stage2.h" />
+    <ClInclude Include="..\Header\Spear.h" />
     <ClInclude Include="..\Header\Tnt.h" />
     <ClInclude Include="..\Header\TooltipObj.h" />
     <ClInclude Include="..\Header\Village.h" />
@@ -312,6 +314,7 @@
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
     <ClCompile Include="..\Code\BossIcon.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
+    <ClCompile Include="..\Code\Crossbow.cpp" />
     <ClCompile Include="..\Code\DamageText.cpp" />
     <ClCompile Include="..\Code\DeathFrame.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
@@ -349,6 +352,7 @@
     <ClCompile Include="..\Code\SpriteEffect.cpp" />
     <ClCompile Include="..\Code\Stage1.cpp" />
     <ClCompile Include="..\Code\Stage2.cpp" />
+    <ClCompile Include="..\Code\Spear.cpp" />
     <ClCompile Include="..\Code\Tnt.cpp" />
     <ClCompile Include="..\Code\TooltipObj.cpp" />
     <ClCompile Include="..\Code\Village.cpp" />

@@ -35,7 +35,8 @@ public:
     enum class ePlayerShootType : int
     {
         ARROW,
-        FIREWORK
+        FIREWORK,
+        CROSSBOW
     };
     struct PhaseRotation
     {
@@ -69,6 +70,7 @@ public:
     void RevivePlayer();
     _vec3 GetAttackDirection();
     void ChangeShootType();
+    bool IsMovingToAttack();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -79,6 +81,8 @@ private:
     void PickingTerrain();
     void CheckStateRoll(_float dt);
     void CheckDead();
+    void CheckJump();
+    void CheckTargetDead();
 
     void UpdateIdle(_float dt);
     void UpdateWalk(_float dt);
@@ -89,17 +93,22 @@ private:
     void UpdateRevive(_float dt);
 
     void SaveStartRotation();
-    void SetUpFirstAttackPhaseRotations();
-    void SetUpSecondAttackPhaseRotations();
-    void SetUpLastAttackPhaseRotations();
+    void SetUpSwordFirstAttackPhaseRotations();
+    void SetUpSwordSecondAttackPhaseRotations();
+    void SetUpSwordLastAttackPhaseRotations();
     void SetUpShootPhaseRotations();
     void SetUpDeadPhaseRotations();
     void SetUpRevivePhaseRotations();
+    void SetUpSpearFirstAttackPhaseRotations();
+    void SetUpSpearSecondAttackPhaseRotations();
+    void SetUpSpearLastAttackPhaseRotations();
     void SetAttackTypeNext();
+    void SetUpIdleRotations();
+    void UpdateNewIdleRotations();
 
     _vec3 MatrixToEulerAngles(const _matrix& mat);
     void OnCollisionStay(Object* other);
-    void IdleSmoothing(_float dt, std::string bone);
+    void IdleSmoothing(_float dt, ePlayerBone bone);
     float NormalizeAngle(_float angle);
     float OffsetLerp(const _float& start, const _float& offset, float ratio);
     _vec3 OffsetLerp(const _vec3& start, const _vec3& offset, float ratio);
@@ -127,8 +136,11 @@ private:
     const _float RollDuration = 0.5f;
 
     _float AttackTime = 0.f;
-    const _float AttackDuration = 0.3f;
+    const _float AttackDuration = 0.5f;
     const _float ShootDuration = 0.6f;
+
+    _float chargedTime = 0.f;
+    const _float MaxChargeTime = 1.f;
 
     _float DeadTime = 0.f;
     const _float DeadDuration = 1.0f;
@@ -151,8 +163,8 @@ private:
     std::unordered_map<std::pair<int, int>, PhaseRotation, PairHash> PhaseRotations;
     std::unordered_map<std::string, _vec3> itemBaseRotOffset;
 
-
-    ///////////////////////Effect
     _float walkEffectTimer = 0.f;
-    //////////////////////
+    std::unordered_map<std::pair<int, int>, _vec3, PairHash> idleRot;
+
+    const float jumpPower = 15.f;
 };

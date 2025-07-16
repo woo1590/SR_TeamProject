@@ -67,7 +67,7 @@ void Tnt::Update(_float dt)
         auto ownerTransform = ownerObject->GetComponent<TransformComponent>();
         transform->SetPosition(ownerTransform->GetWorldPosition() + tntOffset);
 
-        if (ownerObject->GetObjectType() == ObjectType::Player && static_cast<Player*>(ownerObject)->GetPlayerState() == Player::ePlayerState::ATTACK)
+        if (ownerObject->GetObjectType() == ObjectType::Player && (static_cast<Player*>(ownerObject)->GetPlayerState() == Player::ePlayerState::ATTACK || static_cast<Player*>(ownerObject)->IsMovingToAttack() == true))
         {
             ThrowTnt();
         }

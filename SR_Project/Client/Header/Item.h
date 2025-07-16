@@ -25,6 +25,7 @@ public:
 
     void ApplyComponents();
 
+    ItemType GetItemType();
 protected:
     float itemScale = 1.f;
     _vec3 itemScaleRatio = { 1.f,1.f,1.f };
@@ -36,6 +37,7 @@ protected:
     std::string meshType;
     std::string material;
     Engine::RENDER_ID renderId = Engine::RENDER_ID::Render_Alpha;
+    ItemType itemType = ItemType::ITEM_PROJECTILE;
 
     Object* ownerObject = nullptr;
 };
