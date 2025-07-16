@@ -1246,12 +1246,15 @@ void Player::UpdateWalk(_float dt) {
 
     //Move Player
     auto transform = GetComponent<TransformComponent>();
-    if (moveToAttack)
-    {
-        //이동하는 순간 오브젝트가 죽으면 버그 생김
-        PlayerDirection = moveToObject->GetComponent<TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
-        PlayerDirection.y = 0.f;
-    }
+    
+    //잠시 사용안함 - 0716
+    //if (moveToAttack)
+    //{
+    //    //이동하는 순간 오브젝트가 죽으면 버그 생김
+    //    PlayerDirection = moveToObject->GetComponent<TransformComponent>()->GetWorldPosition() - transform->GetWorldPosition();
+    //    PlayerDirection.y = 0.f;
+    //}
+
     _vec3 vDir;
     D3DXVec3Normalize(&vDir, &PlayerDirection);
 

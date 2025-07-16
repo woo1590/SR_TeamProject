@@ -104,6 +104,9 @@ void Village::Load()
 		player = Player::Create(ObjectMgr, ObjectType::Player);
 		player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 100.f);
 		ObjectMgr->AddObject(ObjectType::Player, player);
+		
+		auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
+		tnt->TntToPlayer(player);
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
