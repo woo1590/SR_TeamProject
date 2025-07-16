@@ -143,6 +143,7 @@ void Arrow::SetCollisionEnter(Object* other)
         auto collision = GetComponent<CollisionComponent>();
 
         float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + info->GetInfo().value;
+        arrowAttackDamage *= damagePercent;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
 
         auto monster = static_cast<Monster*>(other);
