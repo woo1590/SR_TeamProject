@@ -171,30 +171,32 @@ void RenderSystem::UIPass()
 	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
+	uiRenderState = UIRenderer::GetCurRenderType();
+
+	const auto& canRender = [this](UIRenderer* renderer)
+		{
+			const auto type = renderer->GetRenderType();
+			return type == uiRenderState || type == UIRenderType::Always;
+		};
+
 	spriteBatch->Begin(D3DXSPRITE_ALPHABLEND);
 
 	for (auto* renderer : uiList)
 	{
-		auto* ui = static_cast<UIRenderer*>(renderer);
-
-		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() &&
-			ui->GetRenderType() != UIRenderType::Always)
-			continue;
-
-		ui->Render();
+		auto ui = static_cast<UIRenderer*>(renderer);
+		if (!canRender(ui)) continue;
+		ui->Render(); 
 	}
+	
 	spriteBatch->End();
 
 	for (auto* renderer : uiList)
 	{
-		auto* ui = static_cast<UIRenderer*>(renderer);
-		if (ui->GetRenderType() != UIRenderer::GetCurRenderType() && 
-			ui->GetRenderType() != UIRenderType::Always)
-			continue;
-
+		auto ui = static_cast<UIRenderer*>(renderer);
+		if (!canRender(ui)) continue;
 		ui->RenderFont();
 	}
-
+	
 	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	Device->SetTransform(D3DTS_PROJECTION, &originProj);

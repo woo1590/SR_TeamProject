@@ -1,5 +1,8 @@
 #pragma once
 #include "BaseCharacter.h"
+#include "DialogManager.h"
+
+
 class Npc :
     public BaseCharacter
 {
@@ -13,13 +16,24 @@ public:
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 
+    void Talk(DialogManager* dialogMgr);
+
 private:
     void InitTransform();
     void InitCollision();
     void InitPhysics();
+    void InitDialog();
 
 protected:
     void Free() override;
 
+private:
+    struct DialogSet
+    {
+        function<bool()> condition;
+        vector<wstring> lines;
+        function<void()> onFinish;
+    };
+    vector<DialogSet> dialogSets;
 };
 

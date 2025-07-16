@@ -5,6 +5,7 @@
 #include "ObjectManager.h"
 #include "QuestSystem.h"
 #include "TooltipManager.h"
+#include "DialogManager.h"
 
 UIManager* UIManager::Create(Scene* owner)
 {
@@ -14,15 +15,16 @@ UIManager* UIManager::Create(Scene* owner)
 
 HRESULT UIManager::Ready_UIManager()
 {
-	inventory = new InventoryManager(this);
+	inventory = new InventoryManager(this); 
 	quest = new QuestSystem(this);
 	tooltip = new TooltipManager(this);
+	dialog = new DialogManager(this);
 
-	quest->InitQuests();
+	quest->InitQuests(); 
 	return  S_OK;
 }
 
-void UIManager::Update(float dt)
+void UIManager::Update(float dt) 
 {
 	if (inventory)
 		inventory->Update(dt);
@@ -30,7 +32,8 @@ void UIManager::Update(float dt)
 		quest->Update(dt);
 	if (tooltip)
 		tooltip->Update(dt);
-	
+	if (dialog)
+		dialog->Update(dt);
 }
 
 void UIManager::Free()
@@ -38,4 +41,5 @@ void UIManager::Free()
 	Safe_Release(inventory);
 	Safe_Release(quest);
 	Safe_Release(tooltip);
+	Safe_Release(dialog);
 }

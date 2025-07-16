@@ -9,111 +9,147 @@
 #include "Scene.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
+#include "RenderSystem.h"
+
+namespace 
+{
+    constexpr RECT CenterTitle{450, 190, 850, 260}, CenterDesc{450, 250, 850, 400};
+    constexpr RECT RightTitle{900, 20, 1280, 70}, RightDesc{900, 70, 1280, 200};
+    inline D3DXCOLOR Yellow(float a) { return {1, 1, 0, a}; }
+    inline D3DXCOLOR White(float a) { return {1, 1, 1, a}; }
+}
 
 void QuestSystem::InitQuests()
 {
-	questList.clear();
-	curQuestIdx = 0;
+    quests =
+    {
+        {L"장비 장착해보기", L"인벤토리에서 장비를 하나 장착해보세요! \n(무기든 방어구든 상관없어요~)",
+        QuestType::EquipItem, QuestStatus::NotStarted, 0, 1},
 
-	questList.push_back({L"목표 찾기", L"마커를 따라 이동하세요."});
-	questList.push_back({L"좀비를 죽이세요", L"근접 무기를 사용하세요."});
-	questList.push_back({L"활을 사용하세요", L"스켈레톤을 멀리서 처치하세요."});
-	questList.push_back({L"보물 찾기", L"지도를 보고 보물 위치로 가세요."});
-
-	DisplayCurQuest();
+        {L"몬스터 처치", L"근처에 있는 몬스터 3마리 처치하세요", 
+        QuestType::KillMonsters, QuestStatus::NotStarted, 0, 3},
+        
+        {L"마을로 이동",L"이제 마을로 돌아가주세요~! 다들 제현님 기다리고 있어요~",
+        QuestType::ReachVillage, QuestStatus::NotStarted, 0, 1},
+    };
 }
 
-void QuestSystem::DisplayCurQuest()
+void QuestSystem::AcceptQuest(QuestType type)
 {
-	if (curQuestIdx >= static_cast<int>(questList.size()) || !textObj) return;
-
-	isCenterPhase = true;
-	centerDisplayTime = 0.f;
-
-	auto& quest = questList[curQuestIdx];
-	curTitle = quest.title;
-	curDesc = quest.desc;
-
-	auto* font = textObj->GetComponent<FontComponent>();
-	auto* renderer = textObj->GetComponent<UIRenderer>();
-	
-	renderer->SetVisible(true);
-	font->ClearText();
-
-	RECT titleRect = {425, 290, 800, 360};
-	RECT descRect = {410, 350, 900, 500};
-
-	font->AddText(quest.title, titleRect, Color::Yellow, DT_CENTER, FontType::Title);
-	font->AddText(quest.desc, descRect, Color::White, DT_CENTER, FontType::QuestTitle);
+    for (int i = 0; i < (int)quests.size(); ++i)
+        if (quests[i].type == type)
+            AcceptQuestAtIdx(i);
 }
 
-void QuestSystem::CompleteCurQuest()
+void QuestSystem::AcceptQuestAtIdx(int i)
 {
-	if (curQuestIdx >= static_cast<int>(questList.size())) return;
-	
-	questList[curQuestIdx].isCompleted = true;
-	++curQuestIdx;
+    if (i < 0 || i >= (int)quests.size()) return;
 
-	DisplayCurQuest();
+    auto& quest = quests[i];
+    if (quest.status != QuestStatus::NotStarted) return;
+
+    quest.status = QuestStatus::InProgress;
+    activeIdx = i;
+    ChangeState(QuestUIState::CenterFadeOut);
 }
 
+QuestStatus QuestSystem::GetStatus(QuestType type) const
+{
+    for (auto const& quest : quests)
+        if (quest.type == type)
+            return quest.status;
+
+    return QuestStatus::NotStarted;
+}
+
+void QuestSystem::ReportQuestProgress(QuestType type, int amount)
+{
+    if (activeIdx < 0) return;
+
+    auto& quest = quests[activeIdx];
+    if (quest.type == type && quest.status == QuestStatus::InProgress)
+    {
+        quest.curCount = min(quest.curCount + amount, quest.targetCount);
+        if (quest.curCount >= quest.targetCount)
+        {
+            quest.status = QuestStatus::Completed;
+            ChangeState(QuestUIState::RightFadeIn);
+        }
+    }
+}
+
+void QuestSystem::Show(const QuestInfo& q, float alpha, FontType font)
+{
+    if (!textObj) return;
+    auto* f = textObj->GetComponent<FontComponent>();
+    auto* r = textObj->GetComponent<UIRenderer>();
+    if (!f || !r) return;
+
+    r->SetVisible(true);
+    f->ClearText();
+
+    bool center = (uiPhase.state == QuestUIState::CenterFadeOut);
+
+    wstring tag;
+    if (center) 
+        tag = L"(시작가능)";
+    else 
+    {
+        switch (q.status)
+        {
+        case QuestStatus::NotStarted:  tag = L"(시작가능)"; break;
+        case QuestStatus::InProgress:  tag = L"(진행중)";   break;
+        case QuestStatus::Completed:   tag = L"(완료)";     break;
+        }
+    }
+
+    wstring title = q.title + L" " + tag;
+    wstring desc = q.desc;
+
+    if (q.targetCount > 1)
+        desc += L" (" + to_wstring(q.curCount) + L"/" + to_wstring(q.targetCount) + L")";
+
+    f->AddText(title, center ? CenterTitle : RightTitle, Yellow(alpha),
+        DT_CENTER | DT_WORDBREAK, font);
+    f->AddText(desc, center ? CenterDesc : RightDesc, White(alpha),
+        DT_CENTER | DT_WORDBREAK, font);
+}
+
+void QuestSystem::ChangeState(QuestUIState nextState)
+{
+    uiPhase = {nextState, 0.f};
+}
 
 void QuestSystem::Update(float dt)
 {
-	auto input = EngineCore::GetInstance()->GetInputSystem();
+    if (!textObj || activeIdx < 0 || activeIdx >= quests.size()) return;
 
-	if (input->IsKeyPressed(KEY::Q))
-		InitQuests();
+    auto& quest = quests[activeIdx];
+    uiPhase.t += dt;
 
-	if (input->IsKeyPressed(KEY::E))
-		CompleteCurQuest();
+    switch (uiPhase.state)
+    {
+    case QuestUIState::CenterFadeOut:
+        Show(quest, clamp(1.f - uiPhase.t / centerDur, 0.f, 1.f), FontType::MineCraftFont);
+        if (uiPhase.t >= centerDur)
+        {
+            quest.status = QuestStatus::InProgress;
+            ChangeState(QuestUIState::RightFadeIn);
+        }
+        break;
 
-	auto* font = textObj->GetComponent<FontComponent>();
-	if (!font) return;
+    case QuestUIState::RightFadeIn:
+        Show(quest, clamp(uiPhase.t / fadeDur, 0.f, 1.f), FontType::CookieRunFont);
+        if (uiPhase.t >= fadeDur)
+            ChangeState(QuestUIState::RightHold);
+        break;
 
-	if (isCenterPhase)
-	{
-		centerDisplayTime += dt;
+    case QuestUIState::RightHold:
+        Show(quest, 1.f, FontType::CookieRunFont);
+        break;
+    }
 
-		float alpha = 1.f - (centerDisplayTime / centerDisplayDuration); 
-
-		alpha = std::clamp(alpha, 0.f, 1.f);
-
-		font->ClearText();
-
-		RECT titleRect = {425, 290, 800, 360};
-		RECT descRect = {410, 350, 900, 500};
-
-		D3DXCOLOR titleColor = D3DXCOLOR(1.f, 1.f, 0.f, alpha);
-		D3DXCOLOR descColor = D3DXCOLOR(1.f, 1.f, 1.f, alpha);
-
-		font->AddText(curTitle, titleRect, titleColor, DT_CENTER, FontType::Title);
-		font->AddText(curDesc, descRect, descColor, DT_CENTER, FontType::QuestTitle);
-
-		if (centerDisplayTime >= centerDisplayDuration)
-		{
-			isCenterPhase = false;
-			isRightAppearing = true;
-			rightFadeAlpha = 0.f;
-		}
-	}
-	else if (isRightAppearing)
-	{
-		rightFadeAlpha += dt / fadeDuration;
-		rightFadeAlpha = std::clamp(rightFadeAlpha, 0.f, 1.f);
-
-		font->ClearText();
-
-		RECT titleRect = {1000, 20, 1260, 60};
-		RECT descRect = {960, 60, 1260, 110};
-
-		D3DXCOLOR titleColor = D3DXCOLOR(1.f, 1.f, 0.f, rightFadeAlpha);
-		D3DXCOLOR descColor = D3DXCOLOR(1.f, 1.f, 1.f, rightFadeAlpha);
-
-		font->AddText(curTitle, titleRect, titleColor, DT_LEFT, FontType::Title);
-		font->AddText(curDesc, descRect, descColor, DT_LEFT, FontType::QuestTitle);
-
-		if (rightFadeAlpha >= 1.f)
-			isRightAppearing = false;
-	}
+    const auto& input = EngineCore::GetInstance()->GetInputSystem();
+    if (input->IsKeyPressed(KEY::Q))
+        ReportQuestProgress(QuestType::KillMonsters, 1);
 }

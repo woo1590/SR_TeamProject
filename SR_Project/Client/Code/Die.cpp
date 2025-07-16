@@ -2,6 +2,11 @@
 #include "Die.h"
 #include "Object.h"
 #include "Monster.h"
+#include "EngineCore.h"
+#include "SceneManager.h"
+#include "QuestSystem.h"
+#include "scene.h"
+#include "UIManager.h"
 
 DieNode::DieNode()
 {
@@ -27,7 +32,7 @@ BTStatus DieNode::Tick(float dt, BlackBoard* bb)
 	Monster* monster = static_cast<Monster*>(self);
 	monster->Die();
 
-	if (monster->IsDeadFinish()) 
+	if (monster->IsDeadFinish())
 		return BTStatus::Success;
 	if (monster->IsDeadStart() && !monster->IsDeadFinish())
 		return BTStatus::Running;

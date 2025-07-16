@@ -26,6 +26,7 @@ public:
     void RegisterCollision(CollisionComponent* collision);
     void SetCamera(Object* cam);
     void SetUIRenderState(UIRenderType newType);
+    UIRenderType GetCurRenderState() const { return uiRenderState; }
 
     ID3DXSprite* GetSpriteBatch() const { return spriteBatch; }
     const _matrix& GetCachedViewMatrix() const { return cachedView; }
@@ -57,6 +58,7 @@ private:
 
     _matrix cachedView;
     _matrix cachedProj;
+    UIRenderType uiRenderState = UIRenderType::None;
 };
 
 END

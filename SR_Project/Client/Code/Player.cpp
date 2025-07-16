@@ -17,6 +17,8 @@
 #include "Scene.h"
 #include "CameraComponent.h"
 #include "CameraManager.h"
+#include "UIManager.h"
+#include "DialogManager.h"
 
 #include "MyMath.h"
 
@@ -26,6 +28,8 @@
 #include "Firework.h"
 
 #include "StaticGrid.h"
+#include "Npc.h"
+#include "DialogComponent.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) {}
 Player::~Player() {}
@@ -74,8 +78,12 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     return S_OK;
 }
-void Player::Update(_float dt) 
+void Player::Update(_float dt)
 {
+    auto curRenderType = EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState();
+    if (curRenderType == UIRenderType::Inventory || curRenderType == UIRenderType::WorldMap ||
+        curRenderType == UIRenderType::QuestUI) return;
+
     BaseCharacter::Update(dt);
 
     KeyInput(dt);
@@ -108,6 +116,30 @@ void Player::Update(_float dt)
 void Player::Late_Update(_float dt)
 {
     BaseCharacter::Late_Update(dt);
+
+    // ---------------------------------------- //
+    if (moveToInteract && moveToObject)
+    {
+        auto npcTf = moveToObject->GetComponent<TransformComponent>();
+        auto myTf = GetComponent<TransformComponent>();
+
+        _vec3 toNpc = npcTf->GetWorldPosition() - myTf->GetWorldPosition();
+        toNpc.y = 0.f;
+
+        float distance = D3DXVec3Length(&toNpc);
+        if (distance <= interactRange)
+        {
+            auto dialogMgr = GetScene()->GetUIManager()->GetDialog();
+            if (!dialogMgr->IsTalking())
+            {
+                InteractWithNPC(moveToObject);
+
+                moveToInteract = false;
+                moveToObject = nullptr;
+                State = ePlayerState::IDLE;
+            }
+        }
+    }
 }
 void Player::Free()
 {
@@ -115,10 +147,10 @@ void Player::Free()
 }
 void Player::PickingTerrain()
 {
-    if (State == ePlayerState::DEAD ||
-        State == ePlayerState::ROLL ||
+    if (State == ePlayerState::DEAD   ||
+        State == ePlayerState::ROLL   ||
         State == ePlayerState::ATTACK ||
-        State == ePlayerState::SHOOT ||
+        State == ePlayerState::SHOOT  ||
         State == ePlayerState::REVIVE)
         return;
 
@@ -126,68 +158,94 @@ void Player::PickingTerrain()
     auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
     auto mainCam = curScene->GetCameraManager()->GetMainCamera();
     auto collision = curScene->GetCollisionSystem();
-
-    if (input->IsKeyPressed(LBUTTON))
+    
+    if (input->IsKeyPressed(KEY::LBUTTON))
     {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
+        if (!hit.IsHit) return;
 
-        if (hit.IsHit)
+        const auto& layer = hit.Component->GetLayer();
+
+        if ((State == ePlayerState::IDLE || State == ePlayerState::WALK) &&
+            layer == LAYER_ENEMY  && Bones["RHand"] != nullptr)
         {
-            if ((State == ePlayerState::IDLE || State == ePlayerState::WALK) &&
-                hit.Component->GetLayer() == LAYER_ENEMY &&
-                Bones["RHand"] != nullptr)
+            if (State == ePlayerState::IDLE)
             {
-                if (State == ePlayerState::IDLE)
-                {
-                    WalkTime = 0.f;
-                    State = ePlayerState::WALK;
-
-                    moveToAttack = true;
-                    moveToObject = hit.Component->GetOwner();
-                    return;
-                }
-
-                DestinationPos = hit.Position;
-                auto transform = GetComponent<TransformComponent>();
-                auto curPos = transform->GetWorldPosition();
-
-                DestinationPos.y = 0.f;
-                curPos.y = 0.f;
-                PlayerDirection = DestinationPos - curPos;
-
-                auto distance = sqrtf(PlayerDirection.x * PlayerDirection.x + PlayerDirection.z * PlayerDirection.z);
-                if (distance <= SwordRange)
-                {
-                    State = ePlayerState::ATTACK;
-                    AttackTime = 0.f;
-
-                    SaveStartRotation();
-                    curPos = transform->GetWorldPosition();
-                    auto attackPos = hit.Position;
-                    AttackDirection = attackPos - curPos;
-                }
+                WalkTime = 0.f;
+                State = ePlayerState::WALK;
+        
+                moveToAttack = true;
+                moveToObject = hit.Component->GetOwner();
+                return;
             }
-            if (State == ePlayerState::IDLE || State == ePlayerState::WALK)
+        
+            DestinationPos = hit.Position;
+            auto transform = GetComponent<TransformComponent>();
+            auto curPos = transform->GetWorldPosition();
+        
+            DestinationPos.y = 0.f;
+            curPos.y = 0.f;
+            PlayerDirection = DestinationPos - curPos;
+        
+            auto distance = sqrtf(PlayerDirection.x * PlayerDirection.x + PlayerDirection.z * PlayerDirection.z);
+            if (distance <= SwordRange)
             {
-                if (State == ePlayerState::IDLE)
-                {
-                    State = ePlayerState::WALK;
-                    WalkTime = 0.f;
-                }
-                if (moveToAttack)
-                {
-                    moveToAttack = false;
-                    moveToObject = nullptr;
-                }
-                auto transform = GetComponent<TransformComponent>();
-                auto curPos = transform->GetWorldPosition();
-                DestinationPos = hit.Position;
-
-                DestinationPos.y = 0.f;
-                curPos.y = 0.f;
-                PlayerDirection = DestinationPos - curPos;
+                State = ePlayerState::ATTACK;
+                AttackTime = 0.f;
+        
+                SaveStartRotation();
+                curPos = transform->GetWorldPosition();
+                auto attackPos = hit.Position;
+                AttackDirection = attackPos - curPos;
             }
+        }
+
+        if ((State == ePlayerState::IDLE || State == ePlayerState::WALK) &&
+            layer == CollisionLayer::LAYER_NPC)
+        {
+            if (State == ePlayerState::IDLE)
+            {
+                State = ePlayerState::WALK;
+                WalkTime = 0.f;
+            }
+            if (moveToAttack)
+            {
+                moveToAttack = false;
+                moveToObject = nullptr;
+            }
+
+            moveToObject = hit.Component->GetOwner();
+            moveToInteract = true;
+
+            auto transform = GetComponent<TransformComponent>();
+            auto curPos = transform->GetWorldPosition();
+            DestinationPos = hit.Position;
+
+            DestinationPos.y = 0.f;
+            curPos.y = 0.f;
+            PlayerDirection = DestinationPos - curPos;
+        }
+        
+        if (State == ePlayerState::IDLE || State == ePlayerState::WALK)
+        {
+            if (State == ePlayerState::IDLE)
+            {
+                State = ePlayerState::WALK;
+                WalkTime = 0.f;
+            }
+            if (moveToAttack)
+            {
+                moveToAttack = false;
+                moveToObject = nullptr;
+            }
+            auto transform = GetComponent<TransformComponent>();
+            auto curPos = transform->GetWorldPosition();
+            DestinationPos = hit.Position;
+        
+            DestinationPos.y = 0.f;
+            curPos.y = 0.f;
+            PlayerDirection = DestinationPos - curPos;
         }
     }
 
@@ -195,26 +253,24 @@ void Player::PickingTerrain()
     {
         Ray ray = mainCam->ScreenPointRay();
         HitInfo hit = collision->Raycast(ray);
+        if (!hit.IsHit) return;
 
-        if (hit.IsHit)
+        if (State == ePlayerState::IDLE || State == ePlayerState::WALK)
         {
-            if (State == ePlayerState::IDLE || State == ePlayerState::WALK)
-            {
-                auto transform = GetComponent<TransformComponent>();
-                auto collision = GetComponent<CollisionComponent>();
-                auto curPos = transform->GetWorldPosition();
-                auto attackPos = hit.Position;
+            auto transform = GetComponent<TransformComponent>();
+            auto collision = GetComponent<CollisionComponent>();
+            auto curPos = transform->GetWorldPosition();
+            auto attackPos = hit.Position;
 
-                AttackDirection = attackPos - curPos;
-                if(State == ePlayerState::IDLE)
-                    PlayerDirection = attackPos - curPos;;
+            AttackDirection = attackPos - curPos;
+            if(State == ePlayerState::IDLE)
+                PlayerDirection = attackPos - curPos;;
 
-                State = ePlayerState::SHOOT;
-                AttackTime = 0.f;
-                SaveStartRotation();
-                Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
-                Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
-            }
+            State = ePlayerState::SHOOT;
+            AttackTime = 0.f;
+            SaveStartRotation();
+            Bones["LHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_Alpha);
+            Bones["RHand"]->GetComponent<MeshRenderer>()->SetRenderID(Engine::RENDER_ID::Render_None);
         }
     }
 }
@@ -1216,6 +1272,19 @@ void Player::CheckDead()
 
         EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::DeathUI);
     }
+}
+
+void Player::InteractWithNPC(Object* obj)
+{
+    if (!obj) return;
+
+    auto* npc = dynamic_cast<Npc*>(obj);
+    if (!npc) return;
+
+    auto* dialogMgr = GetScene()->GetUIManager()->GetDialog();
+    if (!dialogMgr)return;
+
+    npc->Talk(dialogMgr);
 }
 
 _vec3 Player::MatrixToEulerAngles(const _matrix& mat)

@@ -111,18 +111,18 @@ void Village::Load()
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
-	}
+	} 
 
 	/*-------------------------Create Objects----------------------------*/
 	{
-		BlockMgr->LoadChunk("VillageMap");
+		BlockMgr->LoadChunk("Plain");
 		Grid->InsertBlock();
 
 		UILoader loader;
 		loader.LoadUI(ObjectMgr);
 
-		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
+		//ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, //ObjectType::BackGroundEffect));
 
 		//player->EquipItem(ItemType::Sword);
 		//player->EquipItem(ItemType::Bow);
@@ -130,9 +130,10 @@ void Village::Load()
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
-		trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
-		trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
-
+		trigger1->AddSpawner(SpawnType::Zombie, _vec3(20.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+		trigger1->AddSpawner(SpawnType::Zombie, _vec3(20.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+		trigger1->AddSpawner(SpawnType::Zombie, _vec3(20.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+		
 		auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger2->SetTriggerPosition(_vec3(124.f, 5.f, 86.f));
 		trigger2->AddSpawner(SpawnType::Skeleton, _vec3(124.f, 5.f, 90.f), _vec3(0.f, 0.f, 0.f));
@@ -140,7 +141,7 @@ void Village::Load()
 		trigger2->AddSpawner(SpawnType::Zombie, _vec3(120.f, 5.f, 90.f), _vec3(0.f, 0.f, 0.f));
 		trigger2->AddSpawner(SpawnType::RedGolem, _vec3(200.f, 5.f, 200.f), _vec3(0.f, 0.f, 0.f));
 
-		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
+		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Neutral));
 	}
 }
 
@@ -148,7 +149,7 @@ void Village::Update(_float dt)
 {
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
-
+	uiMgr->Update(dt);
 }
 
 void Village::Late_Update(_float dt)

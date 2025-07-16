@@ -1,47 +1,54 @@
 #pragma once
 
 BEGIN(Engine)
-
 class UIManager;
 class Object;
+
+enum class QuestUIState { CenterFadeOut, RightFadeIn, RightHold};
+enum class QuestStatus { NotStarted, InProgress, Completed};
+enum class QuestType { EquipItem, KillMonsters, ReachVillage, TalkShop, None };
+
+struct QuestInfo
+{
+    wstring title, desc;
+    QuestType type = QuestType::None;
+    QuestStatus status = QuestStatus::NotStarted;
+    int curCount = 0;
+    int targetCount = 0;
+};
 
 class ENGINE_DLL QuestSystem : public Base
 {
 public:
-	explicit QuestSystem(UIManager* owner)
-		:ui(owner) {
-	}
+    explicit QuestSystem(UIManager* owner) : uiMgr(owner) {}
 
-	void Update(float dt);
-	void InitQuests();
-	void CompleteCurQuest();
+    void InitQuests();
+    void Update(float dt);
 
-	void SetTextObj(Object* obj) { textObj = obj; }
-	void SetPanel(Object* _panel) { panel = _panel; }
+    void ReportQuestProgress(QuestType type, int amount = 1);
+    void AcceptQuest(QuestType type);
+    QuestStatus GetStatus(QuestType type) const;
 
-	void Free() override {};
+    void SetTextObj(Object* obj) { textObj = obj; }
 
 private:
-	void DisplayCurQuest();
+    void Show(const QuestInfo& quest, float alpha, FontType type);
+    void ChangeState(QuestUIState nextState);
+    void AcceptQuestAtIdx(int i);
+
+    void Free() override {}
 
 private:
-	UIManager* ui = nullptr;
-	Object* panel = nullptr;
-	Object* textObj = nullptr;
+    UIManager* uiMgr  = nullptr;
+    Object *textObj  = nullptr;
 
-	vector<QuestInfo> questList;
-	int curQuestIdx = 0;
+    vector<QuestInfo> quests;
+    int activeIdx = -1;
 
-	wstring curTitle, curDesc;
+    struct { QuestUIState state; float t; } uiPhase{QuestUIState::RightHold, 0.f};
 
-	bool isCenterPhase = false;
-	bool isRightAppearing = false;
-
-	float rightFadeAlpha = 0.f;
-	float centerDisplayTime = 3.f;
-
-	const float centerDisplayDuration = 3.f;
-	const float fadeDuration = 1.f;
+    static constexpr float centerDur = 2.f;
+    static constexpr float fadeDur = 0.5f;
+    static constexpr float holdDur = 3.f;
 };
-
 END

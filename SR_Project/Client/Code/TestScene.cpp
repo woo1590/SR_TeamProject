@@ -95,7 +95,7 @@ void TestScene::Load()
 	BlockMgr		= BlockManager::Create(this);
 	ChunkMgr		= ChunkManager::Create(this);
 
-	BlockMgr->LoadChunk("VillageMap");
+	BlockMgr->LoadChunk("plain");
 
 	Grid->InsertBlock();
 	uiMgr           = UIManager::Create(this);
@@ -124,6 +124,7 @@ void TestScene::Load()
 	
 	/*------------------------------------------------*/
 	ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+
 
 	//auto trigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	//ObjectMgr->AddObject(ObjectType::Neutral, trigger);

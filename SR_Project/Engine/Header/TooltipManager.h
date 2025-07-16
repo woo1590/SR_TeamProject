@@ -15,7 +15,7 @@ struct TooltipData
 class ENGINE_DLL TooltipManager : public Base
 {
 public:
-	explicit TooltipManager(UIManager* owner) :ui(owner) {}
+	explicit TooltipManager(UIManager* owner) :uiMgr(owner) {}
 
 public:
 	void SetWorldTooltip(Object* obj) { worldTip.obj = obj; }
@@ -33,7 +33,7 @@ public:
 	void Free() override {}
 
 private:
-	UIManager* ui = nullptr;
+	UIManager* uiMgr = nullptr;
 	
 	TooltipData worldTip;
 	TooltipData invTip;

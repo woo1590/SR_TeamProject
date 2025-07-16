@@ -12,7 +12,8 @@ public:
         ATTACK,
         SHOOT,
         DEAD,
-        REVIVE
+        REVIVE,
+        INTERACT,
     };
     enum class ePlayerBone :int
     {
@@ -80,13 +81,15 @@ private:
     void CheckStateRoll(_float dt);
     void CheckDead();
 
+    void InteractWithNPC(Object* obj);
+
     void UpdateIdle(_float dt);
     void UpdateWalk(_float dt);
     void UpdateRoll(_float dt);
     void UpdateAttack(_float dt);
     void UpdateShoot(_float dt);
     void UpdateDead(_float dt);
-    void UpdateRevive(_float dt);
+    void UpdateRevive(_float dt); 
 
     void SaveStartRotation();
     void SetUpFirstAttackPhaseRotations();
@@ -150,4 +153,8 @@ private:
 
     std::unordered_map<std::pair<int, int>, PhaseRotation, PairHash> PhaseRotations;
     std::unordered_map<std::string, _vec3> itemBaseRotOffset;
+
+    // ----------------------
+    const float interactRange = 5.f;
+    bool moveToInteract = false;
 };

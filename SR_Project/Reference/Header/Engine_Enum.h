@@ -97,6 +97,8 @@ namespace Engine
 		DmgText,
 		DeathText,
 		DeathCount,
+		MineCraftFont,
+		CookieRunFont,
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)
@@ -152,7 +154,8 @@ namespace Engine
 		LAYER_PLAYER		= 1 << 1,
 		LAYER_ENEMY			= 1 << 2,
 		LAYER_PROJECTILE	= 1 << 3,
-		LAYER_TRRIGER		= 1 << 4
+		LAYER_TRRIGER		= 1 << 4,
+		LAYER_NPC           = 1 << 5,
 	};
 }
 #endif // Engine_Enum_h__

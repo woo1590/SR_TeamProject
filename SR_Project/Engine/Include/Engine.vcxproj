@@ -238,6 +238,8 @@
     <ClInclude Include="..\Header\CoolDownComponent.h" />
     <ClInclude Include="..\Header\CubeMesh.h" />
     <ClInclude Include="..\Header\DecoratorNode.h" />
+    <ClInclude Include="..\Header\DialogComponent.h" />
+    <ClInclude Include="..\Header\DialogManager.h" />
     <ClInclude Include="..\Header\DynamicBlock.h" />
     <ClInclude Include="..\Header\Emitter.h" />
     <ClInclude Include="..\Header\EngineCore.h" />
@@ -389,6 +391,8 @@
     <ClCompile Include="..\Code\CoolDownComponent.cpp" />
     <ClCompile Include="..\Code\CubeMesh.cpp" />
     <ClCompile Include="..\Code\DecoratorNode.cpp" />
+    <ClCompile Include="..\Code\DialogComponent.cpp" />
+    <ClCompile Include="..\Code\DialogManager.cpp" />
     <ClCompile Include="..\Code\DynamicBlock.cpp" />
     <ClCompile Include="..\Code\Emitter.cpp" />
     <ClCompile Include="..\Code\EngineCore.cpp" />
