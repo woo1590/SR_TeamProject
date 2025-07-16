@@ -1,5 +1,6 @@
 #pragma once
 #include "Base.h"
+#include "CollisionSystem.h"
 
 BEGIN(Engine)
 
@@ -17,7 +18,7 @@ public:
     HRESULT Ready_StaticGrid();
 
     int WorldToCell(_float v);
-    //HitInfo RayCast(Ray ray);
+    HitInfo RayCast(Ray ray);
     CollisionComponent* QueryCell(int cx, int cy, int cz);
     void InsertBlock();
 

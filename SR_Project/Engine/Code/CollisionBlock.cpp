@@ -34,7 +34,6 @@ HRESULT CollisionBlock::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 
 	auto collision = AddComponent<CollisionComponent>();
-	GetScene()->GetCollisionSystem()->RegisterCollision(collision);
 	collision->SetLayer(LAYER_DEFAULT);
 	collision->SetMask(LAYER_PLAYER | LAYER_ENEMY | LAYER_PROJECTILE | LAYER_TRRIGER);
 	collision->SetDebugMode(false);

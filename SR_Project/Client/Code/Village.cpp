@@ -191,7 +191,7 @@ void Village::Update(_float dt)
 		{
 			auto effect = DeadEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
 			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
-			effect->SetDeadTime(2.f);
+			effect->SetDeadTime(1.f);
 			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);
 		}
 	}

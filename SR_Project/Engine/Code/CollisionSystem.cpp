@@ -113,12 +113,19 @@ void CollisionSystem::UnRegisterCollision(CollisionComponent* collision)
 
 HitInfo CollisionSystem::Raycast(Ray ray)
 {
-	HitInfo hit;
+	HitInfo res;
 
 	for (const auto& collision : Collisions)
-		collision->RayIntersectAABB(ray, hit);
+	{
+		collision->RayIntersectAABB(ray, res);
+	}
 
-	return hit;
+	return res;
+}
+
+void CollisionSystem::ThreadWork(Ray ray, int startIdx, int endIdx, HitInfo& res)
+{
+	
 }
 
 void CollisionSystem::Free()

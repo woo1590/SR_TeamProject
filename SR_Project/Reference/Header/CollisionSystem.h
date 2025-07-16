@@ -32,7 +32,7 @@ public:
     void UnRegisterCollision(CollisionComponent* collision);
 
     HitInfo Raycast(Ray ray);
-
+    void ThreadWork(Ray ray, int startIdx, int endIdx, HitInfo& res);
 private:
     void Free()override;
     std::vector<CollisionComponent*> Collisions;
