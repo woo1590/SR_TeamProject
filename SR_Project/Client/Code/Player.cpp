@@ -255,7 +255,7 @@ void Player::PickingTerrain()
         }
 
         if ((State == ePlayerState::IDLE || State == ePlayerState::WALK) &&
-            hit.Component->GetLayer() == CollisionLayer::LAYER_NPC)
+            hit.IsHit && hit.Component->GetLayer() == CollisionLayer::LAYER_NPC)
         {
             if (State == ePlayerState::IDLE)
             {
