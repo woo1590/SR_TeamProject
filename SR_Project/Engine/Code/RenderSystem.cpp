@@ -154,20 +154,6 @@ void RenderSystem::UIPass()
 	stable_sort(uiList.begin(), uiList.end(), [](auto* a, auto* b)
 		{return static_cast<UIRenderer*>(a)->GetLayer() < static_cast<UIRenderer*>(b)->GetLayer(); });
 
-	_matrix originProj;
-	Device->GetTransform(D3DTS_PROJECTION, &originProj);
-
-	float width = (float)WINCX;
-	float height = (float)WINCY;
-	_matrix ortho;
-	D3DXMatrixOrthoOffCenterLH(&ortho, 0, width, height, 0, 0.1f, 1.f);
-
-	_matrix identity;
-	D3DXMatrixIdentity(&identity);
-	Device->SetTransform(D3DTS_WORLD, &identity);
-	Device->SetTransform(D3DTS_VIEW, &identity);
-	Device->SetTransform(D3DTS_PROJECTION, &ortho);
-
 	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -199,7 +185,6 @@ void RenderSystem::UIPass()
 	
 	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	Device->SetTransform(D3DTS_PROJECTION, &originProj);
 }
 
 void RenderSystem::DebugPass()

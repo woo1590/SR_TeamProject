@@ -56,7 +56,7 @@ void Npc::InitTransform()
 {
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
-    transform->SetPosition(60.f, 1100.f, 60.f);
+    transform->SetPosition(60.f, 500.f, 60.f);
     transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f));
     SetMaterial("VillageBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetScale(_vec3(8.f * Scale, 16.f * Scale, 4.f * Scale), "Body");
@@ -116,8 +116,7 @@ void Npc::InitDialog()
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::InProgress; },
         {
             L"제가 장비 장착하라고 했잖아요. 까먹으셨어요? (인벤토리 버튼 눌러보세요!)"
-        },
-        []() {}},
+        }},
         // EquipItem 완료 -> killMonsters 시작
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::Completed &&
         quest->GetStatus(QuestType::KillMonsters) == QuestStatus::NotStarted; },
@@ -129,8 +128,7 @@ void Npc::InitDialog()
         {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::InProgress; },
         {
             L"몬스터 세 마리만 잡아주면 돼요! 힘내세요!"
-        },
-        []() {}},
+        }},
         // KillMonsters 완료 -> ReachVillage 시작
         {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::Completed
         && quest->GetStatus(QuestType::ReachVillage) == QuestStatus::NotStarted; },
@@ -150,7 +148,7 @@ void Npc::Talk(DialogManager* dialogMgr)
             auto* dialog = GetComponent<DialogComponent>();
 
             dialog->SetDialogLines(set.lines);
-            dialog->SetSpeakerName(L"우석");
+            dialog->SetSpeakerName(L"츄쨩");
 
             if (set.onFinish)
                 dialog->SetOnFinish(set.onFinish);

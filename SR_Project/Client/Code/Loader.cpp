@@ -331,6 +331,12 @@ HRESULT Loader::load_UIResources()
 		{L"panel",              eUI},
 		{L"atri",               eUI},
 		{L"angry",              eUI},
+		{L"inventory_spear",    eUI},
+		{L"inventory_crossbow", eUI},
+		{L"inventory_boost",    eUI},
+		{L"inventory_ghostcloak",eUI},
+
+
 	};
 
 	static const unordered_map<wstring, int> uiLayers = {
@@ -420,6 +426,10 @@ HRESULT Loader::load_UIResources()
 		{L"panel",              10},
 		{L"atri",                9},
 		{L"angry",              10},
+		{L"inventory_spear",     5},
+		{L"inventory_crossbow",  5},
+		{L"inventory_boost",     5},
+		{L"inventory_ghostcloak",5},
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

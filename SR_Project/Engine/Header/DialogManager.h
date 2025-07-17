@@ -34,7 +34,7 @@ private:
 	wstring fullLineText;
 	wstring displayedText;
 	float typingTimer = 0.f;
-	float typingSpeed = 0.05f;
+	float typingSpeed = 0.04f;
 	bool isLineFullyDisplayed = false;
 
 	float afterDialogTimer = 0.f;

@@ -30,8 +30,12 @@ void DialogManager::SkipOrNext()
 		isLineFullyDisplayed = true;
 
 		font->ClearText();
-		RECT dialongRect = {200, 550, 1200, 700};
+		RECT dialongRect = {200, 560, 1200, 700};
 		font->AddText(displayedText, dialongRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+
+		RECT nameRect = {200, 500, 600, 540};
+		font->AddText(curDialog->GetSpeakerName(), nameRect,Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+
 		return;
 	}
 	
@@ -112,11 +116,4 @@ void DialogManager::Update(float dt)
 			}
 		}
 	}
-
-	//if (questInited)
-	//{
-	//	afterDialogTimer += dt;
-	//	if (afterDialogTimer >= 1.f)
-	//		questInited = false;
-	//}
 }

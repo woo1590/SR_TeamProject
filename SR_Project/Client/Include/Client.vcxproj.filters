@@ -70,9 +70,6 @@
     <Filter Include="02. Object\CameraActor\RailCam">
       <UniqueIdentifier>{038db0cb-ea10-4b61-9f5a-3c46340a7892}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIDebugObj">
-      <UniqueIdentifier>{82419094-d92a-4d7d-8f56-5b4d4c56fcfe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Monster\BTNode\Action">
       <UniqueIdentifier>{039f5f30-0e5b-4c77-a75e-6c7120cc6b01}</UniqueIdentifier>
     </Filter>
@@ -453,10 +450,10 @@
     </Filter>
     <Filter Include="02. Object\Monster\BTNode\Decorator\Boss\Ender">
       <UniqueIdentifier>{6cc6603c-8449-4dd4-971a-899dd3b70dde}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Effect\DeadEffect">
       <UniqueIdentifier>{fefade3a-c97c-4d08-b277-3d7ec983d93d}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\NpcUI">
       <UniqueIdentifier>{4335755d-5b8b-4cf8-9064-7f2aae143640}</UniqueIdentifier>
     </Filter>
@@ -477,6 +474,21 @@
     </Filter>
     <Filter Include="01. Scene\UIBuilder\InventoryUIBuilder">
       <UniqueIdentifier>{a6970c45-6bb9-4dbf-982e-928b72f75291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\07. SpearItem">
+      <UniqueIdentifier>{8ba72f24-f310-4eaa-9353-114af7b61c04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\08. CrossBowItem">
+      <UniqueIdentifier>{82873664-4697-47fb-9fb4-0b5e3583d8eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\04. BoostItem">
+      <UniqueIdentifier>{4a039eb1-64fb-4414-8908-03b2c57e1705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIDebugObj">
+      <UniqueIdentifier>{82419094-d92a-4d7d-8f56-5b4d4c56fcfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\09. GhostCloakItem">
+      <UniqueIdentifier>{dd75cd22-1e98-46eb-b211-ba485a4c4023}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -857,9 +869,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\UILoader.h">
       <Filter>02. Object\UIObj\UILoader</Filter>
-    </ClInclude>  
-    <ClInclude Include="..\Header\ExpBarBack.h" />
-    <ClInclude Include="..\Header\ExpBarFront.h" />
+    </ClInclude>
     <ClInclude Include="..\Header\UILoader.h" />
     <ClInclude Include="..\Header\DialogObj.h">
       <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogObj</Filter>
@@ -905,12 +915,30 @@
     </ClInclude>
     <ClInclude Include="..\Header\IsRandomMoveCheck.h">
       <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\DeadEffect.h">
       <Filter>02. Object\Effect\DeadEffect</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\Header\UILoader.h">
       <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpearItem.h">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\07. SpearItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CrossBowItem.h">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\08. CrossBowItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarBack.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExpBarFront.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BoostItem.h">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\04. BoostItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GhostCloakItem.h">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\09. GhostCloakItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1279,9 +1307,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp">
       <Filter>02. Object\UIObj\UILoader</Filter>
-    </ClCompile>  
-    <ClCompile Include="..\Code\ExpBarBack.cpp" />
-    <ClCompile Include="..\Code\ExpBarFront.cpp" />
+    </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp" />
     <ClCompile Include="..\Code\DialogObj.cpp">
       <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogObj</Filter>
@@ -1321,12 +1347,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\IsRandomMoveCheck.cpp">
       <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\DeadEffect.cpp">
       <Filter>02. Object\Effect\DeadEffect</Filter>
-    </ClCompile>   
+    </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp">
       <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpearItem.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\07. SpearItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CrossBowItem.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\08. CrossBowItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarBack.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExpBarFront.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarFront</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BoostItem.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\04. BoostItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GhostCloakItem.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\09. GhostCloakItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
