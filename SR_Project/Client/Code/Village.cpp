@@ -123,8 +123,8 @@ void Village::Load()
 
 	/*-------------------------Create Objects----------------------------*/
 	{
-		BlockMgr->LoadDB("VillageMap");
-		BlockMgr->LoadChunk("VillageMap");
+		BlockMgr->LoadDB("Stage1");
+		BlockMgr->LoadChunk("Stage1");
 		Grid->InsertBlock();
 
 		UILoader loader;
@@ -133,7 +133,7 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, //ObjectType::BackGroundEffect));
 
-		player->GetComponent<TransformComponent>()->SetPosition(60.f, 500.f, 60.f);
+		player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));

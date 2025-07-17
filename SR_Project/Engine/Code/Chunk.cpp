@@ -140,7 +140,7 @@ void Chunk::BuildCollisionBlock()
             return Blocks[x][y][z].Type == StaticBlockType::Air;
         };
 
-    for (int y = 0; y < 20; ++y)
+    for (int y = 0; y <CHUNK_HEIGHT; ++y)
     {
         for (int z = 0; z < CHUNK_SIZE; ++z)
         {
