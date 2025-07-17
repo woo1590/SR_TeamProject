@@ -22,6 +22,9 @@ void Effect::Update(_float dt)
 	{
 		if (deadTime)
 			timer += dt;
+
+		if (timer >= deadTime)
+			SetDead();
 	}
 	else
 	{

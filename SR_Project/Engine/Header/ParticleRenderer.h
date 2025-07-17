@@ -18,6 +18,7 @@ public:
     void Render()override;
 
     void SetMaterial(const std::string& key);
+    Material* GetMaterial()const { return mtrl; }
 private:
     LPDIRECT3DVERTEXBUFFER9 VB = nullptr;
     LPDIRECT3DVERTEXDECLARATION9 Decl = nullptr;

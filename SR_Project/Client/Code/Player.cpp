@@ -150,12 +150,18 @@ void Player::PickingTerrain()
     auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
     auto mainCam = curScene->GetCameraManager()->GetMainCamera();
     auto collision = curScene->GetCollisionSystem();
+    auto grid = curScene->GetStaticGrid();
 
     if (input->IsKeyPressed(Z) || input->IsKeyPressed(LBUTTON))
     {
         Ray ray = mainCam->ScreenPointRay();
-        HitInfo hit = collision->Raycast(ray);
 
+        //////////////////////////////////////////////Picking Change
+        HitInfo hit;
+        HitInfo objectHit = collision->Raycast(ray);
+        HitInfo terrainHit = grid->RayCast(ray);
+        hit = (objectHit.Distance <= terrainHit.Distance) ? objectHit : terrainHit;
+        //////////////////////////////////////////////
         if (hit.IsHit)
         {
             if (input->IsKeyPressed(Z) || hit.Component->GetLayer() == LAYER_ENEMY    &&
@@ -220,7 +226,12 @@ void Player::PickingTerrain()
     if (input->IsKeyPressed(RBUTTON) && Bones["LHand"] != nullptr)
     {
         Ray ray = mainCam->ScreenPointRay();
-        HitInfo hit = collision->Raycast(ray);
+        //////////////////////////////////////////////Picking Change
+        HitInfo hit;
+        HitInfo objectHit = collision->Raycast(ray);
+        HitInfo terrainHit = grid->RayCast(ray);
+        hit = (objectHit.Distance <= terrainHit.Distance) ? objectHit : terrainHit;
+        //////////////////////////////////////////////
 
         if (hit.IsHit)
         {
@@ -1544,12 +1555,18 @@ void Player::UpdateShoot(_float dt) {
             auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
             auto mainCam = curScene->GetCameraManager()->GetMainCamera();
             auto collision = curScene->GetCollisionSystem();
+            auto grid = curScene->GetStaticGrid();
 
             fProgress = phaseVec.at(0);
             chargedTime += dt;
             AttackTime -= dt;
             Ray ray = mainCam->ScreenPointRay();
-            HitInfo hit = collision->Raycast(ray);
+            //////////////////////////////////////////////Picking Change
+            HitInfo hit;
+            HitInfo objectHit = collision->Raycast(ray);
+            HitInfo terrainHit = grid->RayCast(ray);
+            hit = (objectHit.Distance <= terrainHit.Distance) ? objectHit : terrainHit;
+            //////////////////////////////////////////////
 
             if (hit.IsHit)
             {

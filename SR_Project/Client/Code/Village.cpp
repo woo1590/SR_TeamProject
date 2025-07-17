@@ -57,6 +57,7 @@
 #include "Npc.h"
 #include "Ender.h"
 #include "Spear.h"
+#include "DeadEffect.h"
 
 //component
 #include "TransformComponent.h"
@@ -185,6 +186,14 @@ void Village::Update(_float dt)
 
 		if (Input->IsKeyPressed(NUM0))
 			EngineCore::GetInstance()->SetDebugMode(true);
+
+		if (Input->IsKeyPressed(NUM3))
+		{
+			auto effect = DeadEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
+			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
+			effect->SetDeadTime(1.f);
+			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);
+		}
 	}
 }
 

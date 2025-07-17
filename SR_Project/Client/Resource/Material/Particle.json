@@ -24,6 +24,9 @@
     "Hit_Mtrl":{
       "fx":"BloodParticleShader",
       "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
+    },
+
+    "Dead_Mtrl":{
     }
   }
 

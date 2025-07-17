@@ -237,6 +237,7 @@ HRESULT Loader::Load_Village()
 	{
 		resource->LoadSprite("Explosion", 90);
 		resource->LoadSprite("Walk", 7);
+		resource->LoadSprite("Dead", 8);
 	}
 	return S_OK;
 }

@@ -41,6 +41,77 @@ int StaticGrid::WorldToCell(_float v)
 	return static_cast<int>(std::floorf(v / CELL_SIZE));
 }
 
+HitInfo StaticGrid::RayCast(Ray ray)
+{
+    HitInfo hit; 
+
+    int cx = WorldToCell(ray.Origin.x);
+    int cy = WorldToCell(ray.Origin.y);
+    int cz = WorldToCell(ray.Origin.z);
+
+    int stepX = (ray.Direction.x >= 0) ? 1 : -1;
+    int stepY = (ray.Direction.y >= 0) ? 1 : -1;
+    int stepZ = (ray.Direction.z >= 0) ? 1 : -1;
+
+    float deltaX = (ray.Direction.x == 0) ? FLT_MAX : std::abs(CELL_SIZE / ray.Direction.x);
+    float deltaY = (ray.Direction.y == 0) ? FLT_MAX : std::abs(CELL_SIZE / ray.Direction.y);
+    float deltaZ = (ray.Direction.z == 0) ? FLT_MAX : std::abs(CELL_SIZE / ray.Direction.z);
+
+    float nextBoundaryX = (stepX > 0) ? (cx + 1) * CELL_SIZE : cx * CELL_SIZE;
+    float nextBoundaryY = (stepY > 0) ? (cy + 1) * CELL_SIZE : cy * CELL_SIZE;
+    float nextBoundaryZ = (stepZ > 0) ? (cz + 1) * CELL_SIZE : cz * CELL_SIZE;
+
+    float maxX = (ray.Direction.x == 0) ? FLT_MAX : (nextBoundaryX - ray.Origin.x) / ray.Direction.x;
+    float maxY = (ray.Direction.y == 0) ? FLT_MAX : (nextBoundaryY - ray.Origin.y) / ray.Direction.y;
+    float maxZ = (ray.Direction.z == 0) ? FLT_MAX : (nextBoundaryZ - ray.Origin.z) / ray.Direction.z;
+
+    for (int i = 0; i < 1000; ++i)
+    {
+        CollisionComponent* block = QueryCell(cx, cy, cz);
+        if (block)
+        {
+            block->RayIntersectAABB(ray, hit);
+
+            float min = (std::min)(maxX, (std::min)(maxY, maxZ));
+
+            if (hit.IsHit && hit.Distance < min)
+            {
+                return hit;
+            }
+        }
+
+        if (maxX < maxY)
+        {
+            if (maxX < maxZ)
+            {
+                cx += stepX;
+                maxX += deltaX;
+            }
+            else
+            {
+                cz += stepZ;
+                maxZ += deltaZ;
+            }
+        }
+        else
+        {
+            if (maxY < maxZ)
+            {
+                cy += stepY;
+                maxY += deltaY;
+            }
+            else
+            {
+                cz += stepZ;
+                maxZ += deltaZ;
+            }
+        }
+    }
+
+    return hit;
+
+}
+
 void StaticGrid::InsertBlock()
 {
 	Cells.clear();
