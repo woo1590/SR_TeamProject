@@ -47,9 +47,9 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto skillInfo = AddComponent<InfoComponent<SkillInfo>>();
     auto ii = skillInfo->GetInfo();
     ii.level = 1;
-    ii.MaxTarget = 4;
+    ii.MaxTarget = 3;
     ii.DamagePercent = 0.5f;
-    ii.SkillRange = 200.f;
+    ii.SkillRange = 20.f;
     skillInfo->SetInfo(ii);
 
 
