@@ -20,7 +20,8 @@ HRESULT UIManager::Ready_UIManager()
 	tooltip = new TooltipManager(this);
 	dialog = new DialogManager(this);
 
-	quest->InitQuests(); 
+	quest->InitQuests();
+
 	return  S_OK;
 }
 

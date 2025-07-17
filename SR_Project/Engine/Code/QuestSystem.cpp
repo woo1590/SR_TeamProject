@@ -9,7 +9,7 @@
 #include "Scene.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
-#include "RenderSystem.h"
+#include "RenderSystem.h" 
 
 namespace 
 {
@@ -30,7 +30,7 @@ void QuestSystem::InitQuests()
         QuestType::KillMonsters, QuestStatus::NotStarted, 0, 3},
         
         {L"마을로 이동",L"이제 마을로 돌아가주세요~! 다들 제현님 기다리고 있어요~",
-        QuestType::ReachVillage, QuestStatus::NotStarted, 0, 1},
+        QuestType::ReachVillage, QuestStatus::NotStarted, 0, 1}, 
     };
 }
 
@@ -44,7 +44,6 @@ void QuestSystem::AcceptQuest(QuestType type)
 void QuestSystem::AcceptQuestAtIdx(int i)
 {
     if (i < 0 || i >= (int)quests.size()) return;
-
     auto& quest = quests[i];
     if (quest.status != QuestStatus::NotStarted) return;
 
@@ -78,7 +77,7 @@ void QuestSystem::ReportQuestProgress(QuestType type, int amount)
     }
 }
 
-void QuestSystem::Show(const QuestInfo& q, float alpha, FontType font)
+void QuestSystem::Show(const QuestInfo& q, float alpha, FontType font) 
 {
     if (!textObj) return;
     auto* f = textObj->GetComponent<FontComponent>();
@@ -91,16 +90,10 @@ void QuestSystem::Show(const QuestInfo& q, float alpha, FontType font)
     bool center = (uiPhase.state == QuestUIState::CenterFadeOut);
 
     wstring tag;
-    if (center) 
-        tag = L"(시작가능)";
-    else 
+    if (!center)
     {
-        switch (q.status)
-        {
-        case QuestStatus::NotStarted:  tag = L"(시작가능)"; break;
-        case QuestStatus::InProgress:  tag = L"(진행중)";   break;
-        case QuestStatus::Completed:   tag = L"(완료)";     break;
-        }
+        if (q.status == QuestStatus::InProgress)  tag = L"(진행중)";
+        else if (q.status == QuestStatus::Completed) tag = L"(완료)";
     }
 
     wstring title = q.title + L" " + tag;
@@ -123,7 +116,6 @@ void QuestSystem::ChangeState(QuestUIState nextState)
 void QuestSystem::Update(float dt)
 {
     if (!textObj || activeIdx < 0 || activeIdx >= quests.size()) return;
-
     auto& quest = quests[activeIdx];
     uiPhase.t += dt;
 
@@ -132,10 +124,7 @@ void QuestSystem::Update(float dt)
     case QuestUIState::CenterFadeOut:
         Show(quest, clamp(1.f - uiPhase.t / centerDur, 0.f, 1.f), FontType::MineCraftFont);
         if (uiPhase.t >= centerDur)
-        {
-            quest.status = QuestStatus::InProgress;
             ChangeState(QuestUIState::RightFadeIn);
-        }
         break;
 
     case QuestUIState::RightFadeIn:

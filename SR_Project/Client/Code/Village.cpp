@@ -115,7 +115,7 @@ void Village::Load()
 
 	/*-------------------------Create Objects----------------------------*/
 	{
-		BlockMgr->LoadChunk("Plain");
+		BlockMgr->LoadChunk("VillageMap");
 		Grid->InsertBlock();
 
 		UILoader loader;

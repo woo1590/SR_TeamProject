@@ -116,7 +116,8 @@ void Npc::InitDialog()
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::InProgress; },
         {
             L"제가 장비 장착하라고 했잖아요. 까먹으셨어요? (인벤토리 버튼 눌러보세요!)"
-        }},
+        },
+        []() {}},
         // EquipItem 완료 -> killMonsters 시작
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::Completed &&
         quest->GetStatus(QuestType::KillMonsters) == QuestStatus::NotStarted; },
@@ -128,7 +129,8 @@ void Npc::InitDialog()
         {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::InProgress; },
         {
             L"몬스터 세 마리만 잡아주면 돼요! 힘내세요!"
-        }},
+        },
+        []() {}},
         // KillMonsters 완료 -> ReachVillage 시작
         {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::Completed
         && quest->GetStatus(QuestType::ReachVillage) == QuestStatus::NotStarted; },

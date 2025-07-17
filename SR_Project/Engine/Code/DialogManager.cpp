@@ -113,16 +113,10 @@ void DialogManager::Update(float dt)
 		}
 	}
 
-	if (questInited)
-	{
-		afterDialogTimer += dt;
-		if (afterDialogTimer >= 1.f)
-		{
-			questInited = false;
-
-			auto* quest = uiMgr->GetQuestSystem();
-			if (quest)
-				quest->InitQuests();
-		}
-	}
+	//if (questInited)
+	//{
+	//	afterDialogTimer += dt;
+	//	if (afterDialogTimer >= 1.f)
+	//		questInited = false;
+	//}
 }
