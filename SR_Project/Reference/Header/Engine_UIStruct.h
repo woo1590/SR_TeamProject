@@ -18,14 +18,33 @@ namespace Engine
 	enum class Rarity { Default, Rare};
 
 	enum class SlotItemType {Any, MeleeWeapon, Armor, RangeWeapon, Potion};
+
+	struct ItemStat
+	{
+		std::wstring description; // "마비 지속시간"
+		std::wstring unit;  // ex) "초", "%"
+		std::wstring iconKey;    // 스탯 옆에 표시될 아이콘의 텍스처 키
+	};
+
+	struct TooltipLine
+	{
+		std::wstring text;
+		FontType fontType;
+		Color color;
+		std::wstring iconkey;
+	};
+	
 	struct ItemInfo 
 	{
 		std::wstring name;
 		std::wstring renderKey;
 		ItemType type;
 		Rarity rarity;
-		int value;
-		std::wstring description;
+		float value;
+
+		std::wstring flavorText;   // 주 효과 설명
+		std::vector<ItemStat> stats;
+		std::wstring bgText;    // 배경이야기 
 	};
 
 	struct EnemyInfo

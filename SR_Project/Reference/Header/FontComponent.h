@@ -27,6 +27,8 @@ public:
 	void AddText(const wstring& text, const RECT& rect, D3DXCOLOR color,
 		DWORD format = DT_LEFT | DT_TOP, FontType fontType = FontType::Regular);
 
+	RECT MeasureText(FontType fontType, const wstring& text);
+
 	void Render();
 	void ClearText() { entries.clear(); }
 	void SetVisible(bool visible) { isVisible = visible; }
@@ -39,7 +41,7 @@ public:
 		pivotFmt = pivot;
 	}
 
-private:
+public:
 	HRESULT CreateFontResource();
 	ID3DXFont* GetFont(FontType type) const;
 

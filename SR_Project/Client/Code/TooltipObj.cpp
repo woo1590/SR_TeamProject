@@ -2,6 +2,7 @@
 #include "TooltipObj.h"
 #include "TransformComponent.h"
 #include "InfoComponent.h"
+#include "TooltipBuilder.h"
 
 TooltipObj* TooltipObj::Create(ObjectManager* owner)
 {
@@ -31,9 +32,12 @@ void TooltipObj::Update(float dt)
 	auto* selectedSlot = inventory->GetSelectedSlot();
 	if (!selectedSlot || !selectedSlot->HasItem())
 	{
-		font->ClearText();
-		renderer->SetVisible(false);
-		prevSlot = nullptr;
+		if (prevSlot != nullptr)
+		{
+			font->ClearText();
+			renderer->SetVisible(false);
+			prevSlot = nullptr;
+		}
 		return;
 	}
 
@@ -49,32 +53,29 @@ void TooltipObj::Update(float dt)
 
 	font->ClearText();
 
-	RECT nameRect = {1010, 290, 1280, 440};
-	RECT valueRect = {1010, 360, 1280, 570};
-	RECT descRect = {1010, 410, 1280, 730};
+	vector<TooltipLine> lineToRender = TooltipBuilder::BuildTooltip(info);
 
-	font->AddText(info.name, nameRect, Color::White, DT_LEFT, FontType::Title);
+	constexpr float startX = 1010.f;
+	constexpr float startY = 290.f;
+	constexpr float maxWidth = 270.f;
+	constexpr float lineSpacing = 10.f;
+	float curY = startY;
 
-	switch (info.type)
+	for (const auto& line : lineToRender)
 	{
-	case ItemType::Sword:
-		font->AddText(L"근접 공격력:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
-		break;
-	case ItemType::Armor:
-		font->AddText(L"추가 체력: + " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
-		break;
-	case ItemType::Potion:
-		font->AddText(to_wstring(info.value) + L" 초 쿨타임", valueRect, Color::White, DT_LEFT, FontType::Large);
-		break;
-	case ItemType::Bow:
-		font->AddText(L"원거리 공격력:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
-		break;
-	default:
-		font->AddText(L"아이템 수치:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
-		break;
-	}
+		RECT measuredRect = font->MeasureText(line.fontType, line.text);
+		long lineHeight = measuredRect.bottom - measuredRect.top;
 
-	font->AddText(info.description, descRect, Color::White, DT_WORDBREAK, FontType::Title);
+		RECT renderRect;
+		renderRect.left = static_cast<LONG>(startX);
+		renderRect.top = static_cast<LONG>(curY);
+		renderRect.right = static_cast<LONG>(startX + maxWidth);
+		renderRect.bottom = static_cast<LONG>(curY + lineHeight);
+
+		font->AddText(line.text, renderRect, line.color, DT_LEFT | DT_TOP | DT_WORDBREAK, line.fontType);
+
+		curY += lineHeight + lineSpacing;
+	}
 
 	renderer->SetTexture(info.renderKey); 
 	renderer->SetScale(0.5f, 0.5f);

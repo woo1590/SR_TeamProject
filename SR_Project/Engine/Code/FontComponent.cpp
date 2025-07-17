@@ -99,6 +99,16 @@ void FontComponent::AddText(const wstring& text, const RECT& rect, D3DXCOLOR col
 	entries.push_back(move(entry));
 }
 
+RECT FontComponent::MeasureText(FontType fontType, const wstring& text)
+{
+	RECT rect{};
+	ID3DXFont* font = GetFont(fontType);
+
+	if (font)
+		font->DrawTextW(nullptr, text.c_str(), -1, &rect, DT_CALCRECT, 0);
+	return rect;
+}
+
 void FontComponent::Render()
 {
 	if (!isVisible || entries.empty()) return;
@@ -132,7 +142,8 @@ void FontComponent::Render()
 				rc.bottom = rc.top + h;
 			}
 		}
-		auto c = entry.color;  c.a *= globalAlpha;
+		auto c = entry.color; 
+		c.a *= globalAlpha;
 		font->DrawTextW(nullptr, entry.text.c_str(), -1, &rc,
 			entry.format, c);
 	}
