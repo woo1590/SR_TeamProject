@@ -328,7 +328,9 @@ HRESULT Loader::load_UIResources()
 		{L"particle",           eUI},
 		{L"player_deathui",     eUI},
 		{L"deathframe",         eUI},
-
+		{L"panel",              eUI},
+		{L"atri",               eUI},
+		{L"angry",              eUI},
 	};
 
 	static const unordered_map<wstring, int> uiLayers = {
@@ -415,6 +417,9 @@ HRESULT Loader::load_UIResources()
 		{L"particle",            6},
 		{L"player_deathui",     -1},
 		{L"deathframe",          0},
+		{L"panel",              10},
+		{L"atri",                9},
+		{L"angry",              10},
 	};
 
 	auto rm = EngineCore::GetInstance()->GetResourceManager();

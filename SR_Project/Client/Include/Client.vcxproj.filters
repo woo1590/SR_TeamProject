@@ -124,12 +124,6 @@
     <Filter Include="02. Object\Monster\RedGolem\Projectile">
       <UniqueIdentifier>{14456796-8f96-4088-a27a-aa13642bd049}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\UIManager">
-      <UniqueIdentifier>{97af0672-8d0a-43fd-96df-c5a46fe31bd8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\UIManager\InventoryUIBuilder">
-      <UniqueIdentifier>{a6970c45-6bb9-4dbf-982e-928b72f75291}</UniqueIdentifier>
-    </Filter>
     <Filter Include="99. Etc\Shader/Fx">
       <UniqueIdentifier>{23c39b64-fa09-4d84-bbba-49cff170b28d}</UniqueIdentifier>
     </Filter>
@@ -180,9 +174,6 @@
     </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame">
       <UniqueIdentifier>{1f730721-229e-48ac-8939-4c5a086f721f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\QuestPanel">
-      <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame\QuestTextObj">
       <UniqueIdentifier>{91e2b8b4-72bd-44be-8e7d-a8269d158f4f}</UniqueIdentifier>
@@ -465,6 +456,27 @@
     </Filter>  
     <Filter Include="02. Object\Effect\DeadEffect">
       <UniqueIdentifier>{fefade3a-c97c-4d08-b277-3d7ec983d93d}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI">
+      <UniqueIdentifier>{4335755d-5b8b-4cf8-9064-7f2aae143640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\DialogObj">
+      <UniqueIdentifier>{5fbf764f-8ea2-4887-9314-255f63f940bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\Sil">
+      <UniqueIdentifier>{93571a88-d7dd-46ce-9278-99e266b4bc73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\QuestPanel">
+      <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\Angry">
+      <UniqueIdentifier>{7498f894-0231-4220-9013-7a03e1b0d652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\UIBuilder">
+      <UniqueIdentifier>{97af0672-8d0a-43fd-96df-c5a46fe31bd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\UIBuilder\InventoryUIBuilder">
+      <UniqueIdentifier>{a6970c45-6bb9-4dbf-982e-928b72f75291}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -679,7 +691,7 @@
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\05. FishingItem</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuestPanel.h">
-      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\QuestPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\QuestTextObj.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestTextObj</Filter>
@@ -760,7 +772,7 @@
       <Filter>02. Object\Spawner\TriggerBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InventoryUIBuilder.h">
-      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
+      <Filter>01. Scene\UIBuilder\InventoryUIBuilder</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\IsTargetClose.h">
       <Filter>02. Object\Monster\BTNode\Decorator\Monster</Filter>
@@ -845,6 +857,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\UILoader.h">
       <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\ExpBarBack.h" />
+    <ClInclude Include="..\Header\ExpBarFront.h" />
+    <ClInclude Include="..\Header\UILoader.h" />
+    <ClInclude Include="..\Header\DialogObj.h">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Atri.h">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Sil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Angry.h">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Angry</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExpBarBack.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarBack</Filter>
@@ -884,6 +908,9 @@
     </ClInclude>  
     <ClInclude Include="..\Header\DeadEffect.h">
       <Filter>02. Object\Effect\DeadEffect</Filter>
+    </ClInclude>    
+    <ClInclude Include="..\Header\UILoader.h">
+      <Filter>02. Object\UIObj\UILoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1068,7 +1095,7 @@
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\ItemSlot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryUIBuilder.cpp">
-      <Filter>01. Scene\UIManager\InventoryUIBuilder</Filter>
+      <Filter>01. Scene\UIBuilder\InventoryUIBuilder</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryEmerald.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\InventoryEmerald</Filter>
@@ -1101,7 +1128,7 @@
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\05. FishingItem</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuestPanel.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestPanel</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\QuestPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\QuestTextObj.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\QuestTextObj</Filter>
@@ -1252,6 +1279,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\UILoader.cpp">
       <Filter>02. Object\UIObj\UILoader</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\ExpBarBack.cpp" />
+    <ClCompile Include="..\Code\ExpBarFront.cpp" />
+    <ClCompile Include="..\Code\UILoader.cpp" />
+    <ClCompile Include="..\Code\DialogObj.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Atri.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Sil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Angry.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Angry</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExpBarBack.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\ExpBar\ExpBarBack</Filter>
@@ -1285,6 +1324,9 @@
     </ClCompile>  
     <ClCompile Include="..\Code\DeadEffect.cpp">
       <Filter>02. Object\Effect\DeadEffect</Filter>
+    </ClCompile>   
+    <ClCompile Include="..\Code\UILoader.cpp">
+      <Filter>02. Object\UIObj\UILoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

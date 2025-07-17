@@ -1,6 +1,9 @@
 #include "EnginePCH.h"
 #include "ItemComponent.h"
 #include "Object.h"
+#include "QuestSystem.h"
+#include "Scene.h"
+#include "uiManager.h"
 
 ItemComponent* ItemComponent::Create(Object* owner)
 {
@@ -26,6 +29,19 @@ void ItemComponent::Use(Object* user)
 
 	if (itemType == ItemType::Potion)
 		playerInfo->AddHp(itemInfo->GetInfo().value);
+}
+
+void ItemComponent::Equip(Object* user)
+{
+	if (onEquipCallback)
+		onEquipCallback(user);
+
+	if (!user)return;
+
+	auto quest = owner->GetScene()->GetUIManager()->GetQuestSystem();
+	if (!quest) return;
+
+	quest->ReportQuestProgress(QuestType::EquipItem, 1);
 }
 
 void ItemComponent::Drop()

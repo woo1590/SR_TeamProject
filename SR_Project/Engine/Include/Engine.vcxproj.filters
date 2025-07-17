@@ -319,6 +319,12 @@
     <Filter Include="06. Object\02. DynamicBlock\Bridge">
       <UniqueIdentifier>{2f87178e-b4b1-4dc2-b258-9f66e73005ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\UIComponent\14. DialogComponent">
+      <UniqueIdentifier>{154245dd-356c-4d74-a8ae-4ae4277c0fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\UIManager\DialogManager">
+      <UniqueIdentifier>{870abea1-b38e-4b43-a8e5-87ab6360975e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -646,6 +652,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\PrefabManager.cpp">
       <Filter>05. Scene Component\PrefabManager\PrefabManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DialogComponent.cpp">
+      <Filter>07. Object Component\UIComponent\14. DialogComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DialogManager.cpp">
+      <Filter>05. Scene Component\UIManager\DialogManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1000,6 +1012,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\PrefabManager.h">
       <Filter>05. Scene Component\PrefabManager\PrefabManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DialogComponent.h">
+      <Filter>07. Object Component\UIComponent\14. DialogComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DialogManager.h">
+      <Filter>05. Scene Component\UIManager\DialogManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -175,6 +175,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Angry.h" />
     <ClInclude Include="..\Header\Arrow.h" />
     <ClInclude Include="..\Header\BabySlime.h" />
     <ClInclude Include="..\Header\BackStep.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="..\Header\DamageText.h" />
     <ClInclude Include="..\Header\DeadEffect.h" />
     <ClInclude Include="..\Header\DeathFrame.h" />
+    <ClInclude Include="..\Header\DialogObj.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Ender.h" />
     <ClInclude Include="..\Header\EnemyHPBarBack.h" />
@@ -219,6 +221,7 @@
     <ClInclude Include="..\Header\QuestTextObj.h" />
     <ClInclude Include="..\Header\Rain.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
+    <ClInclude Include="..\Header\Atri.h" />
     <ClInclude Include="..\Header\Slime.h" />
     <ClInclude Include="..\Header\Spawner.h" />
     <ClInclude Include="..\Header\SpawnTriggerBox.h" />
@@ -313,6 +316,7 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Angry.cpp" />
     <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\BabySlime.cpp" />
     <ClCompile Include="..\Code\BackStep.cpp" />
@@ -326,6 +330,7 @@
     <ClCompile Include="..\Code\DamageText.cpp" />
     <ClCompile Include="..\Code\DeadEffect.cpp" />
     <ClCompile Include="..\Code\DeathFrame.cpp" />
+    <ClCompile Include="..\Code\DialogObj.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Ender.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
@@ -357,6 +362,7 @@
     <ClCompile Include="..\Code\QuestTextObj.cpp" />
     <ClCompile Include="..\Code\Rain.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />
+    <ClCompile Include="..\Code\Atri.cpp" />
     <ClCompile Include="..\Code\Slime.cpp" />
     <ClCompile Include="..\Code\Spawner.cpp" />
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />

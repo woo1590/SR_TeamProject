@@ -50,7 +50,7 @@ public:
 	float globalAlpha = 1.f;
 
 	bool useTransform = false;
-	DWORD pivotFmt = DT_CENTER | DT_VCENTER;
+	DWORD pivotFmt = DT_CENTER | DT_WORDBREAK;
 };
 
 END

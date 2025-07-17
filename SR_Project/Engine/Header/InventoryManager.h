@@ -9,7 +9,7 @@ class ENGINE_DLL InventoryManager: public Base
 {
 public:
 	explicit InventoryManager(UIManager* owner)
-		:ui(owner) {}
+		:uiMgr(owner) {}
 
 public:
 	void Update(float dt);
@@ -19,7 +19,7 @@ public:
 	void DeselectAll();
 	void RightClick();
 
-	UIManager* GetUI() const { return ui; }
+	//UIManager* GetUI() const { return uiMgr; }
 	SlotComponent* GetSelectedSlot() const { return selected; }
 	SlotComponent* FindFirstEmptySlot();
 	void ClearFromQuickSlot(Object* item);
@@ -45,7 +45,7 @@ public:
 	}
 
 private:
-	UIManager* ui = nullptr;
+	UIManager* uiMgr = nullptr;
 	vector<Object*> slotObjs;
 	SlotComponent* selected = nullptr;
 	optional<ItemType> curFilter;

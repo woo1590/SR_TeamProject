@@ -5,6 +5,7 @@ class InventoryManager;
 class UIManager;
 class ObjectManager;
 class TooltipManager;
+class DialogManager;
 END
 
 class UILoader
@@ -22,4 +23,5 @@ private:
     void BuildMiscUI(ObjectManager* objMgr);
     void BuildWorldMapUI(ObjectManager* objMgr);
     void BuildDeathUI(ObjectManager* objMgr);
+    void BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr);
 };

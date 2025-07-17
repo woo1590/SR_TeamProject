@@ -119,7 +119,7 @@ void Village::Load()
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
-	}
+	} 
 
 	/*-------------------------Create Objects----------------------------*/
 	{
@@ -131,7 +131,7 @@ void Village::Load()
 		loader.LoadUI(ObjectMgr);
 
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
+		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, //ObjectType::BackGroundEffect));
 
 		player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
 
@@ -161,6 +161,7 @@ void Village::Load()
 		auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
 		ender->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
 		ObjectMgr->AddObject(ObjectType::Monster, ender);
+		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Neutral));
 	}
 }
 
@@ -169,6 +170,7 @@ void Village::Update(_float dt)
 	ObjectMgr->Update(dt);
 	PhysicsSys->Update(dt);
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
+	uiMgr->Update(dt);
 	//ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
 	
 

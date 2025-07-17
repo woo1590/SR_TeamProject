@@ -44,8 +44,6 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
     if (FAILED(Core->GetFrameManager()->AddFrame(L"Frame60", 60.f)))
         return E_FAIL;
 
-   
-
     /*---------Start Scene----------*/
     Scene* Start = LoadingScene::Create(LOADID::Village);
     Core->GetSceneManager()->SetActiveScene(Start);

@@ -17,6 +17,9 @@
 #include "ProgressBar.h"
 #include "InfoComponent.h"
 #include "ItemComponent.h"
+#include "DialogComponent.h"
+#include "DialogManager.h"
+#include "PanelComponent.h"
 
 /* --- UI Object ------------------------------*/
 #include "Cursor.h"
@@ -68,10 +71,16 @@
 #include "ParticleObj.h"
 #include "HPBarWhite.h"
 
+
 // DeathUI
 #include "PlayerDeathUI.h"
 #include "DeathFrame.h"
 #include "BossIcon.h"
+
+// QuestUI
+#include "QuestPanel.h"
+#include "atri.h" 
+#include "Angry.h"
 
 
 #define ADD(obj) objMgr->AddUIObject(obj)
@@ -82,6 +91,7 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     auto* uiMgr = scene->GetUIManager();
     auto* invMgr = uiMgr->GetInventory();
     auto* tooltipMgr = uiMgr->GetTooltip();
+    auto* dialogMgr = uiMgr->GetDialog();
 
     ADD(Cursor::Create(objMgr));
 
@@ -94,6 +104,7 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     BuildMiscUI(objMgr);
     BuildWorldMapUI(objMgr);
     BuildDeathUI(objMgr);
+    BuildDialogUI(objMgr,dialogMgr);
 
   //  ADD(ParticleObj::Create(objMgr));
 }
@@ -289,7 +300,7 @@ void UILoader::BuildQuestUI(ObjectManager* objMgr)
     ADD(panel); ADD(text);
 
     auto questSys = objMgr->GetOwner()->GetUIManager()->GetQuestSystem();
-    questSys->SetPanel(panel);
+    //questSys->SetPanel(panel);
     questSys->SetTextObj(text);
 }
 
@@ -381,4 +392,20 @@ void UILoader::BuildDeathUI(ObjectManager* objMgr)
     bossIcon->GetComponent<TransformComponent>()->SetPosition(645.f, 260.f);
     bossIcon->GetComponent<TransformComponent>()->SetScale(0.7f, 1.3f);
     ADD(bossIcon);
+}
+
+void UILoader::BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr)
+{
+    auto panel = QuestPanel::Create(objMgr);
+    ADD(panel);
+
+    auto atri = Atri::Create(objMgr);
+    ADD(atri);
+
+    auto angry = Angry::Create(objMgr);
+    ADD(angry);
+
+    panel->AddChild(atri);
+
+    dialogMgr->SetPanel(panel->GetComponent<PanelComponent>());
 }

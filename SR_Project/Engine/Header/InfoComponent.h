@@ -19,14 +19,20 @@ public:
 	void AddExp(int amount);
 	void SetSpeed(int amount);
 
+	void SetOnZeroHp(function<void()> cb) { onZeroHpCallback = move(cb); }
+
 	//void SetInfo(T& _info) { info = _info; };
 	const T& GetInfo() const { return info; }
+
+	void Update(float dt) override;
 
 public:
 	void SetInfo(const T& _info) { info = _info; }
 
 private:
 	T info{};
+	function<void()> onZeroHpCallback;
+	bool wasDead = false;
 };
 
 END
@@ -56,6 +62,23 @@ inline void InfoComponent<T>::SetSpeed(int amount)
 {
 	info.speed = amount;
 	this->Notify({UIEventType::Speed_Changed, info});
+}
+
+template<typename T>
+inline void InfoComponent<T>::Update(float dt)
+{
+	if constexpr (requires(T x) { x.curHp; })
+	{
+		if (!wasDead && info.curHp <= 0)
+		{
+			if (onZeroHpCallback)
+				onZeroHpCallback();
+
+			wasDead = true;
+		}
+		else if (info.curHp > 0)
+			wasDead = false;
+	}
 }
 
 template<typename T>

@@ -52,6 +52,17 @@ namespace Engine
 				m_pInstance = nullptr;					\
 			}											\
 		}
+
+#define LOG(msg) OutputDebugStringW((std::wstring(msg) + L"\n").c_str())
+
+	// 포맷 문자열 지원용
+#define LOGF(fmt, ...)                     \
+{                                          \
+    wchar_t buf[512];                      \
+    swprintf_s(buf, 512, fmt, __VA_ARGS__);\
+    OutputDebugStringW(buf);              \
+    OutputDebugStringW(L"\n");             \
+}
 }
 
 #endif // Engine_Macro_h__

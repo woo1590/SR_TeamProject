@@ -66,7 +66,7 @@ void InventoryManager::RightClick()
 
 	auto IsSlotAcceptable = [requiredSlotType](SlotItemType slotType) {return slotType == requiredSlotType; };
 
-	auto* player = ui->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player);
+	auto* player = uiMgr->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player);
 
 	if (requiredSlotType == SlotItemType::Potion)
 	{

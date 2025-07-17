@@ -35,7 +35,7 @@ HRESULT CollisionBlock::Ready_Object()
 
 	auto collision = AddComponent<CollisionComponent>();
 	collision->SetLayer(LAYER_DEFAULT);
-	collision->SetMask(LAYER_PLAYER | LAYER_ENEMY | LAYER_PROJECTILE | LAYER_TRRIGER);
+	collision->SetMask(LAYER_PLAYER | LAYER_ENEMY | LAYER_PROJECTILE | LAYER_TRRIGER | LAYER_NPC);
 	collision->SetDebugMode(false);
 
 	auto physics = AddComponent<PhysicsComponent>();

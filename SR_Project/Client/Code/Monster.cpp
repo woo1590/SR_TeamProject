@@ -23,6 +23,8 @@
 #include "DamageText.h"
 #include "Fontcomponent.h"
 #include "HPBarWhite.h"
+#include "UIManager.h"
+#include "QuestSystem.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -80,6 +82,13 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
        
         owner->AddUIObject(enemyBack);
         owner->AddUIObject(whiteBack);
+
+        statcomponent->SetOnZeroHp([this]() 
+            {
+                auto quest = GetScene()->GetUIManager()->GetQuestSystem();
+                if (quest)
+                    quest->ReportQuestProgress(QuestType::KillMonsters, 1);
+            });
     }
     else if (type == MonsterType::Boss)
     {
@@ -113,10 +122,10 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         //bossFront->AddChild(bossIcon);
 
         //auto particle = ParticleObj::Create(owner);
-        //auto particleTf = particle->GetComponent<TransformComponent>();
+        //auto particleTf = particle->GetComponent<TransformComponent>(); 
         //owner->AddUIObject(particle);
 
-        bossFront->AddChild(bossBack);
+        bossFront->AddChild(bossBack); 
     }
     IsHit = nullptr;
 
@@ -147,21 +156,14 @@ void Monster::Attack(Object* target)
 
 void Monster::Die()
 {
-   
+    
 }
 
 void Monster::DeleteBar()
 {
-    if (enemyFront)
-        enemyFront->SetDead();
-    if (enemyBack)
-        enemyBack->SetDead();
-    if (bossFront)
-        bossFront->SetDead();
-    if (bossBack)
-        bossBack->SetDead();
-    if (whiteBack)
-        whiteBack->SetDead();
+    Object* bars[] = {enemyFront, enemyBack, bossFront, bossBack, whiteBack};
+    for (auto* bar : bars)
+        if (bar) bar->SetDead();
 }
 
 void Monster::ShowDmgText(int dmg, const _vec3& hitDir)

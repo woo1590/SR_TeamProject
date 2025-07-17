@@ -12,7 +12,8 @@ public:
         ATTACK,
         SHOOT,
         DEAD,
-        REVIVE
+        REVIVE,
+        INTERACT,
     };
     enum class ePlayerBone :int
     {
@@ -87,13 +88,15 @@ private:
     void CheckTargetDead();
     void CheckSkill();
 
+    void InteractWithNPC(Object* obj);
+
     void UpdateIdle(_float dt);
     void UpdateWalk(_float dt);
     void UpdateRoll(_float dt);
     void UpdateAttack(_float dt);
     void UpdateShoot(_float dt);
     void UpdateDead(_float dt);
-    void UpdateRevive(_float dt);
+    void UpdateRevive(_float dt); 
 
     void SaveStartRotation();
     void SetUpSwordFirstAttackPhaseRotations();
@@ -174,4 +177,7 @@ private:
     _bool StatikkMode = false;
 
     std::string soundBefore = "WalkOnDefault2";
+    // ----------------------
+    const float interactRange = 5.f;
+    bool moveToInteract = false;
 };

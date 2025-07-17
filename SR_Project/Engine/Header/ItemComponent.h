@@ -5,6 +5,8 @@
 
 BEGIN(Engine)
 
+class QuestSystem;
+
 class ENGINE_DLL ItemComponent : public ObjectComponent
 {
 private:
@@ -22,7 +24,7 @@ public:
 	void SetEquipCallBack(function<void(Object* user)> cb) { onEquipCallback = move(cb); }
 	void SetUnEquipCallBack(function<void(Object* user)> cb) { unEquipCallback = move(cb); }
 
-	void Equip(Object* user) { if (onEquipCallback) onEquipCallback(user); }
+	void Equip(Object* user);
 	void UnEquip(Object* user) { if (unEquipCallback) unEquipCallback(user); }
 
 	void SetOriginalScale(const _vec2& _scale) { originalScale = _scale; }

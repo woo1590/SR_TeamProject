@@ -13,13 +13,12 @@ namespace Engine
 		float speed = 15.f;
 	};
 
-	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Loading, DeathUI, Always };
-	enum class ItemType{ Sword, Spear, Armor, Bow, CrossBow, Potion, Enchant, Costume, Projectile, None };
+	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Loading, DeathUI, QuestUI, Always };
+	enum class ItemType{ Sword, Spear, Armor, Bow, CrossBow, Potion, Enchant, Costume, Projectile, None,};
 	enum class Rarity { Default, Rare};
 
 	enum class SlotItemType {Any, MeleeWeapon, Armor, RangeWeapon, Potion};
-
-	struct ItemInfo
+	struct ItemInfo 
 	{
 		std::wstring name;
 		std::wstring renderKey;
@@ -27,13 +26,6 @@ namespace Engine
 		Rarity rarity;
 		int value;
 		std::wstring description;
-	};
-
-	struct QuestInfo
-	{
-		std::wstring title;
-		std::wstring desc;
-		bool isCompleted = false;
 	};
 
 	struct EnemyInfo

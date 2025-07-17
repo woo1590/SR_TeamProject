@@ -53,5 +53,5 @@ void BossHPBarFront::Update(float dt)
 		font->SetAlpha(alpha);
 	}
 
-	font->AddText(L"·¹µå½ºÅæ °ñ·¥", {530, 40, 730, 150}, Color::Red, DT_CENTER, FontType::QuestTitle);
+	font->AddText(L"·¹µå½ºÅæ °ñ·½", {530, 40, 730, 150}, Color::Red, DT_CENTER, FontType::QuestTitle);
 }

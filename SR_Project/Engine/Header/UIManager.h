@@ -6,19 +6,20 @@ class Scene;
 class InventoryManager; 
 class QuestSystem;
 class TooltipManager;
+class DialogManager;
 
 class ENGINE_DLL UIManager: public Base
 {
 public:
-	UIManager(Scene* owner)
-		:owner(owner) {}
+	UIManager(Scene* owner) :owner(owner) {}
 
 	static UIManager* Create(Scene* owner);
 	HRESULT Ready_UIManager();
 
 	InventoryManager* GetInventory() const { return inventory; }
-	QuestSystem* GetQuestSystem() const { return quest; }
-	TooltipManager* GetTooltip() const { return tooltip; }
+	QuestSystem*    GetQuestSystem() const { return quest; }
+	TooltipManager*     GetTooltip() const { return tooltip; }
+	DialogManager*       GetDialog() const { return dialog; }
 
 	Scene* GetScene() const { return owner; }
 
@@ -30,6 +31,7 @@ private:
 	InventoryManager* inventory = nullptr;
 	QuestSystem* quest = nullptr;
 	TooltipManager* tooltip = nullptr;
+	DialogManager* dialog = nullptr;
 };
 
 END
