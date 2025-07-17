@@ -8,8 +8,7 @@ class Object;
 class ENGINE_DLL InventoryManager: public Base
 {
 public:
-	explicit InventoryManager(UIManager* owner)
-		:uiMgr(owner) {}
+	explicit InventoryManager(UIManager* owner) :uiMgr(owner) {}
 
 public:
 	void Update(float dt);
@@ -19,7 +18,6 @@ public:
 	void DeselectAll();
 	void RightClick();
 
-	//UIManager* GetUI() const { return uiMgr; }
 	SlotComponent* GetSelectedSlot() const { return selected; }
 	SlotComponent* FindFirstEmptySlot();
 	void ClearFromQuickSlot(Object* item);
@@ -51,17 +49,20 @@ private:
 	optional<ItemType> curFilter;
 	array<SlotComponent*, 3> quickSlots{};
 	int quickSlotCount = 0;
-	array<_vec2, 3> quickSlotPos = {
+	array<_vec2, 3> quickSlotPos =
+	{
 		_vec2{380.f,650.f},
 		_vec2{450.f,650.f},
 		_vec2{520.f,650.f},
 	};
-	array<_vec2, 3> quickSlotPosInv = {
+	array<_vec2, 3> quickSlotPosInv =
+	{
 		_vec2{150.f, 620.f},
 		_vec2{300.f, 620.f},
 		_vec2{450.f, 620.f},
 	};
 	unordered_map<SlotComponent*, Object*> slotToPlusMap;
+	vector<Object*> unslottedItems;
 };
 
 END
