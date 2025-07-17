@@ -58,6 +58,7 @@
 #include "Ender.h"
 #include "Spear.h"
 #include "DeadEffect.h"
+#include "ExplodeEffect.h"
 
 //component
 #include "TransformComponent.h"
@@ -170,7 +171,6 @@ void Village::Update(_float dt)
 	PhysicsSys->Update(dt);
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	//ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
-	
 
 	{
 		auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -189,7 +189,7 @@ void Village::Update(_float dt)
 
 		if (Input->IsKeyPressed(NUM3))
 		{
-			auto effect = DeadEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
+			auto effect = ExplodeEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
 			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
 			effect->SetDeadTime(1.f);
 			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);

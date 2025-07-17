@@ -1,6 +1,5 @@
-//BloodParticle Shader
+//Explode Particle
 
-//Albedo Texture and Sampler
 texture AlbedoMap : register(t0);
 sampler AlbedoSampler = sampler_state
 {
@@ -44,15 +43,16 @@ VS_OUTPUT VS_Main(VS_INPUT input)
     return output;
 }
 
-float4 PS_Main(VS_OUTPUT input, float2 uv :TEXCOORD0) : COLOR0
+float4 PS_Main(VS_OUTPUT input, float2 uv : TEXCOORD0) : COLOR0
 {
-    float2 center = uv * 2.f - 1.f;
-    float1 distance = length(center);
-    
-    if(distance>=1.0f)
+    float1 mask = tex2D(AlbedoSampler, uv).r;
+    if(mask<=0.01f)
         discard;
     
-    return tex2D(AlbedoSampler, uv) * input.color;
+    float4 tex = tex2D(AlbedoSampler, uv) * input.color;
+    tex.a *= mask;
+    
+    return tex;
 }
 
 technique Particle

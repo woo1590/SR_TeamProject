@@ -38,11 +38,11 @@ HRESULT BloodEffect::Ready_Object()
 	hit.looping = true;
 	hit.followCam = false;
 
-	hit.life = 0.5f;
-	hit.size = 15.f;
+	hit.life = 1.f;
+	hit.size = 40.f;
 
-	hit.velocityMin = { -10.f,-10.f,-10.f };
-	hit.velocityMax = { 10.f,10.f,10.f };
+	hit.velocityMin = { -6.f,-6.f,-6.f };
+	hit.velocityMax = { 6.f,6.f,6.f };
 	hit.spawnAreaMin = { -0.1f,-0.1f,-0.1f };
 	hit.spawnAreaMax = { 0.1f,0.1f,0.1f };
 
@@ -52,7 +52,7 @@ HRESULT BloodEffect::Ready_Object()
 	particle->AddEmitter(hit, [](Particle& p, _float dt)
 		{
 			p.position += p.velocity * dt;
-			p.color.w -= p.colorFade.w * dt;
+			p.color.w -= p.colorFade.w * dt * 1.5f;
 			if (p.color.w <= 0.f)
 				p.color.w = 0.f;
 		});

@@ -18,6 +18,7 @@
 #include "SoundManager.h"
 #include "ThirdcamComponent.h"
 #include "CameraComponent.h"
+#include "ExplodeEffect.h"
 
 Tnt::Tnt(ObjectManager* owner, ObjectType objType) : Item(owner, objType){}
 
@@ -123,6 +124,12 @@ void Tnt::Update(_float dt)
             auto cam = GetScene()->GetCameraManager()->GetMainCamera()->GetOwner()->GetComponent<ThirdcamComponent>();
             if (cam)
                 cam->SetShake(15.f, 0.5f);
+
+            auto effect = ExplodeEffect::Create(owner, ObjectType::ParticleEffect);
+            effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+            effect->SetDeadTime(1.f);
+            owner->AddObject(ObjectType::ParticleEffect, effect);
+
             SetDead();
         }
     }

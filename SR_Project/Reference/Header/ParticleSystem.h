@@ -38,6 +38,12 @@ struct Emitter
     _float size = 1.f;
     _float life = 1.f;
 
+    /*-------Sphere param---------*/
+    _bool isSphere = false;
+    _float radius = 0.f;
+    _float minSpeed;
+    _float maxSpeed;
+
     void Spawn(std::vector<Particle>& particles, _vec3 spawnPos, _float dt)
     {
         if (!alive) return;
@@ -88,15 +94,36 @@ struct Emitter
         p.size = size;
         p.life = life;
 
-        _float spawnX = r->get<_float>(pos.x + spawnAreaMin.x, pos.x + spawnAreaMax.x);
-        _float spawnY = r->get<_float>(pos.y + spawnAreaMin.y, pos.y + spawnAreaMax.y);
-        _float spawnZ = r->get<_float>(pos.z + spawnAreaMin.z, pos.z + spawnAreaMax.z);
-        p.position = _vec3(spawnX, spawnY, spawnZ);
+        if (!isSphere)
+        {
+            _float spawnX = r->get<_float>(pos.x + spawnAreaMin.x, pos.x + spawnAreaMax.x);
+            _float spawnY = r->get<_float>(pos.y + spawnAreaMin.y, pos.y + spawnAreaMax.y);
+            _float spawnZ = r->get<_float>(pos.z + spawnAreaMin.z, pos.z + spawnAreaMax.z);
+            p.position = _vec3(spawnX, spawnY, spawnZ);
 
-        _float velocityX = r->get<_float>(velocityMin.x, velocityMax.x);
-        _float velocityY = r->get<_float>(velocityMin.y, velocityMax.y);
-        _float velocityZ = r->get<_float>(velocityMin.z, velocityMax.z);
-        p.velocity = _vec3(velocityX, velocityY, velocityZ);
+            _float velocityX = r->get<_float>(velocityMin.x, velocityMax.x);
+            _float velocityY = r->get<_float>(velocityMin.y, velocityMax.y);
+            _float velocityZ = r->get<_float>(velocityMin.z, velocityMax.z);
+            p.velocity = _vec3(velocityX, velocityY, velocityZ);
+        }
+        else
+        {
+            _vec3 dir;
+            while (true)
+            {
+                dir.x = r->get<_float>(-1.f, 1.f);
+                dir.y = r->get<_float>(-1.f, 1.f);
+                dir.z = r->get<_float>(-1.f, 1.f);
+
+                if (D3DXVec3LengthSq(&dir) <= 1.f)
+                    break;
+            }
+            D3DXVec3Normalize(&dir, &dir);
+            p.position = pos + dir * radius;
+
+            _float speed = r->get<_float>(minSpeed, maxSpeed);
+            p.velocity = dir * speed;
+        }
 
         p.isActive = true;
     }
