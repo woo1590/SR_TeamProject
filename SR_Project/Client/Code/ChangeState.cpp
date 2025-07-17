@@ -2,6 +2,7 @@
 #include "ChangeState.h"
 #include "Object.h"
 #include "Ender.h"
+#include "TransformComponent.h"
 
 ChangeStateNode::ChangeStateNode()
 {
@@ -21,18 +22,27 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 	if (bb == nullptr) return BTStatus::Failure;
 
 	Object* self = static_cast<Object*>(bb->GetValue("Self"));
+	_vec3* targetPos = static_cast<_vec3*>(bb->GetValue("targetPos"));
 
 	if (self == nullptr) return BTStatus::Failure;
 	Ender* ender = static_cast<Ender*>(self);
+
+	auto transform = self->GetComponent<TransformComponent>();
+	_vec3 pos = transform->GetPosition();
+
+	int randx = pos.x + rand() % 10 - 20;
+	int randz = pos.z + rand() % 10 - 20;
 
 	switch (ender->GetState())
 	{
 	case EnderState::Crawl:
 		ender->CrawlToStand();
+		*targetPos = _vec3(randx, 0.f, randz);
 		return BTStatus::Success;
-		
+
 	case EnderState::Hidden:
 		ender->Sprout();
+		*targetPos = _vec3(randx, 0.f, randz);
 		return BTStatus::Success;
 
 	case EnderState::Stand:
@@ -41,10 +51,12 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 		{
 		case 0:
 			ender->StandToCrawl();
+			*targetPos = _vec3(randx, 0.f, randz);
 			return BTStatus::Success;
 
 		case 1:
 			ender->Hide();
+			*targetPos = _vec3(randx, 0.f, randz);
 			return BTStatus::Success;
 		}
 	}

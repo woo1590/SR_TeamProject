@@ -75,7 +75,7 @@ void Ender::InitTransform(ObjectType objType)
     SetMaterial("EnderBottomHead_Mtrl", "Head", RENDER_ID::Render_NonAlpha);
     SetMaterial("EnderBody_Mtrl", "Body");
 
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f/*D3DXToRadian(-90.f)*/));
+    //transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f/*D3DXToRadian(-90.f)*/));
     transform->SetPosition(10 , 100, 10);
     
     auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
@@ -215,7 +215,7 @@ void Ender::InitTree()
 
     auto transform = GetComponent<TransformComponent>();
     _vec3 startPos = transform->GetPosition();
-    TargetPos = new _vec3(startPos.x - 10, startPos.y, startPos.z);
+    TargetPos = new _vec3(startPos.x + 30, startPos.y, startPos.z + 40); //startpos setting->initialize after
     bb->SetValue("targetPos", TargetPos);
 
     CheckStateChangeCount* changeCount = new CheckStateChangeCount(new StateAttackNode());
@@ -240,17 +240,17 @@ void Ender::InitAnimation()
 {
     CrawlAnim.ElapsedTime = 0.f;
 
+    StandAnim.ElapsedTime = 0.f;
+
     CrawlToStandAnim.Start = 0.f;
-    CrawlToStandAnim.End = 90.f;
+    CrawlToStandAnim.End = 89.f;
     CrawlToStandAnim.TotalTime = 0.7f;
     CrawlToStandAnim.ElapsedTime = 0.f;
-    CrawlToStandAnim.DelayTime = 6.0f;
 
     StandToCrawlAnim.Start = 0.f;
-    StandToCrawlAnim.End = 90.f;
+    StandToCrawlAnim.End = 89.f;
     StandToCrawlAnim.TotalTime = 0.7f;
     StandToCrawlAnim.ElapsedTime = 0.f;
-    StandToCrawlAnim.DelayTime = 6.0f;
 
     HideAnim.TotalTime = 3.f;
     HideAnim.ElapsedTime = 0.f;
@@ -300,11 +300,17 @@ void Ender::Free()
 
 void Ender::Crawl()
 {
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), D3DXToRadian(-90.f)));
+    if (enderState != EnderState::Crawl)
+    {
+        enderState = EnderState::Crawl;
 
-    auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
-    bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f), 0.f, 0.f));
+
+        auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+        transform->SetRotate(_vec3(D3DXToRadian(89.f), /*D3DXToRadian(89.f)*/0.f,0.f /*D3DXToRadian(-89.f)*/));
+
+        auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
+        bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f), 0.f, 0.f));
+    }
 }
 
 void Ender::Stand()
@@ -313,8 +319,8 @@ void Ender::Stand()
     {
         enderState = EnderState::Stand;
 
-        auto transform = GetComponent<TransformComponent>();
-        transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f));
+        auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+        transform->SetRotate(_vec3(0.f, /*D3DXToRadian(89.f)*/0.f, 0.f));
 
         auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
         bottomtransform->SetRotate(_vec3(0.f, 0.f, 0.f));
@@ -357,10 +363,24 @@ void Ender::Sprout()
 
 void Ender::CrawlToStand()
 {
+    if (enderState != EnderState::CrawlToStand)
+    {
+        enderState = EnderState::CrawlToStand;
+
+        CrawlToStandAnim.ElapsedTime = 0.f;
+        ++CurChangeStateCount;
+    }
 }
 
 void Ender::StandToCrawl()
 {
+    if (enderState != EnderState::StandToCrawl)
+    {
+        enderState = EnderState::StandToCrawl;
+
+        StandToCrawlAnim.ElapsedTime = 0.f;
+        ++CurChangeStateCount;
+    }
 }
 
 void Ender::LineLaserAttack()
@@ -373,6 +393,28 @@ void Ender::CrossLaserAttack()
 
 void Ender::ProjectileAttack()
 {
+}
+
+void Ender::MoveTo(_vec3 targetPos, _float dt)
+{
+    auto transform = GetComponent<TransformComponent>();
+    _vec3 pos = transform->GetPosition();
+
+    pos.y = 0;
+    _vec3 dir = targetPos - pos;
+    dir.y = 0;
+
+    if (D3DXVec3Length(&dir) >= 0.1)
+    {
+        D3DXVec3Normalize(&dir, &dir);
+        transform->Translate(dir * dt * Speed);
+        transform->SetForward(dir);
+        //_vec3 right = transform->GetRight();
+        //_matrix rotMat;
+        //D3DXMatrixRotationAxis(&rotMat, &right, D3DXToRadian(-90.f));
+        //D3DXVec3TransformNormal(&dir, &dir, &rotMat);
+        //transform->SetForward(dir);
+    }
 }
 
 EnderState Ender::GetState()
@@ -419,16 +461,13 @@ void Ender::PlayCrawl(_float dt)
 
 void Ender::PlayCrawlToStand(_float dt)
 {
-    CrawlToStandAnim.DelayTime -= dt;
-    if (CrawlToStandAnim.DelayTime > 0) return;
-
     CrawlToStandAnim.ElapsedTime += dt;
 
     _float t = clamp(CrawlToStandAnim.ElapsedTime / CrawlToStandAnim.TotalTime, 0.f, 1.f);
     float angle = lerp(CrawlToStandAnim.Start, CrawlToStandAnim.End, t);
 
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), D3DXToRadian(-90.f + angle)));
+    auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+    transform->SetRotate(_vec3(D3DXToRadian(90.f - angle), /*D3DXToRadian(89.f)*/0.f, 0.f));
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f + angle), 0.f, 0.f));
@@ -440,20 +479,22 @@ void Ender::PlayCrawlToStand(_float dt)
     SetRotation({ D3DXToRadian(-angle), D3DXToRadian(90.f), 0.f }, "RFoot1");
     SetRotation({ D3DXToRadian(-angle), D3DXToRadian(90.f), 0.f }, "RFoot2");
     SetRotation({ D3DXToRadian(-angle), D3DXToRadian(90.f), 0.f }, "RFoot3");
+   
+    if (CrawlToStandAnim.ElapsedTime > CrawlToStandAnim.TotalTime)
+    {
+        Stand();
+    }
 }
 
 void Ender::PlayStandToCrawl(_float dt)
 {
-    StandToCrawlAnim.DelayTime -= dt;
-    if (StandToCrawlAnim.DelayTime > 0) return;
-
     StandToCrawlAnim.ElapsedTime += dt;
 
     _float t = clamp(StandToCrawlAnim.ElapsedTime / StandToCrawlAnim.TotalTime, 0.f, 1.f);
     float angle = lerp(StandToCrawlAnim.Start, StandToCrawlAnim.End, t);
 
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), D3DXToRadian(-angle)));
+    auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+    transform->SetRotate(_vec3(D3DXToRadian(angle), /*D3DXToRadian(89.f)*/0.f, 0.f));
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetRotate(_vec3(D3DXToRadian(-angle), 0.f, 0.f));
@@ -465,6 +506,11 @@ void Ender::PlayStandToCrawl(_float dt)
     SetRotation({ D3DXToRadian(-90.f + angle), D3DXToRadian(90.f), 0.f }, "RFoot1");
     SetRotation({ D3DXToRadian(-90.f + angle), D3DXToRadian(90.f), 0.f }, "RFoot2");
     SetRotation({ D3DXToRadian(-90.f + angle), D3DXToRadian(90.f), 0.f }, "RFoot3");
+    
+    if (StandToCrawlAnim.ElapsedTime > StandToCrawlAnim.TotalTime)
+    {
+        Crawl();
+    }
 }
 
 void Ender::PlayStand(_float dt)
@@ -559,6 +605,11 @@ void Ender::PlaySprout(_float dt)
 
     Scale = size;
     SetBoneSize();
+
+    if (SproutAnim.ElapsedTime > SproutAnim.TotalTime)
+    {
+        Stand();
+    }
 }
 
 void Ender::PlayLineLaserAttack(_float dt)

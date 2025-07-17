@@ -35,6 +35,7 @@ public:
     void        LineLaserAttack();
     void        CrossLaserAttack();
     void        ProjectileAttack();
+    void        MoveTo(_vec3 targetPos, _float dt);
 
     EnderState  GetState();
     int         GetCurChangeStateCount();
