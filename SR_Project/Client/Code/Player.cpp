@@ -176,6 +176,8 @@ void Player::PickingTerrain()
         State == ePlayerState::SHOOT  ||
         State == ePlayerState::REVIVE)
         return;
+   
+    if (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::Inventory) return;
         
 
     auto input = EngineCore::GetInstance()->GetInputSystem();
