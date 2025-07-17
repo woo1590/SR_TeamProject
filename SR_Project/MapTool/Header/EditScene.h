@@ -29,13 +29,17 @@ private:
 
 #ifdef USE_IMGUI
     void ImGui_Main();
+
     void ImGui_Info();
     void ImGui_Terrain();
     void ImGui_SaveLoad();
+
+    void ImGui_SetMode();
+    void ImGui_SetPrefab();
     void ImGui_SetBlockType();
     void ImGui_SetBlockUsage();
     void ImGui_SetBlockInfo();
-    void ImGui_SetPrefab();
+
     void ImGui_LinkLever();
 #endif
     void CreateTerrain(const std::string& filename);

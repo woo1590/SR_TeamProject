@@ -68,7 +68,7 @@ bool TerrainCreater::LoadHeightmapFromImage(const std::string& filename)
 
 void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 {
-    chunkedBlocks.clear();
+    chunkBlocks.clear();
 
     int blocksX = terX * (CHUNK_SIZE / BLOCK_SIZE);
     int blocksZ = terZ * (CHUNK_SIZE / BLOCK_SIZE);
@@ -108,7 +108,7 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 
                 int chunkX = x / (CHUNK_SIZE / BLOCK_SIZE);
                 int chunkZ = z / (CHUNK_SIZE / BLOCK_SIZE);
-                chunkedBlocks[{chunkX, chunkZ}].push_back(block);
+                chunkBlocks[{chunkX, chunkZ}].push_back(block);
             }
 
             if (topY != -1)
@@ -116,8 +116,8 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
                 int chunkX = x / (CHUNK_SIZE / BLOCK_SIZE);
                 int chunkZ = z / (CHUNK_SIZE / BLOCK_SIZE);
 
-                auto& vec = chunkedBlocks[{chunkX, chunkZ}];
-                vec.back().Type = StaticBlockType::GrassDirt;
+                auto& vec = chunkBlocks[{chunkX, chunkZ}];
+                vec.back().Type = StaticBlockType::DarkGrass;
             }
         }
     }
@@ -125,15 +125,15 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
 
 StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
 {
-    if (y <= 1) return StaticBlockType::Dirt;
-    else if (y < maxHeight * 0.5f) return StaticBlockType::Dirt;
-    else if (y < maxHeight * 0.65f) return StaticBlockType::Stone;
-    else return StaticBlockType::Dirt;
+    if (y <= 1) return StaticBlockType::DarkDirt;
+    else if (y < maxHeight * 0.3f) return StaticBlockType::DarkDirt;
+    else if (y < maxHeight * 0.55f) return StaticBlockType::DarkStone;
+    else return StaticBlockType::DarkDirt;
 }
 
 const std::vector<SB>& TerrainCreater::GetBlocksInChunk(int chunkX, int chunkZ) const
 {
-    auto it = chunkedBlocks.find({ chunkX, chunkZ });
+    auto it = chunkBlocks.find({ chunkX, chunkZ });
     return it->second;
 }
 

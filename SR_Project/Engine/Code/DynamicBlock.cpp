@@ -41,9 +41,6 @@ Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBl
         if (col == DynamicBlockCol::dYP)
             Instance = IronCage::Create(owner, ObjectType::DynamicBlock, type, col, rot, Count);
         break;
-    case DynamicBlockType::WoodBridge:
-        Instance = Bridge::Create(owner, ObjectType::DynamicBlock, type, col, Count);
-        break;
     default:
         MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"Error", MB_OK);
         break;
