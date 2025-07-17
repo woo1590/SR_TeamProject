@@ -1098,8 +1098,19 @@ void Player::CamRotTest(_float dt)
             _vec3 camRight = camTransform->GetRight();
 
             _float fAngle;
-            if (input->IsKeyDown(keyLeft)) fAngle = D3DXToRadian(90.f * dt);
-            else if (input->IsKeyDown(keyRight)) fAngle = D3DXToRadian(-90.f * dt);
+            if (input->IsKeyDown(keyLeft))
+            {
+                fAngle = D3DXToRadian(180.f * dt);
+            }
+            else if (input->IsKeyDown(keyRight))
+            {
+                fAngle = D3DXToRadian(-180.f * dt);
+            }
+            else
+            {
+                fAngle = 0.f;
+            }
+
             _matrix matRot;
             D3DXMatrixRotationAxis(&matRot, &playerUp, fAngle);
 
