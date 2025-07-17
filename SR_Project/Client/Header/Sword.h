@@ -24,5 +24,7 @@ private:
     const _float damageTerm = 0.1f;
 
     _int preTarget = 0;
+
+    std::vector<Object*> hitMonsters;
 };
 

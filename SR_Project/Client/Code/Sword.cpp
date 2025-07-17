@@ -14,6 +14,7 @@
 
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "Creeper.h"
 
 Sword::Sword(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
 
@@ -47,9 +48,9 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto skillInfo = AddComponent<InfoComponent<SkillInfo>>();
     auto ii = skillInfo->GetInfo();
     ii.level = 1;
-    ii.MaxTarget = 4;
+    ii.MaxTarget = 3;
     ii.DamagePercent = 0.5f;
-    ii.SkillRange = 200.f;
+    ii.SkillRange = 20.f;
     skillInfo->SetInfo(ii);
 
 
@@ -71,25 +72,36 @@ HRESULT Sword::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Sword::Update(_float dt)
 {
     Item::Update(dt);
+    
+    if (!hitMonsters.empty() && static_cast<Player*>(ownerObject)->GetPlayerState() != Player::ePlayerState::ATTACK)
+    {
+        hitMonsters.clear();
+    }
 
-    if (targetMonsters.empty()) return;
+    if (targetMonsters.empty()) 
+        return;
     
     delayTimer += dt;
     int target = static_cast<int>(delayTimer / damageTerm);
 
-    if (target <= preTarget) return;
+    if (target <= preTarget) 
+        return;
+
     if (target >= targetMonsters.size())
     {
         targetMonsters.clear();
         return;
     }
-    if (!targetMonsters.at(target)) return;
+
+    if (!targetMonsters.at(target)) 
+        return;
 
     float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
     auto skillInfo = GetComponent<InfoComponent<SkillInfo>>()->GetInfo();
 
     auto pEnemyInfo = targetMonsters.at(target)->GetComponent<InfoComponent<EnemyInfo>>();
-    if (!pEnemyInfo) return;
+    if (!pEnemyInfo) 
+        return;
 
     pEnemyInfo->AddHp( - playerPower * skillInfo.DamagePercent);
 
@@ -109,6 +121,19 @@ void Sword::SetCollisionEnter(Object* other)
     if (objType == ObjectType::Monster && 
         player->GetPlayerState() == Player::ePlayerState::ATTACK)
     {
+        if (other->GetObjectType() == ObjectType::Bone) return;
+        _bool includedMonster = false;
+        for (auto& m : hitMonsters)
+        {
+            if (m == other || dynamic_cast<Creeper*>(m))
+            {
+                includedMonster = true;
+                break;
+            }
+        }
+        if (includedMonster) return;
+        hitMonsters.push_back(other);
+
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitSword");
         float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
         float weaponValue = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
@@ -167,7 +192,7 @@ void Sword::FindNextTarget(Object* targetMonster)
         _bool includedMonster = false;
         for (auto& m : targetMonsters)
         {
-            if (monster == m)
+            if (m == monster || dynamic_cast<Creeper*>(m))
             {
                 includedMonster = true;
                 break;

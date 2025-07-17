@@ -14,6 +14,7 @@
 
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "Creeper.h"
 
 Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
 {
@@ -128,12 +129,14 @@ void Arrow::Late_Update(_float dt)
 
 void Arrow::SetCollisionEnter(Object* other)
 {
-    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitArrow");
-    if (hitObject != nullptr) return;
-    
+    if (hitObject != nullptr) 
+        return;
+    if (other->GetObjectType() == ObjectType::Bone) return;
     arrowSpeed = 0.f;
 
     ObjectType objType = other->GetObjectType();
+    
+    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitArrow");
     if (objType == ObjectType::StaticBlock && hitObject==nullptr) {
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
@@ -142,6 +145,9 @@ void Arrow::SetCollisionEnter(Object* other)
     {
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+
+        if (dynamic_cast<Creeper*>(other))
+            return;
 
         auto info = GetComponent<InfoComponent<ItemInfo>>();
         auto collision = GetComponent<CollisionComponent>();

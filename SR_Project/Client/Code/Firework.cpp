@@ -14,6 +14,7 @@
 
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "Creeper.h"
 
 Firework::Firework(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
 {
@@ -90,36 +91,40 @@ void Firework::Late_Update(_float dt)
 
 void Firework::SetCollisionEnter(Object* other)
 {
-    //auto transform = GetComponent<TransformComponent>();
-    //auto pos = transform->GetWorldPosition();
-    //auto fireworkDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
-    //
-    //auto player = owner->GetFrontObject(ObjectType::Player);
-    //auto playerPos = player->GetComponent<TransformComponent>()->GetWorldPosition();
-    //
-    //_vec3 distanceVec = playerPos - pos;
-    //_float distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
-    //if (distance <= fireworkRange)
-    //{
-    //    player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-fireworkDamage);
-    //}
-    //
-    //auto monsters = owner->GetObjectList(ObjectType::Monster);
-    //for (auto& monster : monsters)
-    //{
-    //
-    //    auto monsterPos = monster->GetComponent<TransformComponent>()->GetWorldPosition();
-    //
-    //    distanceVec = monsterPos - pos;
-    //    distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
-    //    if (distance <= fireworkRange)
-    //    {
-    //        auto mon = dynamic_cast<Monster*>(monster);
-    //        mon->SetHit(true);
-    //        mon->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), fireworkDamage);
-    //        monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-fireworkDamage);
-    //    }
-    //}
+
+    auto transform = GetComponent<TransformComponent>();
+    auto pos = transform->GetWorldPosition();
+    auto fireworkDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
+    
+    auto player = owner->GetFrontObject(ObjectType::Player);
+    auto playerPos = player->GetComponent<TransformComponent>()->GetWorldPosition();
+    
+    _vec3 distanceVec = playerPos - pos;
+    _float distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
+    if (distance <= fireworkRange)
+    {
+        player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-fireworkDamage);
+    }
+    
+    auto monsters = owner->GetObjectList(ObjectType::Monster);
+    for (auto& monster : monsters)
+    {
+        if (monster->GetObjectType() == ObjectType::Bone) continue;
+        if (dynamic_cast<Creeper*>(monster))
+            continue;
+
+        auto monsterPos = monster->GetComponent<TransformComponent>()->GetWorldPosition();
+
+        distanceVec = monsterPos - pos;
+        distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
+        if (distance <= fireworkRange)
+        {
+            auto mon = dynamic_cast<Monster*>(monster);
+            mon->SetHit(true);
+            mon->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), fireworkDamage);
+            monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-fireworkDamage);
+        }
+    }
     EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomFirework");
     SetDead();
 }

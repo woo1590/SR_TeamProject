@@ -23,7 +23,7 @@ private:
     _vec3 tntOffset = { 0.f, 5.f, 0.f };
 
     bool throwTnt = false;
-    const float throwSpeed = 10.f;
+    const float throwSpeed = 20.f;
     _vec3 throwDirection = { 0.f,0.f,0.f };
 
     float TntTime = 0.f;

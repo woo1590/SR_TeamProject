@@ -164,7 +164,7 @@ void Player::PickingTerrain()
         //////////////////////////////////////////////
         if (hit.IsHit)
         {
-            if (input->IsKeyPressed(Z) || hit.Component->GetLayer() == LAYER_ENEMY    &&
+            if ( (input->IsKeyPressed(Z) || hit.Component->GetLayer() == LAYER_ENEMY)    &&
                 Bones["RHand"] != nullptr                   )
             {
                 if (State == ePlayerState::IDLE)
@@ -1067,6 +1067,28 @@ void Player::UpdateNewIdleRotations()
         idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
 }
 
+//void Player::CamRotTest()
+//{
+//    auto input = EngineCore::GetInstance()->GetInputSystem();
+//    static const KEY keyLeft = LEFT;
+//    static const KEY keyRight = RIGHT;
+//
+//    if (input->IsKeyDown(keyLeft))
+//    {
+//        auto input = EngineCore::GetInstance()->GetInputSystem();
+//        auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
+//        auto mainCam = curScene->GetCameraManager()->GetMainCamera();
+//        mainCam->
+//    }
+//    else if (input->IsKeyDown(keyRight))
+//    {
+//        auto input = EngineCore::GetInstance()->GetInputSystem();
+//        auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
+//        auto mainCam = curScene->GetCameraManager()->GetMainCamera();
+//    }
+//
+//}
+
 void Player::CheckJump()
 {
     if (State != ePlayerState::IDLE && State != ePlayerState::WALK)
@@ -1140,15 +1162,15 @@ void Player::UnEquipItem(ItemType itemType)
         Bones["LHand"] = nullptr;
         break;
     case ItemType::CrossBow:
-        Safe_Release(Bones["LHand"]);
+        Bones["LHand"]->SetDead();
         Bones["LHand"] = nullptr;
         break;
     case ItemType::Sword:
-        Safe_Release(Bones["RHand"]);
+        Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Spear:
-        Safe_Release(Bones["RHand"]);
+        Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
         break;
     }
@@ -1451,18 +1473,21 @@ void Player::UpdateRoll(_float dt)
 void Player::UpdateAttack(_float dt) {
     AttackTime += dt;
 
+    if (!Bones["RHand"])
+    {
+        State = ePlayerState::IDLE;
+        return;
+    }
     //Components
     auto transform = GetComponent<TransformComponent>();
 
     //Rotate Bones
-
     float fProgress = AttackTime / AttackDuration;
     fProgress = std::clamp(fProgress, 0.f, 1.f);
     
     if (AttackTime == dt)
     {
         SaveStartRotation();
-        if (!Bones["RHand"]) return;
         ItemType type = static_cast<Item*>(Bones["RHand"])->GetItemType();
         switch (type)
         {
@@ -1537,6 +1562,11 @@ void Player::UpdateAttack(_float dt) {
 void Player::UpdateShoot(_float dt) {
     AttackTime += dt;
 
+    if (!Bones["LHand"])
+    {
+        State = ePlayerState::IDLE;
+        return;
+    }
     //Components
     auto transform = GetComponent<TransformComponent>();
 
@@ -1782,6 +1812,7 @@ void Player::KeyInput(_float dt)
     CheckDead();
     CheckJump();
     CheckSkill();
+    //CamRotTest();
 }
 
 void Player::CheckStateRoll(_float dt)
@@ -1793,7 +1824,7 @@ void Player::CheckStateRoll(_float dt)
     {
         switch (State)
         {
-        case ePlayerState::WALK:
+        case ePlayerState::IDLE: case ePlayerState::WALK:
             EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Roll");
             State = ePlayerState::ROLL;
             SaveStartRotation();
