@@ -156,7 +156,7 @@ void Monster::Attack(Object* target)
 
 void Monster::Die()
 {
-    
+  
 }
 
 void Monster::DeleteBar()
@@ -181,11 +181,10 @@ void Monster::ShowDmgText(int dmg, const _vec3& hitDir)
     owner->AddUIObject(dmgText);
 }
 
-
 void Monster::Hit(_vec3 dir, _float power)
 {
     auto stat = GetComponent<InfoComponent<EnemyInfo>>();
-    ShowDmgText(stat->GetInfo().power, dir);
+    ShowDmgText(static_cast<int>(power), dir);
 }
 
 _float Monster::GetHp()
