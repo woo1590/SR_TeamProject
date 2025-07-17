@@ -32,6 +32,10 @@
 #include "SpriteEffect.h"
 
 #include "SoundManager.h"
+#include "FirstCam.h"
+#include "ThirdCam.h"
+#include "FreecamComponent.h"
+#include "ThirdcamComponent.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) 
 {
@@ -1067,27 +1071,50 @@ void Player::UpdateNewIdleRotations()
         idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
 }
 
-//void Player::CamRotTest()
-//{
-//    auto input = EngineCore::GetInstance()->GetInputSystem();
-//    static const KEY keyLeft = LEFT;
-//    static const KEY keyRight = RIGHT;
-//
-//    if (input->IsKeyDown(keyLeft))
-//    {
-//        auto input = EngineCore::GetInstance()->GetInputSystem();
-//        auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
-//        auto mainCam = curScene->GetCameraManager()->GetMainCamera();
-//        mainCam->
-//    }
-//    else if (input->IsKeyDown(keyRight))
-//    {
-//        auto input = EngineCore::GetInstance()->GetInputSystem();
-//        auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
-//        auto mainCam = curScene->GetCameraManager()->GetMainCamera();
-//    }
-//
-//}
+void Player::CamRotTest(_float dt)
+{
+    auto input = EngineCore::GetInstance()->GetInputSystem();
+    static const KEY keyLeft = LEFT;
+    static const KEY keyRight = RIGHT;
+
+    if (input->IsKeyDown(keyLeft) || input->IsKeyDown(keyRight))
+    {
+        auto mainCam = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCameraManager()->GetMainCamera();
+
+        auto camTransform = mainCam->GetTarget();
+        auto playerTransform = GetComponent<TransformComponent>();
+
+        auto camObject = mainCam->GetOwner();
+        
+        if (dynamic_cast<ThirdCam*>(camObject))
+        {
+            auto thirdCam = camObject->GetComponent<ThirdcamComponent>();
+
+            _vec3 playerPos = playerTransform->GetWorldPosition();
+            _vec3 camPos = camTransform->GetWorldPosition();
+            _vec3 distance = camPos - playerPos;
+
+            _vec3 playerUp = playerTransform->GetUp();
+            _vec3 camRight = camTransform->GetRight();
+
+            _float fAngle;
+            if (input->IsKeyDown(keyLeft)) fAngle = D3DXToRadian(90.f * dt);
+            else if (input->IsKeyDown(keyRight)) fAngle = D3DXToRadian(-90.f * dt);
+            _matrix matRot;
+            D3DXMatrixRotationAxis(&matRot, &playerUp, fAngle);
+
+            _vec3 newPos;
+            D3DXVec3TransformCoord(&newPos, &distance, &matRot);
+            thirdCam->SetOffset(newPos);
+        }
+        //else if (dynamic_cast<FirstCam*>(camObject))
+        //{
+        //    camObject->GetComponent<FreecamComponent>();
+        //}
+        else
+            return;
+    }
+}
 
 void Player::CheckJump()
 {
@@ -1812,7 +1839,7 @@ void Player::KeyInput(_float dt)
     CheckDead();
     CheckJump();
     CheckSkill();
-    //CamRotTest();
+    CamRotTest(dt);
 }
 
 void Player::CheckStateRoll(_float dt)
