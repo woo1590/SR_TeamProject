@@ -16,5 +16,7 @@ private:
     void SetCollisionEnter(Object* other);
 
     void PlayerSpearInfo();
+
+    std::vector<Object*> hitMonsters;
 };
 

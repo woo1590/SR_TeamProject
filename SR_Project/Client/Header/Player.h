@@ -112,6 +112,8 @@ private:
     void SetUpIdleRotations();
     void UpdateNewIdleRotations();
 
+    void CamRotTest(_float dt);
+
     _vec3 MatrixToEulerAngles(const _matrix& mat);
     void OnCollisionStay(Object* other);
     void IdleSmoothing(_float dt, ePlayerBone bone);

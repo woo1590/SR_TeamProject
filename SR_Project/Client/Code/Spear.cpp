@@ -11,6 +11,7 @@
 #include "CollisionComponent.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Creeper.h"
 
 Spear::Spear(ObjectManager* owner, ObjectType objType) : Item(owner, objType) {}
 
@@ -69,12 +70,26 @@ void Spear::Late_Update(_float dt)
 
 void Spear::SetCollisionEnter(Object* other)
 {
+
     ObjectType objType = other->GetObjectType();
     auto collision = GetComponent<CollisionComponent>();
 
     if (objType == ObjectType::Monster &&
         static_cast<Player*>(ownerObject)->GetPlayerState() == Player::ePlayerState::ATTACK)
     {
+        if (other->GetObjectType() == ObjectType::Bone) return;
+        _bool includedMonster = false;
+        for (auto& m : hitMonsters)
+        {
+            if (m == other || dynamic_cast<Creeper*>(m))
+            {
+                includedMonster = true;
+                break;
+            }
+        }
+        if (includedMonster) return;
+        hitMonsters.push_back(other);
+
         float spearAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
 
         auto monster = static_cast<Monster*>(other);

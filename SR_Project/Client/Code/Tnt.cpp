@@ -15,6 +15,7 @@
 
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "Creeper.h"
 
 Tnt::Tnt(ObjectManager* owner, ObjectType objType) : Item(owner, objType){}
 
@@ -86,36 +87,39 @@ void Tnt::Update(_float dt)
         }
         if (TntTime >= TntBoom)
         {
-            //auto transform = GetComponent<TransformComponent>();
-            //auto pos = transform->GetWorldPosition();
-            //auto TntDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
-            //
-            //auto player = owner->GetFrontObject(ObjectType::Player);
-            //auto playerPos = player->GetComponent<TransformComponent>()->GetWorldPosition();
-            //
-            //_vec3 distanceVec = playerPos - pos;
-            //_float distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
-            //if (distance <= TntRange)
-            //{
-            //    player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-TntDamage);
-            //}
-            //
-            //auto monsters = owner->GetObjectList(ObjectType::Monster);
-            //for (auto& monster : monsters)
-            //{
-            //    
-            //    auto monsterPos = monster->GetComponent<TransformComponent>()->GetWorldPosition();
-            //
-            //    distanceVec = monsterPos - pos;
-            //    distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
-            //    if (distance <= TntRange)
-            //    {
-            //        auto mon = dynamic_cast<Monster*>(monster);
-            //        mon->SetHit(true);
-            //        mon->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), TntDamage);
-            //        monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-TntDamage);
-            //    }
-            //}
+            auto transform = GetComponent<TransformComponent>();
+            auto pos = transform->GetWorldPosition();
+            auto TntDamage = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
+            
+            auto player = owner->GetFrontObject(ObjectType::Player);
+            auto playerPos = player->GetComponent<TransformComponent>()->GetWorldPosition();
+            
+            _vec3 distanceVec = playerPos - pos;
+            _float distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
+            if (distance <= TntRange)
+            {
+                player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-TntDamage);
+            }
+            
+            auto monsters = owner->GetObjectList(ObjectType::Monster);
+            for (auto& monster : monsters)
+            {
+                if (monster->GetObjectType() == ObjectType::Bone) continue;
+                if (dynamic_cast<Creeper*>(monster))
+                    continue;
+
+                auto monsterPos = monster->GetComponent<TransformComponent>()->GetWorldPosition();
+            
+                distanceVec = monsterPos - pos;
+                distance = sqrtf(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y + distanceVec.z * distanceVec.z);
+                if (distance <= TntRange)
+                {
+                    auto mon = dynamic_cast<Monster*>(monster);
+                    mon->SetHit(true);
+                    mon->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), TntDamage);
+                    monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-TntDamage);
+                }
+            }
             EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomTNT");
             SetDead();
         }

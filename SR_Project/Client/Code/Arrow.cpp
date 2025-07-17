@@ -14,6 +14,7 @@
 
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "Creeper.h"
 
 Arrow::Arrow(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
 {
@@ -128,43 +129,50 @@ void Arrow::Late_Update(_float dt)
 
 void Arrow::SetCollisionEnter(Object* other)
 {
-    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitArrow");
-    if (hitObject != nullptr) return;
-    
+    if (hitObject != nullptr)
+        return;
+
+    if (other->GetObjectType() == ObjectType::Bone)
+        return;
+
     arrowSpeed = 0.f;
+    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitArrow");
 
     ObjectType objType = other->GetObjectType();
-    if (objType == ObjectType::StaticBlock && hitObject==nullptr) {
-        hitObject = other;
-        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
-    }
-    if (objType == ObjectType::Monster && hitObject == nullptr) 
+    switch (objType)
     {
-        hitObject = other;
-        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
-
-        auto info = GetComponent<InfoComponent<ItemInfo>>();
-        auto collision = GetComponent<CollisionComponent>();
-
-        float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + info->GetInfo().value;
+    case ObjectType::Monster:
+    {
+        if (dynamic_cast<Creeper*>(other))
+        {
+            hitObject = other;
+            hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+            return;
+        }
+        InfoComponent<ItemInfo>* info = GetComponent<InfoComponent<ItemInfo>>();
+        CollisionComponent* collision = GetComponent<CollisionComponent>();
+        _float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power + info->GetInfo().value;
         arrowAttackDamage *= damagePercent;
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-arrowAttackDamage);
 
-        auto monster = static_cast<Monster*>(other);
+        Monster* monster = static_cast<Monster*>(other);
         monster->SetHit(true);
         monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), arrowAttackDamage);
     }
-
-    if (objType == ObjectType::Player && hitObject == nullptr)
+        break;
+    case ObjectType::Player:
     {
-        auto info = GetComponent<InfoComponent<ItemInfo>>();
-        auto collision = GetComponent<CollisionComponent>();
+        InfoComponent<ItemInfo>* info = GetComponent<InfoComponent<ItemInfo>>();
+        CollisionComponent* collision = GetComponent<CollisionComponent>();
 
-        float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<EnemyInfo>>()->GetInfo().power + info->GetInfo().value;
+        _float arrowAttackDamage = ownerObject->GetComponent<InfoComponent<EnemyInfo>>()->GetInfo().power + info->GetInfo().value;
         arrowAttackDamage *= damagePercent;
         other->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-arrowAttackDamage);
+    }
+    case ObjectType::StaticBlock: case ObjectType::CollisionBlock:
         hitObject = other;
         hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
+        break;
     }
 }
 

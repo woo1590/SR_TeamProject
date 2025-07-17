@@ -26,6 +26,8 @@ public:
     _matrix GetViewMatrix()const;
     _matrix GetProjMatrix()const;
     Ray ScreenPointRay();
+
+    TransformComponent* GetTarget() { return Target; };
 private:
     void Free()override;
 

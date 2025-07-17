@@ -36,6 +36,10 @@
 #include "SoundManager.h"
 #include "Npc.h"
 #include "DialogComponent.h"
+#include "FirstCam.h"
+#include "ThirdCam.h"
+#include "FreecamComponent.h"
+#include "ThirdcamComponent.h"
 
 Player::Player(ObjectManager* owner, ObjectType objType) : BaseCharacter(owner, objType) 
 {
@@ -196,7 +200,7 @@ void Player::PickingTerrain()
         //////////////////////////////////////////////
         if (hit.IsHit)
         {
-            if (input->IsKeyPressed(Z) || hit.Component->GetLayer() == LAYER_ENEMY    &&
+            if ( (input->IsKeyPressed(Z) || hit.Component->GetLayer() == LAYER_ENEMY)    &&
                 Bones["RHand"] != nullptr                   )
             {
                 if (State == ePlayerState::IDLE)
@@ -1146,6 +1150,62 @@ void Player::UpdateNewIdleRotations()
         idleRot[{static_cast<int>(ItemType::Spear), static_cast<int>(ePlayerBone::RHAND)}] = _vec3(0.f, 0.f, 0.f);
 }
 
+void Player::CamRotTest(_float dt)
+{
+    auto input = EngineCore::GetInstance()->GetInputSystem();
+    static const KEY keyLeft = LEFT;
+    static const KEY keyRight = RIGHT;
+
+    if (input->IsKeyDown(keyLeft) || input->IsKeyDown(keyRight))
+    {
+        auto mainCam = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCameraManager()->GetMainCamera();
+
+        auto camTransform = mainCam->GetTarget();
+        auto playerTransform = GetComponent<TransformComponent>();
+
+        auto camObject = mainCam->GetOwner();
+        
+        if (dynamic_cast<ThirdCam*>(camObject))
+        {
+            auto thirdCam = camObject->GetComponent<ThirdcamComponent>();
+
+            _vec3 playerPos = playerTransform->GetWorldPosition();
+            _vec3 camPos = camTransform->GetWorldPosition();
+            _vec3 distance = camPos - playerPos;
+
+            _vec3 playerUp = playerTransform->GetUp();
+            _vec3 camRight = camTransform->GetRight();
+
+            _float fAngle;
+            if (input->IsKeyDown(keyLeft))
+            {
+                fAngle = D3DXToRadian(180.f * dt);
+            }
+            else if (input->IsKeyDown(keyRight))
+            {
+                fAngle = D3DXToRadian(-180.f * dt);
+            }
+            else
+            {
+                fAngle = 0.f;
+            }
+
+            _matrix matRot;
+            D3DXMatrixRotationAxis(&matRot, &playerUp, fAngle);
+
+            _vec3 newPos;
+            D3DXVec3TransformCoord(&newPos, &distance, &matRot);
+            thirdCam->SetOffset(newPos);
+        }
+        //else if (dynamic_cast<FirstCam*>(camObject))
+        //{
+        //    camObject->GetComponent<FreecamComponent>();
+        //}
+        else
+            return;
+    }
+}
+
 void Player::CheckJump()
 {
     if (State != ePlayerState::IDLE && State != ePlayerState::WALK)
@@ -1219,15 +1279,15 @@ void Player::UnEquipItem(ItemType itemType)
         Bones["LHand"] = nullptr;
         break;
     case ItemType::CrossBow:
-        Safe_Release(Bones["LHand"]);
+        Bones["LHand"]->SetDead();
         Bones["LHand"] = nullptr;
         break;
     case ItemType::Sword:
-        Safe_Release(Bones["RHand"]);
+        Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Spear:
-        Safe_Release(Bones["RHand"]);
+        Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
         break;
     }
@@ -1530,18 +1590,21 @@ void Player::UpdateRoll(_float dt)
 void Player::UpdateAttack(_float dt) {
     AttackTime += dt;
 
+    if (!Bones["RHand"])
+    {
+        State = ePlayerState::IDLE;
+        return;
+    }
     //Components
     auto transform = GetComponent<TransformComponent>();
 
     //Rotate Bones
-
     float fProgress = AttackTime / AttackDuration;
     fProgress = std::clamp(fProgress, 0.f, 1.f);
     
     if (AttackTime == dt)
     {
         SaveStartRotation();
-        if (!Bones["RHand"]) return;
         ItemType type = static_cast<Item*>(Bones["RHand"])->GetItemType();
         switch (type)
         {
@@ -1616,6 +1679,11 @@ void Player::UpdateAttack(_float dt) {
 void Player::UpdateShoot(_float dt) {
     AttackTime += dt;
 
+    if (!Bones["LHand"])
+    {
+        State = ePlayerState::IDLE;
+        return;
+    }
     //Components
     auto transform = GetComponent<TransformComponent>();
 
@@ -1861,6 +1929,7 @@ void Player::KeyInput(_float dt)
     CheckDead();
     CheckJump();
     CheckSkill();
+    CamRotTest(dt);
 }
 
 void Player::CheckStateRoll(_float dt)
@@ -1872,7 +1941,7 @@ void Player::CheckStateRoll(_float dt)
     {
         switch (State)
         {
-        case ePlayerState::WALK:
+        case ePlayerState::IDLE: case ePlayerState::WALK:
             EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Roll");
             State = ePlayerState::ROLL;
             SaveStartRotation();
