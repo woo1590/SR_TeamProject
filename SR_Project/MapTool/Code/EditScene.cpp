@@ -173,13 +173,16 @@ void EditScene::ImGui_Main()
 	ImGui_Info();
 	ImGui_Terrain();
 	ImGui_SaveLoad();
+	ImGui::End();
+
+	ImGui::Begin("==== Set Block Type & Info ====", NULL, 0);
+	ImGui_SetMode();
+	ImGui_SetPrefab();
 	ImGui_SetBlockType();
 	ImGui_SetBlockUsage();
 	ImGui_SetBlockInfo();
-	ImGui_SetPrefab();
 	ImGui::End();
 
-	ImGui::SetNextWindowPos({ 0.f, 350.f });
 	ImGui::Begin("==== Link IronCage & Lever ====");
 	ImGui_LinkLever();
 	ImGui::End();
@@ -187,49 +190,18 @@ void EditScene::ImGui_Main()
 
 void EditScene::ImGui_Info()
 {
-	static bool checkMouse(false), checkPrefab(false), checkLoading(false);
-	if (ImGui::Checkbox(" : MOUSE DOWN", &checkMouse)) isDown = checkMouse;
-	ImGui::SameLine();
-	if (ImGui::Checkbox(" : PREFAB MODE", &checkPrefab)) isPrefab = checkPrefab;
-	ImGui::SameLine();
+	static bool checkLoading(false);
 	if (ImGui::Checkbox(" : CHUNK LOADING", &checkLoading)) isLoading = checkLoading;
+	ImGui::SameLine();
+	if (ImGui::Button("Load All Prefabs")) PrefabMgr->LoadAllPrefabs("../Resource/Prefab/");
 
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
 	ImGui::Text("Dynamic Block Count : %d", dynamicBlocks.size());
-
-	if (ImGui::Button("Load All Prefabs")) PrefabMgr->LoadAllPrefabs("../Resource/Prefab/");
 }
 
 void EditScene::ImGui_Terrain()
 {
-	// 생성할 지형 넓이 지정
-	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
-	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthZ", &WidthZ);
-
-	// 생성할 지형 높이와 굴곡도 지정
-	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
-	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
-
-	if (ImGui::Button("CREATE HEIGHTMAP")) CreateTerrain("heightMap");
-	ImGui::SameLine();
-	if (ImGui::Button("CREATE TERRAIN"))
-	{
-		Terrain->Free();
-		staticBlocks.clear();
-		ChunkMgr->ClearAllChunks();
-
-		SetCurChunkZero();
-
-		selectedSBlockType = 0;
-		dynamicBlocks.clear();
-		ObjectMgr->ClearList(ObjectType::Part);
-		ObjectMgr->ClearList(ObjectType::AlphaBlock);
-		ObjectMgr->ClearList(ObjectType::DynamicBlock);
-
-		PlaceTerrainBlocks("heightMap");
-	}
-
 	if (ImGui::Button("CLEAR TERRAIN"))
 	{
 		Terrain->Free();
@@ -258,9 +230,31 @@ void EditScene::ImGui_Terrain()
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("BUILDCHUNKFACE"))
+	if (ImGui::Button("BUILDCHUNKFACE")) for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
+
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthX /", &WidthX); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : WidthZ", &WidthZ);
+
+	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
+	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
+
+	if (ImGui::Button("CREATE HEIGHTMAP")) CreateTerrain("heightMap2");
+	ImGui::SameLine();
+	if (ImGui::Button("CREATE TERRAIN"))
 	{
-		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
+		Terrain->Free();
+		staticBlocks.clear();
+		ChunkMgr->ClearAllChunks();
+
+		SetCurChunkZero();
+
+		selectedSBlockType = 0;
+		dynamicBlocks.clear();
+		ObjectMgr->ClearList(ObjectType::Part);
+		ObjectMgr->ClearList(ObjectType::AlphaBlock);
+		ObjectMgr->ClearList(ObjectType::DynamicBlock);
+
+		PlaceTerrainBlocks("heightMap2");
 	}
 }
 
@@ -308,127 +302,12 @@ void EditScene::ImGui_SaveLoad()
 	}
 }
 
-void EditScene::ImGui_SetBlockType()
+void EditScene::ImGui_SetMode()
 {
-	if (isPrefab) return;
-
-	if (dynamicBlockType == DynamicBlockType::dBlockNone)
-	{
-		// 블럭 종류 선택
-		const char* staticBlockNames[] =
-		{
-			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK", 
-			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
-			"GLASS", "LEAF",
-			"OAK", "DIRTPATH", "FURNACE", "HAYBALE", "DARKWOODPLANK",
-			"WHITEWOOL", "YELLOWWOOL", "TERRACOTA"
-		};
-
-		// 선택할 때마다, 다른 값들 초기화
-		if (ImGui::Combo(" : Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
-		{
-			staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
-			selectedSBlockUsage = 0; staticBlockUsage = StaticBlockUsage::Basic;
-			selectedSBlockAxis = 1; staticBlockAxis = StaticBlockAxis::sAY;
-			selectedSBlockRot = 0; staticBlockRot = StaticBlockRot::sZP;
-		}
-	}
-
-	if (staticBlockType == StaticBlockType::Air)
-	{
-		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE"};
-
-		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
-			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
-	}
-}
-
-void EditScene::ImGui_SetBlockUsage()
-{
-	if (staticBlockType == StaticBlockType::Air) return;
-
-	std::vector<const char*> usageOptions;
-	std::vector<StaticBlockUsage> usageEnums;
-
-	// 블럭 모양 결정
-	switch (staticBlockType)
-	{
-	case Dirt: case GrassDirt: case DirtPath: case Wood: case Oak:
-	case StoneBrick: case MossyStoneBrick: case Furnace: case DarkWoodPlank:
-	case WhiteWool: case YellowWool: case Terracota:
-		staticBlockUsage = Basic;
-		return;
-	case StaticBlockType::WoodPlank: 
-		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE", "DOOR"};
-		usageEnums = { Basic, Half, Stair, Fence, Door };
-		break;
-	case StaticBlockType::Stone: case StaticBlockType::CobbleStone:
-		usageOptions = { "BASIC", "HALF", "STAIR" };
-		usageEnums = { Basic, Half, Stair, Fence };
-		break;
-	case StaticBlockType::SmoothStone:
-		usageOptions = { "BASIC", "HALF", "STAIR" };
-		usageEnums = { Basic, Half, Stair };
-		break;
-	case StaticBlockType::Glass: case StaticBlockType::Leaf:
-		staticBlockUsage = Alpha;
-		return;
-	}
-
-	if (!usageOptions.empty())
-	{
-		if (ImGui::Combo(" : Usage", &selectedSBlockUsage, usageOptions.data(), static_cast<int>(usageOptions.size())))
-		{
-			staticBlockUsage = usageEnums[selectedSBlockUsage];
-			staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
-			staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
-		}
-	}
-}
-
-void EditScene::ImGui_SetBlockInfo()
-{
-	if (staticBlockType != StaticBlockType::Air)
-	{
-		const char* axisNames[] = { "X", "Y", "Z" };
-		const char* rotNames[] = { "+Z", "-Z", "+X", "-X", "None"};
-
-		// 블럭 방향 및 회전 지정
-		switch (staticBlockUsage)
-		{
-		case StaticBlockUsage::Basic:
-			if (staticBlockType == Furnace)
-			{
-				if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
-					staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
-			}
-			else
-			{
-				if (ImGui::Combo(" : Axis", &selectedSBlockAxis, axisNames, IM_ARRAYSIZE(axisNames)))
-					staticBlockAxis = static_cast<StaticBlockAxis>(selectedSBlockAxis);
-			}
-			break;
-		case StaticBlockUsage::Stair: case StaticBlockUsage::Fence:
-			if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
-				staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
-			break;
-		}
-	}
-	else
-	{
-		const char* dynamicRotNames[] = { "+X", "-X", "+Z", "-Z" };
-
-		// 블럭 방향 및 개수 지정
-		switch (dynamicBlockType)
-		{
-		case DynamicBlockType::BasicChest: case DynamicBlockType::IronCages:
-			if (ImGui::Combo(" : Rotation", &selectedDBlockRot, dynamicRotNames, IM_ARRAYSIZE(dynamicRotNames)))
-				dynamicBlockRot = static_cast<DynamicBlockRot>(selectedDBlockRot);
-			if (dynamicBlockType == DynamicBlockType::IronCages)
-				ImGui::InputInt(" : Count", &Count);
-			break;
-		}
-	}
+	static bool checkMouse(false), checkPrefab(false);
+	if (ImGui::Checkbox(" : MOUSE DOWN", &checkMouse)) isDown = checkMouse;
+	ImGui::SameLine();
+	if (ImGui::Checkbox(" : PREFAB MODE", &checkPrefab)) isPrefab = checkPrefab;
 }
 
 void EditScene::ImGui_SetPrefab()
@@ -487,6 +366,134 @@ void EditScene::ImGui_SetPrefab()
 
 		std::string selectedKey = prefabNames[selectedIndex];
 		selectedPrefab = PrefabMgr->GetPrefab(selectedKey);
+	}
+}
+
+void EditScene::ImGui_SetBlockType()
+{
+	if (isPrefab) return;
+
+	if (dynamicBlockType == DynamicBlockType::dBlockNone)
+	{
+		// 블럭 종류 선택
+		const char* staticBlockNames[] =
+		{
+			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK", 
+			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
+			"GLASS", "LEAF",
+			"OAK", "DIRTPATH", "FURNACE", "HAYBALE", "DARKWOODPLANK",
+			"WHITEWOOL", "YELLOWWOOL", "TERRACOTA",
+			"DARKDIRT", "DARKWOOD", "BOOKSHELF", "DARKGRASS", "DARKSTONE", "DARKLEAF"
+		};
+
+		// 선택할 때마다, 다른 값들 초기화
+		if (ImGui::Combo(" : Static Type", &selectedSBlockType, staticBlockNames, IM_ARRAYSIZE(staticBlockNames)))
+		{
+			staticBlockType = static_cast<StaticBlockType>(selectedSBlockType);
+			selectedSBlockUsage = 0; staticBlockUsage = StaticBlockUsage::Basic;
+			selectedSBlockAxis = 1; staticBlockAxis = StaticBlockAxis::sAY;
+			selectedSBlockRot = 0; staticBlockRot = StaticBlockRot::sZP;
+		}
+	}
+
+	if (staticBlockType == StaticBlockType::Air)
+	{
+		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE" };
+
+		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
+			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
+	}
+}
+
+void EditScene::ImGui_SetBlockUsage()
+{
+	if (staticBlockType == StaticBlockType::Air) return;
+
+	std::vector<const char*> usageOptions;
+	std::vector<StaticBlockUsage> usageEnums;
+
+	// 블럭 모양 결정
+	switch (staticBlockType)
+	{
+	case Dirt: case GrassDirt: case DirtPath: case Wood: case Oak:
+	case StoneBrick: case MossyStoneBrick: case Furnace: case BookShelf:
+	case WhiteWool: case YellowWool: case Terracota: case DarkDirt: case DarkGrass:
+		staticBlockUsage = Basic;
+		return;
+	case WoodPlank: 
+		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE", "DOOR", "MINIDOOR" };
+		usageEnums = { Basic, Half, Stair, Fence, Door, MiniDoor };
+		break;
+	case DarkWoodPlank:
+		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE" };
+		usageEnums = { Basic, Half, Stair, Fence };
+		break;
+	case Stone: case CobbleStone: case DarkStone:
+		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE"};
+		usageEnums = { Basic, Half, Stair, Fence };
+		break;
+	case SmoothStone:
+		usageOptions = { "BASIC", "HALF", "STAIR" };
+		usageEnums = { Basic, Half, Stair };
+		break;
+	case Glass: case Leaf: case DarkLeaf:
+		staticBlockUsage = Alpha;
+		return;
+	}
+
+	if (!usageOptions.empty())
+	{
+		if (ImGui::Combo(" : Usage", &selectedSBlockUsage, usageOptions.data(), static_cast<int>(usageOptions.size())))
+		{
+			staticBlockUsage = usageEnums[selectedSBlockUsage];
+			staticBlockAxis = StaticBlockAxis::sAY; selectedSBlockAxis = 1;
+			staticBlockRot = StaticBlockRot::sZP; selectedSBlockRot = 0;
+		}
+	}
+}
+
+void EditScene::ImGui_SetBlockInfo()
+{
+	if (staticBlockType != StaticBlockType::Air)
+	{
+		const char* axisNames[] = { "X", "Y", "Z" };
+		const char* rotNames[] = { "+Z", "-Z", "+X", "-X", "None"};
+
+		// 블럭 방향 및 회전 지정
+		switch (staticBlockUsage)
+		{
+		case StaticBlockUsage::Basic:
+			if (staticBlockType == Furnace)
+			{
+				if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
+					staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
+			}
+			else
+			{
+				if (ImGui::Combo(" : Axis", &selectedSBlockAxis, axisNames, IM_ARRAYSIZE(axisNames)))
+					staticBlockAxis = static_cast<StaticBlockAxis>(selectedSBlockAxis);
+			}
+			break;
+		case StaticBlockUsage::Stair: case StaticBlockUsage::Fence:
+			if (ImGui::Combo(" : Rotation", &selectedSBlockRot, rotNames, IM_ARRAYSIZE(rotNames)))
+				staticBlockRot = static_cast<StaticBlockRot>(selectedSBlockRot);
+			break;
+		}
+	}
+	else
+	{
+		const char* dynamicRotNames[] = { "+X", "-X", "+Z", "-Z" };
+
+		// 블럭 방향 및 개수 지정
+		switch (dynamicBlockType)
+		{
+		case DynamicBlockType::BasicChest: case DynamicBlockType::IronCages:
+			if (ImGui::Combo(" : Rotation", &selectedDBlockRot, dynamicRotNames, IM_ARRAYSIZE(dynamicRotNames)))
+				dynamicBlockRot = static_cast<DynamicBlockRot>(selectedDBlockRot);
+			if (dynamicBlockType == DynamicBlockType::IronCages)
+				ImGui::InputInt(" : Count", &Count);
+			break;
+		}
 	}
 }
 
@@ -633,21 +640,17 @@ void EditScene::UpdateCreateTerrain()
 	if (!isCreate) return;
 
 	static bool placeBlock(false);
-
 	if (!placeBlock)
 	{
 		const auto& blocks = Terrain->GetBlocksInChunk(CurChunkX, CurChunkZ);
-
 		for (const auto& block : blocks)
 		{
 			staticBlockUsage = block.Usage;
 			staticBlockType = block.Type;
 			staticBlockAxis = block.Axis;
 			staticBlockRot = block.Rot;
-
 			PlaceBlock(block.Pos);
 		}
-
 		placeBlock = true;
 	}
 	else

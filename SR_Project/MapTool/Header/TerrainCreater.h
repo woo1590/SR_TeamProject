@@ -5,7 +5,8 @@
 class TerrainCreater : public Base
 {
 private:
-    struct pair_hash {
+    struct PairHash
+    {
         template <class T1, class T2>
         std::size_t operator () (const std::pair<T1, T2>& p) const
         {
@@ -44,5 +45,5 @@ private:
     int Hei = 0;
 
     std::vector<unsigned char> heightMap;
-    std::unordered_map<std::pair<int, int>, std::vector<SB>, pair_hash> chunkedBlocks;
+    std::unordered_map<std::pair<int, int>, std::vector<SB>, PairHash> chunkBlocks;
 };

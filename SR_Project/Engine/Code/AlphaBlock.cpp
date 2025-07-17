@@ -50,6 +50,8 @@ HRESULT AlphaBlock::Ready_Object(ObjectManager* owner, ObjectType objType, Stati
     case StaticBlockType::Leaf:
         renderer->SetMaterial("Leaf_Mtrl");
         break;
+    case StaticBlockType::DarkLeaf:
+        renderer->SetMaterial("DarkLeaf_Mtrl");
     }
 
     return S_OK;

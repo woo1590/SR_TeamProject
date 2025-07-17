@@ -43,7 +43,7 @@ public:
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
     void SetBlockAir(int x, int y, int z)
     {
-        if (Blocks[x][y - 1][z].Type == Dirt && Blocks[x][y][z].Type == GrassDirt) Blocks[x][y - 1][z].Type = GrassDirt;
+        if (Blocks[x][y - 1][z].Type == DarkDirt && Blocks[x][y][z].Type == DarkGrass) Blocks[x][y - 1][z].Type = DarkGrass;
         Blocks[x][y][z].Type = Air;
     }
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);

@@ -28,6 +28,9 @@
         "Leaf_Mtrl": {
             "textures": { "CubeMap": "../Resource/Texture/Block/Leaf.dds" }
         },
+        "DarkLeaf_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/DarkLeaf.dds" }
+        },
 
         "ChestBottom_Mtrl": {
             "textures": { "CubeMap": "../Resource/Texture/Block/ChestBottom.dds" }

@@ -132,16 +132,17 @@ namespace Engine
 		Glass, Leaf,
 		Oak, DirtPath, Furnace, Haybale, DarkWoodPlank,
 		WhiteWool, YellowWool, Terracota,
+		DarkDirt, DarkWood, BookShelf, DarkGrass, DarkStone, DarkLeaf,
 		sBlockEnd
 	};
-	enum StaticBlockUsage { Basic, Half, Stair, Fence, Alpha, Door };
+	enum StaticBlockUsage { Basic, Half, Stair, Fence, Alpha, Door, MiniDoor };
 
 	enum DynamicBlockCol { dZP, dZM, dXP, dXM, dYP, dAEnd };
 	enum DynamicBlockRot { drXP, drXM, drZP, drZM, dREnd };
 	enum DynamicBlockType
 	{
 		dBlockNone,
-		LeverSwitch, BasicChest, IronCages, WoodBridge,
+		LeverSwitch, BasicChest, IronCages,
 		dBlockEnd
 	};
 
