@@ -16,6 +16,7 @@ public:
 private:
     HRESULT Load_TestScene();
     HRESULT Load_Village();
+    HRESULT Load_Stage1();
     HRESULT load_UIResources();
 
     void Free()override;

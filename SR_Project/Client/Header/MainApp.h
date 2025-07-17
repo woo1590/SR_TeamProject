@@ -30,6 +30,8 @@ private:
 
     void Free()override;
 private:
+    HRESULT LoadDefaultResource();
+
     HWND hWnd;
     HINSTANCE hInstance;
     RECT windowSize;

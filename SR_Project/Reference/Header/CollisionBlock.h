@@ -14,6 +14,7 @@ public:
     static CollisionBlock* Create(ObjectManager* owner, ObjectType objType);
     HRESULT Ready_Object()override;
 
+    void SetOwner(ObjectManager* owner) { this->owner = owner; }
 private:
     void Free()override;
 };

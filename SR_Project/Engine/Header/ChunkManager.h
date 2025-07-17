@@ -6,7 +6,7 @@ class Chunk;
 class Scene;    
 class ENGINE_DLL ChunkManager : public Base
 {
-private:
+public:     //청크로더에서 접근하기 위해 public으로 둠
     struct PairHash
     {
         size_t operator()(const std::pair<int, int>& key) const { return std::hash<int>()(key.first) ^ (std::hash<int>()(key.second) << 1); }
@@ -32,6 +32,9 @@ public:
 
     Chunk* GetChunk(int chunkX, int chunkZ);        // Key 값의 청크 있으면 해당 청크 반환
     const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() const { return worldChunks; }
+
+    /*-----------------Only Client-------------------------*/
+    void SetChunk(std::unordered_map<std::pair<int, int>, Chunk*, PairHash>& chunks);
 
 private:
     void Free()override;

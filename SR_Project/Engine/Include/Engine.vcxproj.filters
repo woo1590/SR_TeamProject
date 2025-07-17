@@ -303,7 +303,7 @@
     </Filter>
     <Filter Include="07. Object Component\Renderer\SpriteRenderer">
       <UniqueIdentifier>{af9db076-9ef3-4390-962e-cf1f3af57986}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="06. Object\02. DynamicBlock">
       <UniqueIdentifier>{f70839ee-bc53-45ee-884e-c96eb4549b31}</UniqueIdentifier>
     </Filter>
@@ -324,6 +324,9 @@
     </Filter>
     <Filter Include="05. Scene Component\UIManager\DialogManager">
       <UniqueIdentifier>{870abea1-b38e-4b43-a8e5-87ab6360975e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ChunkLoader">
+      <UniqueIdentifier>{cf1aadbb-5c19-4f1b-8d90-f9d52862cd55}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -658,6 +661,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DialogManager.cpp">
       <Filter>05. Scene Component\UIManager\DialogManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ChunkLoader.cpp">
+      <Filter>01. Engine Component\ChunkLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1018,6 +1024,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\DialogManager.h">
       <Filter>05. Scene Component\UIManager\DialogManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ChunkLoader.h">
+      <Filter>01. Engine Component\ChunkLoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

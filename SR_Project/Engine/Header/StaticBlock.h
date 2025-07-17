@@ -20,6 +20,9 @@ public:
     StaticBlockType GetType() { return Type; }
     _vec3 GetPosition() { return AddComponent<TransformComponent>()->GetPosition(); }
 
+    /*-------------Only Client-------------*/
+    void SetOwner(ObjectManager* owner) { this->owner = owner; }
+
 private:
     void Free() override;
 

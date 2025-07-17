@@ -9,6 +9,7 @@
 #include "LightSystem.h"
 #include "InputSystem.h"
 #include "SoundManager.h"
+#include "ChunkLoader.h"
 
 #ifdef USE_IMGUI
 #include "ImGuiManager.h"
@@ -65,6 +66,10 @@ HRESULT EngineCore::Ready_Engine(HWND hWnd)
 
 	InputSys = InputSystem::Create();
 	if (!InputSys)
+		return E_FAIL;
+
+	chunkLoader = ChunkLoader::Create();
+	if (!chunkLoader)
 		return E_FAIL;
 
 	random = Random::Create();
@@ -156,6 +161,11 @@ LightSystem* EngineCore::GetLightSystem() const
 InputSystem* EngineCore::GetInputSystem() const
 {
 	return InputSys;
+}
+
+ChunkLoader* EngineCore::GetChunkLoader() const
+{
+	return chunkLoader;
 }
 
 Random* EngineCore::GetRandom() const

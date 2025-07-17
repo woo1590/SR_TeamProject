@@ -2,6 +2,7 @@
 #include "Loader.h"
 #include "EngineCore.h"
 #include "ResourceManager.h"
+#include "ChunkLoader.h"
 #include "SoundManager.h"
 #include "StaticMesh.h"
 #include "TerrainMesh.h"
@@ -36,8 +37,8 @@ HRESULT Loader::Ready_Loader()
 {
 	InitializeCriticalSection(&Crt);
 
-	if (FAILED(load_UIResources()))
-		return E_FAIL;
+	//if (FAILED(load_UIResources()))
+	//	return E_FAIL;
 
 	H_Thread = (HANDLE)_beginthreadex(NULL, 0, LoaderMain, this, 0, NULL);
 
@@ -57,6 +58,7 @@ HRESULT Loader::Loading()
 		hr = Load_Village();
 		break;
 	case LOADID::Stage1:
+		hr = Load_Stage1();
 		break;
 	case LOADID::Stage2:
 		break;
@@ -142,6 +144,8 @@ HRESULT Loader::Load_Village()
 {
 	auto resource = EngineCore::GetInstance()->GetResourceManager();
 	auto sound = EngineCore::GetInstance()->GetSoundManager();
+	auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
+
 	/*----------------------Load Mesh----------------------------*/
 	{
 		auto cube = CubeMesh::Create();
@@ -239,157 +243,175 @@ HRESULT Loader::Load_Village()
 		resource->LoadSprite("Walk", 7);
 		resource->LoadSprite("Dead", 8);
 	}
+
+	/*--------------------Load Chunk----------------------*/
+	{
+		chunkload->LoadChunk(L"../../Reference/MapData/VillageMap.chunkmap");
+	}
+
+	return S_OK;
+}
+
+HRESULT Loader::Load_Stage1()
+{
+	auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
+
+	/*--------------------Load Chunk----------------------*/
+	{
+		chunkload->LoadChunk(L"../../Reference/MapData/Stage1.chunkmap");
+	}
+
 	return S_OK;
 }
 
 HRESULT Loader::load_UIResources()
 {
-	// UI 리소스 정보를 담는 통합 구조체
-	struct UIResourceInfo
-	{
-		const wchar_t* name;
-		TEXTURE type;
-		std::optional<int> layer; // 레이어가 없는 리소스는 std::nullopt
-	};
+	//// UI 리소스 정보를 담는 통합 구조체
+	//struct UIResourceInfo
+	//{
+	//	const wchar_t* name;
+	//	TEXTURE type;
+	//	std::optional<int> layer; // 레이어가 없는 리소스는 std::nullopt
+	//};
 
-	const auto eUI = TEXTURE::Tex_Diffuse;
+	//const auto eUI = TEXTURE::Tex_Diffuse;
 
-	// 모든 UI 리소스를 하나의 정적 배열에서 관리 (레이어 순으로 정렬)
-	static const UIResourceInfo uiResources[] = {
-		// =====================================================================
-		// Layer -1 (가장 뒤에 있는 배경 이미지)
-		// =====================================================================
-		{L"Logo",                     eUI, -1},
-		{L"loadingscene",             eUI, -1},
-		{L"InventoryPanel",           eUI, -1},
-		{L"worldmap",                 eUI, -1},
-		{L"player_deathui",           eUI, -1},
+	//// 모든 UI 리소스를 하나의 정적 배열에서 관리 (레이어 순으로 정렬)
+	//static const UIResourceInfo uiResources[] = {
+	//	// =====================================================================
+	//	// Layer -1 (가장 뒤에 있는 배경 이미지)
+	//	// =====================================================================
+	//	{L"Logo",                     eUI, -1},
+	//	{L"loadingscene",             eUI, -1},
+	//	{L"InventoryPanel",           eUI, -1},
+	//	{L"worldmap",                 eUI, -1},
+	//	{L"player_deathui",           eUI, -1},
 
-		// =====================================================================
-		// Layer 0 (UI 베이스)
-		// =====================================================================
-		{L"hotbar_back",              eUI, 0},
-		{L"gearstrength_back",        eUI, 0},
-		{L"level_back",               eUI, 0},
-		{L"deathframe",               eUI, 0},
-		{L"loadingscene_lobby",       eUI, 0},
+	//	// =====================================================================
+	//	// Layer 0 (UI 베이스)
+	//	// =====================================================================
+	//	{L"hotbar_back",              eUI, 0},
+	//	{L"gearstrength_back",        eUI, 0},
+	//	{L"level_back",               eUI, 0},
+	//	{L"deathframe",               eUI, 0},
+	//	{L"loadingscene_lobby",       eUI, 0},
 
-		// =====================================================================
-		// Layer 1
-		// =====================================================================
-		{L"expbar_back",              eUI, 1},
-		{L"hpbar_white",              eUI, 1},
-		{L"icon_emerald",             eUI, 1},
-		{L"icon_enchant",             eUI, 1},
-		{L"gearslot",                 eUI, 1},
-		{L"gearslot_highlight",       eUI, 1},
-		{L"gearstrength",             eUI, 1},
-		{L"level_front",              eUI, 1},
-		{L"filter",                   eUI, 1},
-		{L"filter_hover",             eUI, 1},
-		{L"inventoryslot",            eUI, 1},
-		{L"itemslot",                 eUI, 1},
-		{L"inventory_emerald",        eUI, 1},
-		{L"inventory_enchant",        eUI, 1},
-		{L"scroll_back",              eUI, 1},
-		{L"locked_node_back",         eUI, 1},
-		{L"loading_stone",            eUI, 1},
-		{L"boss_icon",                eUI, 1},
+	//	// =====================================================================
+	//	// Layer 1
+	//	// =====================================================================
+	//	{L"expbar_back",              eUI, 1},
+	//	{L"hpbar_white",              eUI, 1},
+	//	{L"icon_emerald",             eUI, 1},
+	//	{L"icon_enchant",             eUI, 1},
+	//	{L"gearslot",                 eUI, 1},
+	//	{L"gearslot_highlight",       eUI, 1},
+	//	{L"gearstrength",             eUI, 1},
+	//	{L"level_front",              eUI, 1},
+	//	{L"filter",                   eUI, 1},
+	//	{L"filter_hover",             eUI, 1},
+	//	{L"inventoryslot",            eUI, 1},
+	//	{L"itemslot",                 eUI, 1},
+	//	{L"inventory_emerald",        eUI, 1},
+	//	{L"inventory_enchant",        eUI, 1},
+	//	{L"scroll_back",              eUI, 1},
+	//	{L"locked_node_back",         eUI, 1},
+	//	{L"loading_stone",            eUI, 1},
+	//	{L"boss_icon",                eUI, 1},
 
-		// =====================================================================
-		// Layer 2
-		// =====================================================================
-		{L"expbar_front",             eUI, 2},
-		{L"quickslot",                eUI, 2},
-		{L"quickslot_hover",          eUI, 2},
-		{L"arrow_slot",               eUI, 2},
-		{L"gearslot_plus",            eUI, 2},
-		{L"gearslot_hover",           eUI, 2},
-		{L"slot_selected",            eUI, 2},
-		{L"swordfilter",              eUI, 2},
-		{L"swordfilter_hover",        eUI, 2},
-		{L"arrowfilter",              eUI, 2},
-		{L"arrowfilter_hover",        eUI, 2},
-		{L"armorfilter",              eUI, 2},
-		{L"armorfilter_hover",        eUI, 2},
-		{L"potionfilter",             eUI, 2},
-		{L"potionfilter_hover",       eUI, 2},
-		{L"enchantfilter",            eUI, 2},
-		{L"enchantfilter_hover",      eUI, 2},
-		{L"costumefilter",            eUI, 2},
-		{L"costumefilter_hover",      eUI, 2},
-		{L"locked_node",              eUI, 2},
-		{L"map_node_front",           eUI, 2},
+	//	// =====================================================================
+	//	// Layer 2
+	//	// =====================================================================
+	//	{L"expbar_front",             eUI, 2},
+	//	{L"quickslot",                eUI, 2},
+	//	{L"quickslot_hover",          eUI, 2},
+	//	{L"arrow_slot",               eUI, 2},
+	//	{L"gearslot_plus",            eUI, 2},
+	//	{L"gearslot_hover",           eUI, 2},
+	//	{L"slot_selected",            eUI, 2},
+	//	{L"swordfilter",              eUI, 2},
+	//	{L"swordfilter_hover",        eUI, 2},
+	//	{L"arrowfilter",              eUI, 2},
+	//	{L"arrowfilter_hover",        eUI, 2},
+	//	{L"armorfilter",              eUI, 2},
+	//	{L"armorfilter_hover",        eUI, 2},
+	//	{L"potionfilter",             eUI, 2},
+	//	{L"potionfilter_hover",       eUI, 2},
+	//	{L"enchantfilter",            eUI, 2},
+	//	{L"enchantfilter_hover",      eUI, 2},
+	//	{L"costumefilter",            eUI, 2},
+	//	{L"costumefilter_hover",      eUI, 2},
+	//	{L"locked_node",              eUI, 2},
+	//	{L"map_node_front",           eUI, 2},
 
-		// =====================================================================
-		// Layer 3
-		// =====================================================================
-		{L"mouse_left",               eUI, 3},
-		{L"mouse_right",              eUI, 3},
-		{L"dash_icon",                eUI, 3},
-		{L"quickslot_plus",           eUI, 3},
-		{L"questpanel",               eUI, 3},
-		{L"enemy_hpbarback",          eUI, 3},
+	//	// =====================================================================
+	//	// Layer 3
+	//	// =====================================================================
+	//	{L"mouse_left",               eUI, 3},
+	//	{L"mouse_right",              eUI, 3},
+	//	{L"dash_icon",                eUI, 3},
+	//	{L"quickslot_plus",           eUI, 3},
+	//	{L"questpanel",               eUI, 3},
+	//	{L"enemy_hpbarback",          eUI, 3},
 
-		// =====================================================================
-		// Layer 4
-		// =====================================================================
-		{L"hpbar_back",               eUI, 4},
-		{L"quest_icon",               eUI, 4},
-		{L"map_node",                 eUI, 4},
-		{L"enemy_hpbarfront",         eUI, 4},
-		{L"boss_hpbarfront",          eUI, 4},
+	//	// =====================================================================
+	//	// Layer 4
+	//	// =====================================================================
+	//	{L"hpbar_back",               eUI, 4},
+	//	{L"quest_icon",               eUI, 4},
+	//	{L"map_node",                 eUI, 4},
+	//	{L"enemy_hpbarfront",         eUI, 4},
+	//	{L"boss_hpbarfront",          eUI, 4},
 
-		// =====================================================================
-		// Layer 5 (주요 아이콘 및 버튼)
-		// =====================================================================
-		{L"Shield",                   eUI, 5},
-		{L"hpbar_front",              eUI, 5},
-		{L"inventorybtn",             eUI, 5},
-		{L"mapbtn",                   eUI, 5},
-		{L"hp_potion",                eUI, 5},
-		{L"debugui",                  eUI, 5},
-		{L"inventory_sword",          eUI, 5},
-		{L"inventory_bow",            eUI, 5},
-		{L"inventory_wolfarmor",      eUI, 5},
-		{L"inventory_spear",          eUI, 5},
-		{L"inventory_crossbow",       eUI, 5},
-		{L"inventory_boost",          eUI, 5},
-		{L"inventory_ghostcloak",     eUI, 5},
-		{L"inventory_rocket",         eUI, 5},
-		{L"inventory_fishing",        eUI, 5},
-		{L"map_node_hover",           eUI, 5},
-		{L"locked_node_hover",        eUI, 5},
-		{L"worldmap_textpanel",       eUI, 5},
-		{L"pig",                      eUI, 5},
+	//	// =====================================================================
+	//	// Layer 5 (주요 아이콘 및 버튼)
+	//	// =====================================================================
+	//	{L"Shield",                   eUI, 5},
+	//	{L"hpbar_front",              eUI, 5},
+	//	{L"inventorybtn",             eUI, 5},
+	//	{L"mapbtn",                   eUI, 5},
+	//	{L"hp_potion",                eUI, 5},
+	//	{L"debugui",                  eUI, 5},
+	//	{L"inventory_sword",          eUI, 5},
+	//	{L"inventory_bow",            eUI, 5},
+	//	{L"inventory_wolfarmor",      eUI, 5},
+	//	{L"inventory_spear",          eUI, 5},
+	//	{L"inventory_crossbow",       eUI, 5},
+	//	{L"inventory_boost",          eUI, 5},
+	//	{L"inventory_ghostcloak",     eUI, 5},
+	//	{L"inventory_rocket",         eUI, 5},
+	//	{L"inventory_fishing",        eUI, 5},
+	//	{L"map_node_hover",           eUI, 5},
+	//	{L"locked_node_hover",        eUI, 5},
+	//	{L"worldmap_textpanel",       eUI, 5},
+	//	{L"pig",                      eUI, 5},
 
-		// =====================================================================
-		// Layer 6+ (상위 레이어)
-		// =====================================================================
-		{L"particle",                 eUI, 6},
-		{L"atri",                     eUI, 9},
-		{L"emerald_sword",            eUI, 10},
-		{L"panel",                    eUI, 10},
-		{L"angry",                    eUI, 10},
+	//	// =====================================================================
+	//	// Layer 6+ (상위 레이어)
+	//	// =====================================================================
+	//	{L"particle",                 eUI, 6},
+	//	{L"atri",                     eUI, 9},
+	//	{L"emerald_sword",            eUI, 10},
+	//	{L"panel",                    eUI, 10},
+	//	{L"angry",                    eUI, 10},
 
-		// =====================================================================
-		// Layer 100+ (팝업 및 최상단 UI)
-		// =====================================================================
-		{L"exitbtn",                  eUI, 101},
-		{L"exitbtn_hover",            eUI, 101},
-		{L"Cursor",                   eUI, 1000},
-	};
+	//	// =====================================================================
+	//	// Layer 100+ (팝업 및 최상단 UI)
+	//	// =====================================================================
+	//	{L"exitbtn",                  eUI, 101},
+	//	{L"exitbtn_hover",            eUI, 101},
+	//	{L"Cursor",                   eUI, 1000},
+	//};
 
-	auto rm = EngineCore::GetInstance()->GetResourceManager();
-	const wstring basePath = L"../Resource/Asset/Jehyun/";
+	//auto rm = EngineCore::GetInstance()->GetResourceManager();
+	//const wstring basePath = L"../Resource/Asset/Jehyun/";
 
-	for (const auto& resource : uiResources)
-	{
-		rm->LoadTexture(basePath + resource.name + L".png", resource.name, resource.type);
+	//for (const auto& resource : uiResources)
+	//{
+	//	rm->LoadTexture(basePath + resource.name + L".png", resource.name, resource.type);
 
-		if (resource.layer.has_value())
-			rm->RegisterUILayer(resource.name, resource.layer.value());
-	}
+	//	if (resource.layer.has_value())
+	//		rm->RegisterUILayer(resource.name, resource.layer.value());
+	//}
 
 	return S_OK;
 }
