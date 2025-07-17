@@ -75,22 +75,20 @@ void Ender::InitTransform(ObjectType objType)
     SetMaterial("EnderBottomHead_Mtrl", "Head", RENDER_ID::Render_NonAlpha);
     SetMaterial("EnderBody_Mtrl", "Body");
 
-    //transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f/*D3DXToRadian(-90.f)*/));
     transform->SetPosition(10 , 100, 10);
-    
     auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
     toptransform->SetScale(24.f * Scale, 18.f * Scale, 24.f * Scale);
     toptransform->SetPosition(0.0f, 24.f * Scale, 0.f);
-    toptransform->SetRotate(D3DXToRadian(-45.f), 0.f, 0.f);
     toptransform->SetPivot(0.f, -18.f* Scale, 24.f * Scale);
     toptransform->SetPivotEnable(true);
+   /* toptransform->SetRotate(D3DXToRadian(-45.f), 0.f, 0.f);*/
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetScale(24.f * Scale, 6.f * Scale, 24.f * Scale);
     bottomtransform->SetPosition(0.f * Scale, 66.f * Scale, 0.f * Scale);
     bottomtransform->SetPivot(0.f, -84.f * Scale,0.f);
     bottomtransform->SetPivotEnable(true);
-    bottomtransform->SetRotate(_vec3(/*D3DXToRadian(-90.f)*/0.f, 0.f, 0.f));
+    bottomtransform->SetRotate(_vec3(0.f, 0.f, 0.f));
 
     auto bodytransform = Bones["Body"]->GetComponent<TransformComponent>();
     bodytransform->SetScale(16.f * Scale, 60.f * Scale, 16.f * Scale);
@@ -306,7 +304,7 @@ void Ender::Crawl()
 
 
         auto transform = Bones["Body"]->GetComponent<TransformComponent>();
-        transform->SetRotate(_vec3(D3DXToRadian(89.f), /*D3DXToRadian(89.f)*/0.f,0.f /*D3DXToRadian(-89.f)*/));
+        transform->SetRotate(_vec3(D3DXToRadian(89.f),0.f,0.f ));
 
         auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
         bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f), 0.f, 0.f));
@@ -320,7 +318,7 @@ void Ender::Stand()
         enderState = EnderState::Stand;
 
         auto transform = Bones["Body"]->GetComponent<TransformComponent>();
-        transform->SetRotate(_vec3(0.f, /*D3DXToRadian(89.f)*/0.f, 0.f));
+        transform->SetRotate(_vec3(0.f, 0.f, 0.f));
 
         auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
         bottomtransform->SetRotate(_vec3(0.f, 0.f, 0.f));
@@ -409,11 +407,6 @@ void Ender::MoveTo(_vec3 targetPos, _float dt)
         D3DXVec3Normalize(&dir, &dir);
         transform->Translate(dir * dt * Speed);
         transform->SetForward(dir);
-        //_vec3 right = transform->GetRight();
-        //_matrix rotMat;
-        //D3DXMatrixRotationAxis(&rotMat, &right, D3DXToRadian(-90.f));
-        //D3DXVec3TransformNormal(&dir, &dir, &rotMat);
-        //transform->SetForward(dir);
     }
 }
 
@@ -467,7 +460,7 @@ void Ender::PlayCrawlToStand(_float dt)
     float angle = lerp(CrawlToStandAnim.Start, CrawlToStandAnim.End, t);
 
     auto transform = Bones["Body"]->GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(D3DXToRadian(90.f - angle), /*D3DXToRadian(89.f)*/0.f, 0.f));
+    transform->SetRotate(_vec3(D3DXToRadian(90.f - angle), 0.f, 0.f));
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f + angle), 0.f, 0.f));
@@ -494,7 +487,7 @@ void Ender::PlayStandToCrawl(_float dt)
     float angle = lerp(StandToCrawlAnim.Start, StandToCrawlAnim.End, t);
 
     auto transform = Bones["Body"]->GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(D3DXToRadian(angle), /*D3DXToRadian(89.f)*/0.f, 0.f));
+    transform->SetRotate(_vec3(D3DXToRadian(angle), 0.f, 0.f));
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetRotate(_vec3(D3DXToRadian(-angle), 0.f, 0.f));

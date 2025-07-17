@@ -256,6 +256,13 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Ender_Body.dds"
       }
+    },
+
+    "Laser_Mtrl": {
+      "fx": "MaskShader",
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/laser.dds"
+      }
     }
   }
 }

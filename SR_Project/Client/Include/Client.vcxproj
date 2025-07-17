@@ -204,6 +204,8 @@
     <ClInclude Include="..\Header\IsTimerOn.h" />
     <ClInclude Include="..\Header\JungleSkeleton.h" />
     <ClInclude Include="..\Header\JungleZombie.h" />
+    <ClInclude Include="..\Header\LaserEffect.h" />
+    <ClInclude Include="..\Header\LaserHead.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
     <ClInclude Include="..\Header\Locked_Node.h" />
     <ClInclude Include="..\Header\LockNode_Back.h" />
@@ -342,6 +344,8 @@
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
     <ClCompile Include="..\Code\JungleSkeleton.cpp" />
     <ClCompile Include="..\Code\JungleZombie.cpp" />
+    <ClCompile Include="..\Code\LaserEffect.cpp" />
+    <ClCompile Include="..\Code\LaserHead.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
     <ClCompile Include="..\Code\Locked_Node.cpp" />
     <ClCompile Include="..\Code\LockNode_Back.cpp" />

@@ -16,17 +16,28 @@
     }
   },
 
-  "materials":{
-    "Rain_Mtrl" :{
-        "textures":{"AlbedoMap":"../Resource/Texture/Effect/Rain.png"}
+  "materials": {
+    "Rain_Mtrl": {
+      "textures": { "AlbedoMap": "../Resource/Texture/Effect/Rain.png" }
     },
 
-    "Hit_Mtrl":{
-      "fx":"BloodParticleShader",
-      "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
+    "Hit_Mtrl": {
+      "fx": "BloodParticleShader",
+      "textures": { "AlbedoMap": "../Resource/Texture/Effect/Glow.png" }
     },
 
-    "Dead_Mtrl":{
+    "Dead_Mtrl": {
+    },
+
+
+    "Laser_Mtrl1": {
+      "fx": "SpriteShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/HY/laser1.png" }
+    },
+
+    "Laser_Mtrl2": {
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/HY/laser2.png" }
     }
   }
 

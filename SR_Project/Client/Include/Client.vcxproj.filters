@@ -462,9 +462,15 @@
     </Filter>
     <Filter Include="02. Object\Monster\BTNode\Decorator\Boss\Ender">
       <UniqueIdentifier>{6cc6603c-8449-4dd4-971a-899dd3b70dde}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Effect\DeadEffect">
       <UniqueIdentifier>{fefade3a-c97c-4d08-b277-3d7ec983d93d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Ender\LaserHead">
+      <UniqueIdentifier>{4263dd23-619c-47af-8b85-f90ce0d32785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Ender\Laser">
+      <UniqueIdentifier>{b693e2fd-100b-4d10-946c-eb2dc28c02cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -881,9 +887,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\IsRandomMoveCheck.h">
       <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\DeadEffect.h">
       <Filter>02. Object\Effect\DeadEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserHead.h">
+      <Filter>02. Object\Monster\Ender\LaserHead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserEffect.h">
+      <Filter>02. Object\Monster\Ender\Laser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1282,9 +1294,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\IsRandomMoveCheck.cpp">
       <Filter>02. Object\Monster\BTNode\Decorator\Boss\Ender</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\DeadEffect.cpp">
       <Filter>02. Object\Effect\DeadEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LaserHead.cpp">
+      <Filter>02. Object\Monster\Ender\LaserHead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LaserEffect.cpp">
+      <Filter>02. Object\Monster\Ender\Laser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

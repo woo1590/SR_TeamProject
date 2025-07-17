@@ -30,8 +30,8 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 	auto transform = self->GetComponent<TransformComponent>();
 	_vec3 pos = transform->GetPosition();
 
-	int randx = pos.x + rand() % 10 - 20;
-	int randz = pos.z + rand() % 10 - 20;
+	int randx = pos.x + rand() % 20 - 10;
+	int randz = pos.z + rand() % 20 - 10;
 
 	switch (ender->GetState())
 	{
