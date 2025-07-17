@@ -31,9 +31,6 @@ public:
 	const _vec2& GetOriginalScale() const { return originalScale; }
 
 private:
-	void Drop();
-
-private:
 	InfoComponent<ItemInfo>* itemInfo = nullptr;
 	ItemType itemType = ItemType::Potion;
 	function<void(Object* user)> onEquipCallback;

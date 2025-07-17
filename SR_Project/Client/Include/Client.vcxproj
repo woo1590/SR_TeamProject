@@ -179,6 +179,7 @@
     <ClInclude Include="..\Header\Arrow.h" />
     <ClInclude Include="..\Header\BabySlime.h" />
     <ClInclude Include="..\Header\BackStep.h" />
+    <ClInclude Include="..\Header\BoostItem.h" />
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
     <ClInclude Include="..\Header\BossIcon.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="..\Header\CheckStateChangeCount.h" />
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\Crossbow.h" />
+    <ClInclude Include="..\Header\CrossBowItem.h" />
     <ClInclude Include="..\Header\DamageText.h" />
     <ClInclude Include="..\Header\DeadEffect.h" />
     <ClInclude Include="..\Header\DeathFrame.h" />
@@ -198,6 +200,7 @@
     <ClInclude Include="..\Header\Firework.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
     <ClInclude Include="..\Header\BloodEffect.h" />
+    <ClInclude Include="..\Header\GhostCloakItem.h" />
     <ClInclude Include="..\Header\IsChangingState.h" />
     <ClInclude Include="..\Header\IsRandomMoveCheck.h" />
     <ClInclude Include="..\Header\IsTargetClose.h" />
@@ -225,6 +228,7 @@
     <ClInclude Include="..\Header\Slime.h" />
     <ClInclude Include="..\Header\Spawner.h" />
     <ClInclude Include="..\Header\SpawnTriggerBox.h" />
+    <ClInclude Include="..\Header\SpearItem.h" />
     <ClInclude Include="..\Header\SpriteEffect.h" />
     <ClInclude Include="..\Header\Stage1.h" />
     <ClInclude Include="..\Header\Stage2.h" />
@@ -320,6 +324,7 @@
     <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\BabySlime.cpp" />
     <ClCompile Include="..\Code\BackStep.cpp" />
+    <ClCompile Include="..\Code\BoostItem.cpp" />
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
     <ClCompile Include="..\Code\BossIcon.cpp" />
@@ -327,6 +332,7 @@
     <ClCompile Include="..\Code\CheckStateChangeCount.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\Crossbow.cpp" />
+    <ClCompile Include="..\Code\CrossBowItem.cpp" />
     <ClCompile Include="..\Code\DamageText.cpp" />
     <ClCompile Include="..\Code\DeadEffect.cpp" />
     <ClCompile Include="..\Code\DeathFrame.cpp" />
@@ -339,6 +345,7 @@
     <ClCompile Include="..\Code\Firework.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
     <ClCompile Include="..\Code\BloodEffect.cpp" />
+    <ClCompile Include="..\Code\GhostCloakItem.cpp" />
     <ClCompile Include="..\Code\IsChangingState.cpp" />
     <ClCompile Include="..\Code\IsRandomMoveCheck.cpp" />
     <ClCompile Include="..\Code\IsTargetClose.cpp" />
@@ -366,6 +373,7 @@
     <ClCompile Include="..\Code\Slime.cpp" />
     <ClCompile Include="..\Code\Spawner.cpp" />
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />
+    <ClCompile Include="..\Code\SpearItem.cpp" />
     <ClCompile Include="..\Code\SpriteEffect.cpp" />
     <ClCompile Include="..\Code\Stage1.cpp" />
     <ClCompile Include="..\Code\Stage2.cpp" />

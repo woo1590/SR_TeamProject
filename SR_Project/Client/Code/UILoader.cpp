@@ -70,6 +70,10 @@
 #include "HPBarBack.h"
 #include "ParticleObj.h"
 #include "HPBarWhite.h"
+#include "SpearItem.h"
+#include "CrossBowItem.h"
+#include "BoostItem.h"
+#include "GhostCloakItem.h"
 
 
 // DeathUI
@@ -122,6 +126,9 @@ void UILoader::BuildInventory(ObjectManager* objMgr,InventoryManager* invMgr)
         SwordItem::Create(objMgr), BowItem::Create(objMgr),
         WolfArmor::Create(objMgr), RocketItem::Create(objMgr),
         FishingItem::Create(objMgr), PigItem::Create(objMgr),
+        SpearItem::Create(objMgr), CrossBowItem::Create(objMgr),
+        BoostItem::Create(objMgr), GhostCloakItem::Create(objMgr),
+
     };
 
     auto* player = dynamic_cast<Player*>(objMgr->GetFrontObject(ObjectType::Player));

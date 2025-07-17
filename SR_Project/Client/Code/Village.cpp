@@ -133,7 +133,7 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, //ObjectType::BackGroundEffect));
 
-		player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
+		player->GetComponent<TransformComponent>()->SetPosition(60.f, 500.f, 60.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
@@ -158,10 +158,10 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
 		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 
-		auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
-		ender->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
-		ObjectMgr->AddObject(ObjectType::Monster, ender);
-		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Neutral));
+		//auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
+		//ender->GetComponent<TransformComponent>()->SetPosition(60.f, 500.f, 60.f);
+		//ObjectMgr->AddObject(ObjectType::Monster, ender);
+		//ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Neutral));
 	}
 }
 

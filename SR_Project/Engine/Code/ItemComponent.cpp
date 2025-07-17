@@ -43,8 +43,3 @@ void ItemComponent::Equip(Object* user)
 
 	quest->ReportQuestProgress(QuestType::EquipItem, 1);
 }
-
-void ItemComponent::Drop()
-{
-
-}

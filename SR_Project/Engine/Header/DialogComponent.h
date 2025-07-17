@@ -41,7 +41,6 @@ public:
 	void SetSpeakerName(const wstring& name) { speakerName = name; }
 	const wstring& GetSpeakerName() const { return speakerName; }
 
-
 private:
 	vector<wstring> dialogLines;
 	size_t curLineIdx = 0;

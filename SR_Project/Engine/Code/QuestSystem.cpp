@@ -13,8 +13,8 @@
 
 namespace 
 {
-    constexpr RECT CenterTitle{450, 190, 850, 260}, CenterDesc{450, 250, 850, 400};
-    constexpr RECT RightTitle{900, 20, 1280, 70}, RightDesc{900, 70, 1280, 200};
+    constexpr RECT CenterTitle{450, 190, 850, 300}, CenterDesc{450, 250, 850, 450};
+    constexpr RECT RightTitle{900, 20, 1280, 70}, RightDesc{900, 70, 1280, 250};
     inline D3DXCOLOR Yellow(float a) { return {1, 1, 0, a}; }
     inline D3DXCOLOR White(float a) { return {1, 1, 1, a}; }
 }
