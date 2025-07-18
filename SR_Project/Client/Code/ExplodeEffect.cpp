@@ -58,9 +58,9 @@ HRESULT ExplodeEffect::Ready_Object()
 					p.color.w = 0.f;
 				_float t = p.age / p.life;
 				t = std::clamp(t, 0.f, 1.f);
-				float tFast = std::pow(t, 0.3f);
+				float tFast = std::pow(t, 0.1f);
 
-				p.size = std::lerp(100.f, 400.f, tFast);
+				p.size = std::lerp(10.f, 400.f, tFast);
 			});
 
 	}

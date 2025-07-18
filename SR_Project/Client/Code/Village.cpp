@@ -206,6 +206,14 @@ void Village::Update(_float dt)
 			ObjectMgr->AddObject(ObjectType::ParticleEffect, fire);
 		}
 
+		if (Input->IsKeyPressed(Q))
+		{
+			auto effect = ExplodeEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
+			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
+			effect->SetDeadTime(1.f);
+			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);
+		}
+
 	}
 }
 

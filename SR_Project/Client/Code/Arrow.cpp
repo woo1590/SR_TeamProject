@@ -159,8 +159,6 @@ void Arrow::SetCollisionEnter(Object* other)
         monster->SetHit(true);
         monster->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), arrowAttackDamage);
     }
-    hitObject = other;
-    hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
         break;
     case ObjectType::Player:
     {
