@@ -17,6 +17,7 @@
 //Objects
 #include "LoadingUI.h"
 #include "Cursor.h"
+#include "LoadingStone.h"
 
 LoadingScene::LoadingScene(LOADID loadId)
 	:nextSceneID(loadId)
@@ -42,8 +43,10 @@ void LoadingScene::Load()
 	loader = Loader::Create(nextSceneID);
 
 	loadingUI = LoadingUI::Create(nullptr);
+	loadingStone = LoadingStone::Create(nullptr);
 	
 	ObjectMgr->AddUIObject(loadingUI);
+	ObjectMgr->AddUIObject(loadingStone);
 }
 
 void LoadingScene::Update(_float dt)

@@ -15,7 +15,7 @@ HRESULT Atri::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	transform->SetScale(1.5f , 1.5f);
+	transform->SetScale(2.f , 2.f);
 	transform->SetPosition(250.f, 430.f);
 
 	renderer->SetRenderType(UIRenderType::QuestUI);

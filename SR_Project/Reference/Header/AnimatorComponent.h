@@ -22,6 +22,8 @@ public:
 	void SetFrameSize(int width, int height);
 	void SetTotalFrameCount(int count) { totalFrames = count; }
 
+	void SetSheetSize(int columns) { sheetColumns = columns > 0 ? columns : 1; }
+
 	void Update(float dt) override;
 
 
@@ -42,6 +44,8 @@ private:
 	int startFrame = 0;
 	int endFrame = 0;
 	int totalFrames = 0;
+
+	int sheetColumns = 1;
 
 	int frameWidth = 0;
 	int frameHeight = 0;

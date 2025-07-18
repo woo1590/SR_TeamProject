@@ -4,6 +4,7 @@
 class Loader;
 class LoadingUI;
 class Cursor;
+class LoadingStone;
 
 class LoadingScene :
     public Scene
@@ -28,5 +29,6 @@ private:
 
     LoadingUI* loadingUI = nullptr;
     Cursor* cursor = nullptr;
+    LoadingStone* loadingStone = nullptr;
 };
 

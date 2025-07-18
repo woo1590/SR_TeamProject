@@ -29,6 +29,8 @@ void AnimatorComponent::Play(int start, int end, float speed)
 	endFrame = end;
 	frameSpeed = speed;
 	curFrame = start; 
+	frameTimer = 0.f;
+
 	SetFrame(curFrame);
 }
 
@@ -36,11 +38,14 @@ void AnimatorComponent::SetFrame(int idx)
 {
 	if (!renderer || idx >= totalFrames) return;
 
+	const int row = idx / sheetColumns;
+	const int col = idx % sheetColumns;
+
 	RECT rect;
-	rect.left = idx * frameWidth;
-	rect.top = 0;
-	rect.right = rect.left + frameWidth; 
-	rect.bottom = frameHeight;
+	rect.left = col * frameWidth;
+	rect.top = row * frameHeight; 
+	rect.right = rect.left + frameWidth;
+	rect.bottom = rect.top + frameHeight;
 	
 	renderer->SetSrcRect(rect);
 }
