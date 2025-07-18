@@ -48,9 +48,6 @@ HRESULT Loader::Loading()
 
 	switch (LoadId)
 	{
-	case LOADID::TestScene:
-		hr = Load_TestScene();
-		break;
 	case LOADID::Village:
 		hr = Load_Village();
 		break;
@@ -91,51 +88,6 @@ _uint __stdcall Loader::LoaderMain(void* arg)
 	return 0;
 }
 
-HRESULT Loader::Load_TestScene()
-{
-	auto resource = EngineCore::GetInstance()->GetResourceManager();
-	auto sound = EngineCore::GetInstance()->GetSoundManager();
-	/*----------------------Load Mesh----------------------------*/
-	{
-		auto cube = CubeMesh::Create();
-		resource->LoadMesh("Cube_Mesh", cube);
-		auto arrow = ArrowMesh::Create();
-		resource->LoadMesh("Arrow_Mesh", arrow);
-	}
-	/*--------------------Load Shader---------------------------------*/
-	{
-		resource->LoadShader("../Resource/Shader/SkyBox.fx", "SkyBoxShader");
-		resource->LoadShader("../Resource/Shader/BasicShader.fx", "BasicShader");
-		resource->LoadShader("../Resource/Shader/ChunkShader.fx", "ChunkShader");
-		resource->LoadShader("../Resource/Shader/ColorShader.fx", "ColorShader");
-		resource->LoadShader("../Resource/Shader/MaskShader.fx", "MaskShader");
-		resource->LoadShader("../Resource/Shader/ParticleShader.fx", "ParticleShader");
-		resource->LoadShader("../Resource/Shader/BloodParticleShader.fx", "BloodParticleShader");
-		resource->LoadShader("../Resource/Shader/SpriteShader.fx", "SpriteShader");
-	}
-
-	/*---------------------Load Material--------------------------*/
-	{
-		resource->LoadMaterial("../Resource/Material/SkyBox.json");
-		resource->LoadMaterial("../Resource/Material/Monsters.json");
-		resource->LoadMaterial("../Resource/Material/Player.json");
-		resource->LoadMaterial("../Resource/Material/Blocks.json");
-		resource->LoadMaterial("../Resource/Material/Items.json");
-		resource->LoadMaterial("../Resource/Material/Particle.json");
-	}
-
-	/*----------------------Load Sound-----------------------------*/
-	{
-		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
-	}
-
-	/*----------------------Load Sprite----------------------------*/
-	{
-		resource->LoadSprite("Explosion", 90);
-		resource->LoadSprite("Walk", 7);
-	}
-	return S_OK;
-}
 
 HRESULT Loader::Load_Village()
 {

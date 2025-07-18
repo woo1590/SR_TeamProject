@@ -78,8 +78,6 @@ void LoadingScene::Update(_float dt)
 
 		switch (nextSceneID)
 		{
-		case LOADID::TestScene:
-			nextScene = TestScene::Create();
 			break;
 		case LOADID::Village:
 			nextScene = Village::Create();

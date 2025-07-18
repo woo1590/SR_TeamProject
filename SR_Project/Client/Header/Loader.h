@@ -14,7 +14,6 @@ public:
     _bool IsFinished()const;
     static _uint __stdcall LoaderMain(void* arg);
 private:
-    HRESULT Load_TestScene();
     HRESULT Load_Village();
     HRESULT Load_Stage1();
     HRESULT load_UIResources();

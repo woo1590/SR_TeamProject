@@ -35,7 +35,7 @@ HRESULT ExplodeEffect::Ready_Object()
 
 	auto particle = AddComponent<ParticleSystem>();
 	Emitter explode;
-	explode.burstCount = 4;
+	explode.burstCount = 10;
 	explode.life = 0.5f;
 	explode.looping = false;
 	explode.followCam = false;
@@ -46,7 +46,7 @@ HRESULT ExplodeEffect::Ready_Object()
 	explode.velocityMax = { 0.1f,0.1f,0.1f };
 	explode.spawnAreaMin = { -6.f,-3.f,-6.f };
 	explode.spawnAreaMax = { 6.f,3.f,6.f };
-	explode.size = 100.f;
+	explode.size = 50.f;
 	
 	particle->AddEmitter(explode, [](Particle& p, _float dt)
 		{
@@ -59,7 +59,7 @@ HRESULT ExplodeEffect::Ready_Object()
 			t = std::clamp(t, 0.f, 1.f);
 			float tFast = std::pow(t, 0.3f);
 
-			p.size = std::lerp(100.f, 400.f, tFast);
+			p.size = std::lerp(50.f, 100.f, tFast);
 		});
 
 	auto renderer = AddComponent<ParticleRenderer>(RENDER_ID::Render_Alpha);

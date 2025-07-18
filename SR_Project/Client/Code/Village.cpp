@@ -173,7 +173,6 @@ void Village::Update(_float dt)
 	PhysicsSys->Update(dt);
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
-	//ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
 
 	{
 		auto Input = EngineCore::GetInstance()->GetInputSystem();

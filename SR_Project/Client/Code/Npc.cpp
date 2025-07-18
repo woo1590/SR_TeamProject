@@ -157,7 +157,7 @@ void Npc::Talk(DialogManager* dialogMgr)
             auto* dialog = GetComponent<DialogComponent>();
 
             dialog->SetDialogLines(set.lines);
-            dialog->SetSpeakerName(L"ÃòÂ»");
+            dialog->SetSpeakerName(L"¿ì¼®");
 
             if (set.onFinish)
                 dialog->SetOnFinish(set.onFinish);

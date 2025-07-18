@@ -26,6 +26,6 @@ HRESULT LoadingStone::Ready_Object()
 	animator->SetFrameSize(240, 240);
 	animator->SetTotalFrameCount(59);
 	animator->SetSheetSize(8);
-	animator->Play(0, 59, 0.1f); 
+	animator->Play(0, 59, 0.06f); 
 	return S_OK;
 }

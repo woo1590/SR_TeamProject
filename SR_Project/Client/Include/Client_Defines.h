@@ -2,7 +2,6 @@
 
 enum class LOADID
 {
-	TestScene,
 	Village,
 	Stage1,
 	Stage2,
