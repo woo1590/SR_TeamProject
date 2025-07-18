@@ -37,9 +37,6 @@ HRESULT Loader::Ready_Loader()
 {
 	InitializeCriticalSection(&Crt);
 
-	//if (FAILED(load_UIResources()))
-	//	return E_FAIL;
-
 	H_Thread = (HANDLE)_beginthreadex(NULL, 0, LoaderMain, this, 0, NULL);
 
 	return S_OK;
