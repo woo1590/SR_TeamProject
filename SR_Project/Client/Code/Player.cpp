@@ -1466,12 +1466,12 @@ void Player::UpdateWalk(_float dt) {
     }
     //////////////////////////////////////////
 
-    //auto blockOn1 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
-    //auto blockOn2 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
-    //auto blockOn3 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
-    //auto blockOn4 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
-    //
-    //if (blockOn1 == nullptr && blockOn2 == nullptr && blockOn3 == nullptr && blockOn4 == nullptr) GetComponent<PhysicsComponent>()->SetGround(false);
+    auto blockOn1 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
+    auto blockOn2 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
+    auto blockOn3 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
+    auto blockOn4 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
+    
+    if (blockOn1 == nullptr && blockOn2 == nullptr && blockOn3 == nullptr && blockOn4 == nullptr) GetComponent<PhysicsComponent>()->SetGround(false);
 
     //Rotate Player
     const float fRotateDuration = 0.05f;
