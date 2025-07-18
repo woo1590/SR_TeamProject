@@ -155,6 +155,9 @@ private:
     std::vector<Particle> particles;
     Emitter emitter;
     UpdateFunc particleUpdate;
+
+    std::vector<Emitter> emitters;
+    std::vector<UpdateFunc> behaviors;
 };
 
 END

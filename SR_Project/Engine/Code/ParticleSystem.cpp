@@ -52,8 +52,8 @@ void ParticleSystem::Update(_float dt)
 
 void ParticleSystem::AddEmitter(Emitter emitter, UpdateFunc update)
 {
-	this->emitter = emitter;
-	particleUpdate = update;
+	emitters.push_back(emitter);
+	behaviors.push_back(update);
 }
 
 void ParticleSystem::Free()
