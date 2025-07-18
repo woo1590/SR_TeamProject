@@ -12,5 +12,5 @@ public:
 	static Atri* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
 
-	void SetEmotion(const wstring& emotion);
+	void SetEmotion(Emotion emotion);
 };

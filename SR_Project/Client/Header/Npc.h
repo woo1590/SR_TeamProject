@@ -2,7 +2,6 @@
 #include "BaseCharacter.h"
 #include "DialogManager.h"
 
-
 class Npc :
     public BaseCharacter
 {
@@ -31,7 +30,7 @@ private:
     struct DialogSet
     {
         function<bool()> condition;
-        vector<wstring> lines;
+        vector<DialogLine> lines;
         function<void()> onFinish;
     };
     vector<DialogSet> dialogSets;

@@ -26,7 +26,7 @@ void DialogManager::SkipOrNext()
 
 	if (!isLineFullyDisplayed)
 	{
-		displayedText = fullLineText;
+		displayedText = curLine.text;
 		isLineFullyDisplayed = true;
 
 		font->ClearText();
@@ -55,7 +55,11 @@ void DialogManager::ShowCurLine()
 	font = owner->GetComponent<FontComponent>();
 	if (!font) return;
 
-	fullLineText = curDialog->GetCurLine();
+	curLine = curDialog->GetCurLine();
+
+	if (onEmotionChange)
+		onEmotionChange(curLine.emotion);
+
 	displayedText.clear();
 	typingTimer = 0.f;
 	isLineFullyDisplayed = false;
@@ -72,6 +76,9 @@ void DialogManager::EndDialog()
 
 	curDialog->Finish();
 	curDialog = nullptr;
+
+	if (onEmotionChange)
+		onEmotionChange(Emotion::None);
 
 	if (panel)
 		panel->SetVisible(false);
@@ -97,9 +104,9 @@ void DialogManager::Update(float dt)
 		{
 			typingTimer -= typingSpeed;
 
-			if (displayedText.length() < fullLineText.length())
+			if (displayedText.length() < curLine.text.length())
 			{
-				displayedText += fullLineText[displayedText.length()];
+				displayedText += curLine.text[displayedText.length()];
 
 				font->ClearText();
 				RECT dialogRect = {200, 560, 1100, 700};

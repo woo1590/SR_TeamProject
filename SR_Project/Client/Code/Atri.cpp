@@ -15,26 +15,29 @@ HRESULT Atri::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	transform->SetScale(0.3f, 0.2f);
-	transform->SetPosition(280.f, 460.f);
+	transform->SetScale(1.5f , 1.5f);
+	transform->SetPosition(250.f, 430.f);
 
 	renderer->SetRenderType(UIRenderType::QuestUI);
-	renderer->SetTexture(L"atri");
+	renderer->SetTexture(L"atri_none");
 
 	return S_OK;
 }
 
-void Atri::SetEmotion(const wstring& emotion)
+void Atri::SetEmotion(Emotion emotion)
 {
 	auto renderer = GetComponent<UIRenderer>();
 	if (!renderer) return;
 
-	//if (emotion == L"happy")
-	//	renderer->SetTexture(L"atri_happy");
-	//else if (emotion == L"sad")
-	//	renderer->SetTexture(L"atri_sad");
-	//else if (emotion == L"angry")
-	//	renderer->SetTexture(L"atri_angry");
-	//else
-	//	renderer->SetTexture(L"atri");
+	switch (emotion)
+	{
+	case Emotion::None:     renderer->SetTexture(L"atri_none");     break;
+	case Emotion::Angry:    renderer->SetTexture(L"atri_angry");    break;
+	case Emotion::Sad:      renderer->SetTexture(L"atri_sad");      break;
+	case Emotion::Happy:    renderer->SetTexture(L"atri_happy");    break;
+	case Emotion::Emm:      renderer->SetTexture(L"atri_emm");      break;
+	case Emotion::CloseEye: renderer->SetTexture(L"atri_closeeye"); break;
+	case Emotion::Confuse:  renderer->SetTexture(L"atri_confuse");  break;
+	case Emotion::Brave:    renderer->SetTexture(L"atri_brave");    break;
+	}
 }

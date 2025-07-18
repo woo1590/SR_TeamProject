@@ -7,6 +7,7 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "ObjectManager.h"
+#include "CoolDownComponent.h"
 
 
 HP_Potion* HP_Potion::Create(ObjectManager* owner)
@@ -24,11 +25,22 @@ HRESULT HP_Potion::Ready_Object()
 	auto info      = AddComponent<InfoComponent<ItemInfo>>();
 	auto item      = AddComponent<ItemComponent>();
 
+	auto coolrenderer = AddComponent<UIRenderer>();
+	coolrenderer->SetVisible(false);
+
+	auto cooldownUI = AddComponent<CoolDownComponent>();
+
+	coolrenderer->SetTexture(L"cooldown_front");
+	coolrenderer->SetScale(0.5f, 1.f);
+
 	transform->SetPosition(700.f, 700.f);
 	transform->SetScale(0.8f, 0.8f);
 	renderer->SetTexture(L"hp_potion");
 
 	info->SetInfo({L"HP 포션", L"hp_potion",ItemType::Potion,Rarity::Default,10,L"HP 10 회복"});
+
+	item->SetCoolDown(true, 3.f);
+	cooldownUI->Init(item, coolrenderer);
 
 	hover->SetUpdateCallBack([this](bool isHovered) {
 		auto input = EngineCore::GetInstance()->GetInputSystem();

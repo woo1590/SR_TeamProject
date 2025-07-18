@@ -2,54 +2,35 @@
 #include "CoolDownComponent.h"
 #include "Object.h"
 #include "UIRenderer.h"
+#include "ItemComponent.h"
 
 CoolDownComponent* CoolDownComponent::Create(Object* owner)
 {
-	auto* instance = new CoolDownComponent(owner);
-
+	auto instance = new CoolDownComponent(owner);
 	return (FAILED(instance->Ready_Component())) ? Safe_Release(instance), nullptr : instance;
 }
 
 HRESULT CoolDownComponent::Ready_Component()
 {
-    whiteOverlay = owner->AddComponent<UIRenderer>();
-    whiteOverlay->SetTexture(L"white");
-    whiteOverlay->SetLayer(10); 
-    whiteOverlay->SetVisible(false);
-
-    cooldownBar = owner->AddComponent<UIRenderer>();
-    cooldownBar->SetTexture(L"white_bar");
-    cooldownBar->SetLayer(11);
-    cooldownBar->SetVisible(false);
 	return S_OK;
 }
 
-void CoolDownComponent::Play()
+void CoolDownComponent::Init(ItemComponent* targetItem, UIRenderer* renderer)
 {
-    curTime = 0.f;
-    playing = true;
-
-    whiteOverlay->SetVisible(true);
-    cooldownBar->SetVisible(true);
-    whiteOverlay->SetAlpha(1.f);
+	itemComp = targetItem;
+	cooldownRenderer = renderer;
 }
 
 void CoolDownComponent::Update(float dt)
 {
-    if (!playing) return;
+	if (!itemComp || !cooldownRenderer) return;
 
-    curTime += dt;
-    float t = curTime / maxTime;
-    t = clamp(t, 0.f, 1.f);
-
-    whiteOverlay->SetAlpha(1.f - t);
-
-    cooldownBar->ApplyRatioVertical(1.f - t); 
-
-    if (t >= 1.f)
-    {
-        playing = false;
-        whiteOverlay->SetVisible(false);
-        cooldownBar->SetVisible(false);
-    }
+	if (itemComp->IsCoolDown())
+	{
+		cooldownRenderer->SetVisible(true);
+		float ratio = itemComp->GetCoolDownRatio();
+		//cooldownRenderer->ApplyRatioVertical(ratio);
+	}
+	else
+		cooldownRenderer->SetVisible(false); 
 }
