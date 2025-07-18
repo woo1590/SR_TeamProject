@@ -18,6 +18,7 @@
 #include "MeshRendererComponent.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "DeadEffect.h"
 
 //effect
 #include "BloodEffect.h"
@@ -100,7 +101,6 @@ void JungleZombie::Die()
 {
     if (State != MonsterState::Die)
     {
-        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathZombie");
         State = MonsterState::Die;
 
         DieAnim.IsRunning = true;
@@ -330,6 +330,13 @@ void JungleZombie::PlayDie(_float dt)
     {
         //  DieAnim.ElapsedTime = 0.f;
         DieAnim.IsEnd = true;
+
+        //////////////////////////////////Dead Effect
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+        //////////////////////////////////
 
         SetDead();
         DeleteBar();

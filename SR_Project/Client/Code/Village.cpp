@@ -59,6 +59,7 @@
 #include "Ender.h"
 #include "Spear.h"
 #include "DeadEffect.h"
+#include "ExplodeEffect.h"
 
 //component
 #include "TransformComponent.h"
@@ -135,7 +136,7 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, //ObjectType::BackGroundEffect));
 
-		player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
+		player->GetComponent<TransformComponent>()->SetPosition(60.f, 500.f, 60.f);
 
 		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 		trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
@@ -152,18 +153,17 @@ void Village::Load()
 		trigger2->AddSpawner(SpawnType::RedGolem, _vec3(150.f, 30.f, 200.f), _vec3(0.f, 0.f, 0.f));
 
 		auto slime = Slime::Create(ObjectMgr, ObjectType::Monster);
-		slime->GetComponent<TransformComponent>()->SetPosition(50.f, 30.f, 50.f);
+		slime->GetComponent<TransformComponent>()->SetPosition(50.f, 400.f, 50.f);
 		auto purpleSlime = PurpleSlime::Create(ObjectMgr, ObjectType::Monster);
-		purpleSlime->GetComponent<TransformComponent>()->SetPosition(50.f, 50.f, 50.f);
+		purpleSlime->GetComponent<TransformComponent>()->SetPosition(50.f, 400.f, 50.f);
 
 		ObjectMgr->AddObject(ObjectType::Monster, slime);
 		ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
 		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 
-		//auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
-		//ender->GetComponent<TransformComponent>()->SetPosition(60.f, 500.f, 60.f);
-		//ObjectMgr->AddObject(ObjectType::Monster, ender);
-		//ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Neutral));
+		auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
+		ender->GetComponent<TransformComponent>()->SetPosition(60.f, 500.f, 60.f);
+		ObjectMgr->AddObject(ObjectType::Monster, ender);
 	}
 }
 
@@ -174,7 +174,6 @@ void Village::Update(_float dt)
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
 	//ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition());
-	
 
 	{
 		auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -199,7 +198,7 @@ void Village::Update(_float dt)
 
 		if (Input->IsKeyPressed(NUM3))
 		{
-			auto effect = DeadEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
+			auto effect = ExplodeEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
 			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
 			effect->SetDeadTime(1.f);
 			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);

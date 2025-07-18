@@ -22,6 +22,7 @@
 #include "CameraComponent.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "ExplodeEffect.h"
 
 Creeper::Creeper(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -282,6 +283,12 @@ void Creeper::PlayDie(_float dt)
                    GetOwner()->GetComponent<ThirdcamComponent>();
         if (cam)
             cam->SetShake(8.f, 0.4f);
+
+        auto effect = ExplodeEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+
         ///////////////////////////////
     }
 }

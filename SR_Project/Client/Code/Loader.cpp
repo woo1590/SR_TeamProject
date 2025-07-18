@@ -160,6 +160,7 @@ HRESULT Loader::Load_Village()
 		resource->LoadShader("../Resource/Shader/ParticleShader.fx", "ParticleShader");
 		resource->LoadShader("../Resource/Shader/BloodParticleShader.fx", "BloodParticleShader");
 		resource->LoadShader("../Resource/Shader/SpriteShader.fx", "SpriteShader");
+		resource->LoadShader("../Resource/Shader/ExplodeParticle.fx", "ExplodeParticle");
 	}
 
 	/*---------------------Load Material--------------------------*/
@@ -236,7 +237,7 @@ HRESULT Loader::Load_Village()
 
 	/*----------------------Load Sprite----------------------------*/
 	{
-		resource->LoadSprite("Explosion", 90);
+		resource->LoadSprite("Explode", 12);
 		resource->LoadSprite("Walk", 7);
 		resource->LoadSprite("Dead", 8);
 	}

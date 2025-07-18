@@ -23,10 +23,15 @@
 
     "Hit_Mtrl":{
       "fx":"BloodParticleShader",
-      "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
+      "textures":{"AlbedoMap":"../Resource/Texture/Effect/Default-Particle.png"}
     },
 
     "Dead_Mtrl":{
+    },
+
+    "Explode_Mtrl":{
+      "fx":"ExplodeParticle",
+      "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
     }
   }
 

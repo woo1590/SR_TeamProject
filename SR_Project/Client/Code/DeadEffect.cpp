@@ -42,8 +42,8 @@ HRESULT DeadEffect::Ready_Object()
 	
 	dead.velocityMin = { 0.f,5.f,0.f };
 	dead.velocityMax = { 0.f,6.f,0.f };
-	dead.spawnAreaMin = { -3.f,0.f,-3.f };
-	dead.spawnAreaMax = { 3.f,0.f,3.f };
+	dead.spawnAreaMin = { -6.f,0.f,-6.f };
+	dead.spawnAreaMax = { 6.f,0.f,6.f };
 
 	dead.life = 1.5f;
 	dead.size = 60.f;

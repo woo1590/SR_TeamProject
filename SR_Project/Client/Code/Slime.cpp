@@ -16,6 +16,7 @@
 #include "PhysicsComponent.h"
 #include "MeshRendererComponent.h"
 #include "Player.h"
+#include "DeadEffect.h"
 
 Slime::Slime(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -345,6 +346,13 @@ void Slime::PlayDie(_float dt)
         transform = babyslime->GetComponent<TransformComponent>();
         transform->SetPosition(_vec3(pos.x + 5, pos.y, pos.z + 5));
     
+        //////////////////////////////////Dead Effect
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+        //////////////////////////////////
+
         SetDead();
         DeleteBar();
 

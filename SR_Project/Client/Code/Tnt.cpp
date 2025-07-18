@@ -8,6 +8,7 @@
 #include "MeshRendererComponent.h"
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
+#include "CameraManager.h"
 #include "CollisionComponent.h"
 
 #include "Player.h"
@@ -16,6 +17,9 @@
 #include "EngineCore.h"
 #include "SoundManager.h"
 #include "Creeper.h"
+#include "ThirdcamComponent.h"
+#include "CameraComponent.h"
+#include "ExplodeEffect.h"
 
 Tnt::Tnt(ObjectManager* owner, ObjectType objType) : Item(owner, objType){}
 
@@ -121,6 +125,15 @@ void Tnt::Update(_float dt)
                 }
             }
             EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomTNT");
+            auto cam = GetScene()->GetCameraManager()->GetMainCamera()->GetOwner()->GetComponent<ThirdcamComponent>();
+            if (cam)
+                cam->SetShake(15.f, 0.5f);
+
+            auto effect = ExplodeEffect::Create(owner, ObjectType::ParticleEffect);
+            effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+            effect->SetDeadTime(1.f);
+            owner->AddObject(ObjectType::ParticleEffect, effect);
+
             SetDead();
         }
     }

@@ -15,6 +15,7 @@
 #include "PhysicsComponent.h"
 #include "MeshRendererComponent.h"
 #include "Player.h"
+#include "DeadEffect.h"
 
 BabySlime::BabySlime(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -321,6 +322,13 @@ void BabySlime::PlayDie(_float dt)
     DieAnim.ElapsedTime += dt;
     if (DieAnim.ElapsedTime > DieAnim.TotalTime && DieAnim.IsEnd == false)
     {
+        //////////////////////////////////Dead Effect
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+        //////////////////////////////////
+
         SetDead();
         DeleteBar();
 

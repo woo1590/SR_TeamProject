@@ -26,6 +26,7 @@
 #include "Random.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "DeadEffect.h"
 
 Skeleton::Skeleton(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -452,10 +453,18 @@ void Skeleton::PlayDie(_float dt)
         isDetachBones = true;
     }
 
-    if (!DieAnim.IsEnd && deadTimer>=3.f)
+    if (!DieAnim.IsEnd && deadTimer>=1.5f)
     {
         DieAnim.IsEnd = true;
         DieAnim.IsRunning = false;
+
+        //////////////////////////////////Dead Effect
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+        //////////////////////////////////
+
         SetDead();
         DeleteBar();
     }

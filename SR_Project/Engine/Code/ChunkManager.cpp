@@ -188,7 +188,7 @@ void ChunkManager::IsChunkBoundary(_vec3 playerPos)
     {
         preChunkX = chunkX;
         preChunkZ = chunkZ;
-        UpdateRenderChunk(chunkX, chunkZ, 5);
+        UpdateRenderChunk(chunkX, chunkZ, 7);
     }
 }
 
