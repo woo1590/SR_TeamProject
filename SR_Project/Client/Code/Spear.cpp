@@ -61,6 +61,17 @@ HRESULT Spear::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Spear::Update(_float dt)
 {
     Item::Update(dt);
+
+    auto player = static_cast<Player*>(ownerObject);
+    if (!hitMonsters.empty() || player->GetPlayerState() == Player::ePlayerState::ATTACK)
+    {
+        attackTime += dt;
+
+        if (player->GetPlayerState() != Player::ePlayerState::ATTACK)
+            hitMonsters.clear();
+        if (attackTime >= player->GetAttackDelay())
+            hitMonsters.clear();
+    }
 }
 
 void Spear::Late_Update(_float dt)

@@ -20,8 +20,9 @@ private:
     void FindNextTarget(Object* targetMonster);
 
     std::vector<Object*> targetMonsters;
+    _float attackTime = 0.f;
     _float delayTimer = 0.f;
-    const _float damageTerm = 0.1f;
+    const _float damageTerm = 0.2f;
 
     _int preTarget = 0;
 
