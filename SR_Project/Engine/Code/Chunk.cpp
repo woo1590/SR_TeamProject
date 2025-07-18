@@ -45,7 +45,7 @@ HRESULT Chunk::Ready_Object()
     renderer->SetMaterial("Chunk_Mtrl");
     renderer->SetMesh(mesh);
 
-    owner->AddObject(ObjectType::Chunk, this);
+    //owner->AddObject(ObjectType::Chunk, this);
 
     return S_OK;
 }
@@ -117,6 +117,7 @@ void Chunk::RemoveAlpha(const _vec3& pos)
 
 Chunk* Chunk::GetNeighborChunk(int x, int z)
 {
+    if (!owner) return nullptr;
     if (!owner->GetOwner()) return nullptr;
     if (!owner->GetOwner()->GetChunkManager()) return nullptr;
 
@@ -158,27 +159,30 @@ void Chunk::BuildCollisionBlock()
                     {
                     case Basic:
                     {
-                        auto cb = CollisionBlock::Create(owner, ObjectType::CollisionBlock);
+                        auto cb = CollisionBlock::Create(nullptr, ObjectType::CollisionBlock);
                         cb->GetComponent<TransformComponent>()->SetPosition(block.Pos);
-                        owner->AddObject(ObjectType::CollisionBlock, cb);
+                        collisionBlocks.push_back(cb);
+                        //owner->AddObject(ObjectType::CollisionBlock, cb);
 
                         break;
                     }
                     case Half:
                     {
-                        auto cb = CollisionBlock::Create(owner, ObjectType::CollisionBlock);
+                        auto cb = CollisionBlock::Create(nullptr, ObjectType::CollisionBlock);
                         cb->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
                         cb->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
-                        owner->AddObject(ObjectType::CollisionBlock, cb);
+                        collisionBlocks.push_back(cb);
+                        //owner->AddObject(ObjectType::CollisionBlock, cb);
 
                         break;
                     }
                     case Stair:
                     {
-                        auto cbBottom = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        auto cbBottom = CollisionBlock::Create(nullptr, ObjectType::StaticBlock);
                         cbBottom->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
                         cbBottom->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
-                        owner->AddObject(ObjectType::StaticBlock, cbBottom);
+                        collisionBlocks.push_back(cbBottom);
+                        //owner->AddObject(ObjectType::StaticBlock, cbBottom);
 
                         _vec3 offset{}, scale{};
                         switch (block.Rot)
@@ -201,10 +205,11 @@ void Chunk::BuildCollisionBlock()
                             break;
                         }
 
-                        auto cbTop = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+                        auto cbTop = CollisionBlock::Create(nullptr, ObjectType::StaticBlock);
                         cbTop->GetComponent<TransformComponent>()->SetPosition(block.Pos + offset);
                         cbTop->GetComponent<TransformComponent>()->SetScale(scale);
-                        owner->AddObject(ObjectType::StaticBlock, cbTop);
+                        collisionBlocks.push_back(cbTop);
+                        //owner->AddObject(ObjectType::StaticBlock, cbTop);
                         break;
                     }
                     }
@@ -846,6 +851,25 @@ StaticBlockData Chunk::GetBlock(int x, int y, int z) const
 {
     if (x < 0 || x >= CHUNK_SIZE || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_SIZE) return SB{};
     return Blocks[x][y][z];
+}
+
+void Chunk::SetOwner(ObjectManager* owner)
+{
+    this->owner = owner;
+    owner->AddObject(ObjectType::Chunk, this);
+    for (auto& alpha : AlphaBlocks)
+    {
+        static_cast<StaticBlock*>(alpha)->SetOwner(owner);
+
+        owner->AddObject(ObjectType::AlphaBlock, alpha);
+    }
+
+    for (auto& colli : collisionBlocks)
+    {
+        static_cast<CollisionBlock*>(colli)->SetOwner(owner);
+
+        owner->AddObject(ObjectType::CollisionBlock, colli);
+    }
 }
 
 void Chunk::Free()

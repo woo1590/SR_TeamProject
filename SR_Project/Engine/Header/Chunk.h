@@ -56,6 +56,8 @@ public:
     StaticBlockData GetBlock(int x, int y, int z) const;
     vector<Object*> GetAlphaBlocks() const { return AlphaBlocks; }
 
+    /*----------Only Client----------*/
+    void SetOwner(ObjectManager* owner);
 private:
     void Free()override;
 
@@ -66,5 +68,6 @@ private:
     _vec2 TexUVs[4]{};
     SB Blocks[CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
     std::vector<Object*> AlphaBlocks;
+    std::list<Object*> collisionBlocks;
 };
 END

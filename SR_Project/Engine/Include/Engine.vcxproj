@@ -229,6 +229,7 @@
     <ClInclude Include="..\Header\CameraManager.h" />
     <ClInclude Include="..\Header\Chest.h" />
     <ClInclude Include="..\Header\Chunk.h" />
+    <ClInclude Include="..\Header\ChunkLoader.h" />
     <ClInclude Include="..\Header\ChunkManager.h" />
     <ClInclude Include="..\Header\ChunkMesh.h" />
     <ClInclude Include="..\Header\CollisionBlock.h" />
@@ -382,6 +383,7 @@
     <ClCompile Include="..\Code\CameraComponent.cpp" />
     <ClCompile Include="..\Code\Chest.cpp" />
     <ClCompile Include="..\Code\Chunk.cpp" />
+    <ClCompile Include="..\Code\ChunkLoader.cpp" />
     <ClCompile Include="..\Code\ChunkManager.cpp" />
     <ClCompile Include="..\Code\ChunkMesh.cpp" />
     <ClCompile Include="..\Code\CollisionBlock.cpp" />

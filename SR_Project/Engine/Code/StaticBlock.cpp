@@ -54,7 +54,7 @@ Object* StaticBlock::Create(ObjectManager* owner, ObjectType objType, StaticBloc
 HRESULT StaticBlock::Ready_Object()
 {
     auto collision = AddComponent<CollisionComponent>();
-    GetScene()->GetCollisionSystem()->RegisterCollision(collision);
+    //GetScene()->GetCollisionSystem()->RegisterCollision(collision);
     collision->SetLayer(LAYER_DEFAULT);
     collision->SetMask(LAYER_PLAYER | LAYER_ENEMY);
     auto physics = AddComponent<PhysicsComponent>();

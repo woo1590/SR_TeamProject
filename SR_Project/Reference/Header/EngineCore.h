@@ -14,6 +14,7 @@ class SoundManager;
 class ImGuiManager;
 class EventSystem;
 class CollisionSystem;
+class ChunkLoader;
 class Random;
 
 class ENGINE_DLL EngineCore :
@@ -46,6 +47,7 @@ public:
     LightSystem*        GetLightSystem()const;
     InputSystem*        GetInputSystem()const;
 
+    ChunkLoader*        GetChunkLoader()const;
     Random* GetRandom()const;
 
     HWND GetWindowHandle()const;
@@ -71,6 +73,8 @@ private:
     RenderSystem* RenderSys;
     LightSystem* LightSys;
     InputSystem* InputSys;
+
+    ChunkLoader* chunkLoader;
 
     HWND hWnd;
 

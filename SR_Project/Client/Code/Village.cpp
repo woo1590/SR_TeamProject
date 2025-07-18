@@ -19,6 +19,7 @@
 #include "UIManager.h"
 #include "ChunkManager.h"
 #include "SoundManager.h"
+#include "ChunkLoader.h"
 
 //object
 #include "TestObject.h"
@@ -123,8 +124,9 @@ void Village::Load()
 
 	/*-------------------------Create Objects----------------------------*/
 	{
-		BlockMgr->LoadDB("Stage1");
-		BlockMgr->LoadChunk("Stage1");
+		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
+		ChunkMgr->SetChunk(chunkload->GetChunks());
+
 		Grid->InsertBlock();
 
 		UILoader loader;
@@ -183,6 +185,12 @@ void Village::Update(_float dt)
 		if (Input->IsKeyPressed(NUM2))
 			CameraMgr->SetMainCamera(L"Third_Camera");
 
+		if (Input->IsKeyPressed(NUM4))
+		{
+			auto next = LoadingScene::Create(LOADID::Stage1);
+			EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(next);
+		}
+
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);
 
@@ -196,6 +204,7 @@ void Village::Update(_float dt)
 			effect->SetDeadTime(1.f);
 			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);
 		}
+
 	}
 }
 
@@ -207,18 +216,19 @@ void Village::Late_Update(_float dt)
 
 void Village::Unload()
 {
+	EngineCore::GetInstance()->GetSoundManager()->Stop("TestBGM");
 }
 
 void Village::Free()
 {
-	Safe_Release(ObjectMgr);
-	Safe_Release(CollisionSys);
-	Safe_Release(PhysicsSys);
-	Safe_Release(CameraMgr);
-	Safe_Release(BlockMgr);
-	Safe_Release(Grid);
-	Safe_Release(uiMgr);
-	Safe_Release(ChunkMgr);
+	//Safe_Release(ObjectMgr);
+	//Safe_Release(CollisionSys);
+	//Safe_Release(PhysicsSys);
+	//Safe_Release(CameraMgr);
+	//Safe_Release(BlockMgr);
+	//Safe_Release(Grid);
+	//Safe_Release(uiMgr);
+	//Safe_Release(ChunkMgr);
 
 	Scene::Free();
 }

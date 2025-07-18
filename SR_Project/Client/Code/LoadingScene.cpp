@@ -5,6 +5,7 @@
 #include "InputSystem.h"
 #include "SceneManager.h"
 #include "ObjectManager.h"
+#include "ChunkLoader.h"
 
 //scene
 #include "TestScene.h"
@@ -54,29 +55,26 @@ void LoadingScene::Update(_float dt)
 		auto Input = EngineCore::GetInstance()->GetInputSystem();
 		Scene* nextScene = nullptr;	
 
-		if (Input->IsKeyPressed(TAB))
+		switch (nextSceneID)
 		{
-			switch (nextSceneID)
-			{
-			case LOADID::TestScene:
-				nextScene = TestScene::Create();
-				break;
-			case LOADID::Village:
-				nextScene = Village::Create();
-				break;
-			case LOADID::Stage1:
-				nextScene = Stage1::Create();
-				break;
-			case LOADID::Stage2:
-				nextScene = Stage2::Create();
-				break;
-			default:
-				break;
-			}
-
-			if (nextScene)
-				EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
+		case LOADID::TestScene:
+			nextScene = TestScene::Create();
+			break;
+		case LOADID::Village:
+			nextScene = Village::Create();
+			break;
+		case LOADID::Stage1:
+			nextScene = Stage1::Create();
+			break;
+		case LOADID::Stage2:
+			nextScene = Stage2::Create();
+			break;
+		default:
+			break;
 		}
+
+		if (nextScene)
+			EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
 	}
 }
 

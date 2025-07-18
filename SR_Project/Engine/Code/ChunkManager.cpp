@@ -215,6 +215,16 @@ Chunk* ChunkManager::GetChunk(int chunkX, int chunkZ)
     return (it != worldChunks.end()) ? it->second : nullptr;
 }
 
+void ChunkManager::SetChunk(std::unordered_map<std::pair<int, int>, Chunk*, PairHash>& chunks)
+{
+    worldChunks = chunks;
+    for (auto& chunk : worldChunks)
+    {
+        chunk.second->SetOwner(owner->GetObjectManager());
+    }
+
+}
+
 void ChunkManager::Free()
 {
     for (auto& [pos, chunkPtr] : worldChunks)
