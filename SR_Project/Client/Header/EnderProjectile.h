@@ -21,9 +21,11 @@ protected:
     void Free() override;
 
 public:
+    void    SetVisible(_bool visible);
     void    FireProjectile(_vec3 dir);
 
 private:
     _float  ElapsedTime = 0.f;
+    _bool   Visible = false;
 };
 

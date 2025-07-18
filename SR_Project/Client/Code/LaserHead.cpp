@@ -86,7 +86,7 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
 void LaserHead::Update(_float dt)
 {
     Object::Update(dt);
-    PlayAnimation(dt);
+        PlayAnimation(dt);
 }
 
 void LaserHead::Late_Update(_float dt)

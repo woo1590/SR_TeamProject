@@ -59,6 +59,14 @@ void FireBlock::Update(_float dt)
 		mtrl->SetVec3("uvOffset", _vec3(currFrame * 1.f / 16.f, 0.f, 0.f));
 	}
 
+	{
+		if (deadTime)
+			deadTimer += dt;
+
+		if (deadTimer >= deadTime)
+			SetDead();
+	}
+
 	timer += dt * speed;
 }
 

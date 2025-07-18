@@ -14,6 +14,7 @@ public:
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
     void SetColor(_vec3 color);
+    void SetDeadTime(_float time) { deadTime = time; }
 private:
     void Free()override;
 
@@ -22,5 +23,7 @@ private:
     _vec3 color{ 0.2f,0.f,0.5f };
     _uint totalFrame = 16;
     _uint currFrame = 0;
+    _float deadTime = 0.f;
+    _float deadTimer = 0.f;
 };
 

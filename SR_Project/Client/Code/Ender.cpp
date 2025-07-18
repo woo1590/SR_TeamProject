@@ -792,8 +792,8 @@ void Ender::PlayProjectileAttack(_float dt)
 
             int randPower = rand() % 10 - 10 + length;
 
-            static_cast<EnderProjectile*>(EnderProjectiles[ProjectileIndex++])->FireProjectile(targetPos * randPower);
-            //static_cast<EnderProjectile*>(EnderProjectiles[ProjectileIndex++])->SetActive(true);
+            static_cast<EnderProjectile*>(EnderProjectiles[ProjectileIndex])->FireProjectile(targetPos * randPower);
+            static_cast<EnderProjectile*>(EnderProjectiles[ProjectileIndex++])->SetVisible(true);
 
             if (ProjectileIndex >= 30) ProjectileIndex = 0;
         }
