@@ -24,7 +24,7 @@ void ParticleSystem::Update(_float dt)
 	_vec3 spawnPos;
 	if (emitter.followCam)
 	{
-		auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
+ 		auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
 		spawnPos = cam->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
 	}
 	else
