@@ -21,39 +21,45 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update(_float dt)
 {
-	_vec3 spawnPos;
-	if (emitter.followCam)
+	for (auto& emitter : emitters)
 	{
-		auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
-		spawnPos = cam->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
-	}
-	else
-	{
-		spawnPos = owner->GetComponent<TransformComponent>()->GetPosition();
-	}
+		if (!emitter.alive)
+			continue;
 
-	emitter.Spawn(particles, spawnPos, dt);
+		_vec3 spawnPos;
+		if (emitter.followCam)
+		{
+			auto cam = owner->GetScene()->GetCameraManager()->GetMainCamera();
+			spawnPos = cam->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
+		}
+		else
+		{
+			spawnPos = owner->GetComponent<TransformComponent>()->GetPosition();
+		}
+
+		emitter.Spawn(particles, spawnPos, dt);
+	}
 
 	for (auto& p : particles)
 	{
 		if (!p.isActive) continue;
 
 		//Life End
-		p.age += dt;	
+		p.age += dt;
 		if (p.age >= p.life)
 		{
 			p.isActive = false;
 			continue;
 		}
 
-		particleUpdate(p, dt);
+		behaviors[p.emitterID](p, dt);
 	}
 }
 
-void ParticleSystem::AddEmitter(Emitter emitter, UpdateFunc update)
+void ParticleSystem::AddEmitter(Emitter emitter, UpdateFunc behavior)
 {
 	emitters.push_back(emitter);
-	behaviors.push_back(update);
+	behaviors.push_back(behavior);
 }
 
 void ParticleSystem::Free()

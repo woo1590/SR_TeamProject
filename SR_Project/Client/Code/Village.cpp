@@ -60,6 +60,7 @@
 #include "Spear.h"
 #include "DeadEffect.h"
 #include "ExplodeEffect.h"
+#include "FireBlock.h"
 
 //component
 #include "TransformComponent.h"
@@ -198,10 +199,11 @@ void Village::Update(_float dt)
 
 		if (Input->IsKeyPressed(NUM3))
 		{
-			auto effect = ExplodeEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
-			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
-			effect->SetDeadTime(1.f);
-			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);
+			auto fire = FireBlock::Create(ObjectMgr, ObjectType::ParticleEffect);
+			fire->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
+			fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));// 보라색
+			//fire->SetColor(_vec3(0.3f, 0.3f, 0.3f));// 검은색
+			ObjectMgr->AddObject(ObjectType::ParticleEffect, fire);
 		}
 
 	}

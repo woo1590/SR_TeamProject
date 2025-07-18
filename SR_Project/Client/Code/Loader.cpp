@@ -161,6 +161,7 @@ HRESULT Loader::Load_Village()
 		resource->LoadShader("../Resource/Shader/BloodParticleShader.fx", "BloodParticleShader");
 		resource->LoadShader("../Resource/Shader/SpriteShader.fx", "SpriteShader");
 		resource->LoadShader("../Resource/Shader/ExplodeParticle.fx", "ExplodeParticle");
+		resource->LoadShader("../Resource/Shader/FireBlock.fx", "FireBlockShader");
 	}
 
 	/*---------------------Load Material--------------------------*/

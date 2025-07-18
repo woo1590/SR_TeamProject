@@ -34,33 +34,36 @@ HRESULT ExplodeEffect::Ready_Object()
 	AddComponent<TransformComponent>();
 
 	auto particle = AddComponent<ParticleSystem>();
-	Emitter explode;
-	explode.burstCount = 4;
-	explode.life = 0.5f;
-	explode.looping = false;
-	explode.followCam = false;
-	explode.color = { 1.f,0.4f,0.f,1.f };
-	explode.colorFade = { 0.f,0.f,0.f,1.f };
+	Emitter flame;
+	{
+		flame.burstCount = 4;
+		flame.life = 0.5f;
+		flame.looping = false;
+		flame.followCam = false;
+		flame.color = { 1.f,0.4f,0.f,1.f };
+		flame.colorFade = { 0.f,0.f,0.f,1.f };
 	
-	explode.velocityMin = { 0.f,0.f,0.f };
-	explode.velocityMax = { 0.1f,0.1f,0.1f };
-	explode.spawnAreaMin = { -6.f,-3.f,-6.f };
-	explode.spawnAreaMax = { 6.f,3.f,6.f };
-	explode.size = 100.f;
+		flame.velocityMin = { 0.f,0.f,0.f };
+		flame.velocityMax = { 0.1f,0.1f,0.1f };
+		flame.spawnAreaMin = { -6.f,-3.f,-6.f };
+		flame.spawnAreaMax = { 6.f,3.f,6.f };
+		flame.size = 100.f;
 	
-	particle->AddEmitter(explode, [](Particle& p, _float dt)
-		{
-			p.position += p.velocity * dt;
+		particle->AddEmitter(flame, [](Particle& p, _float dt)
+			{
+				p.position += p.velocity * dt;
 
-			p.color.w -= p.colorFade.w * dt;
-			if (p.color.w <= 0.f)
-				p.color.w = 0.f;
-			_float t = p.age / p.life;
-			t = std::clamp(t, 0.f, 1.f);
-			float tFast = std::pow(t, 0.3f);
+				p.color.w -= p.colorFade.w * dt;
+				if (p.color.w <= 0.f)
+					p.color.w = 0.f;
+				_float t = p.age / p.life;
+				t = std::clamp(t, 0.f, 1.f);
+				float tFast = std::pow(t, 0.3f);
 
-			p.size = std::lerp(100.f, 400.f, tFast);
-		});
+				p.size = std::lerp(100.f, 400.f, tFast);
+			});
+
+	}
 
 	auto renderer = AddComponent<ParticleRenderer>(RENDER_ID::Render_Alpha);
 	renderer->SetMaterial("Explode_Mtrl");

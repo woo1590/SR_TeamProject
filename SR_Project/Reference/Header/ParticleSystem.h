@@ -15,6 +15,8 @@ struct Particle
     _float life;
     _float age;
     _bool isActive = false;
+
+    _uint emitterID = 0;
 };
 
 struct Emitter
@@ -28,6 +30,7 @@ struct Emitter
     _bool alive = true;
 
     /*-------Particle param-------*/
+    _uint emitterID = 0;
 
     _vec4 color{ 1.f,1.f,1.f,1.f };
     _vec4 colorFade{ 0.f,0.f,0.f,0.f };
@@ -145,7 +148,7 @@ public:
     void Update(_float dt)override;
 
     const std::vector<Particle>& GetParticles()const { return particles; }
-    void AddEmitter(Emitter emitter, UpdateFunc update);
+    void AddEmitter(Emitter emitter, UpdateFunc behavior);
 private:
     void Free()override;
 
@@ -153,8 +156,8 @@ private:
     static constexpr float GRAVITY = 9.8f;
 
     std::vector<Particle> particles;
-    Emitter emitter;
-    UpdateFunc particleUpdate;
+    std::vector<Emitter> emitters;
+    std::vector<UpdateFunc> behaviors;
 };
 
 END
