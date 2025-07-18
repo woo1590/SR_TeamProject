@@ -205,8 +205,8 @@ void Village::Update(_float dt)
 		{
 			auto fire = FireBlock::Create(ObjectMgr, ObjectType::ParticleEffect);
 			fire->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
-			fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));// �����
-			//fire->SetColor(_vec3(0.3f, 0.3f, 0.3f));// ������
+			fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));
+			//fire->SetColor(_vec3(0.3f, 0.3f, 0.3f));
 			ObjectMgr->AddObject(ObjectType::ParticleEffect, fire);
 		}
 
