@@ -196,6 +196,7 @@
     <ClInclude Include="..\Header\DialogObj.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Ender.h" />
+    <ClInclude Include="..\Header\EnderProjectile.h" />
     <ClInclude Include="..\Header\EnemyHPBarBack.h" />
     <ClInclude Include="..\Header\EnemyHPBarFront.h" />
     <ClInclude Include="..\Header\ExplodeEffect.h" />
@@ -212,6 +213,8 @@
     <ClInclude Include="..\Header\IsTimerOn.h" />
     <ClInclude Include="..\Header\JungleSkeleton.h" />
     <ClInclude Include="..\Header\JungleZombie.h" />
+    <ClInclude Include="..\Header\LaserEffect.h" />
+    <ClInclude Include="..\Header\LaserHead.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
     <ClInclude Include="..\Header\Locked_Node.h" />
     <ClInclude Include="..\Header\LockNode_Back.h" />
@@ -344,6 +347,7 @@
     <ClCompile Include="..\Code\DialogObj.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Ender.cpp" />
+    <ClCompile Include="..\Code\EnderProjectile.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarFront.cpp" />
     <ClCompile Include="..\Code\ExplodeEffect.cpp" />
@@ -360,6 +364,8 @@
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
     <ClCompile Include="..\Code\JungleSkeleton.cpp" />
     <ClCompile Include="..\Code\JungleZombie.cpp" />
+    <ClCompile Include="..\Code\LaserEffect.cpp" />
+    <ClCompile Include="..\Code\LaserHead.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
     <ClCompile Include="..\Code\Locked_Node.cpp" />
     <ClCompile Include="..\Code\LockNode_Back.cpp" />

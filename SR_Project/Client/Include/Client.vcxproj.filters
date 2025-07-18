@@ -498,6 +498,15 @@
     </Filter>  
     <Filter Include="02. Object\Effect\ExplodeEffect">
       <UniqueIdentifier>{2ec7e4a7-1314-435a-b36d-761ff9c9058f}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\Monster\Ender\LaserHead">
+      <UniqueIdentifier>{4263dd23-619c-47af-8b85-f90ce0d32785}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Ender\Laser">
+      <UniqueIdentifier>{b693e2fd-100b-4d10-946c-eb2dc28c02cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Ender\Projectile">
+      <UniqueIdentifier>{686bd4dd-264e-4656-b832-17815fc9f4c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -957,6 +966,15 @@
     </ClInclude>  
     <ClInclude Include="..\Header\ExplodeEffect.h">
       <Filter>02. Object\Effect\ExplodeEffect</Filter>
+    </ClInclude>    
+    <ClInclude Include="..\Header\LaserHead.h">
+      <Filter>02. Object\Monster\Ender\LaserHead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserEffect.h">
+      <Filter>02. Object\Monster\Ender\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EnderProjectile.h">
+      <Filter>02. Object\Monster\Ender\Projectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1398,6 +1416,15 @@
     </ClCompile>  
     <ClCompile Include="..\Code\ExplodeEffect.cpp">
       <Filter>02. Object\Effect\ExplodeEffect</Filter>
+    </ClCompile>    
+    <ClCompile Include="..\Code\LaserHead.cpp">
+      <Filter>02. Object\Monster\Ender\LaserHead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LaserEffect.cpp">
+      <Filter>02. Object\Monster\Ender\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EnderProjectile.cpp">
+      <Filter>02. Object\Monster\Ender\Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

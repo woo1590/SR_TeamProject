@@ -9,6 +9,7 @@
 #include "CubeMesh.h"
 #include "Material.h"
 #include "ArrowMesh.h"
+#include "QuadMesh.h"
 
 Loader::Loader(LOADID loadId)
 	:LoadId(loadId)
@@ -101,6 +102,8 @@ HRESULT Loader::Load_Village()
 		resource->LoadMesh("Cube_Mesh", cube);
 		auto arrow = ArrowMesh::Create();
 		resource->LoadMesh("Arrow_Mesh", arrow);
+		auto quad = QuadMesh::Create(10);
+		resource->LoadMesh("Quad_Mesh", quad);
 	}
 	/*--------------------Load Shader---------------------------------*/
 	{
@@ -113,6 +116,7 @@ HRESULT Loader::Load_Village()
 		resource->LoadShader("../Resource/Shader/BloodParticleShader.fx", "BloodParticleShader");
 		resource->LoadShader("../Resource/Shader/SpriteShader.fx", "SpriteShader");
 		resource->LoadShader("../Resource/Shader/ExplodeParticle.fx", "ExplodeParticle");
+		resource->LoadShader("../Resource/Shader/LaserShader.fx", "LaserShader");
 	}
 
 	/*---------------------Load Material--------------------------*/

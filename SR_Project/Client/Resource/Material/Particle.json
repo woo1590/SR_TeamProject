@@ -16,9 +16,9 @@
     }
   },
 
-  "materials":{
-    "Rain_Mtrl" :{
-        "textures":{"AlbedoMap":"../Resource/Texture/Effect/Rain.png"}
+  "materials": {
+    "Rain_Mtrl": {
+      "textures": { "AlbedoMap": "../Resource/Texture/Effect/Rain.png" }
     },
 
     "Hit_Mtrl":{
@@ -32,6 +32,16 @@
     "Explode_Mtrl":{
       "fx":"ExplodeParticle",
       "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
+    },
+
+    "Laser_Mtrl1": {
+      "fx": "SpriteShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/HY/laser1.png" }
+    },
+
+    "Laser_Mtrl2": {
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/HY/laser2.png" }
     }
   }
 

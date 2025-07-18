@@ -15,6 +15,10 @@
 #include "IsAlive.h"
 #include "SelectorNode.h"
 #include "Die.h"
+#include "LaserHead.h"
+#include "LaserEffect.h"
+#include "ObjectManager.h"
+#include "EnderProjectile.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -51,7 +55,9 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     collision->SetSize(_vec3(10.f, 20.f, 20.f));
 
     Stand();
-
+    InitLaserHead();
+    InitCrossLaser();
+    InitEnderProjectile();
 	return S_OK;
 }
 
@@ -75,22 +81,20 @@ void Ender::InitTransform(ObjectType objType)
     SetMaterial("EnderBottomHead_Mtrl", "Head", RENDER_ID::Render_NonAlpha);
     SetMaterial("EnderBody_Mtrl", "Body");
 
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f/*D3DXToRadian(-90.f)*/));
     transform->SetPosition(10 , 100, 10);
-    
     auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
     toptransform->SetScale(24.f * Scale, 18.f * Scale, 24.f * Scale);
     toptransform->SetPosition(0.0f, 24.f * Scale, 0.f);
-    toptransform->SetRotate(D3DXToRadian(-45.f), 0.f, 0.f);
     toptransform->SetPivot(0.f, -18.f* Scale, 24.f * Scale);
     toptransform->SetPivotEnable(true);
+   /* toptransform->SetRotate(D3DXToRadian(-45.f), 0.f, 0.f);*/
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetScale(24.f * Scale, 6.f * Scale, 24.f * Scale);
     bottomtransform->SetPosition(0.f * Scale, 66.f * Scale, 0.f * Scale);
     bottomtransform->SetPivot(0.f, -84.f * Scale,0.f);
     bottomtransform->SetPivotEnable(true);
-    bottomtransform->SetRotate(_vec3(/*D3DXToRadian(-90.f)*/0.f, 0.f, 0.f));
+    bottomtransform->SetRotate(_vec3(0.f, 0.f, 0.f));
 
     auto bodytransform = Bones["Body"]->GetComponent<TransformComponent>();
     bodytransform->SetScale(16.f * Scale, 60.f * Scale, 16.f * Scale);
@@ -215,7 +219,7 @@ void Ender::InitTree()
 
     auto transform = GetComponent<TransformComponent>();
     _vec3 startPos = transform->GetPosition();
-    TargetPos = new _vec3(startPos.x - 10, startPos.y, startPos.z);
+    TargetPos = new _vec3(startPos.x + 30, startPos.y, startPos.z + 40); //startpos setting->initialize after
     bb->SetValue("targetPos", TargetPos);
 
     CheckStateChangeCount* changeCount = new CheckStateChangeCount(new StateAttackNode());
@@ -240,23 +244,34 @@ void Ender::InitAnimation()
 {
     CrawlAnim.ElapsedTime = 0.f;
 
+    StandAnim.ElapsedTime = 0.f;
+
     CrawlToStandAnim.Start = 0.f;
-    CrawlToStandAnim.End = 90.f;
+    CrawlToStandAnim.End = 89.f;
     CrawlToStandAnim.TotalTime = 0.7f;
     CrawlToStandAnim.ElapsedTime = 0.f;
-    CrawlToStandAnim.DelayTime = 6.0f;
 
     StandToCrawlAnim.Start = 0.f;
-    StandToCrawlAnim.End = 90.f;
+    StandToCrawlAnim.End = 89.f;
     StandToCrawlAnim.TotalTime = 0.7f;
     StandToCrawlAnim.ElapsedTime = 0.f;
-    StandToCrawlAnim.DelayTime = 6.0f;
 
     HideAnim.TotalTime = 3.f;
     HideAnim.ElapsedTime = 0.f;
 
     SproutAnim.TotalTime = 3.f;
     SproutAnim.ElapsedTime = 0.f;
+
+    HeadAttackAnim.DelayTime = 2.f;
+    HeadAttackAnim.ElapsedTime = 0.f;
+
+    LaserAttackAnim.ElapsedTime = 0.f;
+    LaserAttackAnim.TotalTime = 8.f;
+
+    ProjectileAttackAnim.ElapsedTime = 0.f;
+    ProjectileAttackAnim.TotalTime = 1.f;
+    ProjectileAttackAnim.Start = 0.f;
+    ProjectileAttackAnim.End = -45.f;
 }
 
 void Ender::PlayAnimation(_float dt)
@@ -300,11 +315,16 @@ void Ender::Free()
 
 void Ender::Crawl()
 {
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), D3DXToRadian(-90.f)));
+    if (enderState != EnderState::Crawl)
+    {
+        enderState = EnderState::Crawl;
 
-    auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
-    bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f), 0.f, 0.f));
+        auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+        transform->SetRotate(_vec3(D3DXToRadian(89.f),0.f,0.f ));
+
+        auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
+        bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f), 0.f, 0.f));
+    }
 }
 
 void Ender::Stand()
@@ -313,8 +333,8 @@ void Ender::Stand()
     {
         enderState = EnderState::Stand;
 
-        auto transform = GetComponent<TransformComponent>();
-        transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f));
+        auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+        transform->SetRotate(_vec3(0.f, 0.f, 0.f));
 
         auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
         bottomtransform->SetRotate(_vec3(0.f, 0.f, 0.f));
@@ -326,6 +346,8 @@ void Ender::Stand()
         SetRotation({ D3DXToRadian(-90.f), D3DXToRadian(-90.f), 0.f }, "LFoot1");
         SetRotation({ D3DXToRadian(-90.f), D3DXToRadian(-90.f), 0.f }, "LFoot2");
         SetRotation({ D3DXToRadian(-90.f), D3DXToRadian(-90.f), 0.f }, "LFoot3");
+
+        *IsAttack = false;
     }
 }
 
@@ -352,27 +374,86 @@ void Ender::Sprout()
             auto renderer = Bone.second->GetComponent<MeshRenderer>();
             renderer->SetRenderID(RENDER_ID::Render_NonAlpha);
         }
+
+        *IsAttack = false;
     }
 }
 
 void Ender::CrawlToStand()
 {
+    if (enderState != EnderState::CrawlToStand)
+    {
+        enderState = EnderState::CrawlToStand;
+
+        CrawlToStandAnim.ElapsedTime = 0.f;
+        ++CurChangeStateCount;
+    }
 }
 
 void Ender::StandToCrawl()
 {
+    if (enderState != EnderState::StandToCrawl)
+    {
+        enderState = EnderState::StandToCrawl;
+
+        StandToCrawlAnim.ElapsedTime = 0.f;
+        ++CurChangeStateCount;
+    }
 }
 
 void Ender::LineLaserAttack()
 {
+    if (enderState != EnderState::LineLaser)
+    {
+        enderState = EnderState::LineLaser;
+
+        HeadAttackAnim.ElapsedTime = 0.f;
+    }
 }
 
 void Ender::CrossLaserAttack()
 {
+    if (enderState != EnderState::CrossLaser)
+    {
+        enderState = EnderState::CrossLaser;
+
+        LaserAttackAnim.ElapsedTime = 0.f;
+
+        for (auto& CrossLaser : CrossLasers)
+            CrossLaser->SetActive(true);
+    }
 }
 
 void Ender::ProjectileAttack()
 {
+    if (enderState != EnderState::Projectile)
+    {
+        enderState = EnderState::Projectile;
+
+        ProjectileAttackAnim.ElapsedTime = 0.f;
+    }
+}
+
+void Ender::MoveTo(_vec3 targetPos, _float dt)
+{
+    auto transform = GetComponent<TransformComponent>();
+    _vec3 pos = transform->GetPosition();
+
+    pos.y = 0;
+    _vec3 dir = targetPos - pos;
+    dir.y = 0;
+
+    if (D3DXVec3Length(&dir) >= 0.1)
+    {
+        D3DXVec3Normalize(&dir, &dir);
+        transform->Translate(dir * dt * Speed);
+        transform->SetForward(dir);
+    }
+}
+
+void Ender::SetState(EnderState state)
+{
+    enderState = state;
 }
 
 EnderState Ender::GetState()
@@ -383,6 +464,46 @@ EnderState Ender::GetState()
 int Ender::GetCurChangeStateCount()
 {
     return CurChangeStateCount;
+}
+
+void Ender::InitLaserHead()
+{
+    LaserHeads.reserve(10);
+
+    for (int i = 0; i < 10; ++i)
+        LaserHeads.push_back(LaserHead::Create(owner, ObjectType::Bone));
+}
+
+void Ender::InitCrossLaser()
+{
+    for (int i = 0; i < 4; ++i)
+    {
+        auto laser = LaserEffect::Create(owner, ObjectType::Bone);
+        CrossLasers.push_back(laser);
+
+        laser->SetActive(false);
+        auto Lasertransform = laser->GetComponent<TransformComponent>();
+        Lasertransform->SetScale(_vec3(80.f * Scale, 0.5f, 1.f));
+        Lasertransform->SetParent(Bones["Body"]);
+        Lasertransform->SetPosition(_vec3(0.f, -60.f * Scale, 0.f));
+        Lasertransform->SetPivot(0.f, 60.f * Scale, 0.f);
+        Lasertransform->SetPivotEnable(true);
+
+        owner->AddObject(ObjectType::ParticleEffect, laser);
+    }
+
+    CrossLasers[0]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
+    CrossLasers[1]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-270.f), 0.f));
+    CrossLasers[2]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, 0.f, 0.f));
+    CrossLasers[3]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(180.f), 0.f));
+}
+
+void Ender::InitEnderProjectile()
+{
+    EnderProjectiles.reserve(30);
+
+    for (int i = 0; i < 30; ++i)
+        EnderProjectiles.push_back(EnderProjectile::Create(owner, ObjectType::Projectile));
 }
 
 void Ender::PlayCrawl(_float dt)
@@ -419,16 +540,13 @@ void Ender::PlayCrawl(_float dt)
 
 void Ender::PlayCrawlToStand(_float dt)
 {
-    CrawlToStandAnim.DelayTime -= dt;
-    if (CrawlToStandAnim.DelayTime > 0) return;
-
     CrawlToStandAnim.ElapsedTime += dt;
 
     _float t = clamp(CrawlToStandAnim.ElapsedTime / CrawlToStandAnim.TotalTime, 0.f, 1.f);
     float angle = lerp(CrawlToStandAnim.Start, CrawlToStandAnim.End, t);
 
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), D3DXToRadian(-90.f + angle)));
+    auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+    transform->SetRotate(_vec3(D3DXToRadian(90.f - angle), 0.f, 0.f));
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetRotate(_vec3(D3DXToRadian(-90.f + angle), 0.f, 0.f));
@@ -440,20 +558,22 @@ void Ender::PlayCrawlToStand(_float dt)
     SetRotation({ D3DXToRadian(-angle), D3DXToRadian(90.f), 0.f }, "RFoot1");
     SetRotation({ D3DXToRadian(-angle), D3DXToRadian(90.f), 0.f }, "RFoot2");
     SetRotation({ D3DXToRadian(-angle), D3DXToRadian(90.f), 0.f }, "RFoot3");
+   
+    if (CrawlToStandAnim.ElapsedTime > CrawlToStandAnim.TotalTime)
+    {
+        Stand();
+    }
 }
 
 void Ender::PlayStandToCrawl(_float dt)
 {
-    StandToCrawlAnim.DelayTime -= dt;
-    if (StandToCrawlAnim.DelayTime > 0) return;
-
     StandToCrawlAnim.ElapsedTime += dt;
 
     _float t = clamp(StandToCrawlAnim.ElapsedTime / StandToCrawlAnim.TotalTime, 0.f, 1.f);
     float angle = lerp(StandToCrawlAnim.Start, StandToCrawlAnim.End, t);
 
-    auto transform = GetComponent<TransformComponent>();
-    transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), D3DXToRadian(-angle)));
+    auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+    transform->SetRotate(_vec3(D3DXToRadian(angle), 0.f, 0.f));
 
     auto bottomtransform = Bones["Head"]->GetComponent<TransformComponent>();
     bottomtransform->SetRotate(_vec3(D3DXToRadian(-angle), 0.f, 0.f));
@@ -465,6 +585,11 @@ void Ender::PlayStandToCrawl(_float dt)
     SetRotation({ D3DXToRadian(-90.f + angle), D3DXToRadian(90.f), 0.f }, "RFoot1");
     SetRotation({ D3DXToRadian(-90.f + angle), D3DXToRadian(90.f), 0.f }, "RFoot2");
     SetRotation({ D3DXToRadian(-90.f + angle), D3DXToRadian(90.f), 0.f }, "RFoot3");
+    
+    if (StandToCrawlAnim.ElapsedTime > StandToCrawlAnim.TotalTime)
+    {
+        Crawl();
+    }
 }
 
 void Ender::PlayStand(_float dt)
@@ -559,18 +684,148 @@ void Ender::PlaySprout(_float dt)
 
     Scale = size;
     SetBoneSize();
+
+    if (SproutAnim.ElapsedTime > SproutAnim.TotalTime)
+    {
+        Stand();
+    }
 }
 
 void Ender::PlayLineLaserAttack(_float dt)
 {
+    HeadAttackAnim.DelayTime -= dt;
+    LaserSpawnTime += dt;
+
+    if (LaserSpawnTime > 1.0f)
+    {
+        auto Transform = GetComponent<TransformComponent>();
+        _vec3 Pos = Transform->GetPosition();
+
+        _float RandX = rand() % 40 - 20;
+        _float RandZ = rand() % 40 - 20;
+
+        _vec3 randPos = _vec3(Pos.x + RandX, Pos.y, Pos.z + RandZ);
+
+        LaserSpawnTime = 0.f;
+        auto projectileTransform = LaserHeads[LaserIndex]->GetComponent<TransformComponent>();
+        projectileTransform->SetPosition(randPos);
+        static_cast<LaserHead*>(LaserHeads[LaserIndex])->SetDir(HeadDir(rand() % 4));
+        static_cast<LaserHead*>(LaserHeads[LaserIndex++])->SetActive(true);
+
+        if (LaserIndex >= 10) LaserIndex = 0;
+    }
+
+    if (HeadAttackAnim.DelayTime < 0)
+    {
+        HeadAttackAnim.IsEnd = true;
+
+        (*IsAttack) = false;
+        AttackAnim.IsEnd = true;
+        CurChangeStateCount = 0;
+        Sprout();
+    }
 }
 
 void Ender::PlayCrossLaserAttack(_float dt)
 {
+    LaserAttackAnim.ElapsedTime += dt;
+
+    for (auto& CrossLaser : CrossLasers)
+    {
+        auto Lasertransform = CrossLaser->GetComponent<TransformComponent>();
+        _vec3 rot = Lasertransform->GetRotate();
+        Lasertransform->SetRotate(_vec3(rot.x, D3DXToRadian(rot.y + 1.f * dt), rot.z));
+    }
+
+    if (LaserAttackAnim.ElapsedTime > LaserAttackAnim.TotalTime)
+    {
+        for (auto& CrossLaser : CrossLasers)
+            CrossLaser->SetActive(false);
+
+        (*IsAttack) = false;
+        AttackAnim.IsEnd = true;
+        CurChangeStateCount = 0;
+        Stand();
+    }
 }
 
 void Ender::PlayProjectileAttack(_float dt)
 {
+    ProjectileAttackAnim.DelayTime -= dt;
+    ProjectileSpawnTime += dt;
+    ProjectileAttackAnim.ElapsedTime += dt;
+
+    if (ProjectileAttackAnim.Phase == Ready)
+    {
+        _float t = clamp(ProjectileAttackAnim.ElapsedTime / ProjectileAttackAnim.TotalTime, 0.f, 1.f);
+        _float angle = lerp(ProjectileAttackAnim.Start, ProjectileAttackAnim.End, t);
+        auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
+        toptransform->SetRotate(D3DXToRadian(angle), 0.f, 0.f);
+
+        if (ProjectileAttackAnim.TotalTime < ProjectileAttackAnim.ElapsedTime)
+        {
+            ProjectileAttackAnim.Phase = Action;
+            ProjectileAttackAnim.ElapsedTime = 0.f;
+            ProjectileAttackAnim.TotalTime = 3.f;
+        }
+    }
+    if (ProjectileAttackAnim.Phase == Action)
+    {
+        if (ProjectileSpawnTime > 0.5f)
+        {
+            auto Transform = GetComponent<TransformComponent>();
+            _vec3 Pos = Transform->GetPosition();
+
+            ProjectileSpawnTime = 0.f;
+            auto projectileTransform = EnderProjectiles[ProjectileIndex]->GetComponent<TransformComponent>();
+            projectileTransform->SetPosition(Pos.x, Pos.y + 60.f * Scale, Pos.z);
+
+            auto player = owner->GetFrontObject(ObjectType::Player);
+            _vec3 playerPos = player->GetComponent<TransformComponent>()->GetPosition();
+            int randx = rand() % 1 - 0.5f;
+            int randz = rand() % 1 - 0.5f;
+            _vec3 randPos = _vec3(randx, 1.f, randz);
+
+            _vec3 targetPos = playerPos + randPos - Pos;
+            _float length = D3DXVec3Length(&targetPos);
+            D3DXVec3Normalize(&targetPos, &targetPos);
+
+            int randPower = rand() % 10 - 10 + length;
+
+            static_cast<EnderProjectile*>(EnderProjectiles[ProjectileIndex++])->FireProjectile(targetPos * randPower);
+            //static_cast<EnderProjectile*>(EnderProjectiles[ProjectileIndex++])->SetActive(true);
+
+            if (ProjectileIndex >= 30) ProjectileIndex = 0;
+        }
+        if (ProjectileAttackAnim.TotalTime < ProjectileAttackAnim.ElapsedTime)
+        {
+            ProjectileAttackAnim.Phase = Recover;
+            ProjectileAttackAnim.ElapsedTime = 0.f;
+            ProjectileAttackAnim.TotalTime = 1.f;
+        }
+    }
+
+    if (ProjectileAttackAnim.Phase == Recover)
+    {
+        _float t = clamp(ProjectileAttackAnim.ElapsedTime / ProjectileAttackAnim.TotalTime, 0.f, 1.f);
+        _float angle = lerp(ProjectileAttackAnim.End, ProjectileAttackAnim.Start, t);
+        auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
+        toptransform->SetRotate(D3DXToRadian(angle), 0.f, 0.f);
+
+        if (ProjectileAttackAnim.TotalTime < ProjectileAttackAnim.ElapsedTime)
+        {
+            ProjectileAttackAnim.IsEnd = true;
+
+            (*IsAttack) = false;
+            AttackAnim.IsEnd = true;
+            CurChangeStateCount = 0;
+            Stand();
+
+            ProjectileAttackAnim.Phase = Ready;
+            ProjectileAttackAnim.ElapsedTime = 0.f;
+            ProjectileAttackAnim.TotalTime = 1.f;
+        }
+    }
 }
 
 void Ender::SetBoneSize()

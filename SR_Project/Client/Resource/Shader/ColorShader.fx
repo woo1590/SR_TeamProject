@@ -67,6 +67,7 @@ float4 PS_Main(VS_OUTPUT input) : SV_Target
     if (emissive != 0 && emissivePow > 0)
     {
         result.rgb += emissivecolor.rgb * emissivePow;
+        result.rgb = saturate(result.rgb);
     }
 
     return result;

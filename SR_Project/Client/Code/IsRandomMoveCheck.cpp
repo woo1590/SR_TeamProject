@@ -3,6 +3,7 @@
 #include "Ender.h"
 #include "Object.h"
 #include "TransformComponent.h"
+#include "PhysicsComponent.h"
 
 IsRandomMoveCheck::IsRandomMoveCheck(BTNode* child)
 	:DecoratorNode(child)
@@ -37,8 +38,13 @@ BTStatus IsRandomMoveCheck::Tick(float dt, BlackBoard* bb)
 		return Child->Tick(dt, bb);
 	else
 	{
-		//moveto추가하기
-		return BTStatus::Running;
+		if (self->GetComponent<PhysicsComponent>()->IsGrounded())
+		{
+			static_cast<Ender*>(self)->MoveTo(*targetPos, dt);
+			return BTStatus::Running;
+		}
+		else
+			return BTStatus::Failure;
 	}
 }
 

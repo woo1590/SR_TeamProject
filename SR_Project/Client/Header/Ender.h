@@ -3,6 +3,9 @@
 
 enum class EnderState {CrawlToStand, StandToCrawl, Crawl, Stand, Hidden, Sprout, CrossLaser, LineLaser, Projectile};
 
+class LaserEffect;
+class LaserHead;
+class EnderProjectile;
 class Ender :
     public Monster
 {
@@ -35,10 +38,17 @@ public:
     void        LineLaserAttack();
     void        CrossLaserAttack();
     void        ProjectileAttack();
+    void        MoveTo(_vec3 targetPos, _float dt);
 
+    void        SetState(EnderState state);
     EnderState  GetState();
     int         GetCurChangeStateCount();
+
 private:
+    void        InitLaserHead();
+    void        InitCrossLaser();
+    void        InitEnderProjectile();
+
     void        PlayCrawl(_float dt);
     void        PlayCrawlToStand(_float dt);
     void        PlayStandToCrawl(_float dt);
@@ -71,5 +81,15 @@ private:
     int         CurChangeStateCount;
     int*        ChangeStateCount = nullptr;
     _vec3*      TargetPos = nullptr;
+
+    vector<LaserHead*>  LaserHeads;
+    float               LaserSpawnTime = 0.f;
+    _int                LaserIndex = 0;
+
+    vector<LaserEffect*>        CrossLasers;
+
+    vector<EnderProjectile*>    EnderProjectiles;
+    float                       ProjectileSpawnTime = 0.f;
+    _int                        ProjectileIndex = 0;
 };
 
