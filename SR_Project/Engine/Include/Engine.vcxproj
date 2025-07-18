@@ -259,6 +259,7 @@
     <ClInclude Include="..\Header\HalfBlock.h" />
     <ClInclude Include="..\Header\HoverButtonComponent.h" />
     <ClInclude Include="..\Header\HoverComponent.h" />
+    <ClInclude Include="..\Header\ICommand.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\InfoDetector.h" />
     <ClInclude Include="..\Header\InventoryManager.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="..\Code\HalfBlock.cpp" />
     <ClCompile Include="..\Code\HoverButtonComponent.cpp" />
     <ClCompile Include="..\Code\HoverComponent.cpp" />
+    <ClCompile Include="..\Code\ICommand.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\InfoDetector.cpp" />
     <ClCompile Include="..\Code\InventoryManager.cpp" />

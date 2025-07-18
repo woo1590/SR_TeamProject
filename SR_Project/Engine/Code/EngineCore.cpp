@@ -10,6 +10,7 @@
 #include "InputSystem.h"
 #include "SoundManager.h"
 #include "ChunkLoader.h"
+#include "ICommand.h"
 
 #ifdef USE_IMGUI
 #include "ImGuiManager.h"
@@ -109,11 +110,18 @@ void EngineCore::Tick(float dt)
 
 	RenderSys->Render_End();
 	InputSys->EndFrame();
+
+	ExecuteCommand();
 }
 
 void EngineCore::LoadDefaultResource()
 {
 
+}
+
+void EngineCore::RegisterCommand(ICommand* command)
+{
+	commands.push_back(command);
 }
 
 TimerManager* EngineCore::GetTimerManager() const
@@ -194,6 +202,15 @@ void EngineCore::DebugSetting_IMGUI()
 	ImGui::Text("Debug Mode is %s", Debug_Mode ? "ON" : "OFF");
 
 	ImGui::End();
+}
+void EngineCore::ExecuteCommand()
+{
+	for (auto& command : commands)
+	{
+		command->Execute();
+		Safe_Release(command);
+	}
+	commands.clear();
 }
 #endif
 
