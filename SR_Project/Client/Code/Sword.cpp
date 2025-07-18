@@ -73,9 +73,15 @@ void Sword::Update(_float dt)
 {
     Item::Update(dt);
     
-    if (!hitMonsters.empty() && static_cast<Player*>(ownerObject)->GetPlayerState() != Player::ePlayerState::ATTACK)
+    auto player = static_cast<Player*>(ownerObject);
+    if (!hitMonsters.empty() || player->GetPlayerState() == Player::ePlayerState::ATTACK)
     {
-        hitMonsters.clear();
+        attackTime += dt;
+
+        if (player->GetPlayerState() != Player::ePlayerState::ATTACK)
+            hitMonsters.clear();
+        if (attackTime >= player->GetAttackDelay())
+            hitMonsters.clear();
     }
 
     if (targetMonsters.empty()) 
@@ -122,16 +128,13 @@ void Sword::SetCollisionEnter(Object* other)
         player->GetPlayerState() == Player::ePlayerState::ATTACK)
     {
         if (other->GetObjectType() == ObjectType::Bone) return;
-        _bool includedMonster = false;
         for (auto& m : hitMonsters)
         {
             if (m == other || dynamic_cast<Creeper*>(m))
             {
-                includedMonster = true;
-                break;
+                return;
             }
         }
-        if (includedMonster) return;
         hitMonsters.push_back(other);
 
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitSword");

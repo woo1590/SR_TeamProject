@@ -18,5 +18,6 @@ private:
     void PlayerSpearInfo();
 
     std::vector<Object*> hitMonsters;
+    _float attackTime = 0.f;
 };
 

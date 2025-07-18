@@ -143,10 +143,10 @@ void Arrow::SetCollisionEnter(Object* other)
     {
     case ObjectType::Monster:
     {
+        hitObject = other;
+        hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
         if (dynamic_cast<Creeper*>(other))
         {
-            hitObject = other;
-            hitObjectPos = other->GetComponent<TransformComponent>()->GetWorldPosition();
             return;
         }
         InfoComponent<ItemInfo>* info = GetComponent<InfoComponent<ItemInfo>>();

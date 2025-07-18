@@ -190,7 +190,7 @@ void Player::PickingTerrain()
     auto collision = curScene->GetCollisionSystem();
     auto grid = curScene->GetStaticGrid();
 
-    if (input->IsKeyPressed(Z) || input->IsKeyPressed(LBUTTON))
+    if (input->IsKeyPressed(Z) || input->IsKeyDown(LBUTTON))
     {
         Ray ray = mainCam->ScreenPointRay();
 
@@ -308,7 +308,7 @@ void Player::PickingTerrain()
         }
     }
 
-    if (input->IsKeyPressed(RBUTTON) && Bones["LHand"] != nullptr)
+    if (input->IsKeyDown(RBUTTON) && Bones["LHand"] != nullptr)
     {
         Ray ray = mainCam->ScreenPointRay();
         //////////////////////////////////////////////Picking Change
@@ -1349,6 +1349,11 @@ _bool Player::IsStatikkMode()
     return StatikkMode;
 }
 
+_float Player::GetAttackDelay()
+{
+    return AttackDuration;
+}
+
 void Player::UpdateIdle(_float dt)
 {
     if (comboTime < comboLimit)
@@ -1461,12 +1466,12 @@ void Player::UpdateWalk(_float dt) {
     }
     //////////////////////////////////////////
 
-    auto blockOn1 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
-    auto blockOn2 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
-    auto blockOn3 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
-    auto blockOn4 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
-
-    if (blockOn1 == nullptr && blockOn2 == nullptr && blockOn3 == nullptr && blockOn4 == nullptr) GetComponent<PhysicsComponent>()->SetGround(false);
+    //auto blockOn1 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
+    //auto blockOn2 = grid->QueryCell(grid->WorldToCell(blockPos.x - 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
+    //auto blockOn3 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z - 1));
+    //auto blockOn4 = grid->QueryCell(grid->WorldToCell(blockPos.x + 1), grid->WorldToCell(blockPos.y - 2), grid->WorldToCell(blockPos.z + 1));
+    //
+    //if (blockOn1 == nullptr && blockOn2 == nullptr && blockOn3 == nullptr && blockOn4 == nullptr) GetComponent<PhysicsComponent>()->SetGround(false);
 
     //Rotate Player
     const float fRotateDuration = 0.05f;
