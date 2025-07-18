@@ -24,4 +24,5 @@ private:
     void BuildWorldMapUI(ObjectManager* objMgr);
     void BuildDeathUI(ObjectManager* objMgr);
     void BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr);
+    void BuildMiniMap(ObjectManager* objMgr);
 };

@@ -203,6 +203,8 @@
     <ClInclude Include="..\Header\FishingItem.h" />
     <ClInclude Include="..\Header\BloodEffect.h" />
     <ClInclude Include="..\Header\GhostCloakItem.h" />
+    <ClInclude Include="..\Header\InventoryCam.h" />
+    <ClInclude Include="..\Header\InventoryPlayer.h" />
     <ClInclude Include="..\Header\IsChangingState.h" />
     <ClInclude Include="..\Header\IsRandomMoveCheck.h" />
     <ClInclude Include="..\Header\IsTargetClose.h" />
@@ -216,6 +218,8 @@
     <ClInclude Include="..\Header\LockNode_Back.h" />
     <ClInclude Include="..\Header\MapNode.h" />
     <ClInclude Include="..\Header\MapNode_Front.h" />
+    <ClInclude Include="..\Header\MiniMap.h" />
+    <ClInclude Include="..\Header\MiniMapCam.h" />
     <ClInclude Include="..\Header\Npc.h" />
     <ClInclude Include="..\Header\ParticleObj.h" />
     <ClInclude Include="..\Header\PigItem.h" />
@@ -350,6 +354,8 @@
     <ClCompile Include="..\Code\FishingItem.cpp" />
     <ClCompile Include="..\Code\BloodEffect.cpp" />
     <ClCompile Include="..\Code\GhostCloakItem.cpp" />
+    <ClCompile Include="..\Code\InventoryCam.cpp" />
+    <ClCompile Include="..\Code\InventoryPlayer.cpp" />
     <ClCompile Include="..\Code\IsChangingState.cpp" />
     <ClCompile Include="..\Code\IsRandomMoveCheck.cpp" />
     <ClCompile Include="..\Code\IsTargetClose.cpp" />
@@ -363,6 +369,8 @@
     <ClCompile Include="..\Code\LockNode_Back.cpp" />
     <ClCompile Include="..\Code\MapNode.cpp" />
     <ClCompile Include="..\Code\MapNode_Front.cpp" />
+    <ClCompile Include="..\Code\MiniMap.cpp" />
+    <ClCompile Include="..\Code\MiniMapCam.cpp" />
     <ClCompile Include="..\Code\Npc.cpp" />
     <ClCompile Include="..\Code\ParticleObj.cpp" />
     <ClCompile Include="..\Code\PigItem.cpp" />

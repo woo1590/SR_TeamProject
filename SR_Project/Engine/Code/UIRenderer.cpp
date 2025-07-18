@@ -56,6 +56,28 @@ void UIRenderer::ApplyRatioVertical(float _ratio)
     UpdateCenter();
 }
 
+void UIRenderer::SetTexture(LPDIRECT3DTEXTURE9 _texture)
+{
+    if (!_texture) return;
+
+    Safe_Release(tex2D);
+    Safe_Release(texture);
+
+    texture = _texture;
+    texture->AddRef();
+
+    texture->QueryInterface(__uuidof(IDirect3DTexture9), reinterpret_cast<void**>(&tex2D));
+    assert(tex2D && "QueryInterface failed: not a 2D texture");
+
+    D3DSURFACE_DESC desc;
+    tex2D->GetLevelDesc(0, &desc);
+
+    fullWidth = static_cast<LONG>(desc.Width);
+    fullHeight = static_cast<LONG>(desc.Height);
+    srcRect = {0, 0, fullWidth, fullHeight};
+    UpdateCenter();
+}
+
 void UIRenderer::Free() { Safe_Release(tex2D); Safe_Release(texture); }
 
 void UIRenderer::ApplyRatioHorizontal(float _ratio)

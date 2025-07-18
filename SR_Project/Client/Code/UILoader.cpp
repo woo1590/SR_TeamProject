@@ -20,6 +20,10 @@
 #include "DialogComponent.h"
 #include "DialogManager.h"
 #include "PanelComponent.h"
+#include "RenderSystem.h"
+#include "CameraComponent.h"
+#include "HoverButtonComponent.h"
+#include "MeshRendererComponent.h"
 
 /* --- UI Object ------------------------------*/
 #include "Cursor.h"
@@ -75,7 +79,12 @@
 #include "BoostItem.h"
 #include "GhostCloakItem.h"
 #include "Arrows.h"
-
+#include "MiniMapCam.h"
+#include "MiniMap.h"
+#include "LoadingScene.h"
+#include "InventoryPlayer.h"
+#include "InventoryCam.h"
+#include "BaseCharacter.h"
 
 // DeathUI
 #include "PlayerDeathUI.h"
@@ -86,7 +95,6 @@
 #include "QuestPanel.h"
 #include "atri.h" 
 #include "Angry.h"
-
 
 #define ADD(obj) objMgr->AddUIObject(obj)
 
@@ -109,7 +117,8 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     BuildMiscUI(objMgr);
     BuildWorldMapUI(objMgr);
     BuildDeathUI(objMgr);
-    BuildDialogUI(objMgr,dialogMgr);
+    BuildDialogUI(objMgr,dialogMgr); 
+    BuildMiniMap(objMgr);
 
   //  ADD(ParticleObj::Create(objMgr));
 }
@@ -357,17 +366,24 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
     for (auto p : {_vec2{-100, 200}, {-150, 0}, {-120, -200}, {-450, 240}})
         AddLocked(p.x, p.y);
 
-    auto AddMap = [&](float x, float y)
+    auto AddMap = [&](float x, float y, LOADID loadID)
         {
             auto node = MapNode_Front::Create(objMgr);
             auto transform = node->GetComponent<TransformComponent>();
             transform->SetPosition(x, y);
             transform->SetParent(rootTransform);
+
+            auto button = node->GetComponent<HoverButtonComponent>();
+            button->SetOnClick([=]() 
+                {
+                    auto newScene = LoadingScene::Create(loadID);
+                    EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(newScene);
+                });
             ADD(node);
         };
 
-    for (auto p : {_vec2{-600, 80}, {-480, -150}})
-        AddMap(p.x, p.y);
+    AddMap(-600.f, 80.f, LOADID::Stage1);
+    AddMap(-480.f, -150.f, LOADID::Stage1);
 
    // ADD(LoadingStone::Create(objMgr));
 
@@ -424,4 +440,40 @@ void UILoader::BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr)
         if (atri)
             atri->SetEmotion(emotion);
         });
+}
+
+void UILoader::BuildMiniMap(ObjectManager* objMgr)
+{
+    auto renderSystem = EngineCore::GetInstance()->GetRenderSystem();
+    
+    auto minimapCam = MiniMapCam::Create(objMgr);
+    ADD(minimapCam);
+    renderSystem->SetMinimapCamera(minimapCam->GetComponent<CameraComponent>());
+    
+    ADD(MiniMap::Create(objMgr));
+    
+    auto inventoryCam = InventoryCam::Create(objMgr);
+    ADD(inventoryCam);
+    renderSystem->SetInventoryCamera(inventoryCam->GetComponent<CameraComponent>());
+    
+    ADD(InventoryPlayer::Create(objMgr));
+    
+    //renderSystem->ClearSystem();
+    
+    auto player = objMgr->GetFrontObject(ObjectType::Player);
+    auto playerObj = dynamic_cast<Player*>(player);
+    if (playerObj)
+    {
+        auto& bones = playerObj->GetBones();
+        for (const auto& pair : bones)
+        {
+            Object* bone = pair.second;
+            if (bone)
+            {
+                auto renderer = bone->GetComponent<MeshRenderer>();
+                if (renderer)
+                    renderSystem->RegisterInventoryRenderer(renderer);
+            }
+        }
+    }
 }

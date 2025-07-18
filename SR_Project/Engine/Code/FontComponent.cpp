@@ -57,7 +57,7 @@ HRESULT FontComponent::CreateFontResource()
 	create(FontType::DmgText,       44, FW_BOLD,   L"Noto Sans JP Medium");
 	create(FontType::DeathText,     64, FW_BOLD,   L"Noto Sans JP Medium");
 	create(FontType::DeathCount,    48, FW_BOLD,   L"Roboto-Regular");
-	create(FontType::MineCraftFont, 36, FW_BOLD,   L"minecraft_font");
+	create(FontType::MineCraftFont, 40, FW_BOLD,   L"minecraft_font");
 	create(FontType::CookieRunFont, 36, FW_BOLD,   L"font");
 	return S_OK;
 }

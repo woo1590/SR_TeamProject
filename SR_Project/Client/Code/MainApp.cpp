@@ -265,7 +265,21 @@ HRESULT MainApp::LoadDefaultResource()
         {L"InventoryPanel",           eUI, -1},
         {L"worldmap",                 eUI, -1},
         {L"player_deathui",           eUI, -1},
+        {L"loadingscene_stage0",      eUI, -1},
         {L"loadingscene_stage1",      eUI, -1},
+        {L"loadingscene_stage2",      eUI, -1},
+        {L"loadingscene_stage3",      eUI, -1},
+        {L"loadingscene_tip1",        eUI, -1},
+        {L"loadingscene_tip2",        eUI, -1},
+        {L"loadingscene_tip3",        eUI, -1},
+        {L"loadingscene_tip4",        eUI, -1},
+        {L"loadingscene_tip5",        eUI, -1},
+        {L"loadingscene_tip6",        eUI, -1},
+        {L"loadingscene_tip7",        eUI, -1},
+        {L"loadingscene_tip8",        eUI, -1},
+        {L"loadingscene_tip9",        eUI, -1},
+        {L"loadingscene_tip10",       eUI, -1},
+        {L"loadingscene_tip11",       eUI, -1},
 
         // =====================================================================
         // Layer 0 (UI 베이스)
@@ -274,7 +288,6 @@ HRESULT MainApp::LoadDefaultResource()
         {L"gearstrength_back",        eUI, 0},
         {L"level_back",               eUI, 0},
         {L"deathframe",               eUI, 0},
-        {L"loadingscene_lobby",       eUI, 0},
 
         // =====================================================================
         // Layer 1

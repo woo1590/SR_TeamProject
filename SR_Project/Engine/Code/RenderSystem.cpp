@@ -8,6 +8,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "UIManager.h"
+#include "../../Client/Header/Player.h"
 
 //component
 #include "UIRenderer.h"
@@ -73,11 +75,26 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))
 		return E_FAIL;
 
+	// ------ Minimap ------------------
+	Device->CreateTexture(
+		128, 128, 1, D3DUSAGE_RENDERTARGET, D3DFMT_X8R8G8B8,
+		D3DPOOL_DEFAULT, &minimapTexture, NULL);
+	minimapTexture->GetSurfaceLevel(0, &minimapSurface);
+
+	Device->CreateTexture(
+		128, 256, 
+		1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, // 배경이 투명해야 하므로 Alpha 채널이 있는 포맷 추천
+		D3DPOOL_DEFAULT, &inventoryTexture, NULL);
+	inventoryTexture->GetSurfaceLevel(0, &inventorySurface);
+
 	return S_OK;
 }
 
 void RenderSystem::Render()
 {
+	InventoryPass();
+	MinimapPass();
+
 	if (Camera)
 	{
 		cachedView = Camera->GetViewMatrix();
@@ -86,7 +103,7 @@ void RenderSystem::Render()
 		PriorityPass();
 		NonAlphaPass();
 		AlphaPass();
-
+		
 		if(EngineCore::GetInstance()->IsDebugMode())
 			DebugPass();
 	}
@@ -187,7 +204,58 @@ void RenderSystem::UIPass()
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
-void RenderSystem::DebugPass()
+void RenderSystem::MinimapPass()
+{
+	if (!minimapCamera) return;
+
+	// 1. 기존 렌더 타겟 백업
+	LPDIRECT3DSURFACE9 oldRenderTarget = nullptr;
+	Device->GetRenderTarget(0, &oldRenderTarget);
+
+	Device->SetRenderTarget(0, minimapSurface);
+	Device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(25, 25, 25), 1.0f, 0);
+	
+	Device->BeginScene();
+
+	_matrix view = minimapCamera->GetViewMatrix();
+	_matrix proj = minimapCamera->GetProjMatrix();
+	Device->SetTransform(D3DTS_VIEW, &view);
+	Device->SetTransform(D3DTS_PROJECTION, &proj);
+
+	//for (const auto& r : RenderList[(int)RENDER_ID::Render_NonAlpha])
+	//	r->Render();
+	
+	Device->EndScene();
+
+	Device->SetRenderTarget(0, oldRenderTarget);
+	Safe_Release(oldRenderTarget);
+}
+
+void RenderSystem::InventoryPass()
+{
+	if (!inventoryCamera || inventoryRenderList.empty()) return;
+
+	auto originCam = this->Camera;
+	this->Camera = this->inventoryCamera;
+
+	LPDIRECT3DSURFACE9 oldRenderTarget = nullptr;
+	Device->GetRenderTarget(0, &oldRenderTarget);
+	Device->SetRenderTarget(0, inventorySurface);
+	Device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+
+	Device->BeginScene();
+
+	for (const auto& renderer : inventoryRenderList)
+		renderer->Render();
+
+	Device->EndScene();
+
+	Device->SetRenderTarget(0, oldRenderTarget);
+	Safe_Release(oldRenderTarget);
+	this->Camera = originCam;
+}
+
+void RenderSystem::DebugPass() 
 {
 	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);

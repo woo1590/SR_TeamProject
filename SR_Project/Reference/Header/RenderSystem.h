@@ -8,6 +8,8 @@ class Object;
 class CameraComponent;
 class UIRenderer;
 class Shader;
+class MeshRenderer;
+
 class ENGINE_DLL RenderSystem : public Base
 {
 private:
@@ -34,20 +36,31 @@ public:
 
     void ClearSystem();
 
+    // --------------------------------------------------------------------
+    void SetMinimapCamera(CameraComponent* cam) { minimapCamera = cam; }
+    void SetInventoryCamera(CameraComponent* cam) { inventoryCamera = cam; }
+    LPDIRECT3DTEXTURE9 GetMinimapTexture() const { return minimapTexture; }
+    LPDIRECT3DTEXTURE9 GetInventoryTexture() const { return inventoryTexture; }
+    void RegisterInventoryRenderer(RendererComponent* renderer) { if (renderer) inventoryRenderList.push_back(renderer); }
+    void ClearInventoryRenderers() { inventoryRenderList.clear(); }
+
 private:
     void PriorityPass();
     void NonAlphaPass();
     void AlphaPass();
-    void UIPass();
     void DebugPass();
     void Reset();   
-
+// --------------------------------------
+    void MinimapPass();
+    void InventoryPass();
+    void UIPass();
+    // ------------------------------------
     void Free()override;
 
     std::vector<std::list<RendererComponent*>> RenderList;
     CameraComponent* Camera;
    
-    ID3DXSprite* spriteBatch = nullptr;
+    
     std::list<CollisionComponent*> DebugRender; //����׿�
 
     _matrix CurrView;
@@ -56,9 +69,19 @@ private:
 
     LPDIRECT3DDEVICE9 Device;
 
+    /*---------------------------------------------------------------*/
+    ID3DXSprite* spriteBatch = nullptr;
     _matrix cachedView;
     _matrix cachedProj;
     UIRenderType uiRenderState = UIRenderType::None;
+    CameraComponent* minimapCamera = nullptr;
+    CameraComponent* inventoryCamera = nullptr;
+
+    LPDIRECT3DTEXTURE9 minimapTexture;
+    LPDIRECT3DSURFACE9 minimapSurface;
+    LPDIRECT3DTEXTURE9 inventoryTexture;
+    LPDIRECT3DSURFACE9 inventorySurface;
+    list<RendererComponent*> inventoryRenderList;
 };
 
 END

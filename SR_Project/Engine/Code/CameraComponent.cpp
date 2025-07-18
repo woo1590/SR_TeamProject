@@ -64,6 +64,12 @@ void CameraComponent::SetMinMaxZ(float minZ, float maxZ)
     MaxZ = maxZ;
 }
 
+void CameraComponent::SetOrthoSize(float width, float height)
+{
+    orthoWidth = width;
+    orthoHeight = height;
+}
+
 _matrix CameraComponent::GetViewMatrix() const
 {   
     _vec3 eye = Target->GetPosition();
@@ -79,7 +85,16 @@ _matrix CameraComponent::GetViewMatrix() const
 _matrix CameraComponent::GetProjMatrix() const
 {
     _matrix proj;
-    D3DXMatrixPerspectiveFovLH(&proj,FOV, Aspect, MinZ, MaxZ);
+    
+    switch (projType)
+    {
+    case ProjectionType::Perspective:
+        D3DXMatrixPerspectiveFovLH(&proj, FOV, Aspect, MinZ, MaxZ);
+        break;
+    case ProjectionType::Orthographic:
+        D3DXMatrixOrthoLH(&proj, orthoWidth, orthoHeight, MinZ, MaxZ);
+        break;
+    }
     return proj;
 }
 

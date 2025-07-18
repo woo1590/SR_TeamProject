@@ -40,30 +40,13 @@ LoadingScene* LoadingScene::Create(LOADID loadId)
 void LoadingScene::Load()
 {
 	ObjectMgr = ObjectManager::Create(this);
-
 	loader = Loader::Create(nextSceneID);
-
 	loadingUI = LoadingUI::Create(nullptr);
-	loadingStone = LoadingStone::Create(nullptr);
-
-	switch (nextSceneID)
-	{
-	case LOADID::Stage1:
-		loadingUI->GetComponent<UIRenderer>()->SetTexture(L"loadingscene_stage1");
-		loadingUI->SetVisible(false);
-		break;
-
-	case LOADID::Stage2:
-		loadingUI->GetComponent<UIRenderer>()->SetTexture(L"loadingscene_stage1");
-		loadingUI->SetVisible(false);
-		break;
-
-	default: 
-		loadingUI->GetComponent<UIRenderer>()->SetTexture(L"loadingscene");
-		break;
-	}
 	
+	loadingUI->SetInfo(nextSceneID);
+
 	ObjectMgr->AddUIObject(loadingUI);
+	loadingStone = LoadingStone::Create(nullptr);
 	ObjectMgr->AddUIObject(loadingStone);
 }
 
