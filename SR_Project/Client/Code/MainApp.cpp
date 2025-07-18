@@ -265,6 +265,7 @@ HRESULT MainApp::LoadDefaultResource()
         {L"InventoryPanel",           eUI, -1},
         {L"worldmap",                 eUI, -1},
         {L"player_deathui",           eUI, -1},
+        {L"loadingscene_stage1",      eUI, -1},
 
         // =====================================================================
         // Layer 0 (UI 베이스)

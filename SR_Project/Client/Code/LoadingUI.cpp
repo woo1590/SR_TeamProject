@@ -31,6 +31,7 @@ HRESULT LoadingUI::Ready_Object()
 void LoadingUI::Update(float dt)
 {
 	Object::Update(dt);
+	
 	pulseTime += dt;
 
 	float alpha = 0.5f + 0.5f * sinf(pulseTime * 2.f);
@@ -38,6 +39,9 @@ void LoadingUI::Update(float dt)
 	auto font = GetComponent<FontComponent>();
 
 	font->ClearText();
+
+	if (!visible) return;
+
 	font->AddText(L"아무 버튼이나 누르세요", 
 		{500, 600, 1000, 720},
 		D3DXCOLOR(1.f,1.f,1.f,alpha),
