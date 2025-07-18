@@ -331,6 +331,8 @@ HRESULT MainApp::LoadDefaultResource()
         {L"quickslot_plus",           eUI, 3},
         {L"questpanel",               eUI, 3},
         {L"enemy_hpbarback",          eUI, 3},
+        {L"arrows",                   eUI, 3},
+        {L"arrow",                    eUI, 3},
 
         // =====================================================================
         // Layer 4
@@ -368,10 +370,20 @@ HRESULT MainApp::LoadDefaultResource()
         // Layer 6+ (상위 레이어)
         // =====================================================================
         {L"particle",                 eUI, 6},
+        {L"cooldown_front",           eUI, 6},
         {L"atri",                     eUI, 9},
         {L"emerald_sword",            eUI, 10},
         {L"panel",                    eUI, 10},
         {L"angry",                    eUI, 10},
+
+        {L"atri_angry",               eUI, 9},
+        {L"atri_sad",                 eUI, 9},
+        {L"atri_happy",               eUI, 9},
+        {L"atri_none",                eUI, 9},
+        {L"atri_emm",                 eUI, 9},
+        {L"atri_closeeye",            eUI, 9},
+        {L"atri_confuse",             eUI, 9},
+        {L"atri_brave",               eUI, 9},
 
         // =====================================================================
         // Layer 100+ (팝업 및 최상단 UI)
@@ -379,6 +391,7 @@ HRESULT MainApp::LoadDefaultResource()
         {L"exitbtn",                  eUI, 101},
         {L"exitbtn_hover",            eUI, 101},
         {L"Cursor",                   eUI, 1000},
+
     };
 
     auto rm = EngineCore::GetInstance()->GetResourceManager();
