@@ -147,6 +147,8 @@ HRESULT CubeMesh::CreateBuffer()
 
 void CubeMesh::Draw()
 {
+	if (!isRender) return;
+
 	Device->SetStreamSource(0, VB, 0, sizeof(VTXCUBE));
 	Device->SetIndices(IB);
 	Device->SetVertexDeclaration(Decl);

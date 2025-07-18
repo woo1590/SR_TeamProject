@@ -7,7 +7,7 @@ namespace Engine
 	constexpr float WINCY = 720;
 
 	constexpr int CHUNK_SIZE = 16;
-	constexpr int CHUNK_HEIGHT = 96;
+	constexpr int CHUNK_HEIGHT = 128;
 	constexpr float BLOCK_SIZE = 2.f;
 
 #ifndef MSG_BOX
