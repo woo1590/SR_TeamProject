@@ -59,6 +59,7 @@
 #include "Spear.h"
 #include "DeadEffect.h"
 #include "LaserHead.h"
+#include "EnderProjectile.h"
 
 //component
 #include "TransformComponent.h"
@@ -159,13 +160,18 @@ void Village::Load()
         //ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
         //ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 
-       // auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
-       // ender->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
-       // ObjectMgr->AddObject(ObjectType::Monster, ender);
-
-        auto ender = LaserHead::Create(ObjectMgr, ObjectType::Monster);
+        auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
         ender->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
         ObjectMgr->AddObject(ObjectType::Monster, ender);
+
+
+        auto enderprojectile = EnderProjectile::Create(ObjectMgr, ObjectType::Projectile);
+        enderprojectile->GetComponent<TransformComponent>()->SetPosition(150.f, 100.f, 150.f);
+        ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);
+
+        //auto ender = LaserHead::Create(ObjectMgr, ObjectType::Monster);
+        //ender->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
+        //ObjectMgr->AddObject(ObjectType::Monster, ender);
     }
 }
 

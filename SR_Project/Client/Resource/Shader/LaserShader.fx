@@ -20,7 +20,7 @@ float4x4 g_Proj;
 float3 color;
 float time;
 
-float2 UVScrollSpeed = float2(0.1f, 0.f);
+float2 UVScrollSpeed = float2(-1.0f, 0.f);
 
 struct VS_Input
 {

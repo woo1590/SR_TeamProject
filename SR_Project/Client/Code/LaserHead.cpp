@@ -64,8 +64,9 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
     {
         auto Lasertransform = Laser->GetComponent<TransformComponent>();
         Lasertransform->SetParent(Bones["BottomHead"]);
-        Lasertransform->SetPosition(_vec3(0.f, 12.f * Scale, 48.f * Scale));
+        Lasertransform->SetPosition(_vec3(0.f, 18.f * Scale, 190.f * Scale));
         Lasertransform->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
+        Lasertransform->SetScale(_vec3(40.f * Scale, 0.5f, 1.f));
     }
 
     Lasers[0]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
@@ -76,9 +77,9 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
     for (auto& Laser : Lasers)
         owner->AddObject(ObjectType::ParticleEffect, Laser);
 
-    Dir = HeadDir::Down;
-    SetDir();
-    State = HeadState::Open;
+    owner->AddObject(ObjectType::Bone, this);
+
+    InitAnimation();
 	return S_OK;
 }
 
@@ -99,11 +100,21 @@ void LaserHead::SetActive(_bool Active)
 
     if (IsActive)
     {
+        for (auto& bone : Bones)
+            bone.second->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_NonAlpha);
         State = HeadState::Open;
+        StartAnim.ElapsedTime = 0.f;
+        for (auto& Laser : Lasers)
+            static_cast<LaserEffect*>(Laser)->SetActive(false);
     }
     else
     {
+        for (auto& bone : Bones)
+            bone.second->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_None);
+
         State = HeadState::Close;
+        for (auto& Laser : Lasers)
+            static_cast<LaserEffect*>(Laser)->SetActive(false);
     }
 }
 
@@ -118,6 +129,9 @@ void LaserHead::InitAnimation()
     EndAnim.End = 0.f;
     EndAnim.TotalTime = 0.7f;
     EndAnim.ElapsedTime = 0.f;
+
+    IdleAnim.TotalTime = 5.f;
+    IdleAnim.ElapsedTime = 0.f;
 }
 
 void LaserHead::PlayAnimation(_float dt)
@@ -128,6 +142,7 @@ void LaserHead::PlayAnimation(_float dt)
         PlayOpen(dt);
         break;
     case HeadState::Idle:
+        PlayIdle(dt);
         break;
     case HeadState::Close:
         PlayClose(dt);
@@ -141,22 +156,53 @@ void LaserHead::PlayOpen(_float dt)
     
     _float t = clamp(StartAnim.ElapsedTime / StartAnim.TotalTime, 0.f, 1.f);
     
-    float angle = lerp(StartAnim.Start, StartAnim.End, t);
+    _float angle = lerp(StartAnim.Start, StartAnim.End, t);
 
     auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
     toptransform->SetRotate(D3DXToRadian(angle), 0.f, 0.f);
 
     if (StartAnim.ElapsedTime > StartAnim.TotalTime)
+    {
+        for (auto& Laser : Lasers)
+            static_cast<LaserEffect*>(Laser)->SetActive(true);
+
         State = HeadState::Idle;
+        IdleAnim.ElapsedTime = 0.f;
+    }
+}
+
+void LaserHead::PlayIdle(_float dt)
+{
+    IdleAnim.ElapsedTime += dt;
+
+    if (IdleAnim.ElapsedTime > IdleAnim.TotalTime)
+    {
+        State = HeadState::Close;
+    }
 }
 
 void LaserHead::PlayClose(_float dt)
 {
+    EndAnim.ElapsedTime += dt;
+
+    _float t = clamp(EndAnim.ElapsedTime / EndAnim.TotalTime, 0.f, 1.f);
+
+    _float angle = lerp(EndAnim.Start, EndAnim.End, t);
+
+    auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
+    toptransform->SetRotate(D3DXToRadian(angle), 0.f, 0.f);
+
+    if (EndAnim.ElapsedTime > EndAnim.TotalTime)
+    {
+        State = HeadState::Idle;
+        SetActive(false);
+    }
 }
 
-void LaserHead::SetDir()
+void LaserHead::SetDir(HeadDir dir)
 {
     auto transform = GetComponent<TransformComponent>();
+    Dir = dir;
     switch (Dir)
     {
     case HeadDir::Left:

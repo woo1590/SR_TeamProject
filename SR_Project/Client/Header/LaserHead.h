@@ -3,7 +3,7 @@
 
 enum class HeadDir {Left, Right, Up, Down,};
 enum class HeadState{Open, Idle, Close,};
-struct Animation
+struct HeadAnimation
 {
     _float Start;       //start angle;
     _float End;         //end angle;
@@ -27,14 +27,15 @@ public:
 
 public:
     void SetActive(_bool Active);
+    void SetDir(HeadDir dir);
 
 private:
     void InitAnimation();
     void PlayAnimation(_float dt);
     void PlayOpen(_float dt);
+    void PlayIdle(_float dt);
     void PlayClose(_float dt);
 
-    void SetDir();
 
 protected:
     void Free() override;
@@ -48,7 +49,8 @@ private:
     HeadDir                         Dir;
     HeadState                       State;
 
-    Animation                       StartAnim;
-    Animation                       EndAnim;
+    HeadAnimation                   StartAnim;
+    HeadAnimation                   IdleAnim;
+    HeadAnimation                   EndAnim;
 };
 

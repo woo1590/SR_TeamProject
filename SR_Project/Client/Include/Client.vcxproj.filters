@@ -472,6 +472,9 @@
     <Filter Include="02. Object\Monster\Ender\Laser">
       <UniqueIdentifier>{b693e2fd-100b-4d10-946c-eb2dc28c02cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\Ender\Projectile">
+      <UniqueIdentifier>{686bd4dd-264e-4656-b832-17815fc9f4c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -897,6 +900,9 @@
     <ClInclude Include="..\Header\LaserEffect.h">
       <Filter>02. Object\Monster\Ender\Laser</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\EnderProjectile.h">
+      <Filter>02. Object\Monster\Ender\Projectile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1303,6 +1309,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\LaserEffect.cpp">
       <Filter>02. Object\Monster\Ender\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EnderProjectile.cpp">
+      <Filter>02. Object\Monster\Ender\Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
