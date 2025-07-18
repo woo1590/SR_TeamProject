@@ -11,7 +11,5 @@ private:
 public:
 	static LoadingStone* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
-
-	void Update(float dt) override;
 };
 
