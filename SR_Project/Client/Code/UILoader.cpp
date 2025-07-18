@@ -74,6 +74,7 @@
 #include "CrossBowItem.h"
 #include "BoostItem.h"
 #include "GhostCloakItem.h"
+#include "Arrows.h"
 
 
 // DeathUI
@@ -164,6 +165,9 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
 
     auto hpback = HPBarBack::Create(objMgr);
     ADD(hpback);
+
+    auto arrows = Arrows::Create(objMgr);
+    ADD(arrows);
 
     //auto hpWhite = HPBarWhite::Create(objMgr);
     //auto whiteBar = hpWhite->AddComponent<ProgressBar<PlayerInfo>>();
@@ -415,4 +419,9 @@ void UILoader::BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr)
     panel->AddChild(atri);
 
     dialogMgr->SetPanel(panel->GetComponent<PanelComponent>());
+
+    dialogMgr->SetEmotionChangeCallBack([atri](Emotion emotion) {
+        if (atri)
+            atri->SetEmotion(emotion);
+        });
 }

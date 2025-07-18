@@ -24,11 +24,10 @@ HRESULT ItemComponent::Ready_Component()
 
 void ItemComponent::Use(Object* user)
 {
-	auto playerInfo = user->GetComponent<InfoComponent<PlayerInfo>>();
-	assert(playerInfo && L"missing Info");
+	if (isCoolDownItem && IsCoolDown()) return;
 
-	if (itemType == ItemType::Potion)
-		playerInfo->AddHp(itemInfo->GetInfo().value);
+	if (isCoolDownItem)
+		coolDownTimer = coolDownDur;
 }
 
 void ItemComponent::Equip(Object* user)
@@ -42,4 +41,22 @@ void ItemComponent::Equip(Object* user)
 	if (!quest) return;
 
 	quest->ReportQuestProgress(QuestType::EquipItem, 1);
+}
+
+void ItemComponent::SetCoolDown(bool _isCool, float _dur)
+{
+	isCoolDownItem = _isCool;
+	coolDownDur = _dur;
+}
+
+float ItemComponent::GetCoolDownRatio() const
+{
+	if (coolDownDur <= 0.f) return 0.f;
+	return clamp(coolDownTimer / coolDownDur, 0.f, 1.f);
+}
+
+void ItemComponent::Update(float dt)
+{
+	if (isCoolDownItem && coolDownTimer > 0.f)
+		coolDownTimer -= dt;
 }

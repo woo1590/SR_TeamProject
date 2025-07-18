@@ -11,8 +11,7 @@ class InfoComponent : public ObjectComponent, public Subject<UIEvent<T>>
 public:
 	explicit InfoComponent(Object* owner) : ObjectComponent(owner) {}
 
-	static InfoComponent* Create(Object* owner);
-	HRESULT Ready_Component(Object* owner);
+	static InfoComponent* Create(Object* owner) { return new InfoComponent<T>(owner); }
 
 	void SetHp(int hp);
 	void AddHp(int amount);
@@ -21,7 +20,6 @@ public:
 
 	void SetOnZeroHp(function<void()> cb) { onZeroHpCallback = move(cb); }
 
-	//void SetInfo(T& _info) { info = _info; };
 	const T& GetInfo() const { return info; }
 
 	void Update(float dt) override;
@@ -36,19 +34,6 @@ private:
 };
 
 END
-
-template<typename T>
-InfoComponent<T>* InfoComponent<T>::Create(Object* owner)
-{
-	auto* instance = new InfoComponent<T>(owner);
-	return FAILED(instance->Ready_Component(owner)) ? Safe_Release(instance), nullptr : instance;
-}
-
-template<typename T>
-inline HRESULT InfoComponent<T>::Ready_Component(Object* owner)
-{
-	return S_OK;
-}
 
 template<typename T>
 inline void InfoComponent<T>::SetHp(int hp)

@@ -1,21 +1,23 @@
 #include "EnginePCH.h"
 #include "DialogComponent.h"
 
-void DialogComponent::Finish()
+void DialogComponent::SetDialogLines(const vector<DialogLine>& _lines)
 {
-	if (!talking) return;
-
-	talking = false;
+	lines = _lines;
 	curLineIdx = 0;
+}
 
-	if (onFinish)
-		onFinish();
+const DialogLine& DialogComponent::GetCurLine() const
+{
+	if (curLineIdx < lines.size())
+		return lines[curLineIdx];
+
+	static const DialogLine emptyLine = {L"...", Emotion::None};
+	return emptyLine;
 }
 
 void DialogComponent::AddLineIdx()
 {
-	if (curLineIdx + 1 < dialogLines.size())
-		++curLineIdx;
-	else
-		curLineIdx = dialogLines.size();
+	if (!IsFinished())
+		curLineIdx++;
 }

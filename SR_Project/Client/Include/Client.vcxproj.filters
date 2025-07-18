@@ -460,9 +460,6 @@
     <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\DialogObj">
       <UniqueIdentifier>{5fbf764f-8ea2-4887-9314-255f63f940bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\Sil">
-      <UniqueIdentifier>{93571a88-d7dd-46ce-9278-99e266b4bc73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\QuestPanel">
       <UniqueIdentifier>{52412e65-406e-4e42-9b3e-bcf140689b7e}</UniqueIdentifier>
     </Filter>
@@ -489,6 +486,15 @@
     </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\09. GhostCloakItem">
       <UniqueIdentifier>{dd75cd22-1e98-46eb-b211-ba485a4c4023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\CoolDownBar">
+      <UniqueIdentifier>{34c3b910-3a4e-490a-9259-2575b8847798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\Atri">
+      <UniqueIdentifier>{93571a88-d7dd-46ce-9278-99e266b4bc73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\Arrows">
+      <UniqueIdentifier>{731548aa-fdbf-47e7-9f73-7a77b1498068}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -875,7 +881,7 @@
       <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Atri.h">
-      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Sil</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Atri</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Angry.h">
       <Filter>02. Object\UIObj\UIRenderState\NpcUI\Angry</Filter>
@@ -939,6 +945,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\GhostCloakItem.h">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\09. GhostCloakItem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CoolDownBar.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\CoolDownBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Arrows.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Arrows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1313,7 +1325,7 @@
       <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Atri.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Sil</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\Atri</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Angry.cpp">
       <Filter>02. Object\UIObj\UIRenderState\NpcUI\Angry</Filter>
@@ -1371,6 +1383,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\GhostCloakItem.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\09. GhostCloakItem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CoolDownBar.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\CoolDownBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Arrows.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Arrows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

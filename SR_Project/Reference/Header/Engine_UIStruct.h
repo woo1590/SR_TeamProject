@@ -9,7 +9,7 @@ namespace Engine
 		int maxHp = 100;
 		int curExp = 0;
 		int maxExp = 10;
-		int power = 100;
+		int power = 10;
 		float speed = 15.f;
 	};
 
@@ -64,5 +64,13 @@ namespace Engine
 		int MaxTarget = 1;
 		float DamagePercent = 1.f;
 		float SkillRange = 10.f;
+	};
+
+	enum class Emotion { None, Angry, Sad, Happy, Emm, CloseEye, Confuse, Brave};
+
+	struct DialogLine
+	{
+		std::wstring text;
+		Emotion emotion = Emotion::None;
 	};
 }

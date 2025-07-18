@@ -1221,15 +1221,15 @@ void Player::UnEquipItem(ItemType itemType)
         Bones["LHand"] = nullptr;
         break;
     case ItemType::CrossBow:
-        Safe_Release(Bones["LHand"]);
+        Bones["LHand"]->SetDead();
         Bones["LHand"] = nullptr;
         break;
     case ItemType::Sword:
-        Safe_Release(Bones["RHand"]);
+        Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Spear:
-        Safe_Release(Bones["RHand"]);
+        Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
         break;
     }

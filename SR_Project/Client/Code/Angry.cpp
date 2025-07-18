@@ -18,7 +18,7 @@ HRESULT Angry::Ready_Object()
 	transform->SetScale(0.2f, 0.15f);
 	transform->SetPosition(315.f, 300.f);
 
-	renderer->SetRenderType(UIRenderType::QuestUI);
+	renderer->SetRenderType(UIRenderType::None); 
 	renderer->SetTexture(L"angry");
 
 	return S_OK;
