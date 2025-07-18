@@ -4,8 +4,6 @@
 #include "UIRenderer.h"
 #include "FontComponent.h"
 
-
-
 LoadingUI* LoadingUI::Create(ObjectManager* owner)
 {
 	auto* instance = new LoadingUI(owner);
@@ -24,7 +22,6 @@ HRESULT LoadingUI::Ready_Object()
 
 	renderer->SetTexture(L"loadingscene");
 
-	
 	return S_OK;
 }
 
@@ -33,9 +30,9 @@ void LoadingUI::Update(float dt)
 	Object::Update(dt);
 	
 	pulseTime += dt;
+	scaletime
 
 	float alpha = 0.5f + 0.5f * sinf(pulseTime * 2.f);
-
 	auto font = GetComponent<FontComponent>();
 
 	font->ClearText();
@@ -43,8 +40,8 @@ void LoadingUI::Update(float dt)
 	if (!visible) return;
 
 	font->AddText(L"아무 버튼이나 누르세요", 
-		{500, 600, 1000, 720},
+		{0, 600, 1280, 720},
 		D3DXCOLOR(1.f,1.f,1.f,alpha),
-		DT_LEFT, 
-		FontType::QuestTitle);
+		DT_CENTER, 
+		FontType::DmgText);
 }

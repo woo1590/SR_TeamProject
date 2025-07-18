@@ -4,8 +4,7 @@
 #include "TransformComponent.h"
 #include "Object.h"
 
-FontComponent::FontComponent(Object* owner)
-	:ObjectComponent(owner)
+FontComponent::FontComponent(Object* owner) :ObjectComponent(owner)
 {
 	AddFontResourceEx("../../Client/Resource/Asset/Jehyun/Font/NotoSansJP-Medium.ttf", FR_PRIVATE,0);
 	AddFontResourceEx("../../Client/Resource/Asset/Jehyun/Font/NotoSansKR-Medium.ttf", FR_PRIVATE, 0);
@@ -30,10 +29,6 @@ FontComponent::~FontComponent()
 	}
 }
 
-FontComponent* FontComponent::Create(Object* owner)
-{
-	return new FontComponent(owner);
-}
 HRESULT FontComponent::CreateFontResource()
 {
 	auto device = GraphicDevice::GetInstance()->GetDevice();

@@ -19,7 +19,7 @@ HRESULT BossHPBarFront::Ready_Object()
 	auto hpFront = AddComponent<ProgressBar<EnemyInfo>>();
 	auto font = AddComponent<FontComponent>();
 
-	transform->SetPosition(300.f, 100.f);
+	transform->SetPosition(350.f, 100.f);
 	transform->SetScale(0.3f, 0.4f);
 
 	renderer->SetPivot(UIPivot::Left);
@@ -53,5 +53,5 @@ void BossHPBarFront::Update(float dt)
 		font->SetAlpha(alpha);
 	}
 
-	font->AddText(L"·¹µå½ºÅæ °ñ·½", {530, 40, 730, 150}, Color::Red, DT_CENTER, FontType::QuestTitle);
+	font->AddText(L"·¹µå½ºÅæ °ñ·½", {580, 40, 780, 150}, Color::Red, DT_CENTER, FontType::QuestTitle);
 }

@@ -99,7 +99,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         owner->AddUIObject(bossFront);
 
         bossBack = ExpBarBack::Create(owner);
-        bossBack->GetComponent<TransformComponent>()->SetPosition(300.f, 100.f);
+        bossBack->GetComponent<TransformComponent>()->SetPosition(350.f, 100.f);
         bossBack->GetComponent<TransformComponent>()->SetScale(2.38f, 3.f);
         owner->AddUIObject(bossBack);
 

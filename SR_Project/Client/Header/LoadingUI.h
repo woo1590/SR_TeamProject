@@ -18,5 +18,8 @@ public:
 private:
 	float pulseTime = 0.f;
 	bool visible = true;
+
+	static constexpr float fadeDur = 2.f;
+	//static constexpr float scaleTimer = 0.f;
 };
 

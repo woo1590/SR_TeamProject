@@ -19,7 +19,7 @@ public:
 	explicit FontComponent(Object* owner);
 
 public:
-	static FontComponent* Create(Object* owner);
+	static FontComponent* Create(Object* owner) { return new FontComponent(owner); }
 	virtual ~FontComponent();
 
 	void AddText(const wstring& text, const RECT& rect, Color color = Color::White,
