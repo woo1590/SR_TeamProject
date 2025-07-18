@@ -117,6 +117,7 @@ HRESULT Loader::Load_Village()
 		resource->LoadShader("../Resource/Shader/SpriteShader.fx", "SpriteShader");
 		resource->LoadShader("../Resource/Shader/ExplodeParticle.fx", "ExplodeParticle");
 		resource->LoadShader("../Resource/Shader/LaserShader.fx", "LaserShader");
+		resource->LoadShader("../Resource/Shader/FireBlock.fx", "FireBlockShader");
 	}
 
 	/*---------------------Load Material--------------------------*/

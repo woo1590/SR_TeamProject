@@ -62,6 +62,7 @@
 #include "ExplodeEffect.h"
 #include "LaserHead.h"
 #include "EnderProjectile.h"
+#include "FireBlock.h"
 
 //component
 #include "TransformComponent.h"
@@ -192,6 +193,15 @@ void Village::Update(_float dt)
 			EngineCore::GetInstance()->SetDebugMode(false);
 
 		if (Input->IsKeyPressed(NUM3))
+		{
+			auto fire = FireBlock::Create(ObjectMgr, ObjectType::ParticleEffect);
+			fire->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
+			fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));// �����
+			//fire->SetColor(_vec3(0.3f, 0.3f, 0.3f));// ������
+			ObjectMgr->AddObject(ObjectType::ParticleEffect, fire);
+		}
+
+		if (Input->IsKeyPressed(Q))
 		{
 			auto effect = ExplodeEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
 			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());

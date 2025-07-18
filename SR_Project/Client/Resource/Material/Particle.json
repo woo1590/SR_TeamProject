@@ -31,7 +31,7 @@
 
     "Explode_Mtrl":{
       "fx":"ExplodeParticle",
-      "textures":{"AlbedoMap":"../Resource/Texture/Effect/Glow.png"}
+      "textures":{"AlbedoMap":"../Resource/Texture/Effect/Circle1.png"}
     },
 
     "Laser_Mtrl1": {

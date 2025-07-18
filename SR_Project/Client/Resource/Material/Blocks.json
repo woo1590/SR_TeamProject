@@ -21,6 +21,10 @@
             "fx": "ChunkShader",
             "textures": { "AlbedoMap": "../Resource/Texture/Block/ChunkAtlas.png" }
         },
+        "FireBlock_Mtrl":{
+            "fx":"FireBlockShader",
+            "textures":{"AlbedoMap" :"../Resource/Texture/Effect/Fire.png"}
+        },
 
         "Glass_Mtrl": {
             "textures": { "CubeMap": "../Resource/Texture/Block/Glass.dds" }

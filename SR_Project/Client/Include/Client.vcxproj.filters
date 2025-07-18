@@ -495,7 +495,7 @@
     </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame\Arrows">
       <UniqueIdentifier>{731548aa-fdbf-47e7-9f73-7a77b1498068}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Effect\ExplodeEffect">
       <UniqueIdentifier>{2ec7e4a7-1314-435a-b36d-761ff9c9058f}</UniqueIdentifier>
     </Filter>  
@@ -507,6 +507,9 @@
     </Filter>
     <Filter Include="02. Object\Monster\Ender\Projectile">
       <UniqueIdentifier>{686bd4dd-264e-4656-b832-17815fc9f4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\FireBlock">
+      <UniqueIdentifier>{a2da1936-f9f1-489e-931e-c788ee6b9156}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -963,7 +966,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Arrows.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\Arrows</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ExplodeEffect.h">
       <Filter>02. Object\Effect\ExplodeEffect</Filter>
     </ClInclude>    
@@ -975,6 +978,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\EnderProjectile.h">
       <Filter>02. Object\Monster\Ender\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FireBlock.h">
+      <Filter>02. Object\FireBlock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1413,7 +1419,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Arrows.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\Arrows</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\ExplodeEffect.cpp">
       <Filter>02. Object\Effect\ExplodeEffect</Filter>
     </ClCompile>    
@@ -1425,6 +1431,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EnderProjectile.cpp">
       <Filter>02. Object\Monster\Ender\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FireBlock.cpp">
+      <Filter>02. Object\FireBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1474,6 +1483,9 @@
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\ExplodeParticle.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\FireBlock.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
   </ItemGroup>
