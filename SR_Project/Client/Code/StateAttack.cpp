@@ -41,13 +41,17 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 	switch (ender->GetState())
 	{
 	case EnderState::Crawl:
-		//ender->CrawlToStand();
-		ender->ProjectileAttack();
-		*Attack = true;
-		return BTStatus::Running;
-
+	{
+		ender->CrawlToStand();
+		auto transform = self->GetComponent<TransformComponent>();
+		_vec3 pos = transform->GetPosition();
+		int randx = pos.x + rand() % 20 - 10;
+		int randz = pos.z + rand() % 20 - 10;
+		*targetPos = _vec3(randx, pos.y, randz);
+		return BTStatus::Success;
+	}
 	case EnderState::Hidden:
-		ender->ProjectileAttack();
+		ender->LineLaserAttack();
 		*Attack = true;
 		return BTStatus::Running;
 
@@ -56,13 +60,11 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 		switch (rand() % 2)
 		{
 		case 0:
-			//ender->CrossLaserAttack();
-			ender->ProjectileAttack();
+			ender->CrossLaserAttack();
 			*Attack = true;
 			return BTStatus::Running;
 
 		case 1:
-			//ender->ProjectileAttack();
 			ender->ProjectileAttack();
 			*Attack = true;
 			return BTStatus::Running;

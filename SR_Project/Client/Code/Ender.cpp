@@ -256,8 +256,8 @@ void Ender::InitAnimation()
     StandToCrawlAnim.TotalTime = 0.7f;
     StandToCrawlAnim.ElapsedTime = 0.f;
 
-    HideAnim.TotalTime = 3.f;
     HideAnim.ElapsedTime = 0.f;
+    HideAnim.TotalTime = 3.f;
 
     SproutAnim.TotalTime = 3.f;
     SproutAnim.ElapsedTime = 0.f;
@@ -358,6 +358,9 @@ void Ender::Hide()
         auto transform = Bones["Body"]->GetComponent<TransformComponent>();
         HideStartY = transform->GetPosition().y;
         enderState = EnderState::Hidden;
+
+        HideAnim.ElapsedTime = 0.f;
+        ++CurChangeStateCount;
     }
 }
 
@@ -368,14 +371,14 @@ void Ender::Sprout()
         auto transform = Bones["Body"]->GetComponent<TransformComponent>();
         enderState = EnderState::Sprout;
 
+        SproutAnim.ElapsedTime = 0.f;
+        ++CurChangeStateCount;
         for (auto& Bone : Bones)
         {
             if (Bone.second == nullptr) continue;
             auto renderer = Bone.second->GetComponent<MeshRenderer>();
             renderer->SetRenderID(RENDER_ID::Render_NonAlpha);
         }
-
-        *IsAttack = false;
     }
 }
 
@@ -492,10 +495,10 @@ void Ender::InitCrossLaser()
         owner->AddObject(ObjectType::ParticleEffect, laser);
     }
 
-    CrossLasers[0]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
-    CrossLasers[1]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-270.f), 0.f));
-    CrossLasers[2]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, 0.f, 0.f));
-    CrossLasers[3]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(180.f), 0.f));
+    CrossLasers[0]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(90.f),0.f));
+    CrossLasers[1]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(180.f), 0.f));
+    CrossLasers[2]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(270.f),0.f));
+    CrossLasers[3]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(0.f), 0.f ));
 }
 
 void Ender::InitEnderProjectile()
@@ -734,7 +737,7 @@ void Ender::PlayCrossLaserAttack(_float dt)
     {
         auto Lasertransform = CrossLaser->GetComponent<TransformComponent>();
         _vec3 rot = Lasertransform->GetRotate();
-        Lasertransform->SetRotate(_vec3(rot.x, D3DXToRadian(rot.y + 1.f * dt), rot.z));
+        Lasertransform->SetRotate(_vec3(rot.x, rot.y + 1.f * dt, rot.z));
     }
 
     if (LaserAttackAnim.ElapsedTime > LaserAttackAnim.TotalTime)

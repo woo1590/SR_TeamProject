@@ -56,7 +56,7 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 
 		case 1:
 			ender->Hide();
-			*targetPos = _vec3(randx, 0.f, randz);
+			*targetPos = _vec3(randx + 10.f, 0.f, randz + 10.f);
 			return BTStatus::Success;
 		}
 	}
