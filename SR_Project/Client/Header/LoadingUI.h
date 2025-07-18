@@ -13,8 +13,10 @@ public:
 	HRESULT Ready_Object();
 
 	void Update(float dt) override;
+	void SetVisible(bool _visible) { visible = _visible; }
 	
 private:
 	float pulseTime = 0.f;
+	bool visible = true;
 };
 

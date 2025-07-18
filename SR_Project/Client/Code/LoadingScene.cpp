@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "ObjectManager.h"
 #include "ChunkLoader.h"
+#include "UIRenderer.h"
 
 //scene
 #include "TestScene.h"
@@ -44,6 +45,23 @@ void LoadingScene::Load()
 
 	loadingUI = LoadingUI::Create(nullptr);
 	loadingStone = LoadingStone::Create(nullptr);
+
+	switch (nextSceneID)
+	{
+	case LOADID::Stage1:
+		loadingUI->GetComponent<UIRenderer>()->SetTexture(L"loadingscene_stage1");
+		loadingUI->SetVisible(false);
+		break;
+
+	case LOADID::Stage2:
+		loadingUI->GetComponent<UIRenderer>()->SetTexture(L"loadingscene_stage1");
+		loadingUI->SetVisible(false);
+		break;
+
+	default: 
+		loadingUI->GetComponent<UIRenderer>()->SetTexture(L"loadingscene");
+		break;
+	}
 	
 	ObjectMgr->AddUIObject(loadingUI);
 	ObjectMgr->AddUIObject(loadingStone);
