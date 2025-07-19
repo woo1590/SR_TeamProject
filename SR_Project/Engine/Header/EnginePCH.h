@@ -39,6 +39,7 @@
 #include <random>
 #include <cassert>
 #include <variant>
+#include <queue>
 
 
 //Header

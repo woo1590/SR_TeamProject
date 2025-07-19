@@ -16,6 +16,7 @@ class EventSystem;
 class CollisionSystem;
 class ChunkLoader;
 class Random;
+class ICommand;
 
 class ENGINE_DLL EngineCore :
     public Base
@@ -31,7 +32,7 @@ public:
 
     /*---------------------*/
     void LoadDefaultResource();
-
+    void RegisterCommand(ICommand* command);
     /*---------------------*/
     TimerManager*       GetTimerManager()const;
     FrameManager*       GetFrameManager()const;
@@ -59,6 +60,8 @@ public:
     _bool IsDebugMode()const { return Debug_Mode; }
     void SetDebugMode(bool debug) { Debug_Mode = debug; }
 private:
+    void ExecuteCommand();
+
     TimerManager* TimerMgr;
     FrameManager* FrameMgr;
     SceneManager* SceneMgr;
@@ -78,6 +81,7 @@ private:
 
     HWND hWnd;
 
+    std::vector<ICommand*> commands;
     _bool Debug_Mode = false;
     void Free()override;
 };

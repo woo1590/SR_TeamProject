@@ -3,6 +3,7 @@
 #include "EngineCore.h"
 #include "LoadingScene.h"
 #include "SceneManager.h"
+#include "ChangeScene.h"
 
 //system
 #include "ObjectManager.h"
@@ -193,8 +194,8 @@ void Village::Update(_float dt)
 
 		if (Input->IsKeyPressed(NUM4))
 		{
-			auto next = LoadingScene::Create(LOADID::Stage1);
-			EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(next);
+            auto command = ChangeScene::Create(LOADID::Stage1);
+            EngineCore::GetInstance()->RegisterCommand(command);
 		}
 
 		if (Input->IsKeyPressed(NUM9))
@@ -204,8 +205,8 @@ void Village::Update(_float dt)
 		{
 			auto fire = FireBlock::Create(ObjectMgr, ObjectType::ParticleEffect);
 			fire->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
-			fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));// �����
-			//fire->SetColor(_vec3(0.3f, 0.3f, 0.3f));// ������
+			fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));
+			//fire->SetColor(_vec3(0.3f, 0.3f, 0.3f));
 			ObjectMgr->AddObject(ObjectType::ParticleEffect, fire);
 		}
 

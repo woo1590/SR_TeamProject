@@ -184,6 +184,7 @@
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
     <ClInclude Include="..\Header\BossIcon.h" />
+    <ClInclude Include="..\Header\ChangeScene.h" />
     <ClInclude Include="..\Header\ChangeState.h" />
     <ClInclude Include="..\Header\CheckStateChangeCount.h" />
     <ClInclude Include="..\Header\Circle.h" />
@@ -327,6 +328,7 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\ENGINE\CODE\CHANGESCENE.CPP" />
     <ClCompile Include="..\Code\Angry.cpp" />
     <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\Arrows.cpp" />
@@ -336,6 +338,7 @@
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />
     <ClCompile Include="..\Code\BossIcon.cpp" />
+    <ClCompile Include="..\Code\ChangeScene.cpp" />
     <ClCompile Include="..\Code\ChangeState.cpp" />
     <ClCompile Include="..\Code\CheckStateChangeCount.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />

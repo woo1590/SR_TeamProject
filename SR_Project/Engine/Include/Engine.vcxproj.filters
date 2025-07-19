@@ -328,6 +328,9 @@
     <Filter Include="01. Engine Component\ChunkLoader">
       <UniqueIdentifier>{cf1aadbb-5c19-4f1b-8d90-f9d52862cd55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. EngineCore\Command">
+      <UniqueIdentifier>{b4fa989c-bd19-4add-a75b-eed93ad6699e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -665,6 +668,9 @@
     <ClCompile Include="..\Code\ChunkLoader.cpp">
       <Filter>01. Engine Component\ChunkLoader</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ICommand.cpp">
+      <Filter>00. EngineCore\Command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\EngineCore.h">
@@ -753,9 +759,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\ThirdcamComponent.h">
       <Filter>07. Object Component\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\EnginePCH.h">
-      <Filter>99. Etc\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SoundManager.h">
       <Filter>01. Engine Component\SoundManager</Filter>
@@ -1027,6 +1030,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\ChunkLoader.h">
       <Filter>01. Engine Component\ChunkLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ICommand.h">
+      <Filter>00. EngineCore\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EnginePCH.h">
+      <Filter>99. Etc\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

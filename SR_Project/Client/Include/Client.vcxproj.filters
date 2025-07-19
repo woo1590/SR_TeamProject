@@ -498,7 +498,7 @@
     </Filter>
     <Filter Include="02. Object\Effect\ExplodeEffect">
       <UniqueIdentifier>{2ec7e4a7-1314-435a-b36d-761ff9c9058f}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\Monster\Ender\LaserHead">
       <UniqueIdentifier>{4263dd23-619c-47af-8b85-f90ce0d32785}</UniqueIdentifier>
     </Filter>
@@ -510,6 +510,9 @@
     </Filter>
     <Filter Include="02. Object\FireBlock">
       <UniqueIdentifier>{a2da1936-f9f1-489e-931e-c788ee6b9156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. MainApp\Command">
+      <UniqueIdentifier>{103c2d5a-e295-4566-9b70-f35f5d0e3678}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -969,7 +972,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\ExplodeEffect.h">
       <Filter>02. Object\Effect\ExplodeEffect</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\Header\LaserHead.h">
       <Filter>02. Object\Monster\Ender\LaserHead</Filter>
     </ClInclude>
@@ -981,6 +984,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\FireBlock.h">
       <Filter>02. Object\FireBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ChangeScene.h">
+      <Filter>00. MainApp\Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1422,7 +1428,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExplodeEffect.cpp">
       <Filter>02. Object\Effect\ExplodeEffect</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\Code\LaserHead.cpp">
       <Filter>02. Object\Monster\Ender\LaserHead</Filter>
     </ClCompile>
@@ -1435,6 +1441,10 @@
     <ClCompile Include="..\Code\FireBlock.cpp">
       <Filter>02. Object\FireBlock</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ChangeScene.cpp">
+      <Filter>00. MainApp\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ENGINE\CODE\CHANGESCENE.CPP" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">
