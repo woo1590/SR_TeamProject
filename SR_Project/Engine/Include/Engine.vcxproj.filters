@@ -683,11 +683,11 @@
     <ClCompile Include="..\Code\Collider.cpp">
       <Filter>07. Object Component\Collision\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\OBBCollider.cpp">
-      <Filter>07. Object Component\Collision\Collider\OBB</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\AABBCollider.cpp">
       <Filter>07. Object Component\Collision\Collider\AABB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\OBBCollider.cpp">
+      <Filter>07. Object Component\Collision\Collider\OBB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1058,11 +1058,11 @@
     <ClInclude Include="..\Header\Collider.h">
       <Filter>07. Object Component\Collision\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\OBBCollider.h">
-      <Filter>07. Object Component\Collision\Collider\OBB</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\AABBCollider.h">
       <Filter>07. Object Component\Collision\Collider\AABB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\OBBCollider.h">
+      <Filter>07. Object Component\Collision\Collider\OBB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

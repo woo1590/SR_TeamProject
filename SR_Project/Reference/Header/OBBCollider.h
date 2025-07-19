@@ -25,7 +25,7 @@ public:
 
     OBB GetWorldOBB();
 
-    void Render()override{}
+    void Render()override;
 
 private:
     void Free()override;
