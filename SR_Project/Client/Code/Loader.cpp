@@ -134,7 +134,7 @@ HRESULT Loader::Load_Village()
 	/*----------------------Load Sound-----------------------------*/
 	{
 		//BGM
-		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
+		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Boss_Ender.mp3", true);
 
 		//Player
 		sound->LoadSound("ShootArrow", "../Resource/Sound/SFX/ShootArrow.mp3", false);
@@ -215,7 +215,7 @@ HRESULT Loader::Load_Village()
 
 	/*--------------------Load Chunk----------------------*/
 	{
-		chunkload->LoadChunk(L"../../Reference/MapData/Stage1.chunkmap");
+		chunkload->LoadChunk(L"../../Reference/MapData/temp.chunkmap");
 	}
 
 	return S_OK;

@@ -140,9 +140,9 @@ void Village::Load()
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
         ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-        player->GetComponent<TransformComponent>()->SetPosition(50.f, 100.f, 50.f);
+        /*player->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
 
-        /*auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+        auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
         trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
         trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
         trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
@@ -163,15 +163,15 @@ void Village::Load()
 
         ObjectMgr->AddObject(ObjectType::Monster, slime);
         ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
-        ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
+        ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));*/
 
         auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
-        ender->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
+        ender->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
         ObjectMgr->AddObject(ObjectType::Monster, ender);
 
         auto enderprojectile = EnderProjectile::Create(ObjectMgr, ObjectType::Projectile);
         enderprojectile->GetComponent<TransformComponent>()->SetPosition(150.f, 100.f, 150.f);
-        ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);*/
+        ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);
     }
 }
 
