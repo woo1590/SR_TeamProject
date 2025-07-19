@@ -95,6 +95,11 @@ void RedGolem::Attack(Object* target)
         AttackAnim.ElapsedTime = 0;
         AttackAnim.IsRunning = true;
         AttackAnim.IsEnd = false;
+
+        if (*AttackNum == 1 || *AttackNum == 3)
+        {
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("SwipeGolem");
+        }
     }
 }
 
@@ -279,6 +284,12 @@ void RedGolem::PlayWalk(_float dt)
 {
     WalkAnim.ElapsedTime += dt;
     
+    WalkTimer += dt;
+    if (WalkTimer > 0.7f)
+    {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkGolem");
+        WalkTimer = 0.f;
+    }
     float Angle = sinf(WalkAnim.ElapsedTime * Speed);
 
     float LegAngle = D3DXToRadian(20.f) * Angle;
@@ -301,7 +312,7 @@ void RedGolem::PlayAttack(_float dt)
 {
     switch (*AttackNum)
     {
-    case 1:                         //∆» »÷µŒ∏£±‚
+    case 1:         
         PlayLeftAttack(dt);
         break;
     case 2:                         //≥ª∑¡¬Ô±‚

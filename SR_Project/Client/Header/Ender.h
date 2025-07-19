@@ -1,7 +1,7 @@
 #pragma once
 #include "Monster.h"
 
-enum class EnderState {CrawlToStand, StandToCrawl, Crawl, Stand, Hidden, HideIdle, Sprout, CrossLaser, LineLaser, Projectile};
+enum class EnderState {CrawlToStand, StandToCrawl, Crawl, Stand, Hidden, HideIdle, Sprout, CrossLaser, LineLaser, Projectile, Die};
 
 class LaserEffect;
 class LaserHead;
@@ -41,6 +41,7 @@ public:
     void        CrossLaserAttack();
     void        ProjectileAttack();
     void        MoveTo(_vec3 targetPos, _float dt);
+    void        Die() override;
 
     void        SetState(EnderState state);
     EnderState  GetState();
@@ -62,6 +63,7 @@ private:
     void        PlayLineLaserAttack(_float dt);
     void        PlayCrossLaserAttack(_float dt);
     void        PlayProjectileAttack(_float dt);
+    void        PlayDie(_float dt);
 
     void        SetBoneSize();
     
@@ -99,6 +101,12 @@ private:
     vector<EnderProjectile*>    EnderProjectiles;
     _float                      ProjectileSpawnTime = 0.f;
     _int                        ProjectileIndex = 0;
+
+    _float                      SproutSoundDelay = 0.f;
+    _bool                       IsSproutPlay = false;
+
+    _float                      CrossLaserSoundTime = 0.f;
+    _float                      WalkTime = 0.f;
 
 };
 

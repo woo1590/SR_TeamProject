@@ -15,6 +15,7 @@
 #include "Player.h"
 #include "Circle.h"
 #include "PhysicsSystem.h"
+#include "SoundManager.h"
 
 GolemProjectile::GolemProjectile(ObjectManager* owner, ObjectType objType)
 	:Object(owner, objType)
@@ -101,6 +102,7 @@ void GolemProjectile::SetOn(_bool On)
     {
         collision->SetSize(_vec3(5.f, 5.f, 5.f));
         renderer->SetRenderID(RENDER_ID::Render_Alpha);
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("FireProjectile");
     }
 
     static_cast<Circle*>(circle)->SetOn(IsOn);

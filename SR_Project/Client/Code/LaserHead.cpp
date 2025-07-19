@@ -10,6 +10,8 @@
 #include "ObjectManager.h"
 #include "Material.h"
 #include "LaserEffect.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 LaserHead::LaserHead(ObjectManager* owner, ObjectType objType)
 	:Object(owner, objType)
@@ -167,7 +169,7 @@ void LaserHead::PlayOpen(_float dt)
     {
         for (auto& Laser : Lasers)
             static_cast<LaserEffect*>(Laser)->SetActive(true);
-
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("LineLaserEnder");
         State = HeadState::Idle;
         IdleAnim.ElapsedTime = 0.f;
     }

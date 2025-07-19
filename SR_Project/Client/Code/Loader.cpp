@@ -162,22 +162,35 @@ HRESULT Loader::Load_Village()
 		//Monster
 		//sound->LoadSound("WalkZombie1", "../Resource/Sound/SFX/WalkZombie1.mp3", false);
 		//sound->LoadSound("WalkZombie2", "../Resource/Sound/SFX/WalkZombie2.mp3", false);
-		//sound->LoadSound("HitZombie", "../Resource/Sound/SFX/HitZombie.mp3", false);
+		sound->LoadSound("AttackZombie", "../Resource/Sound/SFX/AttackZombie.mp3", false);
+		sound->LoadSound("HitZombie", "../Resource/Sound/SFX/HitZombie.mp3", false);
 		sound->LoadSound("DeathZombie", "../Resource/Sound/SFX/DeathZombie.mp3", false);
 
 		//sound->LoadSound("WalkSkeleton1", "../Resource/Sound/SFX/WalkSkeleton1.mp3", false);
 		//sound->LoadSound("WalkSkeleton2", "../Resource/Sound/SFX/WalkSkeleton2.mp3", false);
+		sound->LoadSound("HitSkeleton", "../Resource/Sound/SFX/HitSkeleton.mp3", false);
 		sound->LoadSound("DeathSkeleton", "../Resource/Sound/SFX/DeathSkeleton.mp3", false);
 
 		//sound->LoadSound("WalkSlime1", "../Resource/Sound/SFX/WalkSlime1.mp3", false);
 		//sound->LoadSound("WalkSlime2", "../Resource/Sound/SFX/WalkSlime2.mp3", false);
+		sound->LoadSound("AttackSlime", "../Resource/Sound/SFX/AttackSlime.mp3", false);
 
 		//sound->LoadSound("HitGolem", "../Resource/Sound/SFX/HitGolem.mp3", false);
 		sound->LoadSound("DeathGolem", "../Resource/Sound/SFX/DeathGolem.mp3", false);
+		sound->LoadSound("SwipeGolem", "../Resource/Sound/SFX/SwipeRedStone.mp3", false);
+		sound->LoadSound("WalkGolem", "../Resource/Sound/SFX/WalkGolem.mp3", false);
+		sound->LoadSound("FireProjectile", "../Resource/Sound/SFX/FireProjectile.mp3", false);
 
 		sound->LoadSound("DeathCreeper", "../Resource/Sound/SFX/DeathCreeper.mp3", false);
+		sound->LoadSound("ExplosionCreeper", "../Resource/Sound/SFX/ExplosionCreeper.mp3", false);
 
-		//sound->LoadSound("DeathEnder", "../Resource/Sound/SFX/DeathEnder.mp3", false);
+		sound->LoadSound("WalkEnder", "../Resource/Sound/SFX/WalkEnder.mp3", false);
+		sound->LoadSound("HiddenEnder", "../Resource/Sound/SFX/HiddenEnder.mp3", false);
+		sound->LoadSound("SproutEnder", "../Resource/Sound/SFX/SproutEnder.mp3", false);
+		sound->LoadSound("CrossLaserEnder", "../Resource/Sound/SFX/CrossLaserEnder.mp3", false);
+		sound->LoadSound("LineLaserEnder", "../Resource/Sound/SFX/LineLaserEnder.mp3", false);
+		sound->LoadSound("ProjectileEnder", "../Resource/Sound/SFX/ProjectileEnder.mp3", false);
+		sound->LoadSound("DeathEnder", "../Resource/Sound/SFX/DeathEnder.mp3", false);
 
 		//Map
 		//sound->LoadSound("OpenChest", "../Resource/Sound/SFX/OpenChest.mp3", false);

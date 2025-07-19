@@ -58,6 +58,7 @@ private:
 
     _float*             AttackTimer = nullptr;
     _int*               AttackNum = nullptr;
+    _float              WalkTimer;
 
 };
 

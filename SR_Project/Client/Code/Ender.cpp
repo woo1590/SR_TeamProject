@@ -20,6 +20,9 @@
 #include "ObjectManager.h"
 #include "EnderProjectile.h"
 #include "FireBlock.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
+#include "InfoComponent.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -54,6 +57,9 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto collision = GetComponent<CollisionComponent>();
     collision->SetSize(_vec3(10.f, 20.f, 20.f));
+
+    auto Info = GetComponent<InfoComponent<EnemyInfo>>();
+    Info->SetInfo({ 9, 500, 500, 0,0,20, 0,0 });
 
     Stand();
     InitLaserHead();
@@ -307,6 +313,9 @@ void Ender::PlayAnimation(_float dt)
     case EnderState::Projectile:
         PlayProjectileAttack(dt);
         break;
+    case EnderState::Die:
+        PlayDie(dt);
+        break;
     }
 }
 
@@ -363,6 +372,7 @@ void Ender::Hide()
 
         HideAnim.ElapsedTime = 0.f;
         ++CurChangeStateCount;
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HiddenEnder");
     }
 }
 
@@ -389,6 +399,7 @@ void Ender::Sprout()
             auto renderer = Bone.second->GetComponent<MeshRenderer>();
             renderer->SetRenderID(RENDER_ID::Render_NonAlpha);
         }
+        IsSproutPlay = false;
     }
 }
 
@@ -483,6 +494,14 @@ void Ender::MoveTo(_vec3 targetPos, _float dt)
     }
 }
 
+void Ender::Die()
+{
+    if (enderState != EnderState::Die)
+    {
+        enderState = EnderState::Die;
+    }
+}
+
 void Ender::SetState(EnderState state)
 {
     enderState = state;
@@ -559,6 +578,13 @@ void Ender::InitEnderProjectile()
 void Ender::PlayCrawl(_float dt)
 {
     CrawlAnim.ElapsedTime += dt;
+
+    WalkTime += dt;
+    if (WalkTime > 0.3f)
+    {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkEnder");
+        WalkTime = 0.f;
+    }
 
     float LegSwingAngle = D3DXToRadian(30.f);
     float AnimSpeed = 6.f; 
@@ -645,6 +671,13 @@ void Ender::PlayStandToCrawl(_float dt)
 void Ender::PlayStand(_float dt)
 {
     StandAnim.ElapsedTime += dt;
+
+    WalkTime += dt;
+    if (WalkTime > 0.3f)
+    {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkEnder");
+        WalkTime = 0.f;
+    }
 
     float LegSwingAngle = D3DXToRadian(30.f);
     float AnimSpeed = 6.f;
@@ -737,6 +770,12 @@ void Ender::PlaySprout(_float dt)
 
     transform->SetPosition(_vec3(pos.x, yOffset, pos.z));
 
+    if (t > 0.5f && !IsSproutPlay)
+    {
+        IsSproutPlay = true;
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("SproutEnder");
+    }
+
     Scale = size;
     SetBoneSize();
 
@@ -785,7 +824,13 @@ void Ender::PlayLineLaserAttack(_float dt)
 void Ender::PlayCrossLaserAttack(_float dt)
 {
     LaserAttackAnim.ElapsedTime += dt;
+    CrossLaserSoundTime -= dt;
+    if (CrossLaserSoundTime < 0.f)
+    {
+        CrossLaserSoundTime = 1.f;
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("CrossLaserEnder");
 
+    }
     for (auto& CrossLaser : CrossLasers)
     {
         auto Lasertransform = CrossLaser->GetComponent<TransformComponent>();
@@ -824,6 +869,8 @@ void Ender::PlayProjectileAttack(_float dt)
             ProjectileAttackAnim.Phase = Action;
             ProjectileAttackAnim.ElapsedTime = 0.f;
             ProjectileAttackAnim.TotalTime = 3.f;
+
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("ProjectileEnder");
         }
     }
     if (ProjectileAttackAnim.Phase == Action)
@@ -885,6 +932,13 @@ void Ender::PlayProjectileAttack(_float dt)
             *ChangeStateCount = rand() % 3 + 1;
         }
     }
+}
+
+void Ender::PlayDie(_float dt)
+{
+    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathEnder");
+    //SetDead();
+    //DeleteBar();
 }
 
 void Ender::SetBoneSize()

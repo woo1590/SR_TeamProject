@@ -44,7 +44,7 @@ BTStatus IsRandomMoveCheck::Tick(float dt, BlackBoard* bb)
 			return BTStatus::Running;
 		}
 		else
-			return BTStatus::Failure;
+			return BTStatus::Success;
 	}
 }
 
