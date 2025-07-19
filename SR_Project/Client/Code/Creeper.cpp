@@ -269,6 +269,7 @@ void Creeper::PlayDie(_float dt)
     {
         DieAnim.IsEnd = true;
 
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("ExplosionCreeper");
         auto player = owner->GetObjectList(ObjectType::Player).back();
         _vec3 playerpos = player->GetComponent<TransformComponent>()->GetPosition();
         _vec3 pos = GetComponent<TransformComponent>()->GetPosition();

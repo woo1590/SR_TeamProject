@@ -16,6 +16,8 @@
 #include "MeshRendererComponent.h"
 #include "Player.h"
 #include "DeadEffect.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
 
 BabySlime::BabySlime(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -95,6 +97,7 @@ void BabySlime::Attack(Object* target)
         SetRotation({ 0.f, 0.f, 0.f }, "Body");
         *IsAttack = true;
         IsAttackDamage = false;
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackSlime");
     }
 }
 

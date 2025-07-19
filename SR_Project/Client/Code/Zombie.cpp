@@ -89,6 +89,7 @@ void Zombie::Attack(Object* target)
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
         *IsAttack = true;
         IsAttackDamage = false;
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackZombie");
     }
 }
 
@@ -104,6 +105,7 @@ void Zombie::Die()
         SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathZombie");
     }
 }
 
@@ -132,6 +134,7 @@ void Zombie::Hit(_vec3 dir, _float power)
         effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
         owner->AddObject(ObjectType::ParticleEffect, effect);
         ////////////////////////////////////////////////
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitZombie");
         Monster::Hit(dir, power);
     }
 }
@@ -356,7 +359,7 @@ void Zombie::PlayHit(_float dt)
         targetLArmRotRad.y = HitPrevRotLArm.y;
         targetRArmRotRad.y = HitPrevRotRArm.y;
 
-        targetLArmRotRad.z = HitPrevRotLArm.z - D3DXToRadian(currentBendEffectAmountDeg); // Z축도 - 방향으로 꺾인다고 가정
+        targetLArmRotRad.z = HitPrevRotLArm.z - D3DXToRadian(currentBendEffectAmountDeg);
         targetRArmRotRad.z = HitPrevRotRArm.z - D3DXToRadian(currentBendEffectAmountDeg);
 
         SetRotation(targetLArmRotRad, "LArm");
@@ -427,7 +430,6 @@ void Zombie::OnCollisionStay(Object* other)
         if (State == MonsterState::Attack && !IsAttackDamage)
         {
             playerStat->SetHp(playerStat->GetInfo().curHp - Stat->GetInfo().power);
-            //player->PlayKnockBack(playertransform->GetPosition() - transform->GetPosition(), Stat->GetInfo().power, 0.1f);
             IsAttackDamage = true;
         }
     }

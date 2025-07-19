@@ -136,7 +136,7 @@ void JungleSkeleton::Hit(_vec3 dir, _float power)
 
         HitDir = dir;
         HitPower = power;
-
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitSkeleton");
         Monster::Hit(dir, power);
     }
 }

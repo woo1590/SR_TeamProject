@@ -19,7 +19,6 @@
 #include "EngineCore.h"
 #include "SoundManager.h"
 #include "DeadEffect.h"
-
 //effect
 #include "BloodEffect.h"
 
@@ -94,6 +93,7 @@ void JungleZombie::Attack(Object* target)
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
         *IsAttack = true;
         IsAttackDamage = false;
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackZombie");
     }
 }
 
@@ -109,6 +109,7 @@ void JungleZombie::Die()
         SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathZombie");
     }
 }
 
@@ -139,6 +140,7 @@ void JungleZombie::Hit(_vec3 dir, _float power)
         effectTransform->SetPosition(GetComponent<TransformComponent>()->GetPosition());
         owner->AddObject(ObjectType::ParticleEffect, effect);
         ///////////////////////////////////////////
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitZombie");
         Monster::Hit(dir, power);
     }
 }
