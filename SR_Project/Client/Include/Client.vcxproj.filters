@@ -1444,7 +1444,6 @@
     <ClCompile Include="..\Code\ChangeScene.cpp">
       <Filter>00. MainApp\Command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ENGINE\CODE\CHANGESCENE.CPP" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">

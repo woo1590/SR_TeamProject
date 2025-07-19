@@ -203,6 +203,7 @@ void EngineCore::DebugSetting_IMGUI()
 
 	ImGui::End();
 }
+#endif
 void EngineCore::ExecuteCommand()
 {
 	for (auto& command : commands)
@@ -212,7 +213,6 @@ void EngineCore::ExecuteCommand()
 	}
 	commands.clear();
 }
-#endif
 
 void EngineCore::Free()
 {

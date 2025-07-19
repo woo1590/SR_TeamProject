@@ -140,7 +140,7 @@ void Village::Load()
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
         ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-        player->GetComponent<TransformComponent>()->SetPosition(10.f, 100.f, 10.f);
+        player->GetComponent<TransformComponent>()->SetPosition(50.f, 100.f, 50.f);
 
         auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
         trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
