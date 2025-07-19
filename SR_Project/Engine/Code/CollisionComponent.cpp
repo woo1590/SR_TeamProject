@@ -41,19 +41,12 @@ HRESULT CollisionComponent::Ready_Component()
 {
 	BBType = BoundingBoxType::Box;
 
-	auto device = GraphicDevice::GetInstance()->GetDevice();
-	if (BoundingBox)
-		Safe_Release(BoundingBox);
-
-	D3DXCreateBox(device, 2.f, 2.f, 2.f, &BoundingBox, nullptr);
 	return S_OK;
 }
 
 void CollisionComponent::Update(_float dt)
 {
 	ObjectComponent::Update(dt);
-
-	collider->Update();
 }
 
 void CollisionComponent::Late_Update(_float dt)
@@ -181,17 +174,10 @@ void CollisionComponent::Render()
 	if (!DebugMode)
 		return;
 
-	auto device = GraphicDevice::GetInstance()->GetDevice();
-	_vec3 pos = owner->GetComponent<TransformComponent>()->GetWorldPosition() + Offset;
-	_matrix worldMat;
-	D3DXMatrixTranslation(&worldMat, pos.x, pos.y, pos.z);
-
-	device->SetTransform(D3DTS_WORLD, &worldMat);
-	BoundingBox->DrawSubset(0);
+	collider->Render();
 }
 
 void CollisionComponent::Free()
 {
 	ObjectComponent::Free();
-	Safe_Release(BoundingBox);
 }

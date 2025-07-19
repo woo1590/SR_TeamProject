@@ -13,7 +13,6 @@ private:
 
 public:
     static AABBCollider* Create(CollisionComponent* owner);
-    void Update()override;
     AABB GetWorldAABB() override;
     bool CheckCollision(Collider* other) override;
     bool CollisionAABB(AABBCollider* other) override;
@@ -31,7 +30,6 @@ private:
     void Free()override;
 
     AABB localAABB;
-    AABB worldAABB;
 };
 
 END

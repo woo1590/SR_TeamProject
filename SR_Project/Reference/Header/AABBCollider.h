@@ -13,7 +13,6 @@ private:
 
 public:
     static AABBCollider* Create(CollisionComponent* owner);
-    void Update()override;
     AABB GetWorldAABB() override;
     bool CheckCollision(Collider* other) override;
     bool CollisionAABB(AABBCollider* other) override;
@@ -25,11 +24,12 @@ public:
     void SetOffset(_vec3 offset)override;
     _vec3 GetOffset()const { return localAABB.center; }
 
+    void Render()override;
+
 private:
     void Free()override;
 
     AABB localAABB;
-    AABB worldAABB;
 };
 
 END

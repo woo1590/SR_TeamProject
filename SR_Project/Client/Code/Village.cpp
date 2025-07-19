@@ -121,7 +121,7 @@ void Village::Load()
         CameraMgr->AddCamera(L"Third_Camera", tCam);
         tCam->SetTarget(player);
 
-        CameraMgr->SetMainCamera(L"Third_Camera");
+        CameraMgr->SetMainCamera(L"First_Camera");
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
@@ -200,6 +200,9 @@ void Village::Update(_float dt)
 
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);
+        
+        if (Input->IsKeyPressed(NUM0))
+			EngineCore::GetInstance()->SetDebugMode(true);
 
 		if (Input->IsKeyPressed(NUM3))
 		{

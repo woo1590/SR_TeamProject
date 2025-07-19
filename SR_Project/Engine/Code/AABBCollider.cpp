@@ -8,6 +8,8 @@
 AABBCollider::AABBCollider(CollisionComponent* transform)
 	:Collider(transform)
 {
+	auto device = GraphicDevice::GetInstance()->GetDevice();
+	D3DXCreateBox(device, localAABB.half.x * 2.f, localAABB.half.y, localAABB.half.z * 2.f, &debugBox, nullptr);
 }
 
 AABBCollider::~AABBCollider()
@@ -21,16 +23,15 @@ AABBCollider* AABBCollider::Create(CollisionComponent* transform)
 	return Instance;
 }
 
-void AABBCollider::Update()
-{
-	_vec3 pos = owner->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
-
-	worldAABB.center = localAABB.center + pos;
-	worldAABB.half = localAABB.half;
-}
-
 AABB AABBCollider::GetWorldAABB()
 {
+	auto transform = owner->GetOwner()->GetComponent<TransformComponent>();
+	_vec3 pos = transform->GetWorldPosition();
+
+	AABB worldAABB;
+	worldAABB.center = localAABB.center + pos;
+	worldAABB.half = localAABB.half;
+
 	return worldAABB;
 }
 
@@ -41,7 +42,7 @@ bool AABBCollider::CheckCollision(Collider* other)
 
 bool AABBCollider::CollisionAABB(AABBCollider* other)
 {
-	AABB a = worldAABB;
+	AABB a = GetWorldAABB();
 	AABB b = other->GetWorldAABB();
 
 	_vec3 aMin = a.center - a.half;
@@ -64,6 +65,12 @@ bool AABBCollider::CollisionOBB(OBBCollider* other)
 void AABBCollider::SetSize(_vec3 size)
 {
 	localAABB.half = size * 0.5f;
+
+	if (debugBox)
+		Safe_Release(debugBox);
+
+	auto device = GraphicDevice::GetInstance()->GetDevice();
+	D3DXCreateBox(device, localAABB.half.x * 2.f, localAABB.half.y * 2.f, localAABB.half.z * 2.f, &debugBox, nullptr);
 }
 
 void AABBCollider::SetOffset(_vec3 offset)
@@ -73,7 +80,16 @@ void AABBCollider::SetOffset(_vec3 offset)
 
 void AABBCollider::Render()
 {
+	auto device = GraphicDevice::GetInstance()->GetDevice();
 
+	auto transform = owner->GetOwner()->GetComponent<TransformComponent>();
+	_vec3 pos = transform->GetWorldPosition();
+
+	_matrix worldMat;
+	D3DXMatrixTranslation(&worldMat, pos.x, pos.y, pos.z);
+	device->SetTransform(D3DTS_WORLD, &worldMat);
+
+	debugBox->DrawSubset(0);
 }
 
 void AABBCollider::Free()

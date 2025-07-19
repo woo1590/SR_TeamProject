@@ -17,7 +17,6 @@ protected:
 
 public:
     virtual AABB GetWorldAABB()PURE;
-    virtual void Update()PURE;
     virtual bool CheckCollision(Collider* other)PURE;
     virtual bool CollisionAABB(AABBCollider* other)PURE;
     virtual bool CollisionOBB(OBBCollider* other)PURE;
@@ -33,6 +32,8 @@ protected:
     void Free()override {}
 
     CollisionComponent* owner = nullptr;
+
+    LPD3DXMESH debugBox = nullptr;
 };
 
 END

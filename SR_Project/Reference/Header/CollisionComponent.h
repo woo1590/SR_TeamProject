@@ -61,13 +61,13 @@ public:
     /*-------------------------------------------*/
     void Render();  //Debug
     void SetDebugMode(bool debug) { DebugMode = debug; }
+    _bool IsDebugMode()const { return DebugMode; }
 private:
 
     void Free()override;
 
     _vec3 Offset{ 0.f,0.f,0.f };
 
-    LPD3DXMESH BoundingBox = nullptr;   //����׿� �޽� 
     BoundingBoxType BBType = BoundingBoxType::Box;
     _bool DebugMode = true;
 
