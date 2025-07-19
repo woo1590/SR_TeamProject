@@ -157,15 +157,17 @@ void Tnt::TntInfo()
     SetScale(1.f);
     SetScaleRatio(_vec3(1.f, 1.f, 1.f));
     SetPosition(_vec3(0.f, 0.f, 0.f));
-    SetPivot(true, _vec3(0.f, 0.8f, 0.f));
+    SetPivot(true, _vec3(0.f, 0.f, 0.f));
     SetRotation(_vec3(0.f, 0.f, 0.f));
-    SetOwnerObject(owner->GetFrontObject(ObjectType::Player));
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     auto collision = AddComponent<CollisionComponent>();
-    collision->SetLayer(LAYER_PLAYER);
-    collision->SetMask(LAYER_DEFAULT);
-    collision->SetSize(_vec3(1.f, 1.f, 1.f));
+    GetScene()->GetCollisionSystem()->RegisterCollision(collision);
+
+    collision->SetLayer(LAYER_DEFAULT);
+    collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT);
+    collision->SetSize(_vec3(2.f, 2.f, 2.f));
+    collision->SetCollisionStay([this](Object* other) {this->OnCollisionEnter(other); });
 }
 
 void Tnt::ThrowTnt()
@@ -183,4 +185,14 @@ void Tnt::ThrowTnt()
     velocity.y = 10.f;
     velocity.z = throwDirection.z * throwSpeed;
     physics->SetVelocity(velocity);
+}
+
+void Tnt::OnCollisionEnter(Object* other)
+{
+    if (!tntOnField) return;
+    if (!other) return;
+    if (other->GetObjectType() != ObjectType::Player) return;
+
+    TntToPlayer(other);
+    tntOnField = false;
 }

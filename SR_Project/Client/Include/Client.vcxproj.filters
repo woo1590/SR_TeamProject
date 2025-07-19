@@ -514,6 +514,9 @@
     <Filter Include="00. MainApp\Command">
       <UniqueIdentifier>{103c2d5a-e295-4566-9b70-f35f5d0e3678}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Item\Armor">
+      <UniqueIdentifier>{d796ad83-1286-451b-949e-e4b3b830eadd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -988,6 +991,9 @@
     <ClInclude Include="..\Header\ChangeScene.h">
       <Filter>00. MainApp\Command</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Armor.h">
+      <Filter>02. Object\Item\Armor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1444,7 +1450,9 @@
     <ClCompile Include="..\Code\ChangeScene.cpp">
       <Filter>00. MainApp\Command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ENGINE\CODE\CHANGESCENE.CPP" />
+    <ClCompile Include="..\Code\Armor.cpp">
+      <Filter>02. Object\Item\Armor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">

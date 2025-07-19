@@ -18,6 +18,9 @@ private:
     void TntInfo();
 
     void ThrowTnt();
+
+    void OnCollisionEnter(Object* other);
+
     Object* ownerObject = nullptr;
 
     _vec3 tntOffset = { 0.f, 5.f, 0.f };
@@ -29,5 +32,7 @@ private:
     float TntTime = 0.f;
     const float TntBoom = 3.f;
     const float TntRange = 10.f;
+
+    _bool tntOnField = true;
 };
 

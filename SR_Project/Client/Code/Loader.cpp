@@ -128,6 +128,7 @@ HRESULT Loader::Load_Village()
 		resource->LoadMaterial("../Resource/Material/Blocks.json");
 		resource->LoadMaterial("../Resource/Material/Items.json");
 		resource->LoadMaterial("../Resource/Material/Particle.json");
+		resource->LoadMaterial("../Resource/Material/Armor.json");
 	}
 
 	/*----------------------Load Sound-----------------------------*/
