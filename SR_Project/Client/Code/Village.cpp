@@ -112,7 +112,7 @@ void Village::Load()
         ObjectMgr->AddObject(ObjectType::Player, player);
 
         auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
-        tnt->TntToPlayer(player);
+        tnt->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
 
         auto fCam = FirstCam::Create(ObjectMgr);
         auto tCam = ThirdCam::Create(ObjectMgr);
@@ -142,7 +142,7 @@ void Village::Load()
 
         player->GetComponent<TransformComponent>()->SetPosition(50.f, 100.f, 50.f);
 
-        auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+        /*auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
         trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
         trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
         trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
@@ -171,7 +171,7 @@ void Village::Load()
 
         auto enderprojectile = EnderProjectile::Create(ObjectMgr, ObjectType::Projectile);
         enderprojectile->GetComponent<TransformComponent>()->SetPosition(150.f, 100.f, 150.f);
-        ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);
+        ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);*/
     }
 }
 
@@ -200,6 +200,9 @@ void Village::Update(_float dt)
 
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);
+
+        if (Input->IsKeyPressed(NUM0))
+			EngineCore::GetInstance()->SetDebugMode(true);
 
 		if (Input->IsKeyPressed(NUM3))
 		{

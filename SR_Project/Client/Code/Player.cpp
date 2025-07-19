@@ -28,6 +28,7 @@
 #include "Firework.h"
 #include "Spear.h"
 #include "Crossbow.h"
+#include "Armor.h"
 
 #include "StaticGrid.h"
 #include "SpriteRenderer.h"
@@ -1270,6 +1271,9 @@ void Player::EquipItem(ItemType itemType)
         Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "crossbow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
         break;
+    case ItemType::Armor:
+        Armor = Armor::Create(owner, ObjectType::Item);
+        break;
     }
 }
 
@@ -1291,6 +1295,10 @@ void Player::UnEquipItem(ItemType itemType)
     case ItemType::Spear:
         Bones["RHand"]->SetDead();
         Bones["RHand"] = nullptr;
+        break;
+    case ItemType::Armor:
+        Armor->SetDead();
+        Armor = nullptr;
         break;
     }
 }
@@ -1441,8 +1449,12 @@ void Player::UpdateWalk(_float dt) {
     {
         transform->Translate(moveVec);
     }
-    else if (blockUp == nullptr && blockFront == nullptr && blockDown->GetOwner()->GetObjectType() == ObjectType::StaticBlock) {
-        transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
+    else if (blockUp == nullptr && blockFront == nullptr && blockDown !=nullptr) 
+    {
+        auto blockDownType = blockDown->GetOwner()->GetObjectType();
+
+        if(blockDownType == ObjectType::StaticBlock || blockDownType == ObjectType::CollisionBlock)
+            transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
     }
 
     //////////////////////////////////////////Walk Effect

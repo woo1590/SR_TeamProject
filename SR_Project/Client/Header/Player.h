@@ -183,4 +183,6 @@ private:
     // ----------------------
     const float interactRange = 5.f;
     bool moveToInteract = false;
+
+    Object* Armor = nullptr;
 };
