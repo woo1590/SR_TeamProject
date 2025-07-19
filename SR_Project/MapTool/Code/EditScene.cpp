@@ -173,11 +173,11 @@ void EditScene::ImGui_Main()
 	ImGui_Info();
 	ImGui_Terrain();
 	ImGui_SaveLoad();
+	ImGui_SetPrefab();
 	ImGui::End();
 
 	ImGui::Begin("==== Set Block Type & Info ====", NULL, 0);
 	ImGui_SetMode();
-	ImGui_SetPrefab();
 	ImGui_SetBlockType();
 	ImGui_SetBlockUsage();
 	ImGui_SetBlockInfo();
@@ -379,11 +379,13 @@ void EditScene::ImGui_SetBlockType()
 		const char* staticBlockNames[] =
 		{
 			"NONE", "DIRT", "GRASS", "WOOD", "WOODPLANK", 
-			"STONE", "COBBLESTONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
+			"STONE", "COBBLE STONE", "SMOOTH STONE", "STONE BRICK", "MOSSY STONE BRICK",
 			"GLASS", "LEAF",
-			"OAK", "DIRTPATH", "FURNACE", "HAYBALE", "DARKWOODPLANK",
-			"WHITEWOOL", "YELLOWWOOL", "TERRACOTA",
-			"DARKDIRT", "DARKWOOD", "BOOKSHELF", "DARKGRASS", "DARKSTONE", "DARKLEAF"
+			"OAK", "DIRT PATH", "FURNACE", "HAYBALE", "DARK WOODPLANK",
+			"WHITE WOOL", "YELLOW WOOL", "TERRACOTA",
+			"DARK DIRT", "DARK WOOD", "BOOKSHELF", "DARK GRASS", "DARK STONE", "DARK LEAF",
+			"DARK COBBLE STONE", "DARK SMOOTH STONE", "DARK STONE BRICK", "DARK MOSSY STONE BRICK",
+			"DARK OAK"
 		};
 
 		// 선택할 때마다, 다른 값들 초기화
@@ -418,6 +420,7 @@ void EditScene::ImGui_SetBlockUsage()
 	case Dirt: case GrassDirt: case DirtPath: case Wood: case Oak:
 	case StoneBrick: case MossyStoneBrick: case Furnace: case BookShelf:
 	case WhiteWool: case YellowWool: case Terracota: case DarkDirt: case DarkGrass:
+	case DarkStoneBrick: case DarkMossyStoneBrick: case DarkOak:
 		staticBlockUsage = Basic;
 		return;
 	case WoodPlank: 
@@ -428,11 +431,12 @@ void EditScene::ImGui_SetBlockUsage()
 		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE" };
 		usageEnums = { Basic, Half, Stair, Fence };
 		break;
-	case Stone: case CobbleStone: case DarkStone:
+	case Stone: case CobbleStone:
+	case DarkStone: case DarkCobbleStone:
 		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE"};
 		usageEnums = { Basic, Half, Stair, Fence };
 		break;
-	case SmoothStone:
+	case SmoothStone: case DarkSmoothStone:
 		usageOptions = { "BASIC", "HALF", "STAIR" };
 		usageEnums = { Basic, Half, Stair };
 		break;

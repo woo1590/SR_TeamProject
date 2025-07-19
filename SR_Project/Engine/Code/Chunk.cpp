@@ -505,6 +505,21 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
     case DarkDirt:
         SetUVTile(5, 0);
         break;
+    case DarkCobbleStone:
+        if (sb.Usage == Half) SetUVTile(7, 4, 6, 3, faceDir, Half);
+        else SetUVTile(7, 4);
+        break;
+    case DarkSmoothStone:
+        if (sb.Usage == Half) SetUVTile(4, 5, 7, 3, faceDir, Half);
+        else SetUVTile(4, 5);
+        break;
+    case DarkStoneBrick:
+        SetUVTile(5, 5);
+        break;
+    case DarkMossyStoneBrick:
+        SetUVTile(6, 5);
+        break;
+
     case WoodPlank:
         if (sb.Usage == Half) SetUVTile(2, 2, 0, 3, faceDir, sb.Usage);
         else if (sb.Usage == Fence) SetUVTile(4, 2, 5, 2, faceDir, sb.Usage, parts);
@@ -584,7 +599,7 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
         switch (faceDir)
         {
         case Face_Top: case Face_Bottom:
-            SetUVTile(2, 2);
+            SetUVTile(2, 6);
             break;
         default:
             SetUVTile(3, 4);
@@ -593,6 +608,9 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
         break;
     case Oak:
         SetUVTile(3, 2);
+        break;
+    case DarkOak:
+        SetUVTile(3, 6);
         break;
     case Furnace:
         switch (faceDir)
@@ -839,7 +857,7 @@ void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 
 void Chunk::SetChunkRender(bool render)
 {
-    mesh->SetRender(render);
+    if (mesh) mesh->SetRender(render);
 }
 
 bool Chunk::GetChunkRender()
