@@ -152,6 +152,7 @@ void Firework::PlayerFireworkInfo()
     ArrowRotateSet();
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_ENEMY | LAYER_DEFAULT);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });

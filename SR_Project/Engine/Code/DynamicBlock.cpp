@@ -52,6 +52,7 @@ Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBl
 HRESULT DynamicBlock::Ready_Object()
 {
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     collision->SetLayer(LAYER_DEFAULT);
     collision->SetMask(LAYER_PLAYER | LAYER_ENEMY);
     auto transform = AddComponent<TransformComponent>();

@@ -201,7 +201,7 @@ HRESULT Loader::Load_Village()
 
 	/*--------------------Load Chunk----------------------*/
 	{
-		chunkload->LoadChunk(L"../../Reference/MapData/Stage1.chunkmap");
+		chunkload->LoadChunk(L"../../Reference/MapData/VillageMap.chunkmap");
 	}
 
 	return S_OK;

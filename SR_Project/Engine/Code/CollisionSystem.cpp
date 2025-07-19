@@ -35,63 +35,7 @@ HRESULT CollisionSystem::Ready_CollisionSystem()
 
 void CollisionSystem::Late_Update()
 {
-	CurrCollision.clear();
 
-	//Check Collision
-	for (_uint i = 0; i < Collisions.size(); ++i)
-	{
-		CollisionComponent* a = Collisions[i];
-
-		for (_uint j = i+1; j < Collisions.size(); ++j)
-		{
-			CollisionComponent* b = Collisions[j];
-
-			if (a->CanCollision(b) && b->CanCollision(a))
-			{
-				if (a->CheckAABBCollision(b))
-				{
-					CurrCollision.push_back(std::pair<CollisionComponent*, CollisionComponent*>(a, b));
-				}
-			}
-		}
-	}
-
-	//Collision Enter
-	for (const auto& currPair : CurrCollision)
-	{
-		currPair.first->OnCollisionEnter(currPair.second);
-		currPair.second->OnCollisionEnter(currPair.first);
-	}
-
-	//Collision Stay
-	for (const auto& prevPair : PrevCollision)
-	{
-		for (const auto& currPair : CurrCollision)
-		{
-			auto it = std::find(PrevCollision.begin(), PrevCollision.end(), currPair);
-			if (it != PrevCollision.end())
-			{
-				currPair.first->OnCollisionStay(currPair.second);
-				currPair.second->OnCollisionStay(currPair.first);
-			}
-		}
-	}
-
-	//Collision Exit
-	for (const auto& prevPair : PrevCollision)
-	{
-		for (const auto& currPair : CurrCollision)
-		{
-			auto it = std::find(PrevCollision.begin(), PrevCollision.end(), currPair);
-			if (it != PrevCollision.end())
-			{
-				currPair.first->OnCollisionExit(currPair.second);
-				currPair.second->OnCollisionExit(currPair.first);
-			}
-		}
-	}
-
-	PrevCollision.swap(CurrCollision);
 }
 
 void CollisionSystem::RegisterCollision(CollisionComponent* collision)

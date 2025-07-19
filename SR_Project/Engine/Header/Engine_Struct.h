@@ -104,6 +104,19 @@ namespace Engine
 		StaticBlockRot Rot;
 		StaticBlockUsage Usage;
 	} PREFAB;
+
+	struct AABB
+	{
+		_vec3 center{ 0.f,0.f,0.f };
+		_vec3 half{ 1.f,1.f,1.f };
+	};
+
+	struct OBB
+	{
+		_vec3 center{ 0.f,0.f,0.f };
+		_vec3 half{ 1.f,1.f,1.f };
+		_matrix axis;
+	};
 }
 
 #endif // Engine_Struct_h__

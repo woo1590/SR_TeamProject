@@ -70,6 +70,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);
 
     collision->SetLayer(LAYER_PLAYER);

@@ -37,6 +37,7 @@ HRESULT LaserEffect::Ready_Object()
 	transform->SetScale(_vec3(1.f, 1.f, 1.f));
 
 	auto collision = AddComponent<CollisionComponent>();
+	collision->AddCollider<AABBCollider>();
 	GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
 	collision->SetLayer(LAYER_PROJECTILE);
 	collision->SetMask(LAYER_PLAYER);

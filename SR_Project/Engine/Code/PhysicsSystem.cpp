@@ -2,6 +2,7 @@
 #include "PhysicsSystem.h"
 #include "Object.h"
 #include "Scene.h"
+#include "Collider.h"
 #include "StaticGrid.h"
 
 #include "PhysicsComponent.h"
@@ -107,8 +108,13 @@ void PhysicsSystem::Dynamic_vs_Dynamic()
 	for (const auto& body : DynamicBodies)
 	{
 		auto collision = body->GetOwner()->GetComponent<CollisionComponent>();
+		auto collider = collision->GetCollider();
+
+		AABB worldAABB = collider->GetWorldAABB();
+	
 		_float minX, maxX;
-		collision->GetWorldX(&minX, &maxX);
+		minX = (worldAABB.center - worldAABB.half).x;
+		maxX = (worldAABB.center + worldAABB.half).x;
 
 		AABBEntries_Dynamics.push_back({ collision,minX,maxX });
 	}
@@ -125,8 +131,10 @@ void PhysicsSystem::Dynamic_vs_Static()
 	for (const auto& body : DynamicBodies)
 	{
 		auto a = body->GetOwner()->GetComponent<CollisionComponent>();
-		_vec3 worldMin, worldMax;
-		a->GetWorldAABB(&worldMin, &worldMax);
+		AABB worldAABB = a->GetCollider()->GetWorldAABB();
+
+		_vec3 worldMin = worldAABB.center - worldAABB.half;
+		_vec3 worldMax = worldAABB.center + worldAABB.half;
 
 		int minX, maxX;
 		int minY, maxY;
@@ -146,9 +154,11 @@ void PhysicsSystem::Dynamic_vs_Static()
 					const auto& c = Grid->QueryCell(cx, cy, cz);
 					if (!c) continue;
 
-					_float min, max;
-					c->GetWorldX(&min, &max);
+					AABB blockAABB = c->GetCollider()->GetWorldAABB();
 
+					_float min = (blockAABB.center - blockAABB.half).x;
+					_float max = (blockAABB.center + blockAABB.half).x;
+					
 					AABBEntries_Statics.push_back({ c,min,max });
 				}
 
@@ -158,7 +168,7 @@ void PhysicsSystem::Dynamic_vs_Static()
 
 			if (a->CanCollision(b) && b->CanCollision(a))
 			{
-				if (a->CheckAABBCollision(b))
+				if (a->CheckCollision(b))
 					CurrCollisions.emplace(a, b);
 			}
 		}
@@ -181,7 +191,7 @@ void PhysicsSystem::BroadPhase()
 
 			if (a->CanCollision(b) && b->CanCollision(a))
 			{
-				if (a->CheckAABBCollision(b))
+				if (a->CheckCollision(b))
 					CurrCollisions.emplace(a, b);
 			}
 		}
@@ -198,8 +208,14 @@ void PhysicsSystem::SolvePosition()
 
 		_vec3 aMin, aMax, bMin, bMax;
 
-		a->GetWorldAABB(&aMin, &aMax);
-		b->GetWorldAABB(&bMin, &bMax);
+		AABB aWorldAABB = a->GetCollider()->GetWorldAABB();
+		AABB bWorldAABB = b->GetCollider()->GetWorldAABB();
+
+		aMin = aWorldAABB.center - aWorldAABB.half;
+		aMax = aWorldAABB.center + aWorldAABB.half;
+
+		bMin = bWorldAABB.center - bWorldAABB.half;
+		bMax = bWorldAABB.center + bWorldAABB.half;
 
 		_float overlapX = (std::min)(aMax.x, bMax.x) - (std::max)(aMin.x, bMin.x);
 		_float overlapY = (std::min)(aMax.y, bMax.y) - (std::max)(aMin.y, bMin.y);

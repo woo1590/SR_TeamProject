@@ -331,6 +331,15 @@
     <Filter Include="00. EngineCore\Command">
       <UniqueIdentifier>{b4fa989c-bd19-4add-a75b-eed93ad6699e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\Collision\Collider">
+      <UniqueIdentifier>{d28fb882-52be-48b6-bb99-c20f0f3dd34e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Collision\Collider\AABB">
+      <UniqueIdentifier>{eeb00e01-a362-48a0-ae3f-139df539525b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Collision\Collider\OBB">
+      <UniqueIdentifier>{b23b2afb-bc5c-4fce-891a-86a694fa6130}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -670,6 +679,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\ICommand.cpp">
       <Filter>00. EngineCore\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Collider.cpp">
+      <Filter>07. Object Component\Collision\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\OBBCollider.cpp">
+      <Filter>07. Object Component\Collision\Collider\OBB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AABBCollider.cpp">
+      <Filter>07. Object Component\Collision\Collider\AABB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1036,6 +1054,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\EnginePCH.h">
       <Filter>99. Etc\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Collider.h">
+      <Filter>07. Object Component\Collision\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\OBBCollider.h">
+      <Filter>07. Object Component\Collision\Collider\OBB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AABBCollider.h">
+      <Filter>07. Object Component\Collision\Collider\AABB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

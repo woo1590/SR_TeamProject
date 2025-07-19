@@ -163,6 +163,7 @@ void Tnt::TntInfo()
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     collision->SetLayer(LAYER_PLAYER);
     collision->SetMask(LAYER_DEFAULT);
     collision->SetSize(_vec3(1.f, 1.f, 1.f));

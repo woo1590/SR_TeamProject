@@ -42,6 +42,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
     auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_ENEMY);
     collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT | LAYER_PROJECTILE | LAYER_ENEMY);
