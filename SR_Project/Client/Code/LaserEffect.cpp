@@ -41,7 +41,7 @@ HRESULT LaserEffect::Ready_Object()
 	collision->SetLayer(LAYER_PROJECTILE);
 	collision->SetMask(LAYER_PLAYER);
 	collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
-	collision->SetSize(_vec3(1.f, 1.f, 1.f));
+	collision->SetSize(_vec3(2.f, 2.f, 2.f));
 
 	auto physics = AddComponent<PhysicsComponent>();
 	GetScene()->GetPhysicsStstem()->RegisterBody(physics);
