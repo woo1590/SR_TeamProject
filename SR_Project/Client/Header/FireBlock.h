@@ -14,13 +14,19 @@ public:
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
     void SetColor(_vec3 color);
+    void SetDeadTime(_float time) { deadTime = time; }
+    void SetDeadTimer(_float time) { deadTimer = time; }
+    void SetActive(_bool Active);
+    void    OnCollisionStay(Object* other);
 private:
     void Free()override;
 
     _float timer = 0.f;
     _float speed = 16.f;
-    _vec3 color{ 0.2f,0.f,0.5f };
+    _vec3 color{ 0.3f,0.3f,0.3f };
     _uint totalFrame = 16;
     _uint currFrame = 0;
+    _float deadTime = 0.f;
+    _float deadTimer = 0.f;
 };
 

@@ -41,7 +41,7 @@ HRESULT LaserEffect::Ready_Object()
 	collision->SetLayer(LAYER_PROJECTILE);
 	collision->SetMask(LAYER_PLAYER);
 	collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
-	collision->SetSize(_vec3(1.f, 1.f, 1.f));
+	collision->SetSize(_vec3(2.f, 2.f, 2.f));
 
 	auto physics = AddComponent<PhysicsComponent>();
 	GetScene()->GetPhysicsStstem()->RegisterBody(physics);
@@ -82,13 +82,17 @@ void LaserEffect::SetActive(_bool active)
 	Active = active;
 
 	auto renderer = GetComponent<MeshRenderer>();
+	auto collision = GetComponent<CollisionComponent>();
 	if (Active)
 	{
 		renderer->SetRenderID(RENDER_ID::Render_Alpha);
+		collision->SetSize(ColSize);
 	}
 	else
 	{
 		renderer->SetRenderID(RENDER_ID::Render_None);
+		ColSize = collision->GetSize();
+		collision->SetSize(_vec3(0,0,0));
 	}
 }
 

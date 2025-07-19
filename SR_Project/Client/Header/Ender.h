@@ -1,11 +1,12 @@
 #pragma once
 #include "Monster.h"
 
-enum class EnderState {CrawlToStand, StandToCrawl, Crawl, Stand, Hidden, Sprout, CrossLaser, LineLaser, Projectile};
+enum class EnderState {CrawlToStand, StandToCrawl, Crawl, Stand, Hidden, HideIdle, Sprout, CrossLaser, LineLaser, Projectile};
 
 class LaserEffect;
 class LaserHead;
 class EnderProjectile;
+class FireBlock;
 class Ender :
     public Monster
 {
@@ -32,6 +33,7 @@ public:
     void        Crawl();
     void        Stand();
     void        Hide();
+    void        HideIdle();
     void        Sprout();
     void        CrawlToStand();
     void        StandToCrawl();
@@ -45,6 +47,7 @@ public:
     int         GetCurChangeStateCount();
 
 private:
+    void        InitFireBlock();
     void        InitLaserHead();
     void        InitCrossLaser();
     void        InitEnderProjectile();
@@ -54,6 +57,7 @@ private:
     void        PlayStandToCrawl(_float dt);
     void        PlayStand(_float dt);
     void        PlayHide(_float dt);
+    void        PlayHideIdle(_float dt);
     void        PlaySprout(_float dt);
     void        PlayLineLaserAttack(_float dt);
     void        PlayCrossLaserAttack(_float dt);
@@ -82,14 +86,19 @@ private:
     int*        ChangeStateCount = nullptr;
     _vec3*      TargetPos = nullptr;
 
+    vector<FireBlock*>  FireBlocks;
+    _float              FireSpawnTime = 0.f;
+    _int                FireIndex = 0;
+
     vector<LaserHead*>  LaserHeads;
-    float               LaserSpawnTime = 0.f;
+    _float              LaserSpawnTime = 0.f;
     _int                LaserIndex = 0;
 
     vector<LaserEffect*>        CrossLasers;
-
+    
     vector<EnderProjectile*>    EnderProjectiles;
-    float                       ProjectileSpawnTime = 0.f;
+    _float                      ProjectileSpawnTime = 0.f;
     _int                        ProjectileIndex = 0;
+
 };
 

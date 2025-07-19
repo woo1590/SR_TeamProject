@@ -67,6 +67,8 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
         Lasertransform->SetPosition(_vec3(0.f, 18.f * Scale, 190.f * Scale));
         Lasertransform->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
         Lasertransform->SetScale(_vec3(40.f * Scale, 0.5f, 1.f));
+        auto collision = Laser->GetComponent<CollisionComponent>();
+        collision->SetSize(_vec3(1.f, 1.f, 40.f));
     }
 
     Lasers[0]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
@@ -86,7 +88,7 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
 void LaserHead::Update(_float dt)
 {
     Object::Update(dt);
-    PlayAnimation(dt);
+        PlayAnimation(dt);
 }
 
 void LaserHead::Late_Update(_float dt)
