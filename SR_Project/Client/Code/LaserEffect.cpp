@@ -82,13 +82,17 @@ void LaserEffect::SetActive(_bool active)
 	Active = active;
 
 	auto renderer = GetComponent<MeshRenderer>();
+	auto collision = GetComponent<CollisionComponent>();
 	if (Active)
 	{
 		renderer->SetRenderID(RENDER_ID::Render_Alpha);
+		collision->SetSize(ColSize);
 	}
 	else
 	{
 		renderer->SetRenderID(RENDER_ID::Render_None);
+		ColSize = collision->GetSize();
+		collision->SetSize(_vec3(0,0,0));
 	}
 }
 

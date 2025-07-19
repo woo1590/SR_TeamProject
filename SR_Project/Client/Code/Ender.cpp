@@ -19,6 +19,7 @@
 #include "LaserEffect.h"
 #include "ObjectManager.h"
 #include "EnderProjectile.h"
+#include "FireBlock.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -58,6 +59,7 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     InitLaserHead();
     InitCrossLaser();
     InitEnderProjectile();
+    InitFireBlock();
 	return S_OK;
 }
 
@@ -257,9 +259,9 @@ void Ender::InitAnimation()
     StandToCrawlAnim.ElapsedTime = 0.f;
 
     HideAnim.ElapsedTime = 0.f;
-    HideAnim.TotalTime = 3.f;
+    HideAnim.TotalTime = 1.5f;
 
-    SproutAnim.TotalTime = 3.f;
+    SproutAnim.TotalTime = 1.5f;
     SproutAnim.ElapsedTime = 0.f;
 
     HeadAttackAnim.DelayTime = 2.f;
@@ -364,6 +366,14 @@ void Ender::Hide()
     }
 }
 
+void Ender::HideIdle()
+{
+    if (enderState != EnderState::HideIdle)
+    {
+        enderState = EnderState::HideIdle;
+    }
+}
+
 void Ender::Sprout()
 {
     if (enderState != EnderState::Sprout)
@@ -434,6 +444,13 @@ void Ender::ProjectileAttack()
         enderState = EnderState::Projectile;
 
         ProjectileAttackAnim.ElapsedTime = 0.f;
+
+        auto pos = GetComponent<TransformComponent>()->GetPosition();
+        _vec3 playerpos = owner->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>()->GetPosition();
+        pos.y = 0;
+        playerpos.y = 0;
+        _vec3 dir = playerpos - pos;
+        GetComponent<TransformComponent>()->SetForward(dir);
     }
 }
 
@@ -442,6 +459,18 @@ void Ender::MoveTo(_vec3 targetPos, _float dt)
     auto transform = GetComponent<TransformComponent>();
     _vec3 pos = transform->GetPosition();
 
+    FireSpawnTime += dt;
+    if (FireSpawnTime > 0.15)
+    {
+        auto FireTransform = FireBlocks[FireIndex]->GetComponent<TransformComponent>();
+        FireTransform->SetPosition(pos.x, pos.y - 9.f, pos.z);
+        FireBlocks[FireIndex]->SetDeadTimer(0.f);
+        FireBlocks[FireIndex++]->SetActive(true);
+
+        if (FireIndex >= 50) FireIndex = 0;
+        FireSpawnTime = 0.f;
+    }
+
     pos.y = 0;
     _vec3 dir = targetPos - pos;
     dir.y = 0;
@@ -449,7 +478,7 @@ void Ender::MoveTo(_vec3 targetPos, _float dt)
     if (D3DXVec3Length(&dir) >= 0.1)
     {
         D3DXVec3Normalize(&dir, &dir);
-        transform->Translate(dir * dt * Speed);
+        transform->Translate(dir * dt * 15.f);
         transform->SetForward(dir);
     }
 }
@@ -469,6 +498,22 @@ int Ender::GetCurChangeStateCount()
     return CurChangeStateCount;
 }
 
+void Ender::InitFireBlock()
+{
+    FireBlocks.reserve(50);
+
+    for (int i = 0; i < 50; ++i) 
+    {
+        auto fireblock = FireBlock::Create(owner, ObjectType::SpriteEffect);
+        FireBlocks.push_back(fireblock);
+        fireblock->SetActive(false);
+
+        fireblock->GetComponent<TransformComponent>()->SetPosition(0,0,0);
+
+        owner->AddObject(ObjectType::SpriteEffect, fireblock);
+    }
+}
+
 void Ender::InitLaserHead()
 {
     LaserHeads.reserve(10);
@@ -484,13 +529,15 @@ void Ender::InitCrossLaser()
         auto laser = LaserEffect::Create(owner, ObjectType::Bone);
         CrossLasers.push_back(laser);
 
-        laser->SetActive(false);
         auto Lasertransform = laser->GetComponent<TransformComponent>();
         Lasertransform->SetScale(_vec3(80.f * Scale, 0.5f, 1.f));
         Lasertransform->SetParent(Bones["Body"]);
         Lasertransform->SetPosition(_vec3(0.f, -60.f * Scale, 0.f));
         Lasertransform->SetPivot(0.f, 60.f * Scale, 0.f);
         Lasertransform->SetPivotEnable(true);
+        auto collision = laser->GetComponent<CollisionComponent>();
+        collision->SetSize(_vec3(80.f, 1.f, 1.f));
+        laser->SetActive(false);
 
         owner->AddObject(ObjectType::ParticleEffect, laser);
     }
@@ -665,7 +712,12 @@ void Ender::PlayHide(_float dt)
            auto renderer = Bone.second->GetComponent<MeshRenderer>();
            renderer->SetRenderID(RENDER_ID::Render_None);
        }
+       HideIdle();
    }
+}
+
+void Ender::PlayHideIdle(_float dt)
+{
 }
 
 void Ender::PlaySprout(_float dt)
@@ -699,7 +751,7 @@ void Ender::PlayLineLaserAttack(_float dt)
     HeadAttackAnim.DelayTime -= dt;
     LaserSpawnTime += dt;
 
-    if (LaserSpawnTime > 1.0f)
+    if (LaserSpawnTime > 0.5f)
     {
         auto Transform = GetComponent<TransformComponent>();
         _vec3 Pos = Transform->GetPosition();
@@ -726,6 +778,7 @@ void Ender::PlayLineLaserAttack(_float dt)
         AttackAnim.IsEnd = true;
         CurChangeStateCount = 0;
         Sprout();
+        *ChangeStateCount = rand() % 3 + 1;
     }
 }
 
@@ -749,6 +802,7 @@ void Ender::PlayCrossLaserAttack(_float dt)
         AttackAnim.IsEnd = true;
         CurChangeStateCount = 0;
         Stand();
+        *ChangeStateCount = rand() % 3 + 1;
     }
 }
 
@@ -827,6 +881,8 @@ void Ender::PlayProjectileAttack(_float dt)
             ProjectileAttackAnim.Phase = Ready;
             ProjectileAttackAnim.ElapsedTime = 0.f;
             ProjectileAttackAnim.TotalTime = 1.f;
+
+            *ChangeStateCount = rand() % 3 + 1;
         }
     }
 }

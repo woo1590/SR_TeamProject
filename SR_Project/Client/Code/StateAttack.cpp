@@ -32,8 +32,14 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 	{
 		auto transform = self->GetComponent<TransformComponent>();
 		_vec3 pos = transform->GetPosition();
-		int randx = pos.x + rand() % 20 - 10;
-		int randz = pos.z + rand() % 20 - 10;
+		int randx = rand() % 10 + 15;
+		int randz = rand() % 10 + 15;
+
+		if (rand() % 2) randx *= -1;
+		if (rand() % 2) randz *= -1;
+
+		randx += pos.x;
+		randz += pos.z;
 		*targetPos = _vec3(randx, pos.y, randz);
 		return BTStatus::Success;
 	}
@@ -45,12 +51,18 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 		ender->CrawlToStand();
 		auto transform = self->GetComponent<TransformComponent>();
 		_vec3 pos = transform->GetPosition();
-		int randx = pos.x + rand() % 20 - 10;
-		int randz = pos.z + rand() % 20 - 10;
+		int randx = rand() % 10 + 15;
+		int randz = rand() % 10 + 15;
+
+		if (rand() % 2) randx *= -1;
+		if (rand() % 2) randz *= -1;
+
+		randx += pos.x;
+		randz += pos.z;
 		*targetPos = _vec3(randx, pos.y, randz);
 		return BTStatus::Success;
 	}
-	case EnderState::Hidden:
+	case EnderState::HideIdle:
 		ender->LineLaserAttack();
 		*Attack = true;
 		return BTStatus::Running;

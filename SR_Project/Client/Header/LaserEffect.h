@@ -21,7 +21,8 @@ public:
     void    OnCollisionStay(Object* other);
 
 private:
-    _float ElapsedTime = 0.f;
-    _bool  Active;
+    _float  ElapsedTime = 0.f;
+    _bool   Active;
+    _vec3   ColSize;
 };
 
