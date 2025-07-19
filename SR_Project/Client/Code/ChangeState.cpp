@@ -30,8 +30,14 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 	auto transform = self->GetComponent<TransformComponent>();
 	_vec3 pos = transform->GetPosition();
 
-	int randx = pos.x + rand() % 20 - 10;
-	int randz = pos.z + rand() % 20 - 10;
+	int randx = rand() % 10 + 10;
+	int randz = rand() % 10 + 10;
+
+	if (rand() % 2) randx *= -1;
+	if (rand() % 2) randz *= -1;
+
+	randx += pos.x;
+	randz += pos.z;
 
 	switch (ender->GetState())
 	{
@@ -56,7 +62,7 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 
 		case 1:
 			ender->Hide();
-			*targetPos = _vec3(randx + 10.f, 0.f, randz + 10.f);
+			*targetPos = _vec3(randx, 0.f, randz);
 			return BTStatus::Success;
 		}
 	}
