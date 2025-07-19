@@ -447,33 +447,30 @@ void UILoader::BuildMiniMap(ObjectManager* objMgr)
     auto renderSystem = EngineCore::GetInstance()->GetRenderSystem();
     
     auto minimapCam = MiniMapCam::Create(objMgr);
-    ADD(minimapCam);
-    renderSystem->SetMinimapCamera(minimapCam->GetComponent<CameraComponent>());
+    objMgr->AddObject(ObjectType::UICamera, minimapCam);
     
     ADD(MiniMap::Create(objMgr));
     
-    auto inventoryCam = InventoryCam::Create(objMgr);
-    ADD(inventoryCam);
-    renderSystem->SetInventoryCamera(inventoryCam->GetComponent<CameraComponent>());
-    
-    ADD(InventoryPlayer::Create(objMgr));
+    //auto inventoryCam = InventoryCam::Create(objMgr);
+    //ADD(inventoryCam);
+    //renderSystem->SetInventoryCamera(inventoryCam->GetComponent<CameraComponent>());
+    //
+    //ADD(InventoryPlayer::Create(objMgr));
     
     //renderSystem->ClearSystem();
     
-    auto player = objMgr->GetFrontObject(ObjectType::Player);
-    auto playerObj = dynamic_cast<Player*>(player);
-    if (playerObj)
-    {
-        auto& bones = playerObj->GetBones();
-        for (const auto& pair : bones)
-        {
-            Object* bone = pair.second;
-            if (bone)
-            {
-                auto renderer = bone->GetComponent<MeshRenderer>();
-                if (renderer)
-                    renderSystem->RegisterInventoryRenderer(renderer);
-            }
-        }
-    }
+    //auto player = objMgr->GetFrontObject(ObjectType::Player);
+    //auto playerObj = dynamic_cast<Player*>(player);
+    //if (playerObj)
+    //{
+    //    auto& bones = playerObj->GetBones();
+    //    for (const auto& pair : bones)
+    //    {
+    //        Object* bone = pair.second;
+    //        if (bone)
+    //        {
+    //
+    //        }
+    //    }
+    //}
 }

@@ -296,6 +296,7 @@
     <ClInclude Include="..\Header\ProgressBar.h" />
     <ClInclude Include="..\Header\RendererComponent.h" />
     <ClInclude Include="..\Header\RenderSystem.h" />
+    <ClInclude Include="..\Header\RenderTargetView.h" />
     <ClInclude Include="..\Header\RepeatDecorator.h" />
     <ClInclude Include="..\Header\ResourceManager.h" />
     <ClInclude Include="..\Header\Scene.h" />
@@ -450,6 +451,7 @@
     <ClCompile Include="..\Code\ProgressBar.cpp" />
     <ClCompile Include="..\Code\RendererComponent.cpp" />
     <ClCompile Include="..\Code\RenderSystem.cpp" />
+    <ClCompile Include="..\Code\RenderTargetView.cpp" />
     <ClCompile Include="..\Code\RepeatDecorator.cpp" />
     <ClCompile Include="..\Code\ResourceManager.cpp" />
     <ClCompile Include="..\Code\Scene.cpp" />

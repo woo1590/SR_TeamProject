@@ -328,6 +328,9 @@
     <Filter Include="01. Engine Component\ChunkLoader">
       <UniqueIdentifier>{cf1aadbb-5c19-4f1b-8d90-f9d52862cd55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine Component\RenderSystem\RenderTargetView">
+      <UniqueIdentifier>{69a3a785-cf0f-42f7-b190-7ad0fcadb828}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -664,6 +667,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ChunkLoader.cpp">
       <Filter>01. Engine Component\ChunkLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RenderTargetView.cpp">
+      <Filter>01. Engine Component\RenderSystem\RenderTargetView</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1027,6 +1033,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\ChunkLoader.h">
       <Filter>01. Engine Component\ChunkLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RenderTargetView.h">
+      <Filter>01. Engine Component\RenderSystem\RenderTargetView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

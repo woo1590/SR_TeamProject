@@ -29,6 +29,7 @@ namespace Engine
 		Projectile,
 		SkyBox,
 		Camera,
+		UICamera,
 		CollisionBlock,
 		StaticBlock,
 		DynamicBlock,

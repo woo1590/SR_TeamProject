@@ -6,7 +6,7 @@
 class MiniMapCam :public Object
 {
 private:
-	MiniMapCam(ObjectManager* owner) : Object(owner, ObjectType::Camera) {}
+	MiniMapCam(ObjectManager* owner) : Object(owner, ObjectType::UICamera) {}
 
 public:
 	static MiniMapCam* Create(ObjectManager* owner);

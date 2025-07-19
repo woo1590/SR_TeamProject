@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RenderTargetView.h"
+
 BEGIN(Engine)
 
 class RendererComponent;
@@ -27,6 +29,9 @@ public:
     void RegisterRenderer(RENDER_ID layer, RendererComponent* renderer);
     void RegisterCollision(CollisionComponent* collision);
     void SetCamera(Object* cam);
+    void ClearSystem();
+
+    // --------------------------------------------------------------------
     void SetUIRenderState(UIRenderType newType);
     UIRenderType GetCurRenderState() const { return uiRenderState; }
 
@@ -34,16 +39,10 @@ public:
     const _matrix& GetCachedViewMatrix() const { return cachedView; }
     const _matrix& GetCachedProjMatrix() const { return cachedProj; }
 
-    void ClearSystem();
+    void RegisterRTV(RenderTargetView* view) { if (view) rtvs.push_back(view); }
+    void UnRegisterRTV(RenderTargetView* view) { if (view) rtvs.remove(view); }
 
-    // --------------------------------------------------------------------
-    void SetMinimapCamera(CameraComponent* cam) { minimapCamera = cam; }
-    void SetInventoryCamera(CameraComponent* cam) { inventoryCamera = cam; }
-    LPDIRECT3DTEXTURE9 GetMinimapTexture() const { return minimapTexture; }
-    LPDIRECT3DTEXTURE9 GetInventoryTexture() const { return inventoryTexture; }
-    void RegisterInventoryRenderer(RendererComponent* renderer) { if (renderer) inventoryRenderList.push_back(renderer); }
-    void ClearInventoryRenderers() { inventoryRenderList.clear(); }
-
+    // ----------------------------------------------------------------------
 private:
     void PriorityPass();
     void NonAlphaPass();
@@ -51,37 +50,27 @@ private:
     void DebugPass();
     void Reset();   
 // --------------------------------------
-    void MinimapPass();
-    void InventoryPass();
     void UIPass();
+    void RenderOffScreenViews();
     // ------------------------------------
     void Free()override;
 
     std::vector<std::list<RendererComponent*>> RenderList;
     CameraComponent* Camera;
-   
-    
     std::list<CollisionComponent*> DebugRender; //����׿�
-
     _matrix CurrView;
     _matrix CurrProj;
     Shader* CurrShader = nullptr;
 
     LPDIRECT3DDEVICE9 Device;
 
-    /*---------------------------------------------------------------*/
+    /*--------------------------------------------*/
     ID3DXSprite* spriteBatch = nullptr;
     _matrix cachedView;
     _matrix cachedProj;
     UIRenderType uiRenderState = UIRenderType::None;
-    CameraComponent* minimapCamera = nullptr;
-    CameraComponent* inventoryCamera = nullptr;
 
-    LPDIRECT3DTEXTURE9 minimapTexture;
-    LPDIRECT3DSURFACE9 minimapSurface;
-    LPDIRECT3DTEXTURE9 inventoryTexture;
-    LPDIRECT3DSURFACE9 inventorySurface;
-    list<RendererComponent*> inventoryRenderList;
+    list<RenderTargetView*> rtvs;
 };
 
 END

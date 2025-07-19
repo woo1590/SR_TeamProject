@@ -17,7 +17,6 @@ HRESULT InventoryPlayer::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	renderer->SetTexture(EngineCore::GetInstance()->GetRenderSystem()->GetInventoryTexture());
 	renderer->SetRenderType(UIRenderType::Inventory);
 
 	transform->SetPosition(200.f, 600.f);
