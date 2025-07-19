@@ -1,0 +1,92 @@
+{
+  "template" :{
+    "fx" : "BasicShader",
+    "constants": {
+    "MatDiffuse"   : [1.0, 1.0, 1.0, 1.0],      
+    "MatSpecular"  : [1.0, 1.0, 1.0],        
+    "Shininess"    : 32.0,                   
+
+    "Emissive"     : [0.0, 0.0, 0.0],        
+    "EmissivePow"  : 1.0,
+
+    "AlphaCut"     : 0.4,
+
+    "UVScale"      : [1.0, 1.0],             
+    "UVOffset"     : [0.0, 0.0]       
+    }
+  },
+
+  "materials":{
+    "dolbokHead_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/dolbokHead.dds"
+      }
+    },
+
+    "dolbokBody_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/dolbokBody.dds"
+      }
+    },
+
+    "dolbokRightArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/dolbokRightArm.dds"
+      }
+    },
+
+    "dolbokLeftArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/dolbokLeftArm.dds"
+      }
+    },
+
+    "dolbokRightLeg_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/dolbokRightLeg.dds"
+      }
+    },
+
+    "dolbokLeftLeg_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/dolbokLeftLeg.dds"
+      }
+    },
+"shopHead_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/shopHead.dds"
+      }
+    },
+
+    "shopBody_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/shopBody.dds"
+      }
+    },
+
+    "shopRightArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/shopRightArm.dds"
+      }
+    },
+
+    "shopLeftArm_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/shopLeftArm.dds"
+      }
+    },
+
+    "shopRightLeg_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/shopRightLeg.dds"
+      }
+    },
+
+    "shopLeftLeg_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Asset/JW/shopLeftLeg.dds"
+      }
+    }
+
+  }
+}

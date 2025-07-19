@@ -224,6 +224,8 @@
     <ClInclude Include="..\Header\MapNode.h" />
     <ClInclude Include="..\Header\MapNode_Front.h" />
     <ClInclude Include="..\Header\Npc.h" />
+    <ClInclude Include="..\Header\NPCdolbok.h" />
+    <ClInclude Include="..\Header\NPCShop.h" />
     <ClInclude Include="..\Header\ParticleObj.h" />
     <ClInclude Include="..\Header\PigItem.h" />
     <ClInclude Include="..\Header\PlayerDeathUI.h" />
@@ -378,6 +380,8 @@
     <ClCompile Include="..\Code\MapNode.cpp" />
     <ClCompile Include="..\Code\MapNode_Front.cpp" />
     <ClCompile Include="..\Code\Npc.cpp" />
+    <ClCompile Include="..\Code\NPCdolbok.cpp" />
+    <ClCompile Include="..\Code\NPCShop.cpp" />
     <ClCompile Include="..\Code\ParticleObj.cpp" />
     <ClCompile Include="..\Code\PigItem.cpp" />
     <ClCompile Include="..\Code\PlayerDeathUI.cpp" />

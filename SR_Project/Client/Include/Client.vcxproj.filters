@@ -994,6 +994,12 @@
     <ClInclude Include="..\Header\Armor.h">
       <Filter>02. Object\Item\Armor</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\NPCdolbok.h">
+      <Filter>02. Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\NPCShop.h">
+      <Filter>02. Object\NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1452,6 +1458,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Armor.cpp">
       <Filter>02. Object\Item\Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NPCdolbok.cpp">
+      <Filter>02. Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\NPCShop.cpp">
+      <Filter>02. Object\NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
