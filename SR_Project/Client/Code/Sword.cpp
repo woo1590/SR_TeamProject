@@ -11,6 +11,7 @@
 #include "CollisionComponent.h"
 #include "Player.h"
 #include "Monster.h"
+#include "StatikkEffect.h"
 
 #include "EngineCore.h"
 #include "SoundManager.h"
@@ -95,7 +96,11 @@ void Sword::Update(_float dt)
 
     if (target >= targetMonsters.size())
     {
+        prePos = { 0.f,0.f,0.f };
+        curPos = { 0.f,0.f,0.f };
         targetMonsters.clear();
+        delayTimer = 0.f;
+        preTarget = 0;
         return;
     }
 
@@ -109,8 +114,16 @@ void Sword::Update(_float dt)
     if (!pEnemyInfo) 
         return;
 
-    pEnemyInfo->AddHp( - playerPower * skillInfo.DamagePercent);
+    auto skillDamage = playerPower * skillInfo.DamagePercent;
 
+    static_cast<Monster*>(targetMonsters.at(target))->Hit(curPos - prePos, skillDamage);
+    pEnemyInfo->AddHp( -skillDamage);
+
+    curPos = targetMonsters.at(target)->GetComponent<TransformComponent>()->GetWorldPosition();
+    auto statikkEffect = StatikkEffect::Create(owner, ObjectType::ParticleEffect, prePos, curPos);
+    owner->AddObject(ObjectType::ParticleEffect, statikkEffect);
+
+    prePos = curPos;
     preTarget = target;
 }
 
@@ -154,7 +167,17 @@ void Sword::SetCollisionEnter(Object* other)
 
             FindNextTarget(targetMonster);
 
-            targetMonster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-playerPower * skillInfo.DamagePercent);
+            auto skillDamage = playerPower * skillInfo.DamagePercent;
+            
+            targetMonster->Hit(targetMonster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), skillDamage);
+            targetMonster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-skillDamage);
+
+            curPos = targetMonster->GetComponent<TransformComponent>()->GetWorldPosition();
+            auto playerPos = ownerObject->GetComponent<TransformComponent>()->GetWorldPosition();
+            
+            auto statikkEffect = StatikkEffect::Create(owner, ObjectType::ParticleEffect, playerPos, curPos);
+            owner->AddObject(ObjectType::ParticleEffect, statikkEffect);
+            prePos = curPos;
 
             delayTimer = 0.f;
             player->SetStatikkMode(false);

@@ -517,6 +517,9 @@
     <Filter Include="02. Object\Item\Armor">
       <UniqueIdentifier>{d796ad83-1286-451b-949e-e4b3b830eadd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Effect\StatikkEffect">
+      <UniqueIdentifier>{e94717a6-9d5f-45c6-a324-be71501f7154}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1000,6 +1003,9 @@
     <ClInclude Include="..\Header\NPCShop.h">
       <Filter>02. Object\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\StatikkEffect.h">
+      <Filter>02. Object\Effect\StatikkEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1465,6 +1471,9 @@
     <ClCompile Include="..\Code\NPCShop.cpp">
       <Filter>02. Object\NPC</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\StatikkEffect.cpp">
+      <Filter>02. Object\Effect\StatikkEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">
@@ -1516,6 +1525,9 @@
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\FireBlock.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\LaserShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
   </ItemGroup>

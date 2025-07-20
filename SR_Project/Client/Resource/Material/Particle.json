@@ -42,7 +42,10 @@
     "Laser_Mtrl2": {
       "fx": "LaserShader",
       "textures": { "AlbedoMap": "../Resource/Asset/HY/laser2.png" }
+    },
+    "Statikk_Mtrl": {
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/Statikk.png" }
     }
   }
-
 }
