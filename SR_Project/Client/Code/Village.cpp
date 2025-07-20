@@ -111,7 +111,7 @@ void Village::Load()
         ChunkMgr = ChunkManager::Create(this);
         uiMgr = UIManager::Create(this);
 
-		
+	
     }
 
     /*-------------------------Create Camera-----------------------------*/

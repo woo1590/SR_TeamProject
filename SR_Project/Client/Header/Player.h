@@ -76,7 +76,7 @@ public:
     _bool IsStatikkMode();
     _float GetAttackDelay();
 
-    void SetOwner(ObjectManager* owner) { this->owner = owner; }
+    void SetOwner(ObjectManager* owner);
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();

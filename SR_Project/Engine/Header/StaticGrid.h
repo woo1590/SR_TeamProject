@@ -22,6 +22,7 @@ public:
     CollisionComponent* QueryCell(int cx, int cy, int cz);
     void InsertBlock();
 
+    _vec3 GetRandomGrid(_vec3 originPos, _float range);
 private:
     void Free()override;
 
