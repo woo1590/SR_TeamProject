@@ -1,6 +1,8 @@
 #pragma once
 #include "ObjectComponent.h"
 #include "CollisionSystem.h"
+#include "AABBCollider.h"
+#include "OBBCollider.h"
 
 BEGIN(Engine)
 
@@ -17,11 +19,19 @@ public:
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
 
+    template<typename T>
+    T* AddCollider()
+    {
+        auto c = T::Create(this);
+        collider = c;
+
+        return c;
+    }
+
     void SetOffset(_vec3 offset);
     void SetOffset(_float x, _float y, _float z);
     _vec3 GetOffset()const { return Offset; }
 
-    void SetBoudingBox(BoundingBoxType bbType);
     void SetSize(_vec3 size);
     _vec3 GetSize()const;
 
@@ -31,18 +41,13 @@ public:
     _ulong GetLayer()const { return Collision_Layer; }
     _ulong GetMask()const { return Collision_Mask; }
 
-    _vec3 GetLocalMin()const;
-    _vec3 GetLocalMax()const;
-    void GetWorldAABB(_vec3* worldMin, _vec3* worldMax);
-    void GetWorldAABB(_vec3* worldMin, _vec3* worldMax, _vec3 pos);
-    void GetWorldX(_float* minX, _float* maxX);
-
+    Collider* GetCollider()const { return collider; }
     /*----------------Collision-----------------*/
     _bool RayIntersectAABB(Ray ray, HitInfo& hit);
 
     _bool CanCollision(CollisionComponent* other);
 
-    _bool CheckAABBCollision(CollisionComponent* other);
+    _bool CheckCollision(CollisionComponent* other);
     void ResolveAABBColiision(Object* other);
 
     void OnCollisionEnter(CollisionComponent* other);
@@ -56,18 +61,17 @@ public:
     /*-------------------------------------------*/
     void Render();  //Debug
     void SetDebugMode(bool debug) { DebugMode = debug; }
+    _bool IsDebugMode()const { return DebugMode; }
 private:
 
     void Free()override;
 
     _vec3 Offset{ 0.f,0.f,0.f };
 
-    LPD3DXMESH BoundingBox = nullptr;   //����׿� �޽� 
     BoundingBoxType BBType = BoundingBoxType::Box;
     _bool DebugMode = true;
 
-    _vec3 LocalMin{ -1.f,-1.f,-1.f };
-    _vec3 LocalMax{ 1.f,1.f,1.f };
+    Collider* collider = nullptr;
 
     /*----------------------*/
     

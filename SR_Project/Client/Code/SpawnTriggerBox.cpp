@@ -34,6 +34,7 @@ SpawnTriggerBox* SpawnTriggerBox::Create(ObjectManager* owner, ObjectType objTyp
 HRESULT SpawnTriggerBox::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     auto transform = AddComponent<TransformComponent>();
     transform->SetPosition(50.f, 0.f, 50.f);
 

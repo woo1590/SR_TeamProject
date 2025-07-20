@@ -164,6 +164,7 @@ void Tnt::TntInfo()
     auto collision = AddComponent<CollisionComponent>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);
 
+    collision->AddCollider<AABBCollider>();
     collision->SetLayer(LAYER_DEFAULT);
     collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT);
     collision->SetSize(_vec3(2.f, 2.f, 2.f));

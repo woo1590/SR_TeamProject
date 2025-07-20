@@ -123,6 +123,7 @@ void Spear::PlayerSpearInfo()
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     collision->SetLayer(LAYER_PLAYER);
     collision->SetMask(LAYER_ENEMY);
     collision->SetSize(_vec3(0.1f, 1.f, 6.f));

@@ -86,6 +86,7 @@ void Npc::InitTransform()
 void Npc::InitCollision()
 {
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     collision->SetLayer(LAYER_NPC);

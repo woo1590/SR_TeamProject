@@ -213,6 +213,7 @@
     <ClInclude Include="..\..\External\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\..\External\imgui\imstb_textedit.h" />
     <ClInclude Include="..\..\External\imgui\imstb_truetype.h" />
+    <ClInclude Include="..\Header\AABBCollider.h" />
     <ClInclude Include="..\Header\ActionNode.h" />
     <ClInclude Include="..\Header\AIController.h" />
     <ClInclude Include="..\Header\AlphaBlock.h" />
@@ -232,6 +233,7 @@
     <ClInclude Include="..\Header\ChunkLoader.h" />
     <ClInclude Include="..\Header\ChunkManager.h" />
     <ClInclude Include="..\Header\ChunkMesh.h" />
+    <ClInclude Include="..\Header\Collider.h" />
     <ClInclude Include="..\Header\CollisionBlock.h" />
     <ClInclude Include="..\Header\CollisionComponent.h" />
     <ClInclude Include="..\Header\CollisionSystem.h" />
@@ -265,6 +267,7 @@
     <ClInclude Include="..\Header\InventoryManager.h" />
     <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\ItemComponent.h" />
+    <ClInclude Include="..\Header\OBBCollider.h" />
     <ClInclude Include="..\Header\ObjectPool.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\ParticleComponent.h" />
@@ -369,6 +372,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\Code\AABBCollider.cpp" />
     <ClCompile Include="..\Code\ActionNode.cpp" />
     <ClCompile Include="..\Code\AIController.cpp" />
     <ClCompile Include="..\Code\AlphaBlock.cpp" />
@@ -387,6 +391,7 @@
     <ClCompile Include="..\Code\ChunkLoader.cpp" />
     <ClCompile Include="..\Code\ChunkManager.cpp" />
     <ClCompile Include="..\Code\ChunkMesh.cpp" />
+    <ClCompile Include="..\Code\Collider.cpp" />
     <ClCompile Include="..\Code\CollisionBlock.cpp" />
     <ClCompile Include="..\Code\CollisionComponent.cpp" />
     <ClCompile Include="..\Code\CollisionSystem.cpp" />
@@ -421,6 +426,7 @@
     <ClCompile Include="..\Code\InventoryManager.cpp" />
     <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\ItemComponent.cpp" />
+    <ClCompile Include="..\Code\OBBCollider.cpp" />
     <ClCompile Include="..\Code\ObjectPool.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\ParticleComponent.cpp" />

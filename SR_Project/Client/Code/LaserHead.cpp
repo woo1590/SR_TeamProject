@@ -39,6 +39,7 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto transform = AddComponent<TransformComponent>();
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_ENEMY);
     collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT);

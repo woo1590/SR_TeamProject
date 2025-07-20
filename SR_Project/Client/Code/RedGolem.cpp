@@ -345,8 +345,8 @@ void RedGolem::PlayDie(_float dt)
       
         SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "LLeg");
         SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "RLeg");
-        //SetDead();
         //DeleteBar();
+        //SetDead();
     }
 }
 

@@ -447,6 +447,7 @@ void Skeleton::PlayDie(_float dt)
             physics->SetMass(1.f);
             GetScene()->GetPhysicsStstem()->RegisterBody(physics);
             auto collision = bone.second->AddComponent<CollisionComponent>();
+            collision->AddCollider<AABBCollider>();
             collision->SetLayer(LAYER_ENEMY);
             collision->SetMask(LAYER_DEFAULT | LAYER_PLAYER);
         }
