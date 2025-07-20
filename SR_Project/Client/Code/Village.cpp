@@ -182,7 +182,7 @@ void Village::Load()
 
         for (int i = 0; i < 5; ++i)
         {
-            auto testMob = Zombie::Create(ObjectMgr, ObjectType::Monster);
+            auto testMob = Slime::Create(ObjectMgr, ObjectType::Monster);
             testMob->GetComponent<TransformComponent>()->SetPosition(20.f + i, 100.f, 20.f + i);
             ObjectMgr->AddObject(ObjectType::Monster, testMob);
         }
