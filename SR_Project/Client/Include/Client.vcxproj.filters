@@ -561,6 +561,9 @@
     </Filter>
     <Filter Include="02. Object\Effect\TikkleEffect">
       <UniqueIdentifier>{ad819689-0fc3-430a-bf86-a84eb5959533}</UniqueIdentifier>
+    </Filter>   
+    <Filter Include="99. Etc\Shader/Fx\PostProcessing">
+      <UniqueIdentifier>{c978140d-f8e3-495d-8e20-ceae53fed125}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1649,6 +1652,9 @@
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\LaserShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\DefaultPost.fx">
+      <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

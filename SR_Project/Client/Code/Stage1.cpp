@@ -90,8 +90,10 @@ Stage1* Stage1::Create()
 void Stage1::Load()
 {
 	auto game = GameManager::GetInstance();
-
+#ifdef USE_IMGUI
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
+#endif
+
 	/*-------------------------Create System-----------------------------*/
 	{
 		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");

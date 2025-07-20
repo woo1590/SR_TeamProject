@@ -1291,24 +1291,29 @@ void Player::EquipItem(ItemType itemType)
         Bones["LHand"] = Bow::Create(owner, ObjectType::Item);
         Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "bow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["LHand"]->AddRef();
         break;
     case ItemType::Sword:
         Bones["RHand"] = Sword::Create(owner, ObjectType::Item);
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "sword", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["RHand"]->AddRef();
         break;
     case ItemType::Spear:
         Bones["RHand"] = Spear::Create(owner, ObjectType::Item);
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "spear", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["RHand"]->AddRef();
         break;
     case ItemType::CrossBow:
         Bones["LHand"] = Crossbow::Create(owner, ObjectType::Item);
         Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "crossbow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["LHand"]->AddRef();
         break;
     case ItemType::Armor:
-        Bones["Armor"] = Armor::Create(owner, ObjectType::Item);
+        Armor = Armor::Create(owner, ObjectType::Item);
+        Armor->AddRef();
         break;
     }
 }
@@ -1318,23 +1323,28 @@ void Player::UnEquipItem(ItemType itemType)
     switch (itemType) {
     case ItemType::Bow:
         Bones["LHand"]->SetDead();
+        Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case ItemType::CrossBow:
         Bones["LHand"]->SetDead();
+        Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case ItemType::Sword:
         Bones["RHand"]->SetDead();
+        Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Spear:
         Bones["RHand"]->SetDead();
+        Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Armor:
-        Bones["Armor"]->SetDead();
-        Bones["Armor"] = nullptr;
+        Armor->SetDead();
+        Safe_Release(Armor);
+        Armor = nullptr;
         break;
     }
 }

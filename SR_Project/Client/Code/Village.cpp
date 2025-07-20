@@ -167,8 +167,8 @@ void Village::Load()
 		}
 		else
 		{
-			player->GetComponent<TransformComponent>()->SetPosition(260.f, 100.f, 57.f);
-			auto npc = Npc::Create(ObjectMgr, ObjectType::Monster);
+			player->GetComponent<TransformComponent>()->SetPosition(260.f, 30.f, 57.f);
+			auto npc = Npc::Create(ObjectMgr, ObjectType::Neutral);
 			npc->GetComponent<TransformComponent>()->SetPosition(270.f, 20.f, 43.f);
 			ObjectMgr->AddObject(ObjectType::Neutral, npc);
 
