@@ -147,6 +147,7 @@ void Stage1::Load()
 		loader.LoadUI(ObjectMgr);
 
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 70.f, 170.f);
 	}
@@ -173,7 +174,6 @@ void Stage1::Update(_float dt)
 		EngineCore::GetInstance()->RegisterCommand(command);
 		GameManager::GetInstance()->ClearScene(LOADID::Stage1);
 	}
-
 }
 
 void Stage1::Late_Update(_float dt)
