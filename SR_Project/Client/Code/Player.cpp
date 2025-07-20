@@ -1435,27 +1435,34 @@ void Player::UpdateWalk(_float dt) {
         vDir.z * Speed * Scale * dt
     };
 
-    _vec3 blockVec;
-    D3DXVec3Normalize(&blockVec, &moveVec);
-    float blockOffset = max(sqrtf(2.f), sqrtf(moveVec.x * moveVec.x + moveVec.z * moveVec.z));
-    auto blockPos = transform->GetWorldPosition() + moveVec + blockVec * blockOffset;
     _vec3 playerHalfSize = GetComponent<CollisionComponent>()->GetSize() / 2;
+    auto blockPos = transform->GetWorldPosition() + moveVec + vDir;
 
     auto grid = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetStaticGrid();
-    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y + playerHalfSize.y + -1), grid->WorldToCell(blockPos.z));
+    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y + playerHalfSize.y + -0.1f), grid->WorldToCell(blockPos.z));
     auto blockFront = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y), grid->WorldToCell(blockPos.z));
-    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - playerHalfSize.y + 1), grid->WorldToCell(blockPos.z));
+    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - playerHalfSize.y + 0.1f), grid->WorldToCell(blockPos.z));
 
     if (blockUp == nullptr && blockFront == nullptr && blockDown == nullptr)
     {
         transform->Translate(moveVec);
     }
-    else if (blockUp == nullptr && blockFront == nullptr && blockDown !=nullptr) 
+    else if (blockUp == nullptr && blockFront == nullptr && blockDown != nullptr)
     {
         auto blockDownType = blockDown->GetOwner()->GetObjectType();
 
-        if(blockDownType == ObjectType::StaticBlock || blockDownType == ObjectType::CollisionBlock)
-            transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
+        if (blockDownType == ObjectType::StaticBlock || blockDownType == ObjectType::CollisionBlock)
+        {
+            auto block = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - playerHalfSize.y + 1.f), grid->WorldToCell(blockPos.z));
+            if(block == nullptr) 
+                transform->Translate(moveVec + _vec3(0.f, 0.5f, 0.f));
+            else
+            {
+                auto blockType = block->GetOwner()->GetObjectType();
+                if (blockType == ObjectType::StaticBlock || blockType == ObjectType::CollisionBlock)
+                    transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
+            }
+        }
     }
 
     //////////////////////////////////////////Walk Effect

@@ -64,6 +64,8 @@
 #include "LaserHead.h"
 #include "EnderProjectile.h"
 #include "FireBlock.h"
+#include "NPCdolbok.h"
+#include "NPCShop.h"
 
 //component
 #include "TransformComponent.h"
@@ -111,9 +113,6 @@ void Village::Load()
         player = Player::Create(ObjectMgr, ObjectType::Player);
         ObjectMgr->AddObject(ObjectType::Player, player);
 
-        auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
-        tnt->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
-
         auto fCam = FirstCam::Create(ObjectMgr);
         auto tCam = ThirdCam::Create(ObjectMgr);
 
@@ -140,7 +139,15 @@ void Village::Load()
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
         ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-        /*player->GetComponent<TransformComponent>()->SetPosition(30.f, 100.f, 30.f);
+        player->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 50.f);
+
+        auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
+        tnt->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 100.f);
+
+        auto npcdolbok = NPCdolbok::Create(ObjectMgr, ObjectType::Neutral);
+        npcdolbok->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 80.f);
+        auto npcshop = NPCShop::Create(ObjectMgr, ObjectType::Neutral);
+        npcshop->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 90.f);
 
         auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
         trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
