@@ -68,6 +68,7 @@
 #include "NPCdolbok.h"
 #include "NPCShop.h"
 #include "InventoryCam.h"
+#include "Blastling.h"
 
 //component
 #include "TransformComponent.h"
@@ -194,6 +195,8 @@ void Village::Load()
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger1);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
+
+			ObjectMgr->AddObject(ObjectType::Monster, Blastling::Create(ObjectMgr, ObjectType::Monster));
 		}
     }
 }

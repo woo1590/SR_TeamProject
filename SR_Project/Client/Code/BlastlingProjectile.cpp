@@ -38,6 +38,7 @@ HRESULT BlastlingProjectile::Ready_Object(ObjectManager* owner, ObjectType objTy
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
 
     auto collision = AddComponent<CollisionComponent>();
+    collision->AddCollider<AABBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_DEFAULT | LAYER_PLAYER);
