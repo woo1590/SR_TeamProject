@@ -8,4 +8,4 @@ enum class LOADID
 	Count
 };
 
-enum class SpawnType { Zombie, Skeleton, Creeper, RedGolem, };
+enum class SpawnType { Zombie, Skeleton, Creeper, JungleZombie, Slime, PurpleSlime, Ender, RedGolem, };

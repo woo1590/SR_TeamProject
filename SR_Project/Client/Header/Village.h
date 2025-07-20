@@ -17,8 +17,10 @@ public:
     void Late_Update(_float dt)override;
     void Unload()override;
 
+    void DebugIMGUI();
 private:
     void Free()override;
     Player* player = nullptr;
+
 };
 

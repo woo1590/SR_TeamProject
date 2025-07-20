@@ -7,6 +7,10 @@
 #include "Skeleton.h"
 #include "RedGolem.h"
 #include "Creeper.h"
+#include "JungleZombie.h"
+#include "Slime.h"
+#include "PurpleSlime.h"
+#include "Ender.h"
 #include "TransformComponent.h"
 
 Spawner::Spawner(ObjectManager* owner, ObjectType objType)
@@ -60,6 +64,22 @@ Monster* Spawner::Spawn()
 
     case SpawnType::RedGolem:
         monster = RedGolem::Create(owner, ObjectType::Monster);
+        break;
+
+    case SpawnType::Slime:
+        monster = Slime::Create(owner, ObjectType::Monster);
+        break;
+
+    case SpawnType::PurpleSlime:
+        monster = PurpleSlime::Create(owner, ObjectType::Monster);
+        break;
+
+    case SpawnType::JungleZombie:
+        monster = JungleZombie::Create(owner, ObjectType::Monster);
+        break;
+
+    case SpawnType::Ender:
+        monster = Ender::Create(owner, ObjectType::Monster);
         break;
     }
 
