@@ -102,6 +102,7 @@ namespace Engine
 		DeathCount,
 		MineCraftFont,
 		CookieRunFont,
+		TipText,
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)

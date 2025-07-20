@@ -13,8 +13,6 @@ public:
 	HRESULT Ready_Object();
 	void Update(float dt) override;
 
-	void SetTarget(TransformComponent* _target) { target = _target; }
-
 private:
 	TransformComponent* target = nullptr;
 	_vec3 offset = {0.f, 600.f, 0.f};

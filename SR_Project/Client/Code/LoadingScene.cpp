@@ -47,12 +47,13 @@ void LoadingScene::Load()
 
 	ObjectMgr->AddUIObject(loadingUI);
 	loadingStone = LoadingStone::Create(nullptr);
-	ObjectMgr->AddUIObject(loadingStone);
+	if (nextSceneID != LOADID::Village)
+		ObjectMgr->AddUIObject(loadingStone);
 }
 
 void LoadingScene::Update(_float dt)
 {
-	ObjectMgr->Update(dt);
+	ObjectMgr->Update(dt); 
 
 	if (loader->IsFinished())	//Load complete
 	{

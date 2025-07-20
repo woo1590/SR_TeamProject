@@ -310,6 +310,9 @@ HRESULT MainApp::LoadDefaultResource()
         {L"locked_node_back",         eUI, 1},
         {L"loading_stone",            eUI, 1},
         {L"boss_icon",                eUI, 1},
+        {L"levelup_banner",           eUI, 1},
+        {L"levelup",                  eUI, 1},
+
 
         // =====================================================================
         // Layer 2

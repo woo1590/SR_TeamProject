@@ -4,15 +4,13 @@
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 #include "InfoComponent.h"
-#include "AIController.h"
 
 #include "ResourceManager.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "Object.h"
 #include "ObjectManager.h"
-#include "Player.h"
-#include "RenderSystem.h"
+#include "LevelUpEffect.h"
 
 
 UIDebugObj* UIDebugObj::Create(ObjectManager* owner)
@@ -28,6 +26,9 @@ HRESULT UIDebugObj::Ready_Object()
 	auto renderer  = AddComponent<UIRenderer>();
 	auto font      = AddComponent<FontComponent>();
 
+	prevLevel = owner->GetFrontObject(ObjectType::Player)->
+		GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().level;
+
 	return S_OK;
 }
 
@@ -42,7 +43,7 @@ void UIDebugObj::Update(float dt)
 	RECT debugRect = {900, 300, 1400, 650};
 
 	font->AddText(
-		L"Hp: " + to_wstring(info.curHp) + L"/" + to_wstring(info.maxHp) + 
+		L"Hp: " + to_wstring((int)info.curHp) + L"/" + to_wstring((int)info.maxHp) + 
 		L"\nExp: " + to_wstring(info.curExp) + L"/" + to_wstring(info.maxExp) +
 		L"\nspeed: " + to_wstring((int)info.speed),
 		debugRect, Color::Cyan, DT_LEFT, FontType::Title);
@@ -62,5 +63,12 @@ void UIDebugObj::Update(float dt)
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::ESC))
 		exit(0);
+	if (input->IsKeyPressed(KEY::L))
+		playerInfo->AddExp(10);
 
+	if (info.level > prevLevel)
+	{
+		prevLevel = info.level;
+		owner->AddUIObject(LevelUpEffect::Create(owner));
+	}
 }

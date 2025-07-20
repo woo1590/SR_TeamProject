@@ -490,9 +490,6 @@
     <Filter Include="02. Object\UIObj\UIRenderState\MiniMap">
       <UniqueIdentifier>{10cc925a-4fc8-45e5-9a70-64d5e272c0cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\MiniMap\MiniMapCam">
-      <UniqueIdentifier>{2776ae32-6d32-4410-a635-a18b1fbc7115}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\MiniMap\MiniMap">
       <UniqueIdentifier>{2315fa63-ebaa-4bf5-8c0d-89aedef03813}</UniqueIdentifier>
     </Filter>
@@ -508,11 +505,17 @@
     <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\MapNode_Front">
       <UniqueIdentifier>{c25954a4-4c89-454a-bf96-7596365b67fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\MiniMap\InventoryCam">
+    <Filter Include="02. Object\CameraActor\InventoryCam">
       <UniqueIdentifier>{1a07d403-9aa3-4f5c-8e92-187ea3f4833d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\MiniMap\InventoryPlayer">
+    <Filter Include="02. Object\CameraActor\MiniMapCam">
+      <UniqueIdentifier>{2776ae32-6d32-4410-a635-a18b1fbc7115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor\InventoryCam\InventoryPlayer">
       <UniqueIdentifier>{20248366-7dae-4c98-a50d-9d11a5577081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Effect">
+      <UniqueIdentifier>{68a6fd74-6ea6-4498-92f0-24cfa460cdd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -971,16 +974,19 @@
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MiniMapCam.h">
-      <Filter>02. Object\UIObj\UIRenderState\MiniMap\MiniMapCam</Filter>
+      <Filter>02. Object\CameraActor\MiniMapCam</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MiniMap.h">
       <Filter>02. Object\UIObj\UIRenderState\MiniMap\MiniMap</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\InventoryCam.h">
-      <Filter>02. Object\UIObj\UIRenderState\MiniMap\InventoryCam</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\InventoryPlayer.h">
-      <Filter>02. Object\UIObj\UIRenderState\MiniMap\InventoryPlayer</Filter>
+      <Filter>02. Object\CameraActor\InventoryCam\InventoryPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryCam.h">
+      <Filter>02. Object\CameraActor\InventoryCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LevelUpEffect.h">
+      <Filter>02. Object\UIObj\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1421,16 +1427,19 @@
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MiniMapCam.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\MiniMap\MiniMapCam</Filter>
+      <Filter>02. Object\CameraActor\MiniMapCam</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MiniMap.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MiniMap\MiniMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryCam.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\MiniMap\InventoryCam</Filter>
+      <Filter>02. Object\CameraActor\InventoryCam</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InventoryPlayer.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\MiniMap\InventoryPlayer</Filter>
+      <Filter>02. Object\CameraActor\InventoryCam\InventoryPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LevelUpEffect.cpp">
+      <Filter>02. Object\UIObj\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "BaseCharacter.h"
 #include "Item.h"
+#include "QuestTextObj.h"
+
 class Player : public BaseCharacter
 {
 public:
@@ -74,6 +76,13 @@ public:
     bool IsMovingToAttack();
     void SetStatikkMode(_bool _statikk);
     _bool IsStatikkMode();
+
+    _vec3 GetDir() const
+    {
+        _vec3 dir = PlayerDirection;
+        D3DXVec3Normalize(&dir, &dir);
+        return dir;
+    }
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();

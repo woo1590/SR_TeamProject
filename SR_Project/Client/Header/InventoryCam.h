@@ -1,22 +1,16 @@
 #pragma once
 
-#include "Object.h"
+#include "CameraActor.h"
 #include "TransformComponent.h"
 
-class InventoryCam :public Object
+class InventoryCam : public CameraActor
 {
 private:
-	InventoryCam(ObjectManager* owner) : Object(owner, ObjectType::Camera) {}
+	InventoryCam(ObjectManager* owner) : CameraActor(owner, ObjectType::UICamera) {}
 
 public:
 	static InventoryCam* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
-	void Update(float dt) override;
-
-	void SetTarget(TransformComponent* _target) { target = _target; }
-
-private:
-	TransformComponent* target = nullptr;
-	_vec3 offset = {50.f, 0.f, 0.f};
+	void Late_Update(float dt) override;
 };
 

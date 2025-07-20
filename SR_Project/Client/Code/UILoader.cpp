@@ -85,6 +85,7 @@
 #include "InventoryPlayer.h"
 #include "InventoryCam.h"
 #include "BaseCharacter.h"
+#include "Player.h"
 
 // DeathUI
 #include "PlayerDeathUI.h"
@@ -385,8 +386,6 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
     AddMap(-600.f, 80.f, LOADID::Stage1);
     AddMap(-480.f, -150.f, LOADID::Stage1);
 
-   // ADD(LoadingStone::Create(objMgr));
-
     auto AddText = [&](float x, float y, const wchar_t* txt)
         {
             auto panel = WorldMapTextPanel::Create(objMgr);
@@ -445,32 +444,6 @@ void UILoader::BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr)
 void UILoader::BuildMiniMap(ObjectManager* objMgr)
 {
     auto renderSystem = EngineCore::GetInstance()->GetRenderSystem();
-    
-    auto minimapCam = MiniMapCam::Create(objMgr);
-    objMgr->AddObject(ObjectType::UICamera, minimapCam);
-    
-    ADD(MiniMap::Create(objMgr));
-    
-    //auto inventoryCam = InventoryCam::Create(objMgr);
-    //ADD(inventoryCam);
-    //renderSystem->SetInventoryCamera(inventoryCam->GetComponent<CameraComponent>());
-    //
-    //ADD(InventoryPlayer::Create(objMgr));
-    
-    //renderSystem->ClearSystem();
-    
-    //auto player = objMgr->GetFrontObject(ObjectType::Player);
-    //auto playerObj = dynamic_cast<Player*>(player);
-    //if (playerObj)
-    //{
-    //    auto& bones = playerObj->GetBones();
-    //    for (const auto& pair : bones)
-    //    {
-    //        Object* bone = pair.second;
-    //        if (bone)
-    //        {
-    //
-    //        }
-    //    }
-    //}
+
+    ADD(InventoryPlayer::Create(objMgr));
 }

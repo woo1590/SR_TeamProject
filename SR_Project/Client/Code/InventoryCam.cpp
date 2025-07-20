@@ -3,6 +3,9 @@
 #include "CameraComponent.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "RenderSystem.h"
+#include "EngineCore.h"
+#include "Player.h"
 
 InventoryCam* InventoryCam::Create(ObjectManager* owner)
 {
@@ -13,34 +16,32 @@ InventoryCam* InventoryCam::Create(ObjectManager* owner)
 
 HRESULT InventoryCam::Ready_Object()
 {
-	auto transform = AddComponent<TransformComponent>();
-	auto camera = AddComponent<CameraComponent>();
+	if (FAILED(CameraActor::Ready_Object()))
+		return E_FAIL;
 
-	auto player = GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player);
-	target = player->GetComponent<TransformComponent>();
+	auto camera = GetComponent<CameraComponent>();
+
+	camera->SetProjectionType(CameraComponent::ProjectionType::Orthographic);
+	camera->SetOrthoSize(15.f, 15.f);
 
 	return S_OK;
 }
 
-void InventoryCam::Update(float dt)
+void InventoryCam::Late_Update(float dt)
 {
-	Object::Update(dt);
+    auto player = owner->GetFrontObject(ObjectType::Player);
+    if (!player) return;
 
-	if (!target) return;
+    auto targetTf = player->GetComponent<TransformComponent>();
+    if (!targetTf) return;
 
-	auto transform = GetComponent<TransformComponent>();
+    _vec3 offset{0.f, 1.5f, -3.f};
 
-	_vec3 targetPos = target->GetPosition();
-	_vec3 targetForward = target->GetFoward();
+    auto camTf = GetComponent<TransformComponent>();
+    camTf->SetPosition(targetTf->GetPosition() + offset);
+    camTf->LookAt(targetTf->GetPosition());
 
-	float distance = 2.5f;
-	float height = 1.f;
+    CameraActor::Late_Update(dt);
 
-	_vec3 camPos = targetPos + (targetForward * distance) + _vec3(0.f, height, 0.f);
-	transform->SetPosition(camPos);
-
-	_vec3 lookAtPos = targetPos + _vec3(0.f, height, 0.f);
-	_vec3 dir = lookAtPos - camPos;
-	D3DXVec3Normalize(&dir, &dir);
-	transform->SetForward(dir);
+    CameraActor::Late_Update(dt);
 }

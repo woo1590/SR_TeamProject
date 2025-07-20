@@ -58,6 +58,7 @@ HRESULT FontComponent::CreateFontResource()
 	create(FontType::DeathText,     64, FW_BOLD,   L"Noto Sans JP Medium");
 	create(FontType::DeathCount,    48, FW_BOLD,   L"Roboto-Regular");
 	create(FontType::MineCraftFont, 40, FW_BOLD,   L"minecraft_font");
+	create(FontType::TipText,       28, FW_BOLD,   L"minecraft_font");
 	create(FontType::CookieRunFont, 36, FW_BOLD,   L"font");
 	return S_OK;
 }
@@ -110,7 +111,7 @@ void FontComponent::Render()
 			auto tf = owner->GetComponent<TransformComponent>();
 			if (tf)
 			{
-				_vec3 pos = tf->GetWorldPosition();     // 이미 스크린 좌표
+				_vec3 pos = tf->GetWorldPosition();
 				LONG w = rc.right  - rc.left;
 				LONG h = rc.bottom - rc.top;
 

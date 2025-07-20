@@ -7,6 +7,8 @@
 #include "EngineCore.h"
 #include "RenderSystem.h"
 #include "InputSystem.h"
+#include "Scene.h"
+#include "CameraManager.h"
 
 InventoryBtn* InventoryBtn::Create(ObjectManager* owner)
 {
@@ -23,19 +25,30 @@ HRESULT InventoryBtn::Ready_Object()
 	auto button    = AddComponent<ButtonComponent>();
 
 	button->SetRenderer(renderer);
-
 	transform->SetPosition(300.f,655.f);
 	transform->SetScale(0.25f, 0.25f);
-
 	renderer->SetTexture(L"inventorybtn");
 
-	button->SetOnClick([]() {
-		EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::Inventory);
-		});
+	auto toggleInventory = [this]() {
+		auto renderSystem = EngineCore::GetInstance()->GetRenderSystem();
+		auto camMgr = GetScene()->GetCameraManager();
 
-	hover->SetUpdateCallBack([this](float dt) {
+		if (renderSystem->GetCurRenderState() == UIRenderType::Inventory)
+		{
+			renderSystem->SetUIRenderState(UIRenderType::MainGame);
+			camMgr->SetMainCamera(L"Third_Camera");
+		}
+		else
+		{
+			renderSystem->SetUIRenderState(UIRenderType::Inventory);
+			camMgr->SetMainCamera(L"Inventory_Camera");
+		}};
+
+	button->SetOnClick(toggleInventory);
+
+	hover->SetUpdateCallBack([this, toggleInventory](float dt) {
 		if (EngineCore::GetInstance()->GetInputSystem()->IsKeyPressed(KEY::I))
-			EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::Inventory);
+			toggleInventory();
 		});
 
 	return S_OK;

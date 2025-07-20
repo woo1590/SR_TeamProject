@@ -6,7 +6,7 @@ class LoadingUI;
 class Cursor;
 class LoadingStone;
 
-enum class LoadingState { Loading, Animation, Finished };
+//enum class LoadingState { Loading, Animation, Finished };
 
 class LoadingScene :
     public Scene

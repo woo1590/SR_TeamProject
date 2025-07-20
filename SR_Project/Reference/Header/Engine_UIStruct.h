@@ -5,11 +5,11 @@ namespace Engine
 	struct PlayerInfo
 	{
 		int level = 1;
-		int curHp = 100;
-		int maxHp = 100;
+		float curHp = 100.f;
+		float maxHp = 100.f;
 		int curExp = 0;
 		int maxExp = 10;
-		int power = 10;
+		float power = 10.f;
 		float speed = 15.f;
 	};
 
@@ -31,11 +31,11 @@ namespace Engine
 	struct EnemyInfo
 	{
 		int level;
-		int curHp = 100;
-		int maxHp = 100;
+		float curHp = 100.f;
+		float maxHp = 100.f;
 		int curExp = 0;
 		int maxExp = 0;
-		int power = 10;
+		float power = 10.f;
 		float attackDelay;
 		float speed = 5.f;
 	};

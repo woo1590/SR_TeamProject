@@ -103,8 +103,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Player::Update(_float dt)
 {
     auto curRenderType = EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState();
-    if (curRenderType == UIRenderType::Inventory || curRenderType == UIRenderType::WorldMap ||
-        curRenderType == UIRenderType::QuestUI) return;
+   // if (curRenderType == UIRenderType::Inventory || curRenderType == UIRenderType::WorldMap ||
+   //     curRenderType == UIRenderType::QuestUI) return;
 
     BaseCharacter::Update(dt);
 
@@ -142,7 +142,25 @@ void Player::Late_Update(_float dt)
 {
     BaseCharacter::Late_Update(dt);
 
-    // ---------------------------------------- //
+    auto transform = GetComponent<TransformComponent>();
+
+    _vec3 forward = transform->GetFoward();
+    _vec3 rot = transform->GetRotate();
+    
+    wchar_t buffer[256];
+    
+    swprintf_s(buffer,
+        L"Forward: %.1f, %.1f, %.1f | Rotation: %.1f, %.1f, %.1f\n",
+        forward.x, forward.y, forward.z,
+        D3DXToDegree(rot.x), D3DXToDegree(rot.y), D3DXToDegree(rot.z));
+
+    wchar_t bufferDir[128];
+    swprintf_s(bufferDir, L"PlayerDir: %.f, %.f, %.f", PlayerDirection.x, PlayerDirection.y, PlayerDirection.z);
+
+    OutputDebugStringW(buffer);
+    OutputDebugStringW(bufferDir);
+
+    // ---------------------------------------- 
     if (moveToInteract && moveToObject)
     {
         auto npcTf = moveToObject->GetComponent<TransformComponent>();
@@ -1519,7 +1537,6 @@ void Player::UpdateWalk(_float dt) {
         State = ePlayerState::IDLE;
         WalkTime = 0.f;
     }
-
 }
 
 void Player::UpdateRoll(_float dt)

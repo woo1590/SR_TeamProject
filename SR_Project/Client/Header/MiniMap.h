@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CameraComponent.h"
 #include "RenderTargetView.h"
 #include "Object.h"
 

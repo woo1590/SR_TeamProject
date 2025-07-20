@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Object.h"
 #include "RenderTargetView.h"
+#include "Object.h"
 
 class InventoryPlayer : public Object
 {
@@ -12,7 +12,13 @@ public:
 	static InventoryPlayer* Create(ObjectManager* owner);
 	HRESULT Ready_Object();
 
-	LPDIRECT3DTEXTURE9 GetInvTexture() const { return rtv->texture; }
+	LPDIRECT3DTEXTURE9 GetMinimapTexture() const { rtv->texture; }
+	void UpdateRendererList();
+	void Update(float dt) override;
+	void Late_Update(float dt) override;
+
+public:
+	void Free() override;
 
 private:
 	RenderTargetView* rtv = nullptr;

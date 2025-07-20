@@ -9,7 +9,6 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 #include "UIManager.h"
-#include "../../Client/Header/Player.h"
 
 //component
 #include "UIRenderer.h"
@@ -84,7 +83,6 @@ HRESULT RenderSystem::Ready_RenderSystem()
 void RenderSystem::Render()
 {
 	RenderOffScreenViews();
-
 	if (Camera)
 	{
 		cachedView = Camera->GetViewMatrix();
@@ -208,19 +206,20 @@ void RenderSystem::RenderOffScreenViews()
 	for (auto view : rtvs)
 	{
 		if (!view || !view->camera || !view->surface || view->renderers.empty()) continue;
-
 		Device->SetRenderTarget(0, view->surface);
 		Device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, view->clearColor, 1.f, 0);
-
+		
 		Device->BeginScene();
 
 		_matrix viewMatrix = view->camera->GetViewMatrix();
 		_matrix projMatrix = view->camera->GetProjMatrix();
-		Device->SetTransform(D3DTS_VIEW, &viewMatrix);
+
+		Device->SetTransform(D3DTS_VIEW, & viewMatrix);
 		Device->SetTransform(D3DTS_PROJECTION, &projMatrix);
 
 		for (const auto& renderer : view->renderers)
-			renderer->Render();
+			if (renderer)
+				renderer->Render();
 
 		Device->EndScene();
 	}

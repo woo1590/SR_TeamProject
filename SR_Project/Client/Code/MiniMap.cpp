@@ -8,6 +8,7 @@
 #include "ObjectManager.h"
 #include "Bone.h"
 #include "BaseCharacter.h"
+#include "CameraComponent.h"
 
 MiniMap* MiniMap::Create(ObjectManager* owner)
 {
@@ -25,9 +26,10 @@ HRESULT MiniMap::Ready_Object()
 
 	rtv = new RenderTargetView();
 
-	if (FAILED(rtv->CreateTexture(GraphicDevice::GetInstance()->GetDevice(), 128, 128, D3DFMT_A8R8G8B8))) return E_FAIL;
+	if (FAILED(rtv->CreateTexture(GraphicDevice::GetInstance()->GetDevice(),
+		128, 128, D3DFMT_A8R8G8B8))) return E_FAIL;
 
-	rtv->clearColor = D3DCOLOR_XRGB(25, 25, 25);
+	rtv->clearColor = D3DCOLOR_XRGB(25,25,25);
 
 	renderer->SetTexture(rtv->texture);
 
@@ -56,7 +58,7 @@ void MiniMap::UpdateRendererList()
 		Object* boneObj = pair.second;
 		if (boneObj)
 		{
-			auto renderer = boneObj->GetComponent<RendererComponent>();
+			auto renderer = boneObj->GetComponent<MeshRenderer>();
 			if (renderer)
 				rtv->renderers.push_back(renderer); 
 		}

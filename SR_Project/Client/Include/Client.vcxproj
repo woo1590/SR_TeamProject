@@ -141,7 +141,7 @@
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/nlohmann;../../External/imgui;../Resource/Shader;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,7 +163,7 @@
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/nlohmann;../../External/imgui;../Resource/Shader;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -213,6 +213,7 @@
     <ClInclude Include="..\Header\IsTimerOn.h" />
     <ClInclude Include="..\Header\JungleSkeleton.h" />
     <ClInclude Include="..\Header\JungleZombie.h" />
+    <ClInclude Include="..\Header\LevelUpEffect.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
     <ClInclude Include="..\Header\Locked_Node.h" />
     <ClInclude Include="..\Header\LockNode_Back.h" />
@@ -364,6 +365,7 @@
     <ClCompile Include="..\Code\IsTimerOn.cpp" />
     <ClCompile Include="..\Code\JungleSkeleton.cpp" />
     <ClCompile Include="..\Code\JungleZombie.cpp" />
+    <ClCompile Include="..\Code\LevelUpEffect.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
     <ClCompile Include="..\Code\Locked_Node.cpp" />
     <ClCompile Include="..\Code\LockNode_Back.cpp" />

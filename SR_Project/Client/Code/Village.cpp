@@ -59,6 +59,7 @@
 #include "Ender.h"
 #include "Spear.h"
 #include "DeadEffect.h"
+#include "InventoryCam.h"
 
 //component
 #include "TransformComponent.h"
@@ -111,15 +112,18 @@ void Village::Load()
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
+		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 
 		CameraMgr->AddCamera(L"First_Camera", fCam);
 		CameraMgr->AddCamera(L"Third_Camera", tCam);
+		CameraMgr->AddCamera(L"Inventory_Camera", inventoryCam);
 		tCam->SetTarget(player);
 
 		CameraMgr->SetMainCamera(L"Third_Camera");
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
+		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
 	} 
 
 	/*-------------------------Create Objects----------------------------*/
@@ -151,14 +155,18 @@ void Village::Load()
 		trigger2->AddSpawner(SpawnType::Zombie, _vec3(120.f, 30.f, 90.f), _vec3(0.f, 0.f, 0.f));
 		trigger2->AddSpawner(SpawnType::RedGolem, _vec3(150.f, 30.f, 200.f), _vec3(0.f, 0.f, 0.f));
 
-		auto slime = Slime::Create(ObjectMgr, ObjectType::Monster);
-		slime->GetComponent<TransformComponent>()->SetPosition(50.f, 30.f, 50.f);
-		auto purpleSlime = PurpleSlime::Create(ObjectMgr, ObjectType::Monster);
-		purpleSlime->GetComponent<TransformComponent>()->SetPosition(50.f, 50.f, 50.f);
+		//auto slime = Slime::Create(ObjectMgr, ObjectType::Monster);
+		//slime->GetComponent<TransformComponent>()->SetPosition(50.f, 30.f, 50.f);
+		//auto purpleSlime = PurpleSlime::Create(ObjectMgr, ObjectType::Monster);
+		//purpleSlime->GetComponent<TransformComponent>()->SetPosition(50.f, 50.f, 50.f);
 
-		ObjectMgr->AddObject(ObjectType::Monster, slime);
-		ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
-		ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
+		auto redGolem = RedGolem::Create(ObjectMgr, ObjectType::Monster);
+		redGolem->GetComponent<TransformComponent>()->SetPosition(50.f, 50.f, 50.f);
+		ObjectMgr->AddObject(ObjectType::Monster, redGolem);
+
+		//ObjectMgr->AddObject(ObjectType::Monster, slime);
+		//ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
+		//ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
 
 		//auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
 		//ender->GetComponent<TransformComponent>()->SetPosition(60.f, 500.f, 60.f);
@@ -221,14 +229,14 @@ void Village::Unload()
 
 void Village::Free()
 {
-	//Safe_Release(ObjectMgr);
-	//Safe_Release(CollisionSys);
-	//Safe_Release(PhysicsSys);
-	//Safe_Release(CameraMgr);
-	//Safe_Release(BlockMgr);
-	//Safe_Release(Grid);
-	//Safe_Release(uiMgr);
-	//Safe_Release(ChunkMgr);
+	Safe_Release(ObjectMgr);
+	Safe_Release(CollisionSys);
+	Safe_Release(PhysicsSys);
+	Safe_Release(CameraMgr);
+	Safe_Release(BlockMgr);
+	Safe_Release(Grid);
+	Safe_Release(uiMgr);
+	Safe_Release(ChunkMgr);
 
 	Scene::Free();
 }

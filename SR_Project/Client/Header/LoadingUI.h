@@ -13,6 +13,8 @@ struct TipAndTexture
 	wstring sceneTip;
 };
 
+enum class LoadingState {Intro, TipLoop,Static};
+
 #include "Object.h"
 
 class LoadingUI : public Object
@@ -28,13 +30,18 @@ public:
 	
 	void SetInfo(LOADID nextSceneID);
 	bool IsAnimFinished() const { return scaleTimer >= scaleDur; }
+
+	void Update_Scaling(float dt);
+	void Update_Tiploop(float dt);
+	void Update_Static(float dt);
+	void Render_Text(float dt);
 	
 private:
 	bool mainAnimFinished = false;
 	float tipLoopTimer = 0.f;
 
-	static constexpr float TIP_DURATION = 2.5f;
-	static constexpr float scaleDur = 2.5f;
+	static constexpr float TIP_DURATION = 3.f;
+	static constexpr float scaleDur = 3.f;
 
 	vector<TipAndTexture> tipPool;
 	vector<size_t> tipIndices;
@@ -44,10 +51,13 @@ private:
 
 	float scaleTimer = 0.f;
 	static constexpr float startScale = 0.65f;
-	static constexpr float targetScale = 0.8f;
+	static constexpr float targetScale = 0.75f;
 	
-
 	wstring prefixText;
 	wstring sceneNameText;
 	wstring sceneTipText;
+
+	wstring staticMsg;
+	LoadingState curState = LoadingState::Intro;
+	LoadingState nextStateAfterIntro = LoadingState::TipLoop;
 };
