@@ -46,6 +46,14 @@
     "Statikk_Mtrl": {
       "fx": "LaserShader",
       "textures": { "AlbedoMap": "../Resource/Asset/JW/Statikk.png" }
+    },
+    "ChargeDown_Mtrl": {
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/ChargeDown.png" }
+    },
+    "ChargeOn_Mtrl": {
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/ChargeOn.png" }
     }
   }
 }

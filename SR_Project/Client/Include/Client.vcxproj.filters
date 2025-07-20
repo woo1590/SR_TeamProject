@@ -550,6 +550,12 @@
     <Filter Include="02. Object\Monster\Blastling\Projectile">
       <UniqueIdentifier>{7f64f833-45ac-456d-a30e-dc8aa8cc66aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Effect\ChargeDownEffect">
+      <UniqueIdentifier>{875bc9e7-aeed-434f-81ae-8a48f0b123c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\ChargeOnEffect">
+      <UniqueIdentifier>{ab08d6bb-3908-4b89-ac0f-03fba36770d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1063,6 +1069,12 @@
     <ClInclude Include="..\Header\Teleport.h">
       <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ChargeDownEffect.h">
+      <Filter>02. Object\Effect\ChargeDownEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ChargeOnEffect.h">
+      <Filter>02. Object\Effect\ChargeOnEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1557,6 +1569,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Teleport.cpp">
       <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ChargeDownEffect.cpp">
+      <Filter>02. Object\Effect\ChargeDownEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ChargeOnEffect.cpp">
+      <Filter>02. Object\Effect\ChargeOnEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

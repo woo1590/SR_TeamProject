@@ -189,6 +189,8 @@
     <ClInclude Include="..\Header\BossIcon.h" />
     <ClInclude Include="..\Header\ChangeScene.h" />
     <ClInclude Include="..\Header\ChangeState.h" />
+    <ClInclude Include="..\Header\ChargeDownEffect.h" />
+    <ClInclude Include="..\Header\ChargeOnEffect.h" />
     <ClInclude Include="..\Header\CheckStateChangeCount.h" />
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CoolDownBar.h" />
@@ -355,6 +357,8 @@
     <ClCompile Include="..\Code\BossIcon.cpp" />
     <ClCompile Include="..\Code\ChangeScene.cpp" />
     <ClCompile Include="..\Code\ChangeState.cpp" />
+    <ClCompile Include="..\Code\ChargeDownEffect.cpp" />
+    <ClCompile Include="..\Code\ChargeOnEffect.cpp" />
     <ClCompile Include="..\Code\CheckStateChangeCount.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CoolDownBar.cpp" />

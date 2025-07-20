@@ -89,3 +89,8 @@ void Armor::Late_Update(_float dt)
 {
     Item::Late_Update(dt);
 }
+
+std::unordered_map<string,Object*> Armor::GetBones()
+{
+    return Bones;
+}
