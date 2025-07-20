@@ -165,7 +165,7 @@ void Village::Load()
         ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
         ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));*/
 
-        auto ender = Ender::Create(ObjectMgr, ObjectType::Monster);
+        auto ender = RedGolem::Create(ObjectMgr, ObjectType::Monster);
         ender->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
         ObjectMgr->AddObject(ObjectType::Monster, ender);
 

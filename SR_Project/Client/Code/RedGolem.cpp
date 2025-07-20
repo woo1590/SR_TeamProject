@@ -18,6 +18,9 @@
 #include "Die.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "PhysicsComponent.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
 
 RedGolem::RedGolem(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -48,6 +51,31 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     
     auto collision = GetComponent<CollisionComponent>();
     collision->SetSize(_vec3(10.f, 18.f, 10.f));
+
+    {
+        auto LArmCollision = Bones["LArm"]->AddComponent<CollisionComponent>();
+        LArmCollision->AddCollider<OBBCollider>();
+        LArmCollision->SetOffset(_vec3(-5.f, -2.f, 0.f));
+        LArmCollision->SetSize(_vec3(7.f, 20.f, 7.f));
+        //여기서 팔과 충돌 했을때의 동작을 oncollision 함수로 등록해야 할 것 같아요
+
+        auto LArmPhysics = Bones["LArm"]->AddComponent<PhysicsComponent>();
+        LArmPhysics->SetKinematic(true);
+        GetScene()->GetPhysicsStstem()->RegisterBody(LArmPhysics);
+    }
+    
+    {
+        auto RAramCollision = Bones["RArm"]->AddComponent<CollisionComponent>();
+        RAramCollision->AddCollider<OBBCollider>();
+        RAramCollision->SetOffset(_vec3(5.f, -2.f, 0.f));
+        RAramCollision->SetSize(_vec3(7.f, 20.f, 7.f));
+        //여기도
+
+        auto RArmPhysics = Bones["RArm"]->AddComponent<PhysicsComponent>();
+        RArmPhysics->SetKinematic(true);
+        GetScene()->GetPhysicsStstem()->RegisterBody(RArmPhysics);
+    }
+
     InitTransform(objType);
     InitTree();
     InitAnimation();

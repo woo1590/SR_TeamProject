@@ -56,12 +56,12 @@ void CollisionComponent::Late_Update(_float dt)
 
 void CollisionComponent::SetOffset(_vec3 offset)
 {
-	Offset = offset;
+	collider->SetOffset(offset);
 }
 
 void CollisionComponent::SetOffset(_float x, _float y, _float z)
 {
-	SetOffset(_vec3(x, y, z));
+	collider->SetOffset(_vec3(x, y, z));
 }
 
 void CollisionComponent::SetSize(_vec3 size)
