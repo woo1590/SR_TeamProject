@@ -42,6 +42,7 @@ HRESULT FireBlock::Ready_Object()
 	renderer->SetMaterial("FireBlock_Mtrl");
 
 	auto collision = AddComponent<CollisionComponent>();
+	collision->AddCollider<AABBCollider>();
 	GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
 	collision->SetLayer(LAYER_PROJECTILE);
 	collision->SetMask(LAYER_PLAYER);
