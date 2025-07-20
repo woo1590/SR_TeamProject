@@ -44,6 +44,10 @@ public:
 
     void Translate(_vec3 velocity);
     void Translate(float x, float y, float z);
+    
+    // --------------------- Á¦Çö ----
+    void LookAt(const _vec3& targetPos);
+    // ----------------------------
 
     _vec3 GetPosition()const;
     _vec3 GetWorldPosition()const;

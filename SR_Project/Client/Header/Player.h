@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "BaseCharacter.h"
 #include "Item.h"
+#include "QuestTextObj.h"
+
 class Player : public BaseCharacter
 {
 public:
@@ -77,6 +79,13 @@ public:
     _float GetAttackDelay();
 
     void SetOwner(ObjectManager* owner);
+
+    _vec3 GetDir() const
+    {
+        _vec3 dir = PlayerDirection;
+        D3DXVec3Normalize(&dir, &dir);
+        return dir;
+    }
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();

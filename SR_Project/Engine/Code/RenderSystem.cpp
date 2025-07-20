@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "UIManager.h"
 
 //component
 #include "UIRenderer.h"
@@ -67,11 +68,15 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))
 		return E_FAIL;
 
+	// ------ Minimap ------------------
+
+
 	return S_OK;
 }
 
 void RenderSystem::Render()
 {
+	RenderOffScreenViews();
 	if (Camera)
 	{
 		cachedView = Camera->GetViewMatrix();
@@ -80,7 +85,7 @@ void RenderSystem::Render()
 		PriorityPass();
 		NonAlphaPass();
 		AlphaPass();
-
+		
 		if(EngineCore::GetInstance()->IsDebugMode())
 			DebugPass();
 	}
@@ -181,7 +186,46 @@ void RenderSystem::UIPass()
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
-void RenderSystem::DebugPass()
+void RenderSystem::RenderOffScreenViews()
+{
+	if (rtvs.empty()) return;
+
+	LPDIRECT3DSURFACE9 oldRenderTarget = nullptr;
+	Device->GetRenderTarget(0, &oldRenderTarget);
+
+	_matrix oldView, oldProj;
+	Device->GetTransform(D3DTS_VIEW, &oldView);
+	Device->GetTransform(D3DTS_PROJECTION, &oldProj);
+
+	for (auto view : rtvs)
+	{
+		if (!view || !view->camera || !view->surface || view->renderers.empty()) continue;
+		Device->SetRenderTarget(0, view->surface);
+		Device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, view->clearColor, 1.f, 0);
+		
+		Device->BeginScene();
+
+		_matrix viewMatrix = view->camera->GetViewMatrix();
+		_matrix projMatrix = view->camera->GetProjMatrix();
+
+		Device->SetTransform(D3DTS_VIEW, & viewMatrix);
+		Device->SetTransform(D3DTS_PROJECTION, &projMatrix);
+
+		for (const auto& renderer : view->renderers)
+			if (renderer)
+				renderer->Render();
+
+		Device->EndScene();
+	}
+	
+	Device->SetRenderTarget(0, oldRenderTarget);
+	Device->SetTransform(D3DTS_VIEW, &oldView);
+	Device->SetTransform(D3DTS_PROJECTION, &oldProj);
+
+	Safe_Release(oldRenderTarget);
+}
+
+void RenderSystem::DebugPass() 
 {
 	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);

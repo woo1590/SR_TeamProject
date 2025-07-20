@@ -7,7 +7,7 @@
 #include "InfoComponent.h"
 #include "Subject.h"
 
-enum class RenderPolicy { Always, HideWhenFull };
+enum class RenderPolicy { Always, HideWhenFull, HideWhenEmpty };
 
 BEGIN(Engine)
 
@@ -126,14 +126,29 @@ inline void ProgressBar<T>::AppearAnimation(float duration)
 template<typename T>
 void ProgressBar<T>::Update(float dt)
 {
-	const bool hide = (renderPolicy == RenderPolicy::HideWhenFull && actualTargetRatio >= 0.99f);
+	bool shouldBeHidden = false;
+	switch (renderPolicy)
+	{
+	case RenderPolicy::HideWhenFull:
+		if (actualTargetRatio >= 0.999f)
+			shouldBeHidden = true;
+		break;
 
-	renderer->SetVisible(!hide);
+	case RenderPolicy::HideWhenEmpty:
+		if (curValue <= 0)
+			shouldBeHidden = true;
+		break;
 
+	default:
+		shouldBeHidden = false;
+		break;
+	}
+
+	renderer->SetVisible(!shouldBeHidden);
 	for (auto* child : owner->GetChildren())
 	{
 		if (auto* r = child->GetComponent<UIRenderer>())
-			r->SetVisible(!hide);
+			r->SetVisible(!shouldBeHidden);
 	}
 
 

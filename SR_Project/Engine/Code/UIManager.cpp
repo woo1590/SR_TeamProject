@@ -6,6 +6,7 @@
 #include "QuestSystem.h"
 #include "TooltipManager.h"
 #include "DialogManager.h"
+#include "GraphicDevice.h"
 
 UIManager* UIManager::Create(Scene* owner)
 {
@@ -25,7 +26,8 @@ HRESULT UIManager::Ready_UIManager()
 	return  S_OK;
 }
 
-void UIManager::Update(float dt) 
+
+void UIManager::Update(float dt)
 {
 	if (inventory)
 		inventory->Update(dt);

@@ -4,8 +4,7 @@
 #include "TransformComponent.h"
 #include "Object.h"
 
-FontComponent::FontComponent(Object* owner)
-	:ObjectComponent(owner)
+FontComponent::FontComponent(Object* owner) :ObjectComponent(owner)
 {
 	AddFontResourceEx("../../Client/Resource/Asset/Jehyun/Font/NotoSansJP-Medium.ttf", FR_PRIVATE,0);
 	AddFontResourceEx("../../Client/Resource/Asset/Jehyun/Font/NotoSansKR-Medium.ttf", FR_PRIVATE, 0);
@@ -30,10 +29,6 @@ FontComponent::~FontComponent()
 	}
 }
 
-FontComponent* FontComponent::Create(Object* owner)
-{
-	return new FontComponent(owner);
-}
 HRESULT FontComponent::CreateFontResource()
 {
 	auto device = GraphicDevice::GetInstance()->GetDevice();
@@ -62,7 +57,8 @@ HRESULT FontComponent::CreateFontResource()
 	create(FontType::DmgText,       44, FW_BOLD,   L"Noto Sans JP Medium");
 	create(FontType::DeathText,     64, FW_BOLD,   L"Noto Sans JP Medium");
 	create(FontType::DeathCount,    48, FW_BOLD,   L"Roboto-Regular");
-	create(FontType::MineCraftFont, 36, FW_BOLD,   L"minecraft_font");
+	create(FontType::MineCraftFont, 40, FW_BOLD,   L"minecraft_font");
+	create(FontType::TipText,       28, FW_BOLD,   L"minecraft_font");
 	create(FontType::CookieRunFont, 36, FW_BOLD,   L"font");
 	return S_OK;
 }
@@ -115,7 +111,7 @@ void FontComponent::Render()
 			auto tf = owner->GetComponent<TransformComponent>();
 			if (tf)
 			{
-				_vec3 pos = tf->GetWorldPosition();     // 이미 스크린 좌표
+				_vec3 pos = tf->GetWorldPosition();
 				LONG w = rc.right  - rc.left;
 				LONG h = rc.bottom - rc.top;
 

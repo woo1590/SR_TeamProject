@@ -40,6 +40,9 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
     BaseCharacter::Ready_Object(owner, objType);
 
     auto  statcomponent = AddComponent<InfoComponent<EnemyInfo>>();
+    auto playerInfo = owner->GetFrontObject(ObjectType::Player)->GetComponent<InfoComponent<PlayerInfo>>();
+    if (!playerInfo) 
+        return E_FAIL;
 
     auto collision = AddComponent<CollisionComponent>();
     collision->AddCollider<AABBCollider>();
@@ -84,11 +87,14 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         owner->AddUIObject(enemyBack);
         owner->AddUIObject(whiteBack);
 
-        statcomponent->SetOnZeroHp([this]() 
+        statcomponent->SetOnZeroHp([=]() 
             {
                 auto quest = GetScene()->GetUIManager()->GetQuestSystem();
                 if (quest)
+                {
                     quest->ReportQuestProgress(QuestType::KillMonsters, 1);
+                    playerInfo->AddExp(5);
+                }
             });
     }
     else if (type == MonsterType::Boss)
@@ -100,7 +106,7 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         owner->AddUIObject(bossFront);
 
         bossBack = ExpBarBack::Create(owner);
-        bossBack->GetComponent<TransformComponent>()->SetPosition(300.f, 100.f);
+        bossBack->GetComponent<TransformComponent>()->SetPosition(350.f, 100.f);
         bossBack->GetComponent<TransformComponent>()->SetScale(2.38f, 3.f);
         owner->AddUIObject(bossBack);
 
@@ -113,20 +119,26 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
         whiteTf->SetPosition(0.f, 0.f); 
         whiteTf->SetScale(4.75f, 1.5f);
 
-        bossFront->AddChild(whiteBack);
-        owner->AddUIObject(whiteBack);
-
-        auto bossIcon = BossIcon::Create(owner);
-        bossIcon->GetComponent<TransformComponent>()->SetParent(bossFront);
+        bossIcon = BossIcon::Create(owner);
+        auto bossIconTf = bossIcon->GetComponent<TransformComponent>();
+        bossIconTf->SetParent(bossFront);
+       
         owner->AddUIObject(bossIcon);
-
-        //bossFront->AddChild(bossIcon);
-
-        //auto particle = ParticleObj::Create(owner);
-        //auto particleTf = particle->GetComponent<TransformComponent>(); 
-        //owner->AddUIObject(particle);
-
+        owner->AddUIObject(whiteBack);
+        
         bossFront->AddChild(bossBack); 
+        bossFront->AddChild(whiteBack);
+        bossFront->AddChild(bossIcon);
+
+        statcomponent->SetOnZeroHp([=]()
+            {
+                auto quest = GetScene()->GetUIManager()->GetQuestSystem();
+                if (quest)
+                {
+                    quest->ReportQuestProgress(QuestType::KillRedGolem, 1);
+                    playerInfo->AddExp(15);
+                }
+            });
     }
     IsHit = nullptr;
 
@@ -162,9 +174,10 @@ void Monster::Die()
 
 void Monster::DeleteBar()
 {
-    Object* bars[] = {enemyFront, enemyBack, bossFront, bossBack, whiteBack};
+    Object* bars[] = {enemyFront, enemyBack, bossFront, bossBack, whiteBack, bossIcon};
     for (auto* bar : bars)
-        if (bar) bar->SetDead();
+        if (bar)
+            bar->SetDead();
 }
 
 void Monster::ShowDmgText(int dmg, const _vec3& hitDir)

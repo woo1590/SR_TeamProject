@@ -61,6 +61,7 @@
 #include "Ender.h"
 #include "Spear.h"
 #include "DeadEffect.h"
+#include "InventoryCam.h"
 
 //component
 #include "TransformComponent.h"
@@ -122,15 +123,18 @@ void Stage1::Load()
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
+		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 
 		CameraMgr->AddCamera(L"First_Camera", fCam);
 		CameraMgr->AddCamera(L"Third_Camera", tCam);
+		CameraMgr->AddCamera(L"Inventory_Camera", inventoryCam);
 		tCam->SetTarget(player);
 
 		CameraMgr->SetMainCamera(L"Third_Camera");
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
+		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
 	}
 
 	/*----------------Load Chunk----------------*/

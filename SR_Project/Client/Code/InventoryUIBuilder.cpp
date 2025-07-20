@@ -102,11 +102,6 @@ void InventoryUIBuilder::BuildInventorySlots(ObjectManager* objMgr, InventoryMan
 			const float px = topLeft.x + x * slotSpacingX;
 			const float py = topLeft.y + y * slotSpacingY;
 
-			//auto plus = GearSlotPlus::Create(objMgr);
-			//plus->GetComponent<TransformComponent>()->SetPosition(px, py);
-			//plus->GetComponent<TransformComponent>()->SetScale(0.2f, 0.2f);
-			//objMgr->AddUIObject(plus);
-
 			auto slot = InventorySlot::Create(objMgr);
 			slot->GetComponent<TransformComponent>()->SetPosition(px, py);
 			objMgr->AddUIObject(slot);

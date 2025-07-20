@@ -47,6 +47,8 @@ public:
 	static void SetCurRenderType(UIRenderType type) { curRenderType = type; }
 	static UIRenderType GetCurRenderType() { return curRenderType; }
 
+	void SetTexture(LPDIRECT3DTEXTURE9 _texture);
+
 	void Free() override;
 
 private:

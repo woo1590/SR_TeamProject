@@ -18,6 +18,8 @@ HRESULT ExpBarFront::Ready_Object()
 	auto exp = AddComponent<ProgressBar<PlayerInfo>>();
 	
 	exp->SetBarDirection(BarDirection::Horizontal);
+	exp->SetRenderPolicy(RenderPolicy::HideWhenEmpty);
+	exp->SetLerpSpeed(4.f);
 
 	transform->SetPosition(670.f, 717.f);
 

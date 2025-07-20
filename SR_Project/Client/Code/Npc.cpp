@@ -56,7 +56,7 @@ void Npc::InitTransform()
 {
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
-    transform->SetPosition(60.f, 500.f, 60.f);
+    transform->SetPosition(60.f, 200.f, 60.f);
     transform->SetRotate(_vec3(0.f, D3DXToRadian(90.f), 0.f));
     SetMaterial("VillageBody_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetScale(_vec3(8.f * Scale, 16.f * Scale, 4.f * Scale), "Body");

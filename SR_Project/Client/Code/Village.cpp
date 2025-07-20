@@ -67,6 +67,7 @@
 #include "FireBlock.h"
 #include "NPCdolbok.h"
 #include "NPCShop.h"
+#include "InventoryCam.h"
 
 //component
 #include "TransformComponent.h"
@@ -128,20 +129,24 @@ void Village::Load()
 			player = Player::Create(ObjectMgr, ObjectType::Player);
 			game->SetPlayer(player);
 		}
+		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 
+		
         ObjectMgr->AddObject(ObjectType::Player, player);
-
+		
         auto fCam = FirstCam::Create(ObjectMgr);
         auto tCam = ThirdCam::Create(ObjectMgr);
-
+		
         CameraMgr->AddCamera(L"First_Camera", fCam);
         CameraMgr->AddCamera(L"Third_Camera", tCam);
+		CameraMgr->AddCamera(L"Inventory_Camera", inventoryCam);
         tCam->SetTarget(player);
 
         CameraMgr->SetMainCamera(L"Third_Camera");
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
+		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
 	} 
 
 	/*-------------------------Create Objects----------------------------*/
@@ -294,14 +299,14 @@ void Village::DebugIMGUI()
 
 void Village::Free()
 {
-	//Safe_Release(ObjectMgr);
-	//Safe_Release(CollisionSys);
-	//Safe_Release(PhysicsSys);
-	//Safe_Release(CameraMgr);
-	//Safe_Release(BlockMgr);
-	//Safe_Release(Grid);
-	//Safe_Release(uiMgr);
-	//Safe_Release(ChunkMgr);
+	Safe_Release(ObjectMgr);
+	Safe_Release(CollisionSys);
+	Safe_Release(PhysicsSys);
+	Safe_Release(CameraMgr);
+	Safe_Release(BlockMgr);
+	Safe_Release(Grid);
+	Safe_Release(uiMgr);
+	Safe_Release(ChunkMgr);
 
     Scene::Free();
 }

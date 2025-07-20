@@ -141,7 +141,7 @@
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/nlohmann;../../External/imgui;../Resource/Shader;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,7 +163,7 @@
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/nlohmann;../../External/imgui;../Resource/Shader;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -209,6 +209,8 @@
     <ClInclude Include="..\Header\BloodEffect.h" />
     <ClInclude Include="..\Header\GameManager.h" />
     <ClInclude Include="..\Header\GhostCloakItem.h" />
+    <ClInclude Include="..\Header\InventoryCam.h" />
+    <ClInclude Include="..\Header\InventoryPlayer.h" />
     <ClInclude Include="..\Header\IsChangingState.h" />
     <ClInclude Include="..\Header\IsRandomMoveCheck.h" />
     <ClInclude Include="..\Header\IsTargetClose.h" />
@@ -219,11 +221,14 @@
     <ClInclude Include="..\Header\JungleZombie.h" />
     <ClInclude Include="..\Header\LaserEffect.h" />
     <ClInclude Include="..\Header\LaserHead.h" />
+    <ClInclude Include="..\Header\LevelUpEffect.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
     <ClInclude Include="..\Header\Locked_Node.h" />
     <ClInclude Include="..\Header\LockNode_Back.h" />
     <ClInclude Include="..\Header\MapNode.h" />
     <ClInclude Include="..\Header\MapNode_Front.h" />
+    <ClInclude Include="..\Header\MiniMap.h" />
+    <ClInclude Include="..\Header\MiniMapCam.h" />
     <ClInclude Include="..\Header\Npc.h" />
     <ClInclude Include="..\Header\NPCdolbok.h" />
     <ClInclude Include="..\Header\NPCShop.h" />
@@ -367,6 +372,8 @@
     <ClCompile Include="..\Code\BloodEffect.cpp" />
     <ClCompile Include="..\Code\GameManager.cpp" />
     <ClCompile Include="..\Code\GhostCloakItem.cpp" />
+    <ClCompile Include="..\Code\InventoryCam.cpp" />
+    <ClCompile Include="..\Code\InventoryPlayer.cpp" />
     <ClCompile Include="..\Code\IsChangingState.cpp" />
     <ClCompile Include="..\Code\IsRandomMoveCheck.cpp" />
     <ClCompile Include="..\Code\IsTargetClose.cpp" />
@@ -377,11 +384,14 @@
     <ClCompile Include="..\Code\JungleZombie.cpp" />
     <ClCompile Include="..\Code\LaserEffect.cpp" />
     <ClCompile Include="..\Code\LaserHead.cpp" />
+    <ClCompile Include="..\Code\LevelUpEffect.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
     <ClCompile Include="..\Code\Locked_Node.cpp" />
     <ClCompile Include="..\Code\LockNode_Back.cpp" />
     <ClCompile Include="..\Code\MapNode.cpp" />
     <ClCompile Include="..\Code\MapNode_Front.cpp" />
+    <ClCompile Include="..\Code\MiniMap.cpp" />
+    <ClCompile Include="..\Code\MiniMapCam.cpp" />
     <ClCompile Include="..\Code\Npc.cpp" />
     <ClCompile Include="..\Code\NPCdolbok.cpp" />
     <ClCompile Include="..\Code\NPCShop.cpp" />

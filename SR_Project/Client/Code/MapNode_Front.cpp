@@ -36,9 +36,6 @@ HRESULT MapNode_Front::Ready_Object()
 	button->SetHighlightScale({0.5f, 0.3f}, {0.75f,0.45f});
 
 	button->BindRenderers(base, highlight);
-	button->SetOnClick([]() {
-		
-		});
 
 	hover->SetCallBack([button](bool over) {
 		button->SetHoverState(over);

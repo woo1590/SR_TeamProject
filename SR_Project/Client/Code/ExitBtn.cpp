@@ -6,6 +6,9 @@
 #include "HoverComponent.h"
 #include "EngineCore.h"
 #include "RenderSystem.h"
+#include "ObjectManager.h"
+#include "CameraManager.h"
+#include "Scene.h"
 
 ExitBtn* ExitBtn::Create(ObjectManager* owner)
 {
@@ -31,8 +34,9 @@ HRESULT ExitBtn::Ready_Object()
 	button->SetRenderer(base);
 	button->SetTextures(L"exitbtn", L"exitbtn_hover");
 
-	button->SetOnClick([] {
+	button->SetOnClick([this] {
 		EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::MainGame);
+		GetScene()->GetCameraManager()->SetMainCamera(L"Third_Camera");
 		});
 
 	return S_OK;

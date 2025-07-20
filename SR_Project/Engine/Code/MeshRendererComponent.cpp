@@ -73,6 +73,7 @@ void MeshRenderer::Render()
 		shader->End();
 }
 
+
 void MeshRenderer::SetMesh(const std::string& key)
 {
 	mesh = EngineCore::GetInstance()->GetResourceManager()->GetMesh(key);

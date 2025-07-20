@@ -57,7 +57,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
         LArmCollision->AddCollider<OBBCollider>();
         LArmCollision->SetOffset(_vec3(-5.f, -2.f, 0.f));
         LArmCollision->SetSize(_vec3(7.f, 20.f, 7.f));
-        //¿©±â¼­ ÆÈ°ú Ãæµ¹ ÇßÀ»¶§ÀÇ µ¿ÀÛÀ» oncollision ÇÔ¼ö·Î µî·ÏÇØ¾ß ÇÒ °Í °°¾Æ¿ä
+        //ï¿½ï¿½ï¿½â¼­ ï¿½È°ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ oncollision ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½
 
         auto LArmPhysics = Bones["LArm"]->AddComponent<PhysicsComponent>();
         LArmPhysics->SetKinematic(true);
@@ -69,7 +69,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
         RAramCollision->AddCollider<OBBCollider>();
         RAramCollision->SetOffset(_vec3(5.f, -2.f, 0.f));
         RAramCollision->SetSize(_vec3(7.f, 20.f, 7.f));
-        //¿©±âµµ
+        //ï¿½ï¿½ï¿½âµµ
 
         auto RArmPhysics = Bones["RArm"]->AddComponent<PhysicsComponent>();
         RArmPhysics->SetKinematic(true);
@@ -343,7 +343,7 @@ void RedGolem::PlayAttack(_float dt)
     case 1:         
         PlayLeftAttack(dt);
         break;
-    case 2:                         //³»·ÁÂï±â
+    case 2:                         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         PlaySuperAttack(dt);
         break;
     case 3:
@@ -373,8 +373,8 @@ void RedGolem::PlayDie(_float dt)
       
         SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "LLeg");
         SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "RLeg");
-        //DeleteBar();
-        //SetDead();
+        SetDead();
+        DeleteBar();
     }
 }
 

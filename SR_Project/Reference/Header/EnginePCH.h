@@ -41,6 +41,7 @@
 #include <variant>
 #include <queue>
 
+#include <Format>
 
 //Header
 #include "Base.h"

@@ -139,18 +139,6 @@
     <Filter Include="02. Object\Monster\BTNode\Decorator\Boss">
       <UniqueIdentifier>{f09359cc-229b-419e-a55b-5dfb052caba8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\Button\Locked_Node">
-      <UniqueIdentifier>{d12dcb0c-bc08-4a42-8847-bbef7d269a00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Button\MapNode">
-      <UniqueIdentifier>{db018844-a88c-49fd-a806-bf884c53bf45}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Button\LockedNode_Back">
-      <UniqueIdentifier>{1f75d5cb-a79e-4c5a-8574-e84973586753}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\UIObj\Button\MapNode_Front">
-      <UniqueIdentifier>{c25954a4-4c89-454a-bf96-7596365b67fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\Spawner">
       <UniqueIdentifier>{dabd5484-e365-4db5-816b-900c42f87975}</UniqueIdentifier>
     </Filter>
@@ -522,6 +510,39 @@
     </Filter>  
     <Filter Include="00. MainApp\GameManager">
       <UniqueIdentifier>{d7a4d68d-0c6f-47aa-8a0c-3ea57bb9826e}</UniqueIdentifier>
+    </Filter>    
+    <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingStone">
+      <UniqueIdentifier>{06db0d23-85e4-4985-802f-2865ac82b4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MiniMap">
+      <UniqueIdentifier>{10cc925a-4fc8-45e5-9a70-64d5e272c0cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MiniMap\MiniMap">
+      <UniqueIdentifier>{2315fa63-ebaa-4bf5-8c0d-89aedef03813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\Locked_Node">
+      <UniqueIdentifier>{d12dcb0c-bc08-4a42-8847-bbef7d269a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\LockedNode_Back">
+      <UniqueIdentifier>{1f75d5cb-a79e-4c5a-8574-e84973586753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\MapNode">
+      <UniqueIdentifier>{db018844-a88c-49fd-a806-bf884c53bf45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\MapNode_Front">
+      <UniqueIdentifier>{c25954a4-4c89-454a-bf96-7596365b67fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor\InventoryCam">
+      <UniqueIdentifier>{1a07d403-9aa3-4f5c-8e92-187ea3f4833d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor\MiniMapCam">
+      <UniqueIdentifier>{2776ae32-6d32-4410-a635-a18b1fbc7115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\CameraActor\InventoryCam\InventoryPlayer">
+      <UniqueIdentifier>{20248366-7dae-4c98-a50d-9d11a5577081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Effect">
+      <UniqueIdentifier>{68a6fd74-6ea6-4498-92f0-24cfa460cdd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -572,9 +593,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Player.h">
       <Filter>02. Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\LoadingUI.h">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Cursor.h">
       <Filter>02. Object\UIObj\UIRenderState\Always\Cursor</Filter>
@@ -775,19 +793,16 @@
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Locked_Node.h">
-      <Filter>02. Object\UIObj\Button\Locked_Node</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\Locked_Node</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MapNode.h">
-      <Filter>02. Object\UIObj\Button\MapNode</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\MapNode</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LockNode_Back.h">
-      <Filter>02. Object\UIObj\Button\LockedNode_Back</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\LockedNode_Back</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MapNode_Front.h">
-      <Filter>02. Object\UIObj\Button\MapNode_Front</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\LoadingStone.h">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\MapNode_Front</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\WorldMapTextPanel.h">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapTextPanel</Filter>
@@ -1011,6 +1026,27 @@
     </ClInclude>  
     <ClInclude Include="..\Header\GameManager.h">
       <Filter>00. MainApp\GameManager</Filter>
+    </ClInclude>    
+    <ClInclude Include="..\Header\LoadingStone.h">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingUI.h">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMapCam.h">
+      <Filter>02. Object\CameraActor\MiniMapCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMap.h">
+      <Filter>02. Object\UIObj\UIRenderState\MiniMap\MiniMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryPlayer.h">
+      <Filter>02. Object\CameraActor\InventoryCam\InventoryPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryCam.h">
+      <Filter>02. Object\CameraActor\InventoryCam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LevelUpEffect.h">
+      <Filter>02. Object\UIObj\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1058,9 +1094,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraActor.cpp">
       <Filter>02. Object\CameraActor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\LoadingUI.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Cursor.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Always\Cursor</Filter>
@@ -1267,19 +1300,16 @@
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Locked_Node.cpp">
-      <Filter>02. Object\UIObj\Button\Locked_Node</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\Locked_Node</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MapNode.cpp">
-      <Filter>02. Object\UIObj\Button\MapNode</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\MapNode</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LockNode_Back.cpp">
-      <Filter>02. Object\UIObj\Button\LockedNode_Back</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\LockedNode_Back</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MapNode_Front.cpp">
-      <Filter>02. Object\UIObj\Button\MapNode_Front</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\LoadingStone.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\MapNode_Front</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\WorldMapTextPanel.cpp">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\WorldMapTextPanel</Filter>
@@ -1482,6 +1512,27 @@
     </ClCompile>  
     <ClCompile Include="..\Code\GameManager.cpp">
       <Filter>00. MainApp\GameManager</Filter>
+    </ClCompile>   
+    <ClCompile Include="..\Code\LoadingStone.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingUI.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniMapCam.cpp">
+      <Filter>02. Object\CameraActor\MiniMapCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniMap.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MiniMap\MiniMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryCam.cpp">
+      <Filter>02. Object\CameraActor\InventoryCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryPlayer.cpp">
+      <Filter>02. Object\CameraActor\InventoryCam\InventoryPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LevelUpEffect.cpp">
+      <Filter>02. Object\UIObj\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

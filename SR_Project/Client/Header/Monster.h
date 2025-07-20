@@ -10,6 +10,7 @@ class EnemyHPBarBack;
 class BossHPBarFront;
 class ExpBarBack;
 class HPBarWhite;
+class BossIcon;
 
 struct Animation
 {
@@ -95,9 +96,10 @@ protected:
     _float              HitPower;
 
     EnemyHPBarFront* enemyFront = nullptr;
-    EnemyHPBarBack* enemyBack = nullptr;
-    BossHPBarFront* bossFront = nullptr;
-    ExpBarBack*     bossBack = nullptr;
-    HPBarWhite*     whiteBack = nullptr;
+    EnemyHPBarBack*  enemyBack  = nullptr;
+    BossHPBarFront*  bossFront  = nullptr;
+    ExpBarBack*      bossBack   = nullptr;
+    HPBarWhite*      whiteBack  = nullptr;
+    BossIcon*        bossIcon   = nullptr;
 };
 

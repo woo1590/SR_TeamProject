@@ -17,6 +17,7 @@ HRESULT QuestTextObj::Ready_Object()
 	auto renderer = AddComponent<UIRenderer>();
 	auto font = AddComponent<FontComponent>();
 
+	renderer->SetTexture(L"debugui");
 	renderer->SetRenderType(UIRenderType::Always);
 
 	return S_OK;

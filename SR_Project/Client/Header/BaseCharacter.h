@@ -26,6 +26,7 @@ public:
     virtual void Die() {};
     virtual void Add_Bone(string str, ObjectType objType, Object* parent, const string& mtrl);
     void PlayKnockBack(_vec3 dir, _float attack, _float dt);
+    unordered_map<std::string, Object*>& GetBones() { return Bones; }
 
 protected:
     void SetMaterial(const std::string& mtrl, string str = "Body", RENDER_ID id = RENDER_ID::Render_NonAlpha);
