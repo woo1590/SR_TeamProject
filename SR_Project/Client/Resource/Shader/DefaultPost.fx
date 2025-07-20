@@ -4,8 +4,8 @@ texture AlbedoMap : register(t0);
 sampler AlbedoSampler = sampler_state
 {
     Texture = <AlbedoMap>;
-    MinFilter = Linear;
-    MagFilter = Linear;
+    MinFilter = Point;
+    MagFilter = Point;
     MipFilter = Linear;
     AddressU = Clamp;
     AddressV = Clamp;
@@ -14,13 +14,13 @@ sampler AlbedoSampler = sampler_state
 
 struct VS_Input
 {
-    float4 position : POSITIONT;
+    float4 position : POSITION;
     float2 uv : TEXCOORD0;
 };
 
 struct VS_Output
 {
-    float4 position : POSITION;
+    float4 position : SV_Position;
     float2 uv : TEXCOORD0;
 };
 
@@ -39,4 +39,13 @@ float4 PS_Main(VS_Output input) : COLOR0
     float4 tex = tex2D(AlbedoSampler, input.uv);
     
     return tex;
+}
+
+technique DefaultPost
+{
+    pass P0
+    {
+        VertexShader = compile vs_3_0 VS_Main();
+        PixelShader = compile ps_3_0 PS_Main();
+    }
 }

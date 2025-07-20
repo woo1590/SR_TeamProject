@@ -202,6 +202,7 @@ HRESULT RenderSystem::CreatePostProcessBuffer(D3DVIEWPORT9 vp)
 	memcpy_s(inds, 2 * sizeof(INDEX32), indices.data(), 2 * sizeof(INDEX32));
 	postProcessIB->Unlock();
 
+	return S_OK;
 }
 
 void RenderSystem::PriorityPass()
@@ -315,6 +316,8 @@ void RenderSystem::DebugPass()
 
 	for (const auto& collision : DebugRender)
 		collision->Render();
+
+	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void RenderSystem::AlphaPass()
@@ -333,7 +336,12 @@ void RenderSystem::AlphaPass()
 
 void RenderSystem::PostProcessPass()
 {
+	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
+
 	postProcessShader->Begin(0);
+
+	postProcessShader->SetTexture("AlbedoMap", targetTexture);
 
 	Device->SetVertexDeclaration(decl);
 	Device->SetStreamSource(0, postProcessVB, 0, sizeof(VTXPP));
@@ -342,6 +350,8 @@ void RenderSystem::PostProcessPass()
 	Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
 
 	postProcessShader->End();
+
+	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
 
 void RenderSystem::Reset()
