@@ -75,6 +75,8 @@ public:
     void SetStatikkMode(_bool _statikk);
     _bool IsStatikkMode();
     _float GetAttackDelay();
+    _bool IsCharge();
+    std::unordered_map<string, Object*> GetBones();
 private:
     Player(ObjectManager* owner, ObjectType objType);
     virtual ~Player();
@@ -185,5 +187,6 @@ private:
     const float interactRange = 5.f;
     bool moveToInteract = false;
 
-    Object* Armor = nullptr;
+    _bool onCharge = false;
+    _bool onChargeEnd = false;
 };

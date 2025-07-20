@@ -180,12 +180,12 @@ void Village::Load()
         //enderprojectile->GetComponent<TransformComponent>()->SetPosition(150.f, 100.f, 150.f);
         //ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);
 
-        for (int i = 0; i < 5; ++i)
-        {
-            auto testMob = Slime::Create(ObjectMgr, ObjectType::Monster);
-            testMob->GetComponent<TransformComponent>()->SetPosition(20.f + i, 100.f, 20.f + i);
-            ObjectMgr->AddObject(ObjectType::Monster, testMob);
-        }
+        //for (int i = 0; i < 5; ++i)
+        //{
+        //    auto testMob = Slime::Create(ObjectMgr, ObjectType::Monster);
+        //    testMob->GetComponent<TransformComponent>()->SetPosition(20.f + i, 100.f, 20.f + i);
+        //    ObjectMgr->AddObject(ObjectType::Monster, testMob);
+        //}
     }
 }
 

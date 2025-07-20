@@ -34,6 +34,8 @@
 #include "SpriteRenderer.h"
 #include "SpriteEffect.h"
 #include "StatikkEffect.h"
+#include "ChargeDownEffect.h"
+#include "ChargeOnEffect.h"
 
 #include "SoundManager.h"
 #include "Npc.h"
@@ -97,6 +99,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     Bones["LHand"] = nullptr;
     Bones["RHand"] = nullptr;
+    Bones["Armor"] = nullptr;
 
     SetUpIdleRotations();
     UpdateNewIdleRotations();
@@ -1280,7 +1283,7 @@ void Player::EquipItem(ItemType itemType)
         itemBaseRotOffset.insert({ "crossbow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
         break;
     case ItemType::Armor:
-        Armor = Armor::Create(owner, ObjectType::Item);
+        Bones["Armor"] = Armor::Create(owner, ObjectType::Item);
         break;
     }
 }
@@ -1305,8 +1308,8 @@ void Player::UnEquipItem(ItemType itemType)
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Armor:
-        Armor->SetDead();
-        Armor = nullptr;
+        Bones["Armor"]->SetDead();
+        Bones["Armor"] = nullptr;
         break;
     }
 }
@@ -1368,6 +1371,16 @@ _bool Player::IsStatikkMode()
 _float Player::GetAttackDelay()
 {
     return AttackDuration;
+}
+
+_bool Player::IsCharge()
+{
+    return onCharge;
+}
+
+std::unordered_map<string, Object*> Player::GetBones()
+{
+    return Bones;
 }
 
 void Player::UpdateIdle(_float dt)
@@ -1618,6 +1631,7 @@ void Player::UpdateRoll(_float dt)
         vCurRot.x = 0.f;
         vCurRot.z = 0.f;
         transform->SetRotate(vCurRot);
+        transform->SetForward(transform->GetRotate());
     }
 }
 
@@ -1732,6 +1746,18 @@ void Player::UpdateShoot(_float dt) {
         ItemType leftHandType = static_cast<Item*>(Bones["LHand"])->GetItemType();
         if (input->IsKeyDown(RBUTTON) && leftHandType == ItemType::Bow)
         {
+            if (onCharge == false)
+            {
+                onCharge = true;
+                auto chargeDownEffect = ChargeDownEffect::Create(owner, ObjectType::ParticleEffect, Bones["LHand"]);
+                owner->AddObject(ObjectType::ParticleEffect, chargeDownEffect);
+            }
+            if (onChargeEnd == false && chargedTime >= 1.f)
+            {
+                onChargeEnd = true;
+                auto chargeOnEffect = ChargeOnEffect::Create(owner, ObjectType::ParticleEffect, Bones["LHand"]);
+                owner->AddObject(ObjectType::ParticleEffect, chargeOnEffect);
+            }
             auto input = EngineCore::GetInstance()->GetInputSystem();
             auto curScene = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene();
             auto mainCam = curScene->GetCameraManager()->GetMainCamera();
@@ -1766,6 +1792,9 @@ void Player::UpdateShoot(_float dt) {
         }
         else
         {
+            onCharge = false;
+            onChargeEnd = false;
+
             auto shootDir = AttackDirection;
             D3DXVec3Normalize(&shootDir, &shootDir);
             switch (shootType)
