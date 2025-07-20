@@ -246,6 +246,7 @@
     <ClInclude Include="..\Header\Rain.h" />
     <ClInclude Include="..\Header\RocketItem.h" />
     <ClInclude Include="..\Header\Atri.h" />
+    <ClInclude Include="..\Header\Shulker.h" />
     <ClInclude Include="..\Header\Slime.h" />
     <ClInclude Include="..\Header\Spawner.h" />
     <ClInclude Include="..\Header\SpawnTriggerBox.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="..\Code\Rain.cpp" />
     <ClCompile Include="..\Code\RocketItem.cpp" />
     <ClCompile Include="..\Code\Atri.cpp" />
+    <ClCompile Include="..\Code\Shulker.cpp" />
     <ClCompile Include="..\Code\Slime.cpp" />
     <ClCompile Include="..\Code\Spawner.cpp" />
     <ClCompile Include="..\Code\SpawnTriggerBox.cpp" />

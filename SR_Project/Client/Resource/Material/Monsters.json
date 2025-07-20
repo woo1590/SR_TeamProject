@@ -294,6 +294,24 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/BlastlingLeg.dds"
       }
+    },
+
+    "ShulkerBottom_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Shulker_Bottom.dds"
+      }
+    },
+
+    "ShulkerFace_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Shulker_Face.dds"
+      }
+    },
+
+    "ShulkerTop_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/Shulker_Top.dds"
+      }
     }
   }
 }
