@@ -35,38 +35,55 @@ HRESULT ObjectManager::Ready_ObjectMgr()
 
 void ObjectManager::Update(float dt)
 {
+	auto uiState = UIRenderer::GetCurRenderType();
 	for (int type = 0; type < static_cast<int>(ObjectType::Count); ++type)
 	{
 		if (type == static_cast<int>(ObjectType::CollisionBlock))
 			continue;
 
-		for (const auto& object : Objects[type])
+		for (auto obj : Objects[type])
 		{
-			object->Update(dt);
+			if (type == static_cast<int>(ObjectType::UI))
+			{
+				auto ui = obj->GetComponent<UIRenderer>();
+				if (ui->GetRenderType() != uiState && ui->GetRenderType() != UIRenderType::Always)
+					continue;
+			}
+			obj->Update(dt);
 		}
 	}
 }
 
 void ObjectManager::Late_Update(float dt)
 {
+	auto uiState = UIRenderer::GetCurRenderType();
 	for (int type = 0; type < static_cast<int>(ObjectType::Count); ++type)
 	{
-		if (type == static_cast<int>(ObjectType::CollisionBlock))
-			continue;
+		if (type == static_cast<int>(ObjectType::CollisionBlock)) continue;
 
-		for (auto iter = Objects[type].begin(); iter != Objects[type].end();)
+		auto& list = Objects[type];
+		for (auto it = list.begin(); it != list.end();)
 		{
-
-			if ((*iter)->IsDead())
+			auto obj = *it;
+			if (obj->IsDead())
 			{
-				(*iter)->UnRegister();
-				Safe_Release((*iter));
-				iter = Objects[type].erase(iter);
+				obj->UnRegister();
+				Safe_Release(obj);
+				it = list.erase(it);
 			}
 			else
 			{
-				(*iter)->Late_Update(dt);
-				++iter;
+				if (type == static_cast<int>(ObjectType::UI))
+				{
+					auto ui = obj->GetComponent<UIRenderer>();
+					if (ui->GetRenderType() != uiState && ui->GetRenderType() != UIRenderType::Always)
+					{
+						++it;
+						continue;
+					}
+				}
+				obj->Late_Update(dt);
+				++it;
 			}
 		}
 	}

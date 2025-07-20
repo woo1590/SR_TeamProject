@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "UILoader.h"
+#include "ChangeScene.h"
+#include "GameManager.h"
 
 /* --- Engine forward-only Header ------------------------------------------- */
 #include "TransformComponent.h"
@@ -375,12 +377,13 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
             transform->SetParent(rootTransform);
 
             auto button = node->GetComponent<HoverButtonComponent>();
-            button->SetOnClick([=]() 
+            button->SetOnClick([loadID]() 
                 {
-                    auto newScene = LoadingScene::Create(loadID);
-                    EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(newScene);
+                    GameManager::GetInstance()->ClearScene(loadID);
+                    auto command = ChangeScene::Create(loadID);
+                    EngineCore::GetInstance()->RegisterCommand(command);
                 });
-            ADD(node);
+            ADD(node); 
         };
 
     AddMap(-600.f, 80.f, LOADID::Stage1);

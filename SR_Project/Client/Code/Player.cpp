@@ -1674,7 +1674,6 @@ void Player::UpdateRoll(_float dt)
         vCurRot.x = 0.f;
         vCurRot.z = 0.f;
         transform->SetRotate(vCurRot);
-        transform->SetForward(transform->GetRotate());
     }
 }
 

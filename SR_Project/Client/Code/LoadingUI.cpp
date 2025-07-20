@@ -16,6 +16,7 @@ HRESULT LoadingUI::Ready_Object()
 	auto transform = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 	auto font = AddComponent<FontComponent>();
+	renderer->SetRenderType(UIRenderType::MainGame);
 	
 	//transform->SetScale(0.65f, 0.4f);
 	transform->SetPosition(WINCX * 0.5f, WINCY * 0.5f); 
@@ -148,7 +149,7 @@ void LoadingUI::Render_Text(float dt)
 	{
 		font->AddText(prefixText, {240, 545, 800, 600}, Color::White, DT_LEFT | DT_TOP, FontType::DeathCount);
 		font->AddText(sceneNameText, {240, 585, 800, 700}, Color::Yellow, DT_LEFT | DT_TOP, FontType::DeathText);
-		font->AddText(sceneTipText, {750, 585, 1240, 720}, Color::White, 
+		font->AddText(sceneTipText, {750, 545, 1240, 720}, Color::White, 
 			DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::MineCraftFont);
 	}
 }

@@ -20,7 +20,8 @@ HRESULT LoadingStone::Ready_Object()
 
 	auto renderer = AddComponent<UIRenderer>();
 	renderer->SetTexture(L"loading_stone");
-	//renderer->SetPivot(UIPivot::LeftTop);
+	renderer->SetRenderType(UIRenderType::Always);
+	
 
 	auto animator = AddComponent<AnimatorComponent>();
 	animator->SetFrameSize(240, 240);

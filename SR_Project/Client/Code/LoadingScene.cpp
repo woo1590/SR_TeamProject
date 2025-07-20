@@ -45,6 +45,8 @@ void LoadingScene::Load()
 	
 	loadingUI->SetInfo(nextSceneID);
 
+	loadingUI->GetComponent<UIRenderer>()->SetCurRenderType(UIRenderType::MainGame);
+
 	ObjectMgr->AddUIObject(loadingUI);
 	loadingStone = LoadingStone::Create(nullptr);
 	if (nextSceneID != LOADID::Village)
