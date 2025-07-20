@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -181,6 +181,8 @@
     <ClInclude Include="..\Header\Arrows.h" />
     <ClInclude Include="..\Header\BabySlime.h" />
     <ClInclude Include="..\Header\BackStep.h" />
+    <ClInclude Include="..\Header\Blastling.h" />
+    <ClInclude Include="..\Header\BlastlingProjectile.h" />
     <ClInclude Include="..\Header\BoostItem.h" />
     <ClInclude Include="..\Header\BossChase.h" />
     <ClInclude Include="..\Header\BossHPBarFront.h" />
@@ -335,6 +337,8 @@
     <ClCompile Include="..\Code\Arrows.cpp" />
     <ClCompile Include="..\Code\BabySlime.cpp" />
     <ClCompile Include="..\Code\BackStep.cpp" />
+    <ClCompile Include="..\Code\Blastling.cpp" />
+    <ClCompile Include="..\Code\BlastlingProjectile.cpp" />
     <ClCompile Include="..\Code\BoostItem.cpp" />
     <ClCompile Include="..\Code\BossChase.cpp" />
     <ClCompile Include="..\Code\BossHPBarFront.cpp" />

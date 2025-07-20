@@ -84,10 +84,11 @@ void FireBlock::Update(_float dt)
 			if (deadTimer >= deadTime)
 				SetDead();
 		}
-		else
+
+		if(activeTime)
 		{
-			deadTimer += dt;
-			if (deadTimer >= 5.f)
+			activeTimer += dt;
+			if (activeTimer >= activeTime)
 				SetActive(false);
 		}
 	}

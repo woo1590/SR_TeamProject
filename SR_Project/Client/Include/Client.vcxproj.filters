@@ -517,6 +517,12 @@
     <Filter Include="02. Object\Item\Armor">
       <UniqueIdentifier>{d796ad83-1286-451b-949e-e4b3b830eadd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\Blastling">
+      <UniqueIdentifier>{03e264c6-68fa-4ba6-b45f-365bdd787154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Blastling\Projectile">
+      <UniqueIdentifier>{7f64f833-45ac-456d-a30e-dc8aa8cc66aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -994,6 +1000,12 @@
     <ClInclude Include="..\Header\Armor.h">
       <Filter>02. Object\Item\Armor</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Blastling.h">
+      <Filter>02. Object\Monster\Blastling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BlastlingProjectile.h">
+      <Filter>02. Object\Monster\Blastling\Projectile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1452,6 +1464,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Armor.cpp">
       <Filter>02. Object\Item\Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Blastling.cpp">
+      <Filter>02. Object\Monster\Blastling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BlastlingProjectile.cpp">
+      <Filter>02. Object\Monster\Blastling\Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

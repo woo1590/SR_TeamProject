@@ -270,6 +270,30 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/EnderProjectile.dds"
       }
+    },
+
+    "BlastlingArm_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/BlastlingArm.dds"
+      }
+    },
+
+    "BlastlingBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/BlastlingBody.dds"
+      }
+    },
+
+    "BlastlingHead_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/BlastlingHead.dds"
+      }
+    },
+
+    "BlastlingLeg_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/BlastlingLeg.dds"
+      }
     }
   }
 }

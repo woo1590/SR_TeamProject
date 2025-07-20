@@ -25,7 +25,7 @@
 #include "InfoComponent.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
-	:Monster(owner, objType)
+	:Boss(owner, objType)
 {
 }
 
@@ -49,7 +49,7 @@ Ender* Ender::Create(ObjectManager* owner, ObjectType objType)
 
 HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Monster::Ready_Object(owner, objType);
+    Boss::Ready_Object(owner, objType);
 
     InitTransform(objType);
     InitTree();
@@ -71,13 +71,13 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void Ender::Update(_float dt)
 {
-    Monster::Update(dt);
+    Boss::Update(dt);
     PlayAnimation(dt);
 }
 
 void Ender::Late_Update(_float dt)
 {
-    Monster::Late_Update(dt);
+    Boss::Late_Update(dt);
 }
 
 void Ender::InitTransform(ObjectType objType)
@@ -321,7 +321,7 @@ void Ender::PlayAnimation(_float dt)
 
 void Ender::Free()
 {
-    Monster::Free();
+    Boss::Free();
 }
 
 void Ender::Crawl()
@@ -475,7 +475,8 @@ void Ender::MoveTo(_vec3 targetPos, _float dt)
     {
         auto FireTransform = FireBlocks[FireIndex]->GetComponent<TransformComponent>();
         FireTransform->SetPosition(pos.x, pos.y - 9.f, pos.z);
-        FireBlocks[FireIndex]->SetDeadTimer(0.f);
+        FireBlocks[FireIndex]->SetActiveTime(5.f);
+        FireBlocks[FireIndex]->SetActiveTimer(0.f);
         FireBlocks[FireIndex++]->SetActive(true);
 
         if (FireIndex >= 50) FireIndex = 0;

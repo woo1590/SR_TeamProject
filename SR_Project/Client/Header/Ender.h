@@ -1,5 +1,5 @@
 #pragma once
-#include "Monster.h"
+#include "Boss.h"
 
 enum class EnderState {CrawlToStand, StandToCrawl, Crawl, Stand, Hidden, HideIdle, Sprout, CrossLaser, LineLaser, Projectile, Die};
 
@@ -8,7 +8,7 @@ class LaserHead;
 class EnderProjectile;
 class FireBlock;
 class Ender :
-    public Monster
+    public Boss
 {
 protected:
     Ender(ObjectManager* owner, ObjectType objType);
