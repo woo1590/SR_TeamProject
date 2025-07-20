@@ -31,6 +31,8 @@ public:
     void SetCamera(Object* cam);
     void ClearSystem();
 
+    void SetShader(const std::string& key);
+
     // --------------------------------------------------------------------
     void SetUIRenderState(UIRenderType newType);
     UIRenderType GetCurRenderState() const { return uiRenderState; }
@@ -44,9 +46,11 @@ public:
 
     // ----------------------------------------------------------------------
 private:
+    HRESULT CreatePostProcessBuffer(D3DVIEWPORT9 vp);
     void PriorityPass();
     void NonAlphaPass();
     void AlphaPass();
+    void PostProcessPass();
     void DebugPass();
     void Reset();   
 // --------------------------------------
@@ -63,6 +67,18 @@ private:
     Shader* CurrShader = nullptr;
 
     LPDIRECT3DDEVICE9 Device;
+
+    /*---------RenderTarget---------*/
+
+    LPDIRECT3DTEXTURE9 targetTexture = nullptr;
+    LPDIRECT3DSURFACE9 targetSurface = nullptr;
+    LPDIRECT3DSURFACE9 originSurface = nullptr;
+
+    LPDIRECT3DVERTEXBUFFER9 postProcessVB = nullptr;
+    LPDIRECT3DINDEXBUFFER9 postProcessIB = nullptr;
+    LPDIRECT3DVERTEXDECLARATION9 decl = nullptr;
+
+    Shader* postProcessShader = nullptr;
 
     /*--------------------------------------------*/
     ID3DXSprite* spriteBatch = nullptr;

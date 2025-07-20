@@ -507,10 +507,10 @@
     </Filter>
     <Filter Include="02. Object\Effect\StatikkEffect">
       <UniqueIdentifier>{e94717a6-9d5f-45c6-a324-be71501f7154}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="00. MainApp\GameManager">
       <UniqueIdentifier>{d7a4d68d-0c6f-47aa-8a0c-3ea57bb9826e}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingStone">
       <UniqueIdentifier>{06db0d23-85e4-4985-802f-2865ac82b4e3}</UniqueIdentifier>
     </Filter>
@@ -543,6 +543,9 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Effect">
       <UniqueIdentifier>{68a6fd74-6ea6-4498-92f0-24cfa460cdd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Etc\Shader/Fx\PostProcessing">
+      <UniqueIdentifier>{c978140d-f8e3-495d-8e20-ceae53fed125}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1023,10 +1026,10 @@
     </ClInclude>
     <ClInclude Include="..\Header\StatikkEffect.h">
       <Filter>02. Object\Effect\StatikkEffect</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\GameManager.h">
       <Filter>00. MainApp\GameManager</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\Header\LoadingStone.h">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
     </ClInclude>
@@ -1509,10 +1512,10 @@
     </ClCompile>
     <ClCompile Include="..\Code\StatikkEffect.cpp">
       <Filter>02. Object\Effect\StatikkEffect</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\GameManager.cpp">
       <Filter>00. MainApp\GameManager</Filter>
-    </ClCompile>   
+    </ClCompile>
     <ClCompile Include="..\Code\LoadingStone.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
     </ClCompile>
@@ -1589,6 +1592,9 @@
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\LaserShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\DefaultPost.fx">
+      <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

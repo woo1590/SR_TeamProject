@@ -13,6 +13,7 @@
 #include "SoundManager.h"
 #include "ImGuiManager.h"
 #include "GameManager.h"
+#include "RenderSystem.h"
 
 //scene
 #include "LoadingScene.h"
@@ -53,6 +54,8 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
         return E_FAIL;
     if (FAILED(LoadDefaultResource()))
         return E_FAIL;
+
+    EngineCore::GetInstance()->GetRenderSystem()->SetShader("DefaultPost");
 
     /*---------Start Scene----------*/
     Scene* Start = LoadingScene::Create(LOADID::Village);
@@ -278,6 +281,7 @@ HRESULT MainApp::LoadDefaultResource()
         resource->LoadShader("../Resource/Shader/ExplodeParticle.fx", "ExplodeParticle");
         resource->LoadShader("../Resource/Shader/LaserShader.fx", "LaserShader");
         resource->LoadShader("../Resource/Shader/FireBlock.fx", "FireBlockShader");
+        resource->LoadShader("../Resource/Shader/DefaultPost.fx", "DefaultPost");
     }
 
     /*---------------------Load Material--------------------------*/
