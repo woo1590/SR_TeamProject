@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "SoundManager.h"
 #include "ImGuiManager.h"
+#include "GameManager.h"
 
 //scene
 #include "LoadingScene.h"
@@ -48,7 +49,10 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
     if (FAILED(Core->GetFrameManager()->AddFrame(L"Frame60", 60.f)))
         return E_FAIL;
 
-    LoadDefaultResource();
+    if(FAILED(GameManager::GetInstance()->Ready_GameManager()))
+        return E_FAIL;
+    if (FAILED(LoadDefaultResource()))
+        return E_FAIL;
 
     /*---------Start Scene----------*/
     Scene* Start = LoadingScene::Create(LOADID::Village);

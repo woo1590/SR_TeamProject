@@ -6,6 +6,7 @@
 #include "ChangeScene.h"
 
 //system
+#include "GameManager.h"
 #include "ObjectManager.h"
 #include "RenderSystem.h"
 #include "ResourceManager.h"
@@ -92,6 +93,8 @@ Village* Village::Create()
 
 void Village::Load()
 {
+	auto game = GameManager::GetInstance();
+
     /*-------------------------Create System-----------------------------*/
     {
 #ifdef USE_IMGUI
@@ -107,15 +110,24 @@ void Village::Load()
         BlockMgr = BlockManager::Create(this);
         ChunkMgr = ChunkManager::Create(this);
         uiMgr = UIManager::Create(this);
+
+		
     }
 
     /*-------------------------Create Camera-----------------------------*/
     {
-        player = Player::Create(ObjectMgr, ObjectType::Player);
-        ObjectMgr->AddObject(ObjectType::Player, player);
+		if (game->GetPlayer())
+		{
+			player = game->GetPlayer();
+			player->SetOwner(ObjectMgr);
+		}
+		else
+		{
+			player = Player::Create(ObjectMgr, ObjectType::Player);
+			game->SetPlayer(player);
+		}
 
-        auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
-        tnt->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
+        ObjectMgr->AddObject(ObjectType::Player, player);
 
         auto fCam = FirstCam::Create(ObjectMgr);
         auto tCam = ThirdCam::Create(ObjectMgr);
@@ -142,36 +154,41 @@ void Village::Load()
 
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 
-        player->GetComponent<TransformComponent>()->SetPosition(260.f, 20.f, 57.f);
+		if (game->IsSceneClear(LOADID::Village))
+		{
+			player->GetComponent<TransformComponent>()->SetPosition(160.f, 20.f, 200.f);
+		}
+		else
+		{
+			player->GetComponent<TransformComponent>()->SetPosition(260.f, 20.f, 57.f);
+			auto npc = Npc::Create(ObjectMgr, ObjectType::Monster);
+			npc->GetComponent<TransformComponent>()->SetPosition(270.f, 20.f, 43.f);
+			ObjectMgr->AddObject(ObjectType::Neutral, npc);
 
-		auto npc = Npc::Create(ObjectMgr, ObjectType::Monster);
-		npc->GetComponent<TransformComponent>()->SetPosition(270.f, 20.f, 43.f);
-		ObjectMgr->AddObject(ObjectType::Neutral, npc);
+			auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+			trigger1->GetComponent<TransformComponent>()->SetPosition(238.f, 0.f, 85.f);
+			trigger1->AddSpawner(SpawnType::Zombie, _vec3(208.f, 10.f, 116.f), _vec3(0.f, 0.f, 0.f));
+			trigger1->AddSpawner(SpawnType::Zombie, _vec3(205.f, 40.f, 85.f), _vec3(0.f, 0.f, 0.f));
+			trigger1->AddSpawner(SpawnType::Skeleton, _vec3(185.f, 10.f, 120.f), _vec3(0.f, 0.f, 0.f));
 
-		auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-		trigger1->GetComponent<TransformComponent>()->SetPosition(238.f, 0.f, 85.f);
-		trigger1->AddSpawner(SpawnType::Zombie, _vec3(208.f, 10.f, 116.f), _vec3(0.f, 0.f, 0.f));
-		trigger1->AddSpawner(SpawnType::Zombie, _vec3(205.f, 40.f, 85.f), _vec3(0.f, 0.f, 0.f));
-		trigger1->AddSpawner(SpawnType::Skeleton, _vec3(185.f, 10.f, 120.f), _vec3(0.f, 0.f, 0.f));
+			auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+			trigger2->GetComponent<TransformComponent>()->SetPosition(156.f, 0.f, 116.f);
+			trigger2->AddSpawner(SpawnType::JungleZombie, _vec3(110.f, 10.f, 70.f), _vec3(0.f, 0.f, 0.f));
+			trigger2->AddSpawner(SpawnType::Zombie, _vec3(103.f, 10.f, 40.f), _vec3(0.f, 0.f, 0.f));
+			trigger2->AddSpawner(SpawnType::Creeper, _vec3(98.f, 40.f, 81.f), _vec3(0.f, 0.f, 0.f));
+			trigger2->AddSpawner(SpawnType::Skeleton, _vec3(70.f, 10.f, 60.f), _vec3(0.f, 0.f, 0.f));
 
-		auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-		trigger2->GetComponent<TransformComponent>()->SetPosition(156.f, 0.f, 116.f);
-		trigger2->AddSpawner(SpawnType::JungleZombie, _vec3(110.f, 10.f, 70.f), _vec3(0.f, 0.f, 0.f));
-		trigger2->AddSpawner(SpawnType::Zombie, _vec3(103.f, 10.f, 40.f), _vec3(0.f, 0.f, 0.f));
-		trigger2->AddSpawner(SpawnType::Creeper, _vec3(98.f, 40.f, 81.f), _vec3(0.f, 0.f, 0.f));
-		trigger2->AddSpawner(SpawnType::Skeleton, _vec3(70.f, 10.f, 60.f), _vec3(0.f, 0.f, 0.f));
+			auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+			trigger3->GetComponent<TransformComponent>()->SetPosition(47.f, 0.f, 133.f);
+			trigger3->AddSpawner(SpawnType::Slime, _vec3(65.f, 10.f, 200.f), _vec3(0.f, 0.f, 0.f));
+			trigger3->AddSpawner(SpawnType::Zombie, _vec3(100.f, 10.f, 200.f), _vec3(0.f, 0.f, 0.f));
+			trigger3->AddSpawner(SpawnType::Skeleton, _vec3(71.f, 30.f, 220.f), _vec3(0.f, 0.f, 0.f));
+			trigger3->AddSpawner(SpawnType::Skeleton, _vec3(95.f, 10.f, 220.f), _vec3(0.f, 0.f, 0.f));
 
-		auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-		trigger3->GetComponent<TransformComponent>()->SetPosition(47.f, 0.f, 133.f);
-		trigger3->AddSpawner(SpawnType::Slime, _vec3(65.f, 10.f, 200.f), _vec3(0.f, 0.f, 0.f));
-		trigger3->AddSpawner(SpawnType::Zombie, _vec3(100.f, 10.f, 200.f), _vec3(0.f, 0.f, 0.f));
-		trigger3->AddSpawner(SpawnType::Skeleton, _vec3(71.f, 30.f, 220.f), _vec3(0.f, 0.f, 0.f));
-		trigger3->AddSpawner(SpawnType::Skeleton, _vec3(95.f, 10.f, 220.f), _vec3(0.f, 0.f, 0.f));
-
-		ObjectMgr->AddObject(ObjectType::Neutral, trigger1);
-		ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
-		ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
-
+			ObjectMgr->AddObject(ObjectType::Neutral, trigger1);
+			ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
+			ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
+		}
     }
 }
 
@@ -181,7 +198,6 @@ void Village::Update(_float dt)
 	PhysicsSys->Update(dt);
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
-
 
     {
         auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -196,6 +212,7 @@ void Village::Update(_float dt)
 		{
             auto command = ChangeScene::Create(LOADID::Stage1);
             EngineCore::GetInstance()->RegisterCommand(command);
+			GameManager::GetInstance()->ClearScene(LOADID::Village);
 		}
 
 		if (Input->IsKeyPressed(NUM9))

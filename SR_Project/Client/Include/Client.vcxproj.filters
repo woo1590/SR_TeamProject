@@ -517,6 +517,9 @@
     <Filter Include="02. Object\Item\Armor">
       <UniqueIdentifier>{d796ad83-1286-451b-949e-e4b3b830eadd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. MainApp\GameManager">
+      <UniqueIdentifier>{d7a4d68d-0c6f-47aa-8a0c-3ea57bb9826e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -994,6 +997,9 @@
     <ClInclude Include="..\Header\Armor.h">
       <Filter>02. Object\Item\Armor</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\GameManager.h">
+      <Filter>00. MainApp\GameManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1452,6 +1458,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Armor.cpp">
       <Filter>02. Object\Item\Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameManager.cpp">
+      <Filter>00. MainApp\GameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

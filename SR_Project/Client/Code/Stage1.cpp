@@ -3,6 +3,8 @@
 #include "EngineCore.h"
 #include "LoadingScene.h"
 #include "SceneManager.h"
+#include "ChangeScene.h"
+#include "GameManager.h"
 
 //system
 #include "ObjectManager.h"
@@ -86,6 +88,8 @@ Stage1* Stage1::Create()
 
 void Stage1::Load()
 {
+	auto game = GameManager::GetInstance();
+
 	/*-------------------------Create System-----------------------------*/
 	{
 		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");
@@ -102,12 +106,18 @@ void Stage1::Load()
 
 	/*-------------------------Create Camera-----------------------------*/
 	{
-		player = Player::Create(ObjectMgr, ObjectType::Player);
-		ObjectMgr->AddObject(ObjectType::Player, player);
-		player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
+		if (game->GetPlayer())
+		{
+			player = game->GetPlayer();
+			player->SetOwner(ObjectMgr);
+		}
+		else
+		{
+			player = Player::Create(ObjectMgr, ObjectType::Player);
+			game->SetPlayer(player);
+		}
 
-		auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
-		tnt->TntToPlayer(player);
+		ObjectMgr->AddObject(ObjectType::Player, player);
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
@@ -128,11 +138,23 @@ void Stage1::Load()
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 
 		Grid->InsertBlock();
+	}
 
+	/*------------------Create Object---------------*/
+	{
 		UILoader loader;
 		loader.LoadUI(ObjectMgr);
 
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+
+		if (game->IsSceneClear(LOADID::Stage1))
+		{
+			player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
+		}
+		else
+		{
+			player->GetComponent<TransformComponent>()->SetPosition(60.f, 100.f, 60.f);
+		}
 	}
 
 }
@@ -151,6 +173,13 @@ void Stage1::Update(_float dt)
 
 	if (Input->IsKeyPressed(NUM2))
 		CameraMgr->SetMainCamera(L"Third_Camera");
+
+	if (Input->IsKeyPressed(NUM4))
+	{
+		auto command = ChangeScene::Create(LOADID::Village);
+		EngineCore::GetInstance()->RegisterCommand(command);
+		GameManager::GetInstance()->ClearScene(LOADID::Stage1);
+	}
 
 }
 
