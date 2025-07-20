@@ -519,6 +519,9 @@
     </Filter>
     <Filter Include="02. Object\Effect\StatikkEffect">
       <UniqueIdentifier>{e94717a6-9d5f-45c6-a324-be71501f7154}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="00. MainApp\GameManager">
+      <UniqueIdentifier>{d7a4d68d-0c6f-47aa-8a0c-3ea57bb9826e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1005,6 +1008,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\StatikkEffect.h">
       <Filter>02. Object\Effect\StatikkEffect</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\GameManager.h">
+      <Filter>00. MainApp\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1473,6 +1479,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StatikkEffect.cpp">
       <Filter>02. Object\Effect\StatikkEffect</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\GameManager.cpp">
+      <Filter>00. MainApp\GameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -207,6 +207,7 @@
     <ClInclude Include="..\Header\Firework.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
     <ClInclude Include="..\Header\BloodEffect.h" />
+    <ClInclude Include="..\Header\GameManager.h" />
     <ClInclude Include="..\Header\GhostCloakItem.h" />
     <ClInclude Include="..\Header\IsChangingState.h" />
     <ClInclude Include="..\Header\IsRandomMoveCheck.h" />
@@ -364,6 +365,7 @@
     <ClCompile Include="..\Code\Firework.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
     <ClCompile Include="..\Code\BloodEffect.cpp" />
+    <ClCompile Include="..\Code\GameManager.cpp" />
     <ClCompile Include="..\Code\GhostCloakItem.cpp" />
     <ClCompile Include="..\Code\IsChangingState.cpp" />
     <ClCompile Include="..\Code\IsRandomMoveCheck.cpp" />

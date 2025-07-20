@@ -133,6 +133,21 @@ void StaticGrid::InsertBlock()
 	}
 }
 
+_vec3 StaticGrid::GetRandomGrid(_vec3 originPos, _float range)
+{
+    int minX = WorldToCell(originPos.x - range);
+    int minY = WorldToCell(originPos.y - range);
+    int minZ = WorldToCell(originPos.z - range);
+
+    int maxX = WorldToCell(originPos.x + range);
+    int maxY = WorldToCell(originPos.y + range);
+    int maxZ = WorldToCell(originPos.z + range);
+
+    //for(int x=minX; x<maxX; ++x)
+    //    for(int )
+    return _vec3();
+}
+
 CollisionComponent* StaticGrid::QueryCell(int cx, int cy, int cz)
 {
 	UINT64 key = HashCell(cx, cy, cz);

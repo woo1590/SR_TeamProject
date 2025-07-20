@@ -3,6 +3,8 @@
 #include "EngineCore.h"
 #include "LoadingScene.h"
 #include "SceneManager.h"
+#include "ChangeScene.h"
+#include "GameManager.h"
 
 //system
 #include "ObjectManager.h"
@@ -86,6 +88,9 @@ Stage1* Stage1::Create()
 
 void Stage1::Load()
 {
+	auto game = GameManager::GetInstance();
+
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
 	/*-------------------------Create System-----------------------------*/
 	{
 		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");
@@ -102,12 +107,18 @@ void Stage1::Load()
 
 	/*-------------------------Create Camera-----------------------------*/
 	{
-		player = Player::Create(ObjectMgr, ObjectType::Player);
-		ObjectMgr->AddObject(ObjectType::Player, player);
-		player->GetComponent<TransformComponent>()->SetPosition(60.f, 1000.f, 60.f);
+		if (game->GetPlayer())
+		{
+			player = game->GetPlayer();
+			player->SetOwner(ObjectMgr);
+		}
+		else
+		{
+			player = Player::Create(ObjectMgr, ObjectType::Player);
+			game->SetPlayer(player);
+		}
 
-		auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
-		tnt->TntToPlayer(player);
+		ObjectMgr->AddObject(ObjectType::Player, player);
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
@@ -128,13 +139,18 @@ void Stage1::Load()
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 
 		Grid->InsertBlock();
+	}
 
+	/*------------------Create Object---------------*/
+	{
 		UILoader loader;
 		loader.LoadUI(ObjectMgr);
 
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-	}
+		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
+		player->GetComponent<TransformComponent>()->SetPosition(110.f, 70.f, 170.f);
+	}
 }
 
 void Stage1::Update(_float dt)
@@ -152,6 +168,12 @@ void Stage1::Update(_float dt)
 	if (Input->IsKeyPressed(NUM2))
 		CameraMgr->SetMainCamera(L"Third_Camera");
 
+	if (Input->IsKeyPressed(NUM4))
+	{
+		auto command = ChangeScene::Create(LOADID::Village);
+		EngineCore::GetInstance()->RegisterCommand(command);
+		GameManager::GetInstance()->ClearScene(LOADID::Stage1);
+	}
 }
 
 void Stage1::Late_Update(_float dt)
@@ -163,6 +185,43 @@ void Stage1::Unload()
 {
 	EngineCore::GetInstance()->GetSoundManager()->Stop("TestBGM");
 }
+
+#ifdef USE_IMGUI
+void Stage1::DebugIMGUI()
+{
+	ImGui::Begin("Player Inspector", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+	if (!player)
+		return;
+
+	_vec3 pos = player->GetComponent<TransformComponent>()->GetPosition();
+	_vec3 camPos = CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
+
+	if (ImGui::BeginTable("##PosTable", 2,
+		ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg))
+	{
+		ImGui::TableSetupColumn("Property", ImGuiTableColumnFlags_WidthFixed, 120.0f);
+		ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthStretch);
+		ImGui::TableHeadersRow();
+
+		ImGui::TableNextRow();
+		ImGui::TableSetColumnIndex(0);
+		ImGui::TextUnformatted("Player Position");
+		ImGui::TableSetColumnIndex(1);
+		ImGui::Text("%.2f, %.2f, %.2f", pos.x, pos.y, pos.z);
+
+		ImGui::TableNextRow();
+		ImGui::TableSetColumnIndex(0);
+		ImGui::TextUnformatted("Camera Position");
+		ImGui::TableSetColumnIndex(1);
+		ImGui::Text("%.2f, %.2f, %.2f", camPos.x, camPos.y, camPos.z);
+
+		ImGui::EndTable();
+	}
+	ImGui::End();
+}
+#endif
+
 
 void Stage1::Free()
 {

@@ -1370,6 +1370,26 @@ _float Player::GetAttackDelay()
     return AttackDuration;
 }
 
+void Player::SetOwner(ObjectManager* owner)
+{
+    this->owner = owner;
+
+    for (auto& bone : Bones)
+    {
+        if (bone.second)
+        {
+            bone.second->SetOwner(owner);
+            owner->AddObject(ObjectType::Bone, bone.second);
+        }
+    }
+
+    auto collision = GetComponent<CollisionComponent>();
+
+    auto physics = GetComponent<PhysicsComponent>();
+    physics->SetGround(false);
+    GetScene()->GetPhysicsStstem()->RegisterBody(physics);
+}
+
 void Player::UpdateIdle(_float dt)
 {
     if (comboTime < comboLimit)

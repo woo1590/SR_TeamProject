@@ -22,6 +22,8 @@ public:
     ObjectManager* GetOwner()const;
     Scene* GetScene()const;
     void UnRegister();
+
+    virtual void SetOwner(ObjectManager* owner) { this->owner = owner; }
     
     void AddChild(Object* child) { children.push_back(child); }
     const vector<Object*>& GetChildren() const { return children; }

@@ -33,7 +33,6 @@ public:
     void SetCount(int count) { Count = count; }
 
     /*-----------Only Client----------*/
-    void SetOwner(ObjectManager* owner);
 
 protected:
     void Free() override;
