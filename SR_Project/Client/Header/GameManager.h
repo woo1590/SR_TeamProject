@@ -16,7 +16,7 @@ public:
     void ClearScene(LOADID sceneID);
     _bool IsSceneClear(LOADID sceneID);
 
-    void SetPlayer(Player* player) { this->player = player; }
+    void SetPlayer(Player* player);
     Player* GetPlayer()const { return player; }
 private:
     void Free()override;

@@ -153,7 +153,7 @@ void Stage1::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-		player->GetComponent<TransformComponent>()->SetPosition(110.f, 70.f, 170.f);
+		player->GetComponent<TransformComponent>()->SetPosition(110.f, 100.f, 170.f);
 	}
 }
 

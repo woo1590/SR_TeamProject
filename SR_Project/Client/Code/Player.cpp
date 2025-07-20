@@ -68,6 +68,12 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
     BaseCharacter::Ready_Object(owner, objType);
 
+    for (auto& bone : Bones)
+    {
+        if (bone.second)
+            bone.second->AddRef();
+    }
+
     auto transform = AddComponent<TransformComponent>();
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 

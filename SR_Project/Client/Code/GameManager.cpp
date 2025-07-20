@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GameManager.h"
+#include "Player.h"
 
 IMPLEMENT_SINGLETON(GameManager);
 
@@ -28,6 +29,12 @@ void GameManager::ClearScene(LOADID sceneID)
 _bool GameManager::IsSceneClear(LOADID sceneID)
 {
 	return clearScenes[static_cast<_uint>(sceneID)];
+}
+
+void GameManager::SetPlayer(Player* player)
+{
+	this->player = player;
+	player->AddRef();
 }
 
 void GameManager::Free()

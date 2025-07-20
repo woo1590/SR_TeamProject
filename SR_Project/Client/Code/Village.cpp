@@ -129,13 +129,12 @@ void Village::Load()
 			player = Player::Create(ObjectMgr, ObjectType::Player);
 			game->SetPlayer(player);
 		}
-		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 
-		
         ObjectMgr->AddObject(ObjectType::Player, player);
 		
         auto fCam = FirstCam::Create(ObjectMgr);
         auto tCam = ThirdCam::Create(ObjectMgr);
+		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 		
         CameraMgr->AddCamera(L"First_Camera", fCam);
         CameraMgr->AddCamera(L"Third_Camera", tCam);
