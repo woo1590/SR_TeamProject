@@ -47,7 +47,7 @@ HRESULT TikkleEffect::Ready_Object()
 	renderer->SetMesh("Quad_Mesh");
 	renderer->SetMaterial("Tikkle_Mtrl");
 	auto mtrl = renderer->GetMaterial();
-	mtrl->SetVec3("color", _vec3(1.f, 0.f, 0.f));
+	mtrl->SetVec3("color", _vec3(1.f, 0.5f, 0.f));
 
 	return S_OK;
 }
