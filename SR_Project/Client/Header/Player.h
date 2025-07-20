@@ -88,6 +88,7 @@ private:
     void CheckJump();
     void CheckTargetDead();
     void CheckSkill();
+    void ResetWalkTimer();
 
     void InteractWithNPC(Object* obj);
 

@@ -33,6 +33,7 @@
 #include "StaticGrid.h"
 #include "SpriteRenderer.h"
 #include "SpriteEffect.h"
+#include "StatikkEffect.h"
 
 #include "SoundManager.h"
 #include "Npc.h"
@@ -1249,6 +1250,12 @@ void Player::CheckSkill()
     }
 }
 
+void Player::ResetWalkTimer()
+{
+    if (State != ePlayerState::WALK)
+        walkEffectTimer = 0.f;
+}
+
 void Player::EquipItem(ItemType itemType)
 {
     switch (itemType) {
@@ -1957,6 +1964,7 @@ void Player::KeyInput(_float dt)
     CheckJump();
     CheckSkill();
     CamRotTest(dt);
+    ResetWalkTimer();
 }
 
 void Player::CheckStateRoll(_float dt)
