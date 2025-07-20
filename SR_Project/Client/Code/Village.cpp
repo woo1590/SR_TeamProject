@@ -139,46 +139,53 @@ void Village::Load()
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
         ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
-        player->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 50.f);
+        player->GetComponent<TransformComponent>()->SetPosition(0.f, 100.f, 0.f);
 
-        auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
-        tnt->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 100.f);
+        //auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
+        //tnt->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 100.f);
+        //
+        //auto npcdolbok = NPCdolbok::Create(ObjectMgr, ObjectType::Neutral);
+        //npcdolbok->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 80.f);
+        //auto npcshop = NPCShop::Create(ObjectMgr, ObjectType::Neutral);
+        //npcshop->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 90.f);
+        //
+        //auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+        //trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
+        //trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+        //trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+        //trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+        //trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
+        //
+        //auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+        //trigger2->SetTriggerPosition(_vec3(124.f, 5.f, 86.f));
+        //trigger2->AddSpawner(SpawnType::Skeleton, _vec3(154.f, 30.f, 120.f), _vec3(0.f, 0.f, 0.f));
+        //trigger2->AddSpawner(SpawnType::Creeper, _vec3(174.f, 30.f, 100.f), _vec3(0.f, 0.f, 0.f));
+        //trigger2->AddSpawner(SpawnType::Zombie, _vec3(120.f, 30.f, 90.f), _vec3(0.f, 0.f, 0.f));
+        //trigger2->AddSpawner(SpawnType::RedGolem, _vec3(150.f, 30.f, 200.f), _vec3(0.f, 0.f, 0.f));
+        //
+        //auto slime = Slime::Create(ObjectMgr, ObjectType::Monster);
+        //slime->GetComponent<TransformComponent>()->SetPosition(10.f, 100.f, 10.f);
+        //auto purpleSlime = PurpleSlime::Create(ObjectMgr, ObjectType::Monster);
+        //purpleSlime->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
+        //
+        //ObjectMgr->AddObject(ObjectType::Monster, slime);
+        //ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
+        //ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
+        //
+        //auto ender = RedGolem::Create(ObjectMgr, ObjectType::Monster);
+        //ender->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
+        //ObjectMgr->AddObject(ObjectType::Monster, ender);
+        //
+        //auto enderprojectile = EnderProjectile::Create(ObjectMgr, ObjectType::Projectile);
+        //enderprojectile->GetComponent<TransformComponent>()->SetPosition(150.f, 100.f, 150.f);
+        //ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);
 
-        auto npcdolbok = NPCdolbok::Create(ObjectMgr, ObjectType::Neutral);
-        npcdolbok->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 80.f);
-        auto npcshop = NPCShop::Create(ObjectMgr, ObjectType::Neutral);
-        npcshop->GetComponent<TransformComponent>()->SetPosition(50.f, 1000.f, 90.f);
-
-        auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-        trigger1->SetTriggerPosition(_vec3(90.f, 5.f, 30.f));
-        trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
-        trigger1->AddSpawner(SpawnType::Zombie, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
-        trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
-        trigger1->AddSpawner(SpawnType::Skeleton, _vec3(100.f, 6.f, 35.f), _vec3(0.f, 0.f, 0.f));
-
-        auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-        trigger2->SetTriggerPosition(_vec3(124.f, 5.f, 86.f));
-        trigger2->AddSpawner(SpawnType::Skeleton, _vec3(154.f, 30.f, 120.f), _vec3(0.f, 0.f, 0.f));
-        trigger2->AddSpawner(SpawnType::Creeper, _vec3(174.f, 30.f, 100.f), _vec3(0.f, 0.f, 0.f));
-        trigger2->AddSpawner(SpawnType::Zombie, _vec3(120.f, 30.f, 90.f), _vec3(0.f, 0.f, 0.f));
-        trigger2->AddSpawner(SpawnType::RedGolem, _vec3(150.f, 30.f, 200.f), _vec3(0.f, 0.f, 0.f));
-
-        auto slime = Slime::Create(ObjectMgr, ObjectType::Monster);
-        slime->GetComponent<TransformComponent>()->SetPosition(50.f, 400.f, 50.f);
-        auto purpleSlime = PurpleSlime::Create(ObjectMgr, ObjectType::Monster);
-        purpleSlime->GetComponent<TransformComponent>()->SetPosition(50.f, 400.f, 50.f);
-
-        ObjectMgr->AddObject(ObjectType::Monster, slime);
-        ObjectMgr->AddObject(ObjectType::Monster, purpleSlime);
-        ObjectMgr->AddObject(ObjectType::Neutral, Npc::Create(ObjectMgr, ObjectType::Monster));
-
-        auto ender = RedGolem::Create(ObjectMgr, ObjectType::Monster);
-        ender->GetComponent<TransformComponent>()->SetPosition(20.f, 100.f, 20.f);
-        ObjectMgr->AddObject(ObjectType::Monster, ender);
-
-        auto enderprojectile = EnderProjectile::Create(ObjectMgr, ObjectType::Projectile);
-        enderprojectile->GetComponent<TransformComponent>()->SetPosition(150.f, 100.f, 150.f);
-        ObjectMgr->AddObject(ObjectType::Projectile, enderprojectile);
+        for (int i = 0; i < 5; ++i)
+        {
+            auto testMob = Zombie::Create(ObjectMgr, ObjectType::Monster);
+            testMob->GetComponent<TransformComponent>()->SetPosition(20.f + i, 100.f, 20.f + i);
+            ObjectMgr->AddObject(ObjectType::Monster, testMob);
+        }
     }
 }
 
