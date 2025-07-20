@@ -1312,8 +1312,8 @@ void Player::EquipItem(ItemType itemType)
         Bones["LHand"]->AddRef();
         break;
     case ItemType::Armor:
-        Armor = Armor::Create(owner, ObjectType::Item);
-        Armor->AddRef();
+        Bones["Armor"] = Armor::Create(owner, ObjectType::Item);
+        Bones["Armor"]->AddRef();
         break;
     }
 }
@@ -1342,9 +1342,9 @@ void Player::UnEquipItem(ItemType itemType)
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Armor:
-        Armor->SetDead();
-        Safe_Release(Armor);
-        Armor = nullptr;
+        Bones["Armor"]->SetDead();
+        Safe_Release(Bones["Armor"]);
+        Bones["Armor"] = nullptr;
         break;
     }
 }
@@ -1417,7 +1417,7 @@ void Player::SetOwner(ObjectManager* owner)
         if (bone.second)
         {
             bone.second->SetOwner(owner);
-            owner->AddObject(ObjectType::Bone, bone.second);
+            owner->AddObject(bone.second->GetObjectType(), bone.second);
         }
     }
 

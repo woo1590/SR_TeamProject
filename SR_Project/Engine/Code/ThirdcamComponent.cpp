@@ -72,10 +72,14 @@ void ThirdcamComponent::Update(_float dt)
         shakeTimer += dt;
     }
 
-    _vec3 targetPos = FollowTarget->GetPosition();
-    _vec3 camPos = targetPos + Offset + shakeOffset;
+    _vec3 targetPos = FollowTarget->GetPosition();          //목표 대상 위치 = 플레이어 위치
 
-    Target->SetPosition(camPos);
+    _vec3 finalCamPos = targetPos + Offset + shakeOffset;   //카메라 최종위치 = 플레이어 위치 + offset
+    _vec3 currPos = Target->GetPosition();                  //카메라 현재 위치
+
+    finalCamPos.y = std::lerp(currPos.y, finalCamPos.y, 5.f * dt);  //y값 선형보간 
+
+    Target->SetPosition(finalCamPos);
     Target->SetForward(Direction);
 }
 
