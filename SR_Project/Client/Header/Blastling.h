@@ -53,5 +53,6 @@ private:
 
     _bool       LeftAttack = false;
     _bool       RightAttack = false;
+    _float      DieStartY;
 };
 

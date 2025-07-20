@@ -19,6 +19,7 @@
 #include "SequenceNode.h"
 #include "SelectorNode.h"
 #include "BlastlingProjectile.h"
+#include "Teleport.h"
 
 Blastling::Blastling(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -108,6 +109,9 @@ void Blastling::Die()
     {
         State = MonsterState::Die;
         DieAnim.ElapsedTime = 0;
+        DieStartY = Bones["Body"]->GetComponent<TransformComponent>()->GetPosition().y;
+        auto collision = GetComponent<CollisionComponent>();
+        collision->SetSize(_vec3(0.1f, 0.1f, 0.1f));
     }
 }
 
@@ -116,6 +120,20 @@ void Blastling::Hit(_vec3 dir, _float power)
     if (State != MonsterState::Hit)
     {
         State = MonsterState::Hit;
+
+        HitAnim.IsRunning = true;
+        HitAnim.IsEnd = false;
+
+        HitAnim.ElapsedTime = 0.f;
+        HitAnim.DelayTime = 0.f;
+
+        HitDir = dir;
+        HitPower = power;
+
+        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+        Monster::Hit(dir, power);
+
     }
 }
 
@@ -188,7 +206,7 @@ void Blastling::InitTree()
     rotateThenAttack->AddChild(new AttackNode());
     IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(rotateThenAttack);
 
-    IsTargetClose* closecheck = new IsTargetClose(new BackStepNode());
+    IsTargetClose* closecheck = new IsTargetClose(new TeleportNode());
 
     SelectorNode* attackBehavior = new SelectorNode();
     attackBehavior->AddChild(closecheck);
@@ -214,6 +232,20 @@ void Blastling::InitAnimation()
     //Attack
     AttackAnim.ElapsedTime = 0.f;
     AttackAnim.TotalTime = 1.f;
+
+    //Hit
+    HitAnim.Start = 0;
+    HitAnim.End = 30.f;
+    HitAnim.ElapsedTime = 0.f;
+    HitAnim.TotalTime = 0.3f;
+    HitAnim.DelayTime = 0.f;
+    HitAnim.Phase = Ready;
+
+    //Die
+    DieAnim.Start = 0;
+    DieAnim.End = 90;
+    DieAnim.ElapsedTime = 0.f;
+    DieAnim.TotalTime = 0.7f;
 }
 
 void Blastling::PlayAnimation(_float dt)
@@ -361,10 +393,55 @@ void Blastling::PlayAttack(_float dt)
 
 void Blastling::PlayDie(_float dt)
 {
+    DieAnim.ElapsedTime += dt;
+
+    _float t = clamp(DieAnim.ElapsedTime / DieAnim.TotalTime, 0.f, 1.f);
+
+    _float Angle = lerp(DieAnim.Start, DieAnim.End, t);
+
+    SetRotation({ 0.f, 0.f, D3DXToRadian(Angle) });
+    float yOffset = lerp(DieStartY, DieStartY - 6.f,t);
+
+    auto transform = Bones["Body"]->GetComponent<TransformComponent>();
+    _vec3 pos = transform->GetPosition();
+    transform->SetPosition(_vec3(pos.x, yOffset, pos.z));
+
+    if (DieAnim.ElapsedTime > DieAnim.TotalTime)
+    {
+        DieAnim.IsEnd = true;
+        HeadFire->SetDead();
+        SetDead();
+        DeleteBar();
+    }
 }
 
 void Blastling::PlayHit(_float dt)
 {
+    HitAnim.ElapsedTime += dt;
+
+    _float t = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
+
+    _float Angle = lerp(HitAnim.Start, HitAnim.End, t);
+
+    SetRotation({ -D3DXToRadian(Angle / 3), 0.f, 0.f }, "Head");
+    SetRotation({ 0.f, 0.f, -D3DXToRadian(Angle/2) }, "LArm");
+    SetRotation({ 0.f, 0.f, D3DXToRadian(Angle/2) }, "RArm");
+    SetRotation({ 0.f, D3DXToRadian(Angle), D3DXToRadian(Angle / 2) }, "RLeg");
+
+    PlayKnockBack(HitDir, HitPower, dt);
+
+    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
+    {
+        HitAnim.IsRunning = false;
+        HitAnim.IsEnd = true;
+        HitAnim.ElapsedTime = 0.f;
+
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "LArm");
+        SetRotation({ D3DXToRadian(-90.f), 0.f, 0.f }, "RArm");
+        SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
+        SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
+        *IsHit = false;
+    }
 }
 
 void Blastling::OnCollisionStay(Object* other)

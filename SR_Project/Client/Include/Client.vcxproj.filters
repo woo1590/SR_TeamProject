@@ -1006,6 +1006,9 @@
     <ClInclude Include="..\Header\BlastlingProjectile.h">
       <Filter>02. Object\Monster\Blastling\Projectile</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Teleport.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1470,6 +1473,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\BlastlingProjectile.cpp">
       <Filter>02. Object\Monster\Blastling\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Teleport.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
