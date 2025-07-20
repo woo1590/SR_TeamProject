@@ -543,6 +543,12 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Effect">
       <UniqueIdentifier>{68a6fd74-6ea6-4498-92f0-24cfa460cdd3}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\Monster\Blastling">
+      <UniqueIdentifier>{03e264c6-68fa-4ba6-b45f-365bdd787154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Blastling\Projectile">
+      <UniqueIdentifier>{7f64f833-45ac-456d-a30e-dc8aa8cc66aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1047,6 +1053,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\LevelUpEffect.h">
       <Filter>02. Object\UIObj\Effect</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\Blastling.h">
+      <Filter>02. Object\Monster\Blastling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BlastlingProjectile.h">
+      <Filter>02. Object\Monster\Blastling\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Teleport.h">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1533,6 +1548,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\LevelUpEffect.cpp">
       <Filter>02. Object\UIObj\Effect</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\Blastling.cpp">
+      <Filter>02. Object\Monster\Blastling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BlastlingProjectile.cpp">
+      <Filter>02. Object\Monster\Blastling\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Teleport.cpp">
+      <Filter>02. Object\Monster\BTNode\Action\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

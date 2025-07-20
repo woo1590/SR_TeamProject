@@ -121,7 +121,7 @@ void BaseCharacter::PlayKnockBack(_vec3 dir, _float attack, _float dt)
 
     _vec3 knockback;
     knockback.x = (dir.x / length) * attack;
-    knockback.y = 0.2 * attack;
+    knockback.y = 0 * attack;
     knockback.z = (dir.z / length) * attack;
 
     HitMoveTo(&knockback, dt);

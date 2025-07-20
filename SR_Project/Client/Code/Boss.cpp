@@ -83,4 +83,5 @@ void Boss::OnCollisionStay(Object* other)
 
 void Boss::Free()
 {
+	Monster::Free();
 }

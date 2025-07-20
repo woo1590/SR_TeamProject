@@ -15,7 +15,8 @@ public:
     void Late_Update(_float dt)override;
     void SetColor(_vec3 color);
     void SetDeadTime(_float time) { deadTime = time; }
-    void SetDeadTimer(_float time) { deadTimer = time; }
+    void SetActiveTime(_float time) { activeTime = time; }
+    void SetActiveTimer(_float time) { activeTimer = time; }
     void SetActive(_bool Active);
     void    OnCollisionStay(Object* other);
 private:
@@ -28,5 +29,7 @@ private:
     _uint currFrame = 0;
     _float deadTime = 0.f;
     _float deadTimer = 0.f;
+    _float activeTime = 0.f;
+    _float activeTimer = 0.f;
 };
 
