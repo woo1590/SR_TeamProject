@@ -31,7 +31,7 @@ BTStatus BossChase::Tick(float dt, BlackBoard* bb)
 
 	_vec3 Dir = TargetPos - SelfPos;
 
-	static_cast<BaseCharacter*>(self)->MoveTo(D3DXVec3Normalize(&Dir, &Dir), dt);
+	static_cast<BaseCharacter*>(self)->MoveTo(&Dir, dt);
 	return BTStatus::Success;
 }
 

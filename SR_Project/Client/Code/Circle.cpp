@@ -52,6 +52,7 @@ HRESULT Circle::Ready_Object(ObjectManager* owner, ObjectType objType, Object* p
 void Circle::Update(_float dt)
 {
     Object::Update(dt);
+    PlayScaleAnimation(dt);
 }
 
 void Circle::Late_Update(_float dt)
@@ -62,7 +63,8 @@ void Circle::Late_Update(_float dt)
 void Circle::SetOn(_bool On)
 {
     auto renderer = GetComponent<MeshRenderer>();
-    if (On)
+    IsOn = On;
+    if (IsOn)
     {
         renderer->SetRenderID(RENDER_ID::Render_Alpha);
     }
@@ -70,6 +72,19 @@ void Circle::SetOn(_bool On)
     {
         renderer->SetRenderID(RENDER_ID::Render_None);
     }
+}
+
+void Circle::PlayScaleAnimation(_float dt)
+{
+    if (!IsOn) return;
+
+    ElapsedTime += dt;
+
+    auto transform = GetComponent<TransformComponent>();
+
+    float Scale = (sinf(ElapsedTime * D3DX_PI) * 0.5f) + 4.5f;
+
+    transform->SetScale(_vec3(Scale, 0.1f, Scale));
 }
 
 void Circle::Free()

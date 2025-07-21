@@ -48,7 +48,7 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_PLAYER);
-    collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
+    collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other); });
     collision->SetSize(_vec3(5.f, 5.f, 5.f));
 
     auto physics = AddComponent<PhysicsComponent>();
@@ -98,15 +98,16 @@ void GolemProjectile::SetOn(_bool On)
         ElapsedTime = 0.f;
         collision->SetSize(_vec3(0.f, 0.f, 0.f));
         renderer->SetRenderID(RENDER_ID::Render_None);
+        static_cast<Circle*>(circle)->SetOn(false);
     }
     else
     {
         collision->SetSize(_vec3(5.f, 5.f, 5.f));
         renderer->SetRenderID(RENDER_ID::Render_Alpha);
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("FireProjectile");
+        static_cast<Circle*>(circle)->SetOn(true);
+        ElapsedTime = 0.f;
     }
-
-    static_cast<Circle*>(circle)->SetOn(IsOn);
 }
 
 void GolemProjectile::PlayScaleAnimation(_float dt)
@@ -132,7 +133,7 @@ void GolemProjectile::OnCollisionStay(Object* other)
     if (objType == ObjectType::Player)
     {
         auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
-        playerStat->AddHp(-1);
+        playerStat->AddHp(-0.5f);
     }
 }
 
