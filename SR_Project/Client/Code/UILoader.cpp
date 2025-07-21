@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "UILoader.h"
 #include "ChangeScene.h"
 #include "GameManager.h"
@@ -287,18 +287,18 @@ void UILoader::BuildFilters(ObjectManager* objMgr, InventoryManager* invMgr, Too
                 wstring name = L"";
 
                 if (!typeOpt.has_value()) 
-                    name = L"ÀüÃ¼";
+                    name = L"ì „ì²´";
                 else
                 {
                     switch (typeOpt.value())
                     {
-                    case ItemType::Sword:   name = L"±ÙÁ¢"; break;
-                    case ItemType::Bow:     name = L"¿ø°Å¸®"; break;
-                    case ItemType::Armor:   name = L"¹æ¾î±¸"; break;
-                    case ItemType::Potion:  name = L"À¯¹°"; break;
-                    case ItemType::Enchant: name = L"È¿°ú ºÎ¿©µÊ"; break;
-                    case ItemType::Costume: name = L"ÄÚ½º¸ÞÆ½"; break;
-                    default:                name = L"¾Ë ¼ö ¾øÀ½"; break;
+                    case ItemType::Sword:   name = L"ê·¼ì ‘"; break;
+                    case ItemType::Bow:     name = L"ì›ê±°ë¦¬"; break;
+                    case ItemType::Armor:   name = L"ë°©ì–´êµ¬"; break;
+                    case ItemType::Potion:  name = L"ìœ ë¬¼"; break;
+                    case ItemType::Enchant: name = L"íš¨ê³¼ ë¶€ì—¬ë¨"; break;
+                    case ItemType::Costume: name = L"ì½”ìŠ¤ë©”í‹±"; break;
+                    default:                name = L"ì•Œ ìˆ˜ ì—†ìŒ"; break;
                     }
                 }
                 tooltipMgr->ShowInventoryTooltip(name, pos.x, pos.y);
@@ -396,9 +396,9 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
             ADD(panel);
         };
 
-    AddText(400, 100, L"ÁÖ ´ë·ú");
-    AddText(610, 100, L"¼¶ ¿µÁö");
-    AddText(820, 100, L"´Ù¸¥ Â÷¿ø");
+    AddText(400, 100, L"ì£¼ ëŒ€ë¥™");
+    AddText(610, 100, L"ì„¬ ì˜ì§€");
+    AddText(820, 100, L"ë‹¤ë¥¸ ì°¨ì›");
 
     auto worldTooltip = WorldTooltip::Create(objMgr);
     worldTooltip->GetComponent<UIRenderer>()->SetVisible(false);
