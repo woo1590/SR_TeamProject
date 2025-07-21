@@ -66,6 +66,10 @@
     "Tikkle_Mtrl":{
       "fx": "LaserShader",
       "textures": { "AlbedoMap": "../Resource/Asset/JW/Tikkle.png" }
+    },
+    "Roll_Mtrl":{
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/Roll.png" }
     }
   }
 }

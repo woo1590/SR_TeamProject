@@ -150,7 +150,6 @@ void Sword::SetCollisionEnter(Object* other)
         }
         hitMonsters.push_back(other);
 
-        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitSword");
         float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
         float weaponValue = GetComponent<InfoComponent<ItemInfo>>()->GetInfo().value;
         float swordAttackDamage = playerPower + weaponValue;
@@ -159,6 +158,8 @@ void Sword::SetCollisionEnter(Object* other)
         targetMonster->SetHit(true);
         targetMonster->Hit(targetMonster->GetComponent<TransformComponent>()->GetPosition() - ownerObject->GetComponent<TransformComponent>()->GetPosition(), swordAttackDamage);
         other->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-swordAttackDamage);
+
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitSword");
 
         if (player->IsStatikkMode())
         {
@@ -181,6 +182,8 @@ void Sword::SetCollisionEnter(Object* other)
 
             delayTimer = 0.f;
             player->SetStatikkMode(false);
+
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Statikk");
         }
     }
 }

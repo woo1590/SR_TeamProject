@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Player.h"
 #include "Bone.h"
 #include "TransformComponent.h"
@@ -37,6 +37,7 @@
 #include "ChargeDownEffect.h"
 #include "ChargeOnEffect.h"
 #include "ChargeFrontEffect.h"
+#include "RollEffect.h"
 
 #include "SoundManager.h"
 #include "Npc.h"
@@ -1253,12 +1254,17 @@ void Player::CheckTargetDead()
 void Player::CheckSkill()
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
-    static const KEY keySkill = C;
+    static const KEY keyStatikk = C;
+    static const KEY keyFirework = V;
 
     auto physics = GetComponent<PhysicsComponent>();
-    if (input->IsKeyPressed(keySkill))
+    if (input->IsKeyPressed(keyStatikk))
     {
         SetStatikkMode(true);
+    }
+    else if (input->IsKeyPressed(keyFirework))
+    {
+        ChangeShootType();
     }
 }
 
@@ -1326,6 +1332,12 @@ void Player::UnEquipItem(ItemType itemType)
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Armor:
+        auto armorBones = static_cast<Armor*>(Bones["Armor"])->GetBones();
+        for (auto& bone : armorBones)
+        {
+            bone.second->SetDead();
+            Safe_Release(bone.second);
+        }
         Bones["Armor"]->SetDead();
         Safe_Release(Bones["Armor"]);
         Bones["Armor"] = nullptr;
@@ -1621,6 +1633,33 @@ void Player::UpdateWalk(_float dt) {
 void Player::UpdateRoll(_float dt)
 {
     RollTime += dt;
+
+    if (RollTime == dt)
+    {
+        _int iMax = 10;
+        for (int i = 0;i < iMax;++i)
+        {
+            auto rollEffect = RollEffect::Create(owner, ObjectType::ParticleEffect, this, (360.f / iMax) * i);
+            owner->AddObject(ObjectType::ParticleEffect, rollEffect);
+        }
+    }
+    
+    rollEffectTimer += dt;
+    if (RollTime > 0.25f && rollEffectTimer > rollEffectTerm)
+    {
+        rollEffectTimer = 0.f;
+        _vec3 vDir = { 0.f,0.f,1.f };
+        _vec3 vMove;
+        D3DXVec3Normalize(&vMove, &PlayerDirection);
+
+        _float dot = D3DXVec3Dot(&vDir, &vMove);
+        _float fAngle = D3DXToDegree(acosf(dot));
+
+        auto rollEffect = RollEffect::Create(owner, ObjectType::ParticleEffect, this, fAngle - 90);
+        owner->AddObject(ObjectType::ParticleEffect, rollEffect);
+        auto rollEffect2 = RollEffect::Create(owner, ObjectType::ParticleEffect, this, fAngle + 90);
+        owner->AddObject(ObjectType::ParticleEffect, rollEffect2);
+    }
 
     //Rotate Bones
     float fProgress = RollTime / RollDuration;

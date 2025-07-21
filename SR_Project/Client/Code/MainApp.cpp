@@ -322,6 +322,8 @@ HRESULT MainApp::LoadDefaultResource()
         //sound->LoadSound("WalkOnSand1", "../Resource/Sound/SFX/WalkOnSand1.mp3", false);
         //sound->LoadSound("WalkOnSand2", "../Resource/Sound/SFX/WalkOnSand2.mp3", false);
         //sound->LoadSound("HitPlayer", "../Resource/Sound/SFX/HitPlayer.mp3", false);
+        sound->LoadSound("Statikk", "../Resource/Sound/SFX/Statikk.mp3", false);
+        sound->LoadSound("Charge", "../Resource/Sound/SFX/Charge.mp3", false);
 
         //Monster
         //sound->LoadSound("WalkZombie1", "../Resource/Sound/SFX/WalkZombie1.mp3", false);
