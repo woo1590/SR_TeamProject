@@ -568,6 +568,9 @@
     <Filter Include="02. Object\Monster\Shulker">
       <UniqueIdentifier>{ed4277bf-0ab7-4059-8fca-698c47866197}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Effect\RollEffect">
+      <UniqueIdentifier>{9ebc4e24-e451-441b-8a2b-963d27ff20a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1096,6 +1099,9 @@
     <ClInclude Include="..\Header\Shulker.h">
       <Filter>02. Object\Monster\Shulker</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RollEffect.h">
+      <Filter>02. Object\Effect\RollEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1605,6 +1611,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Shulker.cpp">
       <Filter>02. Object\Monster\Shulker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RollEffect.cpp">
+      <Filter>02. Object\Effect\RollEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
