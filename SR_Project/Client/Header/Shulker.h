@@ -1,5 +1,7 @@
 #pragma once
 #include "Monster.h"
+
+class ShulkerBullet;
 class Shulker :
     public Monster
 {
@@ -18,15 +20,20 @@ public:
     void Die() override;
 
 protected:
+    void InitBullet();
     void InitTransform(ObjectType objType);
     void InitTree();
     void InitAnimation() override;
     void PlayAnimation(_float dt) override;
 
-    void PlayIdle(_float dt) override;
+    void PlayAttack(_float dt) override;
     void PlayDie(_float dt) override;
 
 protected:
     void Free() override;
+
+private:
+    vector<ShulkerBullet*> bullets;
+    _int                   Index = 0;
 };
 

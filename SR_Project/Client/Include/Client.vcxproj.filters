@@ -568,6 +568,9 @@
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame\MaskObj">
       <UniqueIdentifier>{036e52e1-bedb-4c6d-a055-08ea1c7485ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Monster\Shulker\ShulkerBullet">
+      <UniqueIdentifier>{8878c13f-67dc-4b5a-9702-a487663a69d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1099,6 +1102,9 @@
     <ClInclude Include="..\Header\LoadingUI.h">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ShulkerBullet.h">
+      <Filter>02. Object\Monster\Shulker\ShulkerBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1611,6 +1617,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\LoadingUI.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShulkerBullet.cpp">
+      <Filter>02. Object\Monster\Shulker\ShulkerBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

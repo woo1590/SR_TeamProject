@@ -360,6 +360,9 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("IdleBlastling", "../Resource/Sound/SFX/IdleBlastling.mp3", false);
         sound->LoadSound("AttackBlastling", "../Resource/Sound/SFX/AttackBlastling.mp3", false);
         sound->LoadSound("HurtBlastling", "../Resource/Sound/SFX/HurtBlastling.mp3", false);
+        
+        sound->LoadSound("AttackShulker", "../Resource/Sound/SFX/AttackShulker.mp3", false);
+        sound->LoadSound("DeathShulker", "../Resource/Sound/SFX/DeathShulker.mp3", false);
 
         //Map
         //sound->LoadSound("OpenChest", "../Resource/Sound/SFX/OpenChest.mp3", false);
