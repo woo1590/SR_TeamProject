@@ -561,9 +561,12 @@
     </Filter>
     <Filter Include="02. Object\Effect\TikkleEffect">
       <UniqueIdentifier>{ad819689-0fc3-430a-bf86-a84eb5959533}</UniqueIdentifier>
-    </Filter>   
+    </Filter>
     <Filter Include="99. Etc\Shader/Fx\PostProcessing">
       <UniqueIdentifier>{c978140d-f8e3-495d-8e20-ceae53fed125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Monster\Shulker">
+      <UniqueIdentifier>{ed4277bf-0ab7-4059-8fca-698c47866197}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1090,6 +1093,9 @@
     <ClInclude Include="..\Header\TikkleEffect.h">
       <Filter>02. Object\Effect\TikkleEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Shulker.h">
+      <Filter>02. Object\Monster\Shulker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1596,6 +1602,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\TikkleEffect.cpp">
       <Filter>02. Object\Effect\TikkleEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shulker.cpp">
+      <Filter>02. Object\Monster\Shulker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

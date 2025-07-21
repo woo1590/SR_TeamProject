@@ -54,6 +54,7 @@ technique SkyboxPriority
 {
     pass P0
     {
+        CullMode = None;
         // Compile and set shaders
         VertexShader = compile vs_3_0 VS_Main();
         PixelShader = compile ps_3_0 PS_Main();
