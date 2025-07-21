@@ -61,7 +61,7 @@ namespace Engine
 
 	enum class BarDirection {Vertical, Horizontal, ClockWise16};
 
-	enum class UIPivot {Center, Bottom, LeftTop, Left, Right};
+	enum class UIPivot {Center, Bottom, LeftTop, Left, Right, Top};
 
 	enum class SlotSize {Small, Default, Large};
 

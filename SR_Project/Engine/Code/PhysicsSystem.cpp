@@ -77,12 +77,12 @@ void PhysicsSystem::ApplyGravity(_float dt)
 	{
 		if (!body->GetMass())
 			continue;
+
+		if (body->IsGrounded())
+			continue;
+
 		if (body->IsKinematic())
 			continue;
-		//if (body->IsGrounded())
-		//	continue;
-
-		body->SetGround(false);
 
 		_vec3 velocity = body->GetVelocity();
 

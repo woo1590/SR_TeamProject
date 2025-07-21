@@ -2,7 +2,6 @@
 #include "ChunkLoader.h"
 #include "Chunk.h"
 #include "StaticBlock.h"
-#include "DynamicBlock.h"
 
 ChunkLoader::ChunkLoader()
 {
@@ -31,7 +30,8 @@ HRESULT ChunkLoader::Ready_ChunkLoader()
 
 HRESULT ChunkLoader::LoadDB(const std::wstring& loadPath)
 {
-	
+
+
 	return S_OK;
 }
 

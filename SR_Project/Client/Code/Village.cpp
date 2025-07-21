@@ -68,7 +68,6 @@
 #include "NPCdolbok.h"
 #include "NPCShop.h"
 #include "InventoryCam.h"
-#include "Blastling.h"
 
 //component
 #include "TransformComponent.h"
@@ -115,6 +114,7 @@ void Village::Load()
         ChunkMgr = ChunkManager::Create(this);
         uiMgr = UIManager::Create(this);
 
+	
     }
 
     /*-------------------------Create Camera-----------------------------*/
@@ -153,8 +153,6 @@ void Village::Load()
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 
-		BlockMgr->LoadDB("VillageMap");
-
 		Grid->InsertBlock();
 
         UILoader loader;
@@ -168,8 +166,8 @@ void Village::Load()
 		}
 		else
 		{
-			player->GetComponent<TransformComponent>()->SetPosition(260.f, 30.f, 57.f);
-			auto npc = Npc::Create(ObjectMgr, ObjectType::Neutral);
+			player->GetComponent<TransformComponent>()->SetPosition(260.f, 20.f, 57.f);
+			auto npc = Npc::Create(ObjectMgr, ObjectType::Monster);
 			npc->GetComponent<TransformComponent>()->SetPosition(270.f, 20.f, 43.f);
 			ObjectMgr->AddObject(ObjectType::Neutral, npc);
 
@@ -196,10 +194,6 @@ void Village::Load()
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger1);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
-
-			auto blast = Blastling::Create(ObjectMgr, ObjectType::Monster);
-			blast->GetComponent<TransformComponent>()->SetPosition(260.f, 30.f, 57.f);
-			ObjectMgr->AddObject(ObjectType::Monster, blast);
 		}
     }
 }

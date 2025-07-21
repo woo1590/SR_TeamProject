@@ -33,18 +33,16 @@ BlastlingProjectile* BlastlingProjectile::Create(ObjectManager* owner, ObjectTyp
 
 HRESULT BlastlingProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
 {
-    Object::Ready_Object();
     auto transform = AddComponent<TransformComponent>();
     transform->SetScale(0.5f, 0.5f, 0.5f);
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_NonAlpha);
 
     auto collision = AddComponent<CollisionComponent>();
-    collision->AddCollider<AABBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_DEFAULT | LAYER_PLAYER);
-    collision->SetSize(_vec3(1.f, 1.f, 1.f));
     collision->SetCollisionEnter([this](Object* other) {this->OnCollisionEnter(other); });
+    collision->SetSize(_vec3(1.f, 1.f, 1.f));
 
     auto physics = AddComponent<PhysicsComponent>();
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);

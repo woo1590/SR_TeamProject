@@ -30,16 +30,9 @@ HRESULT ChargeOnEffect::Ready_Object()
 	SetDeadTime(1000.0f);
 
 	Scale = 0.3f;
-	auto player = static_cast<Player*>(owner->GetFrontObject(ObjectType::Player));;
-	auto playerAttackDirection = player->GetAttackDirection();
-	playerAttackDirection.y = 0.f;
-	auto pos = effectOwner->GetWorldPosition();
-
-	_vec3 vDir;
-	D3DXVec3Normalize(&vDir, &playerAttackDirection);
-
 	auto transform = AddComponent<TransformComponent>();
-	transform->SetPosition(pos + vDir);
+	auto pos = effectOwner->GetWorldPosition();
+	transform->SetPosition(pos);
 
 	transform->SetScale(_vec3(Scale, Scale, 0.1f));
 
@@ -59,17 +52,11 @@ void ChargeOnEffect::Update(_float dt)
 {
 	Effect::Update(dt);
 
-	auto player = static_cast<Player*>(owner->GetFrontObject(ObjectType::Player));;
-	auto playerAttackDirection = player->GetAttackDirection();
-	playerAttackDirection.y = 0.f;
-	auto pos = effectOwner->GetWorldPosition();
-
-	_vec3 vDir;
-	D3DXVec3Normalize(&vDir, &playerAttackDirection);
-
 	auto transform = GetComponent<TransformComponent>();
-	transform->SetPosition(pos + vDir);
+	auto pos = effectOwner->GetWorldPosition();
+	transform->SetPosition(pos);
 
+	auto player = static_cast<Player*>(owner->GetFrontObject(ObjectType::Player));
 	if (!player->IsCharge())
 	{
 		SetDead();

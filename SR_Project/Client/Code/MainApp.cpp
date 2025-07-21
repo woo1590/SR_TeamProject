@@ -13,7 +13,6 @@
 #include "SoundManager.h"
 #include "ImGuiManager.h"
 #include "GameManager.h"
-#include "RenderSystem.h"
 
 //scene
 #include "LoadingScene.h"
@@ -54,8 +53,6 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
         return E_FAIL;
     if (FAILED(LoadDefaultResource()))
         return E_FAIL;
-
-    EngineCore::GetInstance()->GetRenderSystem()->SetShader("DefaultPost");
 
     /*---------Start Scene----------*/
     Scene* Start = LoadingScene::Create(LOADID::Village);
@@ -281,7 +278,6 @@ HRESULT MainApp::LoadDefaultResource()
         resource->LoadShader("../Resource/Shader/ExplodeParticle.fx", "ExplodeParticle");
         resource->LoadShader("../Resource/Shader/LaserShader.fx", "LaserShader");
         resource->LoadShader("../Resource/Shader/FireBlock.fx", "FireBlockShader");
-        resource->LoadShader("../Resource/Shader/DefaultPost.fx", "DefaultPost");
     }
 
     /*---------------------Load Material--------------------------*/
@@ -355,11 +351,6 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("LineLaserEnder", "../Resource/Sound/SFX/LineLaserEnder.mp3", false);
         sound->LoadSound("ProjectileEnder", "../Resource/Sound/SFX/ProjectileEnder.mp3", false);
         sound->LoadSound("DeathEnder", "../Resource/Sound/SFX/DeathEnder.mp3", false);
-
-        sound->LoadSound("DeathBlastling", "../Resource/Sound/SFX/DeathBlastling.mp3", false);
-        sound->LoadSound("IdleBlastling", "../Resource/Sound/SFX/IdleBlastling.mp3", false);
-        sound->LoadSound("AttackBlastling", "../Resource/Sound/SFX/AttackBlastling.mp3", false);
-        sound->LoadSound("HurtBlastling", "../Resource/Sound/SFX/HurtBlastling.mp3", false);
 
         //Map
         //sound->LoadSound("OpenChest", "../Resource/Sound/SFX/OpenChest.mp3", false);
@@ -477,6 +468,8 @@ HRESULT MainApp::LoadDefaultResource()
         {L"costumefilter_hover",      eUI, 2},
         {L"locked_node",              eUI, 2},
         {L"map_node_front",           eUI, 2},
+        {L"cooldown_rect",            eUI, 2},
+
 
         // =====================================================================
         // Layer 3
@@ -540,6 +533,8 @@ HRESULT MainApp::LoadDefaultResource()
         {L"atri_closeeye",            eUI, 9},
         {L"atri_confuse",             eUI, 9},
         {L"atri_brave",               eUI, 9},
+
+        {L"gray",                     eUI, 9},
 
         // =====================================================================
         // Layer 100+ (팝업 및 최상단 UI)

@@ -9,8 +9,6 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 #include "UIManager.h"
-#include "ResourceManager.h"
-#include "Shader.h"
 
 //component
 #include "UIRenderer.h"
@@ -51,42 +49,22 @@ HRESULT RenderSystem::Ready_RenderSystem()
 	Device = GraphicDevice::GetInstance()->GetDevice();
 	Device->AddRef();
 
-	/*---------Init RenderState-----------*/
-	{
-		Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
-		/*---------------Light Setting---------------------*/
-		Device->SetRenderState(D3DRS_LIGHTING, FALSE);
-		Device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
-		Device->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
+	/*---------------Light Setting---------------------*/
+	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	Device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+	Device->SetRenderState(D3DRS_SPECULARENABLE, FALSE);
 
-		/*---------------Blend Setting---------------*/
-		Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-		Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	/*---------------Blend Setting---------------*/
+	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-		/*---------------Point Sprite Setting---------------*/
-		Device->SetRenderState(D3DRS_POINTSPRITEENABLE, TRUE);
-		Device->SetRenderState(D3DRS_POINTSCALEENABLE, TRUE);
+	/*---------------Point Sprite Setting---------------*/
+	Device->SetRenderState(D3DRS_POINTSPRITEENABLE, TRUE);
+	Device->SetRenderState(D3DRS_POINTSCALEENABLE, TRUE);
 
-	}
-
-	/*---------Init Surfaces=============*/
-	{
-		D3DVIEWPORT9 vp;
-		Device->GetViewport(&vp);
-
-		if (FAILED(Device->CreateTexture(vp.Width, vp.Height, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &targetTexture, nullptr)))
-			return E_FAIL;
-
-		if (FAILED(targetTexture->GetSurfaceLevel(0, &targetSurface)))
-			return E_FAIL;
-
-		if (FAILED(Device->GetRenderTarget(0, &originSurface)))
-			return E_FAIL;
-
-		CreatePostProcessBuffer(vp);
-	}
 	if (FAILED(D3DXCreateSprite(Device, &spriteBatch)))
 		return E_FAIL;
 
@@ -104,25 +82,14 @@ void RenderSystem::Render()
 		cachedView = Camera->GetViewMatrix();
 		cachedProj = Camera->GetProjMatrix(); 
 
-		Device->SetRenderTarget(0, targetSurface);
-		Device->Clear(0,
-			NULL,
-			D3DCLEAR_TARGET | D3DCLEAR_STENCIL | D3DCLEAR_ZBUFFER,
-			D3DXCOLOR(0.f,0.f,1.f,1.f),
-			1.f,
-			0);
-
 		PriorityPass();
 		NonAlphaPass();
 		AlphaPass();
 		
 		if(EngineCore::GetInstance()->IsDebugMode())
 			DebugPass();
-
-		Device->SetRenderTarget(0, originSurface);
 	}
 
-	PostProcessPass();
 	UIPass();
 	
 	Reset();
@@ -159,50 +126,6 @@ void RenderSystem::ClearSystem()
 		list.clear();
 	}
 	Camera = nullptr;
-}
-
-void RenderSystem::SetShader(const std::string& key)
-{
-	postProcessShader = EngineCore::GetInstance()->GetResourceManager()->GetShader(key);
-}
-
-HRESULT RenderSystem::CreatePostProcessBuffer(D3DVIEWPORT9 vp)
-{
-	static const D3DVERTEXELEMENT9 kDecl[] =
-	{
-		{ 0 , 0 , D3DDECLTYPE_FLOAT4 , D3DDECLMETHOD_DEFAULT , D3DDECLUSAGE_POSITIONT , 0 },
-		{ 0 , 16 , D3DDECLTYPE_FLOAT2 , D3DDECLMETHOD_DEFAULT , D3DDECLUSAGE_TEXCOORD , 0 },
-		D3DDECL_END()
-	};
-
-	if(FAILED(Device->CreateVertexDeclaration(kDecl, &decl)))
-		return E_FAIL;
-
-	std::vector<VTXPP> vertices;
-	vertices.push_back({ { -0.5f,vp.Height - 0.5f,0.f,1.f }, { 0.f,1.f } });
-	vertices.push_back({ { -0.5f,-0.5f,0.f,1.f }, { 0.f,0.f } });
-	vertices.push_back({ { vp.Width-0.5f,-0.5f,0.f,1.f }, { 1.f,0.f } });
-	vertices.push_back({ { vp.Width - 0.5f,vp.Height - 0.5f,0.f,1.f }, { 1.f,1.f } });
-
-	Device->CreateVertexBuffer(4 * sizeof(VTXPP), D3DUSAGE_WRITEONLY, 0, D3DPOOL_MANAGED, &postProcessVB, nullptr);
-
-	VTXPP* verts = nullptr;
-	postProcessVB->Lock(0, 0, (void**)&verts, 0);
-	memcpy_s(verts, 4 * sizeof(VTXPP), vertices.data(), 4 * sizeof(VTXPP));
-	postProcessVB->Unlock();
-
-	std::vector<INDEX32> indices;
-	indices.push_back({ 0,1,2 });
-	indices.push_back({ 0,2,3 });
-
-	Device->CreateIndexBuffer(2 * sizeof(INDEX32), D3DUSAGE_WRITEONLY, D3DFMT_INDEX32, D3DPOOL_MANAGED, &postProcessIB, nullptr);
-
-	INDEX32* inds = nullptr;
-	postProcessIB->Lock(0, 0, (void**)&inds, 0);
-	memcpy_s(inds, 2 * sizeof(INDEX32), indices.data(), 2 * sizeof(INDEX32));
-	postProcessIB->Unlock();
-
-	return S_OK;
 }
 
 void RenderSystem::PriorityPass()
@@ -316,8 +239,6 @@ void RenderSystem::DebugPass()
 
 	for (const auto& collision : DebugRender)
 		collision->Render();
-
-	Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void RenderSystem::AlphaPass()
@@ -332,26 +253,6 @@ void RenderSystem::AlphaPass()
 
 	Device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-}
-
-void RenderSystem::PostProcessPass()
-{
-	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
-
-	postProcessShader->Begin(0);
-
-	postProcessShader->SetTexture("AlbedoMap", targetTexture);
-
-	Device->SetVertexDeclaration(decl);
-	Device->SetStreamSource(0, postProcessVB, 0, sizeof(VTXPP));
-	Device->SetIndices(postProcessIB);
-
-	Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
-
-	postProcessShader->End();
-
-	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
 
 void RenderSystem::Reset()
@@ -386,10 +287,6 @@ void RenderSystem::Render_End()
 
 void RenderSystem::Free()
 {
-	Safe_Release(targetSurface);
-	Safe_Release(targetTexture);
-	Safe_Release(originSurface);
-
 	Safe_Release(spriteBatch);
 	Safe_Release(Device);
 }

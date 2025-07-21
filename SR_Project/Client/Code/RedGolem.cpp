@@ -57,7 +57,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
         LArmCollision->AddCollider<OBBCollider>();
         LArmCollision->SetOffset(_vec3(-5.f, -2.f, 0.f));
         LArmCollision->SetSize(_vec3(7.f, 20.f, 7.f));
-        //
+        //���⼭ �Ȱ� �浹 �������� ������ oncollision �Լ��� ����ؾ� �� �� ���ƿ�
 
         auto LArmPhysics = Bones["LArm"]->AddComponent<PhysicsComponent>();
         LArmPhysics->SetKinematic(true);

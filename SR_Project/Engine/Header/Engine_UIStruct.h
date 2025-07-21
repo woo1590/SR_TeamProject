@@ -5,8 +5,8 @@ namespace Engine
 	struct PlayerInfo
 	{
 		int level = 1;
-		float curHp = 400.f;
-		float maxHp = 400.f;
+		float curHp = 100.f;
+		float maxHp = 100.f;
 		int curExp = 0;
 		int maxExp = 10;
 		float power = 10.f;

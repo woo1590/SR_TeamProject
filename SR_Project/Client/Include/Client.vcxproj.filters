@@ -223,9 +223,6 @@
     <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingUI">
       <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone">
-      <UniqueIdentifier>{a0df6aec-5ee3-450b-89ff-618aae2eeef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item">
       <UniqueIdentifier>{95b869b5-1ad8-4d5c-9c1b-c7d1c940080c}</UniqueIdentifier>
     </Filter>
@@ -556,17 +553,8 @@
     <Filter Include="02. Object\Effect\ChargeOnEffect">
       <UniqueIdentifier>{ab08d6bb-3908-4b89-ac0f-03fba36770d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Effect\ChargeFrontEffect">
-      <UniqueIdentifier>{920aefda-9ad1-4834-b372-6522e02cf86b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Effect\TikkleEffect">
-      <UniqueIdentifier>{ad819689-0fc3-430a-bf86-a84eb5959533}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="99. Etc\Shader/Fx\PostProcessing">
-      <UniqueIdentifier>{c978140d-f8e3-495d-8e20-ceae53fed125}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Monster\Shulker">
-      <UniqueIdentifier>{ed4277bf-0ab7-4059-8fca-698c47866197}</UniqueIdentifier>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\MaskObj">
+      <UniqueIdentifier>{036e52e1-bedb-4c6d-a055-08ea1c7485ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1054,9 +1042,6 @@
     <ClInclude Include="..\Header\LoadingStone.h">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LoadingUI.h">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MiniMapCam.h">
       <Filter>02. Object\CameraActor\MiniMapCam</Filter>
     </ClInclude>
@@ -1087,14 +1072,11 @@
     <ClInclude Include="..\Header\ChargeOnEffect.h">
       <Filter>02. Object\Effect\ChargeOnEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ChargeFrontEffect.h">
-      <Filter>02. Object\Effect\ChargeFrontEffect</Filter>
+    <ClInclude Include="..\Header\MaskObj.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\TikkleEffect.h">
-      <Filter>02. Object\Effect\TikkleEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Shulker.h">
-      <Filter>02. Object\Monster\Shulker</Filter>
+    <ClInclude Include="..\Header\LoadingUI.h">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1564,9 +1546,6 @@
     <ClCompile Include="..\Code\LoadingStone.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LoadingUI.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MiniMapCam.cpp">
       <Filter>02. Object\CameraActor\MiniMapCam</Filter>
     </ClCompile>
@@ -1597,14 +1576,11 @@
     <ClCompile Include="..\Code\ChargeOnEffect.cpp">
       <Filter>02. Object\Effect\ChargeOnEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ChargeFrontEffect.cpp">
-      <Filter>02. Object\Effect\ChargeFrontEffect</Filter>
+    <ClCompile Include="..\Code\MaskObj.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TikkleEffect.cpp">
-      <Filter>02. Object\Effect\TikkleEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Shulker.cpp">
-      <Filter>02. Object\Monster\Shulker</Filter>
+    <ClCompile Include="..\Code\LoadingUI.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1661,9 +1637,6 @@
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\LaserShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resource\Shader\DefaultPost.fx">
-      <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

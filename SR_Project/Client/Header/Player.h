@@ -79,8 +79,13 @@ public:
     _float GetAttackDelay();
 
     void SetOwner(ObjectManager* owner);
-    _vec3 GetAttackDirection() const;
-    _vec3 GetDir() const;
+
+    _vec3 GetDir() const
+    {
+        _vec3 dir = PlayerDirection;
+        D3DXVec3Normalize(&dir, &dir);
+        return dir;
+    }
     _bool IsCharge();
     std::unordered_map<string, Object*> GetBones();
 private:
@@ -182,7 +187,6 @@ private:
     std::unordered_map<std::string, _vec3> itemBaseRotOffset;
 
     _float walkEffectTimer = 0.f;
-    const _float walkEffectTerm = 0.3f;
     std::unordered_map<std::pair<int, int>, _vec3, PairHash> idleRot;
 
     const float jumpPower = 15.f;
@@ -196,7 +200,4 @@ private:
 
     _bool onCharge = false;
     _bool onChargeEnd = false;
-
-    _float rollEffectTimer = 0.f;
-    const _float rollEffectTerm = 0.05f;
 };
