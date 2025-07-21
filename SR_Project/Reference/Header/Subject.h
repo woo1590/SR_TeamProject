@@ -19,6 +19,8 @@ public:
 		observers.erase(remove(observers.begin(), observers.end(), obs), observers.end());
 	}
 
+	void ClearObservers() { observers.clear(); }
+
 protected:
 	void Notify(const EventT& event)
 	{

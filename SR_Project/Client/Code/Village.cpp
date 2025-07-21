@@ -70,6 +70,7 @@
 #include "InventoryCam.h"
 #include "Shulker.h"
 #include "Blastling.h"
+#include "WayPointCam.h"
 
 //component
 #include "TransformComponent.h"
@@ -78,6 +79,7 @@
 #include "RendererComponent.h"
 #include "SpriteRenderer.h"
 #include "ThirdcamComponent.h"
+#include "InfoComponent.h"
 
 
 Village::Village()
@@ -137,10 +139,12 @@ void Village::Load()
 		
         auto fCam = FirstCam::Create(ObjectMgr);
         auto tCam = ThirdCam::Create(ObjectMgr);
+		auto wCam = WayPointCam::Create(ObjectMgr);
 		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 		
         CameraMgr->AddCamera(L"First_Camera", fCam);
         CameraMgr->AddCamera(L"Third_Camera", tCam);
+		CameraMgr->AddCamera(L"Way_Camera", wCam);
 		CameraMgr->AddCamera(L"Inventory_Camera", inventoryCam);
         tCam->SetTarget(player);
 
@@ -148,6 +152,7 @@ void Village::Load()
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
+		ObjectMgr->AddObject(ObjectType::Camera, wCam);
 		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
 	} 
 
@@ -205,6 +210,8 @@ void Village::Load()
 			ObjectMgr->AddObject(ObjectType::Monster, blast);
 		}
     }
+
+	ChangeState(VillageState::Intro);
 }
 
 void Village::Update(_float dt)
@@ -213,6 +220,22 @@ void Village::Update(_float dt)
 	PhysicsSys->Update(dt);
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
+
+	switch (currState)
+	{
+	case Village::VillageState::Intro:
+	{
+		if (introTimer >= introDuration)
+			ChangeState(VillageState::Play);
+
+		introTimer += dt;
+	}
+		break;
+	case Village::VillageState::Play:
+		break;
+	default:
+		break;
+	}
 
     {
         auto Input = EngineCore::GetInstance()->GetInputSystem();
@@ -274,6 +297,18 @@ void Village::Late_Update(_float dt)
 void Village::Unload()
 {
 	EngineCore::GetInstance()->GetSoundManager()->Stop("VillageBGM");
+
+	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Player))
+	{
+		if (auto playerComponent = obj->GetComponent<InfoComponent<PlayerInfo>>())
+			playerComponent->ClearObservers();
+	}
+	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Monster))
+	{
+		if (auto monsterComponent = obj->GetComponent<InfoComponent<EnemyInfo>>())
+			monsterComponent->ClearObservers();
+	}
+
 }
 
 #ifdef USE_IMGUI
@@ -286,6 +321,7 @@ void Village::DebugIMGUI()
 
 	_vec3 pos = player->GetComponent<TransformComponent>()->GetPosition();
 	_vec3 camPos = CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
+	_vec3 forward = CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetFoward();
 
 	if (ImGui::BeginTable("##PosTable", 2,
 		ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg))
@@ -306,6 +342,12 @@ void Village::DebugIMGUI()
 		ImGui::TableSetColumnIndex(1);
 		ImGui::Text("%.2f, %.2f, %.2f", camPos.x, camPos.y, camPos.z);
 
+		ImGui::TableNextRow();
+		ImGui::TableSetColumnIndex(0);
+		ImGui::TextUnformatted("Camera Dir");
+		ImGui::TableSetColumnIndex(1);
+		ImGui::Text("%.2f, %.2f, %.2f", forward.x, forward.y, forward.z);
+
         ImGui::EndTable();
 	}
 	ImGui::End();
@@ -324,4 +366,37 @@ void Village::Free()
 	Safe_Release(ChunkMgr);
 
     Scene::Free();
+}
+
+void Village::ChangeState(VillageState state)
+{
+	switch (state)
+	{
+	case Village::VillageState::Intro:
+	{
+		currState = VillageState::Intro;
+
+		introDuration = 5.f;
+		introTimer = 0.f;
+		CameraMgr->SetMainCamera(L"Way_Camera");
+		auto cam = static_cast<WayPointCam*>(CameraMgr->GetMainCamera()->GetOwner());
+		cam->SetDuration(introDuration);
+		
+		cam->AddWaypoint({ _vec3(270.f,30.f,40.f),_vec3(-0.6f,-0.4f,0.6f) });
+		cam->AddWaypoint({ _vec3(210.f,30.f,125.f),_vec3(-0.9f,-0.1f,-0.2f) });
+		cam->AddWaypoint({ _vec3(104.f,40.f,50.f),_vec3(-0.8f,-0.4f,0.3f) });
+		cam->AddWaypoint({ _vec3(33.f,40.f,124.f),_vec3(0.4f,-0.2f,0.8f) });
+
+		cam->Start();
+
+	}break;
+	case Village::VillageState::Play:
+	{
+		currState = VillageState::Play;
+		CameraMgr->SetMainCamera(L"Third_Camera");
+
+	}break;
+	default:
+		break;
+	}
 }
