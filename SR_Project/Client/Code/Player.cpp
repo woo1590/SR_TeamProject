@@ -1562,10 +1562,15 @@ void Player::UpdateWalk(_float dt) {
             EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnDefault2");
             soundBefore = "WalkOnDefault2";
         }
-        auto effect = SpriteEffect::Create(owner, ObjectType::SpriteEffect);
-        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition() - _vec3(0.f, 2.f, 0.f));
-        effect->AddComponent<SpriteRenderer>("Walk", 7, 10.f, 2.f);
-        owner->AddObject(ObjectType::SpriteEffect, effect);
+        _vec3 vDir = { 0.f,0.f,1.f };
+        _vec3 vMove;
+        D3DXVec3Normalize(&vMove, &PlayerDirection);
+
+        _float dot = D3DXVec3Dot(&vDir, &vMove);
+        _float fAngle = D3DXToDegree(acosf(dot));
+
+        auto effect = RollEffect::Create(owner, ObjectType::ParticleEffect,this, fAngle - 180.f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
         walkEffectTimer = 0.f;
     }
     //////////////////////////////////////////
