@@ -312,6 +312,12 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Shulker_Top.dds"
       }
+    },
+
+    "ShulkerBullet_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/ShulkerBullet.dds"
+      }
     }
   }
 }
