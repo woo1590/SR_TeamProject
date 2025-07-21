@@ -50,7 +50,7 @@ BTStatus TeleportNode::Tick(float dt, BlackBoard* bb)
 
 		self->GetComponent<TransformComponent>()->SetPosition(targetTeleportPos);
 		self->GetComponent<TransformComponent>()->SetForward(Dir);
-		//EngineCore::GetInstance()->GetSoundManager()->PlaySFX("IdleBlastling");
+		EngineCore::GetInstance()->GetSoundManager()->PlaySFX("IdleBlastling");
 		return BTStatus::Success;
 	}
 	else

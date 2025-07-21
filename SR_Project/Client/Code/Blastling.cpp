@@ -114,7 +114,7 @@ void Blastling::Die()
         DieStartY = Bones["Body"]->GetComponent<TransformComponent>()->GetPosition().y;
         auto collision = GetComponent<CollisionComponent>();
         collision->SetSize(_vec3(0.1f, 0.1f, 0.1f));
-       // EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathBlastling");
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathBlastling");
     }
 }
 
@@ -136,7 +136,7 @@ void Blastling::Hit(_vec3 dir, _float power)
         SetRotation({ 0.f, 0.f, 0.f }, "LLeg");
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
         Monster::Hit(dir, power);
-        //EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HurtBlastling");
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HurtBlastling");
     }
 }
 
@@ -318,7 +318,7 @@ void Blastling::PlayAttack(_float dt)
 
             LeftAttack = false;
             RightAttack = false;
-            //EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackBlastling");
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackBlastling");
         }
         break;
     }

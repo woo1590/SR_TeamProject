@@ -43,7 +43,7 @@ HRESULT BlastlingProjectile::Ready_Object(ObjectManager* owner, ObjectType objTy
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_DEFAULT | LAYER_PLAYER);
-    //collision->SetSize(_vec3(1.f, 1.f, 1.f));
+    collision->SetSize(_vec3(1.f, 1.f, 1.f));
     collision->SetCollisionEnter([this](Object* other) {this->OnCollisionEnter(other); });
 
     auto physics = AddComponent<PhysicsComponent>();

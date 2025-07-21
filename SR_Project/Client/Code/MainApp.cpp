@@ -356,10 +356,10 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("ProjectileEnder", "../Resource/Sound/SFX/ProjectileEnder.mp3", false);
         sound->LoadSound("DeathEnder", "../Resource/Sound/SFX/DeathEnder.mp3", false);
 
-        //sound->LoadSound("DeathBlastling", "../Resource/Sound/SFX/DeathBlastling.mp3", false);
-        //sound->LoadSound("IdleBlastling", "../Resource/Sound/SFX/IdleBlastling.mp3", false);
-        //sound->LoadSound("AttackBlastling", "../Resource/Sound/SFX/AttackBlastling.mp3", false);
-        //sound->LoadSound("HurtBlastling", "../Resource/Sound/SFX/HurtBlastling.mp3", false);
+        sound->LoadSound("DeathBlastling", "../Resource/Sound/SFX/DeathBlastling.mp3", false);
+        sound->LoadSound("IdleBlastling", "../Resource/Sound/SFX/IdleBlastling.mp3", false);
+        sound->LoadSound("AttackBlastling", "../Resource/Sound/SFX/AttackBlastling.mp3", false);
+        sound->LoadSound("HurtBlastling", "../Resource/Sound/SFX/HurtBlastling.mp3", false);
 
         //Map
         //sound->LoadSound("OpenChest", "../Resource/Sound/SFX/OpenChest.mp3", false);
