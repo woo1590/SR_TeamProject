@@ -156,22 +156,6 @@ void Player::Late_Update(_float dt)
 
     auto transform = GetComponent<TransformComponent>();
 
-    _vec3 forward = transform->GetFoward();
-    _vec3 rot = transform->GetRotate();
-    
-    wchar_t buffer[256];
-    
-    swprintf_s(buffer,
-        L"Forward: %.1f, %.1f, %.1f | Rotation: %.1f, %.1f, %.1f\n",
-        forward.x, forward.y, forward.z,
-        D3DXToDegree(rot.x), D3DXToDegree(rot.y), D3DXToDegree(rot.z));
-
-    wchar_t bufferDir[128];
-    swprintf_s(bufferDir, L"PlayerDir: %.f, %.f, %.f", PlayerDirection.x, PlayerDirection.y, PlayerDirection.z);
-
-    OutputDebugStringW(buffer);
-    OutputDebugStringW(bufferDir);
-
     // ---------------------------------------- 
     if (moveToInteract && moveToObject)
     {
