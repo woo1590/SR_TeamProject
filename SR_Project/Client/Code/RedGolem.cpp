@@ -21,6 +21,8 @@
 #include "PhysicsComponent.h"
 #include "Scene.h"
 #include "PhysicsSystem.h"
+#include "MeshRendererComponent.h"
+#include "Material.h"
 
 RedGolem::RedGolem(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -110,7 +112,7 @@ void RedGolem::MoveTo(_vec3* dir, _float dt)
     if (D3DXVec3Length(dir) >= *Distance)
     {
         D3DXVec3Normalize(dir, dir);
-        Transform->Translate(*dir * dt * stat->GetInfo().speed * 2.5f);
+        Transform->Translate(*dir * dt * stat->GetInfo().speed * 4.f);
     }
     D3DXVec3Normalize(dir, dir);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
@@ -190,6 +192,14 @@ void RedGolem::InitTransform(ObjectType objType)
     SetPosition(_vec3(0.f, -3.f * Scale, -10.f * Scale), "LightBlock");
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f, -20.f * Scale, 0.0f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+    auto mtrl = Bones["LightBlock"]->GetComponent<MeshRenderer>()->GetMaterial();
+    mtrl->SetInt("emissive", 1);
+
+    mtrl->SetInt("coloruse", 1);
+    mtrl->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+    mtrl->SetFloat("emissive", 1);
+    mtrl->SetVec3("emissivecolor", _vec3(1.0, 0.1, 0));
+    mtrl->SetFloat("emissivePow", 3);
 
     //arm
     SetScale(_vec3(10.f * Scale, 20.f * Scale, 10.f * Scale), "LArm");
@@ -334,13 +344,13 @@ void RedGolem::PlayWalk(_float dt)
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkGolem");
         WalkTimer = 0.f;
     }
-    float Angle = sinf(WalkAnim.ElapsedTime * Speed);
+    float Angle = sinf(WalkAnim.ElapsedTime * Speed * 2.f);
 
     float LegAngle = D3DXToRadian(20.f) * Angle;
     float ArmAngle = D3DXToRadian(30.f) * Angle;
 
-    SetRotation({ LegAngle/4, 0.f, 0.f }, "LLeg");
-    SetRotation({ -LegAngle/4, 0.f, 0.f }, "RLeg");
+    SetRotation({ LegAngle/2, 0.f, 0.f }, "LLeg");
+    SetRotation({ -LegAngle/2, 0.f, 0.f }, "RLeg");
 
     SetRotation({ -ArmAngle, 0.f, 0.f }, "LArm");
     SetRotation({ ArmAngle, 0.f, 0.f }, "RArm");
