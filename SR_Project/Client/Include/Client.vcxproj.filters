@@ -223,9 +223,6 @@
     <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingUI">
       <UniqueIdentifier>{0cf5d416-9d91-4463-8cf4-922fb4a60115}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone">
-      <UniqueIdentifier>{a0df6aec-5ee3-450b-89ff-618aae2eeef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item">
       <UniqueIdentifier>{95b869b5-1ad8-4d5c-9c1b-c7d1c940080c}</UniqueIdentifier>
     </Filter>
@@ -1045,9 +1042,6 @@
     <ClInclude Include="..\Header\LoadingStone.h">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LoadingUI.h">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MiniMapCam.h">
       <Filter>02. Object\CameraActor\MiniMapCam</Filter>
     </ClInclude>
@@ -1080,6 +1074,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\MaskObj.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingUI.h">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1549,9 +1546,6 @@
     <ClCompile Include="..\Code\LoadingStone.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingStone</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LoadingUI.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI\LoadingStone</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MiniMapCam.cpp">
       <Filter>02. Object\CameraActor\MiniMapCam</Filter>
     </ClCompile>
@@ -1584,6 +1578,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MaskObj.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingUI.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Loading\LoadingUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
