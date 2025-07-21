@@ -1,22 +1,23 @@
 #include "pch.h"
-#include "ChargeDownEffect.h"
+#include "ChargeFrontEffect.h"
 
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "Material.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "TikkleEffect.h"
 
-ChargeDownEffect::ChargeDownEffect(ObjectManager* owner, ObjectType objType, Object* _onPos) : Effect(owner, objType)
+ChargeFrontEffect::ChargeFrontEffect(ObjectManager* owner, ObjectType objType, Object* _onPos) : Effect(owner, objType)
 {
-	effectOwner = _onPos->GetComponent<TransformComponent>();
+    effectOwner = _onPos->GetComponent<TransformComponent>();
 }
 
-ChargeDownEffect::~ChargeDownEffect() {}
+ChargeFrontEffect::~ChargeFrontEffect() {}
 
-ChargeDownEffect* ChargeDownEffect::Create(ObjectManager* owner, ObjectType objType, Object* _onPos)
+ChargeFrontEffect* ChargeFrontEffect::Create(ObjectManager* owner, ObjectType objType, Object* _onPos)
 {
-	ChargeDownEffect* Instance = new ChargeDownEffect(owner, objType, _onPos);
+	ChargeFrontEffect* Instance = new ChargeFrontEffect(owner, objType, _onPos);
 	if (FAILED(Instance->Ready_Object()))
 	{
 		Safe_Release(Instance);
@@ -25,9 +26,9 @@ ChargeDownEffect* ChargeDownEffect::Create(ObjectManager* owner, ObjectType objT
 	return Instance;
 }
 
-HRESULT ChargeDownEffect::Ready_Object()
+HRESULT ChargeFrontEffect::Ready_Object()
 {
-	SetDeadTime(1.0f);
+	SetDeadTime(1000.0f);
 
 	Scale = 0.3f;
 	auto player = static_cast<Player*>(owner->GetFrontObject(ObjectType::Player));;
@@ -39,34 +40,39 @@ HRESULT ChargeDownEffect::Ready_Object()
 	D3DXVec3Normalize(&vDir, &playerAttackDirection);
 
 	auto transform = AddComponent<TransformComponent>();
-	transform->SetPosition(pos + vDir);
+	transform->SetPosition(pos + vDir * 2.f);
 
-	transform->SetScale(_vec3(Scale, Scale, 0.1f));
-	
+	transform->SetScale(_vec3(Scale * 0.1f, Scale * 0.1f, 0.1f));
+
 	auto fAngle = D3DXToRadian(-45.f);
 	transform->SetRotate(_vec3(0.f, fAngle, 0.f));
 
 	auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_Alpha);
 	renderer->SetMesh("Quad_Mesh");
-	renderer->SetMaterial("ChargeDown_Mtrl");
+	renderer->SetMaterial("ChargeFrontBall_Mtrl");
 	auto mtrl = renderer->GetMaterial();
-	mtrl->SetVec3("color", _vec3(1.f, 1.f, 1.f));
+	mtrl->SetVec3("color", _vec3(1.f, 0.f, 0.f));
 
 	return S_OK;
 }
 
-void ChargeDownEffect::Update(_float dt)
+void ChargeFrontEffect::Update(_float dt)
 {
-    Effect::Update(dt);
+	Effect::Update(dt);
 
-	auto fProgress = timer / deadTime;
+	auto fProgress = timer / 1.f;
 	fProgress = std::clamp(fProgress, 0.f, 1.f);
 
 	auto renderer = GetComponent<MeshRenderer>();
 	auto mtrl = renderer->GetMaterial();
-	mtrl->SetVec3("color", _vec3(1.f, 1-fProgress, 1-fProgress));
+	mtrl->SetVec3("color", _vec3(1.f, 1 - fProgress, 1 - fProgress));
 
 	auto player = static_cast<Player*>(owner->GetFrontObject(ObjectType::Player));;
+	if (!player->IsCharge())
+	{
+		SetDead();
+		return;
+	}
 	auto playerAttackDirection = player->GetAttackDirection();
 	playerAttackDirection.y = 0.f;
 	auto pos = effectOwner->GetWorldPosition();
@@ -75,20 +81,22 @@ void ChargeDownEffect::Update(_float dt)
 	D3DXVec3Normalize(&vDir, &playerAttackDirection);
 
 	auto transform = GetComponent<TransformComponent>();
-	transform->SetPosition(pos + vDir);
-	
-	if (!player->IsCharge())
-	{
-		SetDead();
-		return;
-	}
+	transform->SetPosition(pos + vDir * 2.f);
 
-	fProgress *= 0.6;
-	auto curScale = Scale * (1.f - fProgress);
+	fProgress *= 0.9;
+	auto curScale = Scale * (0.1f + fProgress);
 	transform->SetScale(_vec3(curScale, curScale, 0.1f));
+
+	tikkleTimer += dt;
+	if (tikkleTimer >= tikkleTerm)
+	{
+		tikkleTimer = 0.f;
+		auto tikkle = TikkleEffect::Create(owner, ObjectType::ParticleEffect, this);
+		owner->AddObject(ObjectType::ParticleEffect, tikkle);
+	}
 }
 
-void ChargeDownEffect::Free()
+void ChargeFrontEffect::Free()
 {
-    Effect::Free();
+	Effect::Free();
 }

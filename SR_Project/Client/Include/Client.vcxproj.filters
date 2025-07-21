@@ -556,8 +556,14 @@
     <Filter Include="02. Object\Effect\ChargeOnEffect">
       <UniqueIdentifier>{ab08d6bb-3908-4b89-ac0f-03fba36770d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Monster\Shulker">
-      <UniqueIdentifier>{a275a0be-5497-4a26-804e-8a90d9712898}</UniqueIdentifier>
+    <Filter Include="02. Object\Effect\ChargeFrontEffect">
+      <UniqueIdentifier>{920aefda-9ad1-4834-b372-6522e02cf86b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Effect\TikkleEffect">
+      <UniqueIdentifier>{ad819689-0fc3-430a-bf86-a84eb5959533}</UniqueIdentifier>
+    </Filter>   
+    <Filter Include="99. Etc\Shader/Fx\PostProcessing">
+      <UniqueIdentifier>{c978140d-f8e3-495d-8e20-ceae53fed125}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1078,8 +1084,11 @@
     <ClInclude Include="..\Header\ChargeOnEffect.h">
       <Filter>02. Object\Effect\ChargeOnEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Shulker.h">
-      <Filter>02. Object\Monster\Shulker</Filter>
+    <ClInclude Include="..\Header\ChargeFrontEffect.h">
+      <Filter>02. Object\Effect\ChargeFrontEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TikkleEffect.h">
+      <Filter>02. Object\Effect\TikkleEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1582,8 +1591,11 @@
     <ClCompile Include="..\Code\ChargeOnEffect.cpp">
       <Filter>02. Object\Effect\ChargeOnEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Shulker.cpp">
-      <Filter>02. Object\Monster\Shulker</Filter>
+    <ClCompile Include="..\Code\ChargeFrontEffect.cpp">
+      <Filter>02. Object\Effect\ChargeFrontEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TikkleEffect.cpp">
+      <Filter>02. Object\Effect\TikkleEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1640,6 +1652,9 @@
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\LaserShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\DefaultPost.fx">
+      <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

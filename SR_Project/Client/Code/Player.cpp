@@ -36,6 +36,7 @@
 #include "StatikkEffect.h"
 #include "ChargeDownEffect.h"
 #include "ChargeOnEffect.h"
+#include "ChargeFrontEffect.h"
 
 #include "SoundManager.h"
 #include "Npc.h"
@@ -1290,24 +1291,29 @@ void Player::EquipItem(ItemType itemType)
         Bones["LHand"] = Bow::Create(owner, ObjectType::Item);
         Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "bow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["LHand"]->AddRef();
         break;
     case ItemType::Sword:
         Bones["RHand"] = Sword::Create(owner, ObjectType::Item);
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "sword", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["RHand"]->AddRef();
         break;
     case ItemType::Spear:
         Bones["RHand"] = Spear::Create(owner, ObjectType::Item);
         Bones["RHand"]->GetComponent<TransformComponent>()->SetParent(Bones["RArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "spear", Bones["RHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["RHand"]->AddRef();
         break;
     case ItemType::CrossBow:
         Bones["LHand"] = Crossbow::Create(owner, ObjectType::Item);
         Bones["LHand"]->GetComponent<TransformComponent>()->SetParent(Bones["LArm"]->GetComponent<TransformComponent>());
         itemBaseRotOffset.insert({ "crossbow", Bones["LHand"]->GetComponent<TransformComponent>()->GetRotate() });
+        Bones["LHand"]->AddRef();
         break;
     case ItemType::Armor:
         Bones["Armor"] = Armor::Create(owner, ObjectType::Item);
+        Bones["Armor"]->AddRef();
         break;
     }
 }
@@ -1317,22 +1323,27 @@ void Player::UnEquipItem(ItemType itemType)
     switch (itemType) {
     case ItemType::Bow:
         Bones["LHand"]->SetDead();
+        Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case ItemType::CrossBow:
         Bones["LHand"]->SetDead();
+        Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case ItemType::Sword:
         Bones["RHand"]->SetDead();
+        Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Spear:
         Bones["RHand"]->SetDead();
+        Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Armor:
         Bones["Armor"]->SetDead();
+        Safe_Release(Bones["Armor"]);
         Bones["Armor"] = nullptr;
         break;
     }
@@ -1406,7 +1417,7 @@ void Player::SetOwner(ObjectManager* owner)
         if (bone.second)
         {
             bone.second->SetOwner(owner);
-            owner->AddObject(ObjectType::Bone, bone.second);
+            owner->AddObject(bone.second->GetObjectType(), bone.second);
         }
     }
 
@@ -1415,6 +1426,19 @@ void Player::SetOwner(ObjectManager* owner)
     auto physics = GetComponent<PhysicsComponent>();
     physics->SetGround(false);
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);
+}
+
+_vec3 Player::GetAttackDirection() const
+{
+    return AttackDirection;
+}
+
+_vec3 Player::GetDir() const
+
+{
+    _vec3 dir = PlayerDirection;
+    D3DXVec3Normalize(&dir, &dir);
+    return dir;
 }
 
 _bool Player::IsCharge()
@@ -1530,7 +1554,7 @@ void Player::UpdateWalk(_float dt) {
     }
 
     //////////////////////////////////////////Walk Effect
-    if (walkEffectTimer >= 0.3f)
+    if (walkEffectTimer >= walkEffectTerm)
     {
         if (soundBefore == "WalkOnDefault2")
         {
@@ -1664,6 +1688,15 @@ void Player::UpdateRoll(_float dt)
     _vec3 rotateVec = MatrixToEulerAngles(matRot);
     transform->SetRotate(transform->GetRotate() + rotateVec);
 
+    if (walkEffectTimer >= walkEffectTerm)
+    {
+        auto effect = SpriteEffect::Create(owner, ObjectType::SpriteEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition() - _vec3(0.f, 2.f, 0.f));
+        effect->AddComponent<SpriteRenderer>("Walk", 7, 10.f, 2.f);
+        owner->AddObject(ObjectType::SpriteEffect, effect);
+        walkEffectTimer = 0.f;
+    }
+
     //CheckExit
     if (RollTime >= RollDuration)
     {
@@ -1674,7 +1707,6 @@ void Player::UpdateRoll(_float dt)
         vCurRot.x = 0.f;
         vCurRot.z = 0.f;
         transform->SetRotate(vCurRot);
-        transform->SetForward(transform->GetRotate());
     }
 }
 
@@ -1794,6 +1826,8 @@ void Player::UpdateShoot(_float dt) {
                 onCharge = true;
                 auto chargeDownEffect = ChargeDownEffect::Create(owner, ObjectType::ParticleEffect, Bones["LHand"]);
                 owner->AddObject(ObjectType::ParticleEffect, chargeDownEffect);
+                auto chargeFrontEffect = ChargeFrontEffect::Create(owner, ObjectType::ParticleEffect, Bones["LHand"]);
+                owner->AddObject(ObjectType::ParticleEffect, chargeFrontEffect);
             }
             if (onChargeEnd == false && chargedTime >= 1.f)
             {

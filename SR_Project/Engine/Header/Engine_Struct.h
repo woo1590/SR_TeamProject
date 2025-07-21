@@ -5,6 +5,12 @@
 
 namespace Engine
 {
+	typedef struct tagPostProcess
+	{
+		_vec4 position;
+		_vec2 uv;
+	}VTXPP;
+
 	typedef struct tagVertexPoint
 	{
 		_vec3 position;

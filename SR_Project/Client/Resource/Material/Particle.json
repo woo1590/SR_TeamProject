@@ -54,6 +54,18 @@
     "ChargeOn_Mtrl": {
       "fx": "LaserShader",
       "textures": { "AlbedoMap": "../Resource/Asset/JW/ChargeOn.png" }
+    },
+    "ChargeFrontSpin_Mtrl": {
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/ChargeFrontSpin.png" }
+    },
+    "ChargeFrontBall_Mtrl": {
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/ChargeFrontBall.png" }
+    },
+    "Tikkle_Mtrl":{
+      "fx": "LaserShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/Tikkle.png" }
     }
   }
 }
