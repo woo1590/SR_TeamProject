@@ -115,8 +115,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Player::Update(_float dt)
 {
     auto curRenderType = EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState();
-   // if (curRenderType == UIRenderType::Inventory || curRenderType == UIRenderType::WorldMap ||
-   //     curRenderType == UIRenderType::QuestUI) return;
+    if (curRenderType == UIRenderType::QuestUI || curRenderType == UIRenderType::WorldMap) return;
 
     BaseCharacter::Update(dt);
 

@@ -21,6 +21,7 @@ public:
 	void SetRatio(float _ratio) { targetRatio = clamp(_ratio, 0.f, 1.f); }
 	void ApplyRatioVertical(float _ratio);
 	void ApplyRatioHorizontal(float _ratio);
+	void ApplyRatioVerticalFromTop(float _ratio);
 
 	void SetLayer(int idx) { layerIdx = idx; }
 	int  GetLayer() const { return layerIdx; }

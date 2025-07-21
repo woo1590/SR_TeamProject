@@ -91,7 +91,7 @@ void Stage1::Load()
 {
 	auto game = GameManager::GetInstance();
 
-	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
+	//EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
 	/*-------------------------Create System-----------------------------*/
 	{
 		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");

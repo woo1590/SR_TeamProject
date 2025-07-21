@@ -8,6 +8,7 @@
 #include "InputSystem.h"
 #include "ObjectManager.h"
 #include "CoolDownComponent.h"
+#include "MaskObj.h"
 
 
 HP_Potion* HP_Potion::Create(ObjectManager* owner)
@@ -19,28 +20,30 @@ HP_Potion* HP_Potion::Create(ObjectManager* owner)
 
 HRESULT HP_Potion::Ready_Object()
 {
-	auto transform = AddComponent<TransformComponent>();
-	auto renderer  = AddComponent<UIRenderer>();
-	auto hover     = AddComponent<HoverComponent>();
-	auto info      = AddComponent<InfoComponent<ItemInfo>>();
-	auto item      = AddComponent<ItemComponent>();
-
-	auto coolrenderer = AddComponent<UIRenderer>();
-	coolrenderer->SetVisible(false);
-
-	auto cooldownUI = AddComponent<CoolDownComponent>();
-
-	coolrenderer->SetTexture(L"cooldown_front");
-	coolrenderer->SetScale(0.5f, 1.f);
+	auto transform  = AddComponent<TransformComponent>();
+	auto renderer   = AddComponent<UIRenderer>();
+	auto hover      = AddComponent<HoverComponent>();
+	auto info       = AddComponent<InfoComponent<ItemInfo>>();
+	auto item       = AddComponent<ItemComponent>();
+	auto cooldown   = AddComponent<CoolDownComponent>();
 
 	transform->SetPosition(700.f, 700.f);
 	transform->SetScale(0.8f, 0.8f);
+
+	auto maskObj = MaskObj::Create(owner);
+	auto maskTf = maskObj->GetComponent<TransformComponent>();
+
+	maskTf->SetPosition(transform->GetPosition().x, transform->GetPosition().y - 20.f);
+
 	renderer->SetTexture(L"hp_potion");
 
-	info->SetInfo({L"HP 포션", L"hp_potion",ItemType::Potion,Rarity::Default,10,L"HP 10 회복"});
+	auto maskRenderer = maskObj->GetComponent<UIRenderer>();
+	maskRenderer->SetLayer(renderer->GetLayer() + 1);
 
-	item->SetCoolDown(true, 3.f);
-	cooldownUI->Init(item, coolrenderer);
+	info->SetInfo({L"HP 포션", L"hp_potion", ItemType::Potion, Rarity::Default, 10, L"HP 10 회복"});
+	item->SetCoolDown(true, 5.f);
+
+	cooldown->Init(item, maskRenderer);
 
 	hover->SetUpdateCallBack([this](bool isHovered) {
 		auto input = EngineCore::GetInstance()->GetInputSystem();
@@ -57,6 +60,6 @@ HRESULT HP_Potion::Ready_Object()
 		}
 		});
 
-
+	owner->AddUIObject(maskObj);
 	return S_OK;
 }

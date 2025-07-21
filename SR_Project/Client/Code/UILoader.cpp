@@ -379,7 +379,6 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
             auto button = node->GetComponent<HoverButtonComponent>();
             button->SetOnClick([loadID]() 
                 {
-                    GameManager::GetInstance()->ClearScene(loadID);
                     auto command = ChangeScene::Create(loadID);
                     EngineCore::GetInstance()->RegisterCommand(command);
                 });
