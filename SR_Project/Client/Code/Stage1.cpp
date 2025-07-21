@@ -158,6 +158,12 @@ void Stage1::Load()
 		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
+
+		auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+		bossTrigger->GetComponent<TransformComponent>()->SetPosition(140.f, 70.f, 320.f);
+		bossTrigger->AddSpawner(SpawnType::RedGolem, _vec3(40.f, 80.f, 320.f), _vec3(0.f, 0.f, 0.f));
+
+		ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
 	}
 }
 
@@ -168,6 +174,8 @@ void Stage1::Update(_float dt)
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
 
+
+
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 
 	if (Input->IsKeyPressed(NUM1))
@@ -175,6 +183,13 @@ void Stage1::Update(_float dt)
 
 	if (Input->IsKeyPressed(NUM2))
 		CameraMgr->SetMainCamera(L"Third_Camera");
+
+	if (Input->IsKeyPressed(NUM9))
+		EngineCore::GetInstance()->SetDebugMode(false);
+
+	if (Input->IsKeyPressed(NUM0))
+		EngineCore::GetInstance()->SetDebugMode(true);
+
 
 	if (Input->IsKeyPressed(NUM4))
 	{
@@ -191,7 +206,7 @@ void Stage1::Late_Update(_float dt)
 
 void Stage1::Unload()
 {
-	EngineCore::GetInstance()->GetSoundManager()->Stop("TestBGM");
+	EngineCore::GetInstance()->GetSoundManager()->Stop("Stage1BGM");
 }
 
 #ifdef USE_IMGUI 
@@ -230,6 +245,27 @@ void Stage1::DebugIMGUI()
 }
 #endif
 
+
+void Stage1::ChangeState(Stage1State state)
+{
+	switch (state)
+	{
+	case Stage1::Stage1State::Stage1Intro:	
+		//camera intro
+		break;
+	case Stage1::Stage1State::BossIntro:
+		boss = RedGolem::Create(ObjectMgr, ObjectType::Monster);
+		boss->GetComponent<TransformComponent>()->SetPosition(120.f, 70.f, 100.f);
+		ObjectMgr->AddObject(ObjectType::Monster, boss);
+		boss->AddRef();
+		currState = Stage1State::Play;
+		break;
+	case Stage1::Stage1State::Play:
+		break;
+	default:
+		break;
+	}
+}
 
 void Stage1::Free()
 {

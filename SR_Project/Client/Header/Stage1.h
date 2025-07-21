@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 class Player;
+class RedGolem;
 class Stage1 :
     public Scene
 {
@@ -26,9 +27,11 @@ public:
 
     void DebugIMGUI();
 private:
+    void ChangeState(Stage1State state);
     void Free()override;
 
     Player* player;
+    RedGolem* boss = nullptr;
     Stage1State currState = Stage1State::Play;
 };
 
