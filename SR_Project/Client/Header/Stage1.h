@@ -33,6 +33,10 @@ private:
 
     Player* player;
     RedGolem* boss = nullptr;
+
+    _float stage1IntroDuration = 0.f;
+    _float stage1IntroTimer = 0.f;
+
     Stage1State currState = Stage1State::Play;
 };
 

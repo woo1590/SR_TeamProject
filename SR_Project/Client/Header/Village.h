@@ -11,7 +11,7 @@ private:
 
     enum class VillageState
     {
-        Intro,
+        EnterVillage,
         Play
     };
 
@@ -32,7 +32,7 @@ private:
 
     VillageState currState = {};
 
-    _float introDuration = 5.f;
+    _float introDuration = 15.f;
     _float introTimer = 0.f;
 };
 

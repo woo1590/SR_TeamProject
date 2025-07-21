@@ -211,7 +211,7 @@ void Village::Load()
 		}
     }
 
-	ChangeState(VillageState::Intro);
+	ChangeState(VillageState::Play);
 }
 
 void Village::Update(_float dt)
@@ -223,7 +223,7 @@ void Village::Update(_float dt)
 
 	switch (currState)
 	{
-	case Village::VillageState::Intro:
+	case Village::VillageState::EnterVillage:
 	{
 		if (introTimer >= introDuration)
 			ChangeState(VillageState::Play);
@@ -372,11 +372,11 @@ void Village::ChangeState(VillageState state)
 {
 	switch (state)
 	{
-	case Village::VillageState::Intro:
+	case Village::VillageState::EnterVillage:
 	{
-		currState = VillageState::Intro;
+		currState = VillageState::EnterVillage;
 
-		introDuration = 5.f;
+		introDuration = 7.f;
 		introTimer = 0.f;
 		CameraMgr->SetMainCamera(L"Way_Camera");
 		auto cam = static_cast<WayPointCam*>(CameraMgr->GetMainCamera()->GetOwner());
