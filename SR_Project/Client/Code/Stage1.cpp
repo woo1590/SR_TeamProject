@@ -114,6 +114,7 @@ void Stage1::Load()
 		{
 			player = game->GetPlayer();
 			player->SetOwner(ObjectMgr);
+			player->AddRef();
 		}
 		else
 		{
@@ -192,7 +193,7 @@ void Stage1::Unload()
 	EngineCore::GetInstance()->GetSoundManager()->Stop("TestBGM");
 }
 
-#ifdef USE_IMGUI
+#ifdef USE_IMGUI 
 void Stage1::DebugIMGUI()
 {
 	ImGui::Begin("Player Inspector", nullptr, ImGuiWindowFlags_AlwaysAutoResize);

@@ -12,6 +12,7 @@ public:
     void Update(_float dt)override;
     void Late_Update(_float dt)override;
     std::unordered_map<string, Object*> GetBones();
+    void SetOwner(ObjectManager* owner)override;
 private:
     std::unordered_map<string, Object*> Bones;
     _float Scale = 1.f;

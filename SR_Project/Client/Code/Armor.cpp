@@ -76,6 +76,7 @@ HRESULT Armor::Ready_Object(ObjectManager* owner, ObjectType objType)
     {
         bone.second->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
         owner->AddObject(ObjectType::Bone, bone.second);
+        bone.second->AddRef();
     }
     return S_OK;
 }
@@ -93,4 +94,16 @@ void Armor::Late_Update(_float dt)
 std::unordered_map<string,Object*> Armor::GetBones()
 {
     return Bones;
+}
+
+void Armor::SetOwner(ObjectManager* owner)
+{
+    this->owner = owner;
+
+    for (auto& bone : Bones)
+    {
+        bone.second->SetOwner(owner);
+        bone.second->AddRef();
+        owner->AddObject(ObjectType::Bone, bone.second);
+    }
 }

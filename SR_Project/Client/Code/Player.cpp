@@ -1401,6 +1401,7 @@ void Player::SetOwner(ObjectManager* owner)
         if (bone.second)
         {
             bone.second->SetOwner(owner);
+            bone.second->AddRef();
             owner->AddObject(bone.second->GetObjectType(), bone.second);
         }
     }

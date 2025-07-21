@@ -123,6 +123,7 @@ void Village::Load()
 		{
 			player = game->GetPlayer();
 			player->SetOwner(ObjectMgr);
+			player->AddRef();
 		}
 		else
 		{
