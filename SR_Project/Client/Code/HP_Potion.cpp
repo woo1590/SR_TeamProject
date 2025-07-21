@@ -29,13 +29,12 @@ HRESULT HP_Potion::Ready_Object()
 
 	transform->SetPosition(700.f, 700.f);
 	transform->SetScale(0.8f, 0.8f);
+	renderer->SetTexture(L"hp_potion");
 
 	auto maskObj = MaskObj::Create(owner);
 	auto maskTf = maskObj->GetComponent<TransformComponent>();
 
 	maskTf->SetPosition(transform->GetPosition().x, transform->GetPosition().y - 20.f);
-
-	renderer->SetTexture(L"hp_potion");
 
 	auto maskRenderer = maskObj->GetComponent<UIRenderer>();
 	maskRenderer->SetLayer(renderer->GetLayer() + 1);
