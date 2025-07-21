@@ -29,19 +29,12 @@ HRESULT InventoryCam::Ready_Object()
 
 void InventoryCam::Late_Update(float dt)
 {
-    auto player = owner->GetFrontObject(ObjectType::Player);
-    if (!player) return;
+	auto camTf = GetComponent<TransformComponent>();
 
-    auto targetTf = player->GetComponent<TransformComponent>();
-    if (!targetTf) return;
+	constexpr float distance = 3.f;
+	constexpr float heightOffset = 1.f;
 
-    _vec3 offset{0.f, 1.5f, -3.f};
-
-    auto camTf = GetComponent<TransformComponent>();
-    camTf->SetPosition(targetTf->GetPosition() + offset);
-    camTf->LookAt(targetTf->GetPosition());
-
-    CameraActor::Late_Update(dt);
-
-    CameraActor::Late_Update(dt);
+	camTf->SetPosition({0.f, heightOffset, +distance});
+	camTf->LookAt({0.f, heightOffset, 0.f});
+	Object::Update(dt);
 }

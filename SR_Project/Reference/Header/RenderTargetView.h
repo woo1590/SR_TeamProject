@@ -11,8 +11,10 @@ struct ENGINE_DLL RenderTargetView
 	LPDIRECT3DTEXTURE9 texture = nullptr;
 	LPDIRECT3DSURFACE9 surface = nullptr;
 	D3DXCOLOR clearColor = D3DCOLOR_ARGB(0, 0, 0,0);
-
+	_matrix worldTransform;
 	list<MeshRenderer*> renderers;
+
+	RenderTargetView() { D3DXMatrixIdentity(&worldTransform); }
 
 	HRESULT CreateTexture(IDirect3DDevice9* device, UINT width, UINT height, D3DFORMAT format)
 	{

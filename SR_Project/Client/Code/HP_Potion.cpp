@@ -34,10 +34,7 @@ HRESULT HP_Potion::Ready_Object()
 	auto maskObj = MaskObj::Create(owner);
 	auto maskTf = maskObj->GetComponent<TransformComponent>();
 
-	maskTf->SetPosition(transform->GetPosition().x, transform->GetPosition().y - 20.f);
-
 	auto maskRenderer = maskObj->GetComponent<UIRenderer>();
-	maskRenderer->SetLayer(renderer->GetLayer() + 1);
 
 	info->SetInfo({L"HP 포션", L"hp_potion", ItemType::Potion, Rarity::Default, 10, L"HP 10 회복"});
 	item->SetCoolDown(true, 5.f);

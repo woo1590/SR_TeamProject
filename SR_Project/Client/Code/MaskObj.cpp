@@ -14,10 +14,7 @@ HRESULT MaskObj::Ready_Object()
 	auto tf = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	renderer->SetPivot(UIPivot::Top);
-	renderer->SetVisible(false);
 	renderer->SetTexture(L"gray");
-	renderer->SetAlpha(0.7f);
 	renderer->SetScale(0.9f, -0.9f);
 
 	return S_OK;

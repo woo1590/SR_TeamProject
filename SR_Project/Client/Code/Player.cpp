@@ -154,11 +154,21 @@ void Player::Update(_float dt)
 
 void Player::Late_Update(_float dt)
 {
-    BaseCharacter::Late_Update(dt);
+    // -----------------------------------
+    _vec3 dir = GetDir();
+    wchar_t buffer[256];
+    swprintf_s(buffer, L"PlayerDir ==> X: %f, Z: %f\n", dir.x, dir.z);
+    OutputDebugStringW(buffer);
 
-    auto transform = GetComponent<TransformComponent>();
+    if (EngineCore::GetInstance()->GetInputSystem()->IsKeyPressed(KEY::I))
+    {
+        bool enableInventory = (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::MainGame);
+        SetInventoryMode(enableInventory);
+    }
+   
 
     // ---------------------------------------- 
+    BaseCharacter::Late_Update(dt);
     if (moveToInteract && moveToObject)
     {
         auto npcTf = moveToObject->GetComponent<TransformComponent>();
@@ -1344,7 +1354,6 @@ void Player::UnEquipItem(ItemType itemType)
         break;
     }
 }
-
 Object* Player::GetBone(std::string boneName)
 {
     return Bones[boneName];
@@ -1445,6 +1454,39 @@ _bool Player::IsCharge()
 std::unordered_map<string, Object*> Player::GetBones()
 {
     return Bones;
+}
+
+void Player::SetInventoryMode(bool enable)
+{
+    auto renderSystem = EngineCore::GetInstance()->GetRenderSystem();
+    auto camMgr = GetScene()->GetCameraManager();
+    auto tf = GetComponent<TransformComponent>();
+    auto physics = GetComponent<PhysicsComponent>();
+
+    if (enable) // 인벤토리 여는경우
+    {
+        if (renderSystem->GetCurRenderState() == UIRenderType::Inventory) return;
+
+        lastWorldPos = tf->GetPosition();
+        lastWorldDir = GetDir();
+        tf->SetPosition(0.f, 0.f, 0.f);
+        renderSystem->SetUIRenderState(UIRenderType::Inventory);
+        camMgr->SetMainCamera(L"Inventory_Camera");
+        physics->SetMass(0.f); 
+        PlayerDirection = {0, 0, 1.f};
+        tf->SetForward(PlayerDirection);
+    }
+    else
+    {
+        if (renderSystem->GetCurRenderState() == UIRenderType::MainGame) return;
+
+        tf->SetPosition(lastWorldPos);
+        renderSystem->SetUIRenderState(UIRenderType::MainGame);
+        camMgr->SetMainCamera(L"Third_Camera");
+        physics->SetMass(1.f);
+        PlayerDirection = {lastWorldDir.x,lastWorldDir.y,lastWorldDir.z};
+        tf->SetForward(PlayerDirection);
+    }
 }
 
 void Player::UpdateIdle(_float dt)
