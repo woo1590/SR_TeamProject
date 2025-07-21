@@ -27,6 +27,7 @@ public:
 
     void DebugIMGUI();
 private:
+    void SetTriggerBox();
     void ChangeState(Stage1State state);
     void Free()override;
 

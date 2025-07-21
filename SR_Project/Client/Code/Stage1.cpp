@@ -159,11 +159,8 @@ void Stage1::Load()
 
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
 
-		auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-		bossTrigger->GetComponent<TransformComponent>()->SetPosition(140.f, 70.f, 320.f);
-		bossTrigger->AddSpawner(SpawnType::RedGolem, _vec3(40.f, 80.f, 320.f), _vec3(0.f, 0.f, 0.f));
-
-		ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
+		SetTriggerBox();
+		
 	}
 }
 
@@ -173,8 +170,6 @@ void Stage1::Update(_float dt)
 	PhysicsSys->Update(dt);
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
-
-
 
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 
@@ -245,6 +240,27 @@ void Stage1::DebugIMGUI()
 }
 #endif
 
+
+void Stage1::SetTriggerBox()
+{
+	auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger1->GetComponent<TransformComponent>()->SetPosition(45.f, 70.f, 130.f);
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
+
+	auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	auto trigger5 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+
+
+	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	bossTrigger->GetComponent<TransformComponent>()->SetPosition(140.f, 70.f, 320.f);
+	bossTrigger->AddSpawner(SpawnType::RedGolem, _vec3(40.f, 80.f, 320.f), _vec3(0.f, 0.f, 0.f));
+
+	ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
+}
 
 void Stage1::ChangeState(Stage1State state)
 {
