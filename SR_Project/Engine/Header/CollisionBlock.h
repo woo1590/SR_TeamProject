@@ -15,7 +15,6 @@ public:
     HRESULT Ready_Object()override;
 
     void SetOwner(ObjectManager* owner)override { this->owner = owner; }
-
     StaticBlockType GetType()const { return blockType; }
 private:
     void Free()override;

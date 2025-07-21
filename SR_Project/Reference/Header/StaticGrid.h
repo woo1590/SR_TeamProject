@@ -23,6 +23,7 @@ public:
     void InsertBlock();
 
     _vec3 GetRandomGrid(_vec3 originPos, _float range);
+    StaticBlockType GetBlockType(_vec3 pos);
 private:
     void Free()override;
 

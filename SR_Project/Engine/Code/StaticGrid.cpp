@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Object.h"
 #include "ObjectManager.h"
+#include "CollisionBlock.h"
 #include "CollisionComponent.h"
 #include "TransformComponent.h"
 
@@ -153,6 +154,9 @@ StaticBlockType StaticGrid::GetBlockType(_vec3 pos)
     int cx = WorldToCell(pos.x);
     int cy = WorldToCell(pos.y);
     int cz = WorldToCell(pos.z);
+    int key = HashCell(cx, cy, cz);
+
+    return static_cast<CollisionBlock*>(Cells[key]->GetOwner())->GetType();
 }
 
 CollisionComponent* StaticGrid::QueryCell(int cx, int cy, int cz)

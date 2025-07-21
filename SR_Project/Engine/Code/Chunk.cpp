@@ -159,7 +159,7 @@ void Chunk::BuildCollisionBlock()
                     {
                     case Basic:
                     {
-                        auto cb = CollisionBlock::Create(nullptr, ObjectType::CollisionBlock);
+                        auto cb = CollisionBlock::Create(nullptr, ObjectType::CollisionBlock,block.Type);
                         cb->GetComponent<TransformComponent>()->SetPosition(block.Pos);
                         collisionBlocks.push_back(cb);
                         //owner->AddObject(ObjectType::CollisionBlock, cb);
@@ -168,7 +168,7 @@ void Chunk::BuildCollisionBlock()
                     }
                     case Half:
                     {
-                        auto cb = CollisionBlock::Create(nullptr, ObjectType::CollisionBlock);
+                        auto cb = CollisionBlock::Create(nullptr, ObjectType::CollisionBlock,block.Type);
                         cb->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
                         cb->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
                         collisionBlocks.push_back(cb);
@@ -178,7 +178,7 @@ void Chunk::BuildCollisionBlock()
                     }
                     case Stair:
                     {
-                        auto cbBottom = CollisionBlock::Create(nullptr, ObjectType::StaticBlock);
+                        auto cbBottom = CollisionBlock::Create(nullptr, ObjectType::StaticBlock,block.Type);
                         cbBottom->GetComponent<TransformComponent>()->SetPosition(block.Pos + _vec3(0.f, -0.5f, 0.f));
                         cbBottom->GetComponent<TransformComponent>()->SetScale(_vec3(1.f, 0.5f, 1.f));
                         collisionBlocks.push_back(cbBottom);
@@ -205,7 +205,7 @@ void Chunk::BuildCollisionBlock()
                             break;
                         }
 
-                        auto cbTop = CollisionBlock::Create(nullptr, ObjectType::StaticBlock);
+                        auto cbTop = CollisionBlock::Create(nullptr, ObjectType::StaticBlock,block.Type);
                         cbTop->GetComponent<TransformComponent>()->SetPosition(block.Pos + offset);
                         cbTop->GetComponent<TransformComponent>()->SetScale(scale);
                         collisionBlocks.push_back(cbTop);
