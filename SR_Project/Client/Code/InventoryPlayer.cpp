@@ -8,6 +8,9 @@
 #include "ObjectManager.h"
 #include "BaseCharacter.h"
 #include "CameraComponent.h"
+#include "Player.h"
+#include "ObjectManager.h"
+#include "Object.h"
 
 InventoryPlayer* InventoryPlayer::Create(ObjectManager* owner)
 {
@@ -29,7 +32,6 @@ HRESULT InventoryPlayer::Ready_Object()
 		512, 512, D3DFMT_A8R8G8B8))) return E_FAIL;
 
 	rtv->clearColor = D3DCOLOR_ARGB(0, 0, 0, 0);
-
 	renderer->SetTexture(rtv->texture);
 
 	Object* cam = owner->GetObjectList(ObjectType::UICamera).front();
@@ -46,11 +48,9 @@ void InventoryPlayer::UpdateRendererList()
 {
 	rtv->renderers.clear();
 
-	Object* playerObj = owner->GetFrontObject(ObjectType::Player);
+	Player* player = static_cast<Player*>(owner->GetFrontObject(ObjectType::Player));
 
-	BaseCharacter* player = static_cast<BaseCharacter*>(playerObj);
-
-	auto& playerBones = player->GetBones();
+	const auto& playerBones = player->GetBones();
 
 	for (const auto& pair : playerBones)
 	{
@@ -62,11 +62,6 @@ void InventoryPlayer::UpdateRendererList()
 				rtv->renderers.push_back(renderer);
 		}
 	}
-}
-
-void InventoryPlayer::Update(float dt)
-{
-	Object::Update(dt);
 }
 
 void InventoryPlayer::Late_Update(float dt)

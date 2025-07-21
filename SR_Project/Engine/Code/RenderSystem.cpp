@@ -20,6 +20,7 @@
 #include "CollisionComponent.h"
 #include "ObjectComponent.h"
 #include "FontComponent.h"
+#include "TransformComponent.h"
 
 
 RenderSystem::RenderSystem()
@@ -267,6 +268,9 @@ void RenderSystem::RenderOffScreenViews()
 {
 	if (rtvs.empty()) return;
 
+	DWORD oldCullMode;
+	Device->GetRenderState(D3DRS_CULLMODE, &oldCullMode);
+
 	LPDIRECT3DSURFACE9 oldRenderTarget = nullptr;
 	Device->GetRenderTarget(0, &oldRenderTarget);
 
@@ -290,7 +294,20 @@ void RenderSystem::RenderOffScreenViews()
 
 		for (const auto& renderer : view->renderers)
 			if (renderer)
+			{
+				_matrix worldMat = renderer->GetOwner()->GetComponent<TransformComponent>()->GetWorldMatrix();
+				Device->SetTransform(D3DTS_WORLD, &worldMat);
+
+				// Pass 1: 앞면 그리기
+				Device->SetRenderState(D3DRS_LIGHTING, TRUE);
+				Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 				renderer->Render();
+
+				// Pass 2: 뒷면 그리기 
+				Device->SetRenderState(D3DRS_LIGHTING, FALSE); 
+				Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);  
+				renderer->Render();
+			}
 
 		Device->EndScene();
 	}
@@ -298,6 +315,8 @@ void RenderSystem::RenderOffScreenViews()
 	Device->SetRenderTarget(0, oldRenderTarget);
 	Device->SetTransform(D3DTS_VIEW, &oldView);
 	Device->SetTransform(D3DTS_PROJECTION, &oldProj);
+	Device->SetRenderState(D3DRS_CULLMODE, oldCullMode);
+	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	Safe_Release(oldRenderTarget);
 }

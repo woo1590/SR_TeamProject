@@ -9,10 +9,13 @@
 #include "ObjectManager.h"
 #include "CameraManager.h"
 #include "Scene.h"
+#include "Player.h"
 
-ExitBtn* ExitBtn::Create(ObjectManager* owner)
+ExitBtn* ExitBtn::Create(ObjectManager* owner, ExitBtnType type)
 {
 	auto* instance = new ExitBtn(owner);
+
+	instance->btnType = type;
 
 	return (FAILED(instance->Ready_Object())) ? Safe_Release(instance), nullptr : instance;
 
@@ -35,8 +38,13 @@ HRESULT ExitBtn::Ready_Object()
 	button->SetTextures(L"exitbtn", L"exitbtn_hover");
 
 	button->SetOnClick([this] {
-		EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::MainGame);
-		GetScene()->GetCameraManager()->SetMainCamera(L"Third_Camera");
+		auto player = static_cast<Player*>(owner->GetFrontObject(ObjectType::Player));
+		if (btnType == ExitBtnType::Inventory)
+			player->SetInventoryMode(false);
+		else if (btnType == ExitBtnType::WorldMap)
+		{
+			EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::MainGame);
+		}
 		});
 
 	return S_OK;

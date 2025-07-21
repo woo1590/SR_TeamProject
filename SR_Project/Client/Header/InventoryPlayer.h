@@ -14,7 +14,6 @@ public:
 
 	LPDIRECT3DTEXTURE9 GetMinimapTexture() const { rtv->texture; }
 	void UpdateRendererList();
-	void Update(float dt) override;
 	void Late_Update(float dt) override;
 
 public:

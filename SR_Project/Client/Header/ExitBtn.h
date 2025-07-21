@@ -3,6 +3,8 @@
 #include "Object.h"
 #include "PanelComponent.h"
 
+enum class ExitBtnType {None, Inventory, WorldMap};
+
 class ExitBtn : public Object
 {
 private:
@@ -10,8 +12,10 @@ private:
 		:Object(owner,ObjectType::UI) {}
 
 public:
-	static ExitBtn* Create(ObjectManager* owner);
+	static ExitBtn* Create(ObjectManager* owner, ExitBtnType type);
 	HRESULT Ready_Object();
 
+private:
+	ExitBtnType btnType = ExitBtnType::None;
 };
 

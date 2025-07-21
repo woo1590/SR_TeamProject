@@ -331,8 +331,8 @@ void UILoader::BuildMiscUI(ObjectManager* objMgr)
 {
     ADD(Emerald::Create(objMgr));
 
-    auto exitGame = ExitBtn::Create(objMgr);
-    auto exitMap = ExitBtn::Create(objMgr);
+    auto exitGame = ExitBtn::Create(objMgr,ExitBtnType::Inventory);
+    auto exitMap = ExitBtn::Create(objMgr,ExitBtnType::WorldMap);
     exitMap->GetComponent<UIRenderer>()->SetRenderType(UIRenderType::WorldMap);
     ADD(exitGame); ADD(exitMap);
 

@@ -157,11 +157,7 @@ void TransformComponent::LookAt(const _vec3& targetPos)
 {
     _vec3 dir = targetPos - Position;
     D3DXVec3Normalize(&dir, &dir);
-
-    _float pitch = asinf(dir.y);
-    _float yaw = atan2f(dir.x, dir.z);
-
-    SetRotate({pitch, yaw, 0.f});
+    SetForward(dir);
 }
 
 _vec3 TransformComponent::GetPosition() const
