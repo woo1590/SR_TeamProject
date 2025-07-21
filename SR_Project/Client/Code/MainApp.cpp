@@ -56,6 +56,7 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
         return E_FAIL;
 
     EngineCore::GetInstance()->GetRenderSystem()->SetShader("DefaultPost");
+    EngineCore::GetInstance()->GetSoundManager()->PlayBGM("IntroBGM");
 
     /*---------Start Scene----------*/
     Scene* Start = LoadingScene::Create(LOADID::Village);
@@ -298,7 +299,10 @@ HRESULT MainApp::LoadDefaultResource()
     /*----------------------Load Sound-----------------------------*/
     {
         //BGM
-        sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Boss_Ender.mp3", true);
+        sound->LoadSound("IntroBGM", "../Resource/Sound/BGM/Intro_BGM.mp3", true);
+        sound->LoadSound("VillageBGM", "../Resource/Sound/BGM/Village_BGM.mp3", true);
+        sound->LoadSound("Stage1BGM", "../Resource/Sound/BGM/Stage1_BGM.mp3", true);
+        sound->LoadSound("Boss_EnderBGM", "../Resource/Sound/BGM/Boss_Ender.mp3", true);
 
         //Player
         sound->LoadSound("ShootArrow", "../Resource/Sound/SFX/ShootArrow.mp3", false);

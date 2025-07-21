@@ -96,7 +96,7 @@ void Stage1::Load()
 
 	/*-------------------------Create System-----------------------------*/
 	{
-		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");
+		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("Stage1BGM");
 
 		Grid = StaticGrid::Create(this);
 		ObjectMgr = ObjectManager::Create(this);
@@ -114,6 +114,7 @@ void Stage1::Load()
 		{
 			player = game->GetPlayer();
 			player->SetOwner(ObjectMgr);
+			player->AddRef();
 		}
 		else
 		{
@@ -143,6 +144,7 @@ void Stage1::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
+		BlockMgr->LoadDB("Stage1");
 
 		Grid->InsertBlock();
 	}
@@ -156,6 +158,9 @@ void Stage1::Load()
 		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
+
+		SetTriggerBox();
+		
 	}
 }
 
@@ -174,6 +179,13 @@ void Stage1::Update(_float dt)
 	if (Input->IsKeyPressed(NUM2))
 		CameraMgr->SetMainCamera(L"Third_Camera");
 
+	if (Input->IsKeyPressed(NUM9))
+		EngineCore::GetInstance()->SetDebugMode(false);
+
+	if (Input->IsKeyPressed(NUM0))
+		EngineCore::GetInstance()->SetDebugMode(true);
+
+
 	if (Input->IsKeyPressed(NUM4))
 	{
 		auto command = ChangeScene::Create(LOADID::Village);
@@ -189,10 +201,10 @@ void Stage1::Late_Update(_float dt)
 
 void Stage1::Unload()
 {
-	EngineCore::GetInstance()->GetSoundManager()->Stop("TestBGM");
+	EngineCore::GetInstance()->GetSoundManager()->Stop("Stage1BGM");
 }
 
-#ifdef USE_IMGUI
+#ifdef USE_IMGUI 
 void Stage1::DebugIMGUI()
 {
 	ImGui::Begin("Player Inspector", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
@@ -228,6 +240,48 @@ void Stage1::DebugIMGUI()
 }
 #endif
 
+
+void Stage1::SetTriggerBox()
+{
+	auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger1->GetComponent<TransformComponent>()->SetPosition(45.f, 70.f, 130.f);
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
+
+	auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	auto trigger5 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+
+
+	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	bossTrigger->GetComponent<TransformComponent>()->SetPosition(140.f, 70.f, 320.f);
+	bossTrigger->AddSpawner(SpawnType::RedGolem, _vec3(40.f, 80.f, 320.f), _vec3(0.f, 0.f, 0.f));
+
+	ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
+}
+
+void Stage1::ChangeState(Stage1State state)
+{
+	switch (state)
+	{
+	case Stage1::Stage1State::Stage1Intro:	
+		//camera intro
+		break;
+	case Stage1::Stage1State::BossIntro:
+		boss = RedGolem::Create(ObjectMgr, ObjectType::Monster);
+		boss->GetComponent<TransformComponent>()->SetPosition(120.f, 70.f, 100.f);
+		ObjectMgr->AddObject(ObjectType::Monster, boss);
+		boss->AddRef();
+		currState = Stage1State::Play;
+		break;
+	case Stage1::Stage1State::Play:
+		break;
+	default:
+		break;
+	}
+}
 
 void Stage1::Free()
 {

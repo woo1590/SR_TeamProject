@@ -105,7 +105,8 @@ void Village::Load()
 #ifdef USE_IMGUI
         EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
 #endif
-        EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");
+		EngineCore::GetInstance()->GetSoundManager()->Stop("IntroBGM");
+        EngineCore::GetInstance()->GetSoundManager()->PlayBGM("VillageBGM");
 
         Grid = StaticGrid::Create(this);
         ObjectMgr = ObjectManager::Create(this);
@@ -124,6 +125,7 @@ void Village::Load()
 		{
 			player = game->GetPlayer();
 			player->SetOwner(ObjectMgr);
+			player->AddRef();
 		}
 		else
 		{
@@ -227,6 +229,13 @@ void Village::Update(_float dt)
             EngineCore::GetInstance()->RegisterCommand(command);
 			GameManager::GetInstance()->ClearScene(LOADID::Village);
 		}
+		
+		if (Input->IsKeyPressed(NUM5))
+		{
+            auto command = ChangeScene::Create(LOADID::Stage2);
+            EngineCore::GetInstance()->RegisterCommand(command);
+			GameManager::GetInstance()->ClearScene(LOADID::Village);
+		}
 
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);
@@ -264,7 +273,7 @@ void Village::Late_Update(_float dt)
 
 void Village::Unload()
 {
-	EngineCore::GetInstance()->GetSoundManager()->Stop("TestBGM");
+	EngineCore::GetInstance()->GetSoundManager()->Stop("VillageBGM");
 }
 
 #ifdef USE_IMGUI

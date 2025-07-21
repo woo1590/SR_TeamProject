@@ -56,6 +56,7 @@ HRESULT Loader::Loading()
 		hr = Load_Stage1();
 		break;
 	case LOADID::Stage2:
+		hr = Load_Stage2();
 		break;
 	default:
 		break;
@@ -109,6 +110,18 @@ HRESULT Loader::Load_Stage1()
 	/*--------------------Load Chunk----------------------*/
 	{
 		chunkload->LoadChunk(L"../../Reference/MapData/Stage1.chunkmap");
+	}
+
+	return S_OK;
+}
+
+HRESULT Loader::Load_Stage2()
+{
+	auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
+
+	/*--------------------Load Chunk----------------------*/
+	{
+		chunkload->LoadChunk(L"../../Reference/MapData/Stage2.chunkmap");
 	}
 
 	return S_OK;
