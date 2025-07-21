@@ -148,6 +148,13 @@ _vec3 StaticGrid::GetRandomGrid(_vec3 originPos, _float range)
     return _vec3();
 }
 
+StaticBlockType StaticGrid::GetBlockType(_vec3 pos)
+{
+    int cx = WorldToCell(pos.x);
+    int cy = WorldToCell(pos.y);
+    int cz = WorldToCell(pos.z);
+}
+
 CollisionComponent* StaticGrid::QueryCell(int cx, int cy, int cz)
 {
 	UINT64 key = HashCell(cx, cy, cz);

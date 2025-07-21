@@ -7,8 +7,8 @@
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
 
-CollisionBlock::CollisionBlock(ObjectManager* owner, ObjectType objType)
-	:Object(owner,objType)
+CollisionBlock::CollisionBlock(ObjectManager* owner, ObjectType objType, StaticBlockType type)
+	:Object(owner,objType),blockType(type)
 {
 }
 
@@ -16,7 +16,7 @@ CollisionBlock::~CollisionBlock()
 {
 }
 
-CollisionBlock* CollisionBlock::Create(ObjectManager* owner, ObjectType objType)
+CollisionBlock* CollisionBlock::Create(ObjectManager* owner, ObjectType objType, StaticBlockType type)
 {
 	CollisionBlock* Instance = new CollisionBlock(owner, objType);
 

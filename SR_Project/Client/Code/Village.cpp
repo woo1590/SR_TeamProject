@@ -227,6 +227,13 @@ void Village::Update(_float dt)
             EngineCore::GetInstance()->RegisterCommand(command);
 			GameManager::GetInstance()->ClearScene(LOADID::Village);
 		}
+		
+		if (Input->IsKeyPressed(NUM5))
+		{
+            auto command = ChangeScene::Create(LOADID::Stage2);
+            EngineCore::GetInstance()->RegisterCommand(command);
+			GameManager::GetInstance()->ClearScene(LOADID::Village);
+		}
 
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);

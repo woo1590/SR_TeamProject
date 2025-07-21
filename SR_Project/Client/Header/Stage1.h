@@ -9,6 +9,13 @@ private:
     Stage1();
     virtual ~Stage1();
 
+    enum class Stage1State
+    {
+        Stage1Intro,
+        BossIntro,
+        Play
+    };
+
 public:
     static Stage1* Create();
 
@@ -22,5 +29,6 @@ private:
     void Free()override;
 
     Player* player;
+    Stage1State currState = Stage1State::Play;
 };
 

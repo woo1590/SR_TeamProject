@@ -96,7 +96,7 @@ void Stage1::Load()
 
 	/*-------------------------Create System-----------------------------*/
 	{
-		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("TestBGM");
+		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("Stage1BGM");
 
 		Grid = StaticGrid::Create(this);
 		ObjectMgr = ObjectManager::Create(this);
@@ -144,6 +144,7 @@ void Stage1::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
+		BlockMgr->LoadDB("Stage1");
 
 		Grid->InsertBlock();
 	}

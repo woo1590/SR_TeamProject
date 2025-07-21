@@ -299,6 +299,7 @@ HRESULT MainApp::LoadDefaultResource()
     {
         //BGM
         sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Boss_Ender.mp3", true);
+        sound->LoadSound("Stage1BGM", "../Resource/Sound/BGM/Stage1_BGM.mp3", true);
 
         //Player
         sound->LoadSound("ShootArrow", "../Resource/Sound/SFX/ShootArrow.mp3", false);
