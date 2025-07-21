@@ -115,7 +115,12 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 void Player::Update(_float dt)
 {
     auto curRenderType = EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState();
+<<<<<<< Updated upstream
     if (curRenderType == UIRenderType::QuestUI || curRenderType == UIRenderType::WorldMap) return;
+=======
+    if (curRenderType == UIRenderType::Inventory || curRenderType == UIRenderType::WorldMap ||
+        curRenderType == UIRenderType::QuestUI) return;
+>>>>>>> Stashed changes
 
     BaseCharacter::Update(dt);
 
