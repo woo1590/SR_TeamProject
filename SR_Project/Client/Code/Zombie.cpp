@@ -166,7 +166,7 @@ void Zombie::InitTransform(ObjectType objType)
 
         auto LArmPhysics = Bones["LArm"]->AddComponent<PhysicsComponent>();
         LArmPhysics->SetKinematic(true);
-        GetScene().get
+        //GetScene().get
     }
 
     transform->SetPosition(_vec3(15.f, 150.f, 50.f));

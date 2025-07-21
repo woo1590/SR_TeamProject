@@ -198,6 +198,9 @@ void Village::Load()
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
 
+			auto blast = Blastling::Create(ObjectMgr, ObjectType::Monster);
+			blast->GetComponent<TransformComponent>()->SetPosition(260.f, 30.f, 57.f);
+			ObjectMgr->AddObject(ObjectType::Monster, blast);
 		}
     }
 }
