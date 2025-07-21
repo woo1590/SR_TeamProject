@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Village.h"
 #include "EngineCore.h"
 #include "LoadingScene.h"
@@ -165,7 +165,7 @@ void Village::Load()
 
 		if (game->IsSceneClear(LOADID::Village))
 		{
-			player->GetComponent<TransformComponent>()->SetPosition(160.f, 20.f, 200.f);
+			player->GetComponent<TransformComponent>()->SetPosition(160.f, 100.f, 200.f);
 		}
 		else
 		{
