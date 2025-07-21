@@ -571,6 +571,9 @@
     <Filter Include="02. Object\Effect\RollEffect">
       <UniqueIdentifier>{9ebc4e24-e451-441b-8a2b-963d27ff20a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Effect\FireworkEffect">
+      <UniqueIdentifier>{25bc998c-b888-465f-94ee-930b1439f067}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1102,6 +1105,9 @@
     <ClInclude Include="..\Header\RollEffect.h">
       <Filter>02. Object\Effect\RollEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\FireworkEffect.h">
+      <Filter>02. Object\Effect\FireworkEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1614,6 +1620,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\RollEffect.cpp">
       <Filter>02. Object\Effect\RollEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FireworkEffect.cpp">
+      <Filter>02. Object\Effect\FireworkEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

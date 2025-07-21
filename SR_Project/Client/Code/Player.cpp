@@ -1270,12 +1270,17 @@ void Player::CheckTargetDead()
 void Player::CheckSkill()
 {
     auto input = EngineCore::GetInstance()->GetInputSystem();
-    static const KEY keySkill = C;
+    static const KEY keyStatikk = C;
+    static const KEY keyFirework = V;
 
     auto physics = GetComponent<PhysicsComponent>();
-    if (input->IsKeyPressed(keySkill))
+    if (input->IsKeyPressed(keyStatikk))
     {
         SetStatikkMode(true);
+    }
+    else if (input->IsKeyPressed(keyFirework))
+    {
+        ChangeShootType();
     }
 }
 

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Firework.h"
 #include "Scene.h"
 #include "PhysicsSystem.h"
@@ -15,6 +15,7 @@
 #include "EngineCore.h"
 #include "SoundManager.h"
 #include "Creeper.h"
+#include "FireworkEffect.h"
 
 Firework::Firework(ObjectManager* owner, ObjectType objType) : Item(owner, objType)
 {
@@ -120,12 +121,20 @@ void Firework::SetCollisionEnter(Object* other)
         if (distance <= fireworkRange)
         {
             auto mon = dynamic_cast<Monster*>(monster);
+            if (!mon) continue;
             mon->SetHit(true);
             mon->Hit(monster->GetComponent<TransformComponent>()->GetPosition() - GetComponent<TransformComponent>()->GetPosition(), fireworkDamage);
             monster->GetComponent<InfoComponent<EnemyInfo>>()->AddHp(-fireworkDamage);
         }
     }
     EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomFirework");
+
+    for (int i = 0; i < 40; ++i)
+    {
+        auto fireworkEffect = FireworkEffect::Create(owner, ObjectType::ParticleEffect, this);
+        owner->AddObject(ObjectType::ParticleEffect, fireworkEffect);
+    }
+
     SetDead();
 }
 
