@@ -17,5 +17,7 @@ private:
     _float Scale = 0.f;
     _float tikkleTimer = 0.f;
     const _float tikkleTerm = 0.005f;
+
+    _float soundTimer = 0.f;
 };
 

@@ -8,6 +8,9 @@
 #include "Player.h"
 #include "TikkleEffect.h"
 
+#include "EngineCore.h"
+#include "SoundManager.h"
+
 ChargeFrontEffect::ChargeFrontEffect(ObjectManager* owner, ObjectType objType, Object* _onPos) : Effect(owner, objType)
 {
     effectOwner = _onPos->GetComponent<TransformComponent>();
@@ -53,6 +56,8 @@ HRESULT ChargeFrontEffect::Ready_Object()
 	auto mtrl = renderer->GetMaterial();
 	mtrl->SetVec3("color", _vec3(1.f, 0.f, 0.f));
 
+	EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Charge");
+
 	return S_OK;
 }
 
@@ -93,6 +98,13 @@ void ChargeFrontEffect::Update(_float dt)
 		tikkleTimer = 0.f;
 		auto tikkle = TikkleEffect::Create(owner, ObjectType::ParticleEffect, this);
 		owner->AddObject(ObjectType::ParticleEffect, tikkle);
+	}
+
+	soundTimer += dt;
+	if (soundTimer > 0.33f)
+	{
+		EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Charge");
+		soundTimer = 0.f;
 	}
 }
 
