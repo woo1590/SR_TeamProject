@@ -11,12 +11,15 @@
 #include "InfoComponent.h"
 #include "BloodEffect.h"
 #include "Player.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
 #include "AIController.h"
 #include "IsAlive.h"
 #include "Die.h"
 #include "EngineCore.h"
+#include "PhysicsComponent.h"
 #include "SoundManager.h"
 #include "DeadEffect.h"
 
@@ -150,8 +153,21 @@ void Zombie::InitTransform(ObjectType objType)
     auto transform = AddComponent<TransformComponent>();
 
     auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(3.5f, 7.f, 3.5f));
+    collision->SetSize(_vec3(2.f, 7.f, 2.f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
+
+    {
+        auto LArmCollision = Bones["LArm"]->AddComponent<CollisionComponent>();
+        LArmCollision->AddCollider<OBBCollider>();
+        LArmCollision->SetSize(_vec3(1.f, 4.f, 1.f));
+        LArmCollision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other);});
+        LArmCollision->SetLayer(LAYER_ENEMY);
+        LArmCollision->SetMask(LAYER_PLAYER);
+
+        auto LArmPhysics = Bones["LArm"]->AddComponent<PhysicsComponent>();
+        LArmPhysics->SetKinematic(true);
+        GetScene().get
+    }
 
     transform->SetPosition(_vec3(15.f, 150.f, 50.f));
 }

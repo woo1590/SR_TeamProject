@@ -16,7 +16,7 @@ float4x4 g_World : WORLD;
 float4x4 g_View : VIEW;
 float4x4 g_Proj : PROJECTION;
 float3 lightDir = { -1.f, -1.f, -1.f };
-float1 ambient = 0.5f;
+float1 ambient = 0.4f;
 
 struct VS_INPUT
 {

@@ -215,7 +215,8 @@ void Arrow::PlayerArrowInfo()
     ArrowRotateSet();
 
     auto collision = AddComponent<CollisionComponent>();
-    collision->AddCollider<AABBCollider>();
+    collision->AddCollider<OBBCollider>();
+    collision->SetSize(_vec3(1.f, 0.5f, 1.f));
     collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_ENEMY | LAYER_DEFAULT);
     collision->SetCollisionEnter([this](Object* other) {this->SetCollisionEnter(other); });

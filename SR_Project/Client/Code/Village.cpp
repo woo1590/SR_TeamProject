@@ -154,6 +154,8 @@ void Village::Load()
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 
+		BlockMgr->LoadDB("VillageMap");
+
 		Grid->InsertBlock();
 
         UILoader loader;
@@ -196,7 +198,6 @@ void Village::Load()
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
 
-			ObjectMgr->AddObject(ObjectType::Monster, Blastling::Create(ObjectMgr, ObjectType::Monster));
 		}
     }
 }
