@@ -17,4 +17,6 @@ public:
 
 private:
 	int prevHp = -1;
+	float dmgCooldown = 0.f;
+	static constexpr float DmgInterval = 0.1f;
 };

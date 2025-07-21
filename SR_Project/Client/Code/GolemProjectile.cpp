@@ -48,7 +48,7 @@ HRESULT GolemProjectile::Ready_Object(ObjectManager* owner, ObjectType objType)
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
     collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_PLAYER);
-    collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
+    collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other); });
     collision->SetSize(_vec3(5.f, 5.f, 5.f));
 
     auto physics = AddComponent<PhysicsComponent>();
@@ -132,7 +132,7 @@ void GolemProjectile::OnCollisionStay(Object* other)
     if (objType == ObjectType::Player)
     {
         auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
-        playerStat->AddHp(-1);
+        playerStat->AddHp(-0.5);
     }
 }
 

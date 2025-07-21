@@ -169,9 +169,9 @@ void Village::Load()
 		else
 		{
 			player->GetComponent<TransformComponent>()->SetPosition(260.f, 30.f, 57.f);
-			auto npc = Npc::Create(ObjectMgr, ObjectType::Neutral);
+			auto npc = RedGolem::Create(ObjectMgr, ObjectType::Monster);
 			npc->GetComponent<TransformComponent>()->SetPosition(270.f, 20.f, 43.f);
-			ObjectMgr->AddObject(ObjectType::Neutral, npc);
+			ObjectMgr->AddObject(ObjectType::Monster, npc);
 
 			auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 			trigger1->GetComponent<TransformComponent>()->SetPosition(238.f, 0.f, 85.f);
