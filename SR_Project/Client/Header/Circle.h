@@ -16,7 +16,14 @@ public:
 public:
     void SetOn(_bool On);
 
+private:
+    void PlayScaleAnimation(_float dt);
+
 protected:
     void Free() override;
+
+private:
+    _float          ElapsedTime = 0.f;
+    _bool           IsOn = false;
 };
 

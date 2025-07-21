@@ -92,7 +92,6 @@ void Zombie::Attack(Object* target)
         SetRotation({ 0.f, 0.f, 0.f }, "RLeg");
         *IsAttack = true;
         IsAttackDamage = false;
-        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackZombie");
     }
 }
 
@@ -137,7 +136,11 @@ void Zombie::Hit(_vec3 dir, _float power)
         effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
         owner->AddObject(ObjectType::ParticleEffect, effect);
         ////////////////////////////////////////////////
-        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitZombie");
+        if (rand() % 2)
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitZombie");
+        else
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackZombie");
+
         Monster::Hit(dir, power);
     }
 }

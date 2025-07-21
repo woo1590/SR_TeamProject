@@ -32,7 +32,7 @@ protected:
     void PlayDie(_float dt) override;
     void PlayHit(_float dt) override;
 
-    void OnCollisionStay(Object* other) override;
+    void OnCollisionEnter(Object* other);
 
 private:
     void PlayLeftAttack(_float dt);
@@ -59,6 +59,8 @@ private:
     _float*             AttackTimer = nullptr;
     _int*               AttackNum = nullptr;
     _float              WalkTimer;
+
+    bool IsAttackDamage = false;
 
 };
 

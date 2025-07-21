@@ -21,6 +21,8 @@
 #include "PhysicsComponent.h"
 #include "Scene.h"
 #include "PhysicsSystem.h"
+#include "MeshRendererComponent.h"
+#include "Material.h"
 
 RedGolem::RedGolem(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -55,20 +57,25 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     {
         auto LArmCollision = Bones["LArm"]->AddComponent<CollisionComponent>();
         LArmCollision->AddCollider<OBBCollider>();
-        LArmCollision->SetOffset(_vec3(-5.f, -2.f, 0.f));
+        LArmCollision->SetOffset(_vec3(10.f, -2.f, 0.f));
         LArmCollision->SetSize(_vec3(7.f, 20.f, 7.f));
+        LArmCollision->SetCollisionEnter([this](Object* other) {this->OnCollisionEnter(other); });
         //
-
+        LArmCollision->SetLayer(LAYER_ENEMY);
+        LArmCollision->SetMask(LAYER_PLAYER);
         auto LArmPhysics = Bones["LArm"]->AddComponent<PhysicsComponent>();
         LArmPhysics->SetKinematic(true);
         GetScene()->GetPhysicsStstem()->RegisterBody(LArmPhysics);
     }
     
     {
-        auto RAramCollision = Bones["RArm"]->AddComponent<CollisionComponent>();
-        RAramCollision->AddCollider<OBBCollider>();
-        RAramCollision->SetOffset(_vec3(5.f, -2.f, 0.f));
-        RAramCollision->SetSize(_vec3(7.f, 20.f, 7.f));
+        auto RArmCollision = Bones["RArm"]->AddComponent<CollisionComponent>();
+        RArmCollision->AddCollider<OBBCollider>();
+        RArmCollision->SetOffset(_vec3(-10.f, -2.f, 0.f));
+        RArmCollision->SetSize(_vec3(7.f, 20.f, 7.f));
+        RArmCollision->SetCollisionEnter([this](Object* other) {this->OnCollisionEnter(other); });
+        RArmCollision->SetLayer(LAYER_ENEMY);
+        RArmCollision->SetMask(LAYER_PLAYER);
         //���⵵
 
         auto RArmPhysics = Bones["RArm"]->AddComponent<PhysicsComponent>();
@@ -102,8 +109,12 @@ void RedGolem::MoveTo(_vec3* dir, _float dt)
     auto Transform = GetComponent<TransformComponent>();
     auto stat = GetComponent<InfoComponent<EnemyInfo>>();
     if (State != MonsterState::Walk) State = MonsterState::Walk;
+    if (D3DXVec3Length(dir) >= *Distance)
+    {
+        D3DXVec3Normalize(dir, dir);
+        Transform->Translate(*dir * dt * stat->GetInfo().speed * 4.f);
+    }
     D3DXVec3Normalize(dir, dir);
-    Transform->Translate(*dir * dt * stat->GetInfo().speed);
     Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
 }
 
@@ -115,6 +126,7 @@ void RedGolem::Attack(Object* target)
 {
     if (State != MonsterState::Attack)
     {
+        IsAttackDamage = false;
         State = MonsterState::Attack;
         SuperAttackAnim.DelayTime = 0.f;
         LeftAttackAnim.DelayTime = 0.f;
@@ -141,6 +153,11 @@ void RedGolem::Die()
         DieAnim.IsRunning = true;
         DieAnim.IsEnd = false;
         DieAnim.DelayTime = 0.0f;
+        auto collision = GetComponent<CollisionComponent>();
+        collision->SetSize(_vec3(0.1, 0.1, 0.1));
+
+        auto physics = GetComponent<PhysicsComponent>();
+        physics->SetGround(false);
     }
 }
 
@@ -175,6 +192,14 @@ void RedGolem::InitTransform(ObjectType objType)
     SetPosition(_vec3(0.f, -3.f * Scale, -10.f * Scale), "LightBlock");
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.f, -20.f * Scale, 0.0f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
+    auto mtrl = Bones["LightBlock"]->GetComponent<MeshRenderer>()->GetMaterial();
+    mtrl->SetInt("emissive", 1);
+
+    mtrl->SetInt("coloruse", 1);
+    mtrl->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+    mtrl->SetFloat("emissive", 1);
+    mtrl->SetVec3("emissivecolor", _vec3(1.0, 0.1, 0));
+    mtrl->SetFloat("emissivePow", 3);
 
     //arm
     SetScale(_vec3(10.f * Scale, 20.f * Scale, 10.f * Scale), "LArm");
@@ -277,7 +302,8 @@ void RedGolem::InitAnimation()
     DieAnim.Start = 0;                  //start angle
     DieAnim.End = 90.f;                //end angle
     DieAnim.ElapsedTime = 0.f;
-    DieAnim.TotalTime = 0.5f;          //play animation total time
+    DieAnim.TotalTime = 1.0f;          //play animation total time
+    DieAnim.DelayTime = 1.5f;
 }
 
 void RedGolem::PlayAnimation(_float dt)
@@ -318,13 +344,13 @@ void RedGolem::PlayWalk(_float dt)
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkGolem");
         WalkTimer = 0.f;
     }
-    float Angle = sinf(WalkAnim.ElapsedTime * Speed);
+    float Angle = sinf(WalkAnim.ElapsedTime * Speed * 2.f);
 
     float LegAngle = D3DXToRadian(20.f) * Angle;
     float ArmAngle = D3DXToRadian(30.f) * Angle;
 
-    SetRotation({ LegAngle/4, 0.f, 0.f }, "LLeg");
-    SetRotation({ -LegAngle/4, 0.f, 0.f }, "RLeg");
+    SetRotation({ LegAngle/2, 0.f, 0.f }, "LLeg");
+    SetRotation({ -LegAngle/2, 0.f, 0.f }, "RLeg");
 
     SetRotation({ -ArmAngle, 0.f, 0.f }, "LArm");
     SetRotation({ ArmAngle, 0.f, 0.f }, "RArm");
@@ -359,9 +385,6 @@ void RedGolem::PlayDie(_float dt)
     float t = clamp(DieAnim.ElapsedTime / DieAnim.TotalTime, 0.f, 1.f);
     float angle = lerp(DieAnim.Start, DieAnim.End, t);
 
-    auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(0.1, 0.1, 0.1));
-
     SetRotation({ -D3DXToRadian(angle), 0.f, 0.f }, "Body");
 
     if (DieAnim.ElapsedTime > DieAnim.TotalTime)
@@ -373,8 +396,12 @@ void RedGolem::PlayDie(_float dt)
       
         SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "LLeg");
         SetRotation(_vec3(D3DXToRadian(0.f), 0.f, 0.f), "RLeg");
-        SetDead();
-        DeleteBar();
+
+        if (DieAnim.ElapsedTime > DieAnim.TotalTime + DieAnim.DelayTime)     //1.5ms -> delete
+        {
+            SetDead();
+            DeleteBar();
+        }
     }
 }
 
@@ -384,8 +411,19 @@ void RedGolem::PlayHit(_float dt)
     //motin xxx
 }
 
-void RedGolem::OnCollisionStay(Object* other)
+void RedGolem::OnCollisionEnter(Object* other)
 {
+    ObjectType objType = other->GetObjectType();
+
+    if (objType == ObjectType::Player)
+    {
+        if ((*AttackNum == 1 || *AttackNum == 3) && AttackAnim.IsRunning && !IsAttackDamage)
+        {
+            auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
+            playerStat->AddHp(-40.f);
+            IsAttackDamage = true;
+        }
+    }
 }
 
 void RedGolem::PlayLeftAttack(_float dt)
@@ -424,11 +462,11 @@ void RedGolem::PlayLeftAttack(_float dt)
         LeftAttackAnim.IsRunning = false;
         LeftAttackAnim.IsEnd = true;
 
+        AttackAnim.IsRunning = false;
+        AttackAnim.IsEnd = true;
         (*AttackTimer) = 5;
         SetRotation(_vec3(D3DXToRadian(30.f), 0.f, 0.f), "LArm");
         SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "LHand");
-        AttackAnim.IsRunning = false;
-        AttackAnim.IsEnd = true;
     }
 }
 
@@ -468,11 +506,11 @@ void RedGolem::PlayRightAttack(_float dt)
         RightAttackAnim.IsRunning = false;
         RightAttackAnim.IsEnd = true;
 
+        AttackAnim.IsRunning = false;
+        AttackAnim.IsEnd = true;
         (*AttackTimer) = 5;
         SetRotation(_vec3(D3DXToRadian(30.f), 0.f, 0.f), "RArm");
         SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "RHand");
-        AttackAnim.IsRunning = false;
-        AttackAnim.IsEnd = true;
     }
 }
 
@@ -509,6 +547,8 @@ void RedGolem::PlaySuperAttack(_float dt)
     {
         _float s = (t - charge) / (1.f - charge);
 
+        float colSize = lerp(18.f, 15.f, s);
+
         _float armSmash = D3DXToRadian(90.f);
         _float bodyLeanForward = D3DXToRadian(60.f);
 
@@ -517,7 +557,10 @@ void RedGolem::PlaySuperAttack(_float dt)
         SetRotation({ -bodyLeanForward * s, 0.f, 0.f }, "RLeg");
         _vec3 pos = transform->GetPosition();
         transform->SetPosition(_vec3(pos.x, pos.y - 15 * Scale * (1 - sin(bodyLeanForward * s)), pos.z));
-        collision->SetSize(_vec3(10.f, 18.f - 15 * Scale * (1 - sin(bodyLeanForward * s)), 10.f));
+        collision->SetSize(_vec3(10.f, colSize, 10.f));
+    
+        auto physics = GetComponent<PhysicsComponent>();
+        physics->SetGround(false);
     }
    
     if (SuperAttackAnim.ElapsedTime >= SuperAttackAnim.TotalTime)
@@ -533,7 +576,7 @@ void RedGolem::PlaySuperAttackDelay(_float dt)
     SuperAttackAnim.DelayTime -= dt;
     SpawnTime += dt;
 
-    if (SpawnTime > 0.2f)
+    if (SpawnTime > 0.3f)
     {
         auto Transform = GetComponent<TransformComponent>();
         _vec3 Pos = Transform->GetPosition();
@@ -541,7 +584,7 @@ void RedGolem::PlaySuperAttackDelay(_float dt)
         _float RandX = rand() % 40 - 20;
         _float RandZ = rand() % 40 - 20;
 
-        _vec3 randPos = _vec3(Pos.x + RandX,Pos.y -8.5f, Pos.z + RandZ);
+        _vec3 randPos = _vec3(Pos.x + RandX, Pos.y -6.f, Pos.z + RandZ);
 
         SpawnTime = 0.f;
         auto projectileTransform = BoxProjectile[Index]->GetComponent<TransformComponent>();
@@ -563,6 +606,8 @@ void RedGolem::PlaySuperAttackDelay(_float dt)
 
         SetRotation(_vec3(D3DXToRadian(30.f), 0.f, 0.f), "LArm");
         SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "LHand");
+        auto collision = GetComponent<CollisionComponent>();
+        collision->SetSize(_vec3(10.f, 18.f, 10.f));
     }
 }
 

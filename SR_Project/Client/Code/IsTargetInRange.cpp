@@ -38,8 +38,8 @@ BTStatus IsTargetInRange::Tick(float dt, BlackBoard* bb)
 
 	if (!monster->IsAttackStart())
 	{
-		if (D3DXVec3Length(&Axis) < *(static_cast<float*>(bb->GetValue("Distance"))))
-			*AttackNumber = 1;
+		if (D3DXVec3Length(&Axis) > *(static_cast<float*>(bb->GetValue("Distance"))))
+			*AttackNumber = 2;
 	
 		else
 		{
@@ -52,7 +52,7 @@ BTStatus IsTargetInRange::Tick(float dt, BlackBoard* bb)
 			D3DXVec3Cross(&cross, &forward, &Axis);
 			if (cross.y >= 0.f)
 			{
-				*AttackNumber = 2;
+				*AttackNumber = 1;
 			}
 			else
 			{
