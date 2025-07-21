@@ -477,6 +477,8 @@ HRESULT MainApp::LoadDefaultResource()
         {L"costumefilter_hover",      eUI, 2},
         {L"locked_node",              eUI, 2},
         {L"map_node_front",           eUI, 2},
+        {L"cooldown_rect",            eUI, 2},
+
 
         // =====================================================================
         // Layer 3
@@ -540,6 +542,8 @@ HRESULT MainApp::LoadDefaultResource()
         {L"atri_closeeye",            eUI, 9},
         {L"atri_confuse",             eUI, 9},
         {L"atri_brave",               eUI, 9},
+
+        {L"gray",                     eUI, 9},
 
         // =====================================================================
         // Layer 100+ (팝업 및 최상단 UI)

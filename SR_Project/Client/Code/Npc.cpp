@@ -106,46 +106,51 @@ void Npc::InitDialog()
     auto dialog = AddComponent<DialogComponent>();
 
     dialogSets = {
-        // EquipItem 시작
+        // [1] 첫 만남 (EquipItem 시작)
+        // 덤불 같은 곳에 숨어있다가 플레이어를 보고 겁에 질림
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::NotStarted; },
-        {
-        {L"까아~ 어서오세요, 제현님!", Emotion::Happy},
-        {L"이런 낯선 곳까지 오시다니, 정말 대단해요! 사실 제가 길을 잃어서 곤란하던 참이었거든요.", Emotion::Emm},
-        {L"우선 장비 하나 장착해보세요! (인벤토리 열어서 아무거나요~)", Emotion::Happy},
-        },
-        [=] {quest->AcceptQuest(QuestType::EquipItem); }},
+    {
+        {L"…흐읍…!", Emotion::Happy}, // (작게 숨을 삼키는 소리)
+        {L"…누, 누구세요? 저리 가요! 몬스터가 당신을 보고 쫓아올지도 몰라요!", Emotion::Sad}, // 두려움에 찬 목소리
+        {L"싸, 싸울 수 있는 분인가요? 제발… 뭐라도 단단히 입고 준비해주세요. 보는 제가 불안해서 그래요…", Emotion::Confuse},
+    },
+    [=] {quest->AcceptQuest(QuestType::EquipItem); }},
 
-        // EquipItem 미완료 리마인드
+    // [2] EquipItem 미완료 리마인드
+    // 여전히 두려움에 떨며, 플레이어가 준비되기를 간절히 바람
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::InProgress; },
-        {
-        {L"에이, 아직도요? 제 말은 귓등으로 들으셨나 봐요! 흥!", Emotion::Emm},
-        {L"험한 곳이라구요! 어서 인벤토리에서 장비 하나만이라도 꺼내 입어주세요!", Emotion::CloseEye},
-        }},
+    {
+        {L"아직… 인가요? 이러다간 저희 둘 다 위험해질 거예요…", Emotion::Sad},
+        {L"제발 서둘러 주세요… 너무 무서워요…", Emotion::CloseEye},
+    }},
 
-        // EquipItem 완료 -> killMonsters 시작
-        {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::Completed && 
+    // [3] EquipItem 완료 -> KillMonsters 시작
+    // 플레이어가 준비를 마치자, 작은 희망을 갖고 용기를 내어 부탁함
+        {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::Completed &&
         quest->GetStatus(QuestType::KillMonsters) == QuestStatus::NotStarted; },
-        {
-        {L"오! 훨씬 든든해 보여요! 역시 제현님!", Emotion::Brave},
-        {L"그런데... 저 숲에서 자꾸 이상한 소리가 들려와서 무서워요.", Emotion::Sad},
-        {L"저 때문에 위험에 빠트리는 것 같아 미안하지만... 근처 몬스터 세마리만 물리쳐 주실 수 있을까요?", Emotion::Confuse},
-        }, [=] {quest->AcceptQuest(QuestType::KillMonsters); }}, 
+    {
+        {L"…다행이다. 이제 조금은… 아주 조금은 안심이 돼요.", Emotion::Emm}, // 안도의 한숨
+        {L"저… 염치없는 부탁이지만… 저희 마을을 습격했던 몬스터들이 근처에 있어요.", Emotion::Sad},
+        {L"세 마리만… 세 마리만이라도 물리쳐 주실 수 있나요? 그럼 도망칠 길을 찾을 수 있을 것 같아요…", Emotion::Confuse},
+    }, [=] {quest->AcceptQuest(QuestType::KillMonsters); }},
 
-        // KillMonsters 리마인드
+    // [4] KillMonsters 리마인드
+    // 플레이어를 보며 희망을 발견하고, 진심으로 응원함
         {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::InProgress; },
-        { 
-        {L"조금만 더요! 제현님이라면 문제없을 거예요", Emotion::Happy},
-        {L"제가 여기서 열심히 응원하고 있어요!!", Emotion::CloseEye},
-        }},
+    {
+        {L"굉장해요! 당신이라면 할 수 있을 줄 알았어요!", Emotion::Happy},
+        {L"조금만 더요! 제가 여기서 두 손 모아 기도하고 있을게요!", Emotion::CloseEye},
+    }},
 
-        // KillMonsters 완료 -> ReachVillage 시작
-        {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::Completed
-        && quest->GetStatus(QuestType::ReachVillage) == QuestStatus::NotStarted; },
-        {
-        {L"세상에! 정말 몬스터들을 다 물리치셨군요! 역시 저의 영웅님!", Emotion::Brave},
-        {L"이제 안심하고 마을로 갈 수 있겠어요. 이젠 저와 함께 마을로 돌아가 볼까요?", Emotion::Happy},
-        {L"마을에 가면 제 친구들도 제현님을 보고 싶어 할 거예요", Emotion::Happy},
-        }, [=] {quest->AcceptQuest(QuestType::ReachVillage); }},
+    // [5] KillMonsters 완료 -> ReachVillage 시작
+    // 자신을 구해준 플레이어에게 깊은 감사를 느끼며, 완전히 의지하게 됨
+        {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::Completed &&
+        quest->GetStatus(QuestType::ReachVillage) == QuestStatus::NotStarted; },
+    {
+        {L"…정말… 정말 다 물리치셨군요… 흑…", Emotion::Sad}, // 안도와 감격의 눈물
+        {L"감사합니다… 정말 감사합니다. 당신은 제 생명의 은인이에요.", Emotion::Brave}, // 용기를 내어 똑바로 쳐다보며
+        {L"이제 여기서 벗어날 수 있겠어요. 저와 함께… 안전한 곳으로 가주시겠어요?", Emotion::Happy},
+    }, [=] {quest->AcceptQuest(QuestType::ReachVillage); }},
     };
 }
 

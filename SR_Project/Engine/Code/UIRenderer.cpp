@@ -47,15 +47,6 @@ void UIRenderer::SetTexture(const wstring& key)
     UpdateCenter();
 }
 
-void UIRenderer::ApplyRatioVertical(float _ratio)
-{
-    LONG visible = static_cast<LONG>(fullHeight * _ratio);
-    srcRect.top = fullHeight - visible;
-    srcRect.bottom = fullHeight;
-
-    UpdateCenter();
-}
-
 void UIRenderer::SetTexture(LPDIRECT3DTEXTURE9 _texture)
 {
     if (!_texture) return;
@@ -89,6 +80,27 @@ void UIRenderer::ApplyRatioHorizontal(float _ratio)
     UpdateCenter();
 }
 
+void UIRenderer::ApplyRatioVerticalFromTop(float _ratio)
+{
+    LONG visible = static_cast<LONG>(fullHeight * _ratio);
+
+    srcRect.left = 0;
+    srcRect.right = fullWidth;
+    srcRect.top = 0;
+    srcRect.bottom = visible;
+
+    UpdateCenter();
+}
+
+void UIRenderer::ApplyRatioVertical(float _ratio)
+{
+    LONG visible = static_cast<LONG>(fullHeight * _ratio);
+    srcRect.top = fullHeight - visible;
+    srcRect.bottom = fullHeight;
+
+    UpdateCenter();
+}
+
 void UIRenderer::SetPivot(UIPivot _pivot)
 {
     pivot = _pivot;
@@ -113,6 +125,7 @@ void UIRenderer::UpdateCenter()
     case UIPivot::LeftTop: center = {0.f, 0.f, 0.f};                    break;
     case UIPivot::Left:    center = {0.f, height * 0.5f, 0.f};          break;
     case UIPivot::Right:   center = {width, height * 0.5f, 0.f};        break;
+    case UIPivot::Top:     center = {width * 0.5f, 0.f, 0.f};           break;
     }
 }
 

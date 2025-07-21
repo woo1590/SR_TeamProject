@@ -13,15 +13,14 @@ private:
 	explicit CoolDownComponent(Object* owner) : ObjectComponent(owner) {}
 
 public:
-	static CoolDownComponent* Create(Object* owner);
-	HRESULT Ready_Component();
+	static CoolDownComponent* Create(Object* owner) { return new CoolDownComponent(owner); }
 
-	void Init(ItemComponent* targetItem, UIRenderer* renderer);
+	void Init(ItemComponent* targetItem, UIRenderer* mask);
 	void Update(float dt) override;
 
 private:
 	ItemComponent* itemComp = nullptr;
-	UIRenderer* cooldownRenderer = nullptr;
+	UIRenderer* maskRenderer = nullptr;
 };
 
 END

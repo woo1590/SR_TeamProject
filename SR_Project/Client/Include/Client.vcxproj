@@ -139,7 +139,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/nlohmann;../../External/imgui;../Resource/Shader;</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -161,7 +161,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>./;../Header;../../Base;../../Reference/Header;../../External/FMOD/inc;../../External/imgui/backends;../../External/nlohmann;../../External/imgui;../Resource/Shader;</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -232,6 +232,7 @@
     <ClInclude Include="..\Header\LockNode_Back.h" />
     <ClInclude Include="..\Header\MapNode.h" />
     <ClInclude Include="..\Header\MapNode_Front.h" />
+    <ClInclude Include="..\Header\MaskObj.h" />
     <ClInclude Include="..\Header\MiniMap.h" />
     <ClInclude Include="..\Header\MiniMapCam.h" />
     <ClInclude Include="..\Header\Npc.h" />
@@ -403,6 +404,7 @@
     <ClCompile Include="..\Code\LockNode_Back.cpp" />
     <ClCompile Include="..\Code\MapNode.cpp" />
     <ClCompile Include="..\Code\MapNode_Front.cpp" />
+    <ClCompile Include="..\Code\MaskObj.cpp" />
     <ClCompile Include="..\Code\MiniMap.cpp" />
     <ClCompile Include="..\Code\MiniMapCam.cpp" />
     <ClCompile Include="..\Code\Npc.cpp" />
