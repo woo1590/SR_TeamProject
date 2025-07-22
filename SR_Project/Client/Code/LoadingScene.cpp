@@ -7,6 +7,8 @@
 #include "ObjectManager.h"
 #include "ChunkLoader.h"
 #include "UIRenderer.h"
+#include "InfoComponent.h"
+#include "ProgressBar.h"
 
 //scene
 #include "TestScene.h"

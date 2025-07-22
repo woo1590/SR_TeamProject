@@ -20,6 +20,7 @@
 #include "SoundManager.h"
 #include "PhysicsComponent.h"
 #include "Scene.h"
+#include "BossHPBarFront.h"
 #include "PhysicsSystem.h"
 
 RedGolem::RedGolem(ObjectManager* owner, ObjectType objType)
@@ -81,6 +82,8 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     InitAnimation();
 
     InitProjectile(objType);
+
+    bossFront->SetBossName(L"레드골렘 스톤");
 
 	return S_OK;
 }

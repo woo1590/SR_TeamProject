@@ -10,8 +10,7 @@ using HoverUpdateCallBack = function<void(bool isHovered)>;
 class ENGINE_DLL HoverComponent : public ObjectComponent 
 {
 private:
-	explicit HoverComponent(Object* owner)
-		:ObjectComponent(owner) {}
+	explicit HoverComponent(Object* owner):ObjectComponent(owner) {}
 
 public:
 	static HoverComponent* Create(Object* owner) { return new HoverComponent(owner); }
@@ -20,6 +19,8 @@ public:
 	void SetCallBack(HoverCallBack _callback) { callBack = move(_callback); }
 	void SetUpdateCallBack(HoverUpdateCallBack _callBack) { updateCallBack = move(_callBack); }
 	void SetRightClickCallBack(function<void()> callback) { onRightClick = move(callback); }
+
+	bool IsHovered() const { return isHovered; }
 
 private:
 	bool isHovered = false;

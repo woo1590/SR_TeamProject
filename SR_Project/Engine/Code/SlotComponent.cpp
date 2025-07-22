@@ -9,19 +9,20 @@
 #include "Scene.h"
 #include "UIManager.h"
 #include "InventoryManager.h"
+#include "ShopManager.h"
 
 void SlotComponent::OnClick()
 {
 	auto transform = owner->GetComponent<TransformComponent>();
 
-	if (slotType == SlotType::Quick)
+	if (slotType == SlotType::Quick || slotType == SlotType::ShopSlot)
 	{
 		originalY = transform->GetPosition().y;
 		shakeTime = 0.f;
 		shakeDuration = 0.05f;
 		isShaking = true;
 	}
-	else if (slotType == SlotType::Gear || slotType == SlotType::Item || slotType == SlotType::Inventory)
+	if (slotType == SlotType::Gear || slotType == SlotType::Item || slotType == SlotType::Inventory)
 	{
 		isSelected = true;
 
@@ -32,12 +33,36 @@ void SlotComponent::OnClick()
 				invMgr->SelectSlot(this);
 		}
 	}
+	if (slotType == SlotType::ShopSlot)
+	{
+		isSelected = true;
+
+		auto scene = owner->GetScene();
+		if (auto uiMgr = scene->GetUIManager())
+		{
+			if (auto shopMgr = uiMgr->GetShop())
+				shopMgr->SelectSlot(this);
+		}
+	}
 }
 
 void SlotComponent::BindRenderers(UIRenderer* _base, UIRenderer* _highlight)
 {
 	base = _base;
 	highlight = _highlight;
+}
+
+void SlotComponent::SetItem(Object* item)
+{
+	itemObj = item;
+	if (itemObj)
+	{
+		auto transform = owner->GetComponent<TransformComponent>();
+		auto pos = transform->GetPosition();
+
+		auto itemTf = itemObj->GetComponent<TransformComponent>();
+		itemTf->SetPosition(pos.x, pos.y);
+	}
 }
 
 void SlotComponent::Update(float dt)
@@ -84,6 +109,7 @@ void SlotComponent::Update(float dt)
 				highlight->SetTexture(L"quickslot_hover");
 				break;
 			case SlotType::Gear:
+			case SlotType::ShopSlot:
 			case SlotType::Item:
 			case SlotType::Inventory:
 				highlight->SetTexture(L"gearslot_hover");

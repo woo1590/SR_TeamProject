@@ -6,6 +6,8 @@
 #include "RenderSystem.h"
 #include "EngineCore.h"
 #include "Player.h"
+#include "InputSystem.h"
+#include "HoverComponent.h"
 
 InventoryCam* InventoryCam::Create(ObjectManager* owner)
 {
@@ -22,19 +24,36 @@ HRESULT InventoryCam::Ready_Object()
 	auto camera = GetComponent<CameraComponent>();
 
 	camera->SetProjectionType(CameraComponent::ProjectionType::Orthographic);
-	camera->SetOrthoSize(15.f, 15.f);
+	camera->SetOrthoSize(distance * 5, distance * 5);
 
 	return S_OK;
 }
 
 void InventoryCam::Late_Update(float dt)
 {
-	auto camTf = GetComponent<TransformComponent>();
+	const auto& input = EngineCore::GetInstance()->GetInputSystem();
+	float direction = 0.f;
 
-	constexpr float distance = 3.f;
-	constexpr float heightOffset = 1.f;
+	auto playerTf = owner->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>();
+	auto playerPosY = playerTf->GetPosition().y;
 
-	camTf->SetPosition({0.f, heightOffset, +distance});
-	camTf->LookAt({0.f, heightOffset, 0.f});
+	if (leftBtn)
+	{
+		auto hover = leftBtn->GetComponent<HoverComponent>();
+		if (input->IsKeyDown(KEY::LBUTTON) && hover->IsHovered())
+			direction -= 1.f;
+	}
+	if (rightBtn)
+	{
+		auto hover = rightBtn->GetComponent<HoverComponent>();
+		if (input->IsKeyDown(KEY::LBUTTON) && hover->IsHovered())
+			direction += 1.f;
+	}
+	yaw -= direction * rotSpeed * dt;
+
+	auto tf = GetComponent<TransformComponent>();
+	tf->SetPosition({sinf(yaw) * distance, heightOffset + playerPosY, cosf(yaw) * distance});
+	tf->LookAt({0.f, heightOffset + playerPosY, 0.f});
+
 	Object::Update(dt);
 }

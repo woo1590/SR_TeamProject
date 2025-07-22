@@ -7,6 +7,7 @@
 #include "TooltipManager.h"
 #include "DialogManager.h"
 #include "GraphicDevice.h"
+#include "ShopManager.h"
 
 UIManager* UIManager::Create(Scene* owner)
 {
@@ -20,6 +21,7 @@ HRESULT UIManager::Ready_UIManager()
 	quest = new QuestSystem(this);
 	tooltip = new TooltipManager(this);
 	dialog = new DialogManager(this);
+	shop = new ShopManager(this);
 
 	quest->InitQuests();
 

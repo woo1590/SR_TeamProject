@@ -21,10 +21,16 @@ public:
 	void AddHp(decltype(U::curHp) amount) requires requires(U u) { u.curHp; u.maxHp; };
 
 	template<typename U = T>
-	void AddExp(int amount) requires requires(U u) { u.curExp; u.maxExp; u.level; };
+	void AddExp(int amount) requires requires(U u) { u.curExp; u.maxExp; u.level; u.maxHp; u.power; };
 
 	template<typename U = T>
 	void SetSpeed(decltype(U::speed) amount) requires requires(U u) { u.speed; };
+
+	template<typename U = T>
+	void SetGold(decltype(U::gold) amount) requires requires(U u) { u.gold; };
+
+	template<typename U = T>
+	void AddGold(decltype(U::gold) amount) requires requires(U u) { u.gold; };
 
 	void SetOnZeroHp(function<void()> cb) { onZeroHpCallback = move(cb); }
 
@@ -60,7 +66,7 @@ void InfoComponent<T>::AddHp(decltype(U::curHp) amount) requires requires(U u) {
 
 template<typename T>
 template<typename U>
-void InfoComponent<T>::AddExp(int amount) requires requires(U u) { u.curExp; u.maxExp; u.level; }
+void InfoComponent<T>::AddExp(int amount) requires requires(U u) { u.curExp; u.maxExp; u.level; u.maxHp; u.power; }
 {
 	info.curExp += amount;
 	while (info.curExp >= info.maxExp)
@@ -68,6 +74,12 @@ void InfoComponent<T>::AddExp(int amount) requires requires(U u) { u.curExp; u.m
 		info.curExp -= info.maxExp;
 		info.level++;
 		info.maxExp += 5;
+
+		int addHp = rand() % 5 + 1;
+		int addPower = rand() % 5 + 1;
+
+		info.maxHp += addHp;
+		info.power += addPower;
 	}
 	this->Notify({UIEventType::EXP_Changed, info});
 }
@@ -78,6 +90,21 @@ void InfoComponent<T>::SetSpeed(decltype(U::speed) amount) requires requires(U u
 {
 	info.speed = amount;
 	this->Notify({UIEventType::Speed_Changed, info});
+}
+
+template<typename T>
+template<typename U>
+inline void InfoComponent<T>::SetGold(decltype(U::gold) amount) requires requires(U u) { u.gold; }
+{
+	if (amount < 0) amount = 0;
+	info.gold = amount;
+}
+
+template<typename T>
+template<typename U>
+inline void InfoComponent<T>::AddGold(decltype(U::gold) amount) requires requires(U u) { u.gold; }
+{
+	SetGold(info.gold + amount);
 }
 
 template<typename T>
@@ -97,12 +124,3 @@ void InfoComponent<T>::Update(float dt)
 		}
 	}
 }
-
-// U를 사용해서 "템플릿 함수"로 만드는 것 자체가 목적.
-// 일반 멤버 함수를 템플릿 함수로 "신분 상승" 시키는 순간, 컴파일러가 제약 조건을 처리하는 방식이 근본적으로 달라진다.
- 
-// 확정된 기능이 아니라, 나중에 필요하면 만들수 있는 옵션이구나 라고컴파일러가 판단.
-// 나중에 코드 어딘가에서 호출하려는 시도가 있을때, 먼저 가능한지 조건 부터 확인한다. 
-// 만약 없으면, 이번 경우에는 실행할수 없다고 판단하고 조용히 무시한다 (SFINAE) 규칙.
-// 
-// 클래스템플릿 -> 함수 템플릿 (필수 -> 선택 사양으로 바꿈)

@@ -7,6 +7,10 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "RenderSystem.h"
+#include "Scene.h"
+#include "UIManager.h"
+#include "SceneManager.h"
+#include "TooltipManager.h"
 
 MapNode_Front* MapNode_Front::Create(ObjectManager* owner)
 {
@@ -32,16 +36,27 @@ HRESULT MapNode_Front::Ready_Object()
 
 	auto hover     = AddComponent<HoverComponent>();
 	auto button    = AddComponent<HoverButtonComponent>();
-
 	button->SetHighlightScale({0.5f, 0.3f}, {0.75f,0.45f});
-
 	button->BindRenderers(base, highlight);
 
-	hover->SetCallBack([button](bool over) {
+	hover->SetCallBack([this,button](bool over) {
 		button->SetHoverState(over);
+		auto tooltip = GetScene()->GetUIManager()->GetTooltip();
+		auto pos = GetComponent<TransformComponent>()->GetWorldPosition();
+
+		if (over)
+		{
+			const wchar_t* tip = nullptr;
+			switch (stage)
+			{
+			case StageSelect::Stage1: tip = L"stage1"; break;
+			case StageSelect::Stage2: tip = L"stage2"; break;
+			default:                  tip = L"stage0"; break;
+			}
+			tooltip->ShowWorldTooltip(tip, pos.x, pos.y - 40.f);
+		}
+		else
+			tooltip->HideWorldTooltip();
 		});
-
-
 	return S_OK;
-
 }

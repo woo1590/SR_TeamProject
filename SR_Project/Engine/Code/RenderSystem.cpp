@@ -270,6 +270,7 @@ void RenderSystem::RenderOffScreenViews()
 
 	DWORD oldCullMode;
 	Device->GetRenderState(D3DRS_CULLMODE, &oldCullMode);
+	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	LPDIRECT3DSURFACE9 oldRenderTarget = nullptr;
 	Device->GetRenderTarget(0, &oldRenderTarget);
@@ -317,6 +318,7 @@ void RenderSystem::RenderOffScreenViews()
 	Device->SetTransform(D3DTS_PROJECTION, &oldProj);
 	Device->SetRenderState(D3DRS_CULLMODE, oldCullMode);
 	Device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	Safe_Release(oldRenderTarget);
 }

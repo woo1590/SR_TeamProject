@@ -26,6 +26,7 @@
 #include "CameraComponent.h"
 #include "HoverButtonComponent.h"
 #include "MeshRendererComponent.h"
+#include "InventoryComponent.h"
 
 /* --- UI Object ------------------------------*/
 #include "Cursor.h"
@@ -88,6 +89,16 @@
 #include "InventoryCam.h"
 #include "BaseCharacter.h"
 #include "Player.h"
+#include "Stage1Icon.h"
+#include "Stage2Icon.h"
+#include "Stage0Icon.h"
+#include "LeftBtn.h"
+#include "RightBtn.h"
+#include "ShopBackGround.h"
+#include "ShopManager.h"
+#include "ShopSlot.h"
+#include "ShopTooltip.h"
+#include "ShopBtn.h"
 
 // DeathUI
 #include "PlayerDeathUI.h"
@@ -108,6 +119,7 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     auto* invMgr = uiMgr->GetInventory();
     auto* tooltipMgr = uiMgr->GetTooltip();
     auto* dialogMgr = uiMgr->GetDialog();
+    auto* shopMgr = uiMgr->GetShop();
 
     ADD(Cursor::Create(objMgr));
 
@@ -122,48 +134,59 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     BuildDeathUI(objMgr);
     BuildDialogUI(objMgr,dialogMgr); 
     BuildMiniMap(objMgr);
+    BuildShopUI(objMgr, invMgr, tooltipMgr,shopMgr);
 
   //  ADD(ParticleObj::Create(objMgr));
 }
 
-void UILoader::BuildInventory(ObjectManager* objMgr,InventoryManager* invMgr)
+void UILoader::BuildInventory(ObjectManager* objMgr, InventoryManager* invMgr)
 {
+    auto* playerObj = objMgr->GetFrontObject(ObjectType::Player);
+    invMgr->SetPlayer(playerObj);
+
     InventoryUIBuilder::BuildInventoryUI(objMgr, invMgr);
+    auto tooltipObj = TooltipObj::Create(objMgr);
+    tooltipObj->SetInventoryManager(invMgr);
+    ADD(tooltipObj);
 
-    auto tooltip = TooltipObj::Create(objMgr);
-    tooltip->SetInventoryManager(invMgr);
-    ADD(tooltip);
+    auto player = dynamic_cast<Player*>(playerObj);
+    auto invComp = player->GetComponent<InventoryComponent>();
 
-    vector<Object*> items =
-    {
-        SwordItem::Create(objMgr), BowItem::Create(objMgr),
-        WolfArmor::Create(objMgr), RocketItem::Create(objMgr),
-        FishingItem::Create(objMgr), PigItem::Create(objMgr),
-        SpearItem::Create(objMgr), CrossBowItem::Create(objMgr),
-        BoostItem::Create(objMgr), GhostCloakItem::Create(objMgr),
-
-    };
-
-    auto* player = dynamic_cast<Player*>(objMgr->GetFrontObject(ObjectType::Player));
-    assert(player && "Player must exist in scene");
-
-    for (auto* it : items) 
-    {
-        auto* itemComp = it->GetComponent<ItemComponent>();
-        if (itemComp)
+    auto equipFunc = [player, invComp](ItemType type) {player->EquipItem(type); invComp->Equip(type); };
+    auto unequipFunc = [player, invComp](ItemType type){player->UnEquipItem(type); invComp->UnEquip(type); };
+    auto createFunc = [objMgr](ItemType type)->Object*
         {
-            ItemType itemType = itemComp->GetItemType();
+            Object* itemObj = CreateInventoryObj(objMgr, type);
+            if (itemObj) ADD(itemObj);
+            return itemObj;
+        };
 
-            itemComp->SetEquipCallBack([player, itemType](Object* user) { player->EquipItem(itemType);});
-            itemComp->SetUnEquipCallBack([player, itemType](Object* user) { player->UnEquipItem(itemType);});
-        }
-        ADD(it);
-        invMgr->InsertItem(it);
+    invMgr->BindInventory(equipFunc, unequipFunc, createFunc);
+
+    for (const auto& itemType : invComp->GetUnequippedItems())
+    {
+        Object* itemObj = createFunc(itemType);
+        if (itemObj) invMgr->InsertItem(itemObj);
     }
+    for (const auto& itemType : invComp->GetEquippedItems())
+    {
+        Object* itemObj = createFunc(itemType);
+        if (itemObj)
+        {
+            SlotItemType category = invMgr->GetSlotCategory(itemType);
+            SlotComponent* equipSlot = invMgr->FindSlotByType(category);
+            if (equipSlot) equipSlot->SetItem(itemObj);
+        }
+    }
+
     ADD(InventoryUI::Create(objMgr));
     ADD(InventoryPanel::Create(objMgr));
     ADD(InventoryBtn::Create(objMgr));
+
+    ADD(LeftBtn::Create(objMgr));
+    ADD(RightBtn::Create(objMgr));
 }
+
 
 void UILoader::BuildPlayerBars(ObjectManager* objMgr)
 {
@@ -180,15 +203,6 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
 
     auto arrows = Arrows::Create(objMgr);
     ADD(arrows);
-
-    //auto hpWhite = HPBarWhite::Create(objMgr);
-    //auto whiteBar = hpWhite->AddComponent<ProgressBar<PlayerInfo>>();
-    //playerInfo->Attach(whiteBar);
-    //ADD(hpWhite);
-    //
-    //auto frontTf = hpFront->GetComponent<TransformComponent>();
-    //hpback->GetComponent<TransformComponent>()->SetParent(frontTf);
-    //hpWhite->GetComponent<TransformComponent>()->SetParent(frontTf);
 
     auto expFront = ExpBarFront::Create(objMgr);
     playerInfo->Attach(expFront->GetComponent<ProgressBar<PlayerInfo>>());
@@ -235,86 +249,62 @@ void UILoader::BuildQuickSlots(ObjectManager* objMgr)
     ADD(arrowSlot);
 }
 
-void UILoader::BuildFilters(ObjectManager* objMgr, InventoryManager* invMgr, TooltipManager* tooltipMgr)
+void UILoader::BuildFilters(ObjectManager* objMgr,InventoryManager* invMgr,TooltipManager* tooltipMgr)
 {
-    struct Pos { float x, y; };
-    array<Pos, 6> leftPos = {{{120, 170}, {300, 120}, {480, 170}, 
-                              {150, 620}, {300, 620}, {450, 620}}};
-
-    array<Object*, 6> leftFilters =
-    {
-        SwordFilter::Create(objMgr),  ArmorFilter::Create(objMgr),
-        ArrowFilter::Create(objMgr),  PotionFilter::Create(objMgr),
-        PotionFilter::Create(objMgr), PotionFilter::Create(objMgr)
+    struct FInfo { Object* obj; optional<SlotItemType> category; };
+    vector<FInfo> btns = {
+        {Filter::Create(objMgr), nullopt}, 
+        {SwordFilter::Create(objMgr),   SlotItemType::MeleeWeapon},
+        {ArrowFilter::Create(objMgr),   SlotItemType::RangeWeapon},
+        {ArmorFilter::Create(objMgr),   SlotItemType::Armor},
+        {PotionFilter::Create(objMgr),  SlotItemType::Potion},
+        {EnchantFilter::Create(objMgr), SlotItemType::Enchant}, 
+        {CostumeFilter::Create(objMgr), SlotItemType::Costume}, 
     };
 
-    for (size_t i = 0; i < leftFilters.size(); ++i)
+    for (auto& info : btns)
     {
-        auto* obj = leftFilters[i];
-        auto transform = obj->GetComponent<TransformComponent>();
-        transform->SetPosition(leftPos[i].x + 35.f, leftPos[i].y + 35.f);
-        obj->GetComponent<UIRenderer>()->SetScale(0.8f, 0.8f);
-        ADD(obj);
-    }
+        Object* btnObj = info.obj;
+        optional<SlotItemType> category = info.category;
 
-    struct FInfo { Object* obj; optional<ItemType> type; };
+        if (auto* btn = btnObj->GetComponent<ButtonComponent>())
+            btn->SetOnClick([invMgr, category]() {invMgr->ApplyFilter(category);});
 
-    vector<FInfo> btns = 
-    {
-        {Filter::Create(objMgr), nullopt},
-        {SwordFilter::Create(objMgr),   ItemType::Sword},
-        {ArrowFilter::Create(objMgr),   ItemType::Bow},
-        {ArmorFilter::Create(objMgr),   ItemType::Armor},
-        {PotionFilter::Create(objMgr),  ItemType::Potion},
-        {EnchantFilter::Create(objMgr), ItemType::Enchant},
-        {CostumeFilter::Create(objMgr), ItemType::Costume},
-    };
-
-    for (auto& [obj, typeOpt] : btns)
-    {
-        if (auto* btn = obj->GetComponent<ButtonComponent>())
-            btn->SetOnClick([invMgr, typeOpt] { invMgr->ApplyFilter(typeOpt); });
-
-        auto hover = obj->AddComponent<HoverComponent>();
-        hover->SetCallBack([obj, typeOpt](bool over) {
+        auto* hover = btnObj->AddComponent<HoverComponent>();
+        hover->SetCallBack([btnObj, category](bool over) {
             auto tooltipMgr = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetUIManager()->GetTooltip();
             if (!tooltipMgr) return;
 
-            auto pos = obj->GetComponent<TransformComponent>()->GetWorldPosition();
-
             if (over)
             {
-                wstring name = L"";
-
-                if (!typeOpt.has_value()) 
-                    name = L"전체";
-                else
+                wstring name;
+                if (!category.has_value())       name = L"전체";
+                else switch (*category)
                 {
-                    switch (typeOpt.value())
-                    {
-                    case ItemType::Sword:   name = L"근접"; break;
-                    case ItemType::Bow:     name = L"원거리"; break;
-                    case ItemType::Armor:   name = L"방어구"; break;
-                    case ItemType::Potion:  name = L"유물"; break;
-                    case ItemType::Enchant: name = L"효과 부여됨"; break;
-                    case ItemType::Costume: name = L"코스메틱"; break;
-                    default:                name = L"알 수 없음"; break;
-                    }
+                case SlotItemType::MeleeWeapon:  name = L"근접";   break;
+                case SlotItemType::RangeWeapon:  name = L"원거리"; break;
+                case SlotItemType::Armor:        name = L"방어구"; break;
+                case SlotItemType::Potion:       name = L"유물";   break;
+                case SlotItemType::Enchant:      name = L"효과부여됨"; break;
+                case SlotItemType::Costume:      name = L"코스메틱"; break;
+                default:                         name = L"기타";   break;
                 }
+
+                auto pos = btnObj->GetComponent<TransformComponent>()->GetWorldPosition();
                 tooltipMgr->ShowInventoryTooltip(name, pos.x, pos.y);
             }
             else
                 tooltipMgr->HideInventoryTooltip();
             });
 
-        ADD(obj);
+        ADD(btnObj);
     }
 
-    auto filterTooltip = FilterTooltip::Create(objMgr);
+    auto* filterTooltip = FilterTooltip::Create(objMgr);
     ADD(filterTooltip);
-
     tooltipMgr->SetInventoryTooltip(filterTooltip);
 }
+
 
 void UILoader::BuildQuestUI(ObjectManager* objMgr)
 {
@@ -333,8 +323,10 @@ void UILoader::BuildMiscUI(ObjectManager* objMgr)
 
     auto exitGame = ExitBtn::Create(objMgr,ExitBtnType::Inventory);
     auto exitMap = ExitBtn::Create(objMgr,ExitBtnType::WorldMap);
+    auto exitShop = ExitBtn::Create(objMgr, ExitBtnType::Shop);
+    exitShop->GetComponent<UIRenderer>()->SetRenderType(UIRenderType::Shop);
     exitMap->GetComponent<UIRenderer>()->SetRenderType(UIRenderType::WorldMap);
-    ADD(exitGame); ADD(exitMap);
+    ADD(exitGame); ADD(exitMap); ADD(exitShop);
 
     ADD(MapBtn::Create(objMgr));
     ADD(GearStrengthBack::Create(objMgr));
@@ -351,14 +343,14 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
 
     auto panel = WorldMapPanel::Create(objMgr);
     ADD(panel);
-    auto rootTransform = panel->GetComponent<TransformComponent>();
+    auto rootTf = panel->GetComponent<TransformComponent>();
 
     auto AddLocked = [&](float x, float y)
         {
             auto node = Locked_Node::Create(objMgr);
             auto transform = node->GetComponent<TransformComponent>();
             transform->SetPosition(x, y);
-            transform->SetParent(rootTransform);
+            transform->SetParent(rootTf);
             ADD(node);
 
             auto back = LockNode_Back::Create(objMgr);
@@ -369,12 +361,15 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
     for (auto p : {_vec2{-100, 200}, {-150, 0}, {-120, -200}, {-450, 240}})
         AddLocked(p.x, p.y);
 
-    auto AddMap = [&](float x, float y, LOADID loadID)
+    auto AddMap = [&]<typename IconType>(float x, float y, LOADID loadID, StageSelect stage)
         {
             auto node = MapNode_Front::Create(objMgr);
-            auto transform = node->GetComponent<TransformComponent>();
-            transform->SetPosition(x, y);
-            transform->SetParent(rootTransform);
+            node->SetLoadID(loadID);
+            node->SetStage(stage);
+
+            auto tf = node->GetComponent<TransformComponent>();
+            tf->SetPosition(x, y);
+            tf->SetParent(rootTf);
 
             auto button = node->GetComponent<HoverButtonComponent>();
             button->SetOnClick([loadID]() 
@@ -383,10 +378,17 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
                     EngineCore::GetInstance()->RegisterCommand(command);
                 });
             ADD(node); 
+
+            auto icon = IconType::Create(objMgr);
+            auto iconTf = icon->GetComponent<TransformComponent>();
+            iconTf->SetParent(tf);
+            iconTf->SetPosition(0.f, 0.f);
+            ADD(icon);
         };
 
-    AddMap(-600.f, 80.f, LOADID::Stage1);
-    AddMap(-480.f, -150.f, LOADID::Stage1);
+    AddMap.template operator()<Stage1Icon>(-600.f, 80.f, LOADID::Stage1,StageSelect::Stage1);
+    AddMap.template operator()<Stage2Icon>(-480.f, -150.f, LOADID::Stage2,StageSelect::Stage2);
+    AddMap.template operator()<Stage0Icon>(-750.f, 150.f, LOADID::Village, StageSelect::Stage0);
 
     auto AddText = [&](float x, float y, const wchar_t* txt)
         {
@@ -437,15 +439,69 @@ void UILoader::BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr)
 
     dialogMgr->SetPanel(panel->GetComponent<PanelComponent>());
 
-    dialogMgr->SetEmotionChangeCallBack([atri](Emotion emotion) {
-        if (atri)
-            atri->SetEmotion(emotion);
-        });
+    dialogMgr->SetEmotionChangeCallBack([atri](Emotion emotion) {if (atri) atri->SetEmotion(emotion);});
 }
 
 void UILoader::BuildMiniMap(ObjectManager* objMgr)
 {
     auto renderSystem = EngineCore::GetInstance()->GetRenderSystem();
-
     ADD(InventoryPlayer::Create(objMgr));
+}
+
+void UILoader::BuildShopUI(ObjectManager* objMgr, InventoryManager* invMgr, TooltipManager* tooltipMgr,ShopManager* shopMgr)
+{
+    ADD(ShopBackGround::Create(objMgr));
+    ADD(ShopBtn::Create(objMgr));
+    shopMgr->BindCreateCallBack([objMgr](ItemType type)->Object*{return CreateInventoryObj(objMgr, type);});
+
+    const int cols = 3;
+    const int rows = 2;
+    const _vec2 topLeft = {530.f, 150.f};
+    const float slotSpacingX = 180.f;
+    const float slotSpacingY = 200.f;
+
+    for (int y = 0; y < rows; ++y)
+    {
+        for (int x = 0; x < cols; ++x)
+        {
+            const float px = topLeft.x + x * slotSpacingX;
+            const float py = topLeft.y + y * slotSpacingY;
+
+            auto slot = ShopSlot::Create(objMgr);
+            slot->GetComponent<TransformComponent>()->SetPosition(px, py);
+            ADD(slot);
+
+            shopMgr->RegisterShopSlot(slot);
+        }
+    }
+    shopMgr->StockItem(ItemType::Sword, 0);
+    shopMgr->StockItem(ItemType::Armor, 1);
+    shopMgr->StockItem(ItemType::Bow, 2);
+    shopMgr->StockItem(ItemType::FishingItem, 3);
+    shopMgr->StockItem(ItemType::Spear, 4);
+    shopMgr->StockItem(ItemType::CrossBow, 5);
+
+    auto shopTooltip = ShopTooltip::Create(objMgr);
+    shopTooltip->SetShopManager(shopMgr);
+    ADD(shopTooltip);
+    tooltipMgr->SetShopTooltip(shopTooltip);
+
+}
+
+Object* UILoader::CreateInventoryObj(ObjectManager* objMgr, ItemType type)
+{
+    switch (type)
+    {
+    case ItemType::Sword:       return SwordItem::Create(objMgr);
+    case ItemType::Spear:       return SpearItem::Create(objMgr);
+    case ItemType::Armor:       return WolfArmor::Create(objMgr);
+    case ItemType::Bow:         return BowItem::Create(objMgr);
+    case ItemType::CrossBow:    return CrossBowItem::Create(objMgr);
+    case ItemType::FishingItem: return FishingItem::Create(objMgr);
+    case ItemType::BoostItem:   return BoostItem::Create(objMgr);
+    case ItemType::PigItem:     return PigItem::Create(objMgr);
+    case ItemType::GhostCloak:  return GhostCloakItem::Create(objMgr);
+    case ItemType::RocketItem:  return RocketItem::Create(objMgr);
+    default:                    return nullptr;
+    }
 }

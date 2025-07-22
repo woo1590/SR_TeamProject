@@ -2,6 +2,8 @@
 #include "BaseCharacter.h"
 #include "Item.h"
 #include "QuestTextObj.h"
+#include "InventoryManager.h"
+#include "InventoryComponent.h"
 
 class Player : public BaseCharacter
 {
@@ -85,6 +87,7 @@ public:
     std::unordered_map<string, Object*> GetBones();
     // - --------------- 제현 -------------------------
     void SetInventoryMode(bool enable);
+    void SetShopMode(bool enable);
     void SetDir(_vec3 _dir) { lastWorldDir = _dir; }
 
 private:
@@ -205,4 +208,8 @@ private:
     const _float rollEffectTerm = 0.05f;
     _vec3 lastWorldPos;
     _vec3 lastWorldDir;
+
+    InventoryManager* invMgr = nullptr;
+    InventoryComponent* invComp = nullptr;
+    bool isClickedI = true;
 };

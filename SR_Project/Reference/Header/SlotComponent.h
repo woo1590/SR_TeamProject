@@ -18,7 +18,7 @@ public:
 	void SetSlotType(SlotType type) { slotType = type; }
 	SlotType GetSlotType() const { return slotType; }
 
-	void SetItem(Object* obj) { itemObj = obj; }
+	void SetItem(Object* item);
 	void ClearItem() { itemObj = nullptr; }
 	bool HasItem() const { return itemObj != nullptr; }
 

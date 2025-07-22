@@ -47,12 +47,18 @@ void HPBarFront::Update(float dt)
 {
 	Object::Update(dt);
 
+	if (dmgCooldown > 0.f)
+		dmgCooldown -= dt;
+
 	auto playerInfo = owner->GetFrontObject(ObjectType::Player)->GetComponent<InfoComponent<PlayerInfo>>();
 
 	int curHp = playerInfo->GetInfo().curHp;
 
-	if (prevHp >= 0 && curHp < prevHp)
+	if (prevHp >= 0 && curHp < prevHp && dmgCooldown <= 0.f)
+	{
 		OnHPChanged(prevHp - curHp);
+		dmgCooldown = dmgInterval;
+	}
 
 	prevHp = curHp;
 }
@@ -77,10 +83,7 @@ void HPBarFront::OnHPChanged(int damage)
 	auto font = dmgText->GetComponent<FontComponent>();
 	font->ClearText();
 	RECT rc = {0, 0, 200, 80};
-	font->AddText(L"-" + to_wstring(damage), rc,
-		Color::White,
-		DT_CENTER | DT_VCENTER,
-		FontType::DmgText);
+	font->AddText(L"-" + to_wstring(damage), rc,Color::White,DT_CENTER | DT_VCENTER,FontType::DmgText);
 
 	owner->AddUIObject(dmgText);
 }

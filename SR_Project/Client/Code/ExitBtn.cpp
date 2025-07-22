@@ -42,9 +42,9 @@ HRESULT ExitBtn::Ready_Object()
 		if (btnType == ExitBtnType::Inventory)
 			player->SetInventoryMode(false);
 		else if (btnType == ExitBtnType::WorldMap)
-		{
 			EngineCore::GetInstance()->GetRenderSystem()->SetUIRenderState(UIRenderType::MainGame);
-		}
+		else if (btnType == ExitBtnType::Shop)
+			player->SetShopMode(false);
 		});
 
 	return S_OK;

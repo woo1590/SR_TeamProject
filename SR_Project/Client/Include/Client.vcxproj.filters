@@ -564,7 +564,7 @@
     </Filter>
     <Filter Include="02. Object\Monster\Shulker">
       <UniqueIdentifier>{ed4277bf-0ab7-4059-8fca-698c47866197}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame\MaskObj">
       <UniqueIdentifier>{036e52e1-bedb-4c6d-a055-08ea1c7485ca}</UniqueIdentifier>
     </Filter>
@@ -576,6 +576,39 @@
     </Filter>
     <Filter Include="02. Object\Effect\FireworkEffect">
       <UniqueIdentifier>{25bc998c-b888-465f-94ee-930b1439f067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\StageIcon">
+      <UniqueIdentifier>{ea4b2148-5a1e-42aa-8070-f0d0f0d38da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage1">
+      <UniqueIdentifier>{77d1bc15-562a-4a79-84b3-4d6e48c43479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage2">
+      <UniqueIdentifier>{c6d003f2-2686-4544-9cd6-5e45c51ebbf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage0">
+      <UniqueIdentifier>{dd017aed-4398-4496-8894-1cce45739f68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\RightBtn">
+      <UniqueIdentifier>{a9329a63-2578-45ea-b42c-798cfd4fc08e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\LeftBtn">
+      <UniqueIdentifier>{521ee149-e374-4fea-a554-d018a803b9ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Shop">
+      <UniqueIdentifier>{c00b8437-4be1-497d-8fd4-bdde57796531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Shop\ShopSlot">
+      <UniqueIdentifier>{4fc5ae11-3887-4ef6-80f6-4d8a4b268017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Shop\ShopTooltip">
+      <UniqueIdentifier>{d57aa983-6947-423e-9781-fb7fd6aa23d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Shop\ShopEmerald">
+      <UniqueIdentifier>{040e01ad-b5a5-4d01-bb22-0e1edeae0787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\Button\ShopBtn">
+      <UniqueIdentifier>{de7297a7-f5d4-41af-9364-437cc0e26c05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1101,7 +1134,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Shulker.h">
       <Filter>02. Object\Monster\Shulker</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\MaskObj.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
     </ClInclude>
@@ -1116,6 +1149,36 @@
     </ClInclude>
     <ClInclude Include="..\Header\FireworkEffect.h">
       <Filter>02. Object\Effect\FireworkEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage1Icon.h">
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage2Icon.h">
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage0Icon.h">
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RightBtn.h">
+      <Filter>02. Object\UIObj\Button\RightBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LeftBtn.h">
+      <Filter>02. Object\UIObj\Button\LeftBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShopBackGround.h">
+      <Filter>02. Object\UIObj\UIRenderState\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShopSlot.h">
+      <Filter>02. Object\UIObj\UIRenderState\Shop\ShopSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShopTooltip.h">
+      <Filter>02. Object\UIObj\UIRenderState\Shop\ShopTooltip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShopEmerald.h">
+      <Filter>02. Object\UIObj\UIRenderState\Shop\ShopEmerald</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShopBtn.h">
+      <Filter>02. Object\UIObj\Button\ShopBtn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1623,7 +1686,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Shulker.cpp">
       <Filter>02. Object\Monster\Shulker</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\MaskObj.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
     </ClCompile>
@@ -1638,6 +1701,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\FireworkEffect.cpp">
       <Filter>02. Object\Effect\FireworkEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage1Icon.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage2Icon.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage0Icon.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RightBtn.cpp">
+      <Filter>02. Object\UIObj\Button\RightBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LeftBtn.cpp">
+      <Filter>02. Object\UIObj\Button\LeftBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopBackGround.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopSlot.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Shop\ShopSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopTooltip.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Shop\ShopTooltip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopEmerald.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\Shop\ShopEmerald</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopBtn.cpp">
+      <Filter>02. Object\UIObj\Button\ShopBtn</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

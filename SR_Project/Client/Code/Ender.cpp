@@ -23,6 +23,7 @@
 #include "EngineCore.h"
 #include "SoundManager.h"
 #include "InfoComponent.h"
+#include "BossHPBarFront.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -66,6 +67,8 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     InitCrossLaser();
     InitEnderProjectile();
     InitFireBlock();
+
+    bossFront->SetBossName(L"엔더의 심장");
 	return S_OK;
 }
 

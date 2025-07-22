@@ -38,13 +38,17 @@ void TooltipManager::ShowTooltip(TooltipData& tip, const wstring& text, float x,
 
 void TooltipManager::ShowInventoryTooltip(const wstring& text, float x, float y)
 {
-	ShowTooltip(invTip, text, x, y, true, FontType::Large
-	);
+	ShowTooltip(invTip, text, x, y, true, FontType::Large);
 }
 
 void TooltipManager::ShowWorldTooltip(const wstring& text, float x, float y)
 {
 	ShowTooltip(worldTip, text, x, y, false, FontType::Title);
+}
+
+void TooltipManager::ShowShopTooltip(const wstring& text, float x, float y)
+{
+	ShowTooltip(shopTip, text, x, y, false, FontType::Large);
 }
 
 void TooltipManager::HideTooltip(TooltipData& tip)
@@ -76,6 +80,11 @@ void TooltipManager::HideWorldTooltip()
 	HideTooltip(worldTip);
 }
 
+void TooltipManager::HideShopTooltip()
+{
+	HideTooltip(shopTip);
+}
+
 void TooltipManager::Update(float dt)
 {
 	auto fadeUpdate = [dt](TooltipData& tip)
@@ -96,4 +105,5 @@ void TooltipManager::Update(float dt)
 	
 	fadeUpdate(invTip);
 	fadeUpdate(worldTip);
+	fadeUpdate(shopTip);
 }

@@ -3,7 +3,7 @@
 #include "Object.h"
 #include "PanelComponent.h"
 
-enum class ExitBtnType {None, Inventory, WorldMap};
+enum class ExitBtnType {None, Inventory, WorldMap, Shop};
 
 class ExitBtn : public Object
 {

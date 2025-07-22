@@ -22,10 +22,8 @@ HRESULT FishingItem::Ready_Object()
 	renderer->SetRenderType(UIRenderType::Inventory);
 
 	auto info = AddComponent<InfoComponent<ItemInfo>>();
-	info->SetInfo({L"낚싯대", L"inventory_fishing", ItemType::Potion, Rarity::Default, 2,
-		L"진정한 모험자가 신뢰할 수 있는 동료인 낚싯대는 낚시에만 유용한 것은 아닙니다."});
-
 	auto item = AddComponent<ItemComponent>();
+	item->SetItemType(ItemType::FishingItem);
 	item->SetOriginalScale({0.3f, 0.3f});
 
 	return S_OK;
