@@ -577,6 +577,9 @@
     <Filter Include="02. Object\CameraActor\WayPointCam">
       <UniqueIdentifier>{038db0cb-ea10-4b61-9f5a-3c46340a7892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Pet">
+      <UniqueIdentifier>{d2bf3e82-03a3-46b9-a7b2-dc3c72ac5980}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1120,6 +1123,9 @@
     <ClInclude Include="..\Header\WayPointCam.h">
       <Filter>02. Object\CameraActor\WayPointCam</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Pig.h">
+      <Filter>02. Object\Pet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1644,6 +1650,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\WayPointCam.cpp">
       <Filter>02. Object\CameraActor\WayPointCam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Pig.cpp">
+      <Filter>02. Object\Pet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
