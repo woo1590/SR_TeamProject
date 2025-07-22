@@ -95,6 +95,11 @@ void SpawnTriggerBox::OnCollisionEnter(Object* other)
             spawner->Spawn();
         }
         SpawnOn = true;
+
+        if (callBack)
+        {
+            callBack();
+        }
     }
 }
 

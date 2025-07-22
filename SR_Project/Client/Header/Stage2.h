@@ -14,6 +14,7 @@ private:
     Stage2();
     virtual ~Stage2();
 
+public:
     enum class Stage2Stage
     {
         Stage2Intro,
@@ -21,7 +22,7 @@ private:
         ActiveBridge,
         Play
     };
-
+    void ChangeState(Stage2Stage state);
 public:
     static Stage2* Create();
 
@@ -34,7 +35,6 @@ public:
     void WayPointEdit();
 private:
     void SetTriggerBox();
-    void ChangeState(Stage2Stage state);
     void Free()override;
 
     Player* player = nullptr;

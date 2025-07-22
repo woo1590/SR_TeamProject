@@ -184,6 +184,8 @@ void Stage2::Load()
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
+
+		SetTriggerBox();
 	}
 
 	ChangeState(Stage2Stage::Stage2Intro);
@@ -387,8 +389,12 @@ void Stage2::WayPointEdit()
 void Stage2::SetTriggerBox()
 {
 	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-	bossTrigger->GetComponent<TransformComponent>()->SetPosition(130.f, 30.f, 410.f);
-	bossTrigger->AddSpawner(SpawnType::Ender, _vec3(130.f, 60.f, 410.f), _vec3(0.f, 0.f, 0.f));
+	bossTrigger->GetComponent<TransformComponent>()->SetPosition(130.f, 50.f, 410.f);
+	bossTrigger->AddSpawner(SpawnType::Ender, _vec3(125.f, 60.f, 460.f), _vec3(0.f, 0.f, 0.f));
+	bossTrigger->RegisterCallBack([this]()
+		{
+			this->ChangeState(Stage2Stage::BossIntro);
+		});
 
 	ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
 }
@@ -413,8 +419,12 @@ void Stage2::ChangeState(Stage2Stage state)
 	}break;
 	case Stage2::Stage2Stage::BossIntro:
 	{
+		currState = Stage2Stage::BossIntro;
+
 		EngineCore::GetInstance()->GetSoundManager()->Stop("Stage2BGM");
 		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("Boss_EnderBGM");
+
+		ChangeState(Stage2Stage::Play);
 
 	}break;
 	case Stage2::Stage2Stage::Play:
