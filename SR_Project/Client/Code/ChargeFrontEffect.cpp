@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "ChargeFrontEffect.h"
 
 #include "TransformComponent.h"
@@ -76,6 +76,7 @@ void ChargeFrontEffect::Update(_float dt)
 	if (!player->IsCharge())
 	{
 		SetDead();
+		EngineCore::GetInstance()->GetSoundManager()->Stop("Charge");
 		return;
 	}
 	auto playerAttackDirection = player->GetAttackDirection();
@@ -101,7 +102,7 @@ void ChargeFrontEffect::Update(_float dt)
 	}
 
 	soundTimer += dt;
-	if (soundTimer > 0.33f)
+	if (soundTimer > soundTerm)
 	{
 		EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Charge");
 		soundTimer = 0.f;

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 namespace Engine
 {
@@ -11,6 +11,7 @@ namespace Engine
 		int maxExp = 10;
 		float power = 10.f;
 		float speed = 15.f;
+		int gold = 0;
 	};
 
 	enum class UIRenderType { None, MainGame, Inventory, WorldMap, Loading, DeathUI, QuestUI, Always };

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Effect.h"
 class ChargeFrontEffect :
     public Effect
@@ -19,5 +19,6 @@ private:
     const _float tikkleTerm = 0.005f;
 
     _float soundTimer = 0.f;
+    const _float soundTerm = 1.1f;
 };
 
