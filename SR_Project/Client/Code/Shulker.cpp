@@ -270,7 +270,7 @@ void Shulker::PlayAttack(_float dt)
             AttackAnim.Phase = Ready;
             AttackAnim.ElapsedTime = 0.f;
             AttackAnim.TotalTime = 0.5f;
-            AttackAnim.DelayTime = 2.f;
+            AttackAnim.DelayTime = 5.f;
             *IsAttack = false;
         }
         break;

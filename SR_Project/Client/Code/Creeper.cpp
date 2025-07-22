@@ -59,12 +59,14 @@ HRESULT Creeper::Ready_Object(ObjectManager* owner, ObjectType objType)
     //Init Collision
     auto collision = GetComponent<CollisionComponent>();
     collision->SetSize(_vec3(2.f, 5.5f, 2.f));
+    State = Walk;
 
     //Create BT
     InitTree();
 
     //Animation
     InitAnimation();
+    SetEmissive(false);
     return S_OK;
 }
 
@@ -84,19 +86,19 @@ void Creeper::MoveTo(_vec3* dir, _float dt)
     auto Transform = GetComponent<TransformComponent>();
     auto Stat = GetComponent<InfoComponent<EnemyInfo>>();
 
-    if (State != MonsterState::Walk) State = MonsterState::Walk;
+    //if (State != MonsterState::Walk) State = MonsterState::Walk;
     D3DXVec3Normalize(dir, dir);
 
     if (DieAnim.ElapsedTime < 5.f)
     {
-        Transform->Translate(*dir * dt * Stat->GetInfo().speed * 0.6);
+        Transform->Translate(*dir * dt * Stat->GetInfo().speed * 2.f);
         Transform->SetForward(_vec3(dir->x, 0.f, dir->z));
     }
-    if (DieAnim.ElapsedTime < 2.f)
-    {
-        emissiveOn = false;
-        SetEmissive(emissiveOn);
-    }
+    //if (DieAnim.ElapsedTime < 2.f)
+    //{
+    //    emissiveOn = false;
+    //    SetEmissive(emissiveOn);
+    //}
 }
 
 void Creeper::RotateTo(_vec3* dir, float dt)
@@ -114,8 +116,6 @@ void Creeper::Die()
         DieAnim.IsEnd = false;
         DieAnim.DelayTime = 0.0f;
         emissiveOn = false;
-
-        if (DieAnim.ElapsedTime < 1.f) DieAnim.ElapsedTime = 0.0f;
     }
 }
 
@@ -255,6 +255,15 @@ void Creeper::PlayDie(_float dt)
 {
     DieAnim.ElapsedTime += dt;
     DieAnim.DelayTime -= dt;
+
+    WalkAnim.ElapsedTime += dt;
+
+    float Angle = sinf(WalkAnim.ElapsedTime * 7.f);
+    SetRotation({ Angle / 2, 0.f, 0.f }, "LLeg");
+    SetRotation({ -Angle / 2, 0.f, 0.f }, "RLeg");
+
+    SetRotation({ Angle / 2, 0.f, 0.f }, "LArm");
+    SetRotation({ -Angle / 2, 0.f, 0.f }, "RArm");
 
     float blinkInterval = max(0.05f, 0.5f - DieAnim.ElapsedTime * 0.1f);
 

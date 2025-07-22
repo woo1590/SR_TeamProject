@@ -71,7 +71,7 @@ void ShulkerBullet::Update(_float dt)
     {
         ActiveTimer += dt;
     
-        if (ActiveTimer > 15.f) SetActive(false);
+        if (ActiveTimer > 8.f) SetActive(false);
         
         auto transform = GetComponent<TransformComponent>();
         _vec3 rot = transform->GetRotate();
