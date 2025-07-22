@@ -270,6 +270,7 @@
     <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\ItemComponent.h" />
     <ClInclude Include="..\Header\OBBCollider.h" />
+    <ClInclude Include="..\Header\MapTable.h" />
     <ClInclude Include="..\Header\MinimapData.h" />
     <ClInclude Include="..\Header\MinimapManager.h" />
     <ClInclude Include="..\Header\MinimapMesh.h" />
@@ -433,6 +434,7 @@
     <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\ItemComponent.cpp" />
     <ClCompile Include="..\Code\OBBCollider.cpp" />
+    <ClCompile Include="..\Code\MapTable.cpp" />
     <ClCompile Include="..\Code\MinimapData.cpp" />
     <ClCompile Include="..\Code\MinimapManager.cpp" />
     <ClCompile Include="..\Code\MinimapMesh.cpp" />

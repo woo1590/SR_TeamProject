@@ -12,6 +12,7 @@
 #include "Chest.h"
 #include "IronCage.h"
 #include "Bridge.h"
+#include "MapTable.h"
 
 DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count)
     : Object(owner, objType), Type(type), Col(col), Rot(rot), Count(Count)
@@ -41,6 +42,9 @@ Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBl
         break;
     case DynamicBlockType::Bridges:
         Instance = Bridge::Create(owner, ObjectType::DynamicBlock, type, col, rot);
+        break;
+    case DynamicBlockType::MapSelect:
+        Instance = MapTable::Create(owner, ObjectType::DynamicBlock, type);
         break;
     default:
         MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"Error", MB_OK);
