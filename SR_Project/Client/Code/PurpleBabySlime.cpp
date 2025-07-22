@@ -330,7 +330,7 @@ void PurpleBabySlime::PlayDie(_float dt)
         effect->SetDeadTime(1.5f);
         owner->AddObject(ObjectType::ParticleEffect, effect);
         //////////////////////////////////
-
+        DropEmeralds();
         SetDead();
         DeleteBar();
 

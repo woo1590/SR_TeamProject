@@ -23,6 +23,7 @@
 #include "PhysicsSystem.h"
 #include "MeshRendererComponent.h"
 #include "Material.h"
+#include "EmeraldObj.h"
 
 RedGolem::RedGolem(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -88,6 +89,11 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     InitAnimation();
 
     InitProjectile(objType);
+
+    for (int i = 0; i < 20; ++i)
+    {
+        Emeralds.push_back(EmeraldObj::Create(owner, ObjectType::Item));
+    }
 
 	return S_OK;
 }
@@ -399,6 +405,7 @@ void RedGolem::PlayDie(_float dt)
 
         if (DieAnim.ElapsedTime > DieAnim.TotalTime + DieAnim.DelayTime)     //1.5ms -> delete
         {
+            DropEmeralds();
             SetDead();
             DeleteBar();
         }

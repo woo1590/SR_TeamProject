@@ -580,6 +580,9 @@
     <Filter Include="02. Object\Pet">
       <UniqueIdentifier>{d2bf3e82-03a3-46b9-a7b2-dc3c72ac5980}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Emerald">
+      <UniqueIdentifier>{db9018e5-f1ef-4c83-8e2b-e0396a6e3d25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1126,6 +1129,9 @@
     <ClInclude Include="..\Header\Pig.h">
       <Filter>02. Object\Pet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\EmeraldObj.h">
+      <Filter>02. Object\Emerald</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1653,6 +1659,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Pig.cpp">
       <Filter>02. Object\Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EmeraldObj.cpp">
+      <Filter>02. Object\Emerald</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

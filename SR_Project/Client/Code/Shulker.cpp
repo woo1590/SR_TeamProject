@@ -160,10 +160,8 @@ void Shulker::InitTree()
     bb->SetValue("IsAttack", IsAttack);
 
     //BT
-    IsTargetInAttackRange* attackCheck = new IsTargetInAttackRange(new AttackNode());
-
     SelectorNode* BehaviorNode = new SelectorNode();
-    BehaviorNode->AddChild(attackCheck);
+    BehaviorNode->AddChild(new AttackNode());
 
     IsAliveNode* IsAlive = new IsAliveNode(BehaviorNode);
 
@@ -222,8 +220,9 @@ void Shulker::PlayAttack(_float dt)
 
         _float t = clamp(AttackAnim.ElapsedTime / AttackAnim.TotalTime, 0.f, 1.f);
         _float pos = lerp(-2.f, 15.f, t);
+        _float Angle = lerp(0.f, 90.f, t);
         Bones["Head"]->GetComponent<TransformComponent>()->SetPosition(_vec3(0.f * Scale, pos * Scale, 0.f * Scale));
-
+        Bones["Head"]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(Angle), 0.f));
         if (AttackAnim.ElapsedTime > AttackAnim.TotalTime)
         {
             AttackAnim.Phase = Action;
@@ -263,8 +262,9 @@ void Shulker::PlayAttack(_float dt)
 
         _float t = clamp(AttackAnim.ElapsedTime / AttackAnim.TotalTime, 0.f, 1.f);
         _float pos = lerp(15.f, -2.f, t);
+        _float Angle = lerp(90.f, 0.f, t);
         Bones["Head"]->GetComponent<TransformComponent>()->SetPosition(_vec3(0.f * Scale, pos * Scale, 0.f * Scale));
-
+        Bones["Head"]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(Angle), 0.f));
         if (AttackAnim.ElapsedTime > AttackAnim.TotalTime)
         {
             AttackAnim.Phase = Ready;
@@ -291,7 +291,7 @@ void Shulker::PlayDie(_float dt)
     if (DieAnim.ElapsedTime > DieAnim.TotalTime)
     {
         DieAnim.IsEnd = true;
-
+        DropEmeralds();
         SetDead();
         DeleteBar();
     }
