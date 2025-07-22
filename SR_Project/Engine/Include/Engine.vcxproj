@@ -261,6 +261,9 @@
     <ClInclude Include="..\Header\InventoryManager.h" />
     <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\ItemComponent.h" />
+    <ClInclude Include="..\Header\MinimapData.h" />
+    <ClInclude Include="..\Header\MinimapManager.h" />
+    <ClInclude Include="..\Header\MinimapMesh.h" />
     <ClInclude Include="..\Header\ObjectPool.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\ParticleComponent.h" />
@@ -413,6 +416,9 @@
     <ClCompile Include="..\Code\InventoryManager.cpp" />
     <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\ItemComponent.cpp" />
+    <ClCompile Include="..\Code\MinimapData.cpp" />
+    <ClCompile Include="..\Code\MinimapManager.cpp" />
+    <ClCompile Include="..\Code\MinimapMesh.cpp" />
     <ClCompile Include="..\Code\ObjectPool.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\ParticleComponent.cpp" />

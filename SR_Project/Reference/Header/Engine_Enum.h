@@ -134,6 +134,8 @@ namespace Engine
 		WhiteWool, YellowWool, Terracota,
 		DarkDirt, DarkWood, BookShelf, DarkGrass, DarkStone, DarkLeaf,
 		DarkCobbleStone, DarkSmoothStone, DarkStoneBrick, DarkMossyStoneBrick, DarkOak,
+		EndStone, EndStoneBrick, PurBrick, PurPillar, PurGlass, EndRod,
+		ChorusBranch, ChorusFlower, ChorusFruit,
 		sBlockEnd
 	};
 	enum StaticBlockUsage { Basic, Half, Stair, Fence, Alpha, Door, MiniDoor };
@@ -143,11 +145,13 @@ namespace Engine
 	enum DynamicBlockType
 	{
 		dBlockNone,
-		LeverSwitch, BasicChest, IronCages,
+		LeverSwitch, BasicChest, IronCages, Bridges,
 		dBlockEnd
 	};
 
 	enum FaceDir { Face_Top, Face_Bottom, Face_Left, Face_Right, Face_Front, Face_Behind };
+
+	enum MinimapTileType { TILE_UNKNOWN, TILE_PATH, TILE_OBSTACLE, MAP_PLAYER };
 
 	enum CollisionLayer :ULONG
 	{

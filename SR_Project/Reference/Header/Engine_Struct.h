@@ -104,6 +104,12 @@ namespace Engine
 		StaticBlockRot Rot;
 		StaticBlockUsage Usage;
 	} PREFAB;
+
+	struct TileInfo
+	{
+		bool walkable = false;
+		_ulong color = D3DCOLOR_ARGB(255, 100, 100, 100);
+	};
 }
 
 #endif // Engine_Struct_h__

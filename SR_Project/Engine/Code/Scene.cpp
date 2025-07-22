@@ -52,6 +52,11 @@ UIManager* Scene::GetUIManager() const
 	return uiMgr;
 }
 
+MinimapManager* Scene::GetMinimapManager() const
+{
+	return MinimapMgr;
+}
+
 void Scene::Free()
 {
 

@@ -87,11 +87,19 @@ HRESULT Chest::Ready_Object(ObjectManager* owner, ObjectType objType, DynamicBlo
 
 void Chest::Update(_float dt)
 {
-    if (First)
-        Generate(dt);
+    if (First) Generate(dt);
 
-    if (Activate && !Trigger)
-        Operate();
+    float distance(100.f);
+    auto chestTransform = Parts["ChestDown"]->GetComponent<TransformComponent>();
+    _vec3 chestPos = chestTransform->GetWorldPosition(), targetNchest{};
+    if (Target)
+    {
+        targetNchest = Target->GetComponent<TransformComponent>()->GetPosition() - chestPos;
+        distance = D3DXVec3Length(&targetNchest);
+    }
+
+    if (!Trigger && distance <= TriggerDistance) Activate = true;
+    if (Activate && !Trigger) Operate();
 
     Object::Update(dt);
 }

@@ -218,6 +218,8 @@ void Chunk::BuildChunkFace()
 
     auto IsFaceExposed = [&](int x, int y, int z, FaceDir faceDir, const SB& currentBlock) -> bool
         {
+            if (currentBlock.Type == EndRod || currentBlock.Type == ChorusBranch) return true;
+
             const SB* neighborBlock(nullptr);
             if (x < 0 || x >= CHUNK_SIZE / BLOCK_SIZE || z < 0 || z >= CHUNK_SIZE / BLOCK_SIZE)
             {
@@ -242,6 +244,8 @@ void Chunk::BuildChunkFace()
 
             const SB& neighbor(*neighborBlock);
             if (neighbor.Type == Air) return true;
+            if (neighbor.Type == EndRod) return true;
+            if (neighbor.Type == ChorusBranch) return true;
             if (neighbor.Usage == Half && currentBlock.Usage == Half)
             {
                 if (faceDir == Face_Top) return true;
@@ -351,6 +355,48 @@ void Chunk::BuildChunkFace()
 
 void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indices, const _vec3& blockPos, int faceDir, const SB& sb)
 {
+    if (sb.Type == EndRod)
+    {
+        _vec3 baseScale{ 0.2f, 0.1f, 0.2f }, baseOffset{ 0.f, -1.f, 0.f };
+        _vec3 stickScale{ 0.075f, 1.f, 0.075f }, stickOffset{ 0.f, -0.4f, 0.f };
+        AddQuad(vertices, indices, blockPos + baseOffset, baseScale, sb, faceDir, TRUE);
+        AddQuad(vertices, indices, blockPos + stickOffset, stickScale, sb, faceDir, TRUE);
+        return;
+    }
+
+    if (sb.Type == ChorusBranch)
+    {
+        _vec3 baseScale{ 0.4f, 1.f, 0.4f }, baseOffset{ 0.f, 0.f, 0.f };
+        _vec3 branchScale, branchOffset, branch2Scale{ 0.4f, 0.5f, 0.4f }, branch2Offset{ 0.f, 0.5f, 0.f };
+
+        AddQuad(vertices, indices, blockPos + baseOffset, baseScale, sb, faceDir, TRUE);
+
+        switch (sb.Rot)
+        {
+        case sZP:
+            branchScale = _vec3{ 0.35f, 0.35f, 0.8f };
+            branchOffset = _vec3{ 0.f, 0.5f, 1.2f };
+            branch2Offset.z += 2.f; break;
+        case sZM:
+            branchScale = _vec3{ 0.35f, 0.35f, 0.8f };
+            branchOffset = _vec3{ 0.f, 0.5f, -1.2f };
+            branch2Offset.z -= 2.f; break;
+        case sXP:
+            branchScale = _vec3{ 0.8f, 0.35f, 0.35f };
+            branchOffset = _vec3{ 1.2f, 0.4f, 0.f };
+            branch2Offset.x += 2.f; break;
+        case sXM:
+            branchScale = _vec3{ 0.8f, 0.35f, 0.35f };
+            branchOffset = _vec3{ -1.2f, 0.5f, 0.f };
+            branch2Offset.x -= 2.f; break;
+        case sREnd: return;
+        }
+       
+        AddQuad(vertices, indices, blockPos + branchOffset, branchScale, sb, faceDir, TRUE);
+        AddQuad(vertices, indices, blockPos + branch2Offset, branch2Scale, sb, faceDir, TRUE);
+        return;
+    }
+
     if (sb.Usage == Stair)
     {
         _vec3 bottomScale = { 1.f, 0.5f, 1.f }, bottomOffset = { 0.f, -0.5f, 0.f };
@@ -384,32 +430,30 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     if (sb.Usage == Fence)
     {
         bool isCon(true);
-        _vec3 stickScale = { 0.25f, 1.f, 0.25f }, stickOffset = { 0.f, 0.f, 0.f };
+        _vec3 offset{ 0.f, 0.8f, 0.f }, conScale, conOffset;
+        _vec3 stickScale{ 0.25f, 1.f, 0.25f }, stickOffset{ 0.f, 0.f, 0.f };
+
         AddQuad(vertices, indices, blockPos + stickOffset, stickScale, sb, faceDir, TRUE);
 
-        _vec3 conScale, conOffset;
         switch (sb.Rot)
         {
         case sZP: case sZM:
             conScale = { 0.2f, 0.2f, 1.f };
-            conOffset = { 0.f, 0.5f, 0.f };
-            break;
+            conOffset = { 0.f, 0.5f, 0.f }; break;
         case sXP: case sXM:
             conScale = { 1.f, 0.2f, 0.2f };
-            conOffset = { 0.f, 0.5f, 0.f };
-            break;
+            conOffset = { 0.f, 0.5f, 0.f }; break;
         case sREnd:
-            isCon = false;
-            break;
+            isCon = false; break;
         }
 
         if (!isCon) return;
-        _vec3 offset{ 0.f, 0.8f, 0.f };
+
         AddQuad(vertices, indices, blockPos + conOffset, conScale, sb, faceDir);
         AddQuad(vertices, indices, blockPos + conOffset - offset, conScale, sb, faceDir);
         return;
     }
-
+    
     float scaleY(1.f);
     _vec3 offsetY{ 0.f, 0.f, 0.f };
 
@@ -417,17 +461,13 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
     {
         scaleY = 0.5f;
         offsetY = { 0.f, -0.5f, 0.f };
-    }
-
-    if (sb.Usage == Door)
+    } else if (sb.Usage == Door)
     {
         _vec3 scale = { 1.f, 2.f, 0.1f };
         _vec3 offset = { 0.f, 1.f, 0.f };
         AddQuad(vertices, indices, blockPos + offset, scale, sb, faceDir, TRUE);
         return;
-    }
-
-    if (sb.Usage == MiniDoor)
+    } else if (sb.Usage == MiniDoor)
     {
         _vec3 scale = { 1.f, 1.f, 0.1f };
         _vec3 offset = { 0.f, 0.f, 1.f };
@@ -435,8 +475,7 @@ void Chunk::AddFace(std::vector<VTXTEX>& vertices, std::vector<uint32_t>& indice
         return;
     }
 
-    _vec3 scale{ 1.f, scaleY, 1.f };
-    _vec3 center(blockPos + offsetY);
+    _vec3 scale{ 1.f, scaleY, 1.f }, center(blockPos + offsetY);
     AddQuad(vertices, indices, center, scale, sb, faceDir);
 }
 
@@ -492,24 +531,77 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
     switch (sb.Type)
     {
     case Dirt:
-        SetUVTile(0, 0);
-        break;
+        SetUVTile(0, 0); break;
     case DarkDirt:
-        SetUVTile(5, 0);
-        break;
+        SetUVTile(5, 0); break;
+
+    case GrassDirt:
+        switch (faceDir)
+        {
+        case Face_Top:
+            SetUVTile(2, 0); break;
+        case Face_Bottom:
+            SetUVTile(0, 0); break;
+        default:
+            SetUVTile(1, 0); break;
+        } break;
+    case DarkGrass:
+        switch (faceDir)
+        {
+        case Face_Top:
+            SetUVTile(7, 0); break;
+        case Face_Bottom:
+            SetUVTile(5, 0); break;
+        default:
+            SetUVTile(6, 0); break;
+        } break;
+    case DirtPath:
+        switch (faceDir)
+        {
+        case Face_Top:
+            SetUVTile(4, 0); break;
+        case Face_Bottom: SetUVTile(0, 0);
+            break;
+        default: SetUVTile(3, 0);
+            break;
+        } break;
+
+    case Stone:
+        if (sb.Usage == Half) SetUVTile(1, 1, 2, 3, faceDir, Half);
+        else SetUVTile(1, 1); break;
+    case DarkStone:
+        if (sb.Usage == Half) SetUVTile(5, 3, 6, 4, faceDir, Half);
+        else SetUVTile(6, 4); break;
+
+    case CobbleStone:
+        if (sb.Usage == Half) SetUVTile(0, 1, 3, 3, faceDir, Half);
+        else SetUVTile(0, 1);  break;
     case DarkCobbleStone:
         if (sb.Usage == Half) SetUVTile(7, 4, 6, 3, faceDir, Half);
-        else SetUVTile(7, 4);
-        break;
+        else SetUVTile(7, 4); break;
+
+    case SmoothStone:
+        if (sb.Usage == Half) SetUVTile(2, 1, 1, 3, faceDir, Half);
+        else SetUVTile(2, 1); break;
     case DarkSmoothStone:
         if (sb.Usage == Half) SetUVTile(4, 5, 7, 3, faceDir, Half);
-        else SetUVTile(4, 5);
-        break;
+        else SetUVTile(4, 5); break;
+
+    case StoneBrick:
+        SetUVTile(3, 1); break;
     case DarkStoneBrick:
-        SetUVTile(5, 5);
-        break;
+        SetUVTile(5, 5); break;
+
+    case MossyStoneBrick:
+        SetUVTile(4, 1); break;
     case DarkMossyStoneBrick:
-        SetUVTile(6, 5);
+        SetUVTile(6, 5); break;
+
+    case Oak:
+        SetUVTile(3, 2);
+        break;
+    case DarkOak:
+        SetUVTile(3, 6);
         break;
 
     case WoodPlank:
@@ -517,129 +609,66 @@ void Chunk::SetUV(const SB& sb, int faceDir, bool parts)
         else if (sb.Usage == Fence) SetUVTile(4, 2, 5, 2, faceDir, sb.Usage, parts);
         else if (sb.Usage == Door) SetUVTile(6, 2, 7, 2, faceDir, sb.Usage, parts);
         else if (sb.Usage == MiniDoor) SetUVTile(5, 1, 7, 2, faceDir, sb.Usage, parts);
-        else SetUVTile(2, 2);
-        break;
+        else SetUVTile(2, 2); break;
     case DarkWoodPlank:
         if (sb.Usage == Half) SetUVTile(1, 6, 4, 3, faceDir, sb.Usage);
-        else SetUVTile(1, 6);
-        break;
-    case Stone:
-        if (sb.Usage == Half) SetUVTile(1, 1, 2, 3, faceDir, Half);
-        else SetUVTile(1, 1);
-        break;
-    case DarkStone:
-        if (sb.Usage == Half) SetUVTile(5, 3, 6, 4, faceDir, Half);
-        else SetUVTile(6, 4);
-        break;
-    case CobbleStone:
-        if (sb.Usage == Half) SetUVTile(0, 1, 3, 3, faceDir, Half);
-        else SetUVTile(0, 1);
-        break;
-    case SmoothStone:
-        if (sb.Usage == Half) SetUVTile(2, 1, 1, 3, faceDir, Half);
-        else SetUVTile(2, 1);
-        break;
-    case StoneBrick:
-        SetUVTile(3, 1);
-        break;
-    case MossyStoneBrick:
-        SetUVTile(4, 1);
-        break;
-    case GrassDirt:
-        switch (faceDir)
-        {
-        case Face_Top:
-            SetUVTile(2, 0);
-            break;
-        case Face_Bottom:
-            SetUVTile(0, 0);
-            break;
-        default:
-            SetUVTile(1, 0);
-            break;
-        }
-        break;
-    case DarkGrass:
-        switch (faceDir)
-        {
-        case Face_Top:
-            SetUVTile(7, 0);
-            break;
-        case Face_Bottom:
-            SetUVTile(5, 0);
-            break;
-        default:
-            SetUVTile(6, 0);
-            break;
-        }
-        break;
-    case DirtPath:
-        switch (faceDir)
-        {
-        case Face_Top:
-            SetUVTile(4, 0);
-            break;
-        case Face_Bottom:
-            SetUVTile(0, 0);
-            break;
-        default:
-            SetUVTile(3, 0);
-            break;
-        }
-        break;
+        else SetUVTile(1, 6); break;
+   
     case BookShelf:
         switch (faceDir)
         {
         case Face_Top: case Face_Bottom:
-            SetUVTile(2, 6);
-            break;
+            SetUVTile(2, 6); break;
         default:
-            SetUVTile(3, 4);
-            break;
-        }
-        break;
-    case Oak:
-        SetUVTile(3, 2);
-        break;
-    case DarkOak:
-        SetUVTile(3, 6);
-        break;
+            SetUVTile(3, 4); break;
+        } break;
+   
     case Furnace:
         switch (faceDir)
         {
         case Face_Top: case Face_Bottom:
-            SetUVTile(2, 4);
-            break;
+            SetUVTile(2, 4); break;
         case Face_Front:
             if (sb.Rot == sZP) SetUVTile(0, 4);
-            else SetUVTile(1, 4);
-            break;
+            else SetUVTile(1, 4); break;
         case Face_Behind:
             if (sb.Rot == sZM) SetUVTile(0, 4);
-            else SetUVTile(1, 4);
-            break;
+            else SetUVTile(1, 4); break;
         case Face_Right:
             if (sb.Rot == sXP) SetUVTile(0, 4);
-            else SetUVTile(1, 4);
-            break;
+            else SetUVTile(1, 4); break;
         case Face_Left:
             if (sb.Rot == sXM) SetUVTile(0, 4);
-            else SetUVTile(1, 4);
-            break;
-        }
-        break;
-    case Haybale: case Wood: case DarkWood:
-        SetUVAxisBlock(sb.Type, sb.Axis, faceDir);
-        break;
+            else SetUVTile(1, 4); break;
+        } break;
+
+    case Haybale: case Wood: case DarkWood: case PurPillar:
+        SetUVAxisBlock(sb.Type, sb.Axis, faceDir); break;
+
     case WhiteWool:
-        SetUVTile(2, 5);
-        break;
+        SetUVTile(2, 5); break;
     case YellowWool:
-        SetUVTile(3, 5);
-        break;
+        SetUVTile(3, 5); break;
+
     case Terracota:
-        SetUVTile(0, 6);
-        break;
+        SetUVTile(0, 6); break;
+
+    case EndStone:
+        SetUVTile(0, 7); break;
+    case EndStoneBrick:
+        SetUVTile(1, 7); break;
+    case PurBrick:
+        if (sb.Usage == Half) SetUVTile(2, 7, 2, 7, faceDir, sb.Usage);
+        else SetUVTile(2, 7); break;
+    case EndRod:
+        SetUVTile(5, 7, 6, 5, faceDir, sb.Usage); break;
+
+    case ChorusBranch:
+        SetUVTile(6, 6); break;
+    case ChorusFlower:
+        SetUVTile(5, 6); break;
+    case ChorusFruit:
+        SetUVTile(7, 6); break;
     }
 }
 
@@ -656,11 +685,8 @@ void Chunk::SetUVTile(int tileX, int tileY)
 
 void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, StaticBlockUsage usage, bool scale)
 {
-    float tileSize(0.125f);
-    float halfSize(0.0625f);
-    float quarterSize(0.03125f);
-    float u(tileX * tileSize);
-    float v(tileY * tileSize);
+    float tileSize(0.125f), halfSize(0.0625f), quarterSize(0.03125f);
+    float u(tileX * tileSize), v(tileY * tileSize);
 
     if (usage == Half && (faceDir == Face_Left || faceDir == Face_Right || faceDir == Face_Front || faceDir == Face_Behind))
     {
@@ -671,8 +697,7 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
         TexUVs[1] = { u + tileSize, v };
         TexUVs[2] = { u + tileSize, v + halfSize };
         TexUVs[3] = { u, v + halfSize };
-    }
-    else if (usage == Fence)
+    } else if (usage == Fence)
     {
         if (scale)
         {
@@ -683,8 +708,7 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
             TexUVs[1] = { u + quarterSize, v };
             TexUVs[2] = { u + quarterSize, v + tileSize };
             TexUVs[3] = { u, v + tileSize };
-        }
-        else
+        } else
         {
             u = halfX * tileSize;
             v = halfY * tileSize;
@@ -694,8 +718,7 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
             TexUVs[2] = { u + tileSize, v + quarterSize };
             TexUVs[3] = { u, v + quarterSize };
         }
-    }
-    else if (usage == Door)
+    } else if (usage == Door)
     {
         if (faceDir == Face_Top || faceDir == Face_Bottom || faceDir == Face_Left || faceDir == Face_Right)
         {
@@ -706,16 +729,14 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
             TexUVs[1] = { u + quarterSize, v };
             TexUVs[2] = { u + quarterSize, v + tileSize };
             TexUVs[3] = { u, v + tileSize };
-        }
-        else
+        } else
         {
             TexUVs[0] = { u, v };
             TexUVs[1] = { u + tileSize, v };
             TexUVs[2] = { u + tileSize, v + tileSize };
             TexUVs[3] = { u, v + tileSize };
         }
-    }
-    else if (usage == MiniDoor)
+    } else if (usage == MiniDoor)
     {
         if (faceDir == Face_Top || faceDir == Face_Bottom || faceDir == Face_Left || faceDir == Face_Right)
         {
@@ -726,8 +747,7 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
             TexUVs[1] = { u + quarterSize, v };
             TexUVs[2] = { u + quarterSize, v + tileSize };
             TexUVs[3] = { u, v + tileSize };
-        }
-        else
+        } else
         {
             TexUVs[0] = { u, v };
             TexUVs[1] = { u + tileSize, v };
@@ -735,7 +755,6 @@ void Chunk::SetUVTile(int tileX, int tileY, int halfX, int halfY, int faceDir, S
             TexUVs[3] = { u, v + tileSize };
         }
     }
-
     else
     {
         TexUVs[0] = { u, v };
@@ -754,6 +773,7 @@ void Chunk::SetUVAxisBlock(StaticBlockType type, StaticBlockAxis axis, int faceD
     _vec2 haybaleSideTex{ 0.f, 0.625f }, haybaleTopTex{ 0.125f, 0.625f };
     _vec2 woodSideTex{ 0.f, 0.25f }, woodRingTex{ 0.125f, 0.25f };
     _vec2 darkWoodRingTex{ 0.75f, 0.125f }, darkWoodSideTex{ 0.875f, 0.125f };
+    _vec2 purPillarSideTex{ 0.375f, 0.875f }, purPillarTopTex{ 0.5f, 0.875f };
 
     switch (type)
     {
@@ -762,52 +782,52 @@ void Chunk::SetUVAxisBlock(StaticBlockType type, StaticBlockAxis axis, int faceD
         {
         case sAX:
             isSide = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true;
-            break;
+            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true; break;
         case sAY:
-            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true;
-            break;
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true; break;
         case sAZ:
             if (faceDir == Face_Front || faceDir == Face_Behind) isTop = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true;
-            break;
-        }
-        uvStart = isTop ? haybaleTopTex : haybaleSideTex;
-        break;
+            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true; break;
+        } uvStart = isTop ? haybaleTopTex : haybaleSideTex; break;
+
     case Wood:
         switch (axis)
         {
         case sAX:
             isSide = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true;
-            break;
+            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true; break;
         case sAY:
-            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true;
-            break;
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true; break;
         case sAZ:
             if (faceDir == Face_Front || faceDir == Face_Behind) isTop = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true;
-            break;
-        }
-        uvStart = isTop ? woodRingTex : woodSideTex;
-        break;
+            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true; break;
+        } uvStart = isTop ? woodRingTex : woodSideTex; break;
+
     case DarkWood:
         switch (axis)
         {
         case sAX:
             isSide = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true;
-            break;
+            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true; break;
         case sAY:
-            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true;
-            break;
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true; break;
         case sAZ:
             if (faceDir == Face_Front || faceDir == Face_Behind) isTop = true;
-            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true;
-            break;
-        }
-        uvStart = isTop ? darkWoodSideTex : darkWoodRingTex;
-        break;
+            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true; break;
+        } uvStart = isTop ? darkWoodSideTex : darkWoodRingTex; break;
+
+    case PurPillar:
+        switch (axis)
+        {
+        case sAX:
+            isSide = true;
+            if (faceDir == Face_Left || faceDir == Face_Right) isTop = true; break;
+        case sAY:
+            if (faceDir == Face_Top || faceDir == Face_Bottom) isTop = true; break;
+        case sAZ:
+            if (faceDir == Face_Front || faceDir == Face_Behind) isTop = true;
+            if (faceDir == Face_Left || faceDir == Face_Right) isSide = true; break;
+        } uvStart = isTop ? purPillarTopTex : purPillarSideTex; break;
     }
 
     if (!isTop && isSide)

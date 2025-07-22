@@ -100,8 +100,18 @@ HRESULT Lever::Ready_Object(ObjectManager* owner, ObjectType objType)
 
 void Lever::Update(_float dt)
 {
-    if (Activate && !Trigger)
-        Operate();
+    auto handleTransform = Parts["Handle"]->GetComponent<TransformComponent>();
+
+    float distance(100.f);
+    _vec3 leverPos = handleTransform->GetWorldPosition(), targetNlever{};
+    if (Target)
+    {
+        targetNlever = Target->GetComponent<TransformComponent>()->GetPosition() - leverPos;
+        distance = D3DXVec3Length(&targetNlever);
+    }
+
+    if (!Trigger && distance <= TriggerDistance) Activate = true;
+    if (Activate && !Trigger) Operate();
 
     Object::Update(dt);
 }

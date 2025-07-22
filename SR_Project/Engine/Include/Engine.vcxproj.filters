@@ -196,9 +196,6 @@
     <Filter Include="07. Object Component\UIComponent\07. CoolDownComponent">
       <UniqueIdentifier>{d8f90db7-fdfa-46e7-9678-1b261f621df3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Scene Component\PhysicsSystem">
-      <UniqueIdentifier>{6342d716-998f-4933-862a-73043b0598c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05. Scene Component\ChunkManager">
       <UniqueIdentifier>{5e8cf056-b98c-4cfd-bae1-12c301e666d4}</UniqueIdentifier>
     </Filter>
@@ -259,9 +256,6 @@
     <Filter Include="05. Scene Component\UIManager\TooltipManager">
       <UniqueIdentifier>{337039c7-41b6-4c6c-80e3-94378fe6e9c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\03. CollisionBlock">
-      <UniqueIdentifier>{19e1774f-52c3-4e4d-8d83-606dd19febe3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Engine Component\ResourceManager\Mesh\ArrowMesh">
       <UniqueIdentifier>{058a5e8d-4f54-4f56-b821-1f0c5ec1a1b7}</UniqueIdentifier>
     </Filter>
@@ -318,6 +312,24 @@
     </Filter>
     <Filter Include="06. Object\02. DynamicBlock\Bridge">
       <UniqueIdentifier>{2f87178e-b4b1-4dc2-b258-9f66e73005ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\ChunkMesh">
+      <UniqueIdentifier>{ea8ec471-fd4a-4910-b644-59edd8e5098a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Engine Component\ResourceManager\Mesh\MinimapMesh">
+      <UniqueIdentifier>{52db035c-d364-4c87-b0bd-64ae24e355cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\PhysicsSystem">
+      <UniqueIdentifier>{6342d716-998f-4933-862a-73043b0598c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\04. CollisionBlock">
+      <UniqueIdentifier>{19e1774f-52c3-4e4d-8d83-606dd19febe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\05. MinimapData">
+      <UniqueIdentifier>{f6064108-9005-4278-9bee-56aab6f4e2a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\MinimapManager">
+      <UniqueIdentifier>{a2331b57-416c-4f6b-82a9-1175054412b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -593,9 +605,6 @@
     <ClCompile Include="..\Code\QuestSystem.cpp">
       <Filter>05. Scene Component\UIManager\QuestSystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ChunkMesh.cpp">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\HoverButtonComponent.cpp">
       <Filter>07. Object Component\UIComponent\10. HoverButtonComponent</Filter>
     </ClCompile>
@@ -606,7 +615,7 @@
       <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CollisionBlock.cpp">
-      <Filter>06. Object\03. CollisionBlock</Filter>
+      <Filter>06. Object\04. CollisionBlock</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ArrowMesh.cpp">
       <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
@@ -646,6 +655,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\PrefabManager.cpp">
       <Filter>05. Scene Component\PrefabManager\PrefabManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ChunkMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MinimapData.cpp">
+      <Filter>06. Object\05. MinimapData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MinimapManager.cpp">
+      <Filter>05. Scene Component\MinimapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MinimapMesh.cpp">
+      <Filter>01. Engine Component\ResourceManager\Mesh\MinimapMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -947,9 +968,6 @@
     <ClInclude Include="..\Header\ObjectComponent.h">
       <Filter>07. Object Component</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ChunkMesh.h">
-      <Filter>01. Engine Component\ResourceManager\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\HoverButtonComponent.h">
       <Filter>07. Object Component\UIComponent\10. HoverButtonComponent</Filter>
     </ClInclude>
@@ -960,7 +978,7 @@
       <Filter>05. Scene Component\UIManager\TooltipManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CollisionBlock.h">
-      <Filter>06. Object\03. CollisionBlock</Filter>
+      <Filter>06. Object\04. CollisionBlock</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ArrowMesh.h">
       <Filter>01. Engine Component\ResourceManager\Mesh\ArrowMesh</Filter>
@@ -1000,6 +1018,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\PrefabManager.h">
       <Filter>05. Scene Component\PrefabManager\PrefabManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ChunkMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MinimapData.h">
+      <Filter>06. Object\05. MinimapData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MinimapManager.h">
+      <Filter>05. Scene Component\MinimapManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MinimapMesh.h">
+      <Filter>01. Engine Component\ResourceManager\Mesh\MinimapMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

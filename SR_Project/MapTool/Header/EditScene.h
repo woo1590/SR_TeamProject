@@ -40,8 +40,10 @@ private:
     void ImGui_SetBlockUsage();
     void ImGui_SetBlockInfo();
 
-    void ImGui_LinkLever();
+    void ImGui_LinkCage();
+    void ImGui_LinkBridge();
 #endif
+
     void CreateTerrain(const std::string& filename);
     void PlaceTerrainBlocks(const std::string& filename);
     void UpdateCreateTerrain();
