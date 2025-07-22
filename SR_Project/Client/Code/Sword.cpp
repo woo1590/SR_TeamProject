@@ -74,6 +74,8 @@ void Sword::Update(_float dt)
 {
     Item::Update(dt);
     
+    /////////////////////////////////////////////////////////////////////
+    
     auto player = static_cast<Player*>(ownerObject);
     if (!hitMonsters.empty() || player->GetPlayerState() == Player::ePlayerState::ATTACK)
     {
@@ -84,6 +86,8 @@ void Sword::Update(_float dt)
         if (attackTime > player->GetAttackDelay())
             hitMonsters.clear();
     }
+
+    /////////////////////////////////////////////////////////////////////
 
     if (targetMonsters.empty()) 
         return;
@@ -108,12 +112,15 @@ void Sword::Update(_float dt)
         return;
     if (targetMonsters.at(target)->IsDead())
         return;
-    float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
-    auto skillInfo = GetComponent<InfoComponent<SkillInfo>>()->GetInfo();
 
     auto pEnemyInfo = targetMonsters.at(target)->GetComponent<InfoComponent<EnemyInfo>>();
     if (!pEnemyInfo) 
         return;
+
+    ///////////////////////////////////////////////////////////////////
+
+    float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
+    auto skillInfo = GetComponent<InfoComponent<SkillInfo>>()->GetInfo();
 
     auto skillDamage = playerPower * skillInfo.DamagePercent;
 
