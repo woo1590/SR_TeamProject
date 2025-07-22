@@ -17,6 +17,6 @@ private:
     _float Scale = 0.f;
     _vec3 startPos = { 0.f,0.f,0.f };
     _vec3 moveDir = { 0.f,0.f,0.f };
-    _float moveSpeed = 8.f;
+    _float moveSpeed = 20.f;
 };
 

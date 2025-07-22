@@ -129,7 +129,7 @@ void Firework::SetCollisionEnter(Object* other)
     }
     EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomFirework");
 
-    for (int i = 0; i < 40; ++i)
+    for (int i = 0; i < 20; ++i)
     {
         auto fireworkEffect = FireworkEffect::Create(owner, ObjectType::ParticleEffect, this);
         owner->AddObject(ObjectType::ParticleEffect, fireworkEffect);

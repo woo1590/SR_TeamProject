@@ -29,7 +29,7 @@ FireworkEffect* FireworkEffect::Create(ObjectManager* owner, ObjectType objType,
 
 HRESULT FireworkEffect::Ready_Object()
 {
-	SetDeadTime(0.5f);
+	SetDeadTime(0.3f);
 
 	auto transform = AddComponent<TransformComponent>();
 	transform->SetPosition(startPos);
@@ -61,17 +61,19 @@ HRESULT FireworkEffect::Ready_Object()
 	hit.life = 0.5f;
 	hit.size = 10.f;
 
-	hit.velocityMin = { -6.f,-6.f,-6.f };
-	hit.velocityMax = { 6.f,6.f,6.f };
+	hit.velocityMin = { -1.f,-1.f,-1.f };
+	hit.velocityMax = { 1.f,1.f,1.f };
 	hit.spawnAreaMin = { -0.1f,-0.1f,-0.1f };
 	hit.spawnAreaMax = { 0.1f,0.1f,0.1f };
 
 	hit.color = _vec4(finalColor.x, finalColor.y, finalColor.z,1.f);
 	hit.colorFade = { 0.f,0.f,0.f,1.f };
 
-	particle->AddEmitter(hit, [](Particle& p, _float dt)
+	particle->AddEmitter(hit, [&](Particle& p, _float dt)
 		{
-			p.position += p.velocity * dt;
+			_vec3 moveVec;
+			D3DXVec3Normalize(&moveVec, &p.velocity);
+			p.position += moveVec * dt * moveSpeed;
 			p.color.w -= p.colorFade.w * dt * 1.5f;
 			if (p.color.w <= 0.f)
 				p.color.w = 0.f;
