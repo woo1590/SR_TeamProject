@@ -81,7 +81,7 @@ void Sword::Update(_float dt)
 
         if (player->GetPlayerState() != Player::ePlayerState::ATTACK)
             hitMonsters.clear();
-        if (attackTime >= player->GetAttackDelay())
+        if (attackTime > player->GetAttackDelay())
             hitMonsters.clear();
     }
 

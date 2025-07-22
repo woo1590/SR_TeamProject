@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Spear.h"
 #include "Scene.h"
 #include "PhysicsSystem.h"
@@ -69,7 +69,7 @@ void Spear::Update(_float dt)
 
         if (player->GetPlayerState() != Player::ePlayerState::ATTACK)
             hitMonsters.clear();
-        if (attackTime >= player->GetAttackDelay())
+        if (attackTime > player->GetAttackDelay())
             hitMonsters.clear();
     }
 }
