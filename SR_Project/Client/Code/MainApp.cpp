@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "MainApp.h"
 #include "CubeMesh.h"
 #include "QuadMesh.h"
@@ -283,6 +283,7 @@ HRESULT MainApp::LoadDefaultResource()
         resource->LoadShader("../Resource/Shader/LaserShader.fx", "LaserShader");
         resource->LoadShader("../Resource/Shader/FireBlock.fx", "FireBlockShader");
         resource->LoadShader("../Resource/Shader/DefaultPost.fx", "DefaultPost");
+        resource->LoadShader("../Resource/Shader/FireworkShader.fx", "FireworkShader");
     }
 
     /*---------------------Load Material--------------------------*/

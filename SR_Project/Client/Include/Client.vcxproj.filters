@@ -1704,5 +1704,8 @@
     <FxCompile Include="..\Resource\Shader\DefaultPost.fx">
       <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
     </FxCompile>
+    <FxCompile Include="..\Resource\Shader\FireworkShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

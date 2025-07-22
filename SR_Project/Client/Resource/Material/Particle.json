@@ -70,6 +70,10 @@
     "Roll_Mtrl":{
       "fx": "LaserShader",
       "textures": { "AlbedoMap": "../Resource/Asset/JW/Roll.png" }
+    },
+    "FireworkTikkle_Mtrl":{
+      "fx": "FireworkShader",
+      "textures": { "AlbedoMap": "../Resource/Asset/JW/FireworkTikkle.png" }
     }
   }
 }
