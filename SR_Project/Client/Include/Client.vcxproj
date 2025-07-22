@@ -242,6 +242,7 @@
     <ClInclude Include="..\Header\NPCdolbok.h" />
     <ClInclude Include="..\Header\NPCShop.h" />
     <ClInclude Include="..\Header\ParticleObj.h" />
+    <ClInclude Include="..\Header\Pig.h" />
     <ClInclude Include="..\Header\PigItem.h" />
     <ClInclude Include="..\Header\PlayerDeathUI.h" />
     <ClInclude Include="..\Header\PurpleBabySlime.h" />
@@ -418,6 +419,7 @@
     <ClCompile Include="..\Code\NPCdolbok.cpp" />
     <ClCompile Include="..\Code\NPCShop.cpp" />
     <ClCompile Include="..\Code\ParticleObj.cpp" />
+    <ClCompile Include="..\Code\Pig.cpp" />
     <ClCompile Include="..\Code\PigItem.cpp" />
     <ClCompile Include="..\Code\PlayerDeathUI.cpp" />
     <ClCompile Include="..\Code\PurpleBabySlime.cpp" />

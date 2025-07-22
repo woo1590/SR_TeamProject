@@ -318,6 +318,30 @@
       "textures": {
         "CubeMap": "../Resource/Asset/HY/ShulkerBullet.dds"
       }
+    },
+
+    "PigBody_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/PigBody.dds"
+      }
+    },
+
+    "PigNose_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/PigNose.dds"
+      }
+    },
+
+    "PigFoot_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/PigFoot.dds"
+      }
+    },
+
+    "PigFace_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/PigFace.dds"
+      }
     }
   }
 }
