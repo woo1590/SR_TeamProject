@@ -564,7 +564,7 @@
     </Filter>
     <Filter Include="02. Object\Monster\Shulker">
       <UniqueIdentifier>{ed4277bf-0ab7-4059-8fca-698c47866197}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame\MaskObj">
       <UniqueIdentifier>{036e52e1-bedb-4c6d-a055-08ea1c7485ca}</UniqueIdentifier>
     </Filter>
@@ -1101,7 +1101,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\Shulker.h">
       <Filter>02. Object\Monster\Shulker</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\MaskObj.h">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
     </ClInclude>
@@ -1623,7 +1623,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\Shulker.cpp">
       <Filter>02. Object\Monster\Shulker</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\MaskObj.cpp">
       <Filter>02. Object\UIObj\UIRenderState\MainGame\MaskObj</Filter>
     </ClCompile>
@@ -1697,6 +1697,9 @@
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\DefaultPost.fx">
       <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\FireworkShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

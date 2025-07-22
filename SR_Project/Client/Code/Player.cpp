@@ -1847,7 +1847,7 @@ void Player::UpdateShoot(_float dt) {
     if (prePhase <= phaseVec.at(0) && fProgress > phaseVec.at(0)) {
         auto input = EngineCore::GetInstance()->GetInputSystem();
         ItemType leftHandType = static_cast<Item*>(Bones["LHand"])->GetItemType();
-        if (input->IsKeyDown(RBUTTON) && leftHandType == ItemType::Bow)
+        if (input->IsKeyDown(RBUTTON) && leftHandType == ItemType::Bow && shootType == ePlayerShootType::ARROW)
         {
             if (onCharge == false)
             {

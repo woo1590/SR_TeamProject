@@ -165,7 +165,7 @@ void Village::Load()
 
 		if (game->IsSceneClear(LOADID::Village))
 		{
-			player->GetComponent<TransformComponent>()->SetPosition(160.f, 100.f, 200.f);
+			player->GetComponent<TransformComponent>()->SetPosition(160.f, 300.f, 200.f);
 		}
 		else
 		{
