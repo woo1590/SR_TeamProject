@@ -580,6 +580,9 @@
     <Filter Include="02. Object\Pet">
       <UniqueIdentifier>{d2bf3e82-03a3-46b9-a7b2-dc3c72ac5980}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\CameraActor\FixedCam">
+      <UniqueIdentifier>{e1a384f6-85fa-4f91-ad1f-e3eb75474996}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1126,6 +1129,9 @@
     <ClInclude Include="..\Header\Pig.h">
       <Filter>02. Object\Pet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\FixedCam.h">
+      <Filter>02. Object\CameraActor\FixedCam</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1653,6 +1659,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Pig.cpp">
       <Filter>02. Object\Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FixedCam.cpp">
+      <Filter>02. Object\CameraActor\FixedCam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
