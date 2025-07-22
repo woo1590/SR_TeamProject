@@ -59,7 +59,7 @@ HRESULT FireworkEffect::Ready_Object()
 	hit.followCam = false;
 
 	hit.life = 0.5f;
-	hit.size = 10.f;
+	hit.size = 3.f;
 
 	hit.velocityMin = { -1.f,-1.f,-1.f };
 	hit.velocityMax = { 1.f,1.f,1.f };

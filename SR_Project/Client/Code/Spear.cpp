@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Spear.h"
 #include "Scene.h"
 #include "PhysicsSystem.h"
@@ -69,7 +69,7 @@ void Spear::Update(_float dt)
 
         if (player->GetPlayerState() != Player::ePlayerState::ATTACK)
             hitMonsters.clear();
-        if (attackTime >= player->GetAttackDelay())
+        if (attackTime > player->GetAttackDelay())
             hitMonsters.clear();
     }
 }
@@ -123,7 +123,7 @@ void Spear::PlayerSpearInfo()
     SetRenderId(Engine::RENDER_ID::Render_Alpha);
 
     auto collision = AddComponent<CollisionComponent>();
-    collision->AddCollider<AABBCollider>();
+    collision->AddCollider<OBBCollider>();
     collision->SetLayer(LAYER_PLAYER);
     collision->SetMask(LAYER_ENEMY);
     collision->SetSize(_vec3(0.1f, 1.f, 6.f));
