@@ -62,6 +62,7 @@
 #include "Spear.h"
 #include "DeadEffect.h"
 #include "InventoryCam.h"
+#include "Pig.h"
 
 //component
 #include "TransformComponent.h"
@@ -161,6 +162,7 @@ void Stage1::Load()
 
 		SetTriggerBox();
 		
+		ObjectMgr->AddObject(ObjectType::Neutral, Pig::Create(ObjectMgr, ObjectType::Neutral));
 	}
 }
 
@@ -253,7 +255,6 @@ void Stage1::SetTriggerBox()
 	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	auto trigger5 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-
 
 	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	bossTrigger->GetComponent<TransformComponent>()->SetPosition(140.f, 70.f, 320.f);
