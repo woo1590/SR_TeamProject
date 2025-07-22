@@ -1,4 +1,4 @@
-#include "EnginePCH.h"
+﻿#include "EnginePCH.h"
 #include "StaticGrid.h"
 #include "Scene.h"
 #include "Object.h"
@@ -169,6 +169,8 @@ StaticBlockType StaticGrid::GetBlockType(_vec3 pos)
     int cy = WorldToCell(pos.y);
     int cz = WorldToCell(pos.z);
     int key = HashCell(cx, cy, cz);
+
+    if (Cells.find(key) == Cells.end()) return StaticBlockType::sBlockEnd;
 
     return static_cast<CollisionBlock*>(Cells[key]->GetOwner())->GetType();
 }
