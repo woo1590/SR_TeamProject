@@ -70,6 +70,36 @@
         },
         "PurPilar_Mtrl": {
             "textures": { "CubeMap": "../Resource/Texture/Block/PurPilar.dds" }
+        },
+
+        "MapTable_Down_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/MapTable_Down.dds" }
+        },
+        "MapTable_Middle_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/MapTable_Middle.dds" }
+        },
+        "MapTable_Up_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/MapTable_Up.dds" }
+        },
+
+        "Candle1_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/Candle1.dds" }
+        },
+        "Candle2_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/Candle2.dds" }
+        },
+        "Candle3_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/Candle3.dds" }
+        },
+        "Candle4_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/Candle4.dds" }
+        },
+        "Candle5_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/Candle5.dds" }
+        },
+
+        "Map_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/Map.dds" }
         }
     }
 }

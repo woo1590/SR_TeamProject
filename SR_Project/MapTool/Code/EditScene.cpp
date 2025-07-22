@@ -410,7 +410,7 @@ void EditScene::ImGui_SetBlockType()
 
 	if (staticBlockType == StaticBlockType::Air)
 	{
-		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE"};
+		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE", "MAP TABLE"};
 
 		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
 			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);

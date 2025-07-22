@@ -331,6 +331,9 @@
     <Filter Include="05. Scene Component\MinimapManager">
       <UniqueIdentifier>{a2331b57-416c-4f6b-82a9-1175054412b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Object\02. DynamicBlock\MapTable">
+      <UniqueIdentifier>{7299428f-2b0b-4514-86a5-0781f7b2a2e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -542,9 +545,6 @@
     <ClCompile Include="..\Code\Chest.cpp">
       <Filter>06. Object\02. DynamicBlock\Chest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DynamicBlock.cpp">
-      <Filter>06. Object\02. DynamicBlock</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\HoverComponent.cpp">
       <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
     </ClCompile>
@@ -667,6 +667,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MinimapMesh.cpp">
       <Filter>01. Engine Component\ResourceManager\Mesh\MinimapMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicBlock.cpp">
+      <Filter>06. Object\02. DynamicBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MapTable.cpp">
+      <Filter>06. Object\02. DynamicBlock\MapTable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -898,9 +904,6 @@
     <ClInclude Include="..\Header\Chest.h">
       <Filter>06. Object\02. DynamicBlock\Chest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\DynamicBlock.h">
-      <Filter>06. Object\02. DynamicBlock</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\HoverComponent.h">
       <Filter>07. Object Component\UIComponent\04. HoverComponent</Filter>
     </ClInclude>
@@ -1030,6 +1033,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\MinimapMesh.h">
       <Filter>01. Engine Component\ResourceManager\Mesh\MinimapMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DynamicBlock.h">
+      <Filter>06. Object\02. DynamicBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MapTable.h">
+      <Filter>06. Object\02. DynamicBlock\MapTable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

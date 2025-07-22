@@ -145,7 +145,7 @@ namespace Engine
 	enum DynamicBlockType
 	{
 		dBlockNone,
-		LeverSwitch, BasicChest, IronCages, Bridges,
+		LeverSwitch, BasicChest, IronCages, Bridges, MapSelect,
 		dBlockEnd
 	};
 
