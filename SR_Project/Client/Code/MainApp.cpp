@@ -59,7 +59,7 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
     EngineCore::GetInstance()->GetSoundManager()->PlayBGM("IntroBGM");
 
     /*---------Start Scene----------*/
-    Scene* Start = LoadingScene::Create(LOADID::Stage1);
+    Scene* Start = LoadingScene::Create(LOADID::Village);
     Core->GetSceneManager()->SetActiveScene(Start);
 
     isRunning = true;
