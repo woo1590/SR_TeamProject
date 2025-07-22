@@ -203,17 +203,14 @@ void Stage1::Update(_float dt)
 	{
 		auto Input = EngineCore::GetInstance()->GetInputSystem();
 
-		if (Input->IsKeyPressed(NUM1))
+		if (Input->IsKeyPressed(F))
 			CameraMgr->SetMainCamera(L"First_Camera");
 
-		if (Input->IsKeyPressed(NUM2))
+		if (Input->IsKeyPressed(T))
 			CameraMgr->SetMainCamera(L"Third_Camera");
 
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);
-
-		if (Input->IsKeyPressed(NUM0))
-			ChangeState(Stage1State::Stage1Intro);
 
 
 		if (Input->IsKeyPressed(NUM4))
@@ -296,9 +293,7 @@ void Stage1::WayPointEdit()
 		return;
 	}
 
-
-	_float duration = wayCam->GetDuration();
-	ImGui::DragFloat("Total Duration", &duration, 0.1f, 1.f, 300.f);
+	ImGui::DragFloat("Total Duration", wayCam->GetDuration(), 0.1f, 1.f, 300.f);
 	ImGui::Separator();
 
 
@@ -315,8 +310,18 @@ void Stage1::WayPointEdit()
 		wayCam->Clear();
 	}
 	ImGui::Separator();
-
-
+	if (ImGui::Button("Start"))
+	{
+		wayCam->Start();
+		CameraMgr->SetMainCamera(L"Way_Camera");
+	}
+	ImGui::Separator();
+	if (ImGui::Button("Stop"))
+	{
+		wayCam->Stop();
+		CameraMgr->SetMainCamera(L"First_Camera");
+	}
+	ImGui::Separator();
 
 	auto& waypoints = wayCam->GetWaypoints();
 	for (int i = 0; i < waypoints.size(); ++i)
@@ -344,10 +349,12 @@ void Stage1::WayPointEdit()
 
 	if (ImGui::Button("Save to File"))
 	{
+		wayCam->SaveWaypoints("../Resource/Data/Stage1Waypoint.dat");
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Load from File"))
 	{
+		wayCam->LoadWaypoints("../Resource/Data/Stage1Waypoint.dat");
 	}
 
 	ImGui::End();
@@ -384,36 +391,13 @@ void Stage1::ChangeState(Stage1State state)
 	{
 		currState = Stage1State::Stage1Intro;
 
-		stage1IntroDuration = 20.f;
+		stage1IntroDuration = 25.f;
 		stage1IntroTimer = 0.f;
 		CameraMgr->SetMainCamera(L"Way_Camera");
 		auto cam = static_cast<WayPointCam*>(CameraMgr->GetMainCamera()->GetOwner());
 
-		cam->Clear();
 		cam->SetDuration(stage1IntroDuration);
-		cam->AddWaypoint({ _vec3(105.f,71.f,176.f),_vec3(-0.5f,-0.1f,-0.8f) });
-		cam->AddWaypoint({ _vec3(23.f,102.f,103.f),_vec3(0.9f,-0.4f,-0.04f) });
-		cam->AddWaypoint({ _vec3(140.f,75.f,93.f),_vec3(1.f,0.f,0.f) });
-		cam->AddWaypoint({ _vec3(254.f,75.f,93.f),_vec3(1.f,0.f,0.f) });
-
-		cam->AddWaypoint({ _vec3(335.f,107.f,138.f),_vec3(-0.3f,-0.3f,0.8f) });
-		cam->AddWaypoint({ _vec3(400.f,155.f,274.f),_vec3(-0.7f,-0.6f,0.3f) });
-		cam->AddWaypoint({ _vec3(251.f,167.f,404.f),_vec3(-0.6f,-0.6f,-0.5f) });
-		cam->AddWaypoint({ _vec3(133.f,154.f,351.f),_vec3(-0.6f,-0.7f,-0.3f) });
-		
-		//15
-
-		//cam->AddWaypoint({ _vec3(390.f,135.f,125.f),_vec3(-0.5f,-0.5f,0.7f) });
-		//cam->AddWaypoint({ _vec3(421.f,135.f,180.f),_vec3(-0.8f,-0.4f,0.3f) });
-		//cam->AddWaypoint({ _vec3(427.f,135.f,232.f),_vec3(-0.8f,-0.4f,0.2f) });
-		//cam->AddWaypoint({ _vec3(417.f,140.f,314.f),_vec3(-0.8f,-0.5f,-0.4f) });
-		//cam->AddWaypoint({ _vec3(363.f,135.f,382.f),_vec3(-0.7f,-0.4f,-0.5f) });//20
-
-		//cam->AddWaypoint({ _vec3(300.f,163.f,386.f),_vec3(-0.4f,-0.7f,-0.5f) });
-		//cam->AddWaypoint({ _vec3(232.f,156.f,433.f),_vec3(-0.4f,-0.6f,-0.6f) });
-		//cam->AddWaypoint({ _vec3(161.f,166.f,456.f),_vec3(0.f,-0.7f,-0.7f) });
-		//cam->AddWaypoint({ _vec3(107.f,168.f,444.f),_vec3(0.1f,-0.7f,-0.7f) });
-
+		cam->LoadWaypoints("../Resource/Data/Stage1Waypoint.dat");
 		cam->Start();
 	}break;
 	case Stage1::Stage1State::BossIntro:	

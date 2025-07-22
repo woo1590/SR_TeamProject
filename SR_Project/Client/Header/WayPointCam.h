@@ -17,13 +17,17 @@ public:
     void AddWaypoint(WayPoint point) { waypoints.push_back(point); }
     void SetDuration(_float duration) { this->duration = duration; }
     void Start();
+    void Stop();
     _bool IsEnd()const { return isEnd; }
     void Clear() { waypoints.clear(); start = false; }
 
-    _float GetDuration()const { return duration; }
+    _float* GetDuration() { return &duration; }
     std::vector<WayPoint>& GetWaypoints() { return waypoints; }
     void SetWaypoints(std::vector<WayPoint>& points) { waypoints = points; }
     void RemoveWaypoint(int idx);
+
+    void SaveWaypoints(const std::string& filePath);
+    void LoadWaypoints(const std::string& filePath);
 private:
     _vec3 CatmullRom(_vec3 p0, _vec3 p1, _vec3 p2, _vec3 p3, _float t);
     void Free()override;

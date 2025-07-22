@@ -16,6 +16,7 @@ struct WayPoint
 	_vec3 position;
 	_vec3 lookDir;
 
+	WayPoint() = default;
 	WayPoint(_vec3 pos, _vec3 dir)
 	{
 		position = pos;

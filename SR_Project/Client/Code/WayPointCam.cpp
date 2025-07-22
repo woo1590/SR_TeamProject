@@ -78,9 +78,55 @@ void WayPointCam::Start()
 	timer = 0.f;
 }
 
+void WayPointCam::Stop()
+{
+	start = false;
+}
+
 void WayPointCam::RemoveWaypoint(int idx)
 {
 	waypoints.erase(waypoints.begin() + idx);
+}
+
+void WayPointCam::SaveWaypoints(const std::string& filePath)
+{
+	std::ofstream outFile(filePath, std::ios::out | std::ios::binary);
+
+	if (!outFile.is_open()) {
+
+		return;
+	}
+
+	size_t numWaypoints = waypoints.size();
+	outFile.write(reinterpret_cast<const char*>(&numWaypoints), sizeof(size_t));
+
+	outFile.write(reinterpret_cast<const char*>(waypoints.data()), numWaypoints * sizeof(WayPoint));
+
+	outFile.close();
+}
+
+void WayPointCam::LoadWaypoints(const std::string& filePath)
+{
+	std::ifstream inFile(filePath, std::ios::in | std::ios::binary);
+
+	if (!inFile.is_open()) {
+		return;
+	}
+
+	size_t numWaypoints = 0;
+	inFile.read(reinterpret_cast<char*>(&numWaypoints), sizeof(size_t));
+
+	if (numWaypoints == 0) {
+		waypoints.clear();
+		inFile.close();
+		return;
+	}
+
+	waypoints.resize(numWaypoints);
+
+	inFile.read(reinterpret_cast<char*>(waypoints.data()), numWaypoints * sizeof(WayPoint));
+
+	inFile.close();
 }
 
 _vec3 WayPointCam::CatmullRom(_vec3 p0, _vec3 p1, _vec3 p2, _vec3 p3, _float t)
