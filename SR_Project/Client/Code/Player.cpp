@@ -1533,17 +1533,20 @@ void Player::UpdateWalk(_float dt) {
 
     //Rotate Bones
     float fAngle = sinf(WalkTime * WalkSwingSpeed);
-    SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
-    SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
     if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() == ItemType::Spear)
     {
         IdleSmoothing(dt, ePlayerBone::LARM);
         IdleSmoothing(dt, ePlayerBone::RARM);
+        fAngle = std::fabsf(fAngle) * 0.6;
+        SetRotation({ D3DXToRadian(-10.f), 0.f, -fAngle }, "LLeg");
+        SetRotation({ D3DXToRadian(10.f), 0.f, fAngle }, "RLeg");
     }
     else
     {
         SetRotation({ -fAngle, 0.f, 0.f }, "LArm");
         SetRotation({ fAngle, 0.f, 0.f }, "RArm");
+        SetRotation({ fAngle, 0.f, 0.f }, "LLeg");
+        SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
     }
 
     //Move Player
