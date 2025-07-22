@@ -33,6 +33,8 @@ public:
     void SetCount(int count) { Count = count; }
 
     /*-----------Only Client----------*/
+    void SetTriggerDistance(float distance) { TriggerDistance = distance; }
+    void SetTarget(Object* target) { Target = target; }
 
 protected:
     void Free() override;
@@ -51,5 +53,8 @@ protected:
     int ID = -1;
     vector<int> LinkedID;
     vector<Object*> LinkedObject;
+
+    float TriggerDistance = 10.f;
+    Object* Target = nullptr;
 };
 END

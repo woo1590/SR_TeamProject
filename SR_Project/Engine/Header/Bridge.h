@@ -21,8 +21,11 @@ private:
     void SetPosition(_vec3 position, string str);
     void SetRotation(_vec3 rotation, string str);
 
+    void ApplyRotationToBridgeParts(float angleDegree);
+    void CreateCollisionBlocks();
+
 public:
-    void Operate();
+    void Operate(_float dt);
 
 private:
     void Free() override;
@@ -32,6 +35,6 @@ private:
 
     float Angle = 0.f;
     float totAngle = 0.f;
-    float rotSpeed = 5.f;
+    float rotSpeed = 25.f;
 };
 END

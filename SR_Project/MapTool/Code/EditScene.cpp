@@ -13,6 +13,7 @@
 #include "BlockManager.h"
 #include "ChunkManager.h"
 #include "PrefabManager.h"
+#include "MinimapManager.h"
 
 //object
 #include "Camera.h"
@@ -62,6 +63,7 @@ void EditScene::Load()
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
 	PrefabMgr = PrefabManager::Create(this);
+	MinimapMgr = MinimapManager::Create(this);
 	
 	BlockMgr->LoadTexture();								// 이미지 불러오기
 	PrefabMgr->LoadAllPrefabs("../Resource/Prefab/");		// 프리펩 불러오기
@@ -149,15 +151,6 @@ void EditScene::Update(float dt)
 			}
 		}
 	}
-
-	if (Input->IsKeyPressed(Q))
-	{
-		for (auto& Dst : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
-		{
-			if (static_cast<DynamicBlock*>(Dst)->GetType() == LeverSwitch)
-				static_cast<DynamicBlock*>(Dst)->SetActivate();
-		}
-	}
 }
 
 void EditScene::Late_Update(float dt)
@@ -184,7 +177,11 @@ void EditScene::ImGui_Main()
 	ImGui::End();
 
 	ImGui::Begin("==== Link IronCage & Lever ====");
-	ImGui_LinkLever();
+	ImGui_LinkCage();
+	ImGui::End();
+
+	ImGui::Begin("==== Link Bridge & Lever ====");
+	ImGui_LinkBridge();
 	ImGui::End();
 }
 
@@ -202,6 +199,8 @@ void EditScene::ImGui_Info()
 
 void EditScene::ImGui_Terrain()
 {
+	ImGui::SeparatorText("TERRAIN");
+
 	if (ImGui::Button("CLEAR TERRAIN"))
 	{
 		Terrain->Free();
@@ -238,7 +237,7 @@ void EditScene::ImGui_Terrain()
 	ImGui::SetNextItemWidth(100); ImGui::InputInt(" : Height /", &Height); ImGui::SameLine();
 	ImGui::SetNextItemWidth(100); ImGui::InputFloat(" : Scale", &Scale, 0.005f, 0.05f, "%.3f");
 
-	if (ImGui::Button("CREATE HEIGHTMAP")) CreateTerrain("heightMap2");
+	if (ImGui::Button("CREATE HEIGHTMAP")) CreateTerrain("heightMap4");
 	ImGui::SameLine();
 	if (ImGui::Button("CREATE TERRAIN"))
 	{
@@ -254,12 +253,14 @@ void EditScene::ImGui_Terrain()
 		ObjectMgr->ClearList(ObjectType::AlphaBlock);
 		ObjectMgr->ClearList(ObjectType::DynamicBlock);
 
-		PlaceTerrainBlocks("heightMap2");
+		PlaceTerrainBlocks("heightMap4");
 	}
 }
 
 void EditScene::ImGui_SaveLoad()
 {
+	ImGui::SeparatorText("SAVE && LOAD");
+
 	// 청크 저장하기
 	static char save[16]{}; ImGui::SetNextItemWidth(150);
 	ImGui::InputText(" : SAVE", save, sizeof(save)); ImGui::SameLine();
@@ -285,6 +286,14 @@ void EditScene::ImGui_SaveLoad()
 
 		BlockMgr->LoadDB(load);
 		BlockMgr->LoadChunk(load, TRUE);
+		MinimapMgr->GenerateFromChunks(ChunkMgr);
+
+		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			auto lever = static_cast<DynamicBlock*>(dynamic);
+			if (lever->GetType() != DynamicBlockType::LeverSwitch && lever->GetType() != DynamicBlockType::BasicChest) continue;
+			lever->SetTarget(ObjectMgr->GetFrontObject(ObjectType::Camera));
+		}
 
 		for (auto& chunk : ChunkMgr->GetChunks())
 		{
@@ -385,7 +394,8 @@ void EditScene::ImGui_SetBlockType()
 			"WHITE WOOL", "YELLOW WOOL", "TERRACOTA",
 			"DARK DIRT", "DARK WOOD", "BOOKSHELF", "DARK GRASS", "DARK STONE", "DARK LEAF",
 			"DARK COBBLE STONE", "DARK SMOOTH STONE", "DARK STONE BRICK", "DARK MOSSY STONE BRICK",
-			"DARK OAK"
+			"DARK OAK", "END STONE", "END STONE BRICK", "PUR BRICK", "PUR PILLAR", "PUR GLASS", "END ROD",
+			"CHORUS BRANCH", "CHORUS FLOWER", "CHORUS FRUIT"
 		};
 
 		// 선택할 때마다, 다른 값들 초기화
@@ -400,7 +410,7 @@ void EditScene::ImGui_SetBlockType()
 
 	if (staticBlockType == StaticBlockType::Air)
 	{
-		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE" };
+		const char* dynamicBlockNames[] = { "NONE", "LEVER", "CHEST", "IRON CAGE", "BRIDGE"};
 
 		if (ImGui::Combo(" : Dynamic Type", &selectedDBlockType, dynamicBlockNames, IM_ARRAYSIZE(dynamicBlockNames)))
 			dynamicBlockType = static_cast<DynamicBlockType>(selectedDBlockType);
@@ -420,29 +430,32 @@ void EditScene::ImGui_SetBlockUsage()
 	case Dirt: case GrassDirt: case DirtPath: case Wood: case Oak:
 	case StoneBrick: case MossyStoneBrick: case Furnace: case BookShelf:
 	case WhiteWool: case YellowWool: case Terracota: case DarkDirt: case DarkGrass:
-	case DarkStoneBrick: case DarkMossyStoneBrick: case DarkOak:
-		staticBlockUsage = Basic;
-		return;
+	case DarkStoneBrick: case DarkMossyStoneBrick: case DarkOak: case EndStone: case EndStoneBrick: case PurPillar:
+	case EndRod: case ChorusFlower: case ChorusFruit:
+		staticBlockUsage = Basic; return;
+
+	case ChorusBranch:
+		staticBlockUsage = Stair; return;
+
 	case WoodPlank: 
 		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE", "DOOR", "MINIDOOR" };
-		usageEnums = { Basic, Half, Stair, Fence, Door, MiniDoor };
-		break;
+		usageEnums = { Basic, Half, Stair, Fence, Door, MiniDoor }; break;
+
 	case DarkWoodPlank:
 		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE" };
-		usageEnums = { Basic, Half, Stair, Fence };
-		break;
+		usageEnums = { Basic, Half, Stair, Fence }; break;
+
 	case Stone: case CobbleStone:
 	case DarkStone: case DarkCobbleStone:
 		usageOptions = { "BASIC", "HALF", "STAIR", "FENCE"};
-		usageEnums = { Basic, Half, Stair, Fence };
-		break;
-	case SmoothStone: case DarkSmoothStone:
+		usageEnums = { Basic, Half, Stair, Fence }; break;
+
+	case SmoothStone: case DarkSmoothStone: case PurBrick:
 		usageOptions = { "BASIC", "HALF", "STAIR" };
-		usageEnums = { Basic, Half, Stair };
-		break;
-	case Glass: case Leaf: case DarkLeaf:
-		staticBlockUsage = Alpha;
-		return;
+		usageEnums = { Basic, Half, Stair }; break;
+
+	case Glass: case Leaf: case DarkLeaf: case PurGlass:
+		staticBlockUsage = Alpha; return;
 	}
 
 	if (!usageOptions.empty())
@@ -501,7 +514,7 @@ void EditScene::ImGui_SetBlockInfo()
 	}
 }
 
-void EditScene::ImGui_LinkLever()
+void EditScene::ImGui_LinkCage()
 {
 	static int selectedCageIndex = -1;
 	static int selectedLeverIndex = -1;
@@ -618,6 +631,122 @@ void EditScene::ImGui_LinkLever()
 		}
 	}
 }
+
+void EditScene::ImGui_LinkBridge()
+{
+	static int selectedBridgeIndex = -1;
+	static int bridgeLeverComboIdx = 0;
+
+	ImGui::Text("BRIDGE : ");
+	for (int i = 0; i < dynamicBlocks.size(); ++i)
+	{
+		if (dynamicBlocks[i].Type == DynamicBlockType::Bridges)
+		{
+			char buf[64];
+			snprintf(buf, sizeof(buf), "BRIDGE %d : ( POSITION : %.1f, %.1f, %.1f )",
+				i, dynamicBlocks[i].Pos.x, dynamicBlocks[i].Pos.y, dynamicBlocks[i].Pos.z);
+
+			if (ImGui::Selectable(buf, selectedBridgeIndex == i))
+				selectedBridgeIndex = i;
+		}
+	}
+
+	if (selectedBridgeIndex != -1)
+	{
+		Object* bridgeObj = nullptr;
+		_vec3 bridgePos = dynamicBlocks[selectedBridgeIndex].Pos;
+
+		for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			if (obj->GetComponent<TransformComponent>()->GetPosition() == bridgePos)
+			{
+				bridgeObj = obj;
+				break;
+			}
+		}
+
+		if (bridgeObj)
+		{
+			auto* bridge = static_cast<DynamicBlock*>(bridgeObj);
+			const auto& ids = bridge->GetIDVec();
+
+			ImGui::Separator();
+			ImGui::Text("LINKED LEVER ID : ");
+			if (!ids.empty())
+			{
+				for (int id : ids)
+					ImGui::BulletText("LEVER ID : %d", id);
+			}
+			else
+			{
+				ImGui::TextColored(ImVec4(1, 0.5f, 0.5f, 1), "NONE LINKED");
+			}
+		}
+	}
+
+	ImGui::Separator();
+	ImGui::Text("LEVER : ");
+	std::vector<int> leverIDs;
+	std::vector<std::string> leverLabels;
+
+	for (int i = 0; i < dynamicBlocks.size(); ++i)
+	{
+		if (dynamicBlocks[i].Type == DynamicBlockType::LeverSwitch)
+		{
+			Object* leverObj = nullptr;
+			for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+			{
+				if (obj->GetComponent<TransformComponent>()->GetPosition() == dynamicBlocks[i].Pos)
+				{
+					leverObj = obj;
+					break;
+				}
+			}
+
+			if (leverObj)
+			{
+				int leverID = static_cast<DynamicBlock*>(leverObj)->GetID();
+				leverIDs.push_back(leverID);
+				leverLabels.push_back("LEVER ID " + std::to_string(leverID));
+			}
+		}
+	}
+
+	if (!leverLabels.empty())
+	{
+		ImGui::Combo("SELECT LEVER ID", &bridgeLeverComboIdx, [](void* data, int idx, const char** out_text)
+			{
+				auto& labels = *static_cast<std::vector<std::string>*>(data);
+				*out_text = labels[idx].c_str();
+				return true;
+			}, &leverLabels, leverLabels.size());
+	}
+
+	if (ImGui::Button("LINK LEVER TO BRIDGE") && selectedBridgeIndex != -1 && !leverIDs.empty())
+	{
+		int leverID = leverIDs[bridgeLeverComboIdx];
+		Object* bridgeObj = nullptr;
+
+		for (auto& obj : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			if (obj->GetComponent<TransformComponent>()->GetPosition() == dynamicBlocks[selectedBridgeIndex].Pos)
+			{
+				bridgeObj = obj;
+				break;
+			}
+		}
+
+		if (bridgeObj)
+		{
+			DynamicBlock* bridge = static_cast<DynamicBlock*>(bridgeObj);
+			auto idVec = bridge->GetIDVec();
+
+			if (std::find(idVec.begin(), idVec.end(), leverID) == idVec.end())
+				bridge->AddID(leverID);
+		}
+	}
+}
+
 #endif
 
 void EditScene::CreateTerrain(const std::string& filename)

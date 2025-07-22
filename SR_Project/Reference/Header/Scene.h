@@ -9,6 +9,7 @@ class CameraManager;
 class StaticGrid;
 class BlockManager;
 class ChunkManager;
+class MinimapManager;
 class Object;
 
 class ENGINE_DLL Scene : public Base
@@ -47,6 +48,7 @@ public:
     BlockManager*       GetBlockManager()const;
     ChunkManager*       GetChunkManager()const;
     UIManager*          GetUIManager()const;
+    MinimapManager*     GetMinimapManager()const;
     
 public:
     vector<SB>& GetStaticBlocks() { return staticBlocks; }
@@ -68,6 +70,7 @@ protected:
     BlockManager* BlockMgr = nullptr;
     ChunkManager* ChunkMgr = nullptr;
     UIManager* uiMgr = nullptr;
+    MinimapManager* MinimapMgr = nullptr;
 };
 
 END

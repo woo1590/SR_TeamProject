@@ -97,6 +97,27 @@ void BlockManager::SaveDB(const char* saveStage)
 			}
 			break;
 		}
+		case DynamicBlockType::Bridges:
+		{
+			for (auto& obj : owner->GetObjectManager()->GetObjectList(ObjectType::DynamicBlock))
+			{
+				if (obj->GetComponent<TransformComponent>()->GetPosition() == block.Pos)
+				{
+					auto dyn = static_cast<DynamicBlock*>(obj);
+
+					int count = dyn->GetCount();  // 사용 안하더라도 IronCage와 형식 맞추려면 넣어도 됨
+					WriteFile(hFile, &count, sizeof(int), &dwByte, nullptr);
+
+					auto ids = dyn->GetIDVec();
+					int size = static_cast<int>(ids.size());
+					WriteFile(hFile, &size, sizeof(int), &dwByte, nullptr);
+					if (size > 0)
+						WriteFile(hFile, ids.data(), sizeof(int) * size, &dwByte, nullptr);
+					break;
+				}
+			}
+			break;
+		}
 		}
 	}
 
@@ -134,6 +155,24 @@ void BlockManager::LoadDB(const char* loadStage)
 		Object* dBlock = nullptr;
 
 		if (newDBlock.Type == DynamicBlockType::IronCages)
+		{
+			int count = 0;
+			if (!ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr)) return;
+
+			dBlock = DynamicBlock::Create(owner->GetObjectManager(), ObjectType::DynamicBlock, newDBlock.Type, newDBlock.Col, newDBlock.Rot, count);
+			dBlock->GetComponent<TransformComponent>()->SetPosition(newDBlock.Pos);
+
+			int vecSize = 0;
+			if (!ReadFile(hFile, &vecSize, sizeof(int), &dwByte, nullptr)) return;
+			if (vecSize > 0)
+			{
+				std::vector<int> ids(vecSize);
+				if (!ReadFile(hFile, ids.data(), sizeof(int) * vecSize, &dwByte, nullptr)) return;
+				for (int id : ids)
+					static_cast<DynamicBlock*>(dBlock)->AddID(id);
+			}
+		}
+		else if (newDBlock.Type == DynamicBlockType::Bridges)
 		{
 			int count = 0;
 			if (!ReadFile(hFile, &count, sizeof(int), &dwByte, nullptr)) return;

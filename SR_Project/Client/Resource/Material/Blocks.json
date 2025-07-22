@@ -35,6 +35,9 @@
         "DarkLeaf_Mtrl": {
             "textures": { "CubeMap": "../Resource/Texture/Block/DarkLeaf.dds" }
         },
+        "PurGlass_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/PurGlass.dds" }
+        },
 
         "ChestBottom_Mtrl": {
             "textures": { "CubeMap": "../Resource/Texture/Block/ChestBottom.dds" }
@@ -60,14 +63,17 @@
             "textures": { "CubeMap": "../Resource/Texture/Block/IronCage.dds" }
         },
 
-        "WoodPlank_Half_Mtrl": {
-            "textures": { "CubeMap": "../Resource/Texture/Block/WoodPlank_Half.dds" }
+        "EndStoneBrick_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/EndStoneBrick.dds" }
         },
-        "Stone_Half_Mtrl": {
-            "textures": { "CubeMap": "../Resource/Texture/Block/Stone_Half.dds" }
+        "PurBrick_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/PurBrick.dds" }
         },
-        "SmoothStone_Half_Mtrl": {
-            "textures": { "CubeMap": "../Resource/Texture/Block/SmoothStone_Half.dds" }
+        "PurBrick_Half_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/PurBrick_Half.dds" }
+        },
+        "PurPilar_Mtrl": {
+            "textures": { "CubeMap": "../Resource/Texture/Block/PurPilar.dds" }
         }
     }
 }

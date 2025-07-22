@@ -13,8 +13,6 @@
 #include "IronCage.h"
 #include "Bridge.h"
 
-USING(Engine)
-
 DynamicBlock::DynamicBlock(ObjectManager* owner, ObjectType objType, DynamicBlockType type, DynamicBlockCol col, DynamicBlockRot rot, int Count)
     : Object(owner, objType), Type(type), Col(col), Rot(rot), Count(Count)
 {
@@ -40,6 +38,9 @@ Object* DynamicBlock::Create(ObjectManager* owner, ObjectType objType, DynamicBl
     case DynamicBlockType::IronCages:
         if (col == DynamicBlockCol::dYP)
             Instance = IronCage::Create(owner, ObjectType::DynamicBlock, type, col, rot, Count);
+        break;
+    case DynamicBlockType::Bridges:
+        Instance = Bridge::Create(owner, ObjectType::DynamicBlock, type, col, rot);
         break;
     default:
         MessageBoxW(nullptr, L"Invalid DynamicBlockType", L"Error", MB_OK);

@@ -101,7 +101,7 @@ void EngineCore::Tick(float dt)
 
 	LightSys->ApplyLight();
 
-	RenderSys->Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
+	RenderSys->Render_Begin(D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 	RenderSys->Render();
 
 #ifdef USE_IMGUI

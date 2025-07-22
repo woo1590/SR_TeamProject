@@ -106,12 +106,12 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
                 block.Rot = StaticBlockRot::sREnd;
                 block.Usage = StaticBlockUsage::Basic;
 
-                if (y <= 4) block.Type = Air;
-                else
-                {
-                    isExist = true;
-                    block.Type = GetBlockTypeByHeight(y, terY);
-                }
+               //if (y <= 4) block.Type = Air;
+               //else
+               //{
+               //    isExist = true;
+                   block.Type = GetBlockTypeByHeight(y, terY);
+               //}
 
                 topY = y;
 
@@ -120,26 +120,27 @@ void TerrainCreater::CreateBlockTerrain(int terX, int terZ, int terY)
                 chunkBlocks[{chunkX, chunkZ}].push_back(block);
             }
 
-            if (topY != -1 && isExist)
-            {
-                int chunkX = x / (CHUNK_SIZE / BLOCK_SIZE);
-                int chunkZ = z / (CHUNK_SIZE / BLOCK_SIZE);
-
-                auto& vec = chunkBlocks[{chunkX, chunkZ}];
-                vec.back().Type = StaticBlockType::DarkGrass;
-            }
+            //if (topY != -1)// && isExist)
+            //{
+            //    int chunkX = x / (CHUNK_SIZE / BLOCK_SIZE);
+            //    int chunkZ = z / (CHUNK_SIZE / BLOCK_SIZE);
+            //
+            //    auto& vec = chunkBlocks[{chunkX, chunkZ}];
+            //    vec.back().Type = StaticBlockType::DarkGrass;
+            //}
         }
     }
 }
 
 StaticBlockType TerrainCreater::GetBlockTypeByHeight(int y, int maxHeight)
 {
-    if (y <= 1) return DarkDirt;
-    else if (y < maxHeight * 0.3f) return DarkDirt;
-    else if (y < maxHeight * 0.55f) return DarkStone;
-    else if (y < maxHeight * 0.75f) return DarkDirt;
-    else if (y < maxHeight * 0.85f) return DarkStone;
-    else return DarkDirt;
+    // if (y <= 1) return DarkDirt;
+    // else if (y < maxHeight * 0.3f) return DarkDirt;
+    // else if (y < maxHeight * 0.55f) return DarkStone;
+    // else if (y < maxHeight * 0.75f) return DarkDirt;
+    // else if (y < maxHeight * 0.85f) return DarkStone;
+    // else return DarkDirt;
+    return EndStone;
 }
 
 const std::vector<SB>& TerrainCreater::GetBlocksInChunk(int chunkX, int chunkZ) const
