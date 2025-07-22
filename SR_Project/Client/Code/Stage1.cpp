@@ -61,6 +61,7 @@
 #include "Ender.h"
 #include "Spear.h"
 #include "DeadEffect.h"
+#include "WayPointCam.h"
 #include "InventoryCam.h"
 #include "Pig.h"
 
@@ -93,6 +94,7 @@ void Stage1::Load()
 	auto game = GameManager::GetInstance();
 #ifdef USE_IMGUI
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Waypoint", [this]() {this->WayPointEdit();});
 #endif
 
 	/*-------------------------Create System-----------------------------*/
@@ -127,10 +129,12 @@ void Stage1::Load()
 
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
+		auto wCam = WayPointCam::Create(ObjectMgr);
 		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 
 		CameraMgr->AddCamera(L"First_Camera", fCam);
 		CameraMgr->AddCamera(L"Third_Camera", tCam);
+		CameraMgr->AddCamera(L"Way_Camera", wCam);
 		CameraMgr->AddCamera(L"Inventory_Camera", inventoryCam);
 		tCam->SetTarget(player);
 
@@ -138,7 +142,11 @@ void Stage1::Load()
 
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
+		ObjectMgr->AddObject(ObjectType::Camera, wCam);
 		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
+
+		wayCam = wCam;
+		wCam->AddRef();
 	}
 
 	/*----------------Load Chunk----------------*/
@@ -156,7 +164,6 @@ void Stage1::Load()
 		loader.LoadUI(ObjectMgr);
 
 		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
-		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
 
@@ -164,6 +171,7 @@ void Stage1::Load()
 		
 		ObjectMgr->AddObject(ObjectType::Neutral, Pig::Create(ObjectMgr, ObjectType::Neutral));
 	}
+	ChangeState(Stage1State::Stage1Intro);
 }
 
 void Stage1::Update(_float dt)
@@ -173,26 +181,46 @@ void Stage1::Update(_float dt)
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
 
-	auto Input = EngineCore::GetInstance()->GetInputSystem();
-
-	if (Input->IsKeyPressed(NUM1))
-		CameraMgr->SetMainCamera(L"First_Camera");
-
-	if (Input->IsKeyPressed(NUM2))
-		CameraMgr->SetMainCamera(L"Third_Camera");
-
-	if (Input->IsKeyPressed(NUM9))
-		EngineCore::GetInstance()->SetDebugMode(false);
-
-	if (Input->IsKeyPressed(NUM0))
-		EngineCore::GetInstance()->SetDebugMode(true);
-
-
-	if (Input->IsKeyPressed(NUM4))
+	switch (currState)
 	{
-		auto command = ChangeScene::Create(LOADID::Village);
-		EngineCore::GetInstance()->RegisterCommand(command);
-		GameManager::GetInstance()->ClearScene(LOADID::Stage1);
+	case Stage1::Stage1State::Stage1Intro:
+	{
+		if (stage1IntroTimer >= stage1IntroDuration)
+			ChangeState(Stage1State::Play);
+
+		stage1IntroTimer += dt;
+	}break;
+	case Stage1::Stage1State::BossIntro:
+	{
+
+	}break;
+	case Stage1::Stage1State::Play:
+	{
+
+	}break;
+	default:
+		break;
+	}
+
+	{
+		auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+		if (Input->IsKeyPressed(F))
+			CameraMgr->SetMainCamera(L"First_Camera");
+
+		if (Input->IsKeyPressed(T))
+			CameraMgr->SetMainCamera(L"Third_Camera");
+
+		if (Input->IsKeyPressed(NUM9))
+			EngineCore::GetInstance()->SetDebugMode(false);
+
+
+		if (Input->IsKeyPressed(NUM4))
+		{
+			auto command = ChangeScene::Create(LOADID::Village);
+			EngineCore::GetInstance()->RegisterCommand(command);
+			GameManager::GetInstance()->ClearScene(LOADID::Stage1);
+		}
 	}
 }
 
@@ -216,6 +244,7 @@ void Stage1::DebugIMGUI()
 
 	_vec3 pos = player->GetComponent<TransformComponent>()->GetPosition();
 	_vec3 camPos = CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
+	_vec3 forward = CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetFoward();
 
 	if (ImGui::BeginTable("##PosTable", 2,
 		ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg))
@@ -236,8 +265,100 @@ void Stage1::DebugIMGUI()
 		ImGui::TableSetColumnIndex(1);
 		ImGui::Text("%.2f, %.2f, %.2f", camPos.x, camPos.y, camPos.z);
 
+		ImGui::TableNextRow();
+		ImGui::TableSetColumnIndex(0);
+		ImGui::TextUnformatted("Camera Dir");
+		ImGui::TableSetColumnIndex(1);
+		ImGui::Text("%.2f, %.2f, %.2f", forward.x, forward.y, forward.z);
+
 		ImGui::EndTable();
 	}
+	ImGui::End();
+}
+
+void Stage1::WayPointEdit()
+{
+	bool p_open = true;
+
+	auto cam = dynamic_cast<FirstCam*>(CameraMgr->GetMainCamera()->GetOwner());
+
+	if (!ImGui::Begin("Waypoint Editor", &p_open))
+	{
+		ImGui::End();
+		return;
+	}
+
+	if (!cam)
+	{
+		ImGui::Text("Camera not selected.");
+		ImGui::End();
+		return;
+	}
+
+	ImGui::DragFloat("Total Duration", wayCam->GetDuration(), 0.1f, 1.f, 300.f);
+	ImGui::Separator();
+
+
+	if (ImGui::Button("Add Waypoint"))
+	{
+		_vec3 pos = cam->GetComponent<TransformComponent>()->GetPosition();
+		_vec3 dir = cam->GetComponent<TransformComponent>()->GetFoward();
+
+		wayCam->AddWaypoint({ pos, dir });
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Clear All"))
+	{
+		wayCam->Clear();
+	}
+	ImGui::Separator();
+	if (ImGui::Button("Start"))
+	{
+		wayCam->Start();
+		CameraMgr->SetMainCamera(L"Way_Camera");
+	}
+	ImGui::Separator();
+	if (ImGui::Button("Stop"))
+	{
+		wayCam->Stop();
+		CameraMgr->SetMainCamera(L"First_Camera");
+	}
+	ImGui::Separator();
+
+	auto& waypoints = wayCam->GetWaypoints();
+	for (int i = 0; i < waypoints.size(); ++i)
+	{
+		ImGui::PushID(i);
+
+		ImGui::Text("Waypoint %d", i);
+
+		ImGui::DragFloat3("Position", (float*)&waypoints[i].position, 0.1f);
+		ImGui::DragFloat3("Direction", (float*)&waypoints[i].lookDir, 0.01f);
+
+
+		ImGui::SameLine();
+		if (ImGui::Button("Delete"))
+		{
+			wayCam->RemoveWaypoint(i);
+			ImGui::PopID();
+			break; 
+		}
+
+		ImGui::Separator();
+		ImGui::PopID(); 
+
+	}
+
+	if (ImGui::Button("Save to File"))
+	{
+		wayCam->SaveWaypoints("../Resource/Data/Stage1Waypoint.dat");
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Load from File"))
+	{
+		wayCam->LoadWaypoints("../Resource/Data/Stage1Waypoint.dat");
+	}
+
 	ImGui::End();
 }
 #endif
@@ -268,17 +389,29 @@ void Stage1::ChangeState(Stage1State state)
 	switch (state)
 	{
 	case Stage1::Stage1State::Stage1Intro:	
-		//camera intro
-		break;
-	case Stage1::Stage1State::BossIntro:
-		boss = RedGolem::Create(ObjectMgr, ObjectType::Monster);
-		boss->GetComponent<TransformComponent>()->SetPosition(120.f, 70.f, 100.f);
-		ObjectMgr->AddObject(ObjectType::Monster, boss);
-		boss->AddRef();
-		currState = Stage1State::Play;
-		break;
+	{
+		currState = Stage1State::Stage1Intro;
+
+		stage1IntroDuration = 25.f;
+		stage1IntroTimer = 0.f;
+		CameraMgr->SetMainCamera(L"Way_Camera");
+		auto cam = static_cast<WayPointCam*>(CameraMgr->GetMainCamera()->GetOwner());
+
+		cam->SetDuration(stage1IntroDuration);
+		cam->LoadWaypoints("../Resource/Data/Stage1Waypoint.dat");
+		cam->Start();
+	}break;
+	case Stage1::Stage1State::BossIntro:	
+	{
+		
+	}break;
 	case Stage1::Stage1State::Play:
-		break;
+	{
+		currState = Stage1State::Play;
+
+		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
+		CameraMgr->SetMainCamera(L"Third_Camera");
+	}break;
 	default:
 		break;
 	}
