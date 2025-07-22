@@ -33,6 +33,7 @@ public:
     void DebugIMGUI();
     void WayPointEdit();
 private:
+    void SetTriggerBox();
     void ChangeState(Stage2Stage state);
     void Free()override;
 

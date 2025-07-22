@@ -384,6 +384,15 @@ void Stage2::WayPointEdit()
 }
 #endif
 
+void Stage2::SetTriggerBox()
+{
+	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	bossTrigger->GetComponent<TransformComponent>()->SetPosition(130.f, 30.f, 410.f);
+	bossTrigger->AddSpawner(SpawnType::Ender, _vec3(130.f, 60.f, 410.f), _vec3(0.f, 0.f, 0.f));
+
+	ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
+}
+
 void Stage2::ChangeState(Stage2Stage state)
 {
 	switch (state)
