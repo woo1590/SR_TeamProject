@@ -21,6 +21,18 @@
       "textures":{
         "CubeMap":"../Resource/Texture/SkyBox/Stage2.dds"
       }
+    },
+
+    "Stage1SkyBox_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/SkyBox/Stage1.dds"
+      }
+    },
+
+    "Stage2SkyBox_Mtrl":{
+      "textures":{
+        "CubeMap":"../Resource/Texture/SkyBox/Stage2.dds"
+      }
     }
   }
 }

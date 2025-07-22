@@ -33,7 +33,7 @@ SkyBox* SkyBox::Create(ObjectManager* owner, ObjectType objType)
 HRESULT SkyBox::Ready_Object()
 {
     auto transform = AddComponent<TransformComponent>();
-    transform->SetScale(1.f, 1.f, 1.f);
+    transform->SetScale(100.f, 100.f, 100.f);   
 
     auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_Priority);
     renderer->SetMesh("Cube_Mesh");

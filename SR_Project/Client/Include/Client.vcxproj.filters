@@ -582,6 +582,9 @@
     </Filter>
     <Filter Include="02. Object\Emerald">
       <UniqueIdentifier>{db9018e5-f1ef-4c83-8e2b-e0396a6e3d25}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="02. Object\CameraActor\FixedCam">
+      <UniqueIdentifier>{e1a384f6-85fa-4f91-ad1f-e3eb75474996}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1131,6 +1134,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\EmeraldObj.h">
       <Filter>02. Object\Emerald</Filter>
+    </ClInclude>  
+    <ClInclude Include="..\Header\FixedCam.h">
+      <Filter>02. Object\CameraActor\FixedCam</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1662,6 +1668,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EmeraldObj.cpp">
       <Filter>02. Object\Emerald</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\Code\FixedCam.cpp">
+      <Filter>02. Object\CameraActor\FixedCam</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -163,7 +163,9 @@ void Stage1::Load()
 		UILoader loader;
 		loader.LoadUI(ObjectMgr);
 
-		ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+		auto skybox = SkyBox::Create(ObjectMgr, ObjectType::SkyBox);
+		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage1SkyBox_Mtrl");
+		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
 
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
 
@@ -409,7 +411,7 @@ void Stage1::ChangeState(Stage1State state)
 	{
 		currState = Stage1State::Play;
 
-		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
+		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 		CameraMgr->SetMainCamera(L"Third_Camera");
 	}break;
 	default:

@@ -216,6 +216,7 @@
     <ClInclude Include="..\Header\FireworkEffect.h" />
     <ClInclude Include="..\Header\FishingItem.h" />
     <ClInclude Include="..\Header\BloodEffect.h" />
+    <ClInclude Include="..\Header\FixedCam.h" />
     <ClInclude Include="..\Header\GameManager.h" />
     <ClInclude Include="..\Header\GhostCloakItem.h" />
     <ClInclude Include="..\Header\InventoryCam.h" />
@@ -394,6 +395,7 @@
     <ClCompile Include="..\Code\FireworkEffect.cpp" />
     <ClCompile Include="..\Code\FishingItem.cpp" />
     <ClCompile Include="..\Code\BloodEffect.cpp" />
+    <ClCompile Include="..\Code\FixedCam.cpp" />
     <ClCompile Include="..\Code\GameManager.cpp" />
     <ClCompile Include="..\Code\GhostCloakItem.cpp" />
     <ClCompile Include="..\Code\InventoryCam.cpp" />
