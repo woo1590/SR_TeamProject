@@ -147,6 +147,13 @@ void Stage2::Load()
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 		BlockMgr->LoadDB("Stage2");
 
+		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			auto lever = static_cast<DynamicBlock*>(dynamic);
+			if (lever->GetType() != DynamicBlockType::LeverSwitch && lever->GetType() != DynamicBlockType::BasicChest) continue;
+			lever->SetTarget(player);
+		}
+
 		Grid->InsertBlock();
 	}
 

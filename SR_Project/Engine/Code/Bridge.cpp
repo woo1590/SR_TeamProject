@@ -1,12 +1,14 @@
 #include "EnginePCH.h"
 #include "Bridge.h"
 #include "UIRenderer.h"
+#include "Scene.h"
 
 //system
 #include "EngineCore.h"
 #include "ObjectManager.h"
 #include "InputSystem.h"
 #include "TimerManager.h"
+#include "StaticGrid.h"
 
 //object
 #include "Part.h"
@@ -155,6 +157,8 @@ void Bridge::ApplyRotationToBridgeParts(float angleDegree)
 
 void Bridge::CreateCollisionBlocks()
 {
+    auto grid = GetScene()->GetStaticGrid();
+
     for (auto& [name, part] : Parts)
     {
         if (name.find("Tile_") != 0) continue;
@@ -162,10 +166,11 @@ void Bridge::CreateCollisionBlocks()
         auto transform = part->GetComponent<TransformComponent>();
         _vec3 worldPos = transform->GetWorldPosition();
 
-        auto cb = CollisionBlock::Create(owner, ObjectType::StaticBlock);
+        auto cb = CollisionBlock::Create(owner, ObjectType::CollisionBlock,StaticBlockType::Stone);
         cb->GetComponent<TransformComponent>()->SetPosition(worldPos);
 
-        owner->AddObject(ObjectType::StaticBlock, cb);
+        owner->AddObject(ObjectType::CollisionBlock, cb);
+        grid->InsertBlock(cb);
     }
 }
 

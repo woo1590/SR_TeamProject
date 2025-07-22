@@ -134,6 +134,20 @@ void StaticGrid::InsertBlock()
 	}
 }
 
+void StaticGrid::InsertBlock(Object* block)
+{
+    _vec3 pos = block->GetComponent<TransformComponent>()->GetPosition();
+    auto collision = block->GetComponent<CollisionComponent>();
+
+    int cx = WorldToCell(pos.x);
+    int cy = WorldToCell(pos.y);
+    int cz = WorldToCell(pos.z);
+
+    UINT64 key = HashCell(cx, cy, cz);
+
+    Cells[key] = collision;
+}
+
 _vec3 StaticGrid::GetRandomGrid(_vec3 originPos, _float range)
 {
     int minX = WorldToCell(originPos.x - range);

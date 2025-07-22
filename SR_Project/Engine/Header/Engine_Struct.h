@@ -122,7 +122,7 @@ namespace Engine
 		_vec3 center{ 0.f,0.f,0.f };
 		_vec3 half{ 1.f,1.f,1.f };
 		_matrix axis;
-	}
+	};
 	
 	struct TileInfo
 	{

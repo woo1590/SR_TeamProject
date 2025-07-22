@@ -6,6 +6,7 @@ BEGIN(Engine)
 
 class Scene;
 class CollisionComponent;
+class Object;
 class ENGINE_DLL StaticGrid :
     public Base
 {
@@ -21,6 +22,7 @@ public:
     HitInfo RayCast(Ray ray);
     CollisionComponent* QueryCell(int cx, int cy, int cz);
     void InsertBlock();
+    void InsertBlock(Object* block);
 
     _vec3 GetRandomGrid(_vec3 originPos, _float range);
     StaticBlockType GetBlockType(_vec3 pos);
