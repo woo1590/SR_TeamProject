@@ -63,6 +63,7 @@
 #include "DeadEffect.h"
 #include "InventoryCam.h"
 #include "WayPointCam.h"
+#include "FixedCam.h"
 
 //component
 #include "TransformComponent.h"
@@ -130,11 +131,16 @@ void Stage2::Load()
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
 		auto wCam = WayPointCam::Create(ObjectMgr);
+		auto fixCam = FixedCam::Create(ObjectMgr);
+		fixCam->SetPosition(220.f, 74.f, 200.f);
+		fixCam->SetForward(-0.67f, -0.3f, 0.6f);
+
 		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 
 		CameraMgr->AddCamera(L"First_Camera", fCam);
 		CameraMgr->AddCamera(L"Third_Camera", tCam);
 		CameraMgr->AddCamera(L"Way_Camera", wCam);
+		CameraMgr->AddCamera(L"Fix_Camera", fixCam);
 		CameraMgr->AddCamera(L"Inventory_Camera", inventoryCam);
 		tCam->SetTarget(player);
 
@@ -143,6 +149,7 @@ void Stage2::Load()
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
 		ObjectMgr->AddObject(ObjectType::Camera, wCam);
+		ObjectMgr->AddObject(ObjectType::Camera, fixCam);
 		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
 
 		wayCam = wCam;
@@ -160,6 +167,8 @@ void Stage2::Load()
 			auto lever = static_cast<DynamicBlock*>(dynamic);
 			if (lever->GetType() != DynamicBlockType::LeverSwitch && lever->GetType() != DynamicBlockType::BasicChest) continue;
 			lever->SetTarget(player);
+			levers.push_back(lever);
+			lever->AddRef();
 		}
 
 		Grid->InsertBlock();
@@ -203,10 +212,24 @@ void Stage2::Update(_float dt)
 	}break;
 	case Stage2::Stage2Stage::ActiveBridge:
 	{
+		if (bridgeActiveTimer >= bridgeActiveDuration)
+			ChangeState(Stage2Stage::Play);
+
+		bridgeActiveTimer += dt;
 
 	}break;
 	case Stage2::Stage2Stage::Play:
 	{
+		if (!isBridgeActive)
+		{
+			int cnt = 0;
+			for (const auto& lever : levers)
+				if (lever->IsTrigger())
+					cnt++;
+
+			if (cnt >= 3)
+				ChangeState(Stage2Stage::ActiveBridge);
+		}
 
 	}break;
 	default:
@@ -381,7 +404,8 @@ void Stage2::ChangeState(Stage2Stage state)
 	}break;
 	case Stage2::Stage2Stage::BossIntro:
 	{
-
+		EngineCore::GetInstance()->GetSoundManager()->Stop("Stage2BGM");
+		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("Boss_EnderBGM");
 
 	}break;
 	case Stage2::Stage2Stage::Play:
@@ -393,7 +417,13 @@ void Stage2::ChangeState(Stage2Stage state)
 	}break;
 	case Stage2::Stage2Stage::ActiveBridge:
 	{
+		currState = Stage2Stage::ActiveBridge;
 
+		bridgeActiveDuration = 5.f;
+		bridgeActiveTimer = 0.f;
+		isBridgeActive = true;
+
+		CameraMgr->SetMainCamera(L"Fix_Camera");
 
 	}break;
 	default:

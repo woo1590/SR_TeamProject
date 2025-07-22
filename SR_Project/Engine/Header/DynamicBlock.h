@@ -36,6 +36,7 @@ public:
     void SetTriggerDistance(float distance) { TriggerDistance = distance; }
     void SetTarget(Object* target) { Target = target; }
 
+    _bool IsTrigger()const { return Trigger; }
 protected:
     void Free() override;
 
