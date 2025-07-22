@@ -406,6 +406,8 @@ void Stage2::ChangeState(Stage2Stage state)
 	case Stage2::Stage2Stage::Stage2Intro:
 	{
 		currState = Stage2Stage::Stage2Intro;
+		ChunkMgr->SetChunkRange(40);
+
 		stage2IntroDuration = 20.f;
 		stage2IntroTimer = 0.f;
 
@@ -430,6 +432,7 @@ void Stage2::ChangeState(Stage2Stage state)
 	case Stage2::Stage2Stage::Play:
 	{
 		currState = Stage2Stage::Play;
+		ChunkMgr->SetChunkRange(7);
 
 		CameraMgr->SetMainCamera(L"Third_Camera");
 
@@ -437,6 +440,7 @@ void Stage2::ChangeState(Stage2Stage state)
 	case Stage2::Stage2Stage::ActiveBridge:
 	{
 		currState = Stage2Stage::ActiveBridge;
+		ChunkMgr->SetChunkRange(40);
 
 		bridgeActiveDuration = 5.f;
 		bridgeActiveTimer = 0.f;
