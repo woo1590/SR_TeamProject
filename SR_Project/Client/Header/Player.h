@@ -104,6 +104,7 @@ private:
     void CheckSkill();
     void ResetWalkTimer();
     void UpdateFloat(_float dt);
+    void PullingEmerald(_float dt);
 
     void InteractWithNPC(Object* obj);
 
@@ -196,7 +197,7 @@ private:
 
     _bool StatikkMode = false;
 
-    std::string soundBefore = "WalkOnDefault2";
+    int soundBefore = 1;
     // ----------------------
     const float interactRange = 5.f;
     bool moveToInteract = false;
@@ -213,4 +214,7 @@ private:
     _float FloatTimer = 0.f;
     const _float FloatDuration = 3.f;
     _float FloatingSpeed = 3.f;
+
+    const _float itemPullingRange = 50.f;
+    const _float itemPullingSpeed = 30.f;
 };

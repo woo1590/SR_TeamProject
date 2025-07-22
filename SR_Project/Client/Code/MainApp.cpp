@@ -316,17 +316,19 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("BoomTNT", "../Resource/Sound/SFX/BoomTNT.mp3", false);
         sound->LoadSound("DeathPlayer", "../Resource/Sound/SFX/DeathPlayer.mp3", false);
         sound->LoadSound("RevivePlayer", "../Resource/Sound/SFX/RevivePlayer.mp3", false);
+        //sound->LoadSound("HitPlayer", "../Resource/Sound/SFX/HitPlayer.mp3", false);
         sound->LoadSound("WalkOnDefault1", "../Resource/Sound/SFX/WalkOnDefault1.mp3", false);
         sound->LoadSound("WalkOnDefault2", "../Resource/Sound/SFX/WalkOnDefault2.mp3", false);
-        //sound->LoadSound("WalkOnGrass1", "../Resource/Sound/SFX/WalkOnGrass1.mp3", false);
-        //sound->LoadSound("WalkOnGrass2", "../Resource/Sound/SFX/WalkOnGrass2.mp3", false);
-        //sound->LoadSound("WalkOnWood1", "../Resource/Sound/SFX/WalkOnWood1.mp3", false);
-        //sound->LoadSound("WalkOnWood2", "../Resource/Sound/SFX/WalkOnWood2.mp3", false);
-        //sound->LoadSound("WalkOnCloth1", "../Resource/Sound/SFX/WalkOnCloth1.mp3", false);
-        //sound->LoadSound("WalkOnCloth2", "../Resource/Sound/SFX/WalkOnCloth2.mp3", false);
+        sound->LoadSound("WalkOnGrass1", "../Resource/Sound/SFX/WalkOnGrass1.mp3", false);
+        sound->LoadSound("WalkOnGrass2", "../Resource/Sound/SFX/WalkOnGrass2.mp3", false);
+        sound->LoadSound("WalkOnWood1", "../Resource/Sound/SFX/WalkOnWood1.mp3", false);
+        sound->LoadSound("WalkOnWood2", "../Resource/Sound/SFX/WalkOnWood2.mp3", false);
+        sound->LoadSound("WalkOnStone1", "../Resource/Sound/SFX/WalkOnStone1.mp3", false);
+        sound->LoadSound("WalkOnStone2", "../Resource/Sound/SFX/WalkOnStone2.mp3", false);
+        sound->LoadSound("WalkOnCloth1", "../Resource/Sound/SFX/WalkOnCloth1.mp3", false);
+        sound->LoadSound("WalkOnCloth2", "../Resource/Sound/SFX/WalkOnCloth2.mp3", false);
         //sound->LoadSound("WalkOnSand1", "../Resource/Sound/SFX/WalkOnSand1.mp3", false);
         //sound->LoadSound("WalkOnSand2", "../Resource/Sound/SFX/WalkOnSand2.mp3", false);
-        //sound->LoadSound("HitPlayer", "../Resource/Sound/SFX/HitPlayer.mp3", false);
         sound->LoadSound("Statikk", "../Resource/Sound/SFX/Statikk.mp3", false);
         sound->LoadSound("Charge", "../Resource/Sound/SFX/Charge.mp3", false);
 

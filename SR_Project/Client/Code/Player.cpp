@@ -29,6 +29,7 @@
 #include "Spear.h"
 #include "Crossbow.h"
 #include "Armor.h"
+#include "EmeraldObj.h"
 
 #include "StaticGrid.h"
 #include "SpriteRenderer.h"
@@ -151,6 +152,7 @@ void Player::Update(_float dt)
     }
     CheckTargetDead();
     UpdateFloat(dt);
+    PullingEmerald(dt);
 }
 
 void Player::Late_Update(_float dt)
@@ -1313,6 +1315,41 @@ void Player::UpdateFloat(_float dt)
     }
 }
 
+void Player::PullingEmerald(_float dt)
+{
+    _int emeraldCount = 0;
+    _vec3 playerPos = GetComponent<TransformComponent>()->GetWorldPosition();
+    auto itemList = owner->GetObjectList(ObjectType::Item);
+    for (auto& item : itemList)
+    {
+        auto emerald = dynamic_cast<EmeraldObj*>(item);
+        if (!emerald) continue;
+
+        auto itemTransform = item->GetComponent<TransformComponent>();
+        _vec3 itemPos = itemTransform->GetWorldPosition();
+        _vec3 dir = playerPos - itemPos;
+        _float distance = sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+        
+        if (distance < 5.f)
+        {
+            item->SetDead();
+            ++emeraldCount;
+        }
+        else if(distance < itemPullingRange)
+        {
+            D3DXVec3Normalize(&dir, &dir);
+            itemTransform->SetPosition(itemPos + dir * dt * itemPullingSpeed);
+        }
+    }
+    if (emeraldCount != 0)
+    {
+        auto playerInfo = GetComponent<InfoComponent<PlayerInfo>>();
+        auto info = playerInfo->GetInfo();
+        info.gold += emeraldCount;
+        playerInfo->SetInfo(info);
+    }
+}
+
 void Player::EquipItem(ItemType itemType)
 {
     switch (itemType) {
@@ -1641,15 +1678,69 @@ void Player::UpdateWalk(_float dt) {
     //////////////////////////////////////////Walk Effect
     if (walkEffectTimer >= walkEffectTerm)
     {
-        if (soundBefore == "WalkOnDefault2")
+        auto pos = transform->GetWorldPosition();
+        auto blockType = grid->GetBlockType(_vec3(pos.x, pos.y - playerHalfSize.y - 0.1f, pos.z));
+        if (soundBefore == 2)
         {
-            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnDefault1");
-            soundBefore = "WalkOnDefault1";
+            switch (blockType)
+            {
+             case StaticBlockType::DarkDirt: case StaticBlockType::DirtPath:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnDefault1");
+                break;
+            case StaticBlockType::DarkGrass: case StaticBlockType::GrassDirt: case StaticBlockType::Dirt:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnGrass1");
+                break;
+            case StaticBlockType::Wood: case StaticBlockType::WoodPlank: case StaticBlockType::DarkWoodPlank: case StaticBlockType::Oak: case StaticBlockType::DarkOak:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnWood1");
+                break;
+            case StaticBlockType::Stone: case StaticBlockType::CobbleStone: case StaticBlockType::SmoothStone: case StaticBlockType::StoneBrick: 
+            case StaticBlockType::MossyStoneBrick: case StaticBlockType::EndStone: case StaticBlockType::EndStoneBrick: case StaticBlockType::DarkStone:
+            case StaticBlockType::DarkCobbleStone: case StaticBlockType::DarkSmoothStone: case StaticBlockType::DarkStoneBrick: case StaticBlockType::DarkMossyStoneBrick:
+            case StaticBlockType::PurBrick:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnStone1");
+                break;
+            case StaticBlockType::WhiteWool: case StaticBlockType::YellowWool:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnCloth1");
+                break;
+            case StaticBlockType::Air: case StaticBlockType::Glass: case StaticBlockType::Leaf: case StaticBlockType::Furnace: case StaticBlockType::Haybale:
+            case StaticBlockType::Terracota: case StaticBlockType::BookShelf: case StaticBlockType::DarkLeaf: case StaticBlockType::PurPillar:
+            case StaticBlockType::PurGlass: case StaticBlockType::EndRod: case StaticBlockType::ChorusBranch: case StaticBlockType::ChorusFlower:
+            case StaticBlockType::ChorusFruit:
+            default:
+                break;
+            }
+            soundBefore = 1;
         }
-        else if (soundBefore == "WalkOnDefault1")
+        else if (soundBefore == 1)
         {
-            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnDefault2");
-            soundBefore = "WalkOnDefault2";
+            switch (blockType)
+            {
+             case StaticBlockType::DarkDirt: case StaticBlockType::DirtPath:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnDefault2");
+                break;
+            case StaticBlockType::DarkGrass: case StaticBlockType::GrassDirt: case StaticBlockType::Dirt:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnGrass2");
+                break;
+            case StaticBlockType::Wood: case StaticBlockType::WoodPlank: case StaticBlockType::DarkWoodPlank: case StaticBlockType::Oak: case StaticBlockType::DarkOak:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnWood2");
+                break;
+            case StaticBlockType::Stone: case StaticBlockType::CobbleStone: case StaticBlockType::SmoothStone: case StaticBlockType::StoneBrick:
+            case StaticBlockType::MossyStoneBrick: case StaticBlockType::EndStone: case StaticBlockType::EndStoneBrick: case StaticBlockType::DarkStone:
+            case StaticBlockType::DarkCobbleStone: case StaticBlockType::DarkSmoothStone: case StaticBlockType::DarkStoneBrick: case StaticBlockType::DarkMossyStoneBrick:
+            case StaticBlockType::PurBrick:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnStone2");
+                break;
+            case StaticBlockType::WhiteWool: case StaticBlockType::YellowWool:
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnCloth2");
+                break;
+            case StaticBlockType::Air: case StaticBlockType::Glass: case StaticBlockType::Leaf: case StaticBlockType::Furnace: case StaticBlockType::Haybale:
+            case StaticBlockType::Terracota: case StaticBlockType::BookShelf: case StaticBlockType::DarkLeaf: case StaticBlockType::PurPillar:
+            case StaticBlockType::PurGlass: case StaticBlockType::EndRod: case StaticBlockType::ChorusBranch: case StaticBlockType::ChorusFlower:
+            case StaticBlockType::ChorusFruit:
+            default:
+                break;
+            }
+            soundBefore = 2;
         }
         _vec3 vDir = { 0.f,0.f,1.f };
         _vec3 vMove;
