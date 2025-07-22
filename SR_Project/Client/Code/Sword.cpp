@@ -106,7 +106,8 @@ void Sword::Update(_float dt)
 
     if (!targetMonsters.at(target)) 
         return;
-
+    if (targetMonsters.at(target)->IsDead())
+        return;
     float playerPower = ownerObject->GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().power;
     auto skillInfo = GetComponent<InfoComponent<SkillInfo>>()->GetInfo();
 
