@@ -414,6 +414,7 @@ void Blastling::PlayDie(_float dt)
     {
         DieAnim.IsEnd = true;
         HeadFire->SetDead();
+        DropEmeralds();
         SetDead();
         DeleteBar();
     }

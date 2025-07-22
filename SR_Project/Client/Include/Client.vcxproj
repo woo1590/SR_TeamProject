@@ -204,6 +204,7 @@
     <ClInclude Include="..\Header\DeathFrame.h" />
     <ClInclude Include="..\Header\DialogObj.h" />
     <ClInclude Include="..\Header\Effect.h" />
+    <ClInclude Include="..\Header\EmeraldObj.h" />
     <ClInclude Include="..\Header\Ender.h" />
     <ClInclude Include="..\Header\EnderProjectile.h" />
     <ClInclude Include="..\Header\EnemyHPBarBack.h" />
@@ -381,6 +382,7 @@
     <ClCompile Include="..\Code\DeathFrame.cpp" />
     <ClCompile Include="..\Code\DialogObj.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\EmeraldObj.cpp" />
     <ClCompile Include="..\Code\Ender.cpp" />
     <ClCompile Include="..\Code\EnderProjectile.cpp" />
     <ClCompile Include="..\Code\EnemyHPBarBack.cpp" />

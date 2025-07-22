@@ -431,6 +431,7 @@ void JungleSkeleton::PlayDie(_float dt)
         }
         DieAnim.IsEnd = true;
         DieAnim.IsRunning = false;
+        DropEmeralds();
         SetDead();
         DeleteBar();
     }

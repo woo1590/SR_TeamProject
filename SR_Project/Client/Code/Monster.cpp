@@ -25,6 +25,7 @@
 #include "HPBarWhite.h"
 #include "UIManager.h"
 #include "QuestSystem.h"
+#include "EmeraldObj.h"
 
 Monster::Monster(ObjectManager* owner, ObjectType objType)
 	:BaseCharacter(owner, objType)
@@ -141,6 +142,12 @@ HRESULT Monster::Ready_Object(ObjectManager* owner, ObjectType objType, MonsterT
             });
     }
     IsHit = nullptr;
+
+
+    for (int i = 0; i < rand() % 3 + 2; ++i)
+    {
+        Emeralds.push_back(EmeraldObj::Create(owner, ObjectType::Item));
+    }
 
     return S_OK;
 }
@@ -269,6 +276,16 @@ void Monster::OnCollisionStay(Object* other)
 
     //if (objType == ObjectType::StaticBlock)
     //    collision->ResolveAABBColiision(other);
+}
+
+void Monster::DropEmeralds()
+{
+    _vec3 selfpos = GetComponent<TransformComponent>()->GetPosition();
+    for (auto& Emerald : Emeralds)
+    {
+        Emerald->GetComponent<TransformComponent>()->SetPosition(selfpos);
+        Emerald->Throw();
+    }
 }
 
 void Monster::Free()

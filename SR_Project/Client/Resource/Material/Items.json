@@ -16,43 +16,49 @@
     }
   },
 
-  "materials":{
-    "sword_Mtrl":{
-        "textures":{
-            "CubeMap":"../Resource/Asset/JW/sword.dds"
-        }
+  "materials": {
+    "sword_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/JW/sword.dds"
+      }
     },
 
-    "bow_Mtrl":{
-        "textures":{
-            "CubeMap":"../Resource/Asset/JW/bow.dds"
-        }
+    "bow_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/JW/bow.dds"
+      }
     },
 
-    "arrow_Mtrl":{
-        "textures":{
-            "CubeMap":"../Resource/Asset/JW/arrow.dds"
-        }
+    "arrow_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/JW/arrow.dds"
+      }
     },
-    "tnt_Mtrl":{
-        "textures":{
-            "CubeMap":"../Resource/Asset/JW/tnt.dds"
-        }
+    "tnt_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/JW/tnt.dds"
+      }
     },
-    "firework_Mtrl":{
-        "textures":{
-            "CubeMap":"../Resource/Asset/JW/firework.dds"
-        }
+    "firework_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/JW/firework.dds"
+      }
     },
-    "spear_Mtrl":{
-        "textures":{
-            "CubeMap":"../Resource/Asset/JW/spear.dds"
-        }
+    "spear_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/JW/spear.dds"
+      }
     },
-    "crossbow_Mtrl":{
-        "textures":{
-            "CubeMap":"../Resource/Asset/JW/crossbow.dds"
-        }
+    "crossbow_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/JW/crossbow.dds"
+      }
+    },
+
+    "EmeraldCube_Mtrl": {
+      "textures": {
+        "CubeMap": "../Resource/Asset/HY/EmeraldCube.dds"
+      }
     }
   }
 }

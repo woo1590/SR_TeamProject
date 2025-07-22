@@ -11,6 +11,7 @@ class BossHPBarFront;
 class ExpBarBack;
 class HPBarWhite;
 class BossIcon;
+class EmeraldObj;
 
 struct Animation
 {
@@ -76,7 +77,7 @@ protected:
     virtual void PlayHit(_float dt);
 
     virtual void OnCollisionStay(Object* other);
-
+    virtual void DropEmeralds();
 protected:
     void Free() override;
 
@@ -101,5 +102,7 @@ protected:
     ExpBarBack*      bossBack   = nullptr;
     HPBarWhite*      whiteBack  = nullptr;
     BossIcon*        bossIcon   = nullptr;
+
+    vector<EmeraldObj*>     Emeralds;
 };
 

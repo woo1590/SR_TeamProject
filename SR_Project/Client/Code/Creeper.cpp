@@ -277,7 +277,7 @@ void Creeper::PlayDie(_float dt)
         _vec3 length = playerpos - pos;
         if (D3DXVec3Length(&length) < 10)
             player->GetComponent<InfoComponent<PlayerInfo>>()->AddHp(-15);
-        
+        DropEmeralds();
         SetDead();
         ///////////////////////////////Shake Cam
         auto cam = GetScene()->GetCameraManager()->GetMainCamera()->
