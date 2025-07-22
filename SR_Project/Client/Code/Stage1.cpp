@@ -310,23 +310,16 @@ void Stage1::ChangeState(Stage1State state)
 		auto cam = static_cast<WayPointCam*>(CameraMgr->GetMainCamera()->GetOwner());
 
 		cam->SetDuration(stage1IntroDuration);
-		//cam->AddWaypoint({ _vec3(110.f,105.f,216.f),_vec3(-0.3f,-0.7f,-0.7f) });
-		//cam->AddWaypoint({ _vec3(60.f,110.f,215.f),_vec3(0.1f,-0.7f,-0.7f) });
-		//cam->AddWaypoint({ _vec3(12.f,115.f,181.f),_vec3(0.5f,-0.7f,-0.4f) });
-		//cam->AddWaypoint({ _vec3(-17.f,119.f,107.f),_vec3(0.8f,-0.5f,-0.2f) });
-		//cam->AddWaypoint({ _vec3(3.f,123.f,62.f),_vec3(0.8f,-0.5f,-0.2f) });//5
-
-		cam->AddWaypoint({ _vec3(37.f,131.f,18.f),_vec3(0.7f,-0.6f,0.5f) });
-		cam->AddWaypoint({ _vec3(75.f,140.f,-5.f),_vec3(0.4f,-0.5f,0.7f) });
-		cam->AddWaypoint({ _vec3(135.f,144.f,-20.f),_vec3(0.f,-0.4f,0.8f) });
-		cam->AddWaypoint({ _vec3(164.f,160.f,11.f),_vec3(0.1f,-0.3f,0.5f) });
-		cam->AddWaypoint({ _vec3(156.f,169.f,54.f),_vec3(0.1f,-0.3f,0.3f) });//10
-
-		cam->AddWaypoint({ _vec3(156.f,161.f,11.f),_vec3(0.1f,-0.3f,0.5f) });
-		cam->AddWaypoint({ _vec3(150.f,161.f,160.f),_vec3(0.6f,-0.5f,0.5f) });
-		cam->AddWaypoint({ _vec3(216.f,161.f,176.f),_vec3(0.1f,-0.4f,0.8f) });
-		cam->AddWaypoint({ _vec3(226.f,154.f,204.f),_vec3(0.1f,-0.3f,-0.4f) });
-		cam->AddWaypoint({ _vec3(290.f,154.f,146.f),_vec3(-0.2f,-0.6f,0.7f) });//15
+		cam->AddWaypoint({ _vec3(2.f,105.f,23.f),_vec3(0.7f,-0.4f,0.6f) });
+		cam->AddWaypoint({ _vec3(131.f,150.f,-41.f),_vec3(0.1f,-0.4f,0.9f) });
+		cam->AddWaypoint({ _vec3(252.f,164.f,-28.f),_vec3(-0.4f,-0.6f,0.6f) });
+		cam->AddWaypoint({ _vec3(352.f,168.f,43.f),_vec3(-0.5f,-0.6f,0.5f) });
+		cam->AddWaypoint({ _vec3(426.f,155.f,156.f),_vec3(-0.8f,-0.4f,0.2f) });
+		cam->AddWaypoint({ _vec3(413.f,159.f,346.f),_vec3(-0.6f,-0.5f,-0.6f) });
+		cam->AddWaypoint({ _vec3(287.f,154.f,448.f),_vec3(-0.3f,-0.5f,-0.7f) });
+		cam->AddWaypoint({ _vec3(138.f,168.f,441.f),_vec3(-0.04f,-0.7f,-0.7f) });
+		
+		//15
 
 		//cam->AddWaypoint({ _vec3(390.f,135.f,125.f),_vec3(-0.5f,-0.5f,0.7f) });
 		//cam->AddWaypoint({ _vec3(421.f,135.f,180.f),_vec3(-0.8f,-0.4f,0.3f) });
@@ -349,7 +342,7 @@ void Stage1::ChangeState(Stage1State state)
 	{
 		currState = Stage1State::Play;
 
-		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
+		//ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 		CameraMgr->SetMainCamera(L"Third_Camera");
 	}break;
 	default:
