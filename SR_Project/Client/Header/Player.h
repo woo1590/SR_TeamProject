@@ -83,6 +83,8 @@ public:
     _vec3 GetDir() const;
     _bool IsCharge();
     std::unordered_map<string, Object*> GetBones();
+    void SetFloatMode(_bool _floatMode);
+
     // - --------------- 제현 -------------------------
     void SetInventoryMode(bool enable);
     void SetDir(_vec3 _dir) { lastWorldDir = _dir; }
@@ -101,6 +103,7 @@ private:
     void CheckTargetDead();
     void CheckSkill();
     void ResetWalkTimer();
+    void UpdateFloat(_float dt);
 
     void InteractWithNPC(Object* obj);
 
@@ -205,4 +208,9 @@ private:
     const _float rollEffectTerm = 0.05f;
     _vec3 lastWorldPos;
     _vec3 lastWorldDir;
+
+    _bool FloatMode = false;
+    _float FloatTimer = 0.f;
+    const _float FloatDuration = 3.f;
+    _float FloatingSpeed = 3.f;
 };
