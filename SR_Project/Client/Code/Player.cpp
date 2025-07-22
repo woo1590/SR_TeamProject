@@ -1322,21 +1322,25 @@ void Player::UnEquipItem(ItemType itemType)
 {
     switch (itemType) {
     case ItemType::Bow:
+        itemBaseRotOffset.erase("bow");
         Bones["LHand"]->SetDead();
         Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case ItemType::CrossBow:
+        itemBaseRotOffset.erase("crossbow");
         Bones["LHand"]->SetDead();
         Safe_Release(Bones["LHand"]);
         Bones["LHand"] = nullptr;
         break;
     case ItemType::Sword:
+        itemBaseRotOffset.erase("sword");
         Bones["RHand"]->SetDead();
         Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
         break;
     case ItemType::Spear:
+        itemBaseRotOffset.erase("spear");
         Bones["RHand"]->SetDead();
         Safe_Release(Bones["RHand"]);
         Bones["RHand"] = nullptr;
@@ -1533,6 +1537,8 @@ void Player::UpdateWalk(_float dt) {
     SetRotation({ -fAngle, 0.f, 0.f }, "RLeg");
     if (Bones["RHand"] && static_cast<Item*>(Bones["RHand"])->GetItemType() == ItemType::Spear)
     {
+        IdleSmoothing(dt, ePlayerBone::LARM);
+        IdleSmoothing(dt, ePlayerBone::RARM);
     }
     else
     {
