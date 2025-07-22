@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "ShulkerBullet.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
@@ -10,6 +10,7 @@
 #include "InfoComponent.h"
 #include "Scene.h"
 #include "PhysicsSystem.h"
+#include "Player.h"
 
 ShulkerBullet::ShulkerBullet(ObjectManager* owner, ObjectType objType)
 	:Object(owner, objType)
@@ -174,6 +175,11 @@ void ShulkerBullet::OnCollisionEnter(Object* other)
     {
         auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
         playerStat->AddHp(-20);
+
+        //player floating//
+        auto player = dynamic_cast<Player*>(other);
+        player->SetFloatMode(true);
+        ///////////////////
 
         SetActive(false);
     }

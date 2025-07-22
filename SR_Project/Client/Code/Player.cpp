@@ -150,6 +150,7 @@ void Player::Update(_float dt)
         break;
     }
     CheckTargetDead();
+    UpdateFloat(dt);
 }
 
 void Player::Late_Update(_float dt)
@@ -1266,15 +1267,20 @@ void Player::CheckSkill()
     auto input = EngineCore::GetInstance()->GetInputSystem();
     static const KEY keyStatikk = C;
     static const KEY keyFirework = V;
+    static const KEY keyFloat = B;
 
     auto physics = GetComponent<PhysicsComponent>();
     if (input->IsKeyPressed(keyStatikk))
     {
         SetStatikkMode(true);
     }
-    else if (input->IsKeyPressed(keyFirework))
+    if (input->IsKeyPressed(keyFirework))
     {
         ChangeShootType();
+    }
+    if (input->IsKeyPressed(keyFloat))
+    {
+        SetFloatMode(true);
     }
 }
 
@@ -1282,6 +1288,29 @@ void Player::ResetWalkTimer()
 {
     if (State != ePlayerState::WALK)
         walkEffectTimer = 0.f;
+}
+
+void Player::UpdateFloat(_float dt)
+{
+    if (!FloatMode) return;
+    FloatTimer += dt;
+
+    auto physics = GetComponent<PhysicsComponent>();
+    physics->SetMass(0.f);
+
+    _vec3 velocity = physics->GetVelocity();
+    velocity.y = 0.f;
+    physics->SetVelocity(velocity);
+
+    auto offset =  _vec3(0.f, 1.f, 0.f) * dt * FloatingSpeed;
+    auto transform = GetComponent<TransformComponent>();
+    transform->SetPosition(transform->GetPosition() + offset);
+
+    if (FloatTimer > FloatDuration)
+    {
+        SetFloatMode(false);
+        physics->SetMass(1.f);
+    }
 }
 
 void Player::EquipItem(ItemType itemType)
@@ -1461,6 +1490,12 @@ std::unordered_map<string, Object*> Player::GetBones()
     return Bones;
 }
 
+void Player::SetFloatMode(_bool _floatMode)
+{
+    FloatMode = _floatMode;
+    FloatTimer = 0.f;
+}
+
 void Player::SetInventoryMode(bool enable)
 {
     auto renderSystem = EngineCore::GetInstance()->GetRenderSystem();
@@ -1518,7 +1553,9 @@ void Player::UpdateIdle(_float dt)
 
 void Player::UpdateWalk(_float dt) {
     WalkTime += dt;
-    walkEffectTimer += dt;
+
+    if(GetComponent<PhysicsComponent>()->IsGrounded())
+        walkEffectTimer += dt;
 
     if (comboTime < comboLimit)
     {
