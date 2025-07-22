@@ -19,7 +19,7 @@
   "materials":{
     "SkyBox_Mtrl":{
       "textures":{
-        "CubeMap":"../Resource/Texture/SkyBox/Stage2.dds"
+        "CubeMap":"../Resource/Texture/SkyBox/Stage1.dds"
       }
     },
 

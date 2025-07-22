@@ -303,7 +303,8 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("IntroBGM", "../Resource/Sound/BGM/Intro_BGM.mp3", true);
         sound->LoadSound("VillageBGM", "../Resource/Sound/BGM/Village_BGM.mp3", true);
         sound->LoadSound("Stage1BGM", "../Resource/Sound/BGM/Stage1_BGM.mp3", true);
-        sound->LoadSound("Boss_EnderBGM", "../Resource/Sound/BGM/Boss_Ender.mp3", true);
+        sound->LoadSound("Boss_EnderBGM", "../Resource/Sound/BGM/Boss_EnderBGM.mp3", true);
+        sound->LoadSound("Stage2BGM", "../Resource/Sound/BGM/Stage2BGM.mp3", true);
 
         //Player
         sound->LoadSound("ShootArrow", "../Resource/Sound/SFX/ShootArrow.mp3", false);
