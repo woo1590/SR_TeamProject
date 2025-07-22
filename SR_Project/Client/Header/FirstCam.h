@@ -17,5 +17,7 @@ public:
 
 private:
     void Free()override;
+
+    _bool mouseMove = true;
 };
 

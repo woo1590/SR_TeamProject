@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "FirstCam.h"
+#include "EngineCore.h"
+#include "InputSystem.h"
 
 //component
 #include "FreecamComponent.h"
@@ -36,6 +38,14 @@ HRESULT FirstCam::Ready_Object()
 
 void FirstCam::Update(_float dt)
 {
+	auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (Input->IsKeyPressed(TAB))
+		mouseMove = mouseMove ? false : true;
+
+	if (!mouseMove) return;
+
+
 	Object::Update(dt);
 }
 

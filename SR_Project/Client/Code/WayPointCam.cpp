@@ -75,6 +75,12 @@ void WayPointCam::Start()
 {
 	start = true;
 	timePerSection = duration / (waypoints.size() - 1);
+	timer = 0.f;
+}
+
+void WayPointCam::RemoveWaypoint(int idx)
+{
+	waypoints.erase(waypoints.begin() + idx);
 }
 
 _vec3 WayPointCam::CatmullRom(_vec3 p0, _vec3 p1, _vec3 p2, _vec3 p3, _float t)

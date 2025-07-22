@@ -3,6 +3,7 @@
 
 class Player;
 class RedGolem;
+class WayPointCam;
 class Stage1 :
     public Scene
 {
@@ -26,6 +27,7 @@ public:
     void Unload()override;
 
     void DebugIMGUI();
+    void WayPointEdit();
 private:
     void SetTriggerBox();
     void ChangeState(Stage1State state);
@@ -38,5 +40,7 @@ private:
     _float stage1IntroTimer = 0.f;
 
     Stage1State currState = Stage1State::Play;
+
+    WayPointCam* wayCam = nullptr;
 };
 

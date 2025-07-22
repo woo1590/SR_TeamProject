@@ -93,6 +93,7 @@ void Stage1::Load()
 	auto game = GameManager::GetInstance();
 #ifdef USE_IMGUI
 	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
+	EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Waypoint", [this]() {this->WayPointEdit();});
 #endif
 
 	/*-------------------------Create System-----------------------------*/
@@ -142,6 +143,9 @@ void Stage1::Load()
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
 		ObjectMgr->AddObject(ObjectType::Camera, wCam);
 		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
+
+		wayCam = wCam;
+		wCam->AddRef();
 	}
 
 	/*----------------Load Chunk----------------*/
@@ -209,7 +213,7 @@ void Stage1::Update(_float dt)
 			EngineCore::GetInstance()->SetDebugMode(false);
 
 		if (Input->IsKeyPressed(NUM0))
-			EngineCore::GetInstance()->SetDebugMode(true);
+			ChangeState(Stage1State::Stage1Intro);
 
 
 		if (Input->IsKeyPressed(NUM4))
@@ -272,6 +276,82 @@ void Stage1::DebugIMGUI()
 	}
 	ImGui::End();
 }
+
+void Stage1::WayPointEdit()
+{
+	bool p_open = true;
+
+	auto cam = dynamic_cast<FirstCam*>(CameraMgr->GetMainCamera()->GetOwner());
+
+	if (!ImGui::Begin("Waypoint Editor", &p_open))
+	{
+		ImGui::End();
+		return;
+	}
+
+	if (!cam)
+	{
+		ImGui::Text("Camera not selected.");
+		ImGui::End();
+		return;
+	}
+
+
+	_float duration = wayCam->GetDuration();
+	ImGui::DragFloat("Total Duration", &duration, 0.1f, 1.f, 300.f);
+	ImGui::Separator();
+
+
+	if (ImGui::Button("Add Waypoint"))
+	{
+		_vec3 pos = cam->GetComponent<TransformComponent>()->GetPosition();
+		_vec3 dir = cam->GetComponent<TransformComponent>()->GetFoward();
+
+		wayCam->AddWaypoint({ pos, dir });
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Clear All"))
+	{
+		wayCam->Clear();
+	}
+	ImGui::Separator();
+
+
+
+	auto& waypoints = wayCam->GetWaypoints();
+	for (int i = 0; i < waypoints.size(); ++i)
+	{
+		ImGui::PushID(i);
+
+		ImGui::Text("Waypoint %d", i);
+
+		ImGui::DragFloat3("Position", (float*)&waypoints[i].position, 0.1f);
+		ImGui::DragFloat3("Direction", (float*)&waypoints[i].lookDir, 0.01f);
+
+
+		ImGui::SameLine();
+		if (ImGui::Button("Delete"))
+		{
+			wayCam->RemoveWaypoint(i);
+			ImGui::PopID();
+			break; 
+		}
+
+		ImGui::Separator();
+		ImGui::PopID(); 
+
+	}
+
+	if (ImGui::Button("Save to File"))
+	{
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Load from File"))
+	{
+	}
+
+	ImGui::End();
+}
 #endif
 
 
@@ -304,20 +384,22 @@ void Stage1::ChangeState(Stage1State state)
 	{
 		currState = Stage1State::Stage1Intro;
 
-		stage1IntroDuration = 15.f;
+		stage1IntroDuration = 20.f;
 		stage1IntroTimer = 0.f;
 		CameraMgr->SetMainCamera(L"Way_Camera");
 		auto cam = static_cast<WayPointCam*>(CameraMgr->GetMainCamera()->GetOwner());
 
+		cam->Clear();
 		cam->SetDuration(stage1IntroDuration);
-		cam->AddWaypoint({ _vec3(2.f,105.f,23.f),_vec3(0.7f,-0.4f,0.6f) });
-		cam->AddWaypoint({ _vec3(131.f,150.f,-41.f),_vec3(0.1f,-0.4f,0.9f) });
-		cam->AddWaypoint({ _vec3(252.f,164.f,-28.f),_vec3(-0.4f,-0.6f,0.6f) });
-		cam->AddWaypoint({ _vec3(352.f,168.f,43.f),_vec3(-0.5f,-0.6f,0.5f) });
-		cam->AddWaypoint({ _vec3(426.f,155.f,156.f),_vec3(-0.8f,-0.4f,0.2f) });
-		cam->AddWaypoint({ _vec3(413.f,159.f,346.f),_vec3(-0.6f,-0.5f,-0.6f) });
-		cam->AddWaypoint({ _vec3(287.f,154.f,448.f),_vec3(-0.3f,-0.5f,-0.7f) });
-		cam->AddWaypoint({ _vec3(138.f,168.f,441.f),_vec3(-0.04f,-0.7f,-0.7f) });
+		cam->AddWaypoint({ _vec3(105.f,71.f,176.f),_vec3(-0.5f,-0.1f,-0.8f) });
+		cam->AddWaypoint({ _vec3(23.f,102.f,103.f),_vec3(0.9f,-0.4f,-0.04f) });
+		cam->AddWaypoint({ _vec3(140.f,75.f,93.f),_vec3(1.f,0.f,0.f) });
+		cam->AddWaypoint({ _vec3(254.f,75.f,93.f),_vec3(1.f,0.f,0.f) });
+
+		cam->AddWaypoint({ _vec3(335.f,107.f,138.f),_vec3(-0.3f,-0.3f,0.8f) });
+		cam->AddWaypoint({ _vec3(400.f,155.f,274.f),_vec3(-0.7f,-0.6f,0.3f) });
+		cam->AddWaypoint({ _vec3(251.f,167.f,404.f),_vec3(-0.6f,-0.6f,-0.5f) });
+		cam->AddWaypoint({ _vec3(133.f,154.f,351.f),_vec3(-0.6f,-0.7f,-0.3f) });
 		
 		//15
 
