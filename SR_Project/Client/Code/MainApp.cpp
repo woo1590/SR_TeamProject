@@ -354,6 +354,7 @@ HRESULT MainApp::LoadDefaultResource()
 
         sound->LoadSound("DeathCreeper", "../Resource/Sound/SFX/DeathCreeper.mp3", false);
         sound->LoadSound("ExplosionCreeper", "../Resource/Sound/SFX/ExplosionCreeper.mp3", false);
+        sound->LoadSound("StartExplosionCreeper", "../Resource/Sound/SFX/StartExplosionCreeper.mp3", false);
 
         sound->LoadSound("WalkEnder", "../Resource/Sound/SFX/WalkEnder.mp3", false);
         sound->LoadSound("HiddenEnder", "../Resource/Sound/SFX/HiddenEnder.mp3", false);

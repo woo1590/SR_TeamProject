@@ -109,7 +109,7 @@ void Creeper::Die()
 {
     if (State != MonsterState::Die)
     {
-        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathCreeper");
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("StartExplosionCreeper");
         State = MonsterState::Die;
 
         DieAnim.IsRunning = true;
