@@ -31,6 +31,9 @@ public:
 
     void SetTextObj(Object* obj) { textObj = obj; }
 
+    void SaveDataTo();
+    void LoadDataFrom();
+
 private:
     void Show(const QuestInfo& quest, float alpha, FontType type);
     void ChangeState(QuestUIState nextState);

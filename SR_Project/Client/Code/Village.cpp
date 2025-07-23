@@ -276,6 +276,7 @@ void Village::Late_Update(_float dt)
 
 void Village::Unload()
 {
+	GetUIManager()->GetQuestSystem()->SaveDataTo();
 	EngineCore::GetInstance()->GetSoundManager()->Stop("VillageBGM");
 
 	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Player))

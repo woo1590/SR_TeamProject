@@ -35,13 +35,17 @@ public:
 	void Update_Tiploop(float dt);
 	void Update_Static(float dt);
 	void Render_Text(float dt);
+
+	LoadingState GetCurState() const { return curState; }
+	void OnLoadComplete();
 	
 private:
+	bool isLoadComplete = false;
 	bool mainAnimFinished = false;
 	float tipLoopTimer = 0.f;
 
-	static constexpr float TIP_DURATION = 6.f;
-	static constexpr float scaleDur = 6.f;
+	static constexpr float TIP_DURATION = 8.f;
+	static constexpr float scaleDur = 8.f;
 
 	vector<TipAndTexture> tipPool;
 	vector<size_t> tipIndices;

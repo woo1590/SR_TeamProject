@@ -119,8 +119,6 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     invMgr = GetScene()->GetUIManager()->GetInventory();
     invComp = AddComponent<InventoryComponent>();
-    arrows = Arrows::Create(owner);
-    owner->AddUIObject(arrows);
 
     return S_OK;
 }
@@ -174,8 +172,8 @@ void Player::Late_Update(_float dt)
     }
     if (input->IsKeyPressed(KEY::S))
     {
-        //bool enableShop = (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::MainGame);
-        //SetShopMode(enableShop);
+        bool enableShop = (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::MainGame);
+        SetShopMode(enableShop);
     }
     if (isClickedI)
     {

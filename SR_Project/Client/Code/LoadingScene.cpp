@@ -45,8 +45,8 @@ void LoadingScene::Load()
 	loader = Loader::Create(nextSceneID);
 	loadingUI = LoadingUI::Create(ObjectMgr);
 	
-	loadingUI->SetInfo(nextSceneID);
 	loadingUI->GetComponent<UIRenderer>()->SetCurRenderType(UIRenderType::MainGame);
+	loadingUI->SetInfo(nextSceneID);
 
 	ObjectMgr->AddUIObject(loadingUI);
 }
@@ -55,30 +55,34 @@ void LoadingScene::Update(_float dt)
 {
 	ObjectMgr->Update(dt); 
 
-	if (loader->IsFinished())	//Load complete
-	{
-		auto Input = EngineCore::GetInstance()->GetInputSystem();
-		Scene* nextScene = nullptr;	
-
-		switch (nextSceneID)
-		{
-			break;
-		case LOADID::Village:
-			nextScene = Village::Create();
-			break;
-		case LOADID::Stage1:
-			nextScene = Stage1::Create();
-			break;
-		case LOADID::Stage2:
-			nextScene = Stage2::Create();
-			break;
-		default:
-			break;
-		}
-
-		if (nextScene)
-			EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
-	}
+    if (loader->IsFinished())
+    {
+        if (loadingUI->GetCurState() == LoadingState::Static)
+        {
+            if (!isLoadComplete)
+            {
+                loadingUI->OnLoadComplete();
+                isLoadComplete = true;
+            }
+            if (EngineCore::GetInstance()->GetInputSystem()->IsKeyPressed(KEY::TAB))
+            {
+                Scene* nextScene = Village::Create();
+                EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
+            }
+        }
+        else 
+        {
+            Scene* nextScene = nullptr;
+            switch (nextSceneID)
+            {
+            case LOADID::Village: nextScene = Village::Create(); break;
+            case LOADID::Stage1:  nextScene = Stage1::Create(); break;
+            case LOADID::Stage2:  nextScene = Stage2::Create(); break;
+            }
+            if (nextScene)
+                EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
+        }
+    }
 }
 
 void LoadingScene::Late_Update(_float dt)

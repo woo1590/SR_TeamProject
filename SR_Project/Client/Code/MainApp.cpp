@@ -389,8 +389,11 @@ HRESULT MainApp::LoadDefaultResource()
         //sound->LoadSound("FailTrade", "../Resource/Sound/SFX/FailTrade.mp3", false);
         //sound->LoadSound("QuestClear", "../Resource/Sound/SFX/QuestClear.mp3", false);
         //sound->LoadSound("TalkNPC", "../Resource/Sound/SFX/TalkNPC.mp3", false);
+        sound->LoadSound("Typing", "../Resource/Sound/SFX/Typing.mp3", true);
+        sound->LoadSound("switch13", "../Resource/Sound/SFX/switch13.ogg", false);
         sound->LoadSound("PullLever", "../Resource/Sound/SFX/PullLever.mp3", false);
         sound->LoadSound("OperateBridge", "../Resource/Sound/SFX/OperateBridge.mp3", false);
+        sound->LoadSound("LevelUp", "../Resource/Sound/SFX/LevelUp.mp3", false);
     }
 
     /*----------------------Load Sprite----------------------------*/
@@ -513,6 +516,7 @@ HRESULT MainApp::LoadDefaultResource()
         {L"arrows",                   eUI, 3},
         {L"arrow",                    eUI, 3},
         {L"shopslot",                 eUI, 3},
+        {L"enderworld",               eUI, 3},
 
         // =====================================================================
         // Layer 4

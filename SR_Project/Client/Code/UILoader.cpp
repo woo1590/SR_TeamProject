@@ -99,6 +99,7 @@
 #include "ShopSlot.h"
 #include "ShopTooltip.h"
 #include "ShopBtn.h"
+#include "QuestSystem.h"
 
 // DeathUI
 #include "PlayerDeathUI.h"
@@ -120,6 +121,9 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     auto* tooltipMgr = uiMgr->GetTooltip();
     auto* dialogMgr = uiMgr->GetDialog();
     auto* shopMgr = uiMgr->GetShop();
+    auto* quest = uiMgr->GetQuestSystem();
+
+    quest->LoadDataFrom();
 
     ADD(Cursor::Create(objMgr));
 
@@ -214,8 +218,9 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
     auto hpback = HPBarBack::Create(objMgr);
     ADD(hpback);
 
-    //auto arrows = Arrows::Create(objMgr);
-    //ADD(arrows);
+    auto arrows = Arrows::Create(objMgr);
+    dynamic_cast<Player*>(objMgr->GetFrontObject(ObjectType::Player))->SetArrows(arrows);
+    ADD(arrows);
 
     auto expFront = ExpBarFront::Create(objMgr);
     playerInfo->Attach(expFront->GetComponent<ProgressBar<PlayerInfo>>());
@@ -445,8 +450,8 @@ void UILoader::BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr)
     auto atri = Atri::Create(objMgr);
     ADD(atri);
 
-    auto angry = Angry::Create(objMgr);
-    ADD(angry);
+    //auto angry = Angry::Create(objMgr);
+    //ADD(angry);
 
     panel->AddChild(atri);
 

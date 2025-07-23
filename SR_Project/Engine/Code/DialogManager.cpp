@@ -7,6 +7,8 @@
 #include "RenderSystem.h"
 #include "EngineCore.h"
 #include "QuestSystem.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
 
 void DialogManager::StartDialog(DialogComponent* dialog)
 {
@@ -64,6 +66,8 @@ void DialogManager::ShowCurLine()
 	typingTimer = 0.f;
 	isLineFullyDisplayed = false;
 
+	soundPlayTimer = minSoundDelay;
+
 	font->ClearText();
 
 	font->SetVisible(true);
@@ -96,31 +100,38 @@ void DialogManager::EndDialog()
 
 void DialogManager::Update(float dt)
 {
-	if (curDialog && curDialog->IsTalking() && !isLineFullyDisplayed && font)
+	if (!curDialog || !curDialog->IsTalking() || isLineFullyDisplayed || !font) return;
+
+	typingTimer += dt;
+	soundPlayTimer += dt;
+	
+	while (typingTimer >= typingSpeed)
 	{
-		typingTimer += dt;
+		typingTimer -= typingSpeed;
 
-		while (typingTimer >= typingSpeed)
+		if (displayedText.length() < curLine.text.length())
 		{
-			typingTimer -= typingSpeed;
+			const wchar_t newChar = curLine.text[displayedText.length()];
+			displayedText += newChar;
 
-			if (displayedText.length() < curLine.text.length())
+			if (newChar != L' ' && soundPlayTimer >= minSoundDelay)
 			{
-				displayedText += curLine.text[displayedText.length()];
-
-				font->ClearText();
-				RECT dialogRect = {200, 560, 1100, 700};
-				font->AddText(displayedText, dialogRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
-
-				RECT nameRect = {200, 500, 600, 540};
-				font->AddText(curDialog->GetSpeakerName(),
-					nameRect, Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+				EngineCore::GetInstance()->GetSoundManager()->PlaySFX("switch13");
+				soundPlayTimer = 0.f;
 			}
-			else
-			{
-				isLineFullyDisplayed = true;
-				break;
-			}
+
+			font->ClearText();
+
+			RECT nameRect = {200, 500, 600, 540};
+			font->AddText(curDialog->GetSpeakerName(), nameRect, Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+
+			RECT dialogRect = {200, 560, 1100, 700};
+			font->AddText(displayedText, dialogRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+		}
+		else
+		{
+			isLineFullyDisplayed = true;
+			break;
 		}
 	}
 }

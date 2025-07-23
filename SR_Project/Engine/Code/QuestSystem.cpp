@@ -10,6 +10,8 @@
 #include "EngineCore.h"
 #include "InputSystem.h"
 #include "RenderSystem.h" 
+#include "InventoryComponent.h"
+#include "UIManager.h"
 
 namespace 
 {
@@ -66,6 +68,29 @@ QuestStatus QuestSystem::GetStatus(QuestType type) const
             return quest.status;
 
     return QuestStatus::NotStarted;
+}
+
+void QuestSystem::LoadDataFrom()
+{
+    auto invComp = uiMgr->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player)->GetComponent<InventoryComponent>();
+    if (invComp->HasQuestData())
+    {
+        quests = invComp->GetQuestData();
+        for (int i{}; i < quests.size(); ++i)
+        {
+            if (quests[i].status == QuestStatus::InProgress)
+            {
+                activeIdx = i;
+                break;
+            }
+        }
+    }
+}
+
+void QuestSystem::SaveDataTo()
+{
+    auto invComp = uiMgr->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player)->GetComponent<InventoryComponent>();
+    invComp->SetQuestData(quests);
 }
 
 void QuestSystem::ReportQuestProgress(QuestType type, int amount)
