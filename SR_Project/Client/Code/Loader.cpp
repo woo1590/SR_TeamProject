@@ -122,11 +122,7 @@ HRESULT Loader::Load_Stage2()
 	/*--------------------Load Chunk----------------------*/
 	{
 		chunkload->LoadChunk(L"../../Reference/MapData/Stage2.chunkmap");
-		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
-
-
-		sound->LoadSound("PullLever", "../Resource/Sound/BGM/PullLever.mp3", false);
-		sound->LoadSound("OperateBridge", "../Resource/Sound/BGM/OperateBridge.mp3", false);
+		
 	}
 
 	return S_OK;
