@@ -104,46 +104,106 @@ void NPCShop::InitDialog()
     auto dialog = AddComponent<DialogComponent>();
 
     dialogSets = {
-        // EquipItem 시작
+        // [1] 첫 만남 -> 소녀의 기도 (EquipItem) 
+        // 숲 속에서 공포에 떨다가 플레이어를 발견하고, 그의 안전을 걱정하며 갑옷을 건넨다
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::NotStarted; },
-        {
-        {L"까아~ 어서오세요, 제현님!", Emotion::Happy},
-        {L"이런 낯선 곳까지 오시다니, 정말 대단해요! 사실 제가 길을 잃어서 곤란하던 참이었거든요.", Emotion::Emm},
-        {L"우선 장비 하나 장착해보세요! (인벤토리 열어서 아무거나요~)", Emotion::Happy},
-        },
-        [=] {quest->AcceptQuest(QuestType::EquipItem); }},
+    {
+        {L"(고요한 숲 속, 나무 덤불 속에서 미세한 움직임이 느껴진다.)", Emotion::p18},
+        {L"(자세히 보니, 한 소녀가 겁에 질린 채 웅크리고 있다.)", Emotion::p14},
+        {L"…흐읍…!", Emotion::p14},
+        {L"누, 누구세요…? 저리 가요! 괴물들이 몰려올지도 몰라요…!", Emotion::p12},
+        {L"…당신은… 그들과는 다른 것 같네요.", Emotion::p11},
+        {L"하지만 그 장비로는 너무 위험해 보여요. 제가… 마을에서 도망칠 때 겨우 챙겨온 갑옷이에요.", Emotion::p3},
+        {L"부디 이걸 입어주세요. 당신이 무사해야… 저도 희망을 가질 수 있으니까요.", Emotion::p6},
 
-        // EquipItem 미완료 리마인드
+    }, [=] {quest->AcceptQuest(QuestType::EquipItem); }},
+
+    // [2] 소녀의 기도 (EquipItem) 진행 중 리마인드
+    // 플레이어가 갑옷을 입기를 간절히 바란다
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::InProgress; },
-        {
-        {L"에이, 아직도요? 제 말은 귓등으로 들으셨나 봐요! 흥!", Emotion::Emm},
-        {L"험한 곳이라구요! 어서 인벤토리에서 장비 하나만이라도 꺼내 입어주세요!", Emotion::CloseEye},
-        }},
+    {
+        {L"그 갑옷... 입어주지 않으실 건가요? 제가 가진 전부인데…", Emotion::p3},
+        {L"이 험한 숲에선 한순간의 방심이 목숨을 앗아갈 수 있어요…", Emotion::p2},
+    }},
 
-        // EquipItem 완료 -> killMonsters 시작
+    // [3] 소녀의 기도 완료 -> 희망의 증명 (KillMonsters) 퀘스트 수락
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::Completed &&
         quest->GetStatus(QuestType::KillMonsters) == QuestStatus::NotStarted; },
-        {
-        {L"오! 훨씬 든든해 보여요! 역시 제현님!", Emotion::Brave},
-        {L"그런데... 저 숲에서 자꾸 이상한 소리가 들려와서 무서워요.", Emotion::Sad},
-        {L"저 때문에 위험에 빠트리는 것 같아 미안하지만... 근처 몬스터 세마리만 물리쳐 주실 수 있을까요?", Emotion::Confuse},
-        }, [=] {quest->AcceptQuest(QuestType::KillMonsters); }},
+    {
+        {L"다행이다… 이제 조금은 안심이 돼요.", Emotion::p8},
+        {L"(주변에서 몬스터의 울음소리가 들려온다.)", Emotion::p14},
+        {L"안돼요! 여기까지 쫓아왓아요! 조심하세요!", Emotion::p14},
+    }, [=] {quest->AcceptQuest(QuestType::KillMonsters); }},
 
-        // KillMonsters 리마인드
+    // [4] 희망의 증명 (KillMonsters) 진행중 리마인드
+    // 자신을 지켜주는 플레이어를 보며 희망을 갖고 응원
         {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::InProgress; },
-        {
-        {L"조금만 더요! 제현님이라면 문제없을 거예요", Emotion::Happy},
-        {L"제가 여기서 열심히 응원하고 있어요!!", Emotion::CloseEye},
-        }},
+    {
+        {L"굉장해요! 당신이라면 할 수 있을 줄 알았어요!", Emotion::p8},
+        {L"조금만 더 힘내세요! 제가 여기서 기도하고 있을께요!", Emotion::p1},
+    }},
 
-        // KillMonsters 완료 -> ReachVillage 시작
-        {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::Completed
-        && quest->GetStatus(QuestType::ReachVillage) == QuestStatus::NotStarted; },
+    // [5] 희망의 증명 완료 -> 쓸쓸한 귀향 (ReachVillage) 퀘스트 수락
+    // 자신을 구해준 플레이어에게 완전히 의지하며, 함께 마을로 가달라고 부탁한다
+        {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::Completed &&
+        quest->GetStatus(QuestType::ReachVillage) == QuestStatus::NotStarted; },
+    {
+        {L"…정말… 정말 해내셨군요. 흑…", Emotion::p9},
+        {L"고마워요. 당신 덕분에 용기가 생겼어요.", Emotion::p9},
+        {L"함께 가주시겠어요? 폐허가 되어버렸지만… 저의 유일한 집인 마을로요.", Emotion::p17},
+    }, [=] {quest->AcceptQuest(QuestType::ReachVillage); }},
+
+    // [6] 쓸쓸한 귀향 완료 (마을 도착) -> 새로운 가족 (BuyPig) 퀘스트 수락
+    // 폐허가 된 마을에 절망하지만, 떠나려는 상인의 아기 돼지를 보고 새로운 희망을 발견한다.
+        {[=] { return quest->GetStatus(QuestType::ReachVillage) == QuestStatus::Completed &&
+        quest->GetStatus(QuestType::BuyPig) == QuestStatus::NotStarted; },
         {
-        {L"세상에! 정말 몬스터들을 다 물리치셨군요! 역시 저의 영웅님!", Emotion::Brave},
-        {L"이제 안심하고 마을로 갈 수 있겠어요. 이젠 저와 함께 마을로 돌아가 볼까요?", Emotion::Happy},
-        {L"마을에 가면 제 친구들도 제현님을 보고 싶어 할 거예요", Emotion::Happy},
-        }, [=] {quest->AcceptQuest(QuestType::ReachVillage); }},
+            {L"아… 아아… 전부… 전부 무너졌어요. 이제 정말 다 끝이야…", Emotion::p3},
+        {L"(떠나려는 상인의 짐수레에서 아기 돼지의 울음소리가 들린다.)", Emotion::p6},
+        {L"저기… 저 아이 좀 보세요. 이 잿더미 속에서도 살아있어요.", Emotion::p8},
+        {L"부탁이에요. 저 아이를… 우리 마을의 새로운 가족으로 맞아주실 수 없을까요?", Emotion::p3},
+        },
+        [=] { quest->AcceptQuest(QuestType::BuyPig); }},
+
+        // [7] 새로운 가족 (BuyPig) 완료 -> 대지를 잠재워줘 (KillRedGolem) 퀘스트 수락
+        // 아기 돼지와 함께 기뻐하는 순간, 땅의 울림에 공포를 느끼고 그 원인을 제거해달라고 부탁한다.
+        {[=] { return quest->GetStatus(QuestType::BuyPig) == QuestStatus::Completed &&
+        quest->GetStatus(QuestType::KillRedGolem) == QuestStatus::NotStarted; },
+        {
+            {L"고마워요! 이제 우리에겐 새로운 가족이 생겼어요!", Emotion::p19},
+        {L"(땅이 크게 흔들리며 아기 돼지가 겁에 질려 꿀꿀거린다.)", Emotion::p8},
+        {L"이, 이 진동은…! '하늘섬'의 '레드 골렘'이 틀림없어요.", Emotion::p14},
+        {L"저 분노의 울음이 멎지 않는 한, 우리 가족은 편히 쉴 수 없어요. 제발… 골렘을 멈춰주세요!", Emotion::p3},
+        },
+        [=] { quest->AcceptQuest(QuestType::KillRedGolem); }},
+
+        // [8] 대지를 잠재워줘 (KillRedGolem) 완료 -> 악몽의 종언 (KillEnder) 퀘스트 수락
+        // 물리적 위협이 사라진 마을에 남은 마지막 공포, '엔더'에 대해 이야기한다.
+        {[=] { return quest->GetStatus(QuestType::KillRedGolem) == QuestStatus::Completed &&
+        quest->GetStatus(QuestType::KillEnder) == QuestStatus::NotStarted; },
+        {
+            {L"진동이… 멎었어요! 정말 해내셨군요!", Emotion::p16},
+        {L"하지만… 아직 끝이 아니에요. 밤이 되면… 사람들의 마음속 절망을 파고드는 그림자가 나타나요.", Emotion::p11},
+        {L"모두가 그 악몽 때문에 돌아오지 못하고 있어요. 마을의 마지막 공포, '엔더'를 물리쳐주세요.", Emotion::p7},
+        },
+        [=] { quest->AcceptQuest(QuestType::KillEnder); }},
+
+        // [9] 모든 퀘스트 완료 후
+        // 평화를 되찾은 마을에서 플레이어에게 진심으로 감사한다.
+        {[=] { return quest->GetStatus(QuestType::KillEnder) == QuestStatus::Completed; },
+        {
+            // 1. 플레이어를 안심시킨다
+            {L"당신 덕분에… 우리 마을은 다시 살아났어요.", Emotion::p16},
+        {L"정말… 정말 고마워요.", Emotion::p9},
+
+        // 2. 가까이 다가와 감사를 표하는 척하며 찌른다.
+        {L"(아리아가 플레이러를 껴안는 척하며 날카로운 무언가로 찌른다.)", Emotion::p23},
+
+        // 3. 충격적인 진실을 밝히낟
+        {L"…이 마을을 되살리려면… 아주 강한 영혼이 제물로 필요했거든요.", Emotion::p22},
+        {L"엔더까지 물리친 당신의 영혼이라면… '그분'도 분명 만족하시겠죠.", Emotion::p22},
+        {L"이제… 이게 진짜 시작이에요. 우리의… 영원한 마을.", Emotion::p5},
+        }},
     };
 }
 

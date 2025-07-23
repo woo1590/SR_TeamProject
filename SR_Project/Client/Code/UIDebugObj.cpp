@@ -58,7 +58,9 @@ void UIDebugObj::Update(float dt)
 		frameCount = 0;
 	}
 
-	font->AddText(L"FPS: " + to_wstring((int)fps), { 900,250,1250,450 }, Color::Cyan,DT_LEFT, FontType::Title);
+	font->AddText(L"FPS: " + to_wstring((int)fps), {900, 250, 1250, 450}, Color::Cyan, DT_LEFT, FontType::Title);
+	font->AddText(to_wstring((int)playerInfo->GetInfo().gold), 
+		{1040,655,1150,700}, Color::White, DT_LEFT, FontType::CookieRunFont);
 
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::ESC))

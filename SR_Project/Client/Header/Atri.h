@@ -5,8 +5,7 @@
 class Atri : public Object
 {
 private:
-	Atri(ObjectManager* owner)
-		:Object(owner, ObjectType::UI) {}
+	Atri(ObjectManager* owner) :Object(owner, ObjectType::UI) {}
 
 public:
 	static Atri* Create(ObjectManager* owner);

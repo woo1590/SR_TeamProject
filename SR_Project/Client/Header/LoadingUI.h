@@ -40,8 +40,8 @@ private:
 	bool mainAnimFinished = false;
 	float tipLoopTimer = 0.f;
 
-	static constexpr float TIP_DURATION = 2.5f;
-	static constexpr float scaleDur = 2.5f;
+	static constexpr float TIP_DURATION = 6.f;
+	static constexpr float scaleDur = 6.f;
 
 	vector<TipAndTexture> tipPool;
 	vector<size_t> tipIndices;
@@ -60,4 +60,6 @@ private:
 	wstring staticMsg;
 	LoadingState curState = LoadingState::Intro;
 	LoadingState nextStateAfterIntro = LoadingState::TipLoop;
+
+	inline static bool isFirstLoadToVillage = true;
 };

@@ -154,10 +154,19 @@ void UILoader::BuildInventory(ObjectManager* objMgr, InventoryManager* invMgr)
 
     auto equipFunc = [player, invComp](ItemType type) {player->EquipItem(type); invComp->Equip(type); };
     auto unequipFunc = [player, invComp](ItemType type){player->UnEquipItem(type); invComp->UnEquip(type); };
-    auto createFunc = [objMgr](ItemType type)->Object*
+    auto createFunc = [objMgr,equipFunc,unequipFunc](ItemType type)->Object*
         {
             Object* itemObj = CreateInventoryObj(objMgr, type);
-            if (itemObj) ADD(itemObj);
+            if (itemObj)
+            {
+                ADD(itemObj);
+                auto itemComp = itemObj->GetComponent<ItemComponent>();
+                if (itemComp)
+                {
+                    itemComp->SetEquipCallBack([equipFunc, type](Object*) {equipFunc(type); });
+                    itemComp->SetUnEquipCallBack([unequipFunc, type](Object*) {unequipFunc(type); });
+                }
+            }
             return itemObj;
         };
 
@@ -175,7 +184,11 @@ void UILoader::BuildInventory(ObjectManager* objMgr, InventoryManager* invMgr)
         {
             SlotItemType category = invMgr->GetSlotCategory(itemType);
             SlotComponent* equipSlot = invMgr->FindSlotByType(category);
-            if (equipSlot) equipSlot->SetItem(itemObj);
+            if (equipSlot)
+            {
+                equipSlot->SetItem(itemObj);
+                player->EquipItem(itemType);
+            }
         }
     }
 

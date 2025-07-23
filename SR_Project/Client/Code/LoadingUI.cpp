@@ -3,6 +3,8 @@
 #include "TransformComponent.h"
 #include "UIRenderer.h"
 #include "FontComponent.h"
+#include "LoadingStone.h"
+#include "ObjectManager.h"
 
 LoadingUI* LoadingUI::Create(ObjectManager* owner)
 {
@@ -55,9 +57,33 @@ void LoadingUI::SetInfo(LOADID nextSceneID)
 	switch (nextSceneID)
 	{
 	case LOADID::Village:
-		nextStateAfterIntro = LoadingState::Static;
-		info.texturePath = L"loadingscene";
-		staticMsg = L"계속하려면 아무 키나 누르세요.";
+		if (isFirstLoadToVillage)
+		{
+			nextStateAfterIntro  = LoadingState::Static;
+			info.texturePath     = L"loadingscene";
+			staticMsg            = L"계속하려면 아무 키나 누르세요.";
+			isFirstLoadToVillage = false;
+		}
+		else
+		{
+			nextStateAfterIntro = LoadingState::TipLoop;
+			info.texturePath    = L"loadingscene_stage0";
+			info.sceneName      = L"마을";
+			info.sceneTip       = L"마을에서는 주민들과 거래할 수 있습니다.";
+
+			prefixText    = L"다음으로 이동";
+			sceneNameText = info.sceneName;
+			sceneTipText  = L"Tip: " + info.sceneTip; 
+			staticMsg.clear();
+
+			if (!tipIndices.empty())
+			{
+				random_device random;
+				mt19937 g(random());
+				shuffle(tipIndices.begin(), tipIndices.end(), g);
+				curTipIdx = 0;
+			}
+		}
 		break;
 
 	case LOADID::Stage1:
@@ -75,24 +101,26 @@ void LoadingUI::SetInfo(LOADID nextSceneID)
 		if (nextSceneID == LOADID::Stage1)
 		{
 			info.texturePath = L"loadingscene_stage1";
-			info.sceneName = L"선인장 협곡";
-			info.sceneTip = L"좀비는 단단한 갑옷을 입고 있습니다";
+			info.sceneName   = L"하늘섬";
+			info.sceneTip    = L"좀비는 단단한 갑옷을 입고 있습니다";
 		}
 		else 
 		{
 			info.texturePath = L"loadingscene_stage2";
-			info.sceneName = L"레드스톤 광산";
-			info.sceneTip = L"낙하하는 함정을 조심하세요!";
+			info.sceneName   = L"앤더 월드";
+			info.sceneTip    = L"낙하하는 함정을 조심하세요!";
 		}
-		prefixText = L"다음으로 이동";
+		prefixText    = L"다음으로 이동";
 		sceneNameText = info.sceneName;
+		sceneTipText  = L"Tip: " + info.sceneTip;
 		staticMsg.clear();
 		break;
 	}
 	renderer->SetTexture(info.texturePath);
+
+	if (nextStateAfterIntro != LoadingState::Static)
+		owner->AddUIObject(LoadingStone::Create(owner));
 }
-
-
 
 void LoadingUI::Update_Scaling(float dt)
 {

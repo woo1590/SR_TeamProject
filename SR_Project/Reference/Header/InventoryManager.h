@@ -34,7 +34,8 @@ public:
 
 	SlotItemType GetSlotCategory(ItemType type) { return itemTable.at(type).category; }
 
-	void BindInventory(ItemActionCallBack&& equipCallBack,ItemActionCallBack&& unequipCallBack, CreateItemCallBack&& createCallBack);
+	void BindInventory(ItemActionCallBack&& equipCallBack,ItemActionCallBack&& unequipCallBack,
+		CreateItemCallBack&& createCallBack);
 	void SetPlayer(Object* _player) { player = _player; }
 	SlotComponent* FindSlotByType(SlotItemType typeToFind);
 	bool RemoveItemFromSelectedSlot(ItemType& out);
