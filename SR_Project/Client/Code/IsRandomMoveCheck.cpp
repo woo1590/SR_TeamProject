@@ -38,13 +38,8 @@ BTStatus IsRandomMoveCheck::Tick(float dt, BlackBoard* bb)
 		return Child->Tick(dt, bb);
 	else
 	{
-		if (self->GetComponent<PhysicsComponent>()->IsGrounded())
-		{
-			static_cast<Ender*>(self)->MoveTo(*targetPos, dt);
-			return BTStatus::Running;
-		}
-		else
-			return BTStatus::Success;
+		static_cast<Ender*>(self)->MoveTo(*targetPos, dt);
+		return BTStatus::Running;
 	}
 }
 

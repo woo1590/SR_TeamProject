@@ -25,6 +25,7 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 	_vec3* targetPos = static_cast<_vec3*>(bb->GetValue("targetPos"));
 
 	if (self == nullptr) return BTStatus::Failure;
+
 	Ender* ender = static_cast<Ender*>(self);
 
 	if (*Attack) return BTStatus::Running;
@@ -32,15 +33,27 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 	{
 		auto transform = self->GetComponent<TransformComponent>();
 		_vec3 pos = transform->GetPosition();
-		int randx = rand() % 10 + 15;
-		int randz = rand() % 10 + 15;
+		int randx = rand() % 15 + 15;
+		int randz = rand() % 15 + 15;
 
 		if (rand() % 2) randx *= -1;
 		if (rand() % 2) randz *= -1;
 
-		randx += pos.x;
-		randz += pos.z;
-		*targetPos = _vec3(randx, pos.y, randz);
+		int finalx = pos.x + randx;
+		int finalz = pos.z + randz;
+
+		if (finalx > 180 || finalx < 82)
+		{
+			randx *= -1;
+			finalx = pos.x + randx;
+		}
+
+		if (finalz > 530 || finalz < 400)
+		{
+			randz *= -1;
+			finalz = pos.z + randz;
+		}
+		*targetPos = _vec3(finalx, pos.y, finalz);
 		return BTStatus::Success;
 	}
 
@@ -51,15 +64,27 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 		ender->CrawlToStand();
 		auto transform = self->GetComponent<TransformComponent>();
 		_vec3 pos = transform->GetPosition();
-		int randx = rand() % 10 + 15;
-		int randz = rand() % 10 + 15;
+		int randx = rand() % 15 + 15;
+		int randz = rand() % 15 + 15;
 
 		if (rand() % 2) randx *= -1;
 		if (rand() % 2) randz *= -1;
 
-		randx += pos.x;
-		randz += pos.z;
-		*targetPos = _vec3(randx, pos.y, randz);
+		int finalx = pos.x + randx;
+		int finalz = pos.z + randz;
+
+		if (finalx > 180 || finalx < 82)
+		{
+			randx *= -1;
+			finalx = pos.x + randx;
+		}
+
+		if (finalz > 530 || finalz < 400)
+		{
+			randz *= -1;
+			finalz = pos.z + randz;
+		}
+		*targetPos = _vec3(finalx, pos.y, finalz);
 		return BTStatus::Success;
 	}
 	case EnderState::HideIdle:
@@ -69,7 +94,8 @@ BTStatus StateAttackNode::Tick(float dt, BlackBoard* bb)
 
 	case EnderState::Stand:
 	{
-		switch (rand() % 2)
+		static int index = 0;
+		switch ((++index)%2)
 		{
 		case 0:
 			ender->CrossLaserAttack();

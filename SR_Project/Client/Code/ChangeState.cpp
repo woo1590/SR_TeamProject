@@ -36,19 +36,31 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 	if (rand() % 2) randx *= -1;
 	if (rand() % 2) randz *= -1;
 
-	randx += pos.x;
-	randz += pos.z;
+	int finalx = pos.x + randx;
+	int finalz = pos.z + randz;
+
+	if (finalx > 180 || finalx < 82)
+	{
+		randx *= -1;
+		finalx = pos.x + randx;
+	}
+
+	if (finalz > 530 || finalz < 400)
+	{
+		randz *= -1;
+		finalz = pos.z + randz;
+	}
 
 	switch (ender->GetState())
 	{
 	case EnderState::Crawl:
 		ender->CrawlToStand();
-		*targetPos = _vec3(randx, 0.f, randz);
+		*targetPos = _vec3(finalx, 0.f, finalz);
 		return BTStatus::Success;
 
 	case EnderState::HideIdle:
 		ender->Sprout();
-		*targetPos = _vec3(randx, 0.f, randz);
+		*targetPos = _vec3(finalx, 0.f, finalz);
 		return BTStatus::Success;
 
 	case EnderState::Stand:
@@ -57,12 +69,12 @@ BTStatus ChangeStateNode::Tick(float dt, BlackBoard* bb)
 		{
 		case 0:
 			ender->StandToCrawl();
-			*targetPos = _vec3(randx, 0.f, randz);
+			*targetPos = _vec3(finalx, 0.f, finalz);
 			return BTStatus::Success;
 
 		case 1:
 			ender->Hide();
-			*targetPos = _vec3(randx, 0.f, randz);
+			*targetPos = _vec3(finalx, 0.f, finalz);
 			return BTStatus::Success;
 		}
 	}

@@ -29,6 +29,7 @@ public:
     void SetActive(_bool Active);
     void SetDir(HeadDir dir);
 
+    _bool IsActive()const { return isActive; }
 private:
     void InitAnimation();
     void PlayAnimation(_float dt);
@@ -42,7 +43,7 @@ protected:
 
 private:
     _float          ElapsedTime = 0.f;
-    _bool           IsActive;
+    _bool           isActive;
     unordered_map<string, Object*>  Bones;
 
     vector<Object*>                 Lasers;

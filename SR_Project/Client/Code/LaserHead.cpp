@@ -41,8 +41,9 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto collision = AddComponent<CollisionComponent>();
     collision->AddCollider<AABBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
-    collision->SetLayer(LAYER_ENEMY);
+    collision->SetLayer(LAYER_PROJECTILE);
     collision->SetMask(LAYER_PLAYER | LAYER_DEFAULT);
+    collision->SetSize(_vec3(4.f, 4.f, 4.f));
 
     Bones["BottomHead"] = Bone::Create(owner, ObjectType::Bone, _vec3(1.f, 1.f, 1.f), this, "EnderBottomHead_Mtrl");
     Bones["TopHead"] = Bone::Create(owner, ObjectType::Bone, _vec3(1.f, 1.f, 1.f), Bones["BottomHead"], "EnderTopHead_Mtrl");
@@ -71,7 +72,8 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
         Lasertransform->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
         Lasertransform->SetScale(_vec3(40.f * Scale, 0.5f, 1.f));
         auto collision = Laser->GetComponent<CollisionComponent>();
-        collision->SetSize(_vec3(1.f, 1.f, 40.f));
+        collision->SetSize(_vec3(40.f, 1.f, 1.f));
+        static_cast<LaserEffect*>(Laser)->SetActive(false);
     }
 
     Lasers[0]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
@@ -101,16 +103,20 @@ void LaserHead::Late_Update(_float dt)
 
 void LaserHead::SetActive(_bool Active)
 {
-    IsActive = Active;
+    isActive = Active;
 
-    if (IsActive)
+    auto collision = GetComponent<CollisionComponent>();
+
+    if (isActive)
     {
         for (auto& bone : Bones)
             bone.second->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_NonAlpha);
         State = HeadState::Open;
         StartAnim.ElapsedTime = 0.f;
         for (auto& Laser : Lasers)
-            static_cast<LaserEffect*>(Laser)->SetActive(false);
+            static_cast<LaserEffect*>(Laser)->SetActive(true);
+
+       // collision->SetSize(_vec3(40.f, 1.f, 1.f));
     }
     else
     {
@@ -120,7 +126,12 @@ void LaserHead::SetActive(_bool Active)
         State = HeadState::Close;
         for (auto& Laser : Lasers)
             static_cast<LaserEffect*>(Laser)->SetActive(false);
+
+       // collision->SetSize(_vec3(0.f, 0.f, 0.f));
     }
+
+    auto physics = GetComponent<PhysicsComponent>();
+    physics->SetVelocity(0.f, 0.f, 0.f);
 }
 
 void LaserHead::InitAnimation()
@@ -135,7 +146,7 @@ void LaserHead::InitAnimation()
     EndAnim.TotalTime = 0.7f;
     EndAnim.ElapsedTime = 0.f;
 
-    IdleAnim.TotalTime = 5.f;
+    IdleAnim.TotalTime = 10.f;
     IdleAnim.ElapsedTime = 0.f;
 }
 
@@ -173,6 +184,7 @@ void LaserHead::PlayOpen(_float dt)
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("LineLaserEnder");
         State = HeadState::Idle;
         IdleAnim.ElapsedTime = 0.f;
+        StartAnim.ElapsedTime = 0.f;
     }
 }
 
@@ -183,6 +195,7 @@ void LaserHead::PlayIdle(_float dt)
     if (IdleAnim.ElapsedTime > IdleAnim.TotalTime)
     {
         State = HeadState::Close;
+        EndAnim.ElapsedTime = 0.f;
     }
 }
 
@@ -201,6 +214,9 @@ void LaserHead::PlayClose(_float dt)
     {
         State = HeadState::Idle;
         SetActive(false);
+        for (auto& laser : Lasers)
+            laser->SetDead();
+        SetDead();
     }
 }
 

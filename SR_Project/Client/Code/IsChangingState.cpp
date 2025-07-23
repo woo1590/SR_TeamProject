@@ -24,10 +24,11 @@ BTStatus IsChangingState::Tick(float dt, BlackBoard* bb)
 	Object* self = static_cast<Object*>(bb->GetValue("Self"));
 
 	if (self == nullptr) return BTStatus::Failure;
-	
+
 	EnderState state = static_cast<Ender*>(self)->GetState();
-	
-	if (state == EnderState::CrawlToStand || state == EnderState::StandToCrawl)
+
+	if (state == EnderState::CrawlToStand || state == EnderState::StandToCrawl
+	|| state == EnderState::Hidden || state == EnderState::Sprout)
 		return BTStatus::Running;
 
 	else

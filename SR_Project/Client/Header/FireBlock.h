@@ -18,7 +18,8 @@ public:
     void SetActiveTime(_float time) { activeTime = time; }
     void SetActiveTimer(_float time) { activeTimer = time; }
     void SetActive(_bool Active);
-    void    OnCollisionStay(Object* other);
+    _bool GetActive();
+    void OnCollisionStay(Object* other);
 private:
     void Free()override;
 

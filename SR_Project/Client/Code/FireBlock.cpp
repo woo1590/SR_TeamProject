@@ -37,7 +37,7 @@ HRESULT FireBlock::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 
-	auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_Alpha);
+	auto renderer = AddComponent<MeshRenderer>(RENDER_ID::Render_None);
 	renderer->SetMesh("Cube_Mesh");
 	renderer->SetMaterial("FireBlock_Mtrl");
 
@@ -46,7 +46,7 @@ HRESULT FireBlock::Ready_Object()
 	GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
 	collision->SetLayer(LAYER_PROJECTILE);
 	collision->SetMask(LAYER_PLAYER);
-	collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
+	collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other); });
 	collision->SetSize(_vec3(1.f, 1.f, 1.f));
 
 	auto physics = AddComponent<PhysicsComponent>();
@@ -58,6 +58,9 @@ HRESULT FireBlock::Ready_Object()
 	mtrl->SetVec3("uvScale", _vec3(1.f / 16.f, 1.f, 0.f));
 	mtrl->SetVec3("uvOffset", _vec3(0.f, 0.f, 0.f));
 	SetColor(color);
+
+	SetActive(false);
+
 	return S_OK;
 }
 
@@ -90,7 +93,11 @@ void FireBlock::Update(_float dt)
 		{
 			activeTimer += dt;
 			if (activeTimer >= activeTime)
-				SetActive(false);
+			{
+				SetActive(false); 
+				activeTime = 0.f; 
+				activeTimer = 0.f;
+			}
 		}
 	}
 
@@ -113,6 +120,7 @@ void FireBlock::SetActive(_bool Active)
 {
 	auto renderer = GetComponent<MeshRenderer>();
 	auto collision = GetComponent<CollisionComponent>();
+
 	if (Active)
 	{
 		renderer->SetRenderID(RENDER_ID::Render_Alpha);
@@ -125,6 +133,12 @@ void FireBlock::SetActive(_bool Active)
 	}
 }
 
+_bool FireBlock::GetActive()
+{
+	if (deadTime || activeTime) return true;
+	return false;
+}
+
 void FireBlock::OnCollisionStay(Object* other)
 {
 	ObjectType objType = other->GetObjectType();
@@ -132,7 +146,7 @@ void FireBlock::OnCollisionStay(Object* other)
 	if (objType == ObjectType::Player)
 	{
 		auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
-		playerStat->AddHp(-1);
+		playerStat->AddHp(-1.f);
 	}
 }
 

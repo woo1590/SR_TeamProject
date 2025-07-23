@@ -28,6 +28,7 @@
 #include "QuestSystem.h"
 #include "Object.h"
 #include "scene.h"
+#include "PhysicsComponent.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -61,18 +62,17 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     InitAnimation();
 
     auto collision = GetComponent<CollisionComponent>();
-    collision->SetSize(_vec3(10.f, 20.f, 20.f));
+    collision->AddCollider<OBBCollider>();
+    collision->SetSize(_vec3(10.f, 20.f, 5.f));
 
     auto Info = GetComponent<InfoComponent<EnemyInfo>>();
     Info->SetInfo({ 9, 500, 500, 0,0,20, 0,0 });
 
-    Stand();
-    InitLaserHead();
+    CrawlToStand();
     InitCrossLaser();
     InitEnderProjectile();
-    InitFireBlock();
 
-    bossFront->SetBossName(L"¿£´õÀÇ ½ÉÀå");
+    bossFront->SetBossName(L"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 	return S_OK;
 }
 
@@ -80,6 +80,9 @@ void Ender::Update(_float dt)
 {
     Boss::Update(dt);
     PlayAnimation(dt);
+
+    auto stat = GetComponent<InfoComponent<EnemyInfo>>()->GetInfo();
+    if (stat.curHp <= 0) Die();
 }
 
 void Ender::Late_Update(_float dt)
@@ -231,7 +234,8 @@ void Ender::InitTree()
     bb->SetValue("TriggerCount", ChangeStateCount);
     IsAttack = new _bool(false);
     bb->SetValue("IsAttack", IsAttack);
-
+    IsDie = new _bool(false);
+    bb->SetValue("IsDie", IsDie);
     auto transform = GetComponent<TransformComponent>();
     _vec3 startPos = transform->GetPosition();
     TargetPos = new _vec3(startPos.x + 30, startPos.y, startPos.z + 40); //startpos setting->initialize after
@@ -248,7 +252,6 @@ void Ender::InitTree()
 
     SelectorNode* root = new SelectorNode();
     root->AddChild(isAlive);
-    root->AddChild(new DieNode());
 
     BehaviorTree* bt = BehaviorTree::Create(root);
 
@@ -274,8 +277,8 @@ void Ender::InitAnimation()
     HideAnim.ElapsedTime = 0.f;
     HideAnim.TotalTime = 1.5f;
 
-    SproutAnim.TotalTime = 1.5f;
     SproutAnim.ElapsedTime = 0.f;
+    SproutAnim.TotalTime = 1.5f;
 
     HeadAttackAnim.DelayTime = 2.f;
     HeadAttackAnim.ElapsedTime = 0.f;
@@ -287,6 +290,9 @@ void Ender::InitAnimation()
     ProjectileAttackAnim.TotalTime = 1.f;
     ProjectileAttackAnim.Start = 0.f;
     ProjectileAttackAnim.End = -45.f;
+
+    DieAnim.ElapsedTime = 0.f;
+    DieAnim.TotalTime = 7.5f;
 }
 
 void Ender::PlayAnimation(_float dt)
@@ -331,6 +337,11 @@ void Ender::Free()
     Boss::Free();
 }
 
+void Ender::SetTargetPos(_vec3 pos)
+{
+    *TargetPos = pos;
+}
+
 void Ender::Crawl()
 {
     if (enderState != EnderState::Crawl)
@@ -373,6 +384,7 @@ void Ender::Hide()
 {
     if (enderState != EnderState::Hidden)
     {
+        *IsDie = true;
         auto transform = Bones["Body"]->GetComponent<TransformComponent>();
         HideStartY = transform->GetPosition().y;
         enderState = EnderState::Hidden;
@@ -395,7 +407,6 @@ void Ender::Sprout()
 {
     if (enderState != EnderState::Sprout)
     {
-        auto transform = Bones["Body"]->GetComponent<TransformComponent>();
         enderState = EnderState::Sprout;
 
         SproutAnim.ElapsedTime = 0.f;
@@ -439,6 +450,7 @@ void Ender::LineLaserAttack()
         enderState = EnderState::LineLaser;
 
         HeadAttackAnim.ElapsedTime = 0.f;
+        HeadAttackAnim.DelayTime = 2.f;
     }
 }
 
@@ -478,15 +490,14 @@ void Ender::MoveTo(_vec3 targetPos, _float dt)
     _vec3 pos = transform->GetPosition();
 
     FireSpawnTime += dt;
-    if (FireSpawnTime > 0.15)
+    if (FireSpawnTime > 0.2f)
     {
-        auto FireTransform = FireBlocks[FireIndex]->GetComponent<TransformComponent>();
-        FireTransform->SetPosition(pos.x, pos.y - 9.f, pos.z);
-        FireBlocks[FireIndex]->SetActiveTime(5.f);
-        FireBlocks[FireIndex]->SetActiveTimer(0.f);
-        FireBlocks[FireIndex++]->SetActive(true);
+        auto fire = FireBlock::Create(owner, ObjectType::SpriteEffect);
+        fire->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y - 9.f, pos.z);
+        fire->SetActive(true);
+        fire->SetDeadTime(3.f);
+        owner->AddObject(ObjectType::SpriteEffect, fire);
 
-        if (FireIndex >= 50) FireIndex = 0;
         FireSpawnTime = 0.f;
     }
 
@@ -508,6 +519,8 @@ void Ender::Die()
     {
         enderState = EnderState::Die;
         GetScene()->GetUIManager()->GetQuestSystem()->ReportQuestProgress(QuestType::KillEnder, 1);
+        DieAnim.ElapsedTime = 0.f;
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathEnder");
     }
 }
 
@@ -524,30 +537,6 @@ EnderState Ender::GetState()
 int Ender::GetCurChangeStateCount()
 {
     return CurChangeStateCount;
-}
-
-void Ender::InitFireBlock()
-{
-    FireBlocks.reserve(50);
-
-    for (int i = 0; i < 50; ++i) 
-    {
-        auto fireblock = FireBlock::Create(owner, ObjectType::SpriteEffect);
-        FireBlocks.push_back(fireblock);
-        fireblock->SetActive(false);
-
-        fireblock->GetComponent<TransformComponent>()->SetPosition(0,0,0);
-
-        owner->AddObject(ObjectType::SpriteEffect, fireblock);
-    }
-}
-
-void Ender::InitLaserHead()
-{
-    LaserHeads.reserve(10);
-
-    for (int i = 0; i < 10; ++i)
-        LaserHeads.push_back(LaserHead::Create(owner, ObjectType::Bone));
 }
 
 void Ender::InitCrossLaser()
@@ -754,12 +743,19 @@ void Ender::PlayHide(_float dt)
            auto renderer = Bone.second->GetComponent<MeshRenderer>();
            renderer->SetRenderID(RENDER_ID::Render_None);
        }
+       *IsDie = false;
        HideIdle();
    }
 }
 
 void Ender::PlayHideIdle(_float dt)
 {
+    WalkTime += dt;
+    if (WalkTime > 0.3f)
+    {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkEnder");
+        WalkTime = 0.f;
+    }
 }
 
 void Ender::PlaySprout(_float dt)
@@ -801,26 +797,26 @@ void Ender::PlayLineLaserAttack(_float dt)
 
     if (LaserSpawnTime > 0.5f)
     {
+        LaserSpawnTime = 0.f;
+
         auto Transform = GetComponent<TransformComponent>();
         _vec3 Pos = Transform->GetPosition();
 
         _float RandX = rand() % 40 - 20;
         _float RandZ = rand() % 40 - 20;
 
-        _vec3 randPos = _vec3(Pos.x + RandX, Pos.y, Pos.z + RandZ);
-
-        LaserSpawnTime = 0.f;
-        auto projectileTransform = LaserHeads[LaserIndex]->GetComponent<TransformComponent>();
+        _vec3 randPos = _vec3(Pos.x + RandX, Pos.y + 50.f, Pos.z + RandZ);
+        auto laserhead = LaserHead::Create(owner, ObjectType::Bone);
+        auto projectileTransform = laserhead->GetComponent<TransformComponent>();
         projectileTransform->SetPosition(randPos);
-        static_cast<LaserHead*>(LaserHeads[LaserIndex])->SetDir(HeadDir(rand() % 4));
-        static_cast<LaserHead*>(LaserHeads[LaserIndex++])->SetActive(true);
 
-        if (LaserIndex >= 10) LaserIndex = 0;
+        laserhead->SetDir(HeadDir(rand() % 4));
+        laserhead->SetActive(true);
     }
 
     if (HeadAttackAnim.DelayTime < 0)
     {
-        HeadAttackAnim.IsEnd = true;
+        //HeadAttackAnim.IsEnd = true;
 
         (*IsAttack) = false;
         AttackAnim.IsEnd = true;
@@ -945,9 +941,14 @@ void Ender::PlayProjectileAttack(_float dt)
 
 void Ender::PlayDie(_float dt)
 {
-    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathEnder");
-    //SetDead();
-    //DeleteBar();
+    DieAnim.ElapsedTime += dt;
+
+    if (DieAnim.ElapsedTime > DieAnim.TotalTime)
+    {
+        for (auto& laser : CrossLasers) laser->SetDead();
+        SetDead();
+        DeleteBar();
+    }
 }
 
 void Ender::SetBoneSize()

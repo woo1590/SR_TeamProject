@@ -97,7 +97,7 @@ void EnderProjectile::CheckGround()
     if (physics->IsGrounded() && Visible)
     {
         physics->SetVelocity(_vec3(0.f, 0.f, 0.f));
-
+       
         auto transform = GetComponent<TransformComponent>();
         _vec3 pos = transform->GetPosition();
 
@@ -109,6 +109,7 @@ void EnderProjectile::CheckGround()
             _vec3 randpos = _vec3(randx + pos.x, pos.y, randz + pos.z);
             auto fire = FireBlock::Create(owner, ObjectType::SpriteEffect);
             fire->GetComponent<TransformComponent>()->SetPosition(randpos);
+            fire->SetActive(true);
             fire->SetDeadTime(5.f);
             fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));
             owner->AddObject(ObjectType::SpriteEffect, fire);
@@ -125,14 +126,17 @@ void EnderProjectile::Free()
 void EnderProjectile::SetVisible(_bool visible)
 {
     auto renderer = GetComponent<MeshRenderer>();
+    auto collision = GetComponent<CollisionComponent>();
     Visible = visible;
     if (visible)
     {
         renderer->SetRenderID(RENDER_ID::Render_NonAlpha);
+        collision->SetSize(_vec3(3.f, 3.f, 3.f));
     }
     else
     {
         renderer->SetRenderID(RENDER_ID::Render_None);
+        collision->SetSize(_vec3(0.f, 0.f, 0.f));
     }
 }
 
