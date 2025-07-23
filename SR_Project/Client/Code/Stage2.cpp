@@ -183,7 +183,7 @@ void Stage2::Load()
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage2SkyBox_Mtrl");
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
-		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
+		player->GetComponent<TransformComponent>()->SetPosition(100.f, 60.f, 400.f);
 
 		SetTriggerBox();
 	}
@@ -246,6 +246,9 @@ void Stage2::Update(_float dt)
 
 		if (Input->IsKeyPressed(T))
 			CameraMgr->SetMainCamera(L"Third_Camera");
+
+		if (Input->IsKeyPressed(TAB))
+			ChangeState(Stage2Stage::Play);
 
 		if (Input->IsKeyPressed(NUM4))
 		{
