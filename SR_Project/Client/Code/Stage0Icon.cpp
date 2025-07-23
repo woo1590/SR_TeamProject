@@ -15,7 +15,7 @@ HRESULT Stage0Icon::Ready_Object()
 	auto renderer = AddComponent<UIRenderer>();
 
 	renderer->SetScale(0.5f, 0.5f);
-	renderer->SetTexture(L"¸¶À»");
+	renderer->SetTexture(L"stage0");
 	renderer->SetRenderType(UIRenderType::WorldMap);
 
 	return S_OK;

@@ -16,7 +16,7 @@ HRESULT Stage2Icon::Ready_Object()
 
 	tf->SetScale(0.5f, 0.5f);
 
-	renderer->SetTexture(L"엔더 월드");
+	renderer->SetTexture(L"stage2");
 	renderer->SetRenderType(UIRenderType::WorldMap);
 
 	return S_OK;

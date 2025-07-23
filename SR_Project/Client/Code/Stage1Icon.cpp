@@ -16,7 +16,7 @@ HRESULT Stage1Icon::Ready_Object()
 
 	tf->SetScale(0.5f, 0.5f);
 
-	renderer->SetTexture(L"ÇÏ´Ã¼¶");
+	renderer->SetTexture(L"stage1");
 	renderer->SetRenderType(UIRenderType::WorldMap);
 
 	return S_OK;

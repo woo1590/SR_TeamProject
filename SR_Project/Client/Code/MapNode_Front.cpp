@@ -49,9 +49,9 @@ HRESULT MapNode_Front::Ready_Object()
 			const wchar_t* tip = nullptr;
 			switch (stage)
 			{
-			case StageSelect::Stage1: tip = L"stage1"; break;
-			case StageSelect::Stage2: tip = L"stage2"; break;
-			default:                  tip = L"stage0"; break;
+			case StageSelect::Stage1: tip = L"ÇÏ´Ã¼¶"; break;
+			case StageSelect::Stage2: tip = L"¿£´õ ¿ùµå"; break;
+			default:                  tip = L"¸¶À»"; break;
 			}
 			tooltip->ShowWorldTooltip(tip, pos.x, pos.y - 40.f);
 		}
