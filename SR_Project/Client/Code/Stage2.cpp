@@ -183,7 +183,7 @@ void Stage2::Load()
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage2SkyBox_Mtrl");
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
-		player->GetComponent<TransformComponent>()->SetPosition(100.f, 60.f, 400.f);
+		player->GetComponent<TransformComponent>()->SetPosition(175.f, 90.f, 400.f);
 
 		SetTriggerBox();
 	}
@@ -246,6 +246,9 @@ void Stage2::Update(_float dt)
 
 		if (Input->IsKeyPressed(T))
 			CameraMgr->SetMainCamera(L"Third_Camera");
+
+		if (Input->IsKeyPressed(NUM9))
+			EngineCore::GetInstance()->SetDebugMode(true);
 
 		if (Input->IsKeyPressed(TAB))
 			ChangeState(Stage2Stage::Play);
@@ -392,8 +395,8 @@ void Stage2::WayPointEdit()
 void Stage2::SetTriggerBox()
 {
 	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-	bossTrigger->GetComponent<TransformComponent>()->SetPosition(130.f, 50.f, 410.f);
-	bossTrigger->AddSpawner(SpawnType::Ender, _vec3(125.f, 60.f, 460.f), _vec3(0.f, 0.f, 0.f));
+	bossTrigger->GetComponent<TransformComponent>()->SetPosition(130.f, 40.f, 410.f);
+	bossTrigger->AddSpawner(SpawnType::Ender, _vec3(125.f, 70.f, 460.f), _vec3(0.f, 0.f, 0.f));
 	bossTrigger->RegisterCallBack([this]()
 		{
 			this->ChangeState(Stage2Stage::BossIntro);
