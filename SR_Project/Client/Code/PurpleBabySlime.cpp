@@ -18,6 +18,7 @@
 #include "DeadEffect.h"
 #include "SoundManager.h"
 #include "EngineCore.h"
+#include "Material.h"
 
 PurpleBabySlime::PurpleBabySlime(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -122,6 +123,12 @@ void PurpleBabySlime::Hit(_vec3 dir, _float power)
         HitPower = power * 0.5;
 
         Monster::Hit(dir, power * 0.5);
+
+        HitAnim.ElapsedTime = 0.f;
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 1);
+        }
     }
 }
 
@@ -142,6 +149,18 @@ void PurpleBabySlime::InitTransform(ObjectType objType)
     Bones["LLeg"] = nullptr;
     Bones["RLeg"]->SetDead();
     Bones["RLeg"] = nullptr;
+
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("Head"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
 
     Scale = 0.1f;
     SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
@@ -343,6 +362,14 @@ void PurpleBabySlime::PlayHit(_float dt)
     HitAnim.ElapsedTime += dt;
 
     PlayKnockBack(HitDir, HitPower, dt);
+
+    if (HitAnim.ElapsedTime > 0.15)
+    {
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
+    }
 
     if (HitAnim.ElapsedTime >= HitAnim.TotalTime)
     {

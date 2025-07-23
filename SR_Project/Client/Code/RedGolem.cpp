@@ -55,7 +55,8 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     
     auto collision = GetComponent<CollisionComponent>();
     collision->SetSize(_vec3(10.f, 18.f, 10.f));
-
+    auto stat = GetComponent<InfoComponent<EnemyInfo>>();
+    stat->SetInfo({ 5, 500, 500,0,0,10, 0,5 });
     {
         auto LArmCollision = Bones["LArm"]->AddComponent<CollisionComponent>();
         LArmCollision->AddCollider<OBBCollider>();
@@ -169,9 +170,29 @@ void RedGolem::Die()
     }
 }
 
-void RedGolem::Hit(_vec3 dir, _float power)
-{
-}
+//void RedGolem::Hit(_vec3 dir, _float power)
+//{
+//    if (State != MonsterState::Hit)
+//    {
+//        State = MonsterState::Hit;
+//
+//        *IsHit = true;
+//
+//        HitAnim.IsRunning = true;
+//        HitAnim.IsEnd = false;
+//
+//        HitAnim.ElapsedTime = 0.f;
+//        HitAnim.DelayTime = 0.f;
+//
+//        HitDir = _vec3(0, 0, 0);
+//        HitPower = 0.f;
+//
+//        for (auto& material : materials)
+//        {
+//            material->SetFloat("emissive", 1);
+//        }
+//    }
+//}
 
 void RedGolem::InitTransform(ObjectType objType)
 {
@@ -243,6 +264,24 @@ void RedGolem::InitTransform(ObjectType objType)
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivot(_vec3(-5.f * Scale, 20.f * Scale, 0.0f));
     Bones["RHand"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
     SetRotation(_vec3(D3DXToRadian(-35.f), 0.f, 0.f), "RHand");
+
+    materials.push_back(GetMaterial("Head"));
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("LArm"));
+    materials.push_back(GetMaterial("RArm"));
+    materials.push_back(GetMaterial("LLeg"));
+    materials.push_back(GetMaterial("RLeg"));
+    materials.push_back(GetMaterial("LHand"));
+    materials.push_back(GetMaterial("RHand"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
 }
 
 void RedGolem::InitTree()
@@ -414,11 +453,19 @@ void RedGolem::PlayDie(_float dt)
     }
 }
 
-void RedGolem::PlayHit(_float dt)
-{
-    //effect
-    //motin xxx
-}
+//void RedGolem::PlayHit(_float dt)
+//{
+//    HitAnim.ElapsedTime += dt;
+//
+//    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
+//    {
+//        for (auto& material : materials)
+//        {
+//            material->SetFloat("emissive", 0);
+//        }
+//        *IsHit = false;
+//    }
+//}
 
 void RedGolem::OnCollisionEnter(Object* other)
 {

@@ -1827,5 +1827,8 @@
     <FxCompile Include="..\Resource\Shader\FireworkShader.fx">
       <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
+    <FxCompile Include="..\Resource\Shader\BloomShader.fx">
+      <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

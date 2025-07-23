@@ -360,17 +360,20 @@ void RenderSystem::PostProcessPass()
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	postProcessShader->Begin(0);
+	//for (int i = 0; i < numPass; ++i)
+	//{
+		postProcessShader->Begin(0);
 
-	postProcessShader->SetTexture("AlbedoMap", targetTexture);
+		postProcessShader->SetTexture("AlbedoMap", targetTexture);
 
-	Device->SetVertexDeclaration(decl);
-	Device->SetStreamSource(0, postProcessVB, 0, sizeof(VTXPP));
-	Device->SetIndices(postProcessIB);
+		Device->SetVertexDeclaration(decl);
+		Device->SetStreamSource(0, postProcessVB, 0, sizeof(VTXPP));
+		Device->SetIndices(postProcessIB);
 
-	Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
+		Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
 
-	postProcessShader->End();
+		postProcessShader->End();
+	//}
 
 	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 }

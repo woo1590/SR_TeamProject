@@ -285,6 +285,7 @@ HRESULT MainApp::LoadDefaultResource()
         resource->LoadShader("../Resource/Shader/FireBlock.fx", "FireBlockShader");
         resource->LoadShader("../Resource/Shader/DefaultPost.fx", "DefaultPost");
         resource->LoadShader("../Resource/Shader/FireworkShader.fx", "FireworkShader");
+        resource->LoadShader("../Resource/Shader/BloomShader.fx", "BloomShader");
     }
 
     /*---------------------Load Material--------------------------*/

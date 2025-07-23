@@ -46,7 +46,6 @@ protected:
     void Free() override;
 
 private:
-    vector<Material*> materials;
     bool emissiveOn = false;
 };
 

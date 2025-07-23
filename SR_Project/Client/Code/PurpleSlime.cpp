@@ -19,6 +19,7 @@
 #include "DeadEffect.h"
 #include "SoundManager.h"
 #include "EngineCore.h"
+#include "Material.h"
 
 PurpleSlime::PurpleSlime(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -125,6 +126,12 @@ void PurpleSlime::Hit(_vec3 dir, _float power)
         HitPower = power;
 
         Monster::Hit(dir, power);
+
+        HitAnim.ElapsedTime = 0.f;
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 1);
+        }
     }
 }
 
@@ -145,6 +152,18 @@ void PurpleSlime::InitTransform(ObjectType objType)
     Bones["LLeg"] = nullptr;
     Bones["RLeg"]->SetDead();
     Bones["RLeg"] = nullptr;
+
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("Head"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
 
     //head
     Scale = 0.35f;
@@ -368,6 +387,14 @@ void PurpleSlime::PlayHit(_float dt)
     HitAnim.ElapsedTime += dt;
 
     PlayKnockBack(HitDir, HitPower, dt);
+
+    if (HitAnim.ElapsedTime > 0.15)
+    {
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
+    }
 
     if (HitAnim.ElapsedTime >= HitAnim.TotalTime)
     {

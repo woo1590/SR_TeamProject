@@ -45,7 +45,7 @@ VS_OUTPUT VS_Main(VS_INPUT input)
     
     float4 viewPos = mul(worldPos, g_View);
     output.Position = mul(viewPos, g_Proj);
-    
+
     output.TexCoord = input.Position;
     return output;
 }

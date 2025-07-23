@@ -21,7 +21,7 @@
 #include "BackStep.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
-
+#include "Material.h"
 JungleSkeleton::JungleSkeleton(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
 {
@@ -138,6 +138,11 @@ void JungleSkeleton::Hit(_vec3 dir, _float power)
         HitPower = power;
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("HitSkeleton");
         Monster::Hit(dir, power);
+
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 1);
+        }
     }
 }
 
@@ -154,6 +159,22 @@ void JungleSkeleton::InitTransform(ObjectType objType)
     SetMaterial("JungleSkeletonArm_Mtrl", "RArm");
     SetMaterial("JungleSkeletonLeg_Mtrl", "LLeg");
     SetMaterial("JungleSkeletonLeg_Mtrl", "RLeg");
+
+    materials.push_back(GetMaterial("Head"));
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("LArm"));
+    materials.push_back(GetMaterial("RArm"));
+    materials.push_back(GetMaterial("LLeg"));
+    materials.push_back(GetMaterial("RLeg"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
 
     //head
     SetScale(_vec3(7.f * Scale, 7.f * Scale, 7.f * Scale), "Head");
@@ -386,6 +407,14 @@ void JungleSkeleton::PlayAttack(_float dt)
 void JungleSkeleton::PlayHit(float dt)
 {
     HitAnim.ElapsedTime += dt;
+
+    if (HitAnim.ElapsedTime > 0.15)
+    {
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
+    }
 
     _float t = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
 

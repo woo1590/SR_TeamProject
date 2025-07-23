@@ -22,6 +22,7 @@
 #include "PhysicsComponent.h"
 #include "SoundManager.h"
 #include "DeadEffect.h"
+#include "Material.h"
 
 Zombie::Zombie(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -142,6 +143,11 @@ void Zombie::Hit(_vec3 dir, _float power)
             EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackZombie");
 
         Monster::Hit(dir, power);
+
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 1);
+        }
     }
 }
 
@@ -158,6 +164,23 @@ void Zombie::InitTransform(ObjectType objType)
     auto collision = GetComponent<CollisionComponent>();
     collision->SetSize(_vec3(2.f, 7.f, 2.f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
+
+    materials.push_back(GetMaterial("Head"));
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("LArm"));
+    materials.push_back(GetMaterial("RArm"));
+    materials.push_back(GetMaterial("LLeg"));
+    materials.push_back(GetMaterial("RLeg"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
+
 
     {
         auto LArmCollision = Bones["LArm"]->AddComponent<CollisionComponent>();
@@ -349,6 +372,14 @@ void Zombie::PlayDie(_float dt)
 void Zombie::PlayHit(_float dt)
 {
     HitAnim.ElapsedTime += dt;
+
+    if (HitAnim.ElapsedTime > 0.15)
+    {
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
+    }
 
     _float t = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
 
