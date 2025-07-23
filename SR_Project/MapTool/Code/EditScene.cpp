@@ -13,17 +13,19 @@
 #include "BlockManager.h"
 #include "ChunkManager.h"
 #include "PrefabManager.h"
-#include "MinimapManager.h"
+#include "SoundManager.h"
 
 //object
 #include "Camera.h"
 #include "StaticBlock.h"
 #include "DynamicBlock.h"
+#include "MiniMapObject.h"
 
 //component
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "RendererComponent.h"
+#include "MiniMapRenderer.h"
 
 //object
 #include "Chunk.h"
@@ -63,7 +65,6 @@ void EditScene::Load()
 	BlockMgr = BlockManager::Create(this);
 	ChunkMgr = ChunkManager::Create(this);
 	PrefabMgr = PrefabManager::Create(this);
-	MinimapMgr = MinimapManager::Create(this);
 	
 	BlockMgr->LoadTexture();								// 이미지 불러오기
 	PrefabMgr->LoadAllPrefabs("../Resource/Prefab/");		// 프리펩 불러오기
@@ -77,22 +78,52 @@ void EditScene::Load()
 	staticBlocks.push_back(baseBlock);
 
 	// 카메라 추가 및 설정
-	auto cam = Camera::Create(ObjectMgr, ObjectType::Camera);
+	cam = Camera::Create(ObjectMgr, ObjectType::Camera);
 	ObjectMgr->AddObject(ObjectType::Camera, cam);
 	CameraMgr->AddCamera(L"ToolCam", cam);
 	CameraMgr->SetMainCamera(L"ToolCam");
+
+	ChunkMgr->CreateMiniMapChunk(0, 0, ChunkMgr->GetChunk(0, 0), sceneID);
+	miniMapObject = MiniMapObject::Create(ObjectMgr);
+
+	auto sound = EngineCore::GetInstance()->GetSoundManager();
+	sound->LoadSound("PullLever", "../Resource/Sound/SFX/PullLever.mp3", false);
+	sound->LoadSound("OperateBridge", "../Resource/Sound/SFX/OperateBridge.mp3", false);
 }
 
 void EditScene::Update(float dt)
 {
 	ObjectMgr->Update(dt);
 	UpdateCreateTerrain();
-	if (isLoading) ChunkMgr->IsChunkBoundary(ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition());
 
-	// 좌&우클릭에 따른 블럭 생성&제거
+	if (isLoading) ChunkMgr->IsChunkBoundary(cam->GetComponent<TransformComponent>()->GetPosition());
+	if (miniMapObject->GetMiniMapRenderer()->GetVisible()) miniMapObject->GetMiniMapRenderer()->UpdateMapData(ObjectMgr, ChunkMgr, sceneID);
+
 	_vec3 rayOrigin, rayDir;
 	ImGuiIO& io = ImGui::GetIO();
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (Input->IsKeyPressed(M))
+	{
+		bool visible = miniMapObject->GetMiniMapRenderer()->GetVisible();
+		miniMapObject->GetMiniMapRenderer()->SetVisible(!visible);
+	}
+
+	if (Input->IsKeyPressed(NUM1))
+	{
+		sceneID = TUTORIAL;
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
+	}
+	if (Input->IsKeyPressed(NUM2))
+	{
+		sceneID = STAGE1;
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
+	}
+	if (Input->IsKeyPressed(NUM3))
+	{
+		sceneID = STAGE2;
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
+	}
 
 	if (!io.WantCaptureMouse)
 	{
@@ -195,6 +226,9 @@ void EditScene::ImGui_Info()
 	ImGui::Text("Chunk Count : %d", ChunkMgr->GetChunks().size());
 	ImGui::Text("Static Block Count : %d", staticBlocks.size());
 	ImGui::Text("Dynamic Block Count : %d", dynamicBlocks.size());
+
+	auto camPos = ObjectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>()->GetPosition();
+	ImGui::Text("Camera Pos : %.2f %.2f %.2f", camPos.x, camPos.y, camPos.z);
 }
 
 void EditScene::ImGui_Terrain()
@@ -286,7 +320,6 @@ void EditScene::ImGui_SaveLoad()
 
 		BlockMgr->LoadDB(load);
 		BlockMgr->LoadChunk(load, TRUE);
-		MinimapMgr->GenerateFromChunks(ChunkMgr);
 
 		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
 		{
@@ -307,7 +340,7 @@ void EditScene::ImGui_SaveLoad()
 			}
 		}
 
-		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
 	}
 }
 

@@ -861,6 +861,12 @@ void Chunk::SetBlock(int x, int y, int z, const StaticBlockData& block)
     Blocks[x][y][z] = block;
 }
 
+void Chunk::SetBlockAir(int x, int y, int z)
+{
+    //if (Blocks[x][y - 1][z].Type == DarkDirt && Blocks[x][y][z].Type == DarkGrass) Blocks[x][y - 1][z].Type = DarkGrass;
+    Blocks[x][y][z].Type = Air;
+}
+
 void Chunk::SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks)
 {
     for (const auto& block : flatBlocks)
@@ -907,6 +913,41 @@ void Chunk::SetOwner(ObjectManager* owner)
         static_cast<CollisionBlock*>(colli)->SetOwner(owner);
 
         owner->AddObject(ObjectType::CollisionBlock, colli);
+    }
+}
+
+bool Chunk::isPath(int x, int y, int z)
+{
+    const SB& block = Blocks[x][y][z];
+    if (block.Type == Air) return false;
+
+    if (y + 2 >= CHUNK_HEIGHT) return false;
+    if (Blocks[x][y + 1][z].Type != Air) return false;
+    if (Blocks[x][y + 2][z].Type != Air) return false;
+
+    return true;
+}
+
+void Chunk::CreatePathMap(bool outPath[CHUNK_SIZE][CHUNK_SIZE], SceneID sceneID)
+{
+    int minY = (sceneID == STAGE1) ? 25 : 0;
+    int maxY = (sceneID == TUTORIAL) ? 5 : CHUNK_HEIGHT;
+
+    for (int x = 0; x < CHUNK_SIZE; ++x)
+    {
+        for (int z = 0; z < CHUNK_SIZE; ++z)
+        {
+            outPath[x][z] = false;
+
+            for (int y = minY; y < maxY; ++y)
+            {
+                if (isPath(x, y, z))
+                {
+                    outPath[x][z] = true;
+                    break;
+                }
+            }
+        }
     }
 }
 

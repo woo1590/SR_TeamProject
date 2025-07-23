@@ -6,7 +6,7 @@ class Chunk;
 class Scene;    
 class ENGINE_DLL ChunkManager : public Base
 {
-public:     //Ã»Å©·Î´õ¿¡¼­ Á¢±ÙÇÏ±â À§ÇØ publicÀ¸·Î µÒ
+public:     //Ã»Å©ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ publicï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     struct PairHash
     {
         size_t operator()(const std::pair<int, int>& key) const { return std::hash<int>()(key.first) ^ (std::hash<int>()(key.second) << 1); }
@@ -20,22 +20,25 @@ public:
     static ChunkManager* Create(Scene* owner);
 
 public:
-    Chunk* CreateChunk(int chunkX, int chunkZ);     // Key °ªÀÇ Ã»Å© ÀÖÀ¸¸é ÇØ´ç Ã»Å© ¹ÝÈ¯, ¾øÀ¸¸é »ý¼º ÈÄ ¹ÝÈ¯
-    void RemoveChunk(int chunkX, int chunkZ);       // Key °ªÀÇ Ã»Å© ÀÖÀ¸¸é Á¦°Å
-    void ClearAllChunks();                          // ¸ðµç Ã»Å© Å¬¸®¾î ¹× ÇÏ³ªÀÇ Ã»Å©¸¸ ³²±â°í ¸Þ¸ð¸® ÇØÁ¦
+    Chunk* CreateChunk(int chunkX, int chunkZ);     // Key ï¿½ï¿½ï¿½ï¿½ Ã»Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ Ã»Å© ï¿½ï¿½È¯, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯
+    void RemoveChunk(int chunkX, int chunkZ);       // Key ï¿½ï¿½ï¿½ï¿½ Ã»Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    void ClearAllChunks();                          // ï¿½ï¿½ï¿½ Ã»Å© Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ Ã»Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     void SaveChunk(const std::wstring& saveStage);
     void LoadChunk(const std::wstring& loadStage, bool isEditor = false);
     
-    void IsChunkBoundary(_vec3 playerPos);                             // Player°¡ Ã»Å© °æ°è¸¦ ³Ñ¾ú´ÂÁö
-    void UpdateRenderChunk(int playerChunkX, int playerChunkZ, int count);        // Ã»Å© ·Îµù (Player°¡ ¼ÓÇÑ Ã»Å© Áß½É 3 x 3 Ã»Å©¸¸ ·»´õ¸µ)
+    void IsChunkBoundary(_vec3 playerPos);                                        // Playerï¿½ï¿½ Ã»Å© ï¿½ï¿½è¸¦ ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½
+    void UpdateRenderChunk(int playerChunkX, int playerChunkZ, int count);        // Ã»Å© ï¿½Îµï¿½ (Playerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã»Å© ï¿½ß½ï¿½ 3 x 3 Ã»Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
-    Chunk* GetChunk(int chunkX, int chunkZ);        // Key °ªÀÇ Ã»Å© ÀÖÀ¸¸é ÇØ´ç Ã»Å© ¹ÝÈ¯
+    Chunk* GetChunk(int chunkX, int chunkZ);                                      // Key ï¿½ï¿½ï¿½ï¿½ Ã»Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ Ã»Å© ï¿½ï¿½È¯
     const unordered_map<std::pair<int, int>, Chunk*, PairHash>& GetChunks() const { return worldChunks; }
 
     /*-----------------Only Client-------------------------*/
     void SetChunk(std::unordered_map<std::pair<int, int>, Chunk*, PairHash>& chunks);
     void SetChunkRange(_uint range) { chunkRange = range; }
+    void CreateMiniMapChunk(int chunkX, int chunkZ, Chunk* chunk, SceneID sceneID);
+    bool GetMiniMapChunk(int chunkX, int chunkZ, MINIMAP& outData);
+
 private:
     void Free()override;
 
@@ -45,5 +48,6 @@ private:
     std::vector<std::pair<int, int>> renderChunks;
     std::unordered_map<std::pair<int, int>, Chunk*, PairHash> worldChunks;
     _uint chunkRange = 7;
+    std::unordered_map<std::pair<int, int>, MINIMAP, PairHash> miniMapChunks;
 };
 END

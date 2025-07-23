@@ -6,6 +6,7 @@
 #include "EngineCore.h"
 #include "ObjectManager.h"
 #include "InputSystem.h"
+#include "SoundManager.h"
 
 //object
 #include "Part.h"
@@ -111,7 +112,16 @@ void Lever::Update(_float dt)
     }
 
     if (!Trigger && distance <= TriggerDistance) Activate = true;
-    if (Activate && !Trigger) Operate();
+    if (Activate && !Trigger)
+    {
+        Operate();
+
+        if (soundFirst)
+        {
+            soundFirst = false;
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PullLever");
+        }
+    }
 
     Object::Update(dt);
 }

@@ -12,6 +12,7 @@ ChunkManager::ChunkManager(Scene* owner) : owner(owner)
 
 ChunkManager::~ChunkManager()
 {
+    Free();
 }
 
 ChunkManager* ChunkManager::Create(Scene* owner)
@@ -222,7 +223,25 @@ void ChunkManager::SetChunk(std::unordered_map<std::pair<int, int>, Chunk*, Pair
     {
         chunk.second->SetOwner(owner->GetObjectManager());
     }
+}
 
+void ChunkManager::CreateMiniMapChunk(int chunkX, int chunkZ, Chunk* chunk, SceneID sceneID)
+{
+    MiniMapChunkData& data = miniMapChunks[{chunkX, chunkZ}];
+    chunk->CreatePathMap(data.path, sceneID);
+}
+
+bool ChunkManager::GetMiniMapChunk(int chunkX, int chunkZ, MINIMAP& outData)
+{
+    auto it = miniMapChunks.find({ chunkX, chunkZ });
+
+    if (it != miniMapChunks.end())
+    {
+        outData = it->second;
+        return true;
+    }
+
+    return false;
 }
 
 void ChunkManager::Free()

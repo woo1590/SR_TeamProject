@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "DynamicBlock.h"
 
 namespace Engine
 {
@@ -9,6 +8,7 @@ namespace Engine
     class PrefabManager;
 }
 
+class Camera;
 class TerrainCreater;
 class EditScene : public Scene
 {
@@ -83,6 +83,8 @@ private:
 
     static int CurChunkX;
     static int CurChunkZ;
+
+    Camera* cam = nullptr;
 
     // ================ Prefab ================
     bool isPrefab = false;

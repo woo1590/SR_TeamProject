@@ -130,6 +130,10 @@ namespace Engine
 		_ulong color = D3DCOLOR_ARGB(255, 100, 100, 100);
 	};
 
+	typedef struct MiniMapChunkData
+	{
+		bool path[CHUNK_SIZE][CHUNK_SIZE]{ false };
+	} MINIMAP;
 }
 
 #endif // Engine_Struct_h__

@@ -9,6 +9,7 @@
 #include "InputSystem.h"
 #include "TimerManager.h"
 #include "StaticGrid.h"
+#include "SoundManager.h"
 
 //object
 #include "Part.h"
@@ -114,7 +115,16 @@ void Bridge::Update(_float dt)
     }
     Activate = allTriggered;
 
-    if (Activate && !Trigger) Operate(dt);
+    if (Activate && !Trigger)
+    {
+        Operate(dt);
+
+        if (soundFirst)
+        {
+            soundFirst = false;
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("OperateBridge");
+        }
+    }
 
     Object::Update(dt);
 }

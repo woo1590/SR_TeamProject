@@ -41,11 +41,7 @@ public:
     void SetUVAxisBlock(StaticBlockType type, StaticBlockAxis axis, int faceDir);
 
     void SetBlock(int x, int y, int z, const StaticBlockData& block);
-    void SetBlockAir(int x, int y, int z)
-    {
-        //if (Blocks[x][y - 1][z].Type == DarkDirt && Blocks[x][y][z].Type == DarkGrass) Blocks[x][y - 1][z].Type = DarkGrass;
-        Blocks[x][y][z].Type = Air;
-    }
+    void SetBlockAir(int x, int y, int z);
     void SetBlocksFromFlatVector(const std::vector<SB>& flatBlocks);
 
     void SetChunkRender(bool render);
@@ -58,6 +54,9 @@ public:
 
     /*----------Only Client----------*/
     void SetOwner(ObjectManager* owner);
+    bool isPath(int x, int y, int z);
+    void CreatePathMap(bool outPath[CHUNK_SIZE][CHUNK_SIZE], SceneID sceneID);
+
 private:
     void Free()override;
 

@@ -40,6 +40,7 @@ namespace Engine
 		SpriteEffect,
 		ParticleEffect,
 		BackGroundEffect,
+		MiniMap,
 		Count
 	};
 
@@ -157,7 +158,7 @@ namespace Engine
 
 	enum FaceDir { Face_Top, Face_Bottom, Face_Left, Face_Right, Face_Front, Face_Behind };
 
-	enum MinimapTileType { TILE_UNKNOWN, TILE_PATH, TILE_OBSTACLE, MAP_PLAYER };
+	enum SceneID { TUTORIAL, STAGE1, STAGE2 };
 
 	enum CollisionLayer :ULONG
 	{

@@ -105,7 +105,7 @@ void BlockManager::SaveDB(const char* saveStage)
 				{
 					auto dyn = static_cast<DynamicBlock*>(obj);
 
-					int count = dyn->GetCount();  // 사용 안하더라도 IronCage와 형식 맞추려면 넣어도 됨
+					int count = dyn->GetCount();
 					WriteFile(hFile, &count, sizeof(int), &dwByte, nullptr);
 
 					auto ids = dyn->GetIDVec();
