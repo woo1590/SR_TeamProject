@@ -217,4 +217,6 @@ private:
 
     const _float itemPullingRange = 50.f;
     const _float itemPullingSpeed = 30.f;
+
+    _bool onHalf = false;
 };

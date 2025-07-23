@@ -172,11 +172,11 @@ void Village::Load()
 
 		if (game->IsSceneClear(LOADID::Village))
 		{
-			player->GetComponent<TransformComponent>()->SetPosition(160.f, 300.f, 200.f);
+			player->GetComponent<TransformComponent>()->SetPosition(160.f, 200.f, 200.f);
 		}
 		else
 		{
-			player->GetComponent<TransformComponent>()->SetPosition(260.f, 30.f, 57.f);
+			player->GetComponent<TransformComponent>()->SetPosition(260.f, 200.f, 57.f);
 			auto npc = Npc::Create(ObjectMgr, ObjectType::Neutral);
 			npc->GetComponent<TransformComponent>()->SetPosition(270.f, 20.f, 43.f);
 			ObjectMgr->AddObject(ObjectType::Neutral, npc);
