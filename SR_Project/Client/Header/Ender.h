@@ -30,6 +30,7 @@ protected:
     void Free() override;
 
 public:
+    void        SetTargetPos(_vec3 pos);
     void        Crawl();
     void        Stand();
     void        Hide();
@@ -87,6 +88,7 @@ private:
     int         CurChangeStateCount;
     int*        ChangeStateCount = nullptr;
     _vec3*      TargetPos = nullptr;
+    _bool*      IsHide = nullptr;
 
     vector<FireBlock*>  FireBlocks;
     _float              FireSpawnTime = 0.f;

@@ -24,6 +24,7 @@
 #include "SoundManager.h"
 #include "InfoComponent.h"
 #include "BossHPBarFront.h"
+#include "PhysicsComponent.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -62,7 +63,7 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto Info = GetComponent<InfoComponent<EnemyInfo>>();
     Info->SetInfo({ 9, 500, 500, 0,0,20, 0,0 });
 
-    Stand();
+    CrawlToStand();
     InitLaserHead();
     InitCrossLaser();
     InitEnderProjectile();
@@ -76,6 +77,9 @@ void Ender::Update(_float dt)
 {
     Boss::Update(dt);
     PlayAnimation(dt);
+
+    auto stat = GetComponent<InfoComponent<EnemyInfo>>()->GetInfo();
+    if (stat.curHp < 0) Die();
 }
 
 void Ender::Late_Update(_float dt)
@@ -227,7 +231,8 @@ void Ender::InitTree()
     bb->SetValue("TriggerCount", ChangeStateCount);
     IsAttack = new _bool(false);
     bb->SetValue("IsAttack", IsAttack);
-
+    IsHide = new _bool(false);
+    bb->SetValue("IsHide", IsHide);
     auto transform = GetComponent<TransformComponent>();
     _vec3 startPos = transform->GetPosition();
     TargetPos = new _vec3(startPos.x + 30, startPos.y, startPos.z + 40); //startpos setting->initialize after
@@ -244,7 +249,6 @@ void Ender::InitTree()
 
     SelectorNode* root = new SelectorNode();
     root->AddChild(isAlive);
-    root->AddChild(new DieNode());
 
     BehaviorTree* bt = BehaviorTree::Create(root);
 
@@ -270,8 +274,8 @@ void Ender::InitAnimation()
     HideAnim.ElapsedTime = 0.f;
     HideAnim.TotalTime = 1.5f;
 
-    SproutAnim.TotalTime = 1.5f;
     SproutAnim.ElapsedTime = 0.f;
+    SproutAnim.TotalTime = 1.5f;
 
     HeadAttackAnim.DelayTime = 2.f;
     HeadAttackAnim.ElapsedTime = 0.f;
@@ -327,6 +331,11 @@ void Ender::Free()
     Boss::Free();
 }
 
+void Ender::SetTargetPos(_vec3 pos)
+{
+    *TargetPos = pos;
+}
+
 void Ender::Crawl()
 {
     if (enderState != EnderState::Crawl)
@@ -369,6 +378,7 @@ void Ender::Hide()
 {
     if (enderState != EnderState::Hidden)
     {
+        *IsHide = true;
         auto transform = Bones["Body"]->GetComponent<TransformComponent>();
         HideStartY = transform->GetPosition().y;
         enderState = EnderState::Hidden;
@@ -391,7 +401,6 @@ void Ender::Sprout()
 {
     if (enderState != EnderState::Sprout)
     {
-        auto transform = Bones["Body"]->GetComponent<TransformComponent>();
         enderState = EnderState::Sprout;
 
         SproutAnim.ElapsedTime = 0.f;
@@ -435,6 +444,7 @@ void Ender::LineLaserAttack()
         enderState = EnderState::LineLaser;
 
         HeadAttackAnim.ElapsedTime = 0.f;
+        HeadAttackAnim.DelayTime = 2.f;
     }
 }
 
@@ -530,8 +540,6 @@ void Ender::InitFireBlock()
         auto fireblock = FireBlock::Create(owner, ObjectType::SpriteEffect);
         FireBlocks.push_back(fireblock);
         fireblock->SetActive(false);
-
-        fireblock->GetComponent<TransformComponent>()->SetPosition(0,0,0);
 
         owner->AddObject(ObjectType::SpriteEffect, fireblock);
     }
@@ -749,12 +757,19 @@ void Ender::PlayHide(_float dt)
            auto renderer = Bone.second->GetComponent<MeshRenderer>();
            renderer->SetRenderID(RENDER_ID::Render_None);
        }
+       *IsHide = false;
        HideIdle();
    }
 }
 
 void Ender::PlayHideIdle(_float dt)
 {
+    WalkTime += dt;
+    if (WalkTime > 0.3f)
+    {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkEnder");
+        WalkTime = 0.f;
+    }
 }
 
 void Ender::PlaySprout(_float dt)
@@ -796,17 +811,19 @@ void Ender::PlayLineLaserAttack(_float dt)
 
     if (LaserSpawnTime > 0.5f)
     {
+        LaserSpawnTime = 0.f;
+
         auto Transform = GetComponent<TransformComponent>();
         _vec3 Pos = Transform->GetPosition();
 
-        _float RandX = rand() % 40 - 20;
-        _float RandZ = rand() % 40 - 20;
+        _float RandX = rand() % 20 - 10;
+        _float RandZ = rand() % 20 - 10;
 
-        _vec3 randPos = _vec3(Pos.x + RandX, Pos.y, Pos.z + RandZ);
+        _vec3 randPos = _vec3(Pos.x + RandX, Pos.y + 100.f, Pos.z + RandZ);
 
-        LaserSpawnTime = 0.f;
         auto projectileTransform = LaserHeads[LaserIndex]->GetComponent<TransformComponent>();
         projectileTransform->SetPosition(randPos);
+
         static_cast<LaserHead*>(LaserHeads[LaserIndex])->SetDir(HeadDir(rand() % 4));
         static_cast<LaserHead*>(LaserHeads[LaserIndex++])->SetActive(true);
 
@@ -815,7 +832,7 @@ void Ender::PlayLineLaserAttack(_float dt)
 
     if (HeadAttackAnim.DelayTime < 0)
     {
-        HeadAttackAnim.IsEnd = true;
+        //HeadAttackAnim.IsEnd = true;
 
         (*IsAttack) = false;
         AttackAnim.IsEnd = true;

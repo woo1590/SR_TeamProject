@@ -58,6 +58,8 @@ HRESULT FireBlock::Ready_Object()
 	mtrl->SetVec3("uvScale", _vec3(1.f / 16.f, 1.f, 0.f));
 	mtrl->SetVec3("uvOffset", _vec3(0.f, 0.f, 0.f));
 	SetColor(color);
+
+	SetActive(false);
 	return S_OK;
 }
 

@@ -12,6 +12,7 @@
 #include "PurpleSlime.h"
 #include "Ender.h"
 #include "TransformComponent.h"
+#include "PhysicsComponent.h"
 
 Spawner::Spawner(ObjectManager* owner, ObjectType objType)
     :Object(owner, objType)
@@ -88,6 +89,13 @@ Monster* Spawner::Spawn()
     if (transform)
     {
         transform->SetPosition(Position);
+
+        if (spawntype == SpawnType::Ender)
+        {
+            static_cast<Ender*>(monster)->SetTargetPos(Position);
+            monster->GetComponent<PhysicsComponent>()->SetGround(false);
+        }
+
         transform->SetRotate(Rotation);
     }
 
