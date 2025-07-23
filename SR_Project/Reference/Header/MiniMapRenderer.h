@@ -3,6 +3,7 @@
 
 BEGIN(Engine)
 class ChunkManager;
+class ObjectManager;
 class ENGINE_DLL MiniMapRenderer : public RendererComponent
 {
 private:
@@ -31,6 +32,7 @@ public:
 
     _vec2 WorldtoMapPos(const _vec3& worldPos, const _vec3& playerPos);
     void UpdateMapData(const _vec3& playerPos, ChunkManager* chunkMgr, SceneID sceneID);
+    void UpdateMapData(ObjectManager* objectMgr, ChunkManager* chunkMgr, SceneID sceneID);
 
 private:
     void Free() override;
@@ -38,7 +40,7 @@ private:
 private:
     bool IsVisible = false;
     int tileSize = 9;
-    float Scale = 1.2f;
+    float Scale = 0.9f;
 
     _vec2 MapCenter;
     _vec2 MapOffset{ 100.f, 100.f };

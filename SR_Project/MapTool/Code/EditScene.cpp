@@ -90,11 +90,8 @@ void EditScene::Update(float dt)
 	ObjectMgr->Update(dt);
 	UpdateCreateTerrain();
 
-	if (isLoading)
-		ChunkMgr->IsChunkBoundary(cam->GetComponent<TransformComponent>()->GetPosition());
-
-	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
-		miniMapObject->GetMiniMapRenderer()->UpdateMapData(cam->GetComponent<TransformComponent>()->GetPosition(), ChunkMgr, sceneID);
+	if (isLoading) ChunkMgr->IsChunkBoundary(cam->GetComponent<TransformComponent>()->GetPosition());
+	if (miniMapObject->GetMiniMapRenderer()->GetVisible()) miniMapObject->GetMiniMapRenderer()->UpdateMapData(ObjectMgr, ChunkMgr, sceneID);
 
 	_vec3 rayOrigin, rayDir;
 	ImGuiIO& io = ImGui::GetIO();
@@ -337,11 +334,7 @@ void EditScene::ImGui_SaveLoad()
 			}
 		}
 
-		for (auto& [pair, chunk] : ChunkMgr->GetChunks())
-		{
-			chunk->BuildChunkFace();
-			ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
-		}
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
 	}
 }
 

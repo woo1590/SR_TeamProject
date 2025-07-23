@@ -173,6 +173,8 @@ void ChunkManager::LoadChunk(const std::wstring& loadPath, bool isEditor)
         worldChunks[{chunkX, chunkZ}] = chunk;
     }
 
+    for (auto& [pair, chunk] : worldChunks) chunk->BuildChunkFace();
+
     CloseHandle(hFile);
 }
 
