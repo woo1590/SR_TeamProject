@@ -184,7 +184,7 @@ void Stage2::Load()
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage2SkyBox_Mtrl");
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
-		player->GetComponent<TransformComponent>()->SetPosition(220.f, 60.f, 106.f);
+		player->GetComponent<TransformComponent>()->SetPosition(220.f, 80.f, 106.f);
 
 		SetTriggerBox();
 	}
@@ -254,12 +254,6 @@ void Stage2::Update(_float dt)
 		if (Input->IsKeyPressed(TAB))
 			ChangeState(Stage2Stage::Play);
 
-		if (Input->IsKeyPressed(NUM4))
-		{
-			auto command = ChangeScene::Create(LOADID::Village);
-			EngineCore::GetInstance()->RegisterCommand(command);
-			GameManager::GetInstance()->ClearScene(LOADID::Stage2);
-		}
 	}
 }
 
@@ -270,6 +264,9 @@ void Stage2::Late_Update(_float dt)
 
 void Stage2::Unload()
 {
+	EngineCore::GetInstance()->GetSoundManager()->Stop("Stage2BGM");
+	EngineCore::GetInstance()->GetSoundManager()->Stop("Boss_EnderBGM");
+
 	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Player))
 	{
 		if (auto playerComponent = obj->GetComponent<InfoComponent<PlayerInfo>>())
@@ -407,12 +404,15 @@ void Stage2::SetTriggerBox()
 {
 	auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger1->GetComponent<TransformComponent>()->SetPosition(186.f, 35.f, 115.f);
-	trigger1->AddSpawner(SpawnType::Blastling, _vec3(190.f, 40.f, 115.f));
-	trigger1->AddSpawner(SpawnType::PurpleSlime, _vec3(190.f, 40.f, 125.f));
-	trigger1->AddSpawner(SpawnType::PurpleSlime, _vec3(180.f, 40.f, 132.f));
+	trigger1->AddSpawner(SpawnType::Blastling, _vec3(190.f, 50.f, 115.f));
+	trigger1->AddSpawner(SpawnType::PurpleSlime, _vec3(210.f, 60.f, 125.f));
+	trigger1->AddSpawner(SpawnType::PurpleSlime, _vec3(170.f, 60.f, 122.f));
 
 	auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger2->GetComponent<TransformComponent>()->SetPosition(211.f, 35.f, 136.f);
+	trigger2->AddSpawner(SpawnType::Shulker, _vec3(220.f, 50.f, 140.f));
+	trigger2->AddSpawner(SpawnType::Blastling, _vec3(250.f, 50.f, 130.f));
+	trigger2->AddSpawner(SpawnType::Blastling, _vec3(200.f, 50.f, 110.f));
 
 	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger3->GetComponent<TransformComponent>()->SetPosition(257.f, 35.f, 100.f);

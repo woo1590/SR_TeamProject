@@ -90,6 +90,7 @@ void MainApp::Run()
             //Core->GetTimerManager()->Set_DeltaTime(L"Timer_FPS");
 
             //_float FPS_DT = Core->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
+            Immediate_DT = std::clamp(Immediate_DT, 0.f, 0.03f);
 
             Core->Tick(Immediate_DT);
         }

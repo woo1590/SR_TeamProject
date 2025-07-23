@@ -114,18 +114,18 @@ void Stage1::Load()
 
 	/*-------------------------Create Camera-----------------------------*/
 	{
-		//if (game->GetPlayer())
-		//{
-		//	player = game->GetPlayer();
-		//	player->SetOwner(ObjectMgr);
-		//	player->AddRef();
-		//}
-		//else
-		//{
-		//	
-		//	game->SetPlayer(player);
-		//}
-		player = Player::Create(ObjectMgr, ObjectType::Player);
+		if (game->GetPlayer())
+		{
+			player = game->GetPlayer();
+			player->SetOwner(ObjectMgr);
+			player->AddRef();
+		}
+		else
+		{
+			player = Player::Create(ObjectMgr, ObjectType::Player);
+			game->SetPlayer(player);
+		}
+
 		ObjectMgr->AddObject(ObjectType::Player, player);
 
 		auto fCam = FirstCam::Create(ObjectMgr);
@@ -218,14 +218,6 @@ void Stage1::Update(_float dt)
 
 		if (Input->IsKeyPressed(TAB))
 			ChangeState(Stage1State::Play);
-
-
-		if (Input->IsKeyPressed(NUM4))
-		{
-			auto command = ChangeScene::Create(LOADID::Village);
-			EngineCore::GetInstance()->RegisterCommand(command);
-			GameManager::GetInstance()->ClearScene(LOADID::Stage1);
-		}
 	}
 }
 
