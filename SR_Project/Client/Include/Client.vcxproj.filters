@@ -619,6 +619,9 @@
     <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\HP_Potion">
       <UniqueIdentifier>{f2a2d80a-c29e-48d0-a186-6ddcd89eea08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Effect\DeadEffect\EnderDead">
+      <UniqueIdentifier>{26930550-7799-4d72-af90-2b72103af26f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1201,6 +1204,9 @@
     <ClInclude Include="..\Header\ShopBtn.h">
       <Filter>02. Object\UIObj\Button\ShopBtn</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\EnderDead.h">
+      <Filter>02. Object\Effect\DeadEffect\EnderDead</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1764,6 +1770,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ShopBtn.cpp">
       <Filter>02. Object\UIObj\Button\ShopBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EnderDead.cpp">
+      <Filter>02. Object\Effect\DeadEffect\EnderDead</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

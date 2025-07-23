@@ -59,7 +59,7 @@ HRESULT MainApp::Ready_MainApp(HINSTANCE hInst, int nCmdShow)
     EngineCore::GetInstance()->GetSoundManager()->PlayBGM("IntroBGM");
 
     /*---------Start Scene----------*/
-    Scene* Start = LoadingScene::Create(LOADID::Stage2);
+    Scene* Start = LoadingScene::Create(LOADID::Village);
     Core->GetSceneManager()->SetActiveScene(Start);
 
     isRunning = true;
@@ -227,7 +227,7 @@ _bool MainApp::InitWindow(HINSTANCE hInst, int nCmdShow)
         lt.x,lt.y,rb.x,rb.y
     };
 
-    //ClipCursor(&clipRect);
+    ClipCursor(&clipRect);
 
     ShowCursor(FALSE);
 
@@ -302,6 +302,7 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("Stage1BGM", "../Resource/Sound/BGM/Stage1_BGM.mp3", true);
         sound->LoadSound("Boss_EnderBGM", "../Resource/Sound/BGM/Boss_EnderBGM.mp3", true);
         sound->LoadSound("Stage2BGM", "../Resource/Sound/BGM/Stage2BGM.mp3", true);
+        sound->LoadSound("Boss_GolemBGM", "../Resource/Sound/BGM/Boss_GolemBGM.mp3", true);
 
         //Player
         sound->LoadSound("ShootArrow", "../Resource/Sound/SFX/ShootArrow.mp3", false);

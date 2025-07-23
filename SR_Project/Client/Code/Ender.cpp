@@ -30,6 +30,7 @@
 #include "scene.h"
 #include "Material.h"
 #include "PhysicsComponent.h"
+#include "EnderDead.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -992,6 +993,17 @@ void Ender::PlayDie(_float dt)
     {
         material->SetFloat("alpha", val);
     }
+
+    if (!deadEffect)
+    {
+        auto effect = EnderDead::Create(owner, ObjectType::ParticleEffect);
+        effect->SetDeadTime(7.5f);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+
+        deadEffect = true;
+    }
+
 
     if (DieAnim.ElapsedTime > DieAnim.TotalTime)
     {

@@ -249,6 +249,7 @@ void Stage1::Late_Update(_float dt)
 void Stage1::Unload()
 {
 	EngineCore::GetInstance()->GetSoundManager()->Stop("Stage1BGM");
+	EngineCore::GetInstance()->GetSoundManager()->Stop("Boss_GolemBGM");
 
 	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Player))
 	{
@@ -499,7 +500,9 @@ void Stage1::ChangeState(Stage1State state)
 	}break;
 	case Stage1::Stage1State::BossIntro:	
 	{
-		
+		EngineCore::GetInstance()->GetSoundManager()->Stop("Stage1BGM");
+		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("Boss_GolemBGM");
+
 	}break;
 	case Stage1::Stage1State::Play:
 	{

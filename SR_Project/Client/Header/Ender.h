@@ -106,5 +106,6 @@ private:
     _float                      CrossLaserSoundTime = 0.f;
     _float                      WalkTime = 0.f;
 
+    _bool                       deadEffect = false;
 };
 

@@ -4,7 +4,7 @@
 class DeadEffect :
     public Effect
 {
-private:
+protected:
     DeadEffect(ObjectManager* owner, ObjectType objType);
     virtual ~DeadEffect();
 
@@ -14,7 +14,7 @@ public:
 
     void Update(_float dt)override;
 
-private:
+protected:
     void Free()override;
 
     _uint totalFrame = 0;
