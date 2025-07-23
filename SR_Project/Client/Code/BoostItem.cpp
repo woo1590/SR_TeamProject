@@ -22,10 +22,8 @@ HRESULT BoostItem::Ready_Object()
 	renderer->SetRenderType(UIRenderType::Inventory);
 
 	auto info = AddComponent<InfoComponent<ItemInfo>>();
-	info->SetInfo({L"신속의 부츠", L"inventory_boost", ItemType::Potion,Rarity::Default, 5,
-		L"효과부여를 통해 신속한 움직임을 가능하게 하는 부츠입니다. 지금처럼 모든 게 불확실한 때에 유용합니다."});
-
 	auto item = AddComponent<ItemComponent>();
+	item->SetItemType(ItemType::BoostItem);
 	item->SetOriginalScale({0.35f, 0.35f});
 
 	return S_OK;

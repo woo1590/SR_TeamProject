@@ -20,14 +20,17 @@ public:
 public:
 	void SetWorldTooltip(Object* obj) { worldTip.obj = obj; }
 	void SetInventoryTooltip(Object* obj) { invTip.obj = obj; }
+	void SetShopTooltip(Object* obj) { shopTip.obj = obj; }
 
 	void ShowTooltip(TooltipData& tip, const wstring& text, float x, float y, bool above, FontType fontType);
 	void ShowInventoryTooltip(const wstring& text, float x, float y);
 	void ShowWorldTooltip(const wstring& text, float x, float y);
+	void ShowShopTooltip(const wstring& text, float x, float y);
 
 	void HideTooltip(TooltipData& tip);
 	void HideInventoryTooltip();
 	void HideWorldTooltip();
+	void HideShopTooltip();
 
 	void Update(float dt);
 	void Free() override {}
@@ -37,6 +40,7 @@ private:
 	
 	TooltipData worldTip;
 	TooltipData invTip;
+	TooltipData shopTip;
 };
 
 END

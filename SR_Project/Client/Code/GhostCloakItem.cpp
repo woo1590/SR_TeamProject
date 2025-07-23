@@ -22,10 +22,8 @@ HRESULT GhostCloakItem::Ready_Object()
 	renderer->SetRenderType(UIRenderType::Inventory);
 
 	auto info = AddComponent<InfoComponent<ItemInfo>>();
-	info->SetInfo({L"유령 망토", L"inventory_ghostcloak", ItemType::Potion, Rarity::Default, 5,
-		L"잠시 유령 형태가 되어 몹을 통과하고 일부 피해를 흡수합니다"});
-
 	auto item = AddComponent<ItemComponent>();
+	item->SetItemType(ItemType::GhostCloak);
 	item->SetOriginalScale({0.35f, 0.35f});
 
 	return S_OK;

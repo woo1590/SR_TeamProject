@@ -4,11 +4,16 @@ BEGIN(Engine)
 class SlotComponent;
 class UIManager;
 class Object;
+class InventoryComponent;
+class ObjectManager;
+class ItemComponent;
 
 class ENGINE_DLL InventoryManager: public Base
 {
 public:
 	explicit InventoryManager(UIManager* owner) :uiMgr(owner) {}
+	using ItemActionCallBack = function<void(ItemType)>;
+	using CreateItemCallBack = function<Object*(ItemType)>;
 
 public:
 	void Update(float dt);
@@ -22,31 +27,32 @@ public:
 	SlotComponent* FindFirstEmptySlot();
 	void ClearFromQuickSlot(Object* item);
 	
-	void ApplyFilter(optional<ItemType> type);
+	void ApplyFilter(optional<SlotItemType> type);
+	void ApplyFilter(ItemType type) { ApplyFilter(optional<SlotItemType>(GetSlotCategory(type))); }
 	bool InsertItem(Object* item);
 	void Free() override {}
 
-	inline SlotItemType GetSlotCategory(ItemType type)
-	{
-		static const unordered_map<ItemType, SlotItemType> map =
-		{
-			{ItemType::Sword,   SlotItemType::MeleeWeapon},
-			{ItemType::Spear,   SlotItemType::MeleeWeapon},
-			{ItemType::Armor,   SlotItemType::Armor},
-			{ItemType::Bow,     SlotItemType::RangeWeapon},
-			{ItemType::CrossBow,SlotItemType::RangeWeapon},
-			{ItemType::Potion,  SlotItemType::Potion},
-		};
-		auto it = map.find(type);
-		if (it != map.end()) return it->second;
-		return SlotItemType::Any;
-	}
+	SlotItemType GetSlotCategory(ItemType type) { return itemTable.at(type).category; }
+
+	void BindInventory(ItemActionCallBack&& equipCallBack,ItemActionCallBack&& unequipCallBack, CreateItemCallBack&& createCallBack);
+	void SetPlayer(Object* _player) { player = _player; }
+	SlotComponent* FindSlotByType(SlotItemType typeToFind);
+	bool RemoveItemFromSelectedSlot(ItemType& out);
+
+public:
+	void ItemAdded(ItemType type);
+	void HandleEquipAction(ItemComponent* itemComp);
+	void HandleUnEquipAction(ItemComponent* itemComp);
+	void MoveItem(SlotComponent* from, SlotComponent* to);
+	void SwapItems(SlotComponent* from, SlotComponent* to);
+
+	SlotComponent* FindTargetEquipSlot(ItemType type, bool& isSwap);
 
 private:
 	UIManager* uiMgr = nullptr;
 	vector<Object*> slotObjs;
 	SlotComponent* selected = nullptr;
-	optional<ItemType> curFilter;
+	optional<SlotItemType> curFilter;
 	array<SlotComponent*, 3> quickSlots{};
 	int quickSlotCount = 0;
 	array<_vec2, 3> quickSlotPos =
@@ -63,6 +69,12 @@ private:
 	};
 	unordered_map<SlotComponent*, Object*> slotToPlusMap;
 	vector<Object*> unslottedItems;
+
+	// -------------------------------
+	ItemActionCallBack OnEquip;
+	ItemActionCallBack OnUnEquip;
+	CreateItemCallBack OnCreateItem;
+	Object* player = nullptr;
 };
 
 END

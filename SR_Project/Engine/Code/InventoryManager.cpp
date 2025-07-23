@@ -12,6 +12,7 @@
 #include "ObjectManager.h"
 #include "TransformComponent.h"
 #include "UIManager.h"
+#include "InventoryComponent.h"
 
 void InventoryManager::RegisterSlot(Object* slotObj, SlotItemType acceptType, Object* plusObj)
 {
@@ -53,115 +54,18 @@ void InventoryManager::DeselectAll()
 
 void InventoryManager::RightClick()
 {
-	// 1. 기본 정보 확인
 	if (!selected || !selected->HasItem()) return;
 
-	Object* itemObj = selected->GetItem();
+	auto itemObj = selected->GetItem();
 	auto itemComp = itemObj->GetComponent<ItemComponent>();
-	if (!itemObj) return;
+	if (!itemComp) return;
 
-	auto MoveItem = [&](SlotComponent* from, SlotComponent* to)
-		{
-			from->ClearItem();
-			to->SetItem(itemObj);
-			auto pos = to->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
-			itemObj->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
-			DeselectAll();
-		};
-
-	// 두 슬롯의 아이템을 교체
-	auto SwapItems = [&](SlotComponent* slotA, SlotComponent* slotB)
-		{
-			Object* itemA = slotA->GetItem();
-			Object* itemB = slotB->GetItem();
-
-			slotA->SetItem(itemB);
-			slotB->SetItem(itemA);
-
-			if (itemB)
-			{
-				auto posA = slotA->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
-				itemB->GetComponent<TransformComponent>()->SetPosition(posA.x, posA.y);
-			}
-			if (itemA)
-			{
-				auto posB = slotB->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
-				itemA->GetComponent<TransformComponent>()->SetPosition(posB.x, posB.y);
-			}
-		};
-
-	// 2. 소스 슬롯과 타겟 슬롯의 타입 결정
 	const SlotItemType sourceSlotType = selected->GetAllowedType();
-	const SlotItemType requiredEquipType = GetSlotCategory(itemComp->GetItemType());
-	auto player = uiMgr->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player);
 
-	// 3. 장착 (인벤토리 -> 장비 슬롯)
 	if (sourceSlotType == SlotItemType::Any)
-	{
-		// 아이템에 맞는 빈 장비 슬롯을 찾음
-		SlotComponent* emptyTargetSlot = nullptr;
-		SlotComponent* fullTargetSlot = nullptr;
-		
-		if (requiredEquipType == SlotItemType::Potion)
-		{
-			// 1순위: 빈 퀵슬롯 찾기
-			for (auto quickSlot : quickSlots)
-			{
-				if (quickSlot && !quickSlot->HasItem())
-				{
-					emptyTargetSlot = quickSlot;
-					break;
-				}
-			}
-			// 2순위: 빈 슬롯이 없다면, 마지막 퀵슬롯을 교체 대상으로 지정
-			if (!emptyTargetSlot && quickSlots.back() != nullptr)
-				fullTargetSlot = quickSlots.back();
-		}
-		else
-		{
-			for (auto& obj : slotObjs)
-			{
-				auto slot = obj->GetComponent<SlotComponent>();
-				if (slot && slot->GetAllowedType() == requiredEquipType)
-				{
-					if (!slot->HasItem())
-					{
-						emptyTargetSlot = slot;
-						break;
-					}
-					fullTargetSlot = slot;
-				}
-			}
-		}
-		if (emptyTargetSlot)
-		{
-			MoveItem(selected, emptyTargetSlot);
-			itemComp->Equip(player);
-		}
-		else if (fullTargetSlot)
-		{
-			Object* oldItemObj = fullTargetSlot->GetItem();
-			auto oldItemComp = oldItemObj->GetComponent<ItemComponent>();
-
-			SwapItems(selected, fullTargetSlot);
-
-			oldItemComp->UnEquip(player);
-			itemComp->Equip(player);
-			DeselectAll();
-		}
-	}
-	// 4. 장착 해제 (장비 슬롯 -> 인벤토리)
-	else if (sourceSlotType == requiredEquipType)
-	{
-		SlotComponent* targetSlot = FindFirstEmptySlot();
-		if (targetSlot)
-		{
-			if (sourceSlotType == SlotItemType::Potion)
-				ClearFromQuickSlot(itemObj);
-			MoveItem(selected, targetSlot);
-			itemComp->UnEquip(player);
-		}
-	}
+		HandleEquipAction(itemComp);
+	else
+		HandleUnEquipAction(itemComp);
 }
 
 SlotComponent* InventoryManager::FindFirstEmptySlot()
@@ -191,76 +95,65 @@ void InventoryManager::ClearFromQuickSlot(Object* item)
 	}
 }
 
-void InventoryManager::ApplyFilter(optional<ItemType> type)
+void InventoryManager::ApplyFilter(optional<SlotItemType> type)
 {
 	curFilter = type;
 
-	// 1. 모든 가방 슬롯을 가져온다
+	// 1) 모든 가방 슬롯 수집
 	vector<SlotComponent*> bagSlots;
-	for (auto& obj : slotObjs)
+	for (auto* obj : slotObjs)
 	{
-		auto slot = obj->GetComponent<SlotComponent>();
+		auto* slot = obj->GetComponent<SlotComponent>();
 		if (slot && slot->GetAllowedType() == SlotItemType::Any)
 			bagSlots.push_back(slot);
 	}
 
-	// 2. 슬롯에 있던 아이템과, 이전에 필터링으로 제외됏던 아이템을 모두 수집한다.
-	vector<Object*> allItemsToFilter = unslottedItems;
+	// 2) 슬롯에 있던 아이템과 이전 unslottedItems 합치기
+	vector<Object*> allItems = move(unslottedItems);
 	unslottedItems.clear();
-
-	for (auto& slot : bagSlots)
+	for (auto* slot : bagSlots)
 	{
-		if (Object* itemObj = slot->GetItem())
+		if (auto* itm = slot->GetItem())
 		{
-			allItemsToFilter.push_back(itemObj);
+			allItems.push_back(itm);
 			slot->ClearItem();
 		}
 	}
-	
-	// 3. 필터 조건에 따라 아이템들을 "matched" 와 "others"로 분류
-	vector<Object*> matchedItems;
-	vector<Object*> otherItems;
 
-	if (!type.has_value())
-		matchedItems = allItemsToFilter;
-	else
+	// 3) 카테고리별 분류
+	vector<Object*> matched, others;
+	for (auto* obj : allItems)
 	{
-		for (auto& item : allItemsToFilter)
-		{
-			auto itemComp = item->GetComponent<ItemComponent>();
-			if (itemComp && itemComp->GetItemType() == *type)
-				matchedItems.push_back(item);
-			else
-				otherItems.push_back(item);
-		}
+		auto* ic = obj->GetComponent<ItemComponent>();
+		SlotItemType cat = GetSlotCategory(ic->GetItemType());
+		if (!type.has_value() || cat == *type)
+			matched.push_back(obj);
+		else
+			others.push_back(obj);
 	}
 
-	// 4. "matched" 아이템들을 슬롯에 순서대로 다시 배치
-	size_t idx = 0;
-	for (auto& item : matchedItems)
+	// 4) 매치된 아이템부터 슬롯에 재배치
+	size_t i = 0;
+	for (auto* obj : matched)
 	{
-		if (idx >= bagSlots.size())
+		if (i >= bagSlots.size())
 		{
-			unslottedItems.push_back(item);
+			unslottedItems.push_back(obj);
 			continue;
 		}
-		auto slot = bagSlots[idx++];
-		slot->SetItem(item);
-		item->GetComponent<UIRenderer>()->SetVisible(true);
-
+		auto* slot = bagSlots[i++];
+		slot->SetItem(obj);
+		obj->GetComponent<UIRenderer>()->SetVisible(true);
 		auto pos = slot->GetOwner()->GetComponent<TransformComponent>()->GetPosition();
-		item->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
+		obj->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 	}
 
-	// 5. 필터에 맞지 않는 "others" 아이템들은 unslottedItems 목록에 보관. 어느 슬롯도 차지하지 않는다
-	if (type.has_value())
+	// 5) 나머지 숨기기
+	for (auto* obj : others)
 	{
-		unslottedItems.insert(unslottedItems.end(), otherItems.begin(), otherItems.end());
-		for (auto item : unslottedItems)
-		{
-			if (auto renderer = item->GetComponent<UIRenderer>())
-				renderer->SetVisible(false);
-		}
+		unslottedItems.push_back(obj);
+		if (auto* r = obj->GetComponent<UIRenderer>())
+			r->SetVisible(false);
 	}
 }
 
@@ -275,6 +168,153 @@ bool InventoryManager::InsertItem(Object* item)
 	item->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 	return true;
 }
+
+void InventoryManager::BindInventory(ItemActionCallBack&& equipCallBack, ItemActionCallBack&& unequipCallBack, CreateItemCallBack&& createCallBack)
+{
+	OnEquip = move(equipCallBack);
+	OnUnEquip = move(unequipCallBack);
+	OnCreateItem = move(createCallBack);
+	
+	player->GetComponent<InventoryComponent>()->SetOnItemAdded([this](ItemType type) {ItemAdded(type);});
+}
+
+SlotComponent* InventoryManager::FindSlotByType(SlotItemType typeToFind)
+{
+	for (auto slotObj : slotObjs)
+	{
+		if (!slotObj) continue;
+
+		auto slotComp = slotObj->GetComponent<SlotComponent>();
+		if (!slotComp) continue;
+
+		if (slotComp->GetAllowedType() == typeToFind)
+			return slotComp;
+	}
+	return nullptr;
+}
+
+bool InventoryManager::RemoveItemFromSelectedSlot(ItemType& out)
+{
+	if (!selected || !selected->HasItem()) return false;
+
+	Object* itemObj = selected->GetItem();
+	ItemComponent* itemComp = itemObj->GetComponent<ItemComponent>();
+	if (!itemComp)
+		return false;
+
+	out = itemComp->GetItemType();
+
+	selected->ClearItem();
+
+	DeselectAll();
+	return true;
+}
+
+void InventoryManager::ItemAdded(ItemType type)
+{
+	Object* itemObj = OnCreateItem(type);
+	if (!itemObj) return;
+	
+	auto itemComp = itemObj->GetComponent<ItemComponent>();
+
+	if (OnEquip)
+		itemComp->SetEquipCallBack([this, type](Object*) {OnEquip(type); });
+	if (OnUnEquip)
+		itemComp->SetUnEquipCallBack([this, type](Object*) {OnUnEquip(type); });
+	
+	InsertItem(itemObj);
+}
+
+void InventoryManager::HandleEquipAction(ItemComponent* itemComp)
+{
+	bool isSwap = false;
+	SlotComponent* targetSlot = FindTargetEquipSlot(itemComp->GetItemType(),isSwap);
+
+	if (!targetSlot) return;
+
+	if (isSwap)
+	{
+		auto oldItemComp = targetSlot->GetItem()->GetComponent<ItemComponent>();
+		SwapItems(selected, targetSlot);
+		oldItemComp->UnEquip(player);
+		itemComp->Equip(player);
+	}
+	else
+	{
+		MoveItem(selected, targetSlot);
+		itemComp->Equip(player);
+	}
+	DeselectAll();
+}
+
+void InventoryManager::HandleUnEquipAction(ItemComponent* itemComp)
+{
+	SlotComponent* targetSlot = FindFirstEmptySlot();
+	if (targetSlot)
+	{
+		MoveItem(selected, targetSlot);
+		itemComp->UnEquip(player);
+		DeselectAll();
+	}
+}
+
+void InventoryManager::MoveItem(SlotComponent* from, SlotComponent* to)
+{
+	Object* item = from->GetItem();
+	from->ClearItem();
+	to->SetItem(item);
+}
+
+void InventoryManager::SwapItems(SlotComponent* from, SlotComponent* to)
+{
+	Object* itemFrom = from->GetItem();
+	Object* itemTo = to->GetItem();
+	from->SetItem(itemTo);
+	to->SetItem(itemFrom);
+}
+
+SlotComponent* InventoryManager::FindTargetEquipSlot(ItemType type, bool& isSwap)
+{
+	const SlotItemType requiredEquipType = GetSlotCategory(type);
+	SlotComponent* emptyTarget = nullptr;
+	SlotComponent* fullTarget = nullptr;
+	isSwap = false;
+
+	if (requiredEquipType == SlotItemType::Potion)
+	{
+		for (auto quickSlot : quickSlots)
+		{
+			if (quickSlot && !quickSlot->HasItem())
+			{
+				emptyTarget = quickSlot;
+				break;
+			}
+		}
+		if (!emptyTarget && quickSlots.back() != nullptr)
+			fullTarget = quickSlots.back();
+	}
+	else
+	{
+		for (auto& obj : slotObjs)
+		{
+			auto slot = obj->GetComponent<SlotComponent>();
+			if (slot && slot->GetAllowedType() == requiredEquipType)
+			{
+				if (!slot->HasItem())
+				{
+					emptyTarget = slot;
+					break;
+				}
+				fullTarget = slot;
+			}
+		}
+	}
+	if (emptyTarget) return emptyTarget;
+
+	isSwap = true;
+	return fullTarget;
+}
+
 
 void InventoryManager::Update(float dt)
 {

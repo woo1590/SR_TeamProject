@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "ObjectManager.h"
 #include "Object.h"
+#include "Armor.h"
 
 InventoryPlayer* InventoryPlayer::Create(ObjectManager* owner)
 {
@@ -57,6 +58,17 @@ void InventoryPlayer::UpdateRendererList()
 		Object* boneObj = pair.second;
 		if (boneObj)
 		{
+			if (dynamic_cast<Armor*>(boneObj))
+			{
+				auto pArmor = dynamic_cast<Armor*>(boneObj);
+				auto bones = pArmor->GetBones();
+				for (auto& bone : bones)
+				{
+					auto renderer = bone.second->GetComponent<MeshRenderer>();
+					if (renderer)
+						rtv->renderers.push_back(renderer);
+				}
+			}
 			auto renderer = boneObj->GetComponent<MeshRenderer>();
 			if (renderer)
 				rtv->renderers.push_back(renderer);

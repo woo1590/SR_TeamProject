@@ -2,23 +2,24 @@
 
 #include "ObjectComponent.h"
 #include "InfoComponent.h"
+#include "Object.h"
 
 BEGIN(Engine)
-
 class QuestSystem;
 
 class ENGINE_DLL ItemComponent : public ObjectComponent
 {
 private:
-	explicit ItemComponent(Object* owner)
-		:ObjectComponent(owner) {}
+	explicit ItemComponent(Object* owner) :ObjectComponent(owner) {}
 
 public:
 	static ItemComponent* Create(Object* owner);
 	HRESULT Ready_Component();
 
-	void SetItemType(ItemType _type) { itemType = _type; }
+	void SetItemType(ItemType _type);
 	ItemType GetItemType() const { return itemType; }
+	const ItemInfo& GetItemInfo() const { return owner->GetComponent<InfoComponent<ItemInfo>>()->GetInfo(); }
+
 	void Use(Object* user);
 
 	void SetEquipCallBack(function<void(Object* user)> cb) { onEquipCallback = move(cb); }
@@ -34,6 +35,8 @@ public:
 	bool IsCoolDown() const { return coolDownTimer > 0.f; }
 	float GetCoolDownRatio() const;
 
+	void SetUseCallBack(function<void(Object*)> cb) { onUseCallBack = move(cb); }
+
 	void Update(float dt) override;
 
 private:
@@ -46,6 +49,8 @@ private:
 	bool isCoolDownItem = false;
 	float coolDownTimer = 0.f;
 	float coolDownDur = 1.f;
+
+	function<void(Object*)> onUseCallBack;
 };
 
 END

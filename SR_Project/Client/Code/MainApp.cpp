@@ -433,6 +433,7 @@ HRESULT MainApp::LoadDefaultResource()
         {L"loadingscene_tip9",        eUI, -1},
         {L"loadingscene_tip10",       eUI, -1},
         {L"loadingscene_tip11",       eUI, -1},
+        {L"shop_back",                eUI, -1},
 
         // =====================================================================
         // Layer 0 (UI 베이스)
@@ -465,6 +466,8 @@ HRESULT MainApp::LoadDefaultResource()
         {L"boss_icon",                eUI, 1},
         {L"levelup_banner",           eUI, 1},
         {L"levelup",                  eUI, 1},
+        {L"shop_emerald",             eUI, 1},
+        {L"shop_button",              eUI, 1},
 
 
         // =====================================================================
@@ -505,6 +508,7 @@ HRESULT MainApp::LoadDefaultResource()
         {L"enemy_hpbarback",          eUI, 3},
         {L"arrows",                   eUI, 3},
         {L"arrow",                    eUI, 3},
+        {L"shopslot",                 eUI, 3},
 
         // =====================================================================
         // Layer 4
@@ -558,6 +562,13 @@ HRESULT MainApp::LoadDefaultResource()
         {L"atri_brave",               eUI, 9},
 
         {L"gray",                     eUI, 9},
+        {L"gray2",                    eUI, 9},
+
+        {L"stage0",                   eUI, 9},
+        {L"stage1",                   eUI, 9},
+        {L"stage2",                   eUI, 9},
+        {L"button_left",              eUI, 9},
+        {L"button_right",             eUI, 9},
 
         // =====================================================================
         // Layer 100+ (팝업 및 최상단 UI)

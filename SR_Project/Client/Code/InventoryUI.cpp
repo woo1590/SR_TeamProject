@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "InventoryUI.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
@@ -31,7 +31,8 @@ void InventoryUI::Update(float dt)
 
 	font->ClearText();
 
-	font->AddText(L"·¹º§", {97,325,250,380});
-	font->AddText(L"" + to_wstring(info.level), {115,345,250,390});
-	font->AddText(L"Èû", {500,330,580,500});
+	font->AddText(L"ë ˆë²¨", {102, 325, 250, 380}, Color::White, DT_LEFT | DT_TOP, FontType::TipText);
+	font->AddText(L"" + to_wstring(info.level), {115,350,250,390}, Color::White, DT_LEFT | DT_TOP, FontType::TipText);
+	font->AddText(L"íž˜", {505,320,580,500},Color::White, DT_LEFT | DT_TOP, FontType::TipText);
+	font->AddText(to_wstring((int)info.power), {500, 350, 580, 500}, Color::White, DT_LEFT | DT_TOP, FontType::TipText);
 }

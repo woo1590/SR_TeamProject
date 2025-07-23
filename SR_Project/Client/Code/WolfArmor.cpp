@@ -22,9 +22,8 @@ HRESULT WolfArmor::Ready_Object()
 	renderer->SetRenderType(UIRenderType::Inventory);
 
 	auto info = AddComponent<InfoComponent<ItemInfo>>();
-	info->SetInfo({L"늑대방어구",L"inventory_wolfarmor", ItemType::Armor, Rarity::Default, 1, L"많은 전사들은 전투할 때 늑대의 머리를 뒤집어 쓰고 적들에게 공포감을 줬습니다."});
-
 	auto item = AddComponent<ItemComponent>();
+	item->SetItemType(ItemType::Armor);
 	item->SetOriginalScale({0.4f, 0.4f});
 
 	return S_OK;

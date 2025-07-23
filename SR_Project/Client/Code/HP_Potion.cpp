@@ -10,7 +10,6 @@
 #include "CoolDownComponent.h"
 #include "MaskObj.h"
 
-
 HP_Potion* HP_Potion::Create(ObjectManager* owner)
 {
 	auto* instance = new HP_Potion(owner);
@@ -30,14 +29,15 @@ HRESULT HP_Potion::Ready_Object()
 	transform->SetPosition(700.f, 700.f);
 	transform->SetScale(0.8f, 0.8f);
 	renderer->SetTexture(L"hp_potion");
+	_vec3 pos = transform->GetPosition();
 
 	auto maskObj = MaskObj::Create(owner);
 	auto maskTf = maskObj->GetComponent<TransformComponent>();
+	maskTf->SetPosition(pos.x, pos.y - 20.f);
 
 	auto maskRenderer = maskObj->GetComponent<UIRenderer>();
-
-	info->SetInfo({L"HP 포션", L"hp_potion", ItemType::Potion, Rarity::Default, 10, L"HP 10 회복"});
 	item->SetCoolDown(true, 5.f);
+	item->SetItemType(ItemType::HpPotion);
 
 	cooldown->Init(item, maskRenderer);
 
@@ -54,6 +54,11 @@ HRESULT HP_Potion::Ready_Object()
 			if (itemComponent && player)
 				itemComponent->Use(player);
 		}
+		});
+
+	item->SetUseCallBack([=](Object* user) {
+		if (auto hpInfo = user->GetComponent<InfoComponent<PlayerInfo>>())
+			hpInfo->AddHp(50);
 		});
 
 	owner->AddUIObject(maskObj);

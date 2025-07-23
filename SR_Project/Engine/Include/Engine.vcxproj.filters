@@ -333,7 +333,7 @@
     </Filter>
     <Filter Include="07. Object Component\Collision\Collider\OBB">
       <UniqueIdentifier>{b23b2afb-bc5c-4fce-891a-86a694fa6130}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="01. Engine Component\RenderSystem\RenderTargetView">
       <UniqueIdentifier>{69a3a785-cf0f-42f7-b190-7ad0fcadb828}</UniqueIdentifier>
     </Filter>    
@@ -357,6 +357,12 @@
     </Filter>
     <Filter Include="06. Object\02. DynamicBlock\MapTable">
       <UniqueIdentifier>{7299428f-2b0b-4514-86a5-0781f7b2a2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\UIComponent\15. InventoryComponent">
+      <UniqueIdentifier>{271f7dad-0296-4313-a25e-752737a0718b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Scene Component\UIManager\ShopManager">
+      <UniqueIdentifier>{01da51ef-715f-4110-910d-83fecac8d6b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -700,7 +706,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\OBBCollider.cpp">
       <Filter>07. Object Component\Collision\Collider\OBB</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\RenderTargetView.cpp">
       <Filter>01. Engine Component\RenderSystem\RenderTargetView</Filter>
     </ClCompile>   
@@ -721,6 +727,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MapTable.cpp">
       <Filter>06. Object\02. DynamicBlock\MapTable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InventoryComponent.cpp">
+      <Filter>07. Object Component\UIComponent\15. InventoryComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopManager.cpp">
+      <Filter>05. Scene Component\UIManager\ShopManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1111,6 +1123,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\MapTable.h">
       <Filter>06. Object\02. DynamicBlock\MapTable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InventoryComponent.h">
+      <Filter>07. Object Component\UIComponent\15. InventoryComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShopManager.h">
+      <Filter>05. Scene Component\UIManager\ShopManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

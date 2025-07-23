@@ -6,6 +6,7 @@
 #include "MeshRendererComponent.h"
 #include "InputSystem.h"
 #include "InfoComponent.h"
+#include "ItemComponent.h"
 
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
@@ -19,6 +20,7 @@
 #include "CameraManager.h"
 #include "UIManager.h"
 #include "DialogManager.h"
+#include "UILoader.h"
 
 #include "MyMath.h"
 
@@ -30,6 +32,7 @@
 #include "Crossbow.h"
 #include "Armor.h"
 #include "EmeraldObj.h"
+#include "DashUI.h"
 
 #include "StaticGrid.h"
 #include "SpriteRenderer.h"
@@ -113,13 +116,16 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     SetUpIdleRotations();
     UpdateNewIdleRotations();
 
+    invMgr = GetScene()->GetUIManager()->GetInventory();
+    invComp = AddComponent<InventoryComponent>();
+
     return S_OK;
 }
 void Player::Update(_float dt)
 {
     auto curRenderType = EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState();
     if (curRenderType == UIRenderType::Inventory || curRenderType == UIRenderType::WorldMap ||
-        curRenderType == UIRenderType::QuestUI) return;
+        curRenderType == UIRenderType::QuestUI || curRenderType == UIRenderType::Shop) return;
 
     BaseCharacter::Update(dt);
 
@@ -157,18 +163,25 @@ void Player::Update(_float dt)
 
 void Player::Late_Update(_float dt)
 {
-    // -----------------------------------
-    _vec3 dir = GetDir();
-    wchar_t buffer[256];
-    swprintf_s(buffer, L"PlayerDir ==> X: %f, Z: %f\n", dir.x, dir.z);
-    OutputDebugStringW(buffer);
-
-    if (EngineCore::GetInstance()->GetInputSystem()->IsKeyPressed(KEY::I))
+    const auto& input = EngineCore::GetInstance()->GetInputSystem();
+    if (input->IsKeyPressed(KEY::I))
     {
         bool enableInventory = (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::MainGame);
         SetInventoryMode(enableInventory);
     }
-   
+    if (input->IsKeyPressed(KEY::S))
+    {
+        bool enableShop = (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::MainGame);
+        SetShopMode(enableShop);
+    }
+    if (isClickedI)
+    {
+        const auto& allItemTypes = InventoryComponent::GetSupportedItemTypes();
+        for (const auto& itemType : allItemTypes)
+            invComp->Add(itemType);
+
+        isClickedI = false;
+    }
 
     // ---------------------------------------- 
     BaseCharacter::Late_Update(dt);
@@ -1546,11 +1559,11 @@ void Player::SetInventoryMode(bool enable)
 
         lastWorldPos = tf->GetPosition();
         lastWorldDir = GetDir();
-        tf->SetPosition(0.f, 0.f, 0.f);
+        tf->SetPosition(0.f, lastWorldPos.y, 0.f);
         renderSystem->SetUIRenderState(UIRenderType::Inventory);
         camMgr->SetMainCamera(L"Inventory_Camera");
         physics->SetMass(0.f); 
-        PlayerDirection = {0, 0, 1.f};
+        PlayerDirection = {0.f,0.f,1.f};
         tf->SetForward(PlayerDirection);
     }
     else
@@ -1564,6 +1577,15 @@ void Player::SetInventoryMode(bool enable)
         PlayerDirection = {lastWorldDir.x,lastWorldDir.y,lastWorldDir.z};
         tf->SetForward(PlayerDirection);
     }
+}
+
+void Player::SetShopMode(bool enable)
+{
+    auto renderSys = EngineCore::GetInstance()->GetRenderSystem();
+    if (enable)
+        renderSys->SetUIRenderState(UIRenderType::Shop);
+    else
+        renderSys->SetUIRenderState(UIRenderType::MainGame);
 }
 
 void Player::UpdateIdle(_float dt)
@@ -2286,17 +2308,28 @@ void Player::CheckStateRoll(_float dt)
     auto input = EngineCore::GetInstance()->GetInputSystem();
     static const KEY keyRoll = SPACE;
 
-    if (input->IsKeyPressed(keyRoll))
+    if (!input->IsKeyPressed(keyRoll)) return;
+
+    DashUI* dashUI = nullptr;
+    for (auto obj : owner->GetObjectList(ObjectType::UI))
     {
-        switch (State)
-        {
-        case ePlayerState::IDLE: case ePlayerState::WALK:
-            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Roll");
-            State = ePlayerState::ROLL;
-            SaveStartRotation();
+        dashUI = dynamic_cast<DashUI*>(obj);
+        if (dashUI)
             break;
-        }
     }
+    if (!dashUI) return;
+
+    auto dashItem = dashUI->GetComponent<ItemComponent>();
+    if (!dashItem || dashItem->IsCoolDown())
+        return;
+
+    dashItem->Use(this);
+    // ------------------------------------------------ 제현 --------
+    
+    if (State == ePlayerState::IDLE || State == ePlayerState::WALK)
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("Roll");
+    State = ePlayerState::ROLL;
+    SaveStartRotation();
 }
 
 void Player::CheckDead()

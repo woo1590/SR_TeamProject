@@ -20,6 +20,7 @@
 #include "SoundManager.h"
 #include "PhysicsComponent.h"
 #include "Scene.h"
+#include "BossHPBarFront.h"
 #include "PhysicsSystem.h"
 #include "MeshRendererComponent.h"
 #include "Material.h"
@@ -94,6 +95,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     {
         Emeralds.push_back(EmeraldObj::Create(owner, ObjectType::Item));
     }
+    bossFront->SetBossName(L"레드스톤 골렘");
 
 	return S_OK;
 }

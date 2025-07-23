@@ -80,6 +80,7 @@
 #include "SpriteRenderer.h"
 #include "ThirdcamComponent.h"
 #include "InfoComponent.h"
+#include "ProgressBar.h"
 
 
 Village::Village()
@@ -169,6 +170,10 @@ void Village::Load()
         loader.LoadUI(ObjectMgr);
 
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+
+		auto monster = Ender::Create(ObjectMgr, ObjectType::Monster);
+		monster->GetComponent<TransformComponent>()->SetPosition(160.f, 100.f, 200.f);
+		ObjectMgr->AddObject(ObjectType::Monster, monster);
 
 		if (game->IsSceneClear(LOADID::Village))
 		{
@@ -308,7 +313,6 @@ void Village::Unload()
 		if (auto monsterComponent = obj->GetComponent<InfoComponent<EnemyInfo>>())
 			monsterComponent->ClearObservers();
 	}
-
 }
 
 #ifdef USE_IMGUI

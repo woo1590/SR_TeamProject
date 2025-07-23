@@ -2,6 +2,8 @@
 #include "BaseCharacter.h"
 #include "Item.h"
 #include "QuestTextObj.h"
+#include "InventoryManager.h"
+#include "InventoryComponent.h"
 
 class Player : public BaseCharacter
 {
@@ -87,6 +89,7 @@ public:
 
     // - --------------- 제현 -------------------------
     void SetInventoryMode(bool enable);
+    void SetShopMode(bool enable);
     void SetDir(_vec3 _dir) { lastWorldDir = _dir; }
 
 private:
@@ -217,4 +220,7 @@ private:
 
     const _float itemPullingRange = 50.f;
     const _float itemPullingSpeed = 30.f;
+    InventoryManager* invMgr = nullptr;
+    InventoryComponent* invComp = nullptr;
+    bool isClickedI = true;
 };

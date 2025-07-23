@@ -22,12 +22,23 @@ HRESULT ItemComponent::Ready_Component()
 	return S_OK;
 }
 
+void ItemComponent::SetItemType(ItemType _type)
+{
+	itemType = _type;
+	auto infoComp = owner->GetComponent<InfoComponent<ItemInfo>>();
+	if (infoComp)
+		infoComp->SetInfo(itemTable.at(itemType));
+}
+
 void ItemComponent::Use(Object* user)
 {
 	if (isCoolDownItem && IsCoolDown()) return;
 
 	if (isCoolDownItem)
 		coolDownTimer = coolDownDur;
+
+	if (onUseCallBack)
+		onUseCallBack(user);
 }
 
 void ItemComponent::Equip(Object* user)

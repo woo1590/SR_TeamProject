@@ -7,6 +7,7 @@ class InventoryManager;
 class QuestSystem;
 class TooltipManager;
 class DialogManager;
+class ShopManager;
 
 class ENGINE_DLL UIManager: public Base
 {
@@ -20,6 +21,7 @@ public:
 	QuestSystem*    GetQuestSystem() const { return quest; }
 	TooltipManager*     GetTooltip() const { return tooltip; }
 	DialogManager*       GetDialog() const { return dialog; }
+	ShopManager*           GetShop() const { return shop; }
 
 	Scene* GetScene() const { return owner; }
 
@@ -27,11 +29,12 @@ public:
 	void Free() override;
 
 private:
-	Scene* owner = nullptr;
+	Scene*            owner = nullptr;
 	InventoryManager* inventory = nullptr;
-	QuestSystem* quest = nullptr;
-	TooltipManager* tooltip = nullptr;
-	DialogManager* dialog = nullptr;
+	QuestSystem*      quest = nullptr;
+	TooltipManager*   tooltip = nullptr;
+	DialogManager*    dialog = nullptr;
+	ShopManager*      shop = nullptr;
 };
 
 END

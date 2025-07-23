@@ -266,6 +266,7 @@
     <ClInclude Include="..\Header\ICommand.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\InfoDetector.h" />
+    <ClInclude Include="..\Header\InventoryComponent.h" />
     <ClInclude Include="..\Header\InventoryManager.h" />
     <ClInclude Include="..\Header\IronCage.h" />
     <ClInclude Include="..\Header\ItemComponent.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="..\Header\SelectorNode.h" />
     <ClInclude Include="..\Header\SequenceNode.h" />
     <ClInclude Include="..\Header\Shader.h" />
+    <ClInclude Include="..\Header\ShopManager.h" />
     <ClInclude Include="..\Header\SlotComponent.h" />
     <ClInclude Include="..\Header\SoundManager.h" />
     <ClInclude Include="..\Header\SpriteRenderer.h" />
@@ -430,6 +432,7 @@
     <ClCompile Include="..\Code\ICommand.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\InfoDetector.cpp" />
+    <ClCompile Include="..\Code\InventoryComponent.cpp" />
     <ClCompile Include="..\Code\InventoryManager.cpp" />
     <ClCompile Include="..\Code\IronCage.cpp" />
     <ClCompile Include="..\Code\ItemComponent.cpp" />
@@ -477,6 +480,7 @@
     <ClCompile Include="..\Code\SelectorNode.cpp" />
     <ClCompile Include="..\Code\SequenceNode.cpp" />
     <ClCompile Include="..\Code\Shader.cpp" />
+    <ClCompile Include="..\Code\ShopManager.cpp" />
     <ClCompile Include="..\Code\SlotComponent.cpp" />
     <ClCompile Include="..\Code\SoundManager.cpp" />
     <ClCompile Include="..\Code\SpriteRenderer.cpp" />

@@ -4,7 +4,7 @@ BEGIN(Engine)
 
 class ObjectManager;
 class InventoryManager;
-
+class ShopManager;
 END
 
 class  InventoryUIBuilder

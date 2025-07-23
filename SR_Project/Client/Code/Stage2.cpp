@@ -72,6 +72,7 @@
 #include "RendererComponent.h"
 #include "SpriteRenderer.h"
 #include "ThirdcamComponent.h"
+#include "InfoComponent.h"
 
 
 Stage2::Stage2()
@@ -269,6 +270,16 @@ void Stage2::Late_Update(_float dt)
 
 void Stage2::Unload()
 {
+	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Player))
+	{
+		if (auto playerComponent = obj->GetComponent<InfoComponent<PlayerInfo>>())
+			playerComponent->ClearObservers();
+	}
+	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Monster))
+	{
+		if (auto monsterComponent = obj->GetComponent<InfoComponent<EnemyInfo>>())
+			monsterComponent->ClearObservers();
+	}
 }
 
 #ifdef USE_IMGUI 
