@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "FixedCam.h"
+#include "EngineCore.h"
+#include "Random.h"
 
 //component
 #include "TransformComponent.h"

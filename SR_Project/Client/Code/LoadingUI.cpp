@@ -107,7 +107,7 @@ void LoadingUI::SetInfo(LOADID nextSceneID)
 		else 
 		{
 			info.texturePath = L"loadingscene_stage2";
-			info.sceneName   = L"앤더 월드";
+			info.sceneName   = L"엔더 월드";
 			info.sceneTip    = L"낙하하는 함정을 조심하세요!";
 		}
 		prefixText    = L"다음으로 이동";

@@ -356,7 +356,7 @@ void Chunk::BuildChunkFace()
         Safe_Release(mesh);
         mesh = nullptr;
     }
-
+    
     auto renderer = GetComponent<MeshRenderer>();
     renderer->SetMesh(mesh);
 }

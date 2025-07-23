@@ -64,7 +64,8 @@
 #include "WayPointCam.h"
 #include "InventoryCam.h"
 #include "Pig.h"
-
+#include "MiniMapObject.h"
+#include "MiniMapRenderer.h"
 //component
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
@@ -155,6 +156,12 @@ void Stage1::Load()
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 
+		miniMapObject = MiniMapObject::Create(ObjectMgr);
+		sceneID = STAGE1;
+
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) 
+			ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
+
 		Grid->InsertBlock();
 	}
 
@@ -182,6 +189,19 @@ void Stage1::Update(_float dt)
 	PhysicsSys->Update(dt);
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
+
+	auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
+		miniMapObject->GetMiniMapRenderer()->UpdateMapData(player->GetComponent<TransformComponent>()->GetPosition(),
+			ChunkMgr,
+			sceneID);
+
+	if (Input->IsKeyPressed(N))
+	{
+		bool visible = miniMapObject->GetMiniMapRenderer()->GetVisible();
+		miniMapObject->GetMiniMapRenderer()->SetVisible(!visible);
+	}
 
 	switch (currState)
 	{

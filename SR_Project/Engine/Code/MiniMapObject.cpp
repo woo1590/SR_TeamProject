@@ -31,6 +31,7 @@ HRESULT MiniMapObject::Ready_Object()
     auto transform = AddComponent<TransformComponent>();
     transform->SetPosition({ 0.f, 0.f, 0.f });
     miniMapRenderer = AddComponent<MiniMapRenderer>(RENDER_ID::Render_NonAlpha);
+    miniMapRenderer->AddRef();
     owner->AddObject(ObjectType::MiniMap, this);
     return S_OK;
 }

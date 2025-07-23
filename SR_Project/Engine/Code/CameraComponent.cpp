@@ -2,6 +2,7 @@
 #include "CameraComponent.h"
 #include "MyMath.h"
 #include "EngineCore.h"
+#include "Random.h"
 #include "InputSystem.h"
 #include "GraphicDevice.h"
 
@@ -41,6 +42,35 @@ HRESULT CameraComponent::Ready_Component()
         return E_FAIL;
 
     return S_OK;
+}
+
+void CameraComponent::Update(_float dt)
+{
+    if (shakeTimer >= shakeDuration)
+    {
+        shakeDuration = 0.f;
+        shakeTimer = 0.f;
+        shakeOffset = { 0.f,0.f,0.f };
+    }
+
+    if (shakeDuration > 0.f)
+    {
+        auto r = EngineCore::GetInstance()->GetRandom();
+
+        _float progress = 1.f - (shakeTimer / shakeDuration);
+        if (progress < 0.f)
+            progress = 0.f;
+
+        shakeOffset.x = r->get<_float>(-power, power) * progress * progress * 0.1f;
+        shakeOffset.z = r->get<_float>(-power, power) * progress * progress * 0.1f;
+
+        shakeTimer += dt;
+    }
+
+    _vec3 targetPos = Target->GetPosition();          //목표 대상 위치 = 플레이어 위치
+    _vec3 finalCamPos = targetPos + shakeOffset;   //카메라 최종위치 = 플레이어 위치 + offset
+
+    Target->SetPosition(finalCamPos);
 }
 
 void CameraComponent::SetFOV(float fov)
@@ -123,6 +153,12 @@ Ray CameraComponent::ScreenPointRay()
     D3DXVec3TransformNormal(&ray.Direction, &ray.Direction, &view);
 
     return ray;
+}
+
+void CameraComponent::SetShake(_float power, _float duration)
+{
+    this->power = power;
+    shakeDuration = duration;
 }
 
 void CameraComponent::Free()

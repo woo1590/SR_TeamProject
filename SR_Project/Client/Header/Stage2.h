@@ -48,6 +48,7 @@ private:
     _float bridgeActiveDuration = 0.f;
     _float bridgeActiveTimer = 0.f;
     _bool isBridgeActive = false;
+    _bool cameraShake = false;
 
     Object* boss = nullptr;
 

@@ -35,6 +35,6 @@ private:
 
     float Angle = 0.f;
     float totAngle = 0.f;
-    float rotSpeed = 8.f;
+    float rotSpeed = 8.5f;
 };
 END

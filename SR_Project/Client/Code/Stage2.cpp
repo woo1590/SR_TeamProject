@@ -64,6 +64,8 @@
 #include "InventoryCam.h"
 #include "WayPointCam.h"
 #include "FixedCam.h"
+#include "MiniMapObject.h"
+#include "MiniMapRenderer.h"
 
 //component
 #include "TransformComponent.h"
@@ -171,6 +173,13 @@ void Stage2::Load()
 			levers.push_back(lever);
 			lever->AddRef();
 		}
+		
+		miniMapObject = MiniMapObject::Create(ObjectMgr);
+		sceneID = STAGE1;
+
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks())
+			ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
+
 
 		Grid->InsertBlock();
 	}
@@ -199,6 +208,19 @@ void Stage2::Update(_float dt)
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
 
+	auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
+		miniMapObject->GetMiniMapRenderer()->UpdateMapData(player->GetComponent<TransformComponent>()->GetPosition(),
+			ChunkMgr,
+			sceneID);
+
+	if (Input->IsKeyPressed(N))
+	{
+		bool visible = miniMapObject->GetMiniMapRenderer()->GetVisible();
+		miniMapObject->GetMiniMapRenderer()->SetVisible(!visible);
+	}
+
 	switch (currState)
 	{
 	case Stage2::Stage2Stage::Stage2Intro:
@@ -217,6 +239,12 @@ void Stage2::Update(_float dt)
 	{
 		if (bridgeActiveTimer >= bridgeActiveDuration)
 			ChangeState(Stage2Stage::Play);
+
+		if (bridgeActiveTimer >= 10.5f && !cameraShake)
+		{
+			CameraMgr->GetMainCamera()->SetShake(10.f, 0.7f);
+			cameraShake = true;
+		}
 
 		bridgeActiveTimer += dt;
 
@@ -416,12 +444,19 @@ void Stage2::SetTriggerBox()
 
 	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger3->GetComponent<TransformComponent>()->SetPosition(257.f, 35.f, 100.f);
+	trigger3->AddSpawner(SpawnType::Shulker, _vec3(270.f, 45.f, 120.f));
+	trigger3->AddSpawner(SpawnType::Shulker, _vec3(280.f, 45.f, 100.f));
 
 	auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger4->GetComponent<TransformComponent>()->SetPosition(328.f, 35.f, 100.f);
+	trigger4->AddSpawner(SpawnType::Blastling, _vec3(270.f, 50.f, 120.f));
+	trigger4->AddSpawner(SpawnType::Blastling, _vec3(290.f, 50.f, 100.f));
+	trigger4->AddSpawner(SpawnType::Blastling, _vec3(350.f, 50.f, 110.f));
+	trigger4->AddSpawner(SpawnType::Blastling, _vec3(340.f, 50.f, 110.f));
 
 	auto trigger5 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger5->GetComponent<TransformComponent>()->SetPosition(405.f, 35.f, 120.f);
+	trigger5->AddSpawner(SpawnType::PurpleSlime, _vec3(380.f, 50.f, 130.f));
 
 	auto trigger6 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger6->GetComponent<TransformComponent>()->SetPosition(437.f, 35.f, 170.f);
@@ -502,7 +537,7 @@ void Stage2::ChangeState(Stage2Stage state)
 		currState = Stage2Stage::ActiveBridge;
 		ChunkMgr->SetChunkRange(40);
 
-		bridgeActiveDuration = 5.f;
+		bridgeActiveDuration = 13.f;
 		bridgeActiveTimer = 0.f;
 		isBridgeActive = true;
 

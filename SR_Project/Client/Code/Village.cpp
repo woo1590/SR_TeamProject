@@ -71,6 +71,8 @@
 #include "Shulker.h"
 #include "Blastling.h"
 #include "WayPointCam.h"
+#include "MiniMapObject.h"
+#include "MiniMapRenderer.h"
 
 //component
 #include "TransformComponent.h"
@@ -164,8 +166,13 @@ void Village::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
-
 		BlockMgr->LoadDB("VillageMap");
+
+		miniMapObject = MiniMapObject::Create(ObjectMgr);
+		sceneID = TUTORIAL;
+
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks())
+			ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
 
 		Grid->InsertBlock();
 
@@ -229,12 +236,29 @@ void Village::Update(_float dt)
 	ChunkMgr->IsChunkBoundary(CameraMgr->GetMainCamera()->GetOwner()->GetComponent<TransformComponent>()->GetPosition());
 	uiMgr->Update(dt);
 
+	auto Input = EngineCore::GetInstance()->GetInputSystem();
+
+	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
+		miniMapObject->GetMiniMapRenderer()->UpdateMapData(
+			player->GetComponent<TransformComponent>()->GetPosition(),
+														   ChunkMgr,
+														   sceneID);
+
+	if (Input->IsKeyPressed(N))
+	{
+		bool visible = miniMapObject->GetMiniMapRenderer()->GetVisible();
+		miniMapObject->GetMiniMapRenderer()->SetVisible(!visible);
+	}
+
 	switch (currState)
 	{
 	case Village::VillageState::EnterVillage:
 	{
 		if (introTimer >= introDuration)
+		{
 			ChangeState(VillageState::Play);
+			
+		}
 
 		introTimer += dt;
 	}
@@ -248,7 +272,6 @@ void Village::Update(_float dt)
 	}
 
     {
-        auto Input = EngineCore::GetInstance()->GetInputSystem();
 
         if (Input->IsKeyPressed(NUM1))
             CameraMgr->SetMainCamera(L"First_Camera");

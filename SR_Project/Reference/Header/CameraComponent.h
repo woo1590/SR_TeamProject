@@ -16,6 +16,7 @@ private:
 public:
     static CameraComponent* Create(Object* owner);
     HRESULT Ready_Component()override;
+    void Update(_float dt)override;
 
     void SetFOV(float fov);
 
@@ -32,7 +33,7 @@ public:
     _matrix GetViewMatrix()const;
     _matrix GetProjMatrix()const;
     Ray ScreenPointRay();
-
+    void SetShake(_float power, _float duration);
     TransformComponent* GetTarget() { return Target; };
 private:
     void Free()override;
@@ -43,6 +44,9 @@ private:
     _float MaxZ = 1000.f;
 
     _vec3 shakeOffset{ 0.f,0.f,0.f };
+    _float shakeDuration = 0.f;
+    _float shakeTimer = 0.f;
+    _float power = 0.f;
 
     TransformComponent* Target = nullptr;
 
