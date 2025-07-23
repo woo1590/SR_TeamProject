@@ -18,6 +18,7 @@
 #include "DeadEffect.h"
 #include "SoundManager.h"
 #include "EngineCore.h"
+#include "Material.h"
 
 BabySlime::BabySlime(ObjectManager* owner, ObjectType objType)
     :Monster(owner, objType)
@@ -123,6 +124,12 @@ void BabySlime::Hit(_vec3 dir, _float power)
         HitPower = power * 0.5;
 
         Monster::Hit(dir, power * 0.5);
+
+        HitAnim.ElapsedTime = 0.f;
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 1);
+        }
     }
 }
 
@@ -134,6 +141,18 @@ void BabySlime::InitTransform(ObjectType objType)
     transform->SetPosition(_vec3(5.f, 100.f, 5.f));
     SetMaterial("SlimeOut_Mtrl", "Body", RENDER_ID::Render_Alpha);
     SetMaterial("SlimeIn_Mtrl", "Head", RENDER_ID::Render_Alpha);
+    
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("Head"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
 
     Bones["LArm"]->SetDead();
     Bones["LArm"] = nullptr;
@@ -344,6 +363,14 @@ void BabySlime::PlayHit(_float dt)
     HitAnim.ElapsedTime += dt;
 
     PlayKnockBack(HitDir, HitPower, dt);
+
+    if (HitAnim.ElapsedTime > 0.15)
+    {
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
+    }
 
     if (HitAnim.ElapsedTime >= HitAnim.TotalTime)
     {

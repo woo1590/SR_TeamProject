@@ -104,5 +104,6 @@ protected:
     BossIcon*        bossIcon   = nullptr;
 
     vector<EmeraldObj*>     Emeralds;
+    vector<Material*> materials;
 };
 

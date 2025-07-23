@@ -87,6 +87,8 @@ private:
     UIRenderType uiRenderState = UIRenderType::None;
 
     list<RenderTargetView*> rtvs;
+
+    _int numPass = 0;
 };
 
 END

@@ -18,6 +18,7 @@ public:
 public:
     void Attack(Object* target) override;
     void Die() override;
+    void Hit(_vec3 dir, _float power) override;
 
 protected:
     void InitBullet();
@@ -28,6 +29,7 @@ protected:
 
     void PlayAttack(_float dt) override;
     void PlayDie(_float dt) override;
+    void PlayHit(_float dt) override;
 
 protected:
     void Free() override;

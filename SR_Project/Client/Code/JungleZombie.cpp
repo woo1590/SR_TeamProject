@@ -19,6 +19,7 @@
 #include "EngineCore.h"
 #include "SoundManager.h"
 #include "DeadEffect.h"
+#include "Material.h"
 //effect
 #include "BloodEffect.h"
 
@@ -144,6 +145,11 @@ void JungleZombie::Hit(_vec3 dir, _float power)
         else
             EngineCore::GetInstance()->GetSoundManager()->PlaySFX("AttackZombie");
         Monster::Hit(dir, power);
+
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 1);
+        }
     }
 }
 
@@ -159,6 +165,22 @@ void JungleZombie::InitTransform(ObjectType objType)
     //Bones["Ikki"]->GetComponent<TransformComponent>()->SetScale(10.f * Scale, 10.f * Scale, 10.f * Scale);
     //Bones["Ikki"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
     //Bones["Head"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+   
+    materials.push_back(GetMaterial("Head"));
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("LArm"));
+    materials.push_back(GetMaterial("RArm"));
+    materials.push_back(GetMaterial("LLeg"));
+    materials.push_back(GetMaterial("RLeg"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
 
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivot(_vec3(0.0f, 6.f * Scale, 0.0f));
     Bones["Body"]->GetComponent<TransformComponent>()->SetPivotEnable(true);
@@ -350,6 +372,14 @@ void JungleZombie::PlayDie(_float dt)
 void JungleZombie::PlayHit(_float dt)
 {
     HitAnim.ElapsedTime += dt;
+
+    if (HitAnim.ElapsedTime > 0.15)
+    {
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
+    }
 
     _float t = clamp(HitAnim.ElapsedTime / HitAnim.TotalTime, 0.f, 1.f);
 

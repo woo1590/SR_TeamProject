@@ -18,21 +18,25 @@
 
   "materials": {
     "ZombieBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Body2.dds"
       }
     },
     "ZombieHead_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/ZombieHead.dds"
       }
     },
     "ZombieArm_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Arm.dds"
       }
     },
     "ZombieLeg_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Leg.dds"
       }
@@ -57,16 +61,19 @@
     },
 
     "SkeletonBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Skeleton_Body.dds"
       }
     },
     "SkeletonFace_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Skeleton_Face.dds"
       }
     },
     "SkeletonBone_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Skeleton_Bone.dds"
       }
@@ -78,24 +85,28 @@
     },
 
     "RedGolemBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/redgolem_body.dds"
       }
     },
 
     "RedGolemFace_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/redgolem_face.dds"
       }
     },
 
     "RedGolemArm_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/redgolem_arm.dds"
       }
     },
 
     "RedGolemFoot_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/redgolem_foot.dds"
       }
@@ -109,6 +120,7 @@
     },
 
     "RedGolemHand_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/redgolem_hand.dds"
       }
@@ -122,77 +134,90 @@
     },
 
     "SlimeIn_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Slime_In.dds"
       }
     },
 
     "SlimeOut_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Slime_Out.dds"
       }
     },
 
     "PurpleSlimeIn_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/SlimePurple_In.dds"
       }
     },
 
     "PurpleSlimeOut_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/SlimePurple_Out.dds"
       }
     },
     "JungleArm_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Jungle_Arm.dds"
       }
     },
 
     "JungleFace_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Jungle_Face.dds"
       }
     },
 
     "JungleFaceikki_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Jungle_Faceikki.dds"
       }
     },
 
     "JungleBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Jungle_Body.dds"
       }
     },
 
     "JungleLeg_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Jungle_Leg.dds"
       }
     },
 
     "JungleSkeletonArm_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Arm.dds"
       }
     },
 
     "JungleSkeletonFace_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Face.dds"
       }
     },
 
     "JungleSkeletonBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Body.dds"
       }
     },
 
     "JungleSkeletonLeg_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/JungleSkeleton_Leg.dds"
       }
@@ -241,18 +266,21 @@
     },
 
     "EnderTopHead_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Ender_TopHead.dds"
       }
     },
 
     "EnderBottomHead_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Ender_BottomHead.dds"
       }
     },
 
     "EnderBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Ender_Body.dds"
       }
@@ -273,42 +301,49 @@
     },
 
     "BlastlingArm_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/BlastlingArm.dds"
       }
     },
 
     "BlastlingBody_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/BlastlingBody.dds"
       }
     },
 
     "BlastlingHead_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/BlastlingHead.dds"
       }
     },
 
     "BlastlingLeg_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/BlastlingLeg.dds"
       }
     },
 
     "ShulkerBottom_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Shulker_Bottom.dds"
       }
     },
 
     "ShulkerFace_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Shulker_Face.dds"
       }
     },
 
     "ShulkerTop_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Shulker_Top.dds"
       }

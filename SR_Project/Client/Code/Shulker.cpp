@@ -17,6 +17,7 @@
 #include "PhysicsComponent.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
+#include "Material.h"
 
 Shulker::Shulker(ObjectManager* owner, ObjectType objType)
 	:Monster(owner, objType)
@@ -107,6 +108,30 @@ void Shulker::Die()
     }
 }
 
+void Shulker::Hit(_vec3 dir, _float power)
+{
+    if (State != MonsterState::Hit)
+    {
+        State = MonsterState::Hit;
+
+        *IsHit = true;
+
+        HitAnim.IsRunning = true;
+        HitAnim.IsEnd = false;
+
+        HitAnim.ElapsedTime = 0.f;
+        HitAnim.DelayTime = 0.f;
+
+        HitDir = _vec3(0,0,0);
+        HitPower = 0.f;
+
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 1);
+        }
+    }
+}
+
 void Shulker::InitBullet()
 {
     for (int i = 0; i < 10; ++i)
@@ -146,6 +171,19 @@ void Shulker::InitTransform(ObjectType objType)
     Bones["LLeg"] = nullptr;
     Bones["RLeg"]->SetDead();
     Bones["RLeg"] = nullptr;
+
+    materials.push_back(GetMaterial("Head"));
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("BottomHead"));
+
+    for (auto& material : materials)
+    {
+        material->SetInt("coloruse", 0);
+        material->SetVec3("color", _vec3(1.0, 0.0, 0.0));
+        material->SetFloat("emissive", 0);
+        material->SetVec3("emissivecolor", _vec3(0.5, 0.0, 0.0));
+        material->SetFloat("emissivePow", 1);
+    }
 }
 
 void Shulker::InitTree()
@@ -158,6 +196,8 @@ void Shulker::InitTree()
     bb->SetValue("Distance", Distance);
     IsAttack = new _bool(false);
     bb->SetValue("IsAttack", IsAttack);
+    IsHit = new _bool(false);
+    bb->SetValue("IsDamaged", IsHit);
 
     //BT
     SelectorNode* BehaviorNode = new SelectorNode();
@@ -186,6 +226,9 @@ void Shulker::InitAnimation()
     DieAnim.End = 90.f;                //end angle
     DieAnim.ElapsedTime = 0.f;
     DieAnim.TotalTime = 0.7f;
+
+    HitAnim.ElapsedTime = 0.f;
+    HitAnim.TotalTime = 0.3f;
 }
 
 void Shulker::PlayAnimation(_float dt)
@@ -294,6 +337,20 @@ void Shulker::PlayDie(_float dt)
         DropEmeralds();
         SetDead();
         DeleteBar();
+    }
+}
+
+void Shulker::PlayHit(_float dt)
+{
+    HitAnim.ElapsedTime += dt;
+
+    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
+    {
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
+        *IsHit = false;
     }
 }
 
