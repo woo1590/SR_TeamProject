@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 class Player;
+class WayPointCam;
 class Village :
     public Scene
 {
@@ -9,11 +10,13 @@ private:
     Village();
     virtual ~Village();
 
+public:
     enum class VillageState
     {
         EnterVillage,
         Play
     };
+    void ChangeState(VillageState state);
 
 public:
     static Village* Create();
@@ -24,15 +27,18 @@ public:
     void Unload()override;
 
     void DebugIMGUI();
+    void WaypointEdit();
 private:
-    void ChangeState(VillageState state);
 
     void Free()override;
     Player* player = nullptr;
 
     VillageState currState = {};
 
-    _float introDuration = 15.f;
+    _float introDuration = 10.f;
     _float introTimer = 0.f;
+    _bool isEnterVillage = false;
+
+    WayPointCam* wayCam = nullptr;
 };
 

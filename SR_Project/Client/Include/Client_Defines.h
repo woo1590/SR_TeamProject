@@ -9,7 +9,7 @@ enum class LOADID
 	Count
 };
 
-enum class SpawnType { Zombie, Skeleton, Creeper, JungleZombie, Slime, PurpleSlime, Ender, RedGolem, };
+enum class SpawnType { Zombie, Skeleton, Creeper, JungleZombie, Slime, PurpleSlime, Ender, RedGolem, Blastling, Shulker };
 
 struct WayPoint
 {

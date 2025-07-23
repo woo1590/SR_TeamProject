@@ -107,6 +107,7 @@ void Village::Load()
     {
 #ifdef USE_IMGUI
         EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"Debug", [this]() {this->DebugIMGUI();});
+        EngineCore::GetInstance()->GetImGuiManager()->RegisterWindow(L"waY", [this]() {this->WaypointEdit();});
 #endif
 		EngineCore::GetInstance()->GetSoundManager()->Stop("IntroBGM");
         EngineCore::GetInstance()->GetSoundManager()->PlayBGM("VillageBGM");
@@ -155,6 +156,8 @@ void Village::Load()
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
 		ObjectMgr->AddObject(ObjectType::Camera, wCam);
 		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
+
+		wayCam = wCam;
 	} 
 
 	/*-------------------------Create Objects----------------------------*/
@@ -202,9 +205,17 @@ void Village::Load()
 			trigger3->AddSpawner(SpawnType::Skeleton, _vec3(71.f, 30.f, 220.f), _vec3(0.f, 0.f, 0.f));
 			trigger3->AddSpawner(SpawnType::Skeleton, _vec3(95.f, 10.f, 220.f), _vec3(0.f, 0.f, 0.f));
 
+			auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+			trigger4->GetComponent<TransformComponent>()->SetPosition(74.f, 0.f, 188.f);
+			trigger4->RegisterCallBack([this]()
+				{
+					this->ChangeState(VillageState::EnterVillage);
+				});
+
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger1);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
+			ObjectMgr->AddObject(ObjectType::Neutral, trigger4);
 		}
     }
 
@@ -229,7 +240,9 @@ void Village::Update(_float dt)
 	}
 		break;
 	case Village::VillageState::Play:
-		break;
+	{
+
+	}break;
 	default:
 		break;
 	}
@@ -243,45 +256,11 @@ void Village::Update(_float dt)
         if (Input->IsKeyPressed(NUM2))
             CameraMgr->SetMainCamera(L"Third_Camera");
 
-		if (Input->IsKeyPressed(NUM4))
-		{
-            auto command = ChangeScene::Create(LOADID::Stage1);
-            EngineCore::GetInstance()->RegisterCommand(command);
-			GameManager::GetInstance()->ClearScene(LOADID::Village);
-		}
-		
-		if (Input->IsKeyPressed(NUM5))
-		{
-            auto command = ChangeScene::Create(LOADID::Stage2);
-            EngineCore::GetInstance()->RegisterCommand(command);
-			GameManager::GetInstance()->ClearScene(LOADID::Village);
-		}
-
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);
         
         if (Input->IsKeyPressed(NUM0))
 			EngineCore::GetInstance()->SetDebugMode(true);
-
-        if (Input->IsKeyPressed(NUM0))
-			EngineCore::GetInstance()->SetDebugMode(true);
-
-		if (Input->IsKeyPressed(NUM3))
-		{
-			auto fire = FireBlock::Create(ObjectMgr, ObjectType::ParticleEffect);
-			fire->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
-			fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));
-			//fire->SetColor(_vec3(0.3f, 0.3f, 0.3f));
-			ObjectMgr->AddObject(ObjectType::ParticleEffect, fire);
-		}
-
-		if (Input->IsKeyPressed(Q))
-		{
-			auto effect = ExplodeEffect::Create(ObjectMgr, ObjectType::ParticleEffect);
-			effect->GetComponent<TransformComponent>()->SetPosition(player->GetComponent<TransformComponent>()->GetPosition());
-			effect->SetDeadTime(1.f);
-			ObjectMgr->AddObject(ObjectType::ParticleEffect, effect);
-		}
     }
 }
 
@@ -348,6 +327,91 @@ void Village::DebugIMGUI()
 	}
 	ImGui::End();
 }
+void Village::WaypointEdit()
+{
+	bool p_open = true;
+
+	auto cam = dynamic_cast<FirstCam*>(CameraMgr->GetMainCamera()->GetOwner());
+
+	if (!ImGui::Begin("Waypoint Editor", &p_open))
+	{
+		ImGui::End();
+		return;
+	}
+
+	if (!cam)
+	{
+		ImGui::Text("Camera not selected.");
+		ImGui::End();
+		return;
+	}
+
+	ImGui::DragFloat("Total Duration", wayCam->GetDuration(), 0.1f, 1.f, 300.f);
+	ImGui::Separator();
+
+
+	if (ImGui::Button("Add Waypoint"))
+	{
+		_vec3 pos = cam->GetComponent<TransformComponent>()->GetPosition();
+		_vec3 dir = cam->GetComponent<TransformComponent>()->GetFoward();
+
+		wayCam->AddWaypoint({ pos, dir });
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Clear All"))
+	{
+		wayCam->Clear();
+	}
+	ImGui::Separator();
+	if (ImGui::Button("Start"))
+	{
+		wayCam->Start();
+		CameraMgr->SetMainCamera(L"Way_Camera");
+	}
+	ImGui::Separator();
+	if (ImGui::Button("Stop"))
+	{
+		wayCam->Stop();
+		CameraMgr->SetMainCamera(L"First_Camera");
+	}
+	ImGui::Separator();
+
+	auto& waypoints = wayCam->GetWaypoints();
+	for (int i = 0; i < waypoints.size(); ++i)
+	{
+		ImGui::PushID(i);
+
+		ImGui::Text("Waypoint %d", i);
+
+		ImGui::DragFloat3("Position", (float*)&waypoints[i].position, 0.1f);
+		ImGui::DragFloat3("Direction", (float*)&waypoints[i].lookDir, 0.01f);
+
+
+		ImGui::SameLine();
+		if (ImGui::Button("Delete"))
+		{
+			wayCam->RemoveWaypoint(i);
+			ImGui::PopID();
+			break;
+		}
+
+		ImGui::Separator();
+		ImGui::PopID();
+
+	}
+
+	if (ImGui::Button("Save to File"))
+	{
+		wayCam->SaveWaypoints("../Resource/Data/VillageWaypoint.dat");
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Load from File"))
+	{
+		wayCam->LoadWaypoints("../Resource/Data/VillageWaypoint.dat");
+	}
+
+	ImGui::End();
+}
 #endif
 
 void Village::Free()
@@ -371,18 +435,15 @@ void Village::ChangeState(VillageState state)
 	case Village::VillageState::EnterVillage:
 	{
 		currState = VillageState::EnterVillage;
+		ChunkMgr->SetChunkRange(40);
 
-		introDuration = 7.f;
+		introDuration = 10.f;
 		introTimer = 0.f;
 		CameraMgr->SetMainCamera(L"Way_Camera");
 		auto cam = static_cast<WayPointCam*>(CameraMgr->GetMainCamera()->GetOwner());
-		cam->SetDuration(introDuration);
-		
-		cam->AddWaypoint({ _vec3(270.f,30.f,40.f),_vec3(-0.6f,-0.4f,0.6f) });
-		cam->AddWaypoint({ _vec3(210.f,30.f,125.f),_vec3(-0.9f,-0.1f,-0.2f) });
-		cam->AddWaypoint({ _vec3(104.f,40.f,50.f),_vec3(-0.8f,-0.4f,0.3f) });
-		cam->AddWaypoint({ _vec3(33.f,40.f,124.f),_vec3(0.4f,-0.2f,0.8f) });
 
+		cam->SetDuration(introDuration);
+		cam->LoadWaypoints("../Resource/Data/VillageWaypoint.dat");
 		cam->Start();
 
 	}break;

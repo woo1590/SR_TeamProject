@@ -154,7 +154,6 @@ void Stage1::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
-		BlockMgr->LoadDB("Stage1");
 
 		Grid->InsertBlock();
 	}
@@ -219,14 +218,6 @@ void Stage1::Update(_float dt)
 
 		if (Input->IsKeyPressed(TAB))
 			ChangeState(Stage1State::Play);
-
-
-		if (Input->IsKeyPressed(NUM4))
-		{
-			auto command = ChangeScene::Create(LOADID::Village);
-			EngineCore::GetInstance()->RegisterCommand(command);
-			GameManager::GetInstance()->ClearScene(LOADID::Stage1);
-		}
 	}
 }
 

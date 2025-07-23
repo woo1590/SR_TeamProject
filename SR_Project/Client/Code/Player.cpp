@@ -171,8 +171,8 @@ void Player::Late_Update(_float dt)
     }
     if (input->IsKeyPressed(KEY::S))
     {
-        bool enableShop = (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::MainGame);
-        SetShopMode(enableShop);
+        //bool enableShop = (EngineCore::GetInstance()->GetRenderSystem()->GetCurRenderState() == UIRenderType::MainGame);
+        //SetShopMode(enableShop);
     }
     if (isClickedI)
     {
@@ -1504,9 +1504,18 @@ void Player::SetOwner(ObjectManager* owner)
     {
         if (bone.second)
         {
-            bone.second->SetOwner(owner);
-            bone.second->AddRef();
-            owner->AddObject(bone.second->GetObjectType(), bone.second);
+            if (bone.second->GetObjectType() == ObjectType::Item)
+            {
+                bone.second->SetDead();
+                Safe_Release(bone.second);
+            }
+            else
+            {
+                bone.second->SetOwner(owner);
+                bone.second->AddRef();
+                owner->AddObject(bone.second->GetObjectType(), bone.second);
+            }
+
         }
     }
 
