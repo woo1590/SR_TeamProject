@@ -193,7 +193,7 @@ void Stage2::Load()
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage2SkyBox_Mtrl");
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
-		player->GetComponent<TransformComponent>()->SetPosition(220.f, 80.f, 106.f);
+		player->GetComponent<TransformComponent>()->SetPosition(100.f, 80.f, 406.f);
 
 		SetTriggerBox();
 	}

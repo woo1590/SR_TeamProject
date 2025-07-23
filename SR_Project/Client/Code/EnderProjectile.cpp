@@ -9,6 +9,12 @@
 #include "Material.h"
 #include "ObjectManager.h"
 #include "FireBlock.h"
+#include "EngineCore.h"
+#include "CameraManager.h"
+#include "Object.h"
+#include "ThirdcamComponent.h"
+#include "CameraComponent.h"
+#include "SoundManager.h"
 
 EnderProjectile::EnderProjectile(ObjectManager* owner, ObjectType objType)
     :Object(owner, objType)
@@ -114,6 +120,10 @@ void EnderProjectile::CheckGround()
             fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));
             owner->AddObject(ObjectType::SpriteEffect, fire);
             SetVisible(false);
+
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BoomTNT");
+            auto cam = GetScene()->GetCameraManager()->GetMainCamera()->GetOwner()->GetComponent<ThirdcamComponent>();
+            cam->SetShake(5.f, 0.4f);
         }
     }
 }

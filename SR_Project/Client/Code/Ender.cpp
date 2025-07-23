@@ -73,7 +73,7 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     InitCrossLaser();
     InitEnderProjectile();
 
-    bossFront->SetBossName(L"������ ����");
+    bossFront->SetBossName(L"엔더의 심장");
 	return S_OK;
 }
 
