@@ -1647,7 +1647,7 @@ void Player::UpdateWalk(_float dt) {
     };
 
     _vec3 playerHalfSize = GetComponent<CollisionComponent>()->GetSize() * 0.5f;
-    auto blockPos = transform->GetWorldPosition() + moveVec + vDir * 1.3;
+    auto blockPos = transform->GetWorldPosition() + moveVec + vDir * 1.8f;
 
     auto grid = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetStaticGrid();
 
@@ -1709,7 +1709,7 @@ void Player::UpdateWalk(_float dt) {
             if (block == nullptr)
             {
                 if (onHalf)
-                    transform->Translate(moveVec + _vec3(0.f, 0.f, 0.f));
+                    transform->Translate(moveVec + _vec3(0.f, 0.5f, 0.f));
                 else
                     transform->Translate(moveVec + _vec3(0.f, 1.5f, 0.f));
             }
