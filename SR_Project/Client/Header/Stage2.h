@@ -1,5 +1,9 @@
 #pragma once
 #include "Scene.h"
+namespace Engine
+{
+    class DynamicBlock;
+}
 
 class Player;
 class WayPointCam;
@@ -10,6 +14,7 @@ private:
     Stage2();
     virtual ~Stage2();
 
+public:
     enum class Stage2Stage
     {
         Stage2Intro,
@@ -17,7 +22,7 @@ private:
         ActiveBridge,
         Play
     };
-
+    void ChangeState(Stage2Stage state);
 public:
     static Stage2* Create();
 
@@ -29,7 +34,7 @@ public:
     void DebugIMGUI();
     void WayPointEdit();
 private:
-    void ChangeState(Stage2Stage state);
+    void SetTriggerBox();
     void Free()override;
 
     Player* player = nullptr;
@@ -39,5 +44,13 @@ private:
 
     _float stage2IntroDuration = 0.f;
     _float stage2IntroTimer = 0.f;
+
+    _float bridgeActiveDuration = 0.f;
+    _float bridgeActiveTimer = 0.f;
+    _bool isBridgeActive = false;
+
+    Object* boss = nullptr;
+
+    std::vector<DynamicBlock*> levers;
 };
 

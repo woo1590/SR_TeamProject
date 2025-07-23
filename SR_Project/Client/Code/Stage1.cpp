@@ -214,7 +214,10 @@ void Stage1::Update(_float dt)
 			CameraMgr->SetMainCamera(L"Third_Camera");
 
 		if (Input->IsKeyPressed(NUM9))
-			EngineCore::GetInstance()->SetDebugMode(false);
+			EngineCore::GetInstance()->SetDebugMode(true);
+
+		if (Input->IsKeyPressed(TAB))
+			ChangeState(Stage1State::Play);
 
 
 		if (Input->IsKeyPressed(NUM4))
@@ -370,19 +373,86 @@ void Stage1::SetTriggerBox()
 {
 	auto trigger1 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger1->GetComponent<TransformComponent>()->SetPosition(45.f, 70.f, 130.f);
-	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
-	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
-	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 104.f), _vec3(0.f, 0.f, 0.f));
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(35.f, 80.f, 100.f), _vec3(0.f, 0.f, 0.f));
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(40.f, 80.f, 105.f), _vec3(0.f, 0.f, 0.f));
+	trigger1->AddSpawner(SpawnType::Zombie, _vec3(44.f, 80.f, 106.f), _vec3(0.f, 0.f, 0.f));
 
 	auto trigger2 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger2->GetComponent<TransformComponent>()->SetPosition(33.f, 70.f, 96.f);
+	trigger2->AddSpawner(SpawnType::Skeleton, _vec3(36.f, 80.f, 100.f));
+	trigger2->AddSpawner(SpawnType::Skeleton, _vec3(40.f, 80.f, 110.f));
+	trigger2->AddSpawner(SpawnType::Skeleton, _vec3(46.f, 80.f, 115.f));
+
 	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger3->GetComponent<TransformComponent>()->SetPosition(110.f, 95.f, 38.f);
+	trigger3->AddSpawner(SpawnType::Creeper, _vec3(120.f, 105.f, 40.f));
+	trigger3->AddSpawner(SpawnType::Creeper, _vec3(125.f, 105.f, 45.f));
+	trigger3->AddSpawner(SpawnType::Skeleton, _vec3(130.f, 105.f, 50.f));
+
 	auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger4->GetComponent<TransformComponent>()->SetPosition(165.f, 95.f, 47.f);
+	trigger4->AddSpawner(SpawnType::Zombie, _vec3(170.f, 105.f, 50.f));
+	trigger4->AddSpawner(SpawnType::JungleZombie, _vec3(180.f, 105.f, 50.f));
+	trigger4->AddSpawner(SpawnType::JungleZombie, _vec3(195.f, 105.f, 45.f));
+	trigger4->AddSpawner(SpawnType::Zombie, _vec3(155.f, 105.f, 64.f));
+
 	auto trigger5 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger5->GetComponent<TransformComponent>()->SetPosition(200.f, 95.f, 118.f);
+	trigger5->AddSpawner(SpawnType::Slime, _vec3(210.f, 105.f, 120.f));
+	trigger5->AddSpawner(SpawnType::Zombie, _vec3(220.f, 105.f, 145.f));
+	trigger5->AddSpawner(SpawnType::Skeleton, _vec3(206.f, 105.f, 140.f));
+	trigger5->AddSpawner(SpawnType::Skeleton, _vec3(200.f, 105.f, 140.f));
+
+	auto trigger6 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger6->GetComponent<TransformComponent>()->SetPosition(192.f, 95.f, 174.f);
+	trigger6->AddSpawner(SpawnType::Zombie, _vec3(200.f, 105.f, 170.f));
+	trigger6->AddSpawner(SpawnType::Zombie, _vec3(216.f, 105.f, 190.f));
+	trigger6->AddSpawner(SpawnType::Zombie, _vec3(226.f, 105.f, 166.f));
+	trigger6->AddSpawner(SpawnType::Zombie, _vec3(206.f, 105.f, 172.f));
+
+	auto trigger7 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger7->GetComponent<TransformComponent>()->SetPosition(324.f, 80.f, 100.f);
+	trigger7->AddSpawner(SpawnType::Slime, _vec3(350.f, 90.f, 100.f));
+	trigger7->AddSpawner(SpawnType::Slime, _vec3(360.f, 90.f, 120.f));
+	trigger7->AddSpawner(SpawnType::Creeper, _vec3(350.f, 85.f, 130.f));
+	trigger7->AddSpawner(SpawnType::Creeper, _vec3(360.f, 85.f, 137.f));
+
+	auto trigger8 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger8->GetComponent<TransformComponent>()->SetPosition(351.f, 80.f, 156.f);
+	trigger8->AddSpawner(SpawnType::Zombie, _vec3(350.f, 90.f, 170.f));
+	trigger8->AddSpawner(SpawnType::Zombie, _vec3(353.f, 90.f, 180.f));
+	trigger8->AddSpawner(SpawnType::Zombie, _vec3(347.f, 90.f, 200.f));
+
+	auto trigger9 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger9->GetComponent<TransformComponent>()->SetPosition(350.f, 80.f, 237.f);
+	trigger9->AddSpawner(SpawnType::Creeper, _vec3(349.f,90.f, 250.f));
+	trigger9->AddSpawner(SpawnType::Zombie, _vec3(349.f, 90.f, 280.f));
+	trigger9->AddSpawner(SpawnType::Zombie, _vec3(349.f, 90.f, 270.f));
+
+	auto trigger10 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	trigger10->GetComponent<TransformComponent>()->SetPosition(308.f, 70.f, 321.f);
+	trigger10->AddSpawner(SpawnType::Slime, _vec3(260.f, 80.f, 310.f));
+	trigger10->AddSpawner(SpawnType::Zombie, _vec3(250.f, 80.f, 320.f));
+	trigger10->AddSpawner(SpawnType::JungleZombie, _vec3(240.f, 80.f, 315.f));
 
 	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	bossTrigger->GetComponent<TransformComponent>()->SetPosition(140.f, 70.f, 320.f);
 	bossTrigger->AddSpawner(SpawnType::RedGolem, _vec3(40.f, 80.f, 320.f), _vec3(0.f, 0.f, 0.f));
+	bossTrigger->RegisterCallBack([this]()
+		{
+			this->ChangeState(Stage1State::BossIntro);
+		});
 
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger1);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger4);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger5);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger6);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger7);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger8);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger9);
+	ObjectMgr->AddObject(ObjectType::Neutral, trigger10);
 	ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
 }
 
@@ -393,6 +463,7 @@ void Stage1::ChangeState(Stage1State state)
 	case Stage1::Stage1State::Stage1Intro:	
 	{
 		currState = Stage1State::Stage1Intro;
+		ChunkMgr->SetChunkRange(40);
 
 		stage1IntroDuration = 25.f;
 		stage1IntroTimer = 0.f;
@@ -410,6 +481,7 @@ void Stage1::ChangeState(Stage1State state)
 	case Stage1::Stage1State::Play:
 	{
 		currState = Stage1State::Play;
+		ChunkMgr->SetChunkRange(7);
 
 		ObjectMgr->AddObject(ObjectType::BackGroundEffect, Rain::Create(ObjectMgr, ObjectType::BackGroundEffect));
 		CameraMgr->SetMainCamera(L"Third_Camera");

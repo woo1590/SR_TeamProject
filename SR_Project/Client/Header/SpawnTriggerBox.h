@@ -18,8 +18,9 @@ public:
 public:
     void SetCollisionSize(_vec3 size);
     void SetTriggerPosition(_vec3 pos);
-    void AddSpawner(SpawnType type, _vec3 pos, _vec3 rot);
+    void AddSpawner(SpawnType type, _vec3 pos, _vec3 rot=_vec3(0.f,0.f,0.f));
 
+    void RegisterCallBack(std::function<void()> callback) { callBack = callback; }
     void OnCollisionEnter(Object* other);
 
 private:
@@ -27,5 +28,7 @@ private:
 
     vector<Spawner*> spawners;
     _bool           SpawnOn = false;
+
+    std::function<void()> callBack = nullptr;
 };
 

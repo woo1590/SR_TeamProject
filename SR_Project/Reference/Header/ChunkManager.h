@@ -35,7 +35,7 @@ public:
 
     /*-----------------Only Client-------------------------*/
     void SetChunk(std::unordered_map<std::pair<int, int>, Chunk*, PairHash>& chunks);
-
+    void SetChunkRange(_uint range) { chunkRange = range; }
 private:
     void Free()override;
 
@@ -44,5 +44,6 @@ private:
     Scene* owner = nullptr;
     std::vector<std::pair<int, int>> renderChunks;
     std::unordered_map<std::pair<int, int>, Chunk*, PairHash> worldChunks;
+    _uint chunkRange = 7;
 };
 END

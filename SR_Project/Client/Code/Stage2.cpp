@@ -63,6 +63,7 @@
 #include "DeadEffect.h"
 #include "InventoryCam.h"
 #include "WayPointCam.h"
+#include "FixedCam.h"
 
 //component
 #include "TransformComponent.h"
@@ -130,11 +131,16 @@ void Stage2::Load()
 		auto fCam = FirstCam::Create(ObjectMgr);
 		auto tCam = ThirdCam::Create(ObjectMgr);
 		auto wCam = WayPointCam::Create(ObjectMgr);
+		auto fixCam = FixedCam::Create(ObjectMgr);
+		fixCam->SetPosition(220.f, 74.f, 200.f);
+		fixCam->SetForward(-0.67f, -0.3f, 0.6f);
+
 		auto inventoryCam = InventoryCam::Create(ObjectMgr);
 
 		CameraMgr->AddCamera(L"First_Camera", fCam);
 		CameraMgr->AddCamera(L"Third_Camera", tCam);
 		CameraMgr->AddCamera(L"Way_Camera", wCam);
+		CameraMgr->AddCamera(L"Fix_Camera", fixCam);
 		CameraMgr->AddCamera(L"Inventory_Camera", inventoryCam);
 		tCam->SetTarget(player);
 
@@ -143,6 +149,7 @@ void Stage2::Load()
 		ObjectMgr->AddObject(ObjectType::Camera, fCam);
 		ObjectMgr->AddObject(ObjectType::Camera, tCam);
 		ObjectMgr->AddObject(ObjectType::Camera, wCam);
+		ObjectMgr->AddObject(ObjectType::Camera, fixCam);
 		ObjectMgr->AddObject(ObjectType::UICamera, inventoryCam);
 
 		wayCam = wCam;
@@ -160,6 +167,8 @@ void Stage2::Load()
 			auto lever = static_cast<DynamicBlock*>(dynamic);
 			if (lever->GetType() != DynamicBlockType::LeverSwitch && lever->GetType() != DynamicBlockType::BasicChest) continue;
 			lever->SetTarget(player);
+			levers.push_back(lever);
+			lever->AddRef();
 		}
 
 		Grid->InsertBlock();
@@ -174,7 +183,9 @@ void Stage2::Load()
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage2SkyBox_Mtrl");
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
-		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
+		player->GetComponent<TransformComponent>()->SetPosition(100.f, 60.f, 400.f);
+
+		SetTriggerBox();
 	}
 
 	ChangeState(Stage2Stage::Stage2Intro);
@@ -203,10 +214,24 @@ void Stage2::Update(_float dt)
 	}break;
 	case Stage2::Stage2Stage::ActiveBridge:
 	{
+		if (bridgeActiveTimer >= bridgeActiveDuration)
+			ChangeState(Stage2Stage::Play);
+
+		bridgeActiveTimer += dt;
 
 	}break;
 	case Stage2::Stage2Stage::Play:
 	{
+		if (!isBridgeActive)
+		{
+			int cnt = 0;
+			for (const auto& lever : levers)
+				if (lever->IsTrigger())
+					cnt++;
+
+			if (cnt >= 3)
+				ChangeState(Stage2Stage::ActiveBridge);
+		}
 
 	}break;
 	default:
@@ -221,6 +246,9 @@ void Stage2::Update(_float dt)
 
 		if (Input->IsKeyPressed(T))
 			CameraMgr->SetMainCamera(L"Third_Camera");
+
+		if (Input->IsKeyPressed(TAB))
+			ChangeState(Stage2Stage::Play);
 
 		if (Input->IsKeyPressed(NUM4))
 		{
@@ -361,6 +389,19 @@ void Stage2::WayPointEdit()
 }
 #endif
 
+void Stage2::SetTriggerBox()
+{
+	auto bossTrigger = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
+	bossTrigger->GetComponent<TransformComponent>()->SetPosition(130.f, 50.f, 410.f);
+	bossTrigger->AddSpawner(SpawnType::Ender, _vec3(125.f, 60.f, 460.f), _vec3(0.f, 0.f, 0.f));
+	bossTrigger->RegisterCallBack([this]()
+		{
+			this->ChangeState(Stage2Stage::BossIntro);
+		});
+
+	ObjectMgr->AddObject(ObjectType::Neutral, bossTrigger);
+}
+
 void Stage2::ChangeState(Stage2Stage state)
 {
 	switch (state)
@@ -368,6 +409,8 @@ void Stage2::ChangeState(Stage2Stage state)
 	case Stage2::Stage2Stage::Stage2Intro:
 	{
 		currState = Stage2Stage::Stage2Intro;
+		ChunkMgr->SetChunkRange(40);
+
 		stage2IntroDuration = 20.f;
 		stage2IntroTimer = 0.f;
 
@@ -381,19 +424,32 @@ void Stage2::ChangeState(Stage2Stage state)
 	}break;
 	case Stage2::Stage2Stage::BossIntro:
 	{
+		currState = Stage2Stage::BossIntro;
 
+		EngineCore::GetInstance()->GetSoundManager()->Stop("Stage2BGM");
+		EngineCore::GetInstance()->GetSoundManager()->PlayBGM("Boss_EnderBGM");
+
+		ChangeState(Stage2Stage::Play);
 
 	}break;
 	case Stage2::Stage2Stage::Play:
 	{
 		currState = Stage2Stage::Play;
+		ChunkMgr->SetChunkRange(7);
 
 		CameraMgr->SetMainCamera(L"Third_Camera");
 
 	}break;
 	case Stage2::Stage2Stage::ActiveBridge:
 	{
+		currState = Stage2Stage::ActiveBridge;
+		ChunkMgr->SetChunkRange(40);
 
+		bridgeActiveDuration = 5.f;
+		bridgeActiveTimer = 0.f;
+		isBridgeActive = true;
+
+		CameraMgr->SetMainCamera(L"Fix_Camera");
 
 	}break;
 	default:

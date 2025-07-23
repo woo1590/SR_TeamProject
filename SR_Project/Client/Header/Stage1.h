@@ -11,12 +11,14 @@ private:
     Stage1();
     virtual ~Stage1();
 
+public:
     enum class Stage1State
     {
         Stage1Intro,
         BossIntro,
         Play
     };
+    void ChangeState(Stage1State state);
 
 public:
     static Stage1* Create();
@@ -30,7 +32,6 @@ public:
     void WayPointEdit();
 private:
     void SetTriggerBox();
-    void ChangeState(Stage1State state);
     void Free()override;
 
     Player* player;
