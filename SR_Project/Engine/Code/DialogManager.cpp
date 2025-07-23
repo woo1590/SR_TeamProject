@@ -26,8 +26,47 @@ void DialogManager::SkipOrNext()
 {
 	if (!curDialog || !curDialog->IsTalking()) return;
 
-	if (!isLineFullyDisplayed)
+	if (isInterrupted && isLineFullyDisplayed)
 	{
+		isInterrupted = false;
+		curLine = interruptedLine;
+
+		displayedText.clear();
+		typingTimer = 0.f;
+		isLineFullyDisplayed = false;
+		soundPlayTimer = minSoundDelay;
+		font->ClearText();
+
+		if (onEmotionChange)
+			onEmotionChange(curLine.emotion);
+
+		return;
+	}
+
+	if (!isLineFullyDisplayed) // 타이핑중 스킵 시도
+	{
+		if (isInterrupted) return;
+		consecutiveSkips++;
+
+		if (consecutiveSkips >= 2)
+		{
+			isInterrupted = true;
+			interruptedLine = curLine;
+			curLine.text = L"우석님! 왜자꾸 대화를 스킵하시는거예요!";
+			curLine.emotion = Emotion::p17;
+			displayedText.clear();
+			typingTimer = 0.f;
+			isLineFullyDisplayed = false;
+			soundPlayTimer = minSoundDelay;
+			font->ClearText();
+			consecutiveSkips = 0;
+
+			if (onEmotionChange)
+				onEmotionChange(curLine.emotion);
+
+			return;
+		}
+
 		displayedText = curLine.text;
 		isLineFullyDisplayed = true;
 
@@ -40,13 +79,16 @@ void DialogManager::SkipOrNext()
 
 		return;
 	}
-	
-	curDialog->AddLineIdx();
-
-	if (curDialog->IsFinished())
-		EndDialog();
 	else
-		ShowCurLine();
+	{
+		//consecutiveSkips = 0;
+		curDialog->AddLineIdx();
+
+		if (curDialog->IsFinished())
+			EndDialog();
+		else
+			ShowCurLine();
+	}
 }
 
 void DialogManager::ShowCurLine()
@@ -131,6 +173,7 @@ void DialogManager::Update(float dt)
 		else
 		{
 			isLineFullyDisplayed = true;
+			consecutiveSkips = 0;
 			break;
 		}
 	}

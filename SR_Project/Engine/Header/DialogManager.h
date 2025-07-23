@@ -45,6 +45,11 @@ private:
 	const float minSoundDelay = 0.08f;
 
 	function<void(Emotion)> onEmotionChange;
+
+	int consecutiveSkips = 0;
+	bool isInterrupted = false;
+	DialogLine interruptedLine;
+
 };
 
 END
