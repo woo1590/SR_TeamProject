@@ -41,7 +41,7 @@ HRESULT LaserEffect::Ready_Object()
 	GetScene()->GetCollisionSystem()->RegisterCollision(collision);//test
 	collision->SetLayer(LAYER_PROJECTILE);
 	collision->SetMask(LAYER_PLAYER);
-	collision->SetCollisionEnter([this](Object* other) {this->OnCollisionStay(other); });
+	collision->SetCollisionStay([this](Object* other) {this->OnCollisionStay(other); });
 	collision->SetSize(_vec3(2.f, 2.f, 2.f));
 
 	auto physics = AddComponent<PhysicsComponent>();
@@ -104,6 +104,6 @@ void LaserEffect::OnCollisionStay(Object* other)
 	if (objType == ObjectType::Player)
 	{
 		auto playerStat = other->GetComponent<InfoComponent<PlayerInfo>>();
-		playerStat->AddHp(-1);
+		playerStat->AddHp(-1.f);
 	}
 }

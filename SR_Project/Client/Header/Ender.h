@@ -88,15 +88,11 @@ private:
     int         CurChangeStateCount;
     int*        ChangeStateCount = nullptr;
     _vec3*      TargetPos = nullptr;
-    _bool*      IsHide = nullptr;
+    _bool*      IsDie = nullptr;
 
-    vector<FireBlock*>  FireBlocks;
     _float              FireSpawnTime = 0.f;
-    _int                FireIndex = 0;
 
-    vector<LaserHead*>  LaserHeads;
     _float              LaserSpawnTime = 0.f;
-    _int                LaserIndex = 0;
 
     vector<LaserEffect*>        CrossLasers;
     

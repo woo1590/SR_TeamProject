@@ -72,7 +72,8 @@ HRESULT LaserHead::Ready_Object(ObjectManager* owner, ObjectType objType)
         Lasertransform->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
         Lasertransform->SetScale(_vec3(40.f * Scale, 0.5f, 1.f));
         auto collision = Laser->GetComponent<CollisionComponent>();
-        collision->SetSize(_vec3(1.f, 1.f, 40.f));
+        collision->SetSize(_vec3(40.f, 1.f, 1.f));
+        static_cast<LaserEffect*>(Laser)->SetActive(false);
     }
 
     Lasers[0]->GetComponent<TransformComponent>()->SetRotate(_vec3(0.f, D3DXToRadian(-90.f), 0.f));
@@ -115,7 +116,7 @@ void LaserHead::SetActive(_bool Active)
         for (auto& Laser : Lasers)
             static_cast<LaserEffect*>(Laser)->SetActive(true);
 
-        collision->SetSize(_vec3(4.f, 4.f, 4.f));
+       // collision->SetSize(_vec3(40.f, 1.f, 1.f));
     }
     else
     {
@@ -126,7 +127,7 @@ void LaserHead::SetActive(_bool Active)
         for (auto& Laser : Lasers)
             static_cast<LaserEffect*>(Laser)->SetActive(false);
 
-        collision->SetSize(_vec3(0.f, 0.f, 0.f));
+       // collision->SetSize(_vec3(0.f, 0.f, 0.f));
     }
 
     auto physics = GetComponent<PhysicsComponent>();
@@ -213,6 +214,9 @@ void LaserHead::PlayClose(_float dt)
     {
         State = HeadState::Idle;
         SetActive(false);
+        for (auto& laser : Lasers)
+            laser->SetDead();
+        SetDead();
     }
 }
 

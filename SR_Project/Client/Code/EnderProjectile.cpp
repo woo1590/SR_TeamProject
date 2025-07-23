@@ -109,8 +109,8 @@ void EnderProjectile::CheckGround()
             _vec3 randpos = _vec3(randx + pos.x, pos.y, randz + pos.z);
             auto fire = FireBlock::Create(owner, ObjectType::SpriteEffect);
             fire->GetComponent<TransformComponent>()->SetPosition(randpos);
-            fire->SetDeadTime(5.f);
             fire->SetActive(true);
+            fire->SetDeadTime(5.f);
             fire->SetColor(_vec3(0.8f, 0.5f, 0.8f));
             owner->AddObject(ObjectType::SpriteEffect, fire);
             SetVisible(false);
