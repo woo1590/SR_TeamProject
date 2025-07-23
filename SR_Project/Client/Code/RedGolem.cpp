@@ -25,6 +25,8 @@
 #include "MeshRendererComponent.h"
 #include "Material.h"
 #include "EmeraldObj.h"
+#include "QuestSystem.h"
+#include "UIManager.h"
 
 RedGolem::RedGolem(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -167,6 +169,8 @@ void RedGolem::Die()
 
         auto physics = GetComponent<PhysicsComponent>();
         physics->SetGround(false);
+        
+        GetScene()->GetUIManager()->GetQuestSystem()->ReportQuestProgress(QuestType::KillRedGolem, 1);
     }
 }
 

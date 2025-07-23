@@ -73,6 +73,7 @@
 #include "WayPointCam.h"
 #include "MiniMapObject.h"
 #include "MiniMapRenderer.h"
+#include "QuestSystem.h"
 
 //component
 #include "TransformComponent.h"
@@ -258,6 +259,7 @@ void Village::Update(_float dt)
 		{
 			ChangeState(VillageState::Play);
 			
+			uiMgr->GetQuestSystem()->ReportQuestProgress(QuestType::ReachVillage, 1);
 		}
 
 		introTimer += dt;
@@ -273,11 +275,11 @@ void Village::Update(_float dt)
 
     {
 
-        if (Input->IsKeyPressed(NUM1))
-            CameraMgr->SetMainCamera(L"First_Camera");
+        //if (Input->IsKeyPressed(NUM1))
+        //    CameraMgr->SetMainCamera(L"First_Camera");
         
-        if (Input->IsKeyPressed(NUM2))
-            CameraMgr->SetMainCamera(L"Third_Camera");
+        //if (Input->IsKeyPressed(NUM2))
+        //    CameraMgr->SetMainCamera(L"Third_Camera");
 
 		if (Input->IsKeyPressed(NUM9))
 			EngineCore::GetInstance()->SetDebugMode(false);

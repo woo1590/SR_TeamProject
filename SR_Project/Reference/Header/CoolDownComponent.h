@@ -17,10 +17,14 @@ public:
 
 	void Init(ItemComponent* targetItem, UIRenderer* mask);
 	void Update(float dt) override;
+	void SetCompleteCallback(function<void()> cb) { onCompleteCb = move(cb); }
 
 private:
 	ItemComponent* itemComp = nullptr;
 	UIRenderer* maskRenderer = nullptr;
+
+	bool wasCooling = false;
+	function<void()> onCompleteCb;
 };
 
 END

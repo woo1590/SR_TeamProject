@@ -210,6 +210,22 @@ bool InventoryManager::RemoveItemFromSelectedSlot(ItemType& out)
 	return true;
 }
 
+void InventoryManager::UseItemInQuickSlot(int idx)
+{
+	if (idx < 0 || idx >= quickSlots.size()) return;
+
+	SlotComponent* slot = quickSlots[idx];
+	if (!slot || !slot->HasItem()) return;
+
+	Object* itemObj = slot->GetItem();
+	if (!itemObj) return;
+
+	ItemComponent* itemComp = itemObj->GetComponent<ItemComponent>();
+	if (!itemComp)return;
+
+	itemComp->Use(player);
+}
+
 void InventoryManager::ItemAdded(ItemType type)
 {
 	Object* itemObj = OnCreateItem(type);
@@ -231,6 +247,16 @@ void InventoryManager::HandleEquipAction(ItemComponent* itemComp)
 	SlotComponent* targetSlot = FindTargetEquipSlot(itemComp->GetItemType(),isSwap);
 
 	if (!targetSlot) return;
+
+	optional<int> targetSlotIdx = nullopt;
+	for (int i{}; i < quickSlots.size(); ++i)
+	{
+		if (quickSlots[i] == targetSlot)
+		{
+			targetSlotIdx = i;
+			break;
+		}
+	}
 
 	if (isSwap)
 	{
@@ -363,4 +389,11 @@ void InventoryManager::Update(float dt)
 
 		plusRenderer->SetVisible(!slot->HasItem());
 	}
+
+	if (input->IsKeyPressed(KEY::NUM1))
+		UseItemInQuickSlot(0);
+	if (input->IsKeyPressed(KEY::NUM2))
+		UseItemInQuickSlot(1);
+	if (input->IsKeyPressed(KEY::NUM3))
+		UseItemInQuickSlot(2);
 }

@@ -24,6 +24,10 @@
 #include "SoundManager.h"
 #include "InfoComponent.h"
 #include "BossHPBarFront.h"
+#include "UIManager.h"
+#include "QuestSystem.h"
+#include "Object.h"
+#include "scene.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -503,6 +507,7 @@ void Ender::Die()
     if (enderState != EnderState::Die)
     {
         enderState = EnderState::Die;
+        GetScene()->GetUIManager()->GetQuestSystem()->ReportQuestProgress(QuestType::KillEnder, 1);
     }
 }
 

@@ -5,9 +5,7 @@
 class RocketItem : public Object
 {
 private:
-	RocketItem(ObjectManager* owner)
-		:Object(owner, ObjectType::UI) {
-	}
+	RocketItem(ObjectManager* owner):Object(owner, ObjectType::UI) {}
 
 public:
 	static RocketItem* Create(ObjectManager* owner);

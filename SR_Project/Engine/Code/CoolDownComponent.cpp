@@ -19,13 +19,21 @@ void CoolDownComponent::Init(ItemComponent* targetItem, UIRenderer* mask)
 void CoolDownComponent::Update(float dt)
 {
 	if (!itemComp) return;
+	bool cooling = itemComp->IsCoolDown();
 
-	if (itemComp->IsCoolDown())
-	{
-		float fill = clamp(itemComp->GetCoolDownRatio(),0.f,1.f);
-		maskRenderer->ApplyRatioVertical(fill);
-		maskRenderer->SetVisible(fill > 0.f);
-	}
-	else
-		maskRenderer->SetVisible(false);
+    if (cooling)
+    {
+        wasCooling = true;
+        float fill = clamp(itemComp->GetCoolDownRatio(), 0.f, 1.f);
+        maskRenderer->ApplyRatioVertical(fill);
+        maskRenderer->SetVisible(fill > 0.f);
+    }
+    else
+    {
+        if (wasCooling && onCompleteCb)
+            onCompleteCb();
+        wasCooling = false;
+
+        maskRenderer->SetVisible(false);
+    }
 }

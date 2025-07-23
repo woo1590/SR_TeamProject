@@ -4,6 +4,12 @@
 #include "UIRenderer.h"
 #include "InfoComponent.h"
 #include "ItemComponent.h"
+#include "UIManager.h"
+#include "RocketItem.h"
+#include "CoolDownComponent.h"
+#include "MaskObj.h"
+#include "ObjectManager.h"
+#include "Player.h"
 
 RocketItem* RocketItem::Create(ObjectManager* owner)
 {
@@ -25,6 +31,11 @@ HRESULT RocketItem::Ready_Object()
 	auto item = AddComponent<ItemComponent>();
 	item->SetItemType(ItemType::RocketItem);
 	item->SetOriginalScale({0.3f, 0.3f});
+
+	auto cooldown = AddComponent<CoolDownComponent>();
+	_vec3 pos = transform->GetPosition();
+
+	item->SetUseCallBack([this](Object* user) { dynamic_cast<Player*>(user)->ChangeShootType();});
 
 	return S_OK;
 }
