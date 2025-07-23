@@ -225,4 +225,6 @@ private:
     InventoryComponent* invComp = nullptr;
     bool isClickedI = true;
     Arrows* arrows = nullptr;
+
+    _bool onHalf = false;
 };

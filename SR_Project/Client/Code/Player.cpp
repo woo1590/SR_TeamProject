@@ -34,6 +34,7 @@
 #include "Armor.h"
 #include "EmeraldObj.h"
 #include "DashUI.h"
+#include "CollisionBlock.h"
 
 #include "StaticGrid.h"
 #include "SpriteRenderer.h"
@@ -87,7 +88,7 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
     Bones["Body"]->GetComponent<TransformComponent>()->SetParent(transform);
 
     auto collision = AddComponent<CollisionComponent>();
-    collision->AddCollider<AABBCollider>();
+    collision->AddCollider<OBBCollider>();
     GetScene()->GetCollisionSystem()->RegisterCollision(collision);
 
     collision->SetLayer(LAYER_PLAYER);
@@ -150,7 +151,7 @@ void Player::Update(_float dt)
         UpdateAttack(dt);
         break;
     case ePlayerState::SHOOT:
-        UpdateShoot(dt);   
+        UpdateShoot(dt);
         break;
     case ePlayerState::DEAD:
         UpdateDead(dt);
@@ -1673,7 +1674,7 @@ void Player::UpdateWalk(_float dt) {
     _vec3 vDir;
     D3DXVec3Normalize(&vDir, &PlayerDirection);
 
-    float Speed = GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().speed;
+    _float Speed = GetComponent<InfoComponent<PlayerInfo>>()->GetInfo().speed;
     _vec3 moveVec =
     {
         vDir.x * Speed * Scale * dt,
@@ -1681,13 +1682,44 @@ void Player::UpdateWalk(_float dt) {
         vDir.z * Speed * Scale * dt
     };
 
-    _vec3 playerHalfSize = GetComponent<CollisionComponent>()->GetSize() / 2;
-    auto blockPos = transform->GetWorldPosition() + moveVec + vDir;
+    _vec3 playerHalfSize = GetComponent<CollisionComponent>()->GetSize() * 0.5f;
+    auto blockPos = transform->GetWorldPosition() + moveVec + vDir * 1.8f;
 
     auto grid = EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetStaticGrid();
-    auto blockUp = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y + playerHalfSize.y + -0.1f), grid->WorldToCell(blockPos.z));
-    auto blockFront = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y), grid->WorldToCell(blockPos.z));
-    auto blockDown = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - playerHalfSize.y + 0.1f), grid->WorldToCell(blockPos.z));
+
+    auto blockUp = grid->QueryCell(
+        grid->WorldToCell(blockPos.x), 
+        grid->WorldToCell(blockPos.y + playerHalfSize.y + -0.1f * Scale), 
+        grid->WorldToCell(blockPos.z));
+    auto blockFront = grid->QueryCell(
+        grid->WorldToCell(blockPos.x), 
+        grid->WorldToCell(blockPos.y), 
+        grid->WorldToCell(blockPos.z));
+    auto blockDown = grid->QueryCell(
+        grid->WorldToCell(blockPos.x), 
+        grid->WorldToCell(blockPos.y - playerHalfSize.y + 0.1f * Scale), 
+        grid->WorldToCell(blockPos.z));
+
+    auto pos = transform->GetWorldPosition();
+    auto blockUnder = grid->QueryCell(
+        grid->WorldToCell(pos.x),
+        grid->WorldToCell(pos.y - playerHalfSize.y - 0.1f * Scale),
+        grid->WorldToCell(pos.z));
+
+    auto litY = (pos.y - floorf(pos.y));
+    if (litY == 0.5f)
+        onHalf = false;
+    else
+        onHalf = true;
+
+    if (onHalf && blockDown && blockUnder)
+    {
+        auto ubPos = blockUnder->GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+        auto bdPos = blockDown->GetOwner()->GetComponent<TransformComponent>()->GetWorldPosition();
+        auto bdSize = blockDown->GetOwner()->GetComponent<TransformComponent>()->GetScale();
+        if (bdSize.y < 2.f && bdPos.y == ubPos.y)
+            blockDown = nullptr;
+    }
 
     if (blockUp == nullptr && blockFront == nullptr && blockDown == nullptr)
     {
@@ -1696,17 +1728,37 @@ void Player::UpdateWalk(_float dt) {
     else if (blockUp == nullptr && blockFront == nullptr && blockDown != nullptr)
     {
         auto blockDownType = blockDown->GetOwner()->GetObjectType();
-
         if (blockDownType == ObjectType::StaticBlock || blockDownType == ObjectType::CollisionBlock)
         {
-            auto block = grid->QueryCell(grid->WorldToCell(blockPos.x), grid->WorldToCell(blockPos.y - playerHalfSize.y + 1.f), grid->WorldToCell(blockPos.z));
-            if(block == nullptr) 
-                transform->Translate(moveVec + _vec3(0.f, 0.5f, 0.f));
+            CollisionComponent* block;
+            if(onHalf) 
+               block = grid->QueryCell(
+                   grid->WorldToCell(blockPos.x), 
+                   grid->WorldToCell(blockPos.y - playerHalfSize.y + 0.6f * Scale), 
+                   grid->WorldToCell(blockPos.z));
+            else
+                block = grid->QueryCell(
+                    grid->WorldToCell(blockPos.x), 
+                    grid->WorldToCell(blockPos.y - playerHalfSize.y + 1.6f * Scale), 
+                    grid->WorldToCell(blockPos.z));
+
+            if (block == nullptr)
+            {
+                if (onHalf)
+                    transform->Translate(moveVec + _vec3(0.f, 0.5f, 0.f));
+                else
+                    transform->Translate(moveVec + _vec3(0.f, 1.5f, 0.f));
+            }
             else
             {
                 auto blockType = block->GetOwner()->GetObjectType();
                 if (blockType == ObjectType::StaticBlock || blockType == ObjectType::CollisionBlock)
-                    transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
+                {
+                    if (onHalf)
+                        transform->Translate(moveVec + _vec3(0.f, 0.5f, 0.f));
+                    else
+                        transform->Translate(moveVec + _vec3(0.f, 2.f, 0.f));
+                }
             }
         }
     }
@@ -1714,8 +1766,16 @@ void Player::UpdateWalk(_float dt) {
     //////////////////////////////////////////Walk Effect
     if (walkEffectTimer >= walkEffectTerm)
     {
-        auto pos = transform->GetWorldPosition();
-        auto blockType = grid->GetBlockType(_vec3(pos.x, pos.y - playerHalfSize.y - 0.1f, pos.z));
+        CollisionBlock* block;
+        StaticBlockType blockType = StaticBlockType::sBlockEnd;;
+        if (blockUnder)
+        {
+            block = dynamic_cast<CollisionBlock*>(blockUnder->GetOwner());
+
+            if (block)
+                blockType = block->GetType();
+        }
+
         if (soundBefore == 2)
         {
             switch (blockType)
@@ -1743,6 +1803,7 @@ void Player::UpdateWalk(_float dt) {
             case StaticBlockType::PurGlass: case StaticBlockType::EndRod: case StaticBlockType::ChorusBranch: case StaticBlockType::ChorusFlower:
             case StaticBlockType::ChorusFruit:
             default:
+                //EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnSand1");
                 break;
             }
             soundBefore = 1;
@@ -1774,6 +1835,7 @@ void Player::UpdateWalk(_float dt) {
             case StaticBlockType::PurGlass: case StaticBlockType::EndRod: case StaticBlockType::ChorusBranch: case StaticBlockType::ChorusFlower:
             case StaticBlockType::ChorusFruit:
             default:
+                //EngineCore::GetInstance()->GetSoundManager()->PlaySFX("WalkOnSand2");
                 break;
             }
             soundBefore = 2;

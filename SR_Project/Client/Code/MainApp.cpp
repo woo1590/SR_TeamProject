@@ -326,8 +326,8 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("WalkOnStone2", "../Resource/Sound/SFX/WalkOnStone2.mp3", false);
         sound->LoadSound("WalkOnCloth1", "../Resource/Sound/SFX/WalkOnCloth1.mp3", false);
         sound->LoadSound("WalkOnCloth2", "../Resource/Sound/SFX/WalkOnCloth2.mp3", false);
-        //sound->LoadSound("WalkOnSand1", "../Resource/Sound/SFX/WalkOnSand1.mp3", false);
-        //sound->LoadSound("WalkOnSand2", "../Resource/Sound/SFX/WalkOnSand2.mp3", false);
+        sound->LoadSound("WalkOnSand1", "../Resource/Sound/SFX/WalkOnSand1.mp3", false);
+        sound->LoadSound("WalkOnSand2", "../Resource/Sound/SFX/WalkOnSand2.mp3", false);
         sound->LoadSound("Statikk", "../Resource/Sound/SFX/Statikk.mp3", false);
         sound->LoadSound("Charge", "../Resource/Sound/SFX/Charge.mp3", false);
 
