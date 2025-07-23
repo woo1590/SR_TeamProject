@@ -6,6 +6,7 @@
 #include "EngineCore.h"
 #include "ObjectManager.h"
 #include "InputSystem.h"
+#include "SoundManager.h"
 
 //object
 #include "Part.h"
@@ -147,7 +148,7 @@ void Lever::SetRotation(_vec3 rotation, string str)
 void Lever::Operate()
 {
     auto handleTransform = Parts["Handle"]->GetComponent<TransformComponent>();
-
+    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PullLever");
     switch (Col)
     {
     case DynamicBlockCol::dXP: case DynamicBlockCol::dZM:

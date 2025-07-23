@@ -7,6 +7,7 @@
 #include "ObjectManager.h"
 #include "InputSystem.h"
 #include "TimerManager.h"
+#include "SoundManager.h"
 
 //object
 #include "Part.h"
@@ -112,7 +113,11 @@ void Bridge::Update(_float dt)
     }
     Activate = allTriggered;
 
-    if (Activate && !Trigger) Operate(dt);
+    if (Activate && !Trigger)
+    {
+        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PullLever");
+        Operate(dt);
+    }
 
     Object::Update(dt);
 }

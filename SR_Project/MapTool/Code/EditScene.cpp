@@ -13,6 +13,7 @@
 #include "BlockManager.h"
 #include "ChunkManager.h"
 #include "PrefabManager.h"
+#include "SoundManager.h"
 
 //object
 #include "Camera.h"
@@ -25,6 +26,7 @@
 #include "CameraComponent.h"
 #include "RendererComponent.h"
 #include "MiniMapRenderer.h"
+
 //object
 #include "Chunk.h"
 #include "Material.h"
@@ -83,6 +85,10 @@ void EditScene::Load()
 
 	ChunkMgr->CreateMiniMapChunk(0, 0, ChunkMgr->GetChunk(0, 0), sceneID);
 	miniMapObject = MiniMapObject::Create(ObjectMgr);
+
+	auto sound = EngineCore::GetInstance()->GetSoundManager();
+	sound->LoadSound("PullLever", "../Resource/Sound/SFX/PullLever.mp3", true);
+	sound->LoadSound("OperateBridge", "../Resource/Sound/SFX/OperateBridge.mp3", true);
 }
 
 void EditScene::Update(float dt)
