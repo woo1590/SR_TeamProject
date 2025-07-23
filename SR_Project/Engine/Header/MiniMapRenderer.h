@@ -39,11 +39,11 @@ private:
 
 private:
     bool IsVisible = false;
-    int tileSize = 9;
-    float Scale = 0.9f;
+    int tileSize = 10;
+    float Scale = 1.f;
 
     _vec2 MapCenter;
-    _vec2 MapOffset{ 100.f, 100.f };
+    _vec2 MapOffset{ 125.f, 125.f };
 
     ID3DXSprite* Sprite = nullptr;
     LPDIRECT3DTEXTURE9 TileTexture = nullptr;

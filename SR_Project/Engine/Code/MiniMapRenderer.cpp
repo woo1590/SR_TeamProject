@@ -81,7 +81,7 @@ void MiniMapRenderer::UpdateMapData(const _vec3& playerPos, ChunkManager* chunkM
 {
     ClearTiles();
 
-    int range(4);
+    int range(8);
     int playerChunkX(static_cast<int>(playerPos.x) / CHUNK_SIZE);
     int playerChunkZ(static_cast<int>(playerPos.z) / CHUNK_SIZE);
 
