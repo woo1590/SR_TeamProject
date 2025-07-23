@@ -316,23 +316,20 @@
     <Filter Include="01. Engine Component\ResourceManager\Mesh\ChunkMesh">
       <UniqueIdentifier>{ea8ec471-fd4a-4910-b644-59edd8e5098a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Engine Component\ResourceManager\Mesh\MinimapMesh">
-      <UniqueIdentifier>{52db035c-d364-4c87-b0bd-64ae24e355cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05. Scene Component\PhysicsSystem">
       <UniqueIdentifier>{6342d716-998f-4933-862a-73043b0598c1}</UniqueIdentifier>
     </Filter>
     <Filter Include="06. Object\04. CollisionBlock">
       <UniqueIdentifier>{19e1774f-52c3-4e4d-8d83-606dd19febe3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Object\05. MinimapData">
-      <UniqueIdentifier>{f6064108-9005-4278-9bee-56aab6f4e2a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. Scene Component\MinimapManager">
-      <UniqueIdentifier>{a2331b57-416c-4f6b-82a9-1175054412b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06. Object\02. DynamicBlock\MapTable">
       <UniqueIdentifier>{7299428f-2b0b-4514-86a5-0781f7b2a2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Object Component\Renderer\MiniMapRenderer">
+      <UniqueIdentifier>{bb51cdcb-9a3d-4e9f-b6b8-1973832ab141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Object\05. MiniMapObject">
+      <UniqueIdentifier>{926c3d61-d4c9-43fa-81af-890c3387cc25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -659,20 +656,17 @@
     <ClCompile Include="..\Code\ChunkMesh.cpp">
       <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MinimapData.cpp">
-      <Filter>06. Object\05. MinimapData</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MinimapManager.cpp">
-      <Filter>05. Scene Component\MinimapManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MinimapMesh.cpp">
-      <Filter>01. Engine Component\ResourceManager\Mesh\MinimapMesh</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\DynamicBlock.cpp">
       <Filter>06. Object\02. DynamicBlock</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MapTable.cpp">
       <Filter>06. Object\02. DynamicBlock\MapTable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniMapRenderer.cpp">
+      <Filter>07. Object Component\Renderer\MiniMapRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniMapObject.cpp">
+      <Filter>06. Object\05. MiniMapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1025,20 +1019,17 @@
     <ClInclude Include="..\Header\ChunkMesh.h">
       <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MinimapData.h">
-      <Filter>06. Object\05. MinimapData</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MinimapManager.h">
-      <Filter>05. Scene Component\MinimapManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MinimapMesh.h">
-      <Filter>01. Engine Component\ResourceManager\Mesh\MinimapMesh</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\DynamicBlock.h">
       <Filter>06. Object\02. DynamicBlock</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MapTable.h">
       <Filter>06. Object\02. DynamicBlock\MapTable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMapRenderer.h">
+      <Filter>07. Object Component\Renderer\MiniMapRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMapObject.h">
+      <Filter>06. Object\05. MiniMapObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

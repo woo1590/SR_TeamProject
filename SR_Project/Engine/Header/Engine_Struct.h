@@ -105,11 +105,10 @@ namespace Engine
 		StaticBlockUsage Usage;
 	} PREFAB;
 
-	struct TileInfo
+	typedef struct MiniMapChunkData
 	{
-		bool walkable = false;
-		_ulong color = D3DCOLOR_ARGB(255, 100, 100, 100);
-	};
+		bool path[CHUNK_SIZE][CHUNK_SIZE]{ false };
+	} MINIMAP;
 }
 
 #endif // Engine_Struct_h__
