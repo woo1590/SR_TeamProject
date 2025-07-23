@@ -11,6 +11,9 @@
 #include "Slime.h"
 #include "PurpleSlime.h"
 #include "Ender.h"
+#include "Blastling.h"
+#include "Shulker.h"
+
 #include "TransformComponent.h"
 
 Spawner::Spawner(ObjectManager* owner, ObjectType objType)
@@ -80,6 +83,14 @@ Monster* Spawner::Spawn()
 
     case SpawnType::Ender:
         monster = Ender::Create(owner, ObjectType::Monster);
+        break;
+
+    case SpawnType::Blastling:
+        monster = Blastling::Create(owner, ObjectType::Monster);
+        break;
+
+    case SpawnType::Shulker:
+        monster = Shulker::Create(owner, ObjectType::Monster);
         break;
     }
 
