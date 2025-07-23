@@ -168,29 +168,29 @@ void RedGolem::Die()
     }
 }
 
-void RedGolem::Hit(_vec3 dir, _float power)
-{
-    if (State != MonsterState::Hit)
-    {
-        State = MonsterState::Hit;
-
-        *IsHit = true;
-
-        HitAnim.IsRunning = true;
-        HitAnim.IsEnd = false;
-
-        HitAnim.ElapsedTime = 0.f;
-        HitAnim.DelayTime = 0.f;
-
-        HitDir = _vec3(0, 0, 0);
-        HitPower = 0.f;
-
-        for (auto& material : materials)
-        {
-            material->SetFloat("emissive", 1);
-        }
-    }
-}
+//void RedGolem::Hit(_vec3 dir, _float power)
+//{
+//    if (State != MonsterState::Hit)
+//    {
+//        State = MonsterState::Hit;
+//
+//        *IsHit = true;
+//
+//        HitAnim.IsRunning = true;
+//        HitAnim.IsEnd = false;
+//
+//        HitAnim.ElapsedTime = 0.f;
+//        HitAnim.DelayTime = 0.f;
+//
+//        HitDir = _vec3(0, 0, 0);
+//        HitPower = 0.f;
+//
+//        for (auto& material : materials)
+//        {
+//            material->SetFloat("emissive", 1);
+//        }
+//    }
+//}
 
 void RedGolem::InitTransform(ObjectType objType)
 {
@@ -297,9 +297,6 @@ void RedGolem::InitTree()
 
     AttackNum = new int(1);
     bb->SetValue("AttackNumber", AttackNum);
-
-    IsHit = new _bool(false);
-    bb->SetValue("IsDamaged", IsHit);
 
     //BT
     SelectorNode* attackSequence = new SelectorNode();
@@ -454,19 +451,19 @@ void RedGolem::PlayDie(_float dt)
     }
 }
 
-void RedGolem::PlayHit(_float dt)
-{
-    HitAnim.ElapsedTime += dt;
-
-    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
-    {
-        for (auto& material : materials)
-        {
-            material->SetFloat("emissive", 0);
-        }
-        *IsHit = false;
-    }
-}
+//void RedGolem::PlayHit(_float dt)
+//{
+//    HitAnim.ElapsedTime += dt;
+//
+//    if (HitAnim.ElapsedTime > HitAnim.TotalTime)
+//    {
+//        for (auto& material : materials)
+//        {
+//            material->SetFloat("emissive", 0);
+//        }
+//        *IsHit = false;
+//    }
+//}
 
 void RedGolem::OnCollisionEnter(Object* other)
 {

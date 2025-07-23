@@ -18,7 +18,7 @@ public:
     void RotateTo(_vec3* dir, float dt) override;
     void Attack(Object* target) override;
     void Die() override;
-    void Hit(_vec3 dir, _float power) override;
+   // void Hit(_vec3 dir, _float power) override;
 
 protected:
     void InitTransform(ObjectType objType);
@@ -30,7 +30,7 @@ protected:
     void PlayWalk(_float dt) override;
     void PlayAttack(_float dt) override;
     void PlayDie(_float dt) override;
-    void PlayHit(_float dt) override;
+   // void PlayHit(_float dt) override;
 
     void OnCollisionEnter(Object* other);
 
