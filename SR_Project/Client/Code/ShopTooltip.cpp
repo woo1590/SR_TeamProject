@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "ShopTooltip.h"
 #include "TransformComponent.h"
 #include "InfoComponent.h"
@@ -58,19 +58,19 @@ void ShopTooltip::Update(float dt)
 	switch (info.type)
 	{
 	case ItemType::Sword:
-		font->AddText(L"±ÙÁ¢ °ø°İ·Â:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
+		font->AddText(L"ê·¼ì ‘ ê³µê²©ë ¥:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	case ItemType::Armor:
-		font->AddText(L"Ãß°¡ Ã¼·Â: + " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
+		font->AddText(L"ì¶”ê°€ ì²´ë ¥: + " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	case ItemType::Potion:
-		font->AddText(to_wstring(info.value) + L" ÃÊ ÄğÅ¸ÀÓ", valueRect, Color::White, DT_LEFT, FontType::Large);
+		font->AddText(to_wstring(info.value) + L" ì´ˆ ì¿¨íƒ€ì„", valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	case ItemType::Bow:
-		font->AddText(L"¿ø°Å¸® °ø°İ·Â:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
+		font->AddText(L"ì›ê±°ë¦¬ ê³µê²©ë ¥:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	default:
-		font->AddText(L"¾ÆÀÌÅÛ ¼öÄ¡:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
+		font->AddText(L"ì•„ì´í…œ ìˆ˜ì¹˜:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	}
 

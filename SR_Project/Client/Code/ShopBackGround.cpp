@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "ShopBackGround.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
@@ -41,9 +41,9 @@ void ShopBackGround::Update(float dt)
 	auto font = GetComponent<FontComponent>();
 	font->ClearText();
 
-	font->AddText(L"¸¶À» »óÀÎ", {50, 550, 400, 600}, Color::Yellow, DT_LEFT, FontType::MineCraftFont);
-	font->AddText(L"ÀÌ »óÀÎÀº ÇÕ´çÇÑ °¡°İ¿¡ ÀÏ¹İ ¹× Èñ±ÍÇÑ ¾ÆÀÌÅÛÀ» ÆÇ¸ÅÇÕ´Ï´Ù", {50,600,400,700}, Color::White, DT_LEFT | DT_WORDBREAK, FontType::TipText);
+	font->AddText(L"ë§ˆì„ ìƒì¸", {50, 550, 400, 600}, Color::Yellow, DT_LEFT, FontType::MineCraftFont);
+	font->AddText(L"ì´ ìƒì¸ì€ í•©ë‹¹í•œ ê°€ê²©ì— ì¼ë°˜ ë° í¬ê·€í•œ ì•„ì´í…œì„ íŒë§¤í•©ë‹ˆë‹¤", {50,600,400,700}, Color::White, DT_LEFT | DT_WORDBREAK, FontType::TipText);
 
 	font->AddText(to_wstring(gold), {200,90,300,200}, Color::White, DT_LEFT, FontType::MineCraftFont);
-	font->AddText(L"ÆÇ¸Å¿ë ¾ÆÀÌÅÛ", {475, 20, 600, 200}, Color::Yellow, DT_LEFT, FontType::TipText);
+	font->AddText(L"íŒë§¤ìš© ì•„ì´í…œ", {475, 20, 600, 200}, Color::Yellow, DT_LEFT, FontType::TipText);
 }

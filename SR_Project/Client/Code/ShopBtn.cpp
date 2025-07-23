@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "ShopBtn.h"
 #include "TransformComponent.h"
 #include "UIRenderer.h"
@@ -58,6 +58,6 @@ void ShopBtn::Update(float dt)
 	auto pos = GetComponent<TransformComponent>()->GetPosition();
 	font->ClearText();
 
-	font->AddText(L"¾ÆÀÌÅÛ ±¸¸Å", {700,560,900,600}, Color::White, DT_CENTER | DT_VCENTER, FontType::CookieRunFont);
-	font->AddText(L"È®ÀÎÇÏ·Á¸é °è¼Ó ´©¸£¼¼¿ä", {700,600,900,650}, Color::White, DT_CENTER | DT_VCENTER, FontType::TipText);
+	font->AddText(L"ì•„ì´í…œ êµ¬ë§¤", {700,560,900,600}, Color::White, DT_CENTER | DT_VCENTER, FontType::CookieRunFont);
+	font->AddText(L"í™•ì¸í•˜ë ¤ë©´ ê³„ì† ëˆ„ë¥´ì„¸ìš”", {700,600,900,650}, Color::White, DT_CENTER | DT_VCENTER, FontType::TipText);
 }
