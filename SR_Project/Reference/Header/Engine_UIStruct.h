@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 namespace Engine
 {
@@ -32,19 +32,19 @@ namespace Engine
 
 	static const std::unordered_map<ItemType, ItemInfo> itemTable =
 	{
-		{ItemType::Sword, {L"°Ë", L"inventory_sword", ItemType::Sword, SlotItemType::MeleeWeapon, Rarity::Default, 10,
-		L"Æ°Æ°ÇÏ°í ¹Ï°í ¾µ ¼ö ÀÖ´Â °ËÀÔ´Ï´Ù"}},
-		{ItemType::Bow, {L"È°", L"inventory_bow", ItemType::Bow, SlotItemType::RangeWeapon, Rarity::Default, 10,
-		L"´Ü¼øÇÏÁö¸¸ ±ÕÇüÀÌ ÀâÇô ÀÖ´Â ¹«±âÀÔ´Ï´Ù. È£¹Ú ¸ñÀåÀÇ »ç³É²ÛµéÀº È°Àº ´Ù¸¥ Àâµ¿»ç´Ïµé°ú ´Ù¸£°Ô ½Ç¸ÁÀ» ½ÃÅ°Áö ¾Ê´Â´Ù°í ¸»ÇÕ´Ï´Ù."}},
-		{ItemType::Armor, {L"´Á´ë ¹æ¾î±¸", L"inventory_wolfarmor",ItemType::Armor, SlotItemType::Armor, Rarity::Default, 1, L"¸¹Àº Àü»çµéÀº ÀüÅõÇÒ ¶§ ´Á´ëÀÇ ¸Ó¸®¸¦ µÚÁı¾î ¾²°í Àûµé¿¡°Ô °øÆ÷°¨À» Áá½À´Ï´Ù."}},
-		{ItemType::RocketItem, {L"ÆøÁ× È­»ì", L"inventory_rocket",ItemType::RocketItem, SlotItemType::Potion, Rarity::Default, 30, L"TNTÀÇ ÆøÆÈÇÏ´Â °¡·ç°¡ È­»ìÀÇ °í¼Ó ÀÌµ¿°ú °áÇÕ µÇ¾ú½À´Ï´Ù. Àß¸øµÉ ÀÏÀÌ ¹¹°¡ ÀÖ°Ú¾î¿ä?"}},
-		{ItemType::BoostItem, {L"½Å¼ÓÀÇ ºÎÃ÷", L"inventory_boost",ItemType::BoostItem, SlotItemType::Potion, Rarity::Default, 5, L"È¿°úºÎ¿©¸¦ ÅëÇØ ½Å¼ÓÇÑ ¿òÁ÷ÀÓÀ» °¡´ÉÇÏ°Ô ÇÏ´Â ºÎÃ÷ÀÔ´Ï´Ù. Áö±İÃ³·³ ¸ğµç °Ô ºÒÈ®½ÇÇÑ ¶§¿¡ À¯¿ëÇÕ´Ï´Ù."}},
-		{ItemType::FishingItem, {L"³¬½Ë´ë", L"inventory_fishing",ItemType::FishingItem, SlotItemType::Potion, Rarity::Default, 2, L"ÁøÁ¤ÇÑ ¸ğÇèÀÚ°¡ ½Å·ÚÇÒ ¼ö ÀÖ´Â µ¿·áÀÎ ³¬½Ë´ë´Â ³¬½Ã¿¡¸¸ À¯¿ëÇÑ °ÍÀº ¾Æ´Õ´Ï´Ù."}},
-		{ItemType::PigItem, {L"¾Æ±â µÅÁö", L"pig", ItemType::PigItem, SlotItemType::None, Rarity::Default, 0, L"Áö±İ ÀÌ Áñ°Å¿î ²Ü²Ü ¼Ò¸®´Â ¿©·¯ºĞÀÌ ³»´Â °Ç°¡¿ä, ¾Æ´Ô ÀÌ »ç¶û½º·¯¿î ¾Æ±â µÅÁö°¡ ³»´Â °Ç°¡¿ä? »õ·Î¿î ¹İ·Áµ¿¹°ÀÌ ¾ó¸¶³ª ±Í¿©¿îÁö Á¤¸» ±ú¹°¾î ÁÖ°í ½Í³×¿ä! ÇÏÁö¸¸ ±×·¯¸é ¾ÈµÇ°ÚÁÒ."}},
-		{ItemType::Spear, {L"Ã¢", L"inventory_spear",ItemType::Spear, SlotItemType::MeleeWeapon, Rarity::Default, 10, L"ÀÌ Ã¢Àº ¸Õ °Å¸®¿¡µµ ´ê¾Æ ³ĞÀº ¹üÀ§¿¡ ¾µ ¼ö ÀÖ´Â À¯ÀÏÇÑ ¹«±âÀÔ´Ï´Ù."}},
-		{ItemType::CrossBow, {L"¼®±Ã", L"inventory_crossbow",ItemType::CrossBow, SlotItemType::RangeWeapon, Rarity::Default, 10, L"¼®±ÃÀº ¿ì¹ÎµéÀÌ Áñ°Ü ¾²´Â ¿ø°Å¸® ¹«±âÀÔ´Ï´Ù. ÁÖ·Î ¾àÅ»ÀÚµéÀÌ µé°í ´Ù´Õ´Ï´Ù."}},
-		{ItemType::GhostCloak, {L"À¯·É ¸ÁÅä",L"inventory_ghostcloak",ItemType::GhostCloak, SlotItemType::Potion, Rarity::Default, 5, L"Àá½Ã À¯·É ÇüÅÂ°¡ µÇ¾î ¸÷À» Åë°úÇÏ°í ÀÏºÎ ÇÇÇØ¸¦ Èí¼öÇÕ´Ï´Ù."}},
-		{ItemType::HpPotion, {L"Hp Æ÷¼Ç",L"hp_potion",ItemType::HpPotion,SlotItemType::None,Rarity::Default,50,L"HP 10 È¸º¹"}},
+		{ItemType::Sword, {L"ê²€", L"inventory_sword", ItemType::Sword, SlotItemType::MeleeWeapon, Rarity::Default, 10,
+		L"íŠ¼íŠ¼í•˜ê³  ë¯¿ê³  ì“¸ ìˆ˜ ìˆëŠ” ê²€ì…ë‹ˆë‹¤"}},
+		{ItemType::Bow, {L"í™œ", L"inventory_bow", ItemType::Bow, SlotItemType::RangeWeapon, Rarity::Default, 10,
+		L"ë‹¨ìˆœí•˜ì§€ë§Œ ê· í˜•ì´ ì¡í˜€ ìˆëŠ” ë¬´ê¸°ì…ë‹ˆë‹¤. í˜¸ë°• ëª©ì¥ì˜ ì‚¬ëƒ¥ê¾¼ë“¤ì€ í™œì€ ë‹¤ë¥¸ ì¡ë™ì‚¬ë‹ˆë“¤ê³¼ ë‹¤ë¥´ê²Œ ì‹¤ë§ì„ ì‹œí‚¤ì§€ ì•ŠëŠ”ë‹¤ê³  ë§í•©ë‹ˆë‹¤."}},
+		{ItemType::Armor, {L"ëŠ‘ëŒ€ ë°©ì–´êµ¬", L"inventory_wolfarmor",ItemType::Armor, SlotItemType::Armor, Rarity::Default, 1, L"ë§ì€ ì „ì‚¬ë“¤ì€ ì „íˆ¬í•  ë•Œ ëŠ‘ëŒ€ì˜ ë¨¸ë¦¬ë¥¼ ë’¤ì§‘ì–´ ì“°ê³  ì ë“¤ì—ê²Œ ê³µí¬ê°ì„ ì¤¬ìŠµë‹ˆë‹¤."}},
+		{ItemType::RocketItem, {L"í­ì£½ í™”ì‚´", L"inventory_rocket",ItemType::RocketItem, SlotItemType::Potion, Rarity::Default, 30, L"TNTì˜ í­íŒ”í•˜ëŠ” ê°€ë£¨ê°€ í™”ì‚´ì˜ ê³ ì† ì´ë™ê³¼ ê²°í•© ë˜ì—ˆìŠµë‹ˆë‹¤. ì˜ëª»ë  ì¼ì´ ë­ê°€ ìˆê² ì–´ìš”?"}},
+		{ItemType::BoostItem, {L"ì‹ ì†ì˜ ë¶€ì¸ ", L"inventory_boost",ItemType::BoostItem, SlotItemType::Potion, Rarity::Default, 5, L"íš¨ê³¼ë¶€ì—¬ë¥¼ í†µí•´ ì‹ ì†í•œ ì›€ì§ì„ì„ ê°€ëŠ¥í•˜ê²Œ í•˜ëŠ” ë¶€ì¸ ì…ë‹ˆë‹¤. ì§€ê¸ˆì²˜ëŸ¼ ëª¨ë“  ê²Œ ë¶ˆí™•ì‹¤í•œ ë•Œì— ìœ ìš©í•©ë‹ˆë‹¤."}},
+		{ItemType::FishingItem, {L"ë‚šì‹¯ëŒ€", L"inventory_fishing",ItemType::FishingItem, SlotItemType::Potion, Rarity::Default, 2, L"ì§„ì •í•œ ëª¨í—˜ìê°€ ì‹ ë¢°í•  ìˆ˜ ìˆëŠ” ë™ë£Œì¸ ë‚šì‹¯ëŒ€ëŠ” ë‚šì‹œì—ë§Œ ìœ ìš©í•œ ê²ƒì€ ì•„ë‹™ë‹ˆë‹¤."}},
+		{ItemType::PigItem, {L"ì•„ê¸° ë¼ì§€", L"pig", ItemType::PigItem, SlotItemType::None, Rarity::Default, 0, L"ì§€ê¸ˆ ì´ ì¦ê±°ìš´ ê¿€ê¿€ ì†Œë¦¬ëŠ” ì—¬ëŸ¬ë¶„ì´ ë‚´ëŠ” ê±´ê°€ìš”, ì•„ë‹˜ ì´ ì‚¬ë‘ìŠ¤ëŸ¬ìš´ ì•„ê¸° ë¼ì§€ê°€ ë‚´ëŠ” ê±´ê°€ìš”? ìƒˆë¡œìš´ ë°˜ë ¤ë™ë¬¼ì´ ì–¼ë§ˆë‚˜ ê·€ì—¬ìš´ì§€ ì •ë§ ê¹¨ë¬¼ì–´ ì£¼ê³  ì‹¶ë„¤ìš”! í•˜ì§€ë§Œ ê·¸ëŸ¬ë©´ ì•ˆë˜ê² ì£ ."}},
+		{ItemType::Spear, {L"ì°½", L"inventory_spear",ItemType::Spear, SlotItemType::MeleeWeapon, Rarity::Default, 10, L"ì´ ì°½ì€ ë¨¼ ê±°ë¦¬ì—ë„ ë‹¿ì•„ ë„“ì€ ë²”ìœ„ì— ì“¸ ìˆ˜ ìˆëŠ” ìœ ì¼í•œ ë¬´ê¸°ì…ë‹ˆë‹¤."}},
+		{ItemType::CrossBow, {L"ì„ê¶", L"inventory_crossbow",ItemType::CrossBow, SlotItemType::RangeWeapon, Rarity::Default, 10, L"ì„ê¶ì€ ìš°ë¯¼ë“¤ì´ ì¦ê²¨ ì“°ëŠ” ì›ê±°ë¦¬ ë¬´ê¸°ì…ë‹ˆë‹¤. ì£¼ë¡œ ì•½íƒˆìë“¤ì´ ë“¤ê³  ë‹¤ë‹™ë‹ˆë‹¤."}},
+		{ItemType::GhostCloak, {L"ìœ ë ¹ ë§í† ",L"inventory_ghostcloak",ItemType::GhostCloak, SlotItemType::Potion, Rarity::Default, 5, L"ì ì‹œ ìœ ë ¹ í˜•íƒœê°€ ë˜ì–´ ëª¹ì„ í†µê³¼í•˜ê³  ì¼ë¶€ í”¼í•´ë¥¼ í¡ìˆ˜í•©ë‹ˆë‹¤."}},
+		{ItemType::HpPotion, {L"Hp í¬ì…˜",L"hp_potion",ItemType::HpPotion,SlotItemType::None,Rarity::Default,50,L"HP 10 íšŒë³µ"}},
 	};
 
 	struct EnemyInfo
