@@ -389,6 +389,7 @@ void UILoader::BuildWorldMapUI(ObjectManager* objMgr)
                 {
                     auto command = ChangeScene::Create(loadID);
                     EngineCore::GetInstance()->RegisterCommand(command);
+                    GameManager::GetInstance()->ClearScene(loadID);
                 });
             ADD(node); 
 

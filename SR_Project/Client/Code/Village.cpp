@@ -211,10 +211,10 @@ void Village::Load()
 			trigger3->AddSpawner(SpawnType::Slime, _vec3(65.f, 10.f, 200.f), _vec3(0.f, 0.f, 0.f));
 			trigger3->AddSpawner(SpawnType::Zombie, _vec3(100.f, 10.f, 200.f), _vec3(0.f, 0.f, 0.f));
 			trigger3->AddSpawner(SpawnType::Skeleton, _vec3(71.f, 30.f, 220.f), _vec3(0.f, 0.f, 0.f));
-			trigger3->AddSpawner(SpawnType::Skeleton, _vec3(95.f, 10.f, 220.f), _vec3(0.f, 0.f, 0.f));
+			trigger3->AddSpawner(SpawnType::Skeleton, _vec3(65.f, 10.f, 200.f), _vec3(0.f, 0.f, 0.f));
 
 			auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
-			trigger4->GetComponent<TransformComponent>()->SetPosition(74.f, 0.f, 188.f);
+			trigger4->GetComponent<TransformComponent>()->SetPosition(110.f, 0.f, 200.f);
 			trigger4->RegisterCallBack([this]()
 				{
 					this->ChangeState(VillageState::EnterVillage);
