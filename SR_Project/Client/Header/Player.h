@@ -4,6 +4,7 @@
 #include "QuestTextObj.h"
 #include "InventoryManager.h"
 #include "InventoryComponent.h"
+#include "Arrows.h"
 
 class Player : public BaseCharacter
 {
@@ -223,4 +224,5 @@ private:
     InventoryManager* invMgr = nullptr;
     InventoryComponent* invComp = nullptr;
     bool isClickedI = true;
+    Arrows* arrows = nullptr;
 };

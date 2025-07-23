@@ -4,6 +4,10 @@
 #include "UIRenderer.h"
 #include "InfoComponent.h"
 #include "ItemComponent.h"
+#include "CooldownComponent.h"
+#include "MaskObj.h"
+#include "ObjectManager.h"
+#include "Player.h"
 
 BoostItem* BoostItem::Create(ObjectManager* owner)
 {
@@ -23,8 +27,34 @@ HRESULT BoostItem::Ready_Object()
 
 	auto info = AddComponent<InfoComponent<ItemInfo>>();
 	auto item = AddComponent<ItemComponent>();
+	auto cooldown = AddComponent<CoolDownComponent>();
+
 	item->SetItemType(ItemType::BoostItem);
 	item->SetOriginalScale({0.35f, 0.35f});
 
+	auto maskObj = MaskObj::Create(owner);
+	auto maskTf = maskObj->GetComponent<TransformComponent>();
+	maskTf->SetParent(transform);
+	maskTf->SetPosition(0, 30.f);
+
+	auto maskRenderer = maskObj->GetComponent<UIRenderer>();
+	item->SetCoolDown(true, 5.f);
+
+	cooldown->Init(item, maskRenderer);
+
+	item->SetUseCallBack([=](Object* user) {
+		auto playerInfo = user->GetComponent<InfoComponent<PlayerInfo>>();
+		auto info = playerInfo->GetInfo();
+		info.speed = 25.f;
+		playerInfo->SetInfo(info);
+		});
+	cooldown->SetCompleteCallback([=]() {
+		auto playerInfo = owner->GetFrontObject(ObjectType::Player)->GetComponent<InfoComponent<PlayerInfo>>();
+		auto info = playerInfo->GetInfo();
+		info.speed = 15.f;
+		playerInfo->SetInfo(info);
+		});
+
+	owner->AddUIObject(maskObj);
 	return S_OK;
 }

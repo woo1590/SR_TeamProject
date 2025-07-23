@@ -214,8 +214,8 @@ void UILoader::BuildPlayerBars(ObjectManager* objMgr)
     auto hpback = HPBarBack::Create(objMgr);
     ADD(hpback);
 
-    auto arrows = Arrows::Create(objMgr);
-    ADD(arrows);
+    //auto arrows = Arrows::Create(objMgr);
+    //ADD(arrows);
 
     auto expFront = ExpBarFront::Create(objMgr);
     playerInfo->Attach(expFront->GetComponent<ProgressBar<PlayerInfo>>());

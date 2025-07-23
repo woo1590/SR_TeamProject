@@ -39,6 +39,7 @@ public:
 	void SetPlayer(Object* _player) { player = _player; }
 	SlotComponent* FindSlotByType(SlotItemType typeToFind);
 	bool RemoveItemFromSelectedSlot(ItemType& out);
+	void UseItemInQuickSlot(int idx);
 
 public:
 	void ItemAdded(ItemType type);

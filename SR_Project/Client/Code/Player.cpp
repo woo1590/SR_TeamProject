@@ -7,6 +7,7 @@
 #include "InputSystem.h"
 #include "InfoComponent.h"
 #include "ItemComponent.h"
+#include "UIRenderer.h"
 
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
@@ -118,6 +119,8 @@ HRESULT Player::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     invMgr = GetScene()->GetUIManager()->GetInventory();
     invComp = AddComponent<InventoryComponent>();
+    arrows = Arrows::Create(owner);
+    owner->AddUIObject(arrows);
 
     return S_OK;
 }
@@ -1469,9 +1472,11 @@ void Player::ChangeShootType()
     {
     case ePlayerShootType::ARROW:
         shootType = ePlayerShootType::FIREWORK;
+        arrows->GetComponent<UIRenderer>()->SetTexture(L"inventory_rocket");
         break;
     case ePlayerShootType::FIREWORK:
         shootType = ePlayerShootType::ARROW;
+        arrows->GetComponent<UIRenderer>()->SetTexture(L"arrows");
         break;
     }
 }

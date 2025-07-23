@@ -41,8 +41,11 @@ void ItemComponent::Use(Object* user)
 		onUseCallBack(user);
 }
 
-void ItemComponent::Equip(Object* user)
+void ItemComponent::Equip(Object* user, optional<int> slotIdx)
 {
+	isEquipped = true;
+	equippedSlotIdx = slotIdx;
+
 	if (onEquipCallback)
 		onEquipCallback(user);
 
@@ -52,6 +55,15 @@ void ItemComponent::Equip(Object* user)
 	if (!quest) return;
 
 	quest->ReportQuestProgress(QuestType::EquipItem, 1);
+}
+
+void ItemComponent::UnEquip(Object* user)
+{
+	isEquipped = false;
+	equippedSlotIdx.reset();
+
+	if (unEquipCallback)
+		unEquipCallback(user);
 }
 
 void ItemComponent::SetCoolDown(bool _isCool, float _dur)

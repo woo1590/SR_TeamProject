@@ -25,8 +25,8 @@ public:
 	void SetEquipCallBack(function<void(Object* user)> cb) { onEquipCallback = move(cb); }
 	void SetUnEquipCallBack(function<void(Object* user)> cb) { unEquipCallback = move(cb); }
 
-	void Equip(Object* user);
-	void UnEquip(Object* user) { if (unEquipCallback) unEquipCallback(user); }
+	void Equip(Object* user, optional<int> slotIdx = nullopt);
+	void UnEquip(Object* user);
 
 	void SetOriginalScale(const _vec2& _scale) { originalScale = _scale; }
 	const _vec2& GetOriginalScale() const { return originalScale; }
@@ -36,6 +36,7 @@ public:
 	float GetCoolDownRatio() const;
 
 	void SetUseCallBack(function<void(Object*)> cb) { onUseCallBack = move(cb); }
+	optional<int> GetEquippedSlotIdx() const { return equippedSlotIdx; }
 
 	void Update(float dt) override;
 
@@ -45,6 +46,8 @@ private:
 	function<void(Object* user)> onEquipCallback;
 	function<void(Object* user)> unEquipCallback;
 	_vec2 originalScale = {1.f, 1.f};
+	bool isEquipped = false;
+	optional<int> equippedSlotIdx;
 
 	bool isCoolDownItem = false;
 	float coolDownTimer = 0.f;

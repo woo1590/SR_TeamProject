@@ -328,9 +328,6 @@
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame\BossIcon">
       <UniqueIdentifier>{5c469025-e009-4574-819f-577182eb469f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HP_Potion">
-      <UniqueIdentifier>{f2a2d80a-c29e-48d0-a186-6ddcd89eea08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\MainGame\HotBar">
       <UniqueIdentifier>{4c6908b3-1f5b-46ac-b116-07162d908392}</UniqueIdentifier>
     </Filter>
@@ -582,10 +579,10 @@
     </Filter>
     <Filter Include="02. Object\Emerald">
       <UniqueIdentifier>{db9018e5-f1ef-4c83-8e2b-e0396a6e3d25}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\CameraActor\FixedCam">
       <UniqueIdentifier>{e1a384f6-85fa-4f91-ad1f-e3eb75474996}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="02. Object\UIObj\UIRenderState\WorldMap\StageIcon">
       <UniqueIdentifier>{ea4b2148-5a1e-42aa-8070-f0d0f0d38da0}</UniqueIdentifier>
     </Filter>
@@ -618,6 +615,9 @@
     </Filter>
     <Filter Include="02. Object\UIObj\Button\ShopBtn">
       <UniqueIdentifier>{de7297a7-f5d4-41af-9364-437cc0e26c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\Inventory\Item\HP_Potion">
+      <UniqueIdentifier>{f2a2d80a-c29e-48d0-a186-6ddcd89eea08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -742,7 +742,7 @@
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlotPlus</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HP_Potion.h">
-      <Filter>02. Object\UIObj\UIRenderState\MainGame\HP_Potion</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\HP_Potion</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GearStrength.h">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\GearStrength</Filter>
@@ -1167,10 +1167,10 @@
     </ClInclude>
     <ClInclude Include="..\Header\EmeraldObj.h">
       <Filter>02. Object\Emerald</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\FixedCam.h">
       <Filter>02. Object\CameraActor\FixedCam</Filter>
-    </ClInclude>   
+    </ClInclude>
     <ClInclude Include="..\Header\Stage1Icon.h">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage1</Filter>
     </ClInclude>
@@ -1324,7 +1324,7 @@
       <Filter>02. Object\UIObj\UIRenderState\Inventory\Slot\GearSlotPlus</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HP_Potion.cpp">
-      <Filter>02. Object\UIObj\UIRenderState\MainGame\HP_Potion</Filter>
+      <Filter>02. Object\UIObj\UIRenderState\Inventory\Item\HP_Potion</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GearStrength.cpp">
       <Filter>02. Object\UIObj\UIRenderState\Inventory\GearStrength</Filter>
@@ -1731,10 +1731,10 @@
     </ClCompile>
     <ClCompile Include="..\Code\EmeraldObj.cpp">
       <Filter>02. Object\Emerald</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\FixedCam.cpp">
       <Filter>02. Object\CameraActor\FixedCam</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\Stage1Icon.cpp">
       <Filter>02. Object\UIObj\UIRenderState\WorldMap\StageIcon\Stage1</Filter>
     </ClCompile>

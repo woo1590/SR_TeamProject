@@ -134,7 +134,7 @@ void Npc::InitDialog()
     {
         {L"다행이다… 이제 조금은 안심이 돼요.",Emotion::p8},
         {L"(주변에서 몬스터의 울음소리가 들려온다.)",Emotion::p14},
-        {L"안돼요! 여기까지 쫓아왓아요! 조심하세요!",Emotion::p14},
+        {L"안돼요! 여기까지 쫓아왔어요! 조심하세요!",Emotion::p14},
     }, [=] {quest->AcceptQuest(QuestType::KillMonsters); }},
 
     // [4] 희망의 증명 (KillMonsters) 진행중 리마인드
