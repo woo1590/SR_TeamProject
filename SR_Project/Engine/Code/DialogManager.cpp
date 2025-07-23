@@ -78,7 +78,7 @@ void DialogManager::EndDialog()
 	curDialog = nullptr;
 
 	if (onEmotionChange)
-		onEmotionChange(Emotion::None);
+		onEmotionChange(Emotion::p6);
 
 	if (panel)
 		panel->SetVisible(false);

@@ -12,7 +12,7 @@ const DialogLine& DialogComponent::GetCurLine() const
 	if (curLineIdx < lines.size())
 		return lines[curLineIdx];
 
-	static const DialogLine emptyLine = {L"...", Emotion::None};
+	static const DialogLine emptyLine = {L"...", Emotion::p6};
 	return emptyLine;
 }
 

@@ -154,7 +154,7 @@ void UILoader::BuildInventory(ObjectManager* objMgr, InventoryManager* invMgr)
 
     auto equipFunc = [player, invComp](ItemType type) {player->EquipItem(type); invComp->Equip(type); };
     auto unequipFunc = [player, invComp](ItemType type){player->UnEquipItem(type); invComp->UnEquip(type); };
-    auto createFunc = [objMgr, equipFunc, unequipFunc](ItemType type)->Object*
+    auto createFunc = [objMgr,equipFunc,unequipFunc](ItemType type)->Object*
         {
             Object* itemObj = CreateInventoryObj(objMgr, type);
             if (itemObj)

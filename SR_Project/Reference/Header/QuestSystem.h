@@ -6,7 +6,7 @@ class Object;
 
 enum class QuestUIState { CenterFadeOut, RightFadeIn, RightHold};
 enum class QuestStatus { NotStarted, InProgress, Completed};
-enum class QuestType { EquipItem, KillMonsters, ReachVillage, TalkShop, KillRedGolem, None };
+enum class QuestType { EquipItem, KillMonsters, ReachVillage, BuyPig, KillRedGolem, KillEnder,None };
 
 struct QuestInfo
 {

@@ -43,17 +43,12 @@ void LoadingScene::Load()
 {
 	ObjectMgr = ObjectManager::Create(this);
 	loader = Loader::Create(nextSceneID);
-	loadingUI = LoadingUI::Create(nullptr);
+	loadingUI = LoadingUI::Create(ObjectMgr);
 	
 	loadingUI->SetInfo(nextSceneID);
 	loadingUI->GetComponent<UIRenderer>()->SetCurRenderType(UIRenderType::MainGame);
 
-	loadingUI->GetComponent<UIRenderer>()->SetCurRenderType(UIRenderType::MainGame);
-
 	ObjectMgr->AddUIObject(loadingUI);
-	loadingStone = LoadingStone::Create(nullptr);
-	if (nextSceneID != LOADID::Village)
-		ObjectMgr->AddUIObject(loadingStone);
 }
 
 void LoadingScene::Update(_float dt)
