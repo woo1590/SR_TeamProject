@@ -171,10 +171,6 @@ void Village::Load()
 
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 
-		auto monster = Ender::Create(ObjectMgr, ObjectType::Monster);
-		monster->GetComponent<TransformComponent>()->SetPosition(160.f, 100.f, 200.f);
-		ObjectMgr->AddObject(ObjectType::Monster, monster);
-
 		if (game->IsSceneClear(LOADID::Village))
 		{
 			player->GetComponent<TransformComponent>()->SetPosition(160.f, 300.f, 200.f);
@@ -209,10 +205,6 @@ void Village::Load()
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger1);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger2);
 			ObjectMgr->AddObject(ObjectType::Neutral, trigger3);
-
-			auto blast = Shulker::Create(ObjectMgr, ObjectType::Monster);
-			blast->GetComponent<TransformComponent>()->SetPosition(260.f, 30.f, 57.f);
-			ObjectMgr->AddObject(ObjectType::Monster, blast);
 		}
     }
 
