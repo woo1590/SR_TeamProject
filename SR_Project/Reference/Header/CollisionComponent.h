@@ -22,7 +22,6 @@ public:
     template<typename T>
     T* AddCollider()
     {
-        if (collider) Safe_Release(collider);
         auto c = T::Create(this);
         collider = c;
 
