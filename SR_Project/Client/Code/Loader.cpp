@@ -123,8 +123,8 @@ HRESULT Loader::Load_TestScene()
 		sound->LoadSound("TestBGM", "../Resource/Sound/BGM/Minecraft.mp3", true);
 
 
-		sound->LoadSound("PullLever", "../Resource/Sound/BGM/PullLever.mp3", true);
-		sound->LoadSound("OperateBridge", "../Resource/Sound/BGM/OperateBridge.mp3", true);
+		sound->LoadSound("PullLever", "../Resource/Sound/BGM/PullLever.mp3", false);
+		sound->LoadSound("OperateBridge", "../Resource/Sound/BGM/OperateBridge.mp3", false);
 	}
 	return S_OK;
 }

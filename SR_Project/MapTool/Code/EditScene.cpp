@@ -87,8 +87,8 @@ void EditScene::Load()
 	miniMapObject = MiniMapObject::Create(ObjectMgr);
 
 	auto sound = EngineCore::GetInstance()->GetSoundManager();
-	sound->LoadSound("PullLever", "../Resource/Sound/SFX/PullLever.mp3", true);
-	sound->LoadSound("OperateBridge", "../Resource/Sound/SFX/OperateBridge.mp3", true);
+	sound->LoadSound("PullLever", "../Resource/Sound/SFX/PullLever.mp3", false);
+	sound->LoadSound("OperateBridge", "../Resource/Sound/SFX/OperateBridge.mp3", false);
 }
 
 void EditScene::Update(float dt)

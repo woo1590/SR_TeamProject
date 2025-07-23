@@ -39,6 +39,7 @@ protected:
     void Free() override;
 
 protected:
+    bool soundFirst = true;
     bool Activate = false;
     bool Trigger = false;
     int Count = 0;

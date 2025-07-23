@@ -112,7 +112,16 @@ void Lever::Update(_float dt)
     }
 
     if (!Trigger && distance <= TriggerDistance) Activate = true;
-    if (Activate && !Trigger) Operate();
+    if (Activate && !Trigger)
+    {
+        Operate();
+
+        if (soundFirst)
+        {
+            soundFirst = false;
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PullLever");
+        }
+    }
 
     Object::Update(dt);
 }
@@ -148,7 +157,7 @@ void Lever::SetRotation(_vec3 rotation, string str)
 void Lever::Operate()
 {
     auto handleTransform = Parts["Handle"]->GetComponent<TransformComponent>();
-    EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PullLever");
+
     switch (Col)
     {
     case DynamicBlockCol::dXP: case DynamicBlockCol::dZM:

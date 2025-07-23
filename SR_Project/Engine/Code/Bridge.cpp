@@ -115,8 +115,13 @@ void Bridge::Update(_float dt)
 
     if (Activate && !Trigger)
     {
-        EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PullLever");
         Operate(dt);
+
+        if (soundFirst)
+        {
+            soundFirst = false;
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("OperateBridge");
+        }
     }
 
     Object::Update(dt);
