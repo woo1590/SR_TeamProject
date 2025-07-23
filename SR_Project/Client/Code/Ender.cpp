@@ -28,6 +28,7 @@
 #include "QuestSystem.h"
 #include "Object.h"
 #include "scene.h"
+#include "Material.h"
 #include "PhysicsComponent.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
@@ -97,10 +98,11 @@ void Ender::InitTransform(ObjectType objType)
 
     Add_Bone("TopHead", objType, Bones["Head"], "EnderTopHead_Mtrl");
     SetMaterial("EnderBottomHead_Mtrl", "Head", RENDER_ID::Render_NonAlpha);
-    SetMaterial("EnderBody_Mtrl", "Body");
+    SetMaterial("EnderBody_Mtrl", "Body", RENDER_ID::Render_NonAlpha);
 
     transform->SetPosition(10 , 100, 10);
     auto toptransform = Bones["TopHead"]->GetComponent<TransformComponent>();
+    Bones["TopHead"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_NonAlpha);
     toptransform->SetScale(24.f * Scale, 18.f * Scale, 24.f * Scale);
     toptransform->SetPosition(0.0f, 24.f * Scale, 0.f);
     toptransform->SetPivot(0.f, -18.f* Scale, 24.f * Scale);
@@ -224,6 +226,27 @@ void Ender::InitTransform(ObjectType objType)
 
     Bones["RLeg"]->SetDead();
     Bones["RLeg"] = nullptr;
+
+    materials.push_back(GetMaterial("Head"));
+    materials.push_back(GetMaterial("Body"));
+    materials.push_back(GetMaterial("TopHead"));
+    materials.push_back(GetMaterial("LLeg1"));
+    materials.push_back(GetMaterial("LLeg2"));
+    materials.push_back(GetMaterial("LLeg3"));
+    materials.push_back(GetMaterial("LFoot1"));
+    materials.push_back(GetMaterial("LFoot2"));
+    materials.push_back(GetMaterial("LFoot3"));
+    materials.push_back(GetMaterial("RLeg1"));
+    materials.push_back(GetMaterial("RLeg2"));
+    materials.push_back(GetMaterial("RLeg3"));
+    materials.push_back(GetMaterial("RFoot1"));
+    materials.push_back(GetMaterial("RFoot2"));
+    materials.push_back(GetMaterial("RFoot3"));
+
+    for (auto& material : materials)
+    {
+        material->SetFloat("alpha", 1);
+    }
 }
 
 void Ender::InitTree()
@@ -521,6 +544,24 @@ void Ender::Die()
         GetScene()->GetUIManager()->GetQuestSystem()->ReportQuestProgress(QuestType::KillEnder, 1);
         DieAnim.ElapsedTime = 0.f;
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathEnder");
+        for (auto& laser : CrossLasers) laser->SetDead();
+        {
+            Bones["TopHead"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["Head"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["Body"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["LLeg1"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["LLeg2"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["LLeg3"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["LFoot1"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["LFoot2"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["LFoot3"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["RLeg1"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["RLeg2"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["RLeg3"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["RFoot1"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["RFoot2"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+            Bones["RFoot3"]->GetComponent<MeshRenderer>()->SetRenderID(RENDER_ID::Render_Alpha);
+        }
     }
 }
 
@@ -943,9 +984,17 @@ void Ender::PlayDie(_float dt)
 {
     DieAnim.ElapsedTime += dt;
 
+    float t = clamp(DieAnim.ElapsedTime / DieAnim.TotalTime, 0.f, 1.f);
+
+    float val = lerp(1.f, 0.f, t);
+
+    for (auto& material : materials)
+    {
+        material->SetFloat("alpha", val);
+    }
+
     if (DieAnim.ElapsedTime > DieAnim.TotalTime)
     {
-        for (auto& laser : CrossLasers) laser->SetDead();
         SetDead();
         DeleteBar();
     }

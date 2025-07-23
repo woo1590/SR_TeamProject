@@ -266,21 +266,21 @@
     },
 
     "EnderTopHead_Mtrl": {
-      "fx": "ColorShader",
+      "fx": "AlphaShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Ender_TopHead.dds"
       }
     },
 
     "EnderBottomHead_Mtrl": {
-      "fx": "ColorShader",
+      "fx": "AlphaShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Ender_BottomHead.dds"
       }
     },
 
     "EnderBody_Mtrl": {
-      "fx": "ColorShader",
+      "fx": "AlphaShader",
       "textures": {
         "CubeMap": "../Resource/Asset/HY/Ender_Body.dds"
       }
