@@ -52,7 +52,7 @@ float4 PS_Main(VS_Output input):SV_Target0
     float4 texColor = tex2D(AlbedoSampler, scrolledUV);
     //float4 result = tex2D(AlbedoSampler, input.texCoord);
     
-    texColor.rgb *= color;
+    texColor.rgb = texColor.rgb * color;
     
     return texColor;
 }

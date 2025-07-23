@@ -71,7 +71,11 @@ private:
     /*---------RenderTarget---------*/
 
     LPDIRECT3DTEXTURE9 targetTexture = nullptr;
+    LPDIRECT3DTEXTURE9 bloomTexture = nullptr;
+    LPDIRECT3DTEXTURE9 bloomCheckTexture = nullptr;
     LPDIRECT3DSURFACE9 targetSurface = nullptr;
+    LPDIRECT3DSURFACE9 bloomSurface = nullptr;
+    LPDIRECT3DSURFACE9 bloomCheckSurface = nullptr;
     LPDIRECT3DSURFACE9 originSurface = nullptr;
 
     LPDIRECT3DVERTEXBUFFER9 postProcessVB = nullptr;
@@ -88,7 +92,7 @@ private:
 
     list<RenderTargetView*> rtvs;
 
-    _int numPass = 0;
+    _int numPass = 2;
 };
 
 END

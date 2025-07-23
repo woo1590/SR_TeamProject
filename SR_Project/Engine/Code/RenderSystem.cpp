@@ -83,6 +83,18 @@ HRESULT RenderSystem::Ready_RenderSystem()
 		if (FAILED(targetTexture->GetSurfaceLevel(0, &targetSurface)))
 			return E_FAIL;
 
+		if (FAILED(Device->CreateTexture(vp.Width, vp.Height, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &bloomTexture, nullptr)))
+			return E_FAIL;
+
+		if (FAILED(bloomTexture->GetSurfaceLevel(0, &bloomSurface)))
+			return E_FAIL;
+
+		if (FAILED(Device->CreateTexture(vp.Width, vp.Height, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &bloomCheckTexture, nullptr)))
+			return E_FAIL;
+
+		if (FAILED(bloomCheckTexture->GetSurfaceLevel(0, &bloomCheckSurface)))
+			return E_FAIL;
+
 		if (FAILED(Device->GetRenderTarget(0, &originSurface)))
 			return E_FAIL;
 
@@ -360,23 +372,51 @@ void RenderSystem::PostProcessPass()
 	Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	//for (int i = 0; i < numPass; ++i)
-	//{
-		postProcessShader->Begin(0);
+	// 렌더 타겟 저장
+	IDirect3DSurface9* oldRT = nullptr;
+	Device->GetRenderTarget(0, &oldRT);
 
-		postProcessShader->SetTexture("AlbedoMap", targetTexture);
+
+	for (UINT i = 0; i < 3; ++i)
+	{
+		postProcessShader->Begin(i);
+
+		if (i == 0)
+		{
+			Device->SetRenderTarget(0, bloomSurface);
+			Device->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+			postProcessShader->SetTexture("AlbedoMap", targetTexture);
+		}
+		else if (i == 1)
+		{
+			Device->SetRenderTarget(0, bloomCheckSurface);
+			postProcessShader->SetTexture("BloomMap", bloomTexture);
+			Device->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+		}
+		else if (i == 2)
+		{
+			postProcessShader->SetTexture("AlbedoMap", targetTexture);
+			postProcessShader->SetTexture("BlurredBloomMap", bloomCheckTexture);
+
+			Device->SetRenderTarget(0, originSurface);
+			Device->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+		}
 
 		Device->SetVertexDeclaration(decl);
 		Device->SetStreamSource(0, postProcessVB, 0, sizeof(VTXPP));
 		Device->SetIndices(postProcessIB);
-
 		Device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
 
 		postProcessShader->End();
-	//}
+	}
+
+	// 렌더 타겟 복원
+	Device->SetRenderTarget(0, oldRT);
+	if (oldRT) oldRT->Release();
 
 	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
+
 
 void RenderSystem::Reset()
 {
