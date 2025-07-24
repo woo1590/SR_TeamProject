@@ -435,6 +435,9 @@ void Stage1::SetTriggerBox()
 	trigger5->AddSpawner(SpawnType::Skeleton, _vec3(206.f, 105.f, 140.f));
 	trigger5->AddSpawner(SpawnType::Skeleton, _vec3(200.f, 105.f, 140.f));
 
+	auto tnt = Tnt::Create(ObjectMgr, ObjectType::Item);
+	tnt->GetComponent<TransformComponent>()->SetPosition(180.f, 105.f, 160.f);
+
 	auto trigger6 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger6->GetComponent<TransformComponent>()->SetPosition(192.f, 95.f, 174.f);
 	trigger6->AddSpawner(SpawnType::Zombie, _vec3(200.f, 105.f, 170.f));

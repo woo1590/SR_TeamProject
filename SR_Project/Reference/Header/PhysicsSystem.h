@@ -31,10 +31,10 @@ class ENGINE_DLL PhysicsSystem :
 
         bool operator<(const CollisionPair& other) const
         {
-            if (a != other.a)
-                return a < other.a;
-            else
-                return b < other.b;
+            auto p1 = (std::minmax)(a, b);
+            auto p2 = (std::minmax)(other.a, other.b);
+
+            return p1 < p2;
         }
     };
 
