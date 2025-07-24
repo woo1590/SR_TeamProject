@@ -74,6 +74,7 @@
 #include "MiniMapObject.h"
 #include "MiniMapRenderer.h"
 #include "QuestSystem.h"
+#include "CheckPoint.h"
 
 //component
 #include "TransformComponent.h"
@@ -189,6 +190,7 @@ void Village::Load()
 		else
 		{
 			player->GetComponent<TransformComponent>()->SetPosition(278.f, 15.f, 50.f);
+			player->SetSpawnPointFromTrigger(LOADID::Village, 0);
 			
 			auto npc = Npc::Create(ObjectMgr, ObjectType::Neutral);
 			npc->GetComponent<TransformComponent>()->SetPosition(270.f, 20.f, 43.f);

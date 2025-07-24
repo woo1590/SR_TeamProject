@@ -89,6 +89,8 @@ public:
     std::unordered_map<string, Object*> GetBones();
     void SetFloatMode(_bool _floatMode);
 
+    void SetSpawnPointFromTrigger(LOADID _scene, _int _num);
+    void SetSpawnPoint(_vec3 _spawnPoint);
     // - --------------- 제현 -------------------------
     void SetInventoryMode(bool enable);
     void SetShopMode(bool enable);
@@ -110,6 +112,10 @@ private:
     void ResetWalkTimer();
     void UpdateFloat(_float dt);
     void PullingEmerald(_float dt);
+    void CheckFallOut(_float dt);
+    void SaveBeforeCollisionVelocity(_float dt);
+    void SaveAfterCollisionVelocity(_float dt);
+    void CheckFallHit(_float dt);
 
     void InteractWithNPC(Object* obj);
 
@@ -228,4 +234,12 @@ private:
     Arrows* arrows = nullptr;
 
     _bool onHalf = false;
+
+    _vec3 spawnPoint = { 0.f,0.f,0.f };
+    const _float falloutValue = -100.f;
+
+    _vec3 beforeCollisionVelocity = { 0.f,0.f,0.f };
+    _vec3 afterCollisionVelocity = { 0.f,0.f,0.f };
+    const _float minFallHitVelocityY = 23.f;
+    const _float maxFallHitVelocityY = 60.f;
 };

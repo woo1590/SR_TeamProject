@@ -66,6 +66,7 @@
 #include "FixedCam.h"
 #include "MiniMapObject.h"
 #include "MiniMapRenderer.h"
+#include "CheckPoint.h"
 
 //component
 #include "TransformComponent.h"
@@ -194,8 +195,26 @@ void Stage2::Load()
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
 		player->GetComponent<TransformComponent>()->SetPosition(210.f, 60.f, 90.f);
+		player->SetSpawnPointFromTrigger(LOADID::Stage2, 0);
 
 		SetTriggerBox();
+
+		auto checkPoint1 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 1);
+		checkPoint1->GetComponent<TransformComponent>()->SetPosition(148.f, 42.f, 116.f);
+
+		auto checkPoint2 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 2);
+		checkPoint2->GetComponent<TransformComponent>()->SetPosition(480.f, 42.f, 200.f);
+
+		auto checkPoint3 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 3);
+		checkPoint3->GetComponent<TransformComponent>()->SetPosition(475.f, 42.f, 365.f);
+
+		auto checkPoint4 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 4);
+		checkPoint4->GetComponent<TransformComponent>()->SetPosition(135.f, 42.f, 410.f);
+
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint1);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint2);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint3);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint4);
 	}
 
 	ChangeState(Stage2Stage::Stage2Intro);
