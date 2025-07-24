@@ -622,6 +622,9 @@
     <Filter Include="02. Object\Effect\DeadEffect\EnderDead">
       <UniqueIdentifier>{26930550-7799-4d72-af90-2b72103af26f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\CheckPoint">
+      <UniqueIdentifier>{66f93ca8-8086-4303-baa6-5f8c7f0c96d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1207,6 +1210,9 @@
     <ClInclude Include="..\Header\EnderDead.h">
       <Filter>02. Object\Effect\DeadEffect\EnderDead</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CheckPoint.h">
+      <Filter>02. Object\CheckPoint</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1773,6 +1779,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EnderDead.cpp">
       <Filter>02. Object\Effect\DeadEffect\EnderDead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CheckPoint.cpp">
+      <Filter>02. Object\CheckPoint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

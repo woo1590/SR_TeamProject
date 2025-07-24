@@ -160,7 +160,7 @@ void Player::Update(_float dt)
     }
     CheckTargetDead();
     UpdateFloat(dt);
-    PullingEmerald(dt);
+    SaveBeforeCollisionVelocity(dt);
 }
 
 void Player::Late_Update(_float dt)
@@ -209,6 +209,8 @@ void Player::Late_Update(_float dt)
             }
         }
     }
+    SaveAfterCollisionVelocity(dt);
+    CheckFallHit(dt);
 }
 
 void Player::Free()
@@ -1365,6 +1367,47 @@ void Player::PullingEmerald(_float dt)
     }
 }
 
+void Player::CheckFallOut(_float dt)
+{
+    auto transform = GetComponent<TransformComponent>();
+    if (transform->GetWorldPosition().y < falloutValue)
+        transform->SetPosition(spawnPoint);
+}
+
+void Player::SaveBeforeCollisionVelocity(_float dt)
+{
+    beforeCollisionVelocity = GetComponent<PhysicsComponent>()->GetVelocity();
+}
+
+void Player::SaveAfterCollisionVelocity(_float dt)
+{
+    afterCollisionVelocity = GetComponent<PhysicsComponent>()->GetVelocity();
+}
+
+void Player::CheckFallHit(_float dt)
+{
+    auto velocityGap = afterCollisionVelocity.y - beforeCollisionVelocity.y;
+    if (velocityGap >= minFallHitVelocityY)
+    {
+        velocityGap = std::clamp(velocityGap, minFallHitVelocityY,maxFallHitVelocityY);
+
+        _float maxGap = maxFallHitVelocityY - minFallHitVelocityY;
+        _float fallDamagePercent = (velocityGap - minFallHitVelocityY) / maxGap;
+        fallDamagePercent = std::clamp(fallDamagePercent, 0.f, 1.f);
+        
+        auto playerInfo = GetComponent<InfoComponent<PlayerInfo>>();
+        _float maxHp = playerInfo->GetInfo().maxHp;
+        _float maxFallDamage = maxHp * 0.2f;
+        _float minFallDamage = maxHp * 0.05f;
+
+        _float fallDamage = maxFallDamage * fallDamagePercent;
+        if (fallDamage < minFallDamage)
+            fallDamage = minFallDamage;
+
+        playerInfo->AddHp(-fallDamage);
+    }
+}
+
 void Player::EquipItem(ItemType itemType)
 {
     switch (itemType) {
@@ -1557,6 +1600,67 @@ void Player::SetFloatMode(_bool _floatMode)
 {
     FloatMode = _floatMode;
     FloatTimer = 0.f;
+}
+
+void Player::SetSpawnPointFromTrigger(LOADID _scene, _int _num)
+{
+    switch (_scene)
+    {
+    case LOADID::Village:
+        SetSpawnPoint(_vec3(278.f, 35.f, 50.f));
+        break;
+    case LOADID::Stage1:
+        switch (_num)
+        {
+        case 1:
+            SetSpawnPoint(_vec3(40.f, 105.f, 120.f));
+            break;
+        case 2:
+            SetSpawnPoint(_vec3(110.f, 130.f, 40.f));
+            break;
+        case 3:
+            SetSpawnPoint(_vec3(210.f, 130.f, 120.f));
+            break;
+        case 4:
+            SetSpawnPoint(_vec3(305.f, 123.f, 110.f));
+            break;
+        case 5:
+            SetSpawnPoint(_vec3(262.f, 107.f, 355.f));
+            break;
+        case 6:
+            SetSpawnPoint(_vec3(112.f, 106.f, 320.f));
+            break;
+        default:
+            SetSpawnPoint(_vec3(110.f, 140.f, 170.f));
+            break;
+        }
+        break;
+    case LOADID::Stage2:
+        switch (_num)
+        {
+        case 1:
+            SetSpawnPoint(_vec3(148.f, 72.f, 116.f));
+            break;
+        case 2:
+            SetSpawnPoint(_vec3(480.f, 72.f, 200.f));
+            break;
+        case 3:
+            SetSpawnPoint(_vec3(475.f, 72.f, 365.f));
+            break;
+        case 4:
+            SetSpawnPoint(_vec3(135.f, 72.f, 410.f));
+            break;
+        default:
+            SetSpawnPoint(_vec3(210.f, 80.f, 90.f));
+            break;
+        }
+        break;
+    }
+}
+
+void Player::SetSpawnPoint(_vec3 _spawnPoint)
+{
+    spawnPoint = _spawnPoint;
 }
 
 void Player::SetInventoryMode(bool enable)
@@ -2375,6 +2479,8 @@ void Player::KeyInput(_float dt)
     CheckSkill();
     CamRotTest(dt);
     ResetWalkTimer();
+    PullingEmerald(dt);
+    CheckFallOut(dt);
 }
 
 void Player::CheckStateRoll(_float dt)

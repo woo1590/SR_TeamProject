@@ -66,6 +66,8 @@
 #include "Pig.h"
 #include "MiniMapObject.h"
 #include "MiniMapRenderer.h"
+#include "CheckPoint.h"
+
 //component
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
@@ -185,10 +187,36 @@ void Stage1::Load()
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
 
 		player->GetComponent<TransformComponent>()->SetPosition(110.f, 120.f, 170.f);
+		player->SetSpawnPointFromTrigger(LOADID::Stage1, 0);
 
 		SetTriggerBox();
 		
 		ObjectMgr->AddObject(ObjectType::Neutral, Pig::Create(ObjectMgr, ObjectType::Neutral));
+
+		auto checkPoint1 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 1);
+		checkPoint1->GetComponent<TransformComponent>()->SetPosition(40.f, 75.f, 120.f);
+
+		auto checkPoint2 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 2);
+		checkPoint2->GetComponent<TransformComponent>()->SetPosition(110.f, 100.f, 40.f);
+
+		auto checkPoint3 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 3);
+		checkPoint3->GetComponent<TransformComponent>()->SetPosition(210.f, 100.f, 120.f);
+
+		auto checkPoint4 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 4);
+		checkPoint4->GetComponent<TransformComponent>()->SetPosition(305.f, 93.f, 110.f);
+
+		auto checkPoint5 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 5);
+		checkPoint5->GetComponent<TransformComponent>()->SetPosition(262.f, 77.f, 355.f);
+
+		auto checkPoint6 = CheckPoint::Create(ObjectMgr, ObjectType::Neutral, LOADID::Stage1, 6);
+		checkPoint6->GetComponent<TransformComponent>()->SetPosition(112.f, 76.f, 320.f);
+
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint1);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint2);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint3);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint4);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint5);
+		ObjectMgr->AddObject(ObjectType::Neutral, checkPoint6);
 	}
 	ChangeState(Stage1State::Stage1Intro);
 }

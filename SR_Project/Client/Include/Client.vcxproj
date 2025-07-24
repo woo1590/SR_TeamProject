@@ -194,6 +194,7 @@
     <ClInclude Include="..\Header\ChargeDownEffect.h" />
     <ClInclude Include="..\Header\ChargeFrontEffect.h" />
     <ClInclude Include="..\Header\ChargeOnEffect.h" />
+    <ClInclude Include="..\Header\CheckPoint.h" />
     <ClInclude Include="..\Header\CheckStateChangeCount.h" />
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CoolDownBar.h" />
@@ -384,6 +385,7 @@
     <ClCompile Include="..\Code\ChargeDownEffect.cpp" />
     <ClCompile Include="..\Code\ChargeFrontEffect.cpp" />
     <ClCompile Include="..\Code\ChargeOnEffect.cpp" />
+    <ClCompile Include="..\Code\CheckPoint.cpp" />
     <ClCompile Include="..\Code\CheckStateChangeCount.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CoolDownBar.cpp" />
