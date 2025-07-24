@@ -12,6 +12,7 @@
 #include "PurpleSlime.h"
 #include "Ender.h"
 #include "Blastling.h"
+#include "JungleSkeleton.h"
 #include "Shulker.h"
 
 #include "TransformComponent.h"
@@ -92,6 +93,10 @@ Monster* Spawner::Spawn()
 
     case SpawnType::Shulker:
         monster = Shulker::Create(owner, ObjectType::Monster);
+        break;
+
+    case SpawnType::JungleSkeleton:
+        monster = JungleSkeleton::Create(owner, ObjectType::Monster);
         break;
     }
 

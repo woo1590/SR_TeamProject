@@ -115,7 +115,10 @@ void JungleSkeleton::Die()
     {
         EngineCore::GetInstance()->GetSoundManager()->PlaySFX("DeathSkeleton");
         State = MonsterState::Die;
-
+        for (auto& material : materials)
+        {
+            material->SetFloat("emissive", 0);
+        }
         DieAnim.ElapsedTime = 0;
     }
 }

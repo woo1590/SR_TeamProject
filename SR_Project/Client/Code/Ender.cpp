@@ -66,7 +66,7 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto collision = GetComponent<CollisionComponent>();
     collision->AddCollider<OBBCollider>();
-    collision->SetSize(_vec3(10.f, 20.f, 5.f));
+    collision->SetSize(_vec3(5.f, 20.f, 5.f));
 
     auto Info = GetComponent<InfoComponent<EnemyInfo>>();
     Info->SetInfo({ 9, 500, 500, 0,0,20, 0,0 });
@@ -75,7 +75,7 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     InitCrossLaser();
     InitEnderProjectile();
 
-    bossFront->SetBossName(L"ÏóîÎçîÏùò Ïã¨Ïû•");
+    bossFront->SetBossName(L"ø£¥ı¿« Ω…¿Â");
 	return S_OK;
 }
 

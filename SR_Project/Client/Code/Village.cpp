@@ -169,6 +169,15 @@ void Village::Load()
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 		BlockMgr->LoadDB("VillageMap");
 
+		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			auto lever = static_cast<DynamicBlock*>(dynamic);
+			if (lever->GetType() != DynamicBlockType::LeverSwitch && lever->GetType() != DynamicBlockType::BasicChest) continue;
+			lever->SetTarget(player);
+			levers.push_back(lever);
+			lever->AddRef();
+		}
+
 		miniMapObject = MiniMapObject::Create(ObjectMgr);
 		sceneID = TUTORIAL;
 
@@ -181,6 +190,11 @@ void Village::Load()
         loader.LoadUI(ObjectMgr);
 
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
+
+		auto npc2 = Npc::Create(ObjectMgr, ObjectType::Neutral);
+		npc2->GetComponent<TransformComponent>()->SetPosition(140.f, 100.f, 215.f);
+		npc2->GetComponent<TransformComponent>()->SetForward({ 0, 0, -1.f });
+		ObjectMgr->AddObject(ObjectType::Neutral, npc2);
 
 		if (game->IsSceneClear(LOADID::Village))
 		{

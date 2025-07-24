@@ -155,6 +155,16 @@ void Stage1::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
+		BlockMgr->LoadDB("Stage1");
+
+		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			auto lever = static_cast<DynamicBlock*>(dynamic);
+			if (lever->GetType() != DynamicBlockType::LeverSwitch && lever->GetType() != DynamicBlockType::BasicChest) continue;
+			lever->SetTarget(player);
+			levers.push_back(lever);
+			lever->AddRef();
+		}
 
 		miniMapObject = MiniMapObject::Create(ObjectMgr);
 		sceneID = STAGE1;
@@ -405,7 +415,7 @@ void Stage1::SetTriggerBox()
 	trigger2->GetComponent<TransformComponent>()->SetPosition(33.f, 70.f, 96.f);
 	trigger2->AddSpawner(SpawnType::Skeleton, _vec3(36.f, 80.f, 100.f));
 	trigger2->AddSpawner(SpawnType::Skeleton, _vec3(40.f, 80.f, 110.f));
-	trigger2->AddSpawner(SpawnType::Skeleton, _vec3(46.f, 80.f, 115.f));
+	trigger2->AddSpawner(SpawnType::JungleSkeleton, _vec3(46.f, 80.f, 115.f));
 
 	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger3->GetComponent<TransformComponent>()->SetPosition(110.f, 95.f, 38.f);
@@ -417,12 +427,12 @@ void Stage1::SetTriggerBox()
 	trigger4->GetComponent<TransformComponent>()->SetPosition(165.f, 95.f, 47.f);
 	trigger4->AddSpawner(SpawnType::Zombie, _vec3(170.f, 105.f, 50.f));
 	trigger4->AddSpawner(SpawnType::JungleZombie, _vec3(180.f, 105.f, 50.f));
-	trigger4->AddSpawner(SpawnType::JungleZombie, _vec3(195.f, 105.f, 45.f));
+	trigger4->AddSpawner(SpawnType::JungleSkeleton, _vec3(195.f, 105.f, 45.f));
 	trigger4->AddSpawner(SpawnType::Zombie, _vec3(155.f, 105.f, 64.f));
 
 	auto trigger5 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger5->GetComponent<TransformComponent>()->SetPosition(200.f, 95.f, 118.f);
-	trigger5->AddSpawner(SpawnType::Slime, _vec3(210.f, 105.f, 120.f));
+	trigger5->AddSpawner(SpawnType::Slime, _vec3(210.f, 105.f, 150.f));
 	trigger5->AddSpawner(SpawnType::Zombie, _vec3(220.f, 105.f, 145.f));
 	trigger5->AddSpawner(SpawnType::Skeleton, _vec3(206.f, 105.f, 140.f));
 	trigger5->AddSpawner(SpawnType::Skeleton, _vec3(200.f, 105.f, 140.f));
@@ -431,7 +441,7 @@ void Stage1::SetTriggerBox()
 	trigger6->GetComponent<TransformComponent>()->SetPosition(192.f, 95.f, 174.f);
 	trigger6->AddSpawner(SpawnType::Zombie, _vec3(200.f, 105.f, 170.f));
 	trigger6->AddSpawner(SpawnType::Zombie, _vec3(216.f, 105.f, 190.f));
-	trigger6->AddSpawner(SpawnType::Zombie, _vec3(226.f, 105.f, 166.f));
+	trigger6->AddSpawner(SpawnType::JungleSkeleton, _vec3(226.f, 105.f, 166.f));
 	trigger6->AddSpawner(SpawnType::Zombie, _vec3(206.f, 105.f, 172.f));
 
 	auto trigger7 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);

@@ -81,7 +81,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
         RArmCollision->SetCollisionEnter([this](Object* other) {this->OnCollisionEnter(other); });
         RArmCollision->SetLayer(LAYER_ENEMY);
         RArmCollision->SetMask(LAYER_PLAYER);
-        //ï¿½ï¿½ï¿½âµµ
+        //????
 
         auto RArmPhysics = Bones["RArm"]->AddComponent<PhysicsComponent>();
         RArmPhysics->SetKinematic(true);
@@ -98,7 +98,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     {
         Emeralds.push_back(EmeraldObj::Create(owner, ObjectType::Item));
     }
-    bossFront->SetBossName(L"ë ˆë“œìŠ¤í†¤ ê³¨ë ˜");
+    bossFront->SetBossName(L"·¹µå½ºÅæ °ñ·½");
 
 	return S_OK;
 }
@@ -420,7 +420,7 @@ void RedGolem::PlayAttack(_float dt)
     case 1:         
         PlayLeftAttack(dt);
         break;
-    case 2:                         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    case 2:                         //???????
         PlaySuperAttack(dt);
         break;
     case 3:

@@ -65,6 +65,7 @@
 #include "WayPointCam.h"
 #include "FixedCam.h"
 #include "MiniMapObject.h"
+#include "Pig.h"
 #include "MiniMapRenderer.h"
 
 //component
@@ -193,7 +194,9 @@ void Stage2::Load()
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage2SkyBox_Mtrl");
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
-		player->GetComponent<TransformComponent>()->SetPosition(210.f, 60.f, 90.f);
+		player->GetComponent<TransformComponent>()->SetPosition(200.f, 50.f, 115.f);
+
+		ObjectMgr->AddObject(ObjectType::Neutral, Pig::Create(ObjectMgr, ObjectType::Neutral));
 
 		SetTriggerBox();
 	}
@@ -441,16 +444,16 @@ void Stage2::SetTriggerBox()
 	trigger2->GetComponent<CollisionComponent>()->SetSize(_vec3(60.f, 10.f, 10.f));
 	trigger2->GetComponent<TransformComponent>()->SetPosition(211.f, 35.f, 136.f);
 	trigger2->AddSpawner(SpawnType::Shulker, _vec3(220.f, 50.f, 140.f));
-	trigger2->AddSpawner(SpawnType::Blastling, _vec3(250.f, 50.f, 130.f));
-	trigger2->AddSpawner(SpawnType::Blastling, _vec3(200.f, 50.f, 110.f));
+	trigger2->AddSpawner(SpawnType::Blastling, _vec3(250.f, 55.f, 130.f));
+	trigger2->AddSpawner(SpawnType::Blastling, _vec3(200.f, 55.f, 110.f));
 
 	auto trigger3 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger3->GetComponent<CollisionComponent>()->SetSize(_vec3(60.f, 10.f, 10.f));
 	trigger3->GetComponent<TransformComponent>()->SetPosition(257.f, 35.f, 100.f);
-	trigger3->AddSpawner(SpawnType::Shulker, _vec3(270.f, 45.f, 120.f));
-	trigger3->AddSpawner(SpawnType::Shulker, _vec3(280.f, 45.f, 100.f));
-	trigger3->AddSpawner(SpawnType::Blastling, _vec3(230.f, 45.f, 110.f));
-	trigger3->AddSpawner(SpawnType::Blastling, _vec3(250.f, 45.f, 90.f));
+	trigger3->AddSpawner(SpawnType::Shulker, _vec3(270.f, 50.f, 120.f));
+	trigger3->AddSpawner(SpawnType::Shulker, _vec3(280.f, 50.f, 100.f));
+	trigger3->AddSpawner(SpawnType::Blastling, _vec3(230.f, 55.f, 110.f));
+	trigger3->AddSpawner(SpawnType::Blastling, _vec3(250.f, 55.f, 90.f));
 
 	auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger4->GetComponent<CollisionComponent>()->SetSize(_vec3(60.f, 10.f, 10.f));

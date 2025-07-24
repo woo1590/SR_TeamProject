@@ -1,6 +1,11 @@
 #pragma once
 #include "Scene.h"
 
+namespace Engine
+{
+    class DynamicBlock;
+}
+
 class Player;
 class WayPointCam;
 class Village :
@@ -40,5 +45,7 @@ private:
     _bool isEnterVillage = false;
 
     WayPointCam* wayCam = nullptr;
+
+    std::vector<DynamicBlock*> levers;
 };
 

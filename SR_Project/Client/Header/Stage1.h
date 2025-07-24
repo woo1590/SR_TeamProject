@@ -1,6 +1,11 @@
 #pragma once
 #include "Scene.h"
 
+namespace Engine
+{
+    class DynamicBlock;
+}
+
 class Player;
 class RedGolem;
 class WayPointCam;
@@ -43,5 +48,7 @@ private:
     Stage1State currState = Stage1State::Play;
 
     WayPointCam* wayCam = nullptr;
+
+    std::vector<DynamicBlock*> levers;
 };
 

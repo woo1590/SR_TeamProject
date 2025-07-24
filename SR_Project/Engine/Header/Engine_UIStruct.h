@@ -44,7 +44,7 @@ namespace Engine
 		{ItemType::Spear, {L"창", L"inventory_spear",ItemType::Spear, SlotItemType::MeleeWeapon, Rarity::Default, 10, L"이 창은 먼 거리에도 닿아 넓은 범위에 쓸 수 있는 유일한 무기입니다."}},
 		{ItemType::CrossBow, {L"석궁", L"inventory_crossbow",ItemType::CrossBow, SlotItemType::RangeWeapon, Rarity::Default, 10, L"석궁은 우민들이 즐겨 쓰는 원거리 무기입니다. 주로 약탈자들이 들고 다닙니다."}},
 		{ItemType::GhostCloak, {L"유령 망토",L"inventory_ghostcloak",ItemType::GhostCloak, SlotItemType::Potion, Rarity::Default, 5, L"잠시 유령 형태가 되어 몹을 통과하고 일부 피해를 흡수합니다."}},
-		{ItemType::HpPotion, {L"Hp 포션",L"hp_potion",ItemType::HpPotion,SlotItemType::None,Rarity::Default,50,L"HP 10 회복"}},
+		{ItemType::HpPotion, {L"Hp 포션",L"hp_potion",ItemType::HpPotion,SlotItemType::None,Rarity::Default,100,L"HP 10 회복"}},
 	};
 
 	struct EnemyInfo
