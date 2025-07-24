@@ -42,8 +42,8 @@ HRESULT FontComponent::CreateFontResource()
 			DEFAULT_PITCH | FF_DONTCARE,
 			fontName, &font)))
 			fontMap[type] = font;
-		else
-			assert(false && "Font creation failed");
+		/*else
+			assert(false && "Font creation failed");*/
 		};
 
 	create(FontType::Regular,       24, FW_NORMAL, L"Noto Sans JP Medium");

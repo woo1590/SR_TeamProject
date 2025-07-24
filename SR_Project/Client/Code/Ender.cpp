@@ -69,7 +69,7 @@ HRESULT Ender::Ready_Object(ObjectManager* owner, ObjectType objType)
     collision->SetSize(_vec3(5.f, 20.f, 5.f));
 
     auto Info = GetComponent<InfoComponent<EnemyInfo>>();
-    Info->SetInfo({ 9, 500, 500, 0,0,20, 0,0 });
+    Info->SetInfo({ 9, 1000, 1000, 0,0,20, 0,0 });
 
     CrawlToStand();
     InitCrossLaser();

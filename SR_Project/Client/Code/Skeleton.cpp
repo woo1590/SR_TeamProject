@@ -373,6 +373,8 @@ void Skeleton::PlayAttack(_float dt)
             AttackAnim.DelayTime = 0.2f;
 
             Arrow::Create(owner, ObjectType::Projectile, this, GetComponent<TransformComponent>()->GetFoward());
+
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("ShootArrow");
         }
         break;
     }

@@ -14,6 +14,7 @@
 #include "SequenceNode.h"
 #include "SelectorNode.h"
 #include "ShulkerBullet.h"
+#include "DeadEffect.h"
 #include "PhysicsComponent.h"
 #include "EngineCore.h"
 #include "SoundManager.h"
@@ -333,6 +334,10 @@ void Shulker::PlayDie(_float dt)
 
     if (DieAnim.ElapsedTime > DieAnim.TotalTime)
     {
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
         DieAnim.IsEnd = true;
         DropEmeralds();
         SetDead();

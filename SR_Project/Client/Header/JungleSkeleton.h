@@ -40,5 +40,7 @@ protected:
 private:
     _float* NearDistance = nullptr;
 
+    _float deadTimer = 0.f;
+    _float isDetachBones = false;
 };
 

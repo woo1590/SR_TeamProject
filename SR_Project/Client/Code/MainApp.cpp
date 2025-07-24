@@ -392,6 +392,8 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("LevelUp", "../Resource/Sound/SFX/LevelUp.mp3", false);
         sound->LoadSound("CageOpen", "../Resource/Sound/SFX/IronCageOpen.mp3", false);
         sound->LoadSound("TntFuse", "../Resource/Sound/SFX/TntFuse.mp3", false);
+        sound->LoadSound("PickUpItem1", "../Resource/Sound/SFX/PickUpItem1.mp3", false);
+        sound->LoadSound("PickUpItem2", "../Resource/Sound/SFX/PickUpItem2.mp3", false);
     }
 
     /*----------------------Load Sprite----------------------------*/

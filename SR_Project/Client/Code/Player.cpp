@@ -9,6 +9,7 @@
 #include "ItemComponent.h"
 #include "UIRenderer.h"
 
+#include "Random.h"
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include "CollisionComponent.h"
@@ -1349,6 +1350,13 @@ void Player::PullingEmerald(_float dt)
         
         if (distance < 5.f)
         {
+            int r = EngineCore::GetInstance()->GetRandom()->get<int>(0, 1);
+
+            if (r)
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PickUpItem1");
+            else
+                EngineCore::GetInstance()->GetSoundManager()->PlaySFX("PickUpItem2");
+
             item->SetDead();
             ++emeraldCount;
         }

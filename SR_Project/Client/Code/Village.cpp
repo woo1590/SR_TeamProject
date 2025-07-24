@@ -194,7 +194,7 @@ void Village::Load()
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 
 		auto npc2 = Npc::Create(ObjectMgr, ObjectType::Neutral);
-		npc2->GetComponent<TransformComponent>()->SetPosition(140.f, 100.f, 215.f);
+		npc2->GetComponent<TransformComponent>()->SetPosition(140.f, 10.f, 215.f);
 		npc2->GetComponent<TransformComponent>()->SetForward({ 0, 0, -1.f });
 		ObjectMgr->AddObject(ObjectType::Neutral, npc2);
 

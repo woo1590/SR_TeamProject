@@ -1,11 +1,16 @@
 #include "pch.h"
 #include "JungleSkeleton.h"
 #include "TransformComponent.h"
+#include "Random.h"
+#include "DeadEffect.h"
 #include "IsTargetInAttackRange.h"
 #include "Chase.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
 #include "Attack.h"
 #include "SequenceNode.h"
 #include "SelectorNode.h"
+#include "PhysicsComponent.h"
 #include "ObjectManager.h"
 #include "BehaviorTree.h"
 #include "BlackBoard.h"
@@ -371,6 +376,7 @@ void JungleSkeleton::PlayAttack(_float dt)
             AttackAnim.DelayTime = 0.2f;
 
             Arrow::Create(owner, ObjectType::Projectile, this, GetComponent<TransformComponent>()->GetFoward());
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("ShootArrow");
         }
         break;
     }
@@ -449,8 +455,10 @@ void JungleSkeleton::PlayHit(float dt)
 
 void JungleSkeleton::PlayDie(_float dt)
 {
-    if (!DieAnim.IsEnd)
+    if (!isDetachBones)
     {
+        auto r = EngineCore::GetInstance()->GetRandom();
+
         auto transform = GetComponent<TransformComponent>();
         _vec3 pos = transform->GetPosition();
         for (auto& bone : Bones)
@@ -458,15 +466,46 @@ void JungleSkeleton::PlayDie(_float dt)
             auto transform = bone.second->GetComponent<TransformComponent>();
             _vec3 bonepos = transform->GetPosition();
 
+            _vec3 randomOffset{ 0.f,0.f,0.f };
+
+            if (bone.first != "Head")
+            {
+                randomOffset.x = r->get<_float>(-3.f, 3.f);
+                randomOffset.y = 0.f;
+                randomOffset.z = r->get<_float>(-3.f, 3.f);
+            }
+
             DetachParent(bone.first);
-            transform->SetPosition(pos + bonepos);
+            transform->SetPosition(pos + bonepos + randomOffset);
+
+            auto physics = bone.second->AddComponent<PhysicsComponent>();
+            physics->SetMass(1.f);
+            GetScene()->GetPhysicsStstem()->RegisterBody(physics);
+            auto collision = bone.second->AddComponent<CollisionComponent>();
+            collision->AddCollider<AABBCollider>();
+            collision->SetLayer(LAYER_ENEMY);
+            collision->SetMask(LAYER_DEFAULT | LAYER_PLAYER);
         }
+        isDetachBones = true;
+    }
+
+    if (!DieAnim.IsEnd && deadTimer >= 1.5f)
+    {
         DieAnim.IsEnd = true;
         DieAnim.IsRunning = false;
+
+        //////////////////////////////////Dead Effect
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+        //////////////////////////////////
         DropEmeralds();
         SetDead();
         DeleteBar();
     }
+
+    deadTimer += dt;
 }
 
 void JungleSkeleton::OnCollisionStay(Object* other)

@@ -18,6 +18,7 @@
 #include "Attack.h"
 #include "SequenceNode.h"
 #include "SelectorNode.h"
+#include "DeadEffect.h"
 #include "BlastlingProjectile.h"
 #include "Teleport.h"
 #include "SoundManager.h"
@@ -434,6 +435,11 @@ void Blastling::PlayDie(_float dt)
 
     if (DieAnim.ElapsedTime > DieAnim.TotalTime)
     {
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        effect->SetDeadTime(1.5f);
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+
         DieAnim.IsEnd = true;
         HeadFire->SetDead();
         DropEmeralds();
