@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CheckPoint.h"
 
 #include "CollisionComponent.h"
@@ -44,7 +44,7 @@ HRESULT CheckPoint::Ready_Object(ObjectManager* owner, ObjectType objType)
     collision->SetLayer(LAYER_TRRIGER);
     collision->SetMask(LAYER_PLAYER);
     collision->SetCollisionEnter([this](Object* other) {this->OnCollisionEnter(other); });
-    collision->SetSize(_vec3(50.f, 50.f, 50.f));
+    collision->SetSize(_vec3(20.f, 20.f, 20.f));
 
     auto physics = AddComponent<PhysicsComponent>();
     GetScene()->GetPhysicsStstem()->RegisterBody(physics);//test

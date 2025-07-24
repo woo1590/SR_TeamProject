@@ -1607,31 +1607,31 @@ void Player::SetSpawnPointFromTrigger(LOADID _scene, _int _num)
     switch (_scene)
     {
     case LOADID::Village:
-        SetSpawnPoint(_vec3(278.f, 15.f, 50.f));
+        SetSpawnPoint(_vec3(278.f, 35.f, 50.f));
         break;
     case LOADID::Stage1:
         switch (_num)
         {
         case 1:
-            SetSpawnPoint(_vec3(40.f, 85.f, 120.f));
+            SetSpawnPoint(_vec3(40.f, 105.f, 120.f));
             break;
         case 2:
-            SetSpawnPoint(_vec3(110.f, 110.f, 40.f));
+            SetSpawnPoint(_vec3(110.f, 130.f, 40.f));
             break;
         case 3:
-            SetSpawnPoint(_vec3(210.f, 110.f, 120.f));
+            SetSpawnPoint(_vec3(210.f, 130.f, 120.f));
             break;
         case 4:
-            SetSpawnPoint(_vec3(305.f, 103.f, 110.f));
+            SetSpawnPoint(_vec3(305.f, 123.f, 110.f));
             break;
         case 5:
-            SetSpawnPoint(_vec3(262.f, 87.f, 355.f));
+            SetSpawnPoint(_vec3(262.f, 107.f, 355.f));
             break;
         case 6:
-            SetSpawnPoint(_vec3(112.f, 86.f, 320.f));
+            SetSpawnPoint(_vec3(112.f, 106.f, 320.f));
             break;
         default:
-            SetSpawnPoint(_vec3(110.f, 120.f, 170.f));
+            SetSpawnPoint(_vec3(110.f, 140.f, 170.f));
             break;
         }
         break;
@@ -1639,19 +1639,19 @@ void Player::SetSpawnPointFromTrigger(LOADID _scene, _int _num)
         switch (_num)
         {
         case 1:
-            SetSpawnPoint(_vec3(148.f, 52.f, 116.f));
+            SetSpawnPoint(_vec3(148.f, 72.f, 116.f));
             break;
         case 2:
-            SetSpawnPoint(_vec3(480.f, 52.f, 200.f));
+            SetSpawnPoint(_vec3(480.f, 72.f, 200.f));
             break;
         case 3:
-            SetSpawnPoint(_vec3(475.f, 52.f, 365.f));
+            SetSpawnPoint(_vec3(475.f, 72.f, 365.f));
             break;
         case 4:
-            SetSpawnPoint(_vec3(135.f, 52.f, 410.f));
+            SetSpawnPoint(_vec3(135.f, 72.f, 410.f));
             break;
         default:
-            SetSpawnPoint(_vec3(210.f, 60.f, 90.f));
+            SetSpawnPoint(_vec3(210.f, 80.f, 90.f));
             break;
         }
         break;
