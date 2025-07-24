@@ -155,6 +155,7 @@ void Stage1::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 
 		miniMapObject = MiniMapObject::Create(ObjectMgr);
 		sceneID = STAGE1;

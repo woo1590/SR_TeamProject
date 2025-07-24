@@ -167,6 +167,7 @@ void Village::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 		BlockMgr->LoadDB("VillageMap");
 
 		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))

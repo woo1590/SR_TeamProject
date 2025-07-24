@@ -163,6 +163,7 @@ void Stage2::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 		BlockMgr->LoadDB("Stage2");
 
 		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
