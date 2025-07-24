@@ -19,6 +19,7 @@
 #include "Creeper.h"
 #include "ThirdcamComponent.h"
 #include "CameraComponent.h"
+#include "Material.h"
 #include "ExplodeEffect.h"
 
 Tnt::Tnt(ObjectManager* owner, ObjectType objType) : Item(owner, objType){}
@@ -47,7 +48,7 @@ HRESULT Tnt::Ready_Object(ObjectManager* owner, ObjectType objType)
 
     auto info = GetComponent<InfoComponent<ItemInfo>>();
     auto i = info->GetInfo();
-    i.value = 50.f;
+    i.value = 100.f;
     info->SetInfo(i);
 
     SetMesh("Cube_Mesh");
@@ -57,6 +58,13 @@ HRESULT Tnt::Ready_Object(ObjectManager* owner, ObjectType objType)
     TntInfo();
 
     ApplyComponents();
+    auto mtrl = GetComponent<MeshRenderer>()->GetMaterial();
+    mtrl->SetInt("coloruse", 0);
+    mtrl->SetVec3("color", _vec3(0.0, 0.0, 0.0));
+    mtrl->SetFloat("emissive", 1);
+    mtrl->SetVec3("emissivecolor", _vec3(1.f, 1.f, 1.f));
+    mtrl->SetFloat("emissivePow", 2);
+    SetEmissive(false);
 
     /////////////////////////////////////////////////
     auto physics = AddComponent<PhysicsComponent>();
@@ -82,7 +90,31 @@ void Tnt::Update(_float dt)
     }
     if (throwTnt)
     {
+        if (!soundPlay)
+        {
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("TntFuse");
+            soundPlay = true;
+        }
+
         TntTime += dt;
+        blinkTimer += dt;
+
+        float blinkInterval = max(0.05f, 0.7f - TntTime * 0.2f);
+        if (blinkTimer >= blinkInterval)
+        {
+            blinkTimer = 0.f;
+            emissiveOn = !emissiveOn;
+            SetEmissive(emissiveOn);
+        }
+
+        if (TntBoom - TntTime <= 0.4f)
+        {
+            auto transform = GetComponent<TransformComponent>();
+            _vec3 scale = transform->GetScale();
+            scale += _vec3(1.f, 1.f, 1.f) * dt;
+            transform->SetScale(scale);
+        }
+
         auto physics = GetComponent<PhysicsComponent>();
         if (physics->IsGrounded() == true) 
         {
@@ -196,4 +228,18 @@ void Tnt::OnCollisionEnter(Object* other)
 
     TntToPlayer(other);
     tntOnField = false;
+}
+
+void Tnt::SetEmissive(_bool On)
+{
+    auto mtrl = GetComponent<MeshRenderer>()->GetMaterial();
+
+    if (On)
+    {
+        mtrl->SetFloat("emissive", 1.f);
+    }
+    else
+    {
+        mtrl->SetFloat("emissive", 0.f);
+    }
 }

@@ -205,6 +205,7 @@ void Village::Load()
 		else
 		{
 			player->GetComponent<TransformComponent>()->SetPosition(278.f, 10.f, 50.f);
+
 			player->SetSpawnPointFromTrigger(LOADID::Village, 0);
 			
 			auto npc = Npc::Create(ObjectMgr, ObjectType::Neutral);

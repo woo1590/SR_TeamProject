@@ -35,6 +35,7 @@
       }
     },
     "tnt_Mtrl": {
+      "fx": "ColorShader",
       "textures": {
         "CubeMap": "../Resource/Asset/JW/tnt.dds"
       }

@@ -30,9 +30,14 @@ private:
     _vec3 throwDirection = { 0.f,0.f,0.f };
 
     float TntTime = 0.f;
-    const float TntBoom = 3.f;
-    const float TntRange = 10.f;
+    const float TntBoom = 4.f;
+    const float TntRange = 15.f;
 
     _bool tntOnField = true;
+
+    void SetEmissive(_bool on);
+    _bool emissiveOn = true;
+    _float blinkTimer = 0.f;
+    _bool soundPlay = false;
 };
 

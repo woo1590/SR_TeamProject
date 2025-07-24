@@ -196,7 +196,7 @@ void Stage2::Load()
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage2SkyBox_Mtrl");
 	
 		ObjectMgr->AddObject(ObjectType::SkyBox, skybox);
-		player->GetComponent<TransformComponent>()->SetPosition(200.f, 50.f, 115.f);
+		player->GetComponent<TransformComponent>()->SetPosition(200.f, 50.f, 100.f);
 
 		ObjectMgr->AddObject(ObjectType::Neutral, Pig::Create(ObjectMgr, ObjectType::Neutral));
 		player->SetSpawnPointFromTrigger(LOADID::Stage2, 0);

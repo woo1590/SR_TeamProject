@@ -391,6 +391,7 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("OperateBridge", "../Resource/Sound/SFX/OperateBridge.mp3", false);
         sound->LoadSound("LevelUp", "../Resource/Sound/SFX/LevelUp.mp3", false);
         sound->LoadSound("CageOpen", "../Resource/Sound/SFX/IronCageOpen.mp3", false);
+        sound->LoadSound("TntFuse", "../Resource/Sound/SFX/TntFuse.mp3", false);
     }
 
     /*----------------------Load Sprite----------------------------*/
