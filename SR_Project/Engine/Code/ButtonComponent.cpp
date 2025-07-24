@@ -4,6 +4,8 @@
 #include "InputSystem.h"
 #include "Object.h"
 #include "HoverComponent.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
 
 ButtonComponent* ButtonComponent::Create(Object* owner)
 {
@@ -39,5 +41,8 @@ void ButtonComponent::Update(float dt)
 
 	const auto& input = EngineCore::GetInstance()->GetInputSystem();
 	if (input->IsKeyPressed(KEY::LBUTTON) && onClick)
+	{
+		EngineCore::GetInstance()->GetSoundManager()->PlaySFX("MouseClick2");
 		onClick();
+	}
 }

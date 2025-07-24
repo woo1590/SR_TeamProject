@@ -13,6 +13,10 @@
 #include "InventoryComponent.h"
 #include "UIManager.h"
 
+vector<QuestInfo> QuestSystem::quests;
+int QuestSystem::activeIdx = -1;
+int QuestSystem::lastCompletedIdx = -1;
+
 namespace 
 {
     constexpr RECT CenterTitle{450, 190, 850, 300}, CenterDesc{450, 250, 850, 450};
@@ -23,17 +27,19 @@ namespace
 
 void QuestSystem::InitQuests()
 {
-    quests =
-    {   {L"[소녀의 기도]", L"아리아가 건네준 갑옷을 입어 그녀를 안심시켜 주세요.",
-        QuestType::EquipItem, QuestStatus::NotStarted, 0, 1},
+    if (!quests.empty()) return;
 
-        {L"[희망의 증명]", L"아리아를 위협하는 몬스터 3마리를 처치하세요.", 
+    quests =
+    {   {L"[소녀의 기도]", L" 건네준 갑옷을 입어 그녀를 안심시켜 주세요.",
+        QuestType::EquipArmor, QuestStatus::NotStarted, 0, 1},
+
+        {L"[희망의 증명]", L"우석이를 위협하는 몬스터 3마리를 처치하세요.", 
         QuestType::KillMonsters, QuestStatus::NotStarted, 0, 3},
         
-        {L"[쓸쓸한 귀향]",L"아리아와 함께 그녀의 마을로 돌아가세요.",
+        {L"[쓸쓸한 귀향]",L"우석이와 함께 그녀의 마을로 돌아가세요.",
         QuestType::ReachVillage, QuestStatus::NotStarted, 0, 1}, 
         
-        {L"[새로운 가족]",L"아리아가 외롭지 않도록 상점에서 아기 돼지를 구매해 선물하세요.", QuestType::BuyPig,QuestStatus::NotStarted, 0, 1},
+        {L"[새로운 가족]",L"우석이가 외롭지 않도록 상점에서 아기 돼지를 구매해 선물하세요.", QuestType::BuyPig,QuestStatus::NotStarted, 0, 1},
         
         {L"[대지를 잠재워줘]",L"'하늘섬'으로 가서 '레드 골렘'을 처치하세요.",
         QuestType::KillRedGolem,QuestStatus::NotStarted, 0, 1},
@@ -70,29 +76,6 @@ QuestStatus QuestSystem::GetStatus(QuestType type) const
     return QuestStatus::NotStarted;
 }
 
-void QuestSystem::LoadDataFrom()
-{
-    auto invComp = uiMgr->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player)->GetComponent<InventoryComponent>();
-    if (invComp->HasQuestData())
-    {
-        quests = invComp->GetQuestData();
-        for (int i{}; i < quests.size(); ++i)
-        {
-            if (quests[i].status == QuestStatus::InProgress)
-            {
-                activeIdx = i;
-                break;
-            }
-        }
-    }
-}
-
-void QuestSystem::SaveDataTo()
-{
-    auto invComp = uiMgr->GetScene()->GetObjectManager()->GetFrontObject(ObjectType::Player)->GetComponent<InventoryComponent>();
-    invComp->SetQuestData(quests);
-}
-
 void QuestSystem::ReportQuestProgress(QuestType type, int amount)
 {
     if (activeIdx < 0) return;
@@ -104,6 +87,8 @@ void QuestSystem::ReportQuestProgress(QuestType type, int amount)
         if (quest.curCount >= quest.targetCount)
         {
             quest.status = QuestStatus::Completed;
+            lastCompletedIdx = activeIdx;
+            //activeIdx = -1;
             ChangeState(QuestUIState::RightFadeIn);
         }
     }
@@ -173,11 +158,13 @@ void QuestSystem::Update(float dt)
     const auto& input = EngineCore::GetInstance()->GetInputSystem();
     if (input->IsKeyPressed(KEY::Q))
     {
-        ReportQuestProgress(QuestType::EquipItem, 1);
-        ReportQuestProgress(QuestType::KillMonsters, 1);
-        ReportQuestProgress(QuestType::ReachVillage, 1);
-        ReportQuestProgress(QuestType::BuyPig, 1);
-        ReportQuestProgress(QuestType::KillRedGolem, 1);
-        ReportQuestProgress(QuestType::KillEnder, 1);
+        if (activeIdx != -1)
+            ReportQuestProgress(quests[activeIdx].type, 1);
+        else
+        {
+            int nextQuestIdx = lastCompletedIdx + 1;
+            if (nextQuestIdx < quests.size())
+                AcceptQuestAtIdx(nextQuestIdx);
+        }
     }
 }

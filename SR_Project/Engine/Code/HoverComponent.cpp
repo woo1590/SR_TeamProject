@@ -6,6 +6,8 @@
 #include "Object.h"
 #include "TransformComponent.h"
 #include "SlotComponent.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
 
 void HoverComponent::Update(float dt)
 {
@@ -54,13 +56,19 @@ void HoverComponent::Update(float dt)
 	if (mouseOver && input->IsKeyPressed(KEY::LBUTTON))
 	{
 		if (auto slot = owner->GetComponent<SlotComponent>())
+		{
+			EngineCore::GetInstance()->GetSoundManager()->PlaySFX("MouseClick1");
 			slot->OnClick();
+		}
 	}
 
 	if (mouseOver && input->IsKeyPressed(KEY::RBUTTON))
 	{
 		if (onRightClick)
+		{
+			EngineCore::GetInstance()->GetSoundManager()->PlaySFX("MouseClick2");
 			onRightClick();
+		}
 	}
 
 	if (updateCallBack)

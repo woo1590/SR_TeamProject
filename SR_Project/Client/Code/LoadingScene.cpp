@@ -16,6 +16,7 @@
 #include "Village.h"
 #include "Stage1.h"
 #include "Stage2.h"
+#include "LoadingSpinner.h"
 
 //Objects
 #include "LoadingUI.h"
@@ -49,6 +50,8 @@ void LoadingScene::Load()
 	loadingUI->SetInfo(nextSceneID);
 
 	ObjectMgr->AddUIObject(loadingUI);
+   
+    ObjectMgr->AddUIObject(LoadingSpinner::Create(ObjectMgr));
 }
 
 void LoadingScene::Update(_float dt)

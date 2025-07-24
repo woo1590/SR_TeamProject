@@ -44,8 +44,8 @@ private:
 	bool mainAnimFinished = false;
 	float tipLoopTimer = 0.f;
 
-	static constexpr float TIP_DURATION = 8.f;
-	static constexpr float scaleDur = 8.f;
+	static constexpr float TIP_DURATION = 3.f;
+	static constexpr float scaleDur = 3.f;
 
 	vector<TipAndTexture> tipPool;
 	vector<size_t> tipIndices;

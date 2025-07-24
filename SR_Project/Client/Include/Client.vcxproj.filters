@@ -622,6 +622,15 @@
     <Filter Include="02. Object\Effect\DeadEffect\EnderDead">
       <UniqueIdentifier>{26930550-7799-4d72-af90-2b72103af26f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\MainGame\Wing">
+      <UniqueIdentifier>{10ca3b24-dc3d-4733-9e09-53fc29e12d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\DialogRect">
+      <UniqueIdentifier>{7a6471e5-a588-43a4-92bb-720147c8f7c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\UIObj\UIRenderState\NpcUI\DialogRect\LoadingSpinner">
+      <UniqueIdentifier>{725acb46-514b-4059-8e6e-22ce855003a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1207,6 +1216,18 @@
     <ClInclude Include="..\Header\EnderDead.h">
       <Filter>02. Object\Effect\DeadEffect\EnderDead</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\WingLeft.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Wing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WingRight.h">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Wing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DialogRect.h">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogRect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingSpinner.h">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogRect\LoadingSpinner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1773,6 +1794,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\EnderDead.cpp">
       <Filter>02. Object\Effect\DeadEffect\EnderDead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WingRight.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Wing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WingLeft.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\MainGame\Wing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DialogRect.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogRect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingSpinner.cpp">
+      <Filter>02. Object\UIObj\UIRenderState\NpcUI\DialogRect\LoadingSpinner</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -266,6 +266,7 @@
     <ClInclude Include="..\Header\ICommand.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\InfoDetector.h" />
+    <ClInclude Include="..\Header\IntroAnimComponent.h" />
     <ClInclude Include="..\Header\InventoryComponent.h" />
     <ClInclude Include="..\Header\InventoryManager.h" />
     <ClInclude Include="..\Header\IronCage.h" />
@@ -431,6 +432,7 @@
     <ClCompile Include="..\Code\ICommand.cpp" />
     <ClCompile Include="..\Code\ImGuiManager.cpp" />
     <ClCompile Include="..\Code\InfoDetector.cpp" />
+    <ClCompile Include="..\Code\IntroAnimComponent.cpp" />
     <ClCompile Include="..\Code\InventoryComponent.cpp" />
     <ClCompile Include="..\Code\InventoryManager.cpp" />
     <ClCompile Include="..\Code\IronCage.cpp" />

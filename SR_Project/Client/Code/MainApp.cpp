@@ -390,6 +390,18 @@ HRESULT MainApp::LoadDefaultResource()
         sound->LoadSound("PullLever", "../Resource/Sound/SFX/PullLever.mp3", false);
         sound->LoadSound("OperateBridge", "../Resource/Sound/SFX/OperateBridge.mp3", false);
         sound->LoadSound("LevelUp", "../Resource/Sound/SFX/LevelUp.mp3", false);
+        sound->LoadSound("Click1", "../Resource/Sound/SFX/Click1.ogg", false);
+        sound->LoadSound("Click2", "../Resource/Sound/SFX/Click2.ogg", false);
+        sound->LoadSound("Click3", "../Resource/Sound/SFX/Click3.ogg", false);
+        sound->LoadSound("Click4", "../Resource/Sound/SFX/Click4.ogg", false);
+        sound->LoadSound("Click5", "../Resource/Sound/SFX/Click5.ogg", false);
+        sound->LoadSound("MouseClick1", "../Resource/Sound/SFX/MouseClick1.ogg", false);
+        sound->LoadSound("MouseClick2", "../Resource/Sound/SFX/MouseClick2.ogg", false);
+        sound->LoadSound("UseBoost", "../Resource/Sound/SFX/UseBoost.mp3", false);
+        sound->LoadSound("UsePotion", "../Resource/Sound/SFX/UsePotion.mp3", false);
+        sound->LoadSound("Pig", "../Resource/Sound/SFX/Pig.mp3", false);
+        sound->LoadSound("Earthquake", "../Resource/Sound/SFX/Earthquake.mp3", false);
+        sound->LoadSound("BuyItem", "../Resource/Sound/SFX/BuyItem.mp3", false);
     }
 
     /*----------------------Load Sprite----------------------------*/
@@ -472,6 +484,8 @@ HRESULT MainApp::LoadDefaultResource()
         {L"shop_emerald",             eUI, 1},
         {L"shop_button",              eUI, 1},
 
+        {L"wingleft",                 eUI, 1},
+        {L"wingright",                eUI, 1},
 
         // =====================================================================
         // Layer 2
@@ -590,6 +604,7 @@ HRESULT MainApp::LoadDefaultResource()
         {L"stage2",                   eUI, 9},
         {L"button_left",              eUI, 9},
         {L"button_right",             eUI, 9},
+
 
         // =====================================================================
         // Layer 100+ (팝업 및 최상단 UI)

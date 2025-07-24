@@ -6,6 +6,7 @@ class UIManager;
 class InventoryManager;
 class Object;
 class SlotComponent;
+class InventoryComponent;
 
 class ENGINE_DLL ShopManager :public Base
 {
@@ -22,12 +23,14 @@ public:
 	void StockItem(ItemType type, int slotIdx);
 
 	bool BuyItem(int shopSlotIdx);
+	bool BuySelectedItem();
 	bool SellItem(int invSlotIdx);
 
 	void SelectSlot(SlotComponent* newSlot);
 	void DeselectAll();
 
 	void Update(float dt);
+	void SetInvComp(InventoryComponent* _invComp) { invComp = _invComp; }
 	void Free() override {}
 
 private:
@@ -38,6 +41,7 @@ private:
 	CreateItemCallBack onCreateItem;
 
 	SlotComponent* selected = nullptr;
+	InventoryComponent* invComp = nullptr;
 };
 
 END

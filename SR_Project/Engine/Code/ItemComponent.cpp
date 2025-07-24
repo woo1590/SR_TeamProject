@@ -54,7 +54,8 @@ void ItemComponent::Equip(Object* user, optional<int> slotIdx)
 	auto quest = owner->GetScene()->GetUIManager()->GetQuestSystem();
 	if (!quest) return;
 
-	quest->ReportQuestProgress(QuestType::EquipItem, 1);
+	if (itemType == ItemType::Armor)
+		quest->ReportQuestProgress(QuestType::EquipArmor, 1);
 }
 
 void ItemComponent::UnEquip(Object* user)

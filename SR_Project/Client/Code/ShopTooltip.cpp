@@ -49,31 +49,32 @@ void ShopTooltip::Update(float dt)
 
 	font->ClearText();
 
-	RECT nameRect = {1010, 240, 1280, 310};
+	RECT nameRect = {1010, 300, 1280, 380};
 	RECT valueRect = {1010, 340, 1280, 520};
 	RECT descRect = {1010, 410, 1280, 680};
+	RECT priceRect = {1010, 250, 1280, 300};
 
 	font->AddText(info.name, nameRect, Color::White, DT_LEFT, FontType::Title);
 
 	switch (info.type)
 	{
-	case ItemType::Sword:
+	case ItemType::Spear:
 		font->AddText(L"근접 공격력:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	case ItemType::Armor:
 		font->AddText(L"추가 체력: + " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
-	case ItemType::Potion:
+	case ItemType::HpPotion:
 		font->AddText(to_wstring(info.value) + L" 초 쿨타임", valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
-	case ItemType::Bow:
+	case ItemType::CrossBow:
 		font->AddText(L"원거리 공격력:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	default:
 		font->AddText(L"아이템 수치:  " + to_wstring(info.value), valueRect, Color::White, DT_LEFT, FontType::Large);
 		break;
 	}
-
+	font->AddText(L"가격: " + to_wstring(2) + L" 원", priceRect, Color::White, DT_WORDBREAK, FontType::CookieRunFont);
 	font->AddText(info.description, descRect, Color::White, DT_WORDBREAK, FontType::Title);
 
 	renderer->SetTexture(info.renderKey);

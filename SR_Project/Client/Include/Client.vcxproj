@@ -203,6 +203,7 @@
     <ClInclude Include="..\Header\DeadEffect.h" />
     <ClInclude Include="..\Header\DeathFrame.h" />
     <ClInclude Include="..\Header\DialogObj.h" />
+    <ClInclude Include="..\Header\DialogRect.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\EmeraldObj.h" />
     <ClInclude Include="..\Header\Ender.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="..\Header\LaserHead.h" />
     <ClInclude Include="..\Header\LeftBtn.h" />
     <ClInclude Include="..\Header\LevelUpEffect.h" />
+    <ClInclude Include="..\Header\LoadingSpinner.h" />
     <ClInclude Include="..\Header\LoadingStone.h" />
     <ClInclude Include="..\Header\Locked_Node.h" />
     <ClInclude Include="..\Header\LockNode_Back.h" />
@@ -284,6 +286,8 @@
     <ClInclude Include="..\Header\TooltipObj.h" />
     <ClInclude Include="..\Header\Village.h" />
     <ClInclude Include="..\Header\WayPointCam.h" />
+    <ClInclude Include="..\Header\WingLeft.h" />
+    <ClInclude Include="..\Header\WingRight.h" />
     <ClInclude Include="..\Header\WolfArmor.h" />
     <ClInclude Include="..\Header\ArmorFilter.h" />
     <ClInclude Include="..\Header\ArrowFilter.h" />
@@ -393,6 +397,7 @@
     <ClCompile Include="..\Code\DeadEffect.cpp" />
     <ClCompile Include="..\Code\DeathFrame.cpp" />
     <ClCompile Include="..\Code\DialogObj.cpp" />
+    <ClCompile Include="..\Code\DialogRect.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\EmeraldObj.cpp" />
     <ClCompile Include="..\Code\Ender.cpp" />
@@ -424,6 +429,7 @@
     <ClCompile Include="..\Code\LaserHead.cpp" />
     <ClCompile Include="..\Code\LeftBtn.cpp" />
     <ClCompile Include="..\Code\LevelUpEffect.cpp" />
+    <ClCompile Include="..\Code\LoadingSpinner.cpp" />
     <ClCompile Include="..\Code\LoadingStone.cpp" />
     <ClCompile Include="..\Code\Locked_Node.cpp" />
     <ClCompile Include="..\Code\LockNode_Back.cpp" />
@@ -474,6 +480,8 @@
     <ClCompile Include="..\Code\TooltipObj.cpp" />
     <ClCompile Include="..\Code\Village.cpp" />
     <ClCompile Include="..\Code\WayPointCam.cpp" />
+    <ClCompile Include="..\Code\WingLeft.cpp" />
+    <ClCompile Include="..\Code\WingRight.cpp" />
     <ClCompile Include="..\Code\WolfArmor.cpp" />
     <ClCompile Include="..\Code\ArmorFilter.cpp" />
     <ClCompile Include="..\Code\ArrowFilter.cpp" />

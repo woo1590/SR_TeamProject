@@ -6,7 +6,7 @@ class Object;
 
 enum class QuestUIState { CenterFadeOut, RightFadeIn, RightHold};
 enum class QuestStatus { NotStarted, InProgress, Completed};
-enum class QuestType { EquipItem, KillMonsters, ReachVillage, BuyPig, KillRedGolem, KillEnder,None };
+enum class QuestType { EquipArmor, KillMonsters, ReachVillage, BuyPig, KillRedGolem, KillEnder,None };
 
 struct QuestInfo
 {
@@ -31,9 +31,6 @@ public:
 
     void SetTextObj(Object* obj) { textObj = obj; }
 
-    void SaveDataTo();
-    void LoadDataFrom();
-
 private:
     void Show(const QuestInfo& quest, float alpha, FontType type);
     void ChangeState(QuestUIState nextState);
@@ -44,12 +41,11 @@ private:
 private:
     UIManager* uiMgr  = nullptr;
     Object *textObj  = nullptr;
+    struct { QuestUIState state; float t; }uiPhase{QuestUIState::RightHold, 0.f};
 
-    vector<QuestInfo> quests;
-    int activeIdx = -1;
-
-    struct { QuestUIState state; float t; } uiPhase{QuestUIState::RightHold, 0.f};
-
+    static vector<QuestInfo> quests;
+    static int activeIdx;
+    static int lastCompletedIdx;
     static constexpr float centerDur = 2.f;
     static constexpr float fadeDur = 0.5f;
     static constexpr float holdDur = 3.f;

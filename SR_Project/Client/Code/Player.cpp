@@ -178,9 +178,11 @@ void Player::Late_Update(_float dt)
     }
     if (isClickedI)
     {
-        const auto& allItemTypes = InventoryComponent::GetSupportedItemTypes();
-        for (const auto& itemType : allItemTypes)
-            invComp->Add(itemType);
+        invComp->Add(ItemType::Sword);
+        invComp->Add(ItemType::Bow);
+        invComp->Add(ItemType::BoostItem);
+        invComp->Add(ItemType::GhostCloak);
+        invComp->Add(ItemType::FishingItem);
 
         isClickedI = false;
     }

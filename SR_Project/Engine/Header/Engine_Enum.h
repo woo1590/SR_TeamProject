@@ -104,6 +104,7 @@ namespace Engine
 		MineCraftFont,
 		CookieRunFont,
 		TipText,
+		IntroText,
 	};
 
 	inline D3DXCOLOR ToD3DXColor(Color color)

@@ -9,6 +9,8 @@
 #include "ObjectManager.h"
 #include "CoolDownComponent.h"
 #include "MaskObj.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
 
 HP_Potion* HP_Potion::Create(ObjectManager* owner)
 {
@@ -58,7 +60,10 @@ HRESULT HP_Potion::Ready_Object()
 
 	item->SetUseCallBack([=](Object* user) {
 		if (auto hpInfo = user->GetComponent<InfoComponent<PlayerInfo>>())
-			hpInfo->AddHp(50);
+		{
+			hpInfo->AddHp(100);
+			EngineCore::GetInstance()->GetSoundManager()->PlaySFX("UsePotion");
+		}
 		});
 
 	owner->AddUIObject(maskObj);
