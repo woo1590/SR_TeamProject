@@ -34,7 +34,7 @@ public:
     void DebugIMGUI();
     void WaypointEdit();
 private:
-
+    void SetTriggerBox();
     void Free()override;
     Player* player = nullptr;
 

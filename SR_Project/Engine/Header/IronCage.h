@@ -31,6 +31,8 @@ private:
 private:
     bool First = true;
     float totTrans = 0.f;
-    float Speed = 5.f;
+    float Speed = 2.f;
+
+    _bool playSound = false;
 };
 END

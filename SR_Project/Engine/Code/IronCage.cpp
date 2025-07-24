@@ -7,6 +7,7 @@
 #include "ObjectManager.h"
 #include "InputSystem.h"
 #include "TimerManager.h"
+#include "SoundManager.h"
 
 //object
 #include "Part.h"
@@ -113,7 +114,15 @@ void IronCage::Update(_float dt)
     Activate = allTriggered;
 
     if (Activate && !Trigger)
+    {
+        if (!playSound)
+        {
+            EngineCore::GetInstance()->GetSoundManager()->PlaySFX("CageOpen");
+            playSound = true;
+        }
+
         Operate(dt);
+    }
 
     Object::Update(dt);
 }
