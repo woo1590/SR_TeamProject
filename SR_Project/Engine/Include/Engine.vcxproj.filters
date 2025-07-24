@@ -336,7 +336,7 @@
     </Filter>
     <Filter Include="01. Engine Component\RenderSystem\RenderTargetView">
       <UniqueIdentifier>{69a3a785-cf0f-42f7-b190-7ad0fcadb828}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="01. Engine Component\ResourceManager\Mesh\ChunkMesh">
       <UniqueIdentifier>{ea8ec471-fd4a-4910-b644-59edd8e5098a}</UniqueIdentifier>
     </Filter>
@@ -354,7 +354,7 @@
     </Filter>
     <Filter Include="05. Scene Component\UIManager\ShopManager">
       <UniqueIdentifier>{01da51ef-715f-4110-910d-83fecac8d6b3}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="07. Object Component\Renderer\MiniMapRenderer">
       <UniqueIdentifier>{bb51cdcb-9a3d-4e9f-b6b8-1973832ab141}</UniqueIdentifier>
     </Filter>
@@ -706,7 +706,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\RenderTargetView.cpp">
       <Filter>01. Engine Component\RenderSystem\RenderTargetView</Filter>
-    </ClCompile>   
+    </ClCompile>
     <ClCompile Include="..\Code\ChunkMesh.cpp">
       <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
     </ClCompile>
@@ -721,7 +721,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\ShopManager.cpp">
       <Filter>05. Scene Component\UIManager\ShopManager</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="..\Code\MiniMapRenderer.cpp">
       <Filter>07. Object Component\Renderer\MiniMapRenderer</Filter>
     </ClCompile>
@@ -1099,7 +1099,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\RenderTargetView.h">
       <Filter>01. Engine Component\RenderSystem\RenderTargetView</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\ChunkMesh.h">
       <Filter>01. Engine Component\ResourceManager\Mesh\ChunkMesh</Filter>
     </ClInclude>
@@ -1114,7 +1114,7 @@
     </ClInclude>
     <ClInclude Include="..\Header\ShopManager.h">
       <Filter>05. Scene Component\UIManager\ShopManager</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="..\Header\MiniMapRenderer.h">
       <Filter>07. Object Component\Renderer\MiniMapRenderer</Filter>
     </ClInclude>

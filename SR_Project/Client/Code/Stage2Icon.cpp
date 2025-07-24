@@ -14,9 +14,9 @@ HRESULT Stage2Icon::Ready_Object()
 	auto tf = AddComponent<TransformComponent>();
 	auto renderer = AddComponent<UIRenderer>();
 
-	tf->SetScale(0.5f, 0.5f);
+	tf->SetScale(0.12f, 0.12f);
 
-	renderer->SetTexture(L"stage2");
+	renderer->SetTexture(L"enderworld");
 	renderer->SetRenderType(UIRenderType::WorldMap);
 
 	return S_OK;

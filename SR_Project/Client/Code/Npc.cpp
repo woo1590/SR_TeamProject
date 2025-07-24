@@ -110,12 +110,13 @@ void Npc::InitDialog()
         // 숲 속에서 공포에 떨다가 플레이어를 발견하고, 그의 안전을 걱정하며 갑옷을 건넨다
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::NotStarted; },
     {
-        {L"(고요한 숲 속, 나무 덤불 속에서 미세한 움직임이 느껴진다.)",Emotion::p18},
-        {L"(자세히 보니, 한 소녀가 겁에 질린 채 웅크리고 있다.)",Emotion::p14},
+        {L"(고요한 숲 속, 덤불 속에서 미세한 움직임이 느껴진다.)", Emotion::p18},
+        {L"(한 소녀가 겁에 질린 채 웅크리고 있다.)", Emotion::p14},
         {L"…흐읍…!", Emotion::p14},
         {L"누, 누구세요…? 저리 가요! 괴물들이 몰려올지도 몰라요…!", Emotion::p12},
         {L"…당신은… 그들과는 다른 것 같네요.", Emotion::p11},
-        {L"하지만 그 장비로는 너무 위험해 보여요. 제가… 마을에서 도망칠 때 겨우 챙겨온 갑옷이에요.",Emotion::p3},
+        {L"하지만 그 장비로는 너무 위험해 보여요.",Emotion::p3},
+        {L"제가… 마을에서 겨우 챙겨온 갑옷이에요. 이걸 받아주세요.", Emotion::p3},
         {L"부디 이걸 입어주세요. 당신이 무사해야… 저도 희망을 가질 수 있으니까요.", Emotion::p6},
 
     },[=] {quest->AcceptQuest(QuestType::EquipItem); }},
@@ -132,16 +133,16 @@ void Npc::InitDialog()
         {[=] {return quest->GetStatus(QuestType::EquipItem) == QuestStatus::Completed &&
         quest->GetStatus(QuestType::KillMonsters) == QuestStatus::NotStarted; },
     {
-        {L"다행이다… 이제 조금은 안심이 돼요.",Emotion::p8},
-        {L"(주변에서 몬스터의 울음소리가 들려온다.)",Emotion::p14},
-        {L"안돼요! 여기까지 쫓아왔어요! 조심하세요!",Emotion::p14},
+        {L"다행이다… 정말 다행이에요. 이제 조금은 안심이 돼요.",Emotion::p8},
+        {L"(그때, 주변에서 몬스터의 울음소리가 섬뜩하게 들려온다.)",Emotion::p14},
+        {L"안돼요! 여기까지 쫓아왔나 봐요! 조심하세요!",Emotion::p14},
     }, [=] {quest->AcceptQuest(QuestType::KillMonsters); }},
 
     // [4] 희망의 증명 (KillMonsters) 진행중 리마인드
     // 자신을 지켜주는 플레이어를 보며 희망을 갖고 응원
         {[=] {return quest->GetStatus(QuestType::KillMonsters) == QuestStatus::InProgress; },
     {
-        {L"굉장해요! 당신이라면 할 수 있을 줄 알았어요!",Emotion::p8},
+        {L"굉장해요! 역시 당신이라면 할 수 있을 줄 알았어요!",Emotion::p8},
         {L"조금만 더 힘내세요! 제가 여기서 기도하고 있을께요!",Emotion::p1},
     }},
 
@@ -160,10 +161,10 @@ void Npc::InitDialog()
         {[=] { return quest->GetStatus(QuestType::ReachVillage) == QuestStatus::Completed &&
         quest->GetStatus(QuestType::BuyPig) == QuestStatus::NotStarted; },
         {
-        {L"아… 아아… 전부… 전부 무너졌어요. 이제 정말 다 끝이야…", Emotion::p3},
-        {L"(떠나려는 상인의 짐수레에서 아기 돼지의 울음소리가 들린다.)", Emotion::p6},
-        {L"저기… 저 아이 좀 보세요. 이 잿더미 속에서도 살아있어요.", Emotion::p8},
-        {L"부탁이에요. 저 아이를… 우리 마을의 새로운 가족으로 맞아주실 수 없을까요?", Emotion::p3},
+        {L"아… 전부… 전부 무너졌어요. 이제 정말 다 끝이야…", Emotion::p3},
+        {L"(그때, 떠나려는 상인의 짐수레에서 아기 돼지의 울음소리가 들린다.)", Emotion::p6},
+        {L"어…?! 저 아이 좀 보세요.", Emotion::p8},
+        {L"부탁이에요. 저 아이를… 우리 마을의 새로운 희망으로 맞아주실 수 없을까요?", Emotion::p3},
         },
         [=] { quest->AcceptQuest(QuestType::BuyPig); }},
 
@@ -174,8 +175,9 @@ void Npc::InitDialog()
         {
         {L"고마워요! 이제 우리에겐 새로운 가족이 생겼어요!", Emotion::p19},
         {L"(땅이 크게 흔들리며 아기 돼지가 겁에 질려 꿀꿀거린다.)", Emotion::p8},
-        {L"이, 이 진동은…! '하늘섬'의 '레드 골렘'이 틀림없어요.", Emotion::p14},
-        {L"저 분노의 울음이 멎지 않는 한, 우리 가족은 편히 쉴 수 없어요. 제발… 골렘을 멈춰주세요!", Emotion::p3},
+        {L"이, 이 진동은…", Emotion::p14},
+        {L"틀림없어요. '하늘섬'의 '레드 골렘'이 깨어났어요.", Emotion::p3},
+        {L"저 분노가 멎지 않는 한, 우린 편히 쉴 수 없어요. 제발… 골렘을 멈춰주세요!", Emotion::p2},
         },
         [=] { quest->AcceptQuest(QuestType::KillRedGolem); }},
 
@@ -194,17 +196,14 @@ void Npc::InitDialog()
         // 평화를 되찾은 마을에서 플레이어에게 진심으로 감사한다.
         {[=] { return quest->GetStatus(QuestType::KillEnder) == QuestStatus::Completed; },
         {
-        // 1. 플레이어를 안심시킨다
-        {L"당신 덕분에… 우리 마을은 다시 살아났어요.", Emotion::p16},
-        {L"정말… 정말 고마워요.", Emotion::p9},
-
-        // 2. 가까이 다가와 감사를 표하는 척하며 찌른다.
-        {L"(아리아가 플레이러를 껴안는 척하며 날카로운 무언가로 찌른다.)",Emotion::p23},
-
-        // 3. 충격적인 진실을 밝히낟
-        {L"…이 마을을 되살리려면… 아주 강한 영혼이 제물로 필요했거든요.",Emotion::p22},
-        {L"엔더까지 물리친 당신의 영혼이라면… '그분'도 분명 만족하시겠죠.",Emotion::p22},
-        {L"이제… 이게 진짜 시작이에요. 우리의… 영원한 마을.",Emotion::p5},
+        {L"당신 덕분에… 우리 마을은 마침내 평화를 되찾았어요.", Emotion::p16},
+        {L"정말… 정말 고마워요. 이 은혜는 평생 잊지 않을게요.", Emotion::p9},
+        {L"(아리아가 감사의 표시를 하듯 다가와, 플레이어를 껴안는 척하며 날카로운 무언가로 찌른다.)",Emotion::p23},
+        {L"정말 순진하시네요, 구원자님.", Emotion::p22},
+        {L"골렘은 대지의 마지막 저항이었고, 엔더는 떠도는 영혼들의 원념이었죠. 당신은 스스로 제물이 될 무대를 청소한 셈이예요.",Emotion::p22},
+        {L"당신은 스스로 제물이 될 무대를… 깨끗하게 청소한 셈이에요.", Emotion::p22},
+        {L"이제 당신의 강한 영혼은… 위대한 '그분'께 바쳐질 겁니다.", Emotion::p5},
+        {L"환영해요. 우리의… '영원한 마을'에.", Emotion::p5},
         }},
     };
 }

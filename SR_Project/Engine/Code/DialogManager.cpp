@@ -7,6 +7,8 @@
 #include "RenderSystem.h"
 #include "EngineCore.h"
 #include "QuestSystem.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
 
 void DialogManager::StartDialog(DialogComponent* dialog)
 {
@@ -24,8 +26,47 @@ void DialogManager::SkipOrNext()
 {
 	if (!curDialog || !curDialog->IsTalking()) return;
 
-	if (!isLineFullyDisplayed)
+	if (isInterrupted && isLineFullyDisplayed)
 	{
+		isInterrupted = false;
+		curLine = interruptedLine;
+
+		displayedText.clear();
+		typingTimer = 0.f;
+		isLineFullyDisplayed = false;
+		soundPlayTimer = minSoundDelay;
+		font->ClearText();
+
+		if (onEmotionChange)
+			onEmotionChange(curLine.emotion);
+
+		return;
+	}
+
+	if (!isLineFullyDisplayed) // 타이핑중 스킵 시도
+	{
+		if (isInterrupted) return;
+		consecutiveSkips++;
+
+		if (consecutiveSkips >= 2)
+		{
+			isInterrupted = true;
+			interruptedLine = curLine;
+			curLine.text = L"우석님! 왜자꾸 대화를 스킵하시는거예요!";
+			curLine.emotion = Emotion::p17;
+			displayedText.clear();
+			typingTimer = 0.f;
+			isLineFullyDisplayed = false;
+			soundPlayTimer = minSoundDelay;
+			font->ClearText();
+			consecutiveSkips = 0;
+
+			if (onEmotionChange)
+				onEmotionChange(curLine.emotion);
+
+			return;
+		}
+
 		displayedText = curLine.text;
 		isLineFullyDisplayed = true;
 
@@ -38,13 +79,16 @@ void DialogManager::SkipOrNext()
 
 		return;
 	}
-	
-	curDialog->AddLineIdx();
-
-	if (curDialog->IsFinished())
-		EndDialog();
 	else
-		ShowCurLine();
+	{
+		//consecutiveSkips = 0;
+		curDialog->AddLineIdx();
+
+		if (curDialog->IsFinished())
+			EndDialog();
+		else
+			ShowCurLine();
+	}
 }
 
 void DialogManager::ShowCurLine()
@@ -63,6 +107,8 @@ void DialogManager::ShowCurLine()
 	displayedText.clear();
 	typingTimer = 0.f;
 	isLineFullyDisplayed = false;
+
+	soundPlayTimer = minSoundDelay;
 
 	font->ClearText();
 
@@ -96,31 +142,39 @@ void DialogManager::EndDialog()
 
 void DialogManager::Update(float dt)
 {
-	if (curDialog && curDialog->IsTalking() && !isLineFullyDisplayed && font)
+	if (!curDialog || !curDialog->IsTalking() || isLineFullyDisplayed || !font) return;
+
+	typingTimer += dt;
+	soundPlayTimer += dt;
+	
+	while (typingTimer >= typingSpeed)
 	{
-		typingTimer += dt;
+		typingTimer -= typingSpeed;
 
-		while (typingTimer >= typingSpeed)
+		if (displayedText.length() < curLine.text.length())
 		{
-			typingTimer -= typingSpeed;
+			const wchar_t newChar = curLine.text[displayedText.length()];
+			displayedText += newChar;
 
-			if (displayedText.length() < curLine.text.length())
+			if (newChar != L' ' && soundPlayTimer >= minSoundDelay)
 			{
-				displayedText += curLine.text[displayedText.length()];
-
-				font->ClearText();
-				RECT dialogRect = {200, 560, 1100, 700};
-				font->AddText(displayedText, dialogRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
-
-				RECT nameRect = {200, 500, 600, 540};
-				font->AddText(curDialog->GetSpeakerName(),
-					nameRect, Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+				EngineCore::GetInstance()->GetSoundManager()->PlaySFX("switch13");
+				soundPlayTimer = 0.f;
 			}
-			else
-			{
-				isLineFullyDisplayed = true;
-				break;
-			}
+
+			font->ClearText();
+
+			RECT nameRect = {200, 500, 600, 540};
+			font->AddText(curDialog->GetSpeakerName(), nameRect, Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+
+			RECT dialogRect = {200, 560, 1100, 700};
+			font->AddText(displayedText, dialogRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+		}
+		else
+		{
+			isLineFullyDisplayed = true;
+			consecutiveSkips = 0;
+			break;
 		}
 	}
 }

@@ -61,7 +61,9 @@ void LoadingUI::SetInfo(LOADID nextSceneID)
 		{
 			nextStateAfterIntro  = LoadingState::Static;
 			info.texturePath     = L"loadingscene";
-			staticMsg            = L"계속하려면 아무 키나 누르세요.";
+			staticMsg            = L"Loading...";
+			GetComponent<TransformComponent>()->SetScale(targetScale, targetScale * (0.4f / 0.65f));
+			scaleTimer = scaleDur;
 			isFirstLoadToVillage = false;
 		}
 		else
@@ -159,7 +161,7 @@ void LoadingUI::Update_Tiploop(float dt)
 
 void LoadingUI::Update_Static(float dt)
 {
-	pulseTime += dt;
+	//pulseTime += dt;
 }
 
 void LoadingUI::Render_Text(float dt)
@@ -169,9 +171,10 @@ void LoadingUI::Render_Text(float dt)
 
 	if (curState == LoadingState::Static)
 	{
+		pulseTime += dt;
 		float alpha = 0.5f + 0.5f * sinf(pulseTime * 1.5f);
 		font->AddText(staticMsg, {0, 550, 1280, 720}, D3DXCOLOR(1.f, 1.f, 1.f, alpha),
-			DT_CENTER , FontType::QuestTitle);
+			DT_CENTER, FontType::QuestTitle);
 	}
 	else
 	{
@@ -179,6 +182,15 @@ void LoadingUI::Render_Text(float dt)
 		font->AddText(sceneNameText, {240, 585, 800, 700}, Color::Yellow, DT_LEFT | DT_TOP, FontType::DeathText);
 		font->AddText(sceneTipText, {750, 545, 1240, 720}, Color::White, 
 			DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::MineCraftFont);
+	}
+}
+
+void LoadingUI::OnLoadComplete()
+{
+	if (curState == LoadingState::Static && !isLoadComplete)
+	{
+		isLoadComplete = true;
+		staticMsg = L"계속하려면 아무 키나 누르세요.";
 	}
 }
 

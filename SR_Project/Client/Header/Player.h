@@ -80,6 +80,7 @@ public:
     void SetStatikkMode(_bool _statikk);
     _bool IsStatikkMode();
     _float GetAttackDelay();
+    void SetArrows(Arrows* arrow) { arrows = arrow; }
 
     void SetOwner(ObjectManager* owner);
     _vec3 GetAttackDirection() const;

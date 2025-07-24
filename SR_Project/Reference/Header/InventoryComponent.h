@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ObjectComponent.h"
+#include "QuestSystem.h"
 
 BEGIN(Engine)
 
@@ -93,10 +94,16 @@ public:
 		return keys;
 	}
 
+	void SetQuestData(const vector<QuestInfo>& _questData) { questData = _questData; }
+	const vector<QuestInfo>& GetQuestData() const { return questData; }
+	bool HasQuestData() const { return !questData.empty(); }
+
 private:
 	vector<InventoryItemState> items;
 	ItemEvent OnItemAdded;
 	ItemEvent OnItemRemoved;
+
+	vector<QuestInfo> questData;
 };
 
 END

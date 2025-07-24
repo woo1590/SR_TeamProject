@@ -40,7 +40,7 @@ namespace Engine
 		{ItemType::RocketItem, {L"폭죽 화살", L"inventory_rocket",ItemType::RocketItem, SlotItemType::Potion, Rarity::Default, 30, L"TNT의 폭팔하는 가루가 화살의 고속 이동과 결합 되었습니다. 잘못될 일이 뭐가 있겠어요?"}},
 		{ItemType::BoostItem, {L"신속의 부츠", L"inventory_boost",ItemType::BoostItem, SlotItemType::Potion, Rarity::Default, 5, L"효과부여를 통해 신속한 움직임을 가능하게 하는 부츠입니다. 지금처럼 모든 게 불확실한 때에 유용합니다."}},
 		{ItemType::FishingItem, {L"낚싯대", L"inventory_fishing",ItemType::FishingItem, SlotItemType::Potion, Rarity::Default, 2, L"진정한 모험자가 신뢰할 수 있는 동료인 낚싯대는 낚시에만 유용한 것은 아닙니다."}},
-		{ItemType::PigItem, {L"아기 돼지", L"pig", ItemType::PigItem, SlotItemType::None, Rarity::Default, 0, L"지금 이 즐거운 꿀꿀 소리는 여러분이 내는 건가요, 아님 이 사랑스러운 아기 돼지가 내는 건가요? 새로운 반려동물이 얼마나 귀여운지 정말 깨물어 주고 싶네요! 하지만 그러면 안되겠죠."}},
+		{ItemType::PigItem, {L"아기 돼지", L"pig", ItemType::PigItem, SlotItemType::Costume, Rarity::Default, 0, L"지금 이 즐거운 꿀꿀 소리는 여러분이 내는 건가요, 아님 이 사랑스러운 아기 돼지가 내는 건가요? 새로운 반려동물이 얼마나 귀여운지 정말 깨물어 주고 싶네요! 하지만 그러면 안되겠죠."}},
 		{ItemType::Spear, {L"창", L"inventory_spear",ItemType::Spear, SlotItemType::MeleeWeapon, Rarity::Default, 10, L"이 창은 먼 거리에도 닿아 넓은 범위에 쓸 수 있는 유일한 무기입니다."}},
 		{ItemType::CrossBow, {L"석궁", L"inventory_crossbow",ItemType::CrossBow, SlotItemType::RangeWeapon, Rarity::Default, 10, L"석궁은 우민들이 즐겨 쓰는 원거리 무기입니다. 주로 약탈자들이 들고 다닙니다."}},
 		{ItemType::GhostCloak, {L"유령 망토",L"inventory_ghostcloak",ItemType::GhostCloak, SlotItemType::Potion, Rarity::Default, 5, L"잠시 유령 형태가 되어 몹을 통과하고 일부 피해를 흡수합니다."}},

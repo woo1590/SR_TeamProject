@@ -11,6 +11,8 @@
 #include "Object.h"
 #include "ObjectManager.h"
 #include "LevelUpEffect.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
 
 
 UIDebugObj* UIDebugObj::Create(ObjectManager* owner)
@@ -71,6 +73,7 @@ void UIDebugObj::Update(float dt)
 	if (info.level > prevLevel)
 	{
 		prevLevel = info.level;
+		EngineCore::GetInstance()->GetSoundManager()->PlaySFX("LevelUp");
 		owner->AddUIObject(LevelUpEffect::Create(owner));
 	}
 }
