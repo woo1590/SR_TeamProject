@@ -8,6 +8,8 @@
 #include "MaskObj.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 BoostItem* BoostItem::Create(ObjectManager* owner)
 {
@@ -44,6 +46,7 @@ HRESULT BoostItem::Ready_Object()
 
 	item->SetUseCallBack([=](Object* user) {
 		auto playerInfo = user->GetComponent<InfoComponent<PlayerInfo>>();
+		EngineCore::GetInstance()->GetSoundManager()->PlaySFX("UseBoost");
 		auto info = playerInfo->GetInfo();
 		info.speed = 25.f;
 		playerInfo->SetInfo(info);

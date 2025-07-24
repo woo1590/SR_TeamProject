@@ -44,11 +44,11 @@ void UIDebugObj::Update(float dt)
 
 	RECT debugRect = {900, 300, 1400, 650};
 
-	font->AddText(
-		L"Hp: " + to_wstring((int)info.curHp) + L"/" + to_wstring((int)info.maxHp) + 
-		L"\nExp: " + to_wstring(info.curExp) + L"/" + to_wstring(info.maxExp) +
-		L"\nspeed: " + to_wstring((int)info.speed),
-		debugRect, Color::Cyan, DT_LEFT, FontType::Title);
+	//font->AddText(
+	//	L"Hp: " + to_wstring((int)info.curHp) + L"/" + to_wstring((int)info.maxHp) + 
+	//	L"\nExp: " + to_wstring(info.curExp) + L"/" + to_wstring(info.maxExp) +
+	//	L"\nspeed: " + to_wstring((int)info.speed),
+	//	debugRect, Color::Cyan, DT_LEFT, FontType::Title);
 
 	accTime += dt;
 	++frameCount;
@@ -60,7 +60,7 @@ void UIDebugObj::Update(float dt)
 		frameCount = 0;
 	}
 
-	font->AddText(L"FPS: " + to_wstring((int)fps), {900, 250, 1250, 450}, Color::Cyan, DT_LEFT, FontType::Title);
+	//font->AddText(L"FPS: " + to_wstring((int)fps), {900, 250, 1250, 450}, Color::Cyan, DT_LEFT, FontType::Title);
 	font->AddText(to_wstring((int)playerInfo->GetInfo().gold), 
 		{1040,655,1150,700}, Color::White, DT_LEFT, FontType::CookieRunFont);
 

@@ -1,6 +1,9 @@
 #pragma once
 #include "BaseCharacter.h"
 #include "DialogManager.h"
+#include "ThirdCamComponent.h"
+#include "CameraManager.h"
+#include "InventoryComponent.h"
 
 class Npc :
     public BaseCharacter
@@ -34,5 +37,10 @@ private:
         function<void()> onFinish;
     };
     vector<DialogSet> dialogSets;
+
+    ThirdcamComponent* camComp = nullptr;
+    InventoryComponent* invComp = nullptr;
+
+    float talkCooldown = 0.f;
 };
 

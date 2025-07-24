@@ -48,6 +48,8 @@ public:
     BlockManager*       GetBlockManager()const;
     ChunkManager*       GetChunkManager()const;
     UIManager*          GetUIManager()const;
+
+    SceneID GetSceneID() const { return sceneID; }
     
 public:
     vector<SB>& GetStaticBlocks() { return staticBlocks; }

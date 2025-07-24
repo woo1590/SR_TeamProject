@@ -96,7 +96,11 @@ public:
 
 	void SetQuestData(const vector<QuestInfo>& _questData) { questData = _questData; }
 	const vector<QuestInfo>& GetQuestData() const { return questData; }
+	vector<QuestInfo>& GetQuestData() { return questData; }
 	bool HasQuestData() const { return !questData.empty(); }
+
+	void SetQuestProgress(int idx) { curQuestIdx = idx; }
+	int GetQuestProgress() const { return curQuestIdx; }
 
 private:
 	vector<InventoryItemState> items;
@@ -104,6 +108,7 @@ private:
 	ItemEvent OnItemRemoved;
 
 	vector<QuestInfo> questData;
+	int curQuestIdx = 0;
 };
 
 END

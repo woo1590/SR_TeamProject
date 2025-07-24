@@ -8,6 +8,10 @@
 #include "Scene.h"
 #include "SlotComponent.h"
 #include "UIRenderer.h"
+#include "InventoryComponent.h"
+#include "SoundManager.h"
+#include "EngineCore.h"
+#include "QuestSystem.h"
 
 void ShopManager::RegisterShopSlot(Object* slotObj)
 {
@@ -48,7 +52,7 @@ bool ShopManager::BuyItem(int shopSlotIdx)
 
 	ItemType itemToBuy = *shopItems[shopSlotIdx];
 	const auto& itemData = itemTable.at(itemToBuy);
-	const auto& itemPrice = (static_cast<int>(itemData.type) + 1) * 10;
+	const auto& itemPrice = (static_cast<int>(itemData.type) + 1);
 
 	if (playerInfo->GetInfo().gold < itemPrice)
 	{
@@ -61,9 +65,36 @@ bool ShopManager::BuyItem(int shopSlotIdx)
 		return false;
 	}
 	playerInfo->AddGold(-itemPrice);
-	invMgr->ItemAdded(itemToBuy);
+	invComp->Add(itemToBuy);
+	if (itemToBuy == ItemType::PigItem)
+		ui->GetQuestSystem()->ReportQuestProgress(QuestType::BuyPig, 1);
+	EngineCore::GetInstance()->GetSoundManager()->PlaySFX("BuyItem");
+
+
+	auto targetSlot = shopSlots[shopSlotIdx];
+	auto itemObject = targetSlot->GetItem(); 
+
+	if (itemObject)
+		itemObject->GetComponent<UIRenderer>()->SetVisible(false);
+
+	targetSlot->ClearItem(); 
+
+	shopItems[shopSlotIdx].reset();
 
 	return true;
+}
+
+bool ShopManager::BuySelectedItem()
+{
+	if (!selected) return false;
+
+	auto it = find(shopSlots.begin(), shopSlots.end(), selected);
+
+	if (it == shopSlots.end()) return false;
+
+	int slotIdx = distance(shopSlots.begin(), it);
+
+	return BuyItem(slotIdx);
 }
 
 bool ShopManager::SellItem(int invSlotIdx)

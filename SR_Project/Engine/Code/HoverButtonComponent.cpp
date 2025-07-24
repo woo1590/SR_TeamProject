@@ -4,6 +4,8 @@
 #include "UIRenderer.h"
 #include "EngineCore.h"
 #include "InputSystem.h"
+#include "EngineCore.h"
+#include "SoundManager.h"
 
 HoverButtonComponent* HoverButtonComponent::Create(Object* owner)
 {
@@ -63,6 +65,9 @@ void HoverButtonComponent::Update(float dt)
 	{
 		const auto& input = EngineCore::GetInstance()->GetInputSystem();
 		if (input->IsKeyPressed(KEY::LBUTTON) && onClick)
+		{
+			EngineCore::GetInstance()->GetSoundManager()->PlaySFX("MouseClick1");
 			onClick();
+		}
 	}
 }

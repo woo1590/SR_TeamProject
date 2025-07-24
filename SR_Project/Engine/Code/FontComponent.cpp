@@ -60,6 +60,7 @@ HRESULT FontComponent::CreateFontResource()
 	create(FontType::MineCraftFont, 40, FW_BOLD,   L"minecraft_font");
 	create(FontType::TipText,       28, FW_BOLD,   L"minecraft_font");
 	create(FontType::CookieRunFont, 36, FW_BOLD,   L"font");
+	create(FontType::IntroText,     56, FW_BOLD,   L"minecraft_font");
 	return S_OK;
 }
 

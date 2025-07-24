@@ -9,6 +9,10 @@
 #include "ObjectManager.h"
 #include "SlotComponent.h"
 #include "FontComponent.h"
+#include "HoverButtonComponent.h"
+#include "ShopManager.h"
+#include "UIManager.h"
+#include "Scene.h"
 
 ShopBtn* ShopBtn::Create(ObjectManager* owner)
 {
@@ -35,17 +39,22 @@ HRESULT ShopBtn::Ready_Object()
 	highlight->SetRenderType(UIRenderType::Shop);
 	highlight->SetVisible(false);
 	highlight->SetScale(8.f, 3.5f);
-
-	hover->SetUpdateCallBack([base](bool isHovered) {
+	
+	auto shopMgr = GetScene()->GetUIManager()->GetShop();
+	hover->SetUpdateCallBack([base,shopMgr](bool isHovered) {
 		const auto& input = EngineCore::GetInstance()->GetInputSystem();
-		if (isHovered && input->IsKeyDown(KEY::LBUTTON))
+		if (isHovered && input->IsKeyPressed(KEY::LBUTTON))
+		{
 			base->SetAlpha(0.5f);
+			shopMgr->BuySelectedItem();
+		}
 		else
 			base->SetAlpha(1.f);
 		});
 
 	slot->BindRenderers(base, highlight);
 	slot->SetSlotType(SlotType::Quick);
+
 
 	return S_OK;
 }

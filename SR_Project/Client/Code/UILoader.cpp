@@ -100,6 +100,10 @@
 #include "ShopTooltip.h"
 #include "ShopBtn.h"
 #include "QuestSystem.h"
+#include "WingLeft.h"
+#include "WingRight.h"
+#include "DialogRect.h"
+#include "LoadingSpinner.h"
 
 // DeathUI
 #include "PlayerDeathUI.h"
@@ -122,8 +126,8 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     auto* dialogMgr = uiMgr->GetDialog();
     auto* shopMgr = uiMgr->GetShop();
     auto* quest = uiMgr->GetQuestSystem();
-
-    quest->LoadDataFrom();
+    auto* player = objMgr->GetFrontObject(ObjectType::Player);
+    shopMgr->SetInvComp(player->GetComponent<InventoryComponent>());
 
     ADD(Cursor::Create(objMgr));
 
@@ -139,6 +143,7 @@ void UILoader::LoadUI(ObjectManager* objMgr)
     BuildDialogUI(objMgr,dialogMgr); 
     BuildMiniMap(objMgr);
     BuildShopUI(objMgr, invMgr, tooltipMgr,shopMgr);
+    BuildIntroUI(objMgr);
 
   //  ADD(ParticleObj::Create(objMgr));
 }
@@ -333,6 +338,8 @@ void UILoader::BuildQuestUI(ObjectManager* objMgr)
     auto questSys = objMgr->GetOwner()->GetUIManager()->GetQuestSystem();
     //questSys->SetPanel(panel);
     questSys->SetTextObj(text);
+
+    ADD(LoadingSpinner::Create(objMgr));
 }
 
 void UILoader::BuildMiscUI(ObjectManager* objMgr)
@@ -459,6 +466,8 @@ void UILoader::BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr)
     dialogMgr->SetPanel(panel->GetComponent<PanelComponent>());
 
     dialogMgr->SetEmotionChangeCallBack([atri](Emotion emotion) {if (atri) atri->SetEmotion(emotion);});
+
+    ADD(DialogRect::Create(objMgr));
 }
 
 void UILoader::BuildMiniMap(ObjectManager* objMgr)
@@ -493,18 +502,27 @@ void UILoader::BuildShopUI(ObjectManager* objMgr, InventoryManager* invMgr, Tool
             shopMgr->RegisterShopSlot(slot);
         }
     }
-    shopMgr->StockItem(ItemType::Sword, 0);
+    shopMgr->StockItem(ItemType::PigItem, 0);
     shopMgr->StockItem(ItemType::Armor, 1);
-    shopMgr->StockItem(ItemType::Bow, 2);
-    shopMgr->StockItem(ItemType::FishingItem, 3);
-    shopMgr->StockItem(ItemType::Spear, 4);
-    shopMgr->StockItem(ItemType::CrossBow, 5);
+    shopMgr->StockItem(ItemType::CrossBow, 2);
+    shopMgr->StockItem(ItemType::Spear, 3);
+    shopMgr->StockItem(ItemType::RocketItem, 4);
+    shopMgr->StockItem(ItemType::GhostCloak, 5);
 
     auto shopTooltip = ShopTooltip::Create(objMgr);
     shopTooltip->SetShopManager(shopMgr);
     ADD(shopTooltip);
     tooltipMgr->SetShopTooltip(shopTooltip);
 
+}
+
+void UILoader::BuildIntroUI(ObjectManager* objMgr)
+{
+    auto wingLeft = WingLeft::Create(objMgr);
+    ADD(wingLeft);
+    
+    auto wingRight = WingRight::Create(objMgr);
+    ADD(wingRight);
 }
 
 Object* UILoader::CreateInventoryObj(ObjectManager* objMgr, ItemType type)

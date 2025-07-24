@@ -34,8 +34,11 @@ private:
 
 	DialogLine curLine;
 	wstring displayedText;
+
+	vector<wstring> processedLines;
+
 	float typingTimer = 0.f;
-	float typingSpeed = 0.04f;
+	float typingSpeed = 0.03f;
 	bool isLineFullyDisplayed = false;
 
 	float afterDialogTimer = 0.f;
@@ -50,6 +53,7 @@ private:
 	bool isInterrupted = false;
 	DialogLine interruptedLine;
 
+	int skipMaxCount = 15;
 };
 
 END

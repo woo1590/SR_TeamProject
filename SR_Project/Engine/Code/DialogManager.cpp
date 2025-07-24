@@ -43,16 +43,16 @@ void DialogManager::SkipOrNext()
 		return;
 	}
 
-	if (!isLineFullyDisplayed) // 타이핑중 스킵 시도
+	if (!isLineFullyDisplayed) 
 	{
 		if (isInterrupted) return;
 		consecutiveSkips++;
 
-		if (consecutiveSkips >= 2)
+		if (consecutiveSkips >= skipMaxCount)
 		{
 			isInterrupted = true;
 			interruptedLine = curLine;
-			curLine.text = L"우석님! 왜자꾸 대화를 스킵하시는거예요!";
+			curLine.text = L"제현님! 왜자꾸 대화를 스킵하시는거예요!";
 			curLine.emotion = Emotion::p17;
 			displayedText.clear();
 			typingTimer = 0.f;
@@ -71,11 +71,11 @@ void DialogManager::SkipOrNext()
 		isLineFullyDisplayed = true;
 
 		font->ClearText();
-		RECT dialongRect = {200, 560, 1200, 700};
+		RECT dialongRect = {200, 560, 1150, 700};
 		font->AddText(displayedText, dialongRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
 
-		RECT nameRect = {200, 500, 600, 540};
-		font->AddText(curDialog->GetSpeakerName(), nameRect,Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+		RECT nameRect = {200, 510, 600, 550};
+		font->AddText(curDialog->GetSpeakerName(), nameRect,Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK , FontType::DeathCount);
 
 		return;
 	}
@@ -100,6 +100,9 @@ void DialogManager::ShowCurLine()
 	if (!font) return;
 
 	curLine = curDialog->GetCurLine();
+
+	if (curLine.onshow)
+		curLine.onshow();
 
 	if (onEmotionChange)
 		onEmotionChange(curLine.emotion);
@@ -164,11 +167,11 @@ void DialogManager::Update(float dt)
 
 			font->ClearText();
 
-			RECT nameRect = {200, 500, 600, 540};
+			RECT nameRect = {200, 510, 600, 550};
 			font->AddText(curDialog->GetSpeakerName(), nameRect, Color::Pink, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
 
-			RECT dialogRect = {200, 560, 1100, 700};
-			font->AddText(displayedText, dialogRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK, FontType::DeathCount);
+			RECT dialogRect = {200, 560, 1150, 700};
+			font->AddText(displayedText, dialogRect, Color::White, DT_LEFT | DT_TOP | DT_WORDBREAK , FontType::DeathCount);
 		}
 		else
 		{

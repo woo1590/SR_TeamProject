@@ -76,6 +76,7 @@
 #include "QuestSystem.h"
 #include "CheckPoint.h"
 #include "Overlay.h"
+#include "NPCdolbok.h"
 
 //component
 #include "TransformComponent.h"
@@ -189,14 +190,14 @@ void Village::Load()
 
 		Grid->InsertBlock();
 
-        UILoader loader;
+        UILoader loader; 
         loader.LoadUI(ObjectMgr);
 
         ObjectMgr->AddObject(ObjectType::SkyBox, SkyBox::Create(ObjectMgr, ObjectType::SkyBox));
 
 		auto npc2 = Npc::Create(ObjectMgr, ObjectType::Neutral);
 		npc2->GetComponent<TransformComponent>()->SetPosition(140.f, 10.f, 215.f);
-		npc2->GetComponent<TransformComponent>()->SetForward({ 0, 0, -1.f });
+		npc2->GetComponent<TransformComponent>()->SetForward({0, 0, -1.f});
 		ObjectMgr->AddObject(ObjectType::Neutral, npc2);
 
 		if (game->IsSceneClear(LOADID::Village))
@@ -280,7 +281,6 @@ void Village::Late_Update(_float dt)
 
 void Village::Unload()
 {
-	GetUIManager()->GetQuestSystem()->SaveDataTo();
 	EngineCore::GetInstance()->GetSoundManager()->Stop("VillageBGM");
 
 	for (auto& obj : ObjectMgr->GetObjectList(ObjectType::Player))

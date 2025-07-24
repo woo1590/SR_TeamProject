@@ -30,4 +30,5 @@ private:
     void BuildDialogUI(ObjectManager* objMgr, DialogManager* dialogMgr);
     void BuildMiniMap(ObjectManager* objMgr);
     void BuildShopUI(ObjectManager* objMgr, InventoryManager* invMgr, TooltipManager* tooltipMgr,ShopManager* shopMgr);
+    void BuildIntroUI(ObjectManager* objMgr);
 };

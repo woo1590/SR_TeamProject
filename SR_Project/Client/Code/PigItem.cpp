@@ -4,6 +4,8 @@
 #include "UIRenderer.h"
 #include "InfoComponent.h"
 #include "ItemComponent.h"
+#include "InventoryEmerald.h"
+#include "ObjectManager.h"
 
 PigItem* PigItem::Create(ObjectManager* owner)
 {
