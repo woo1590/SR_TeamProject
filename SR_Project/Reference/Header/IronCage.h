@@ -23,7 +23,7 @@ private:
     void SetRotation(_vec3 rotation, string str);
 
 public:
-    void Operate();
+    void Operate(_float dt);
 
 private:
     void Free() override;

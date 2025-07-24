@@ -175,7 +175,7 @@ void Stage2::Load()
 		}
 		
 		miniMapObject = MiniMapObject::Create(ObjectMgr);
-		sceneID = STAGE1;
+		sceneID = STAGE2;
 
 		for (auto& [pair, chunk] : ChunkMgr->GetChunks())
 			ChunkMgr->CreateMiniMapChunk(pair.first, pair.second, chunk, sceneID);
@@ -211,9 +211,7 @@ void Stage2::Update(_float dt)
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 
 	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
-		miniMapObject->GetMiniMapRenderer()->UpdateMapData(player->GetComponent<TransformComponent>()->GetPosition(),
-			ChunkMgr,
-			sceneID);
+		miniMapObject->GetMiniMapRenderer()->UpdateMapData(ObjectMgr, ChunkMgr, sceneID);
 
 	if (Input->IsKeyPressed(N))
 	{

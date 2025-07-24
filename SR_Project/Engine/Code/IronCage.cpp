@@ -113,7 +113,7 @@ void IronCage::Update(_float dt)
     Activate = allTriggered;
 
     if (Activate && !Trigger)
-        Operate();
+        Operate(dt);
 
     Object::Update(dt);
 }
@@ -146,12 +146,12 @@ void IronCage::SetRotation(_vec3 rotation, string str)
         Parts[str]->GetComponent<TransformComponent>()->SetRotate(rotation);
 }
 
-void IronCage::Operate()
+void IronCage::Operate(_float dt)
 {
     auto ironParTrans = Parts["IronParCage"]->GetComponent<TransformComponent>();
 
-    totTrans += Speed * EngineCore::GetInstance()->GetTimerManager()->Get_DeltaTime(L"Timer_FPS");
-    ironParTrans->Translate(0.f, -Speed * EngineCore::GetInstance()->GetTimerManager()->Get_DeltaTime(L"Timer_FPS"), 0.f);
+    totTrans += Speed * dt;
+    ironParTrans->Translate(0.f, -Speed * dt, 0.f);
 
     if (totTrans >= 7.9f) Trigger = true;
 }

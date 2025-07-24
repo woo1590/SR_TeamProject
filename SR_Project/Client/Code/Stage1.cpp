@@ -193,9 +193,7 @@ void Stage1::Update(_float dt)
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 
 	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
-		miniMapObject->GetMiniMapRenderer()->UpdateMapData(player->GetComponent<TransformComponent>()->GetPosition(),
-			ChunkMgr,
-			sceneID);
+		miniMapObject->GetMiniMapRenderer()->UpdateMapData(ObjectMgr, ChunkMgr, sceneID);
 
 	if (Input->IsKeyPressed(N))
 	{

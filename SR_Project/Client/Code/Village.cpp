@@ -169,6 +169,14 @@ void Village::Load()
 		ChunkMgr->SetChunk(chunkload->GetChunks());
 		BlockMgr->LoadDB("VillageMap");
 
+		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
+		{
+			auto lever = static_cast<DynamicBlock*>(dynamic);
+			if (lever->GetType() != DynamicBlockType::LeverSwitch && lever->GetType() != DynamicBlockType::BasicChest) continue;
+			lever->SetTarget(player);
+			lever->AddRef();
+		}
+
 		miniMapObject = MiniMapObject::Create(ObjectMgr);
 		sceneID = TUTORIAL;
 
@@ -241,10 +249,7 @@ void Village::Update(_float dt)
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 
 	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
-		miniMapObject->GetMiniMapRenderer()->UpdateMapData(
-			player->GetComponent<TransformComponent>()->GetPosition(),
-														   ChunkMgr,
-														   sceneID);
+		miniMapObject->GetMiniMapRenderer()->UpdateMapData(ObjectMgr, ChunkMgr, sceneID);
 
 	if (Input->IsKeyPressed(N))
 	{
