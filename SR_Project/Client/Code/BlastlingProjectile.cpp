@@ -62,8 +62,8 @@ HRESULT BlastlingProjectile::Ready_Object(ObjectManager* owner, ObjectType objTy
     mtrl->SetVec3("color", _vec3(0.3, 0.2, 0.25));
     mtrl->SetFloat("emissivePow", 0.9f);
 
-    owner->AddObject(objType, this);
-
+    owner->AddObject(ObjectType::Projectile, this);
+    
     ElapsedTime = 0.f;
 
     return S_OK;
