@@ -9,6 +9,11 @@
 #include "QuestSystem.h"
 #include "SoundManager.h"
 #include "EngineCore.h"
+#include "SceneManager.h"
+#include "CameraManager.h"
+#include "ThirdcamComponent.h"
+#include "CameraComponent.h"
+#include "Scene.h"
 
 void DialogManager::StartDialog(DialogComponent* dialog)
 {
@@ -53,6 +58,8 @@ void DialogManager::SkipOrNext()
 			isInterrupted = true;
 			interruptedLine = curLine;
 			curLine.text = L"제현님! 왜자꾸 대화를 스킵하시는거예요!";
+			EngineCore::GetInstance()->GetSceneManager()->GetActiveScene()->GetCameraManager()->GetMainCamera()
+				->GetOwner()->GetComponent<ThirdcamComponent>()->SetShake(4.f, 0.5f);
 			curLine.emotion = Emotion::p17;
 			displayedText.clear();
 			typingTimer = 0.f;

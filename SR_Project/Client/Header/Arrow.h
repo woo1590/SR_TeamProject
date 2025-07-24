@@ -29,7 +29,7 @@ protected:
 
     float shootTime = 0.f;
     float hitTime = 0.f;
-    float arrowPersistTime = 3.f;
+    float arrowPersistTime = 0.5f;
 
     float damagePercent = 1.f;
 };

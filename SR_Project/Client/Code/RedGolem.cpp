@@ -58,7 +58,7 @@ HRESULT RedGolem::Ready_Object(ObjectManager* owner, ObjectType objType)
     auto collision = GetComponent<CollisionComponent>();
     collision->SetSize(_vec3(7.f, 18.f, 7.f));
     auto stat = GetComponent<InfoComponent<EnemyInfo>>();
-    stat->SetInfo({ 5, 800, 800,0,0,10, 0,5 });
+    stat->SetInfo({ 5, 1200, 1200,0,0,10, 0,5 });
     {
         auto LArmCollision = Bones["LArm"]->AddComponent<CollisionComponent>();
         LArmCollision->AddCollider<OBBCollider>();

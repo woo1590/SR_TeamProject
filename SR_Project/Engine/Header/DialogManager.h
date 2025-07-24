@@ -53,7 +53,7 @@ private:
 	bool isInterrupted = false;
 	DialogLine interruptedLine;
 
-	int skipMaxCount = 15;
+	int skipMaxCount = 20;
 };
 
 END

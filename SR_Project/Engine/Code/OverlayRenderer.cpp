@@ -30,10 +30,10 @@ HRESULT OverlayRenderer::Ready_Component()
 	std::vector<VTXOVER> vertices;
 	std::vector<INDEX32> indices;
 
-	vertices.push_back({ {0.f,(_float)WINCY,0.f,1.f },{0.f,0.f,0.f,1.f} });
+	vertices.push_back({ {0.f,(_float)WINCY+50,0.f,1.f },{0.f,0.f,0.f,1.f} });
 	vertices.push_back({ {0.f,0.f,0.f,1.f },{0.f,0.f,0.f,1.f} });
-	vertices.push_back({ {(_float)WINCX,0.f,0.f,1.f},{0.f,0.f,0.f,1.f} });
-	vertices.push_back({ {(_float)WINCX,(_float)WINCY,0.f,1.f},{0.f,0.f,0.f,1.f} });
+	vertices.push_back({ {(_float)WINCX+50,0.f,0.f,1.f},{0.f,0.f,0.f,1.f} });
+	vertices.push_back({ {(_float)WINCX+50,(_float)WINCY+50,0.f,1.f},{0.f,0.f,0.f,1.f} });
 
 	indices.push_back({ 0,1,2 });
 	indices.push_back({ 0,2,3 });

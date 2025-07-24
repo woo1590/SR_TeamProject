@@ -476,7 +476,6 @@ void Stage2::SetTriggerBox()
 	trigger3->GetComponent<TransformComponent>()->SetPosition(257.f, 35.f, 100.f);
 	trigger3->AddSpawner(SpawnType::Shulker, _vec3(270.f, 50.f, 120.f));
 	trigger3->AddSpawner(SpawnType::Shulker, _vec3(280.f, 50.f, 100.f));
-	trigger3->AddSpawner(SpawnType::Blastling, _vec3(230.f, 55.f, 110.f));
 	trigger3->AddSpawner(SpawnType::Blastling, _vec3(250.f, 55.f, 90.f));
 
 	auto trigger4 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
@@ -491,16 +490,13 @@ void Stage2::SetTriggerBox()
 	trigger5->GetComponent<CollisionComponent>()->SetSize(_vec3(60.f, 10.f, 10.f));
 	trigger5->GetComponent<TransformComponent>()->SetPosition(405.f, 35.f, 120.f);
 	trigger5->AddSpawner(SpawnType::PurpleSlime, _vec3(380.f, 50.f, 130.f));
-	trigger5->AddSpawner(SpawnType::Shulker, _vec3(380.f, 50.f, 130.f));
 	trigger5->AddSpawner(SpawnType::Blastling, _vec3(360.f, 50.f, 160.f));
-	trigger5->AddSpawner(SpawnType::PurpleSlime, _vec3(410.f, 50.f, 120.f));
 
 	auto trigger6 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger6->GetComponent<CollisionComponent>()->SetSize(_vec3(60.f, 10.f, 10.f));
 	trigger6->GetComponent<TransformComponent>()->SetPosition(437.f, 35.f, 170.f);
 	trigger6->AddSpawner(SpawnType::Blastling, _vec3(440.f, 50.f, 175.f));
 	trigger6->AddSpawner(SpawnType::Blastling, _vec3(420.f, 50.f, 190.f));
-	trigger6->AddSpawner(SpawnType::Blastling, _vec3(410.f, 50.f, 155.f));
 
 	auto trigger7 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger7->GetComponent<CollisionComponent>()->SetSize(_vec3(60.f, 10.f, 10.f));
@@ -514,14 +510,12 @@ void Stage2::SetTriggerBox()
 	trigger8->GetComponent<TransformComponent>()->SetPosition(483.f, 35.f, 236.f);
 	trigger8->AddSpawner(SpawnType::Blastling, _vec3(480.f, 50.f, 250.f));
 	trigger8->AddSpawner(SpawnType::Blastling, _vec3(450.f, 50.f, 220.f));
-	trigger8->AddSpawner(SpawnType::Blastling, _vec3(460.f, 50.f, 240.f));
 
 	auto trigger9 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger9->GetComponent<CollisionComponent>()->SetSize(_vec3(60.f, 10.f, 10.f));
 	trigger9->GetComponent<TransformComponent>()->SetPosition(457.f, 35.f, 291.f);
 	trigger9->AddSpawner(SpawnType::PurpleSlime, _vec3(450.f, 50.f, 280.f));
 	trigger9->AddSpawner(SpawnType::PurpleSlime, _vec3(470.f, 50.f, 270.f));
-	trigger9->AddSpawner(SpawnType::PurpleSlime, _vec3(460.f, 50.f, 240.f));
 
 	auto trigger10 = SpawnTriggerBox::Create(ObjectMgr, ObjectType::Neutral);
 	trigger10->GetComponent<TransformComponent>()->SetPosition(471.f, 35.f, 360.f);
