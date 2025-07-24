@@ -9,6 +9,7 @@ namespace Engine
 class Player;
 class RedGolem;
 class WayPointCam;
+class Overlay;
 class Stage1 :
     public Scene
 {
@@ -50,5 +51,7 @@ private:
     WayPointCam* wayCam = nullptr;
 
     std::vector<DynamicBlock*> levers;
+
+    Overlay* overlay = nullptr;
 };
 

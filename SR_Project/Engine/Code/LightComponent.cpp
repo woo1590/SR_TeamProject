@@ -34,64 +34,25 @@ LightComponent* LightComponent::Create(Object* owner)
 	return Instance;
 }
 
-void LightComponent::SetPointLight(float range, D3DCOLOR color)
+void LightComponent::Late_Update(_float dt)
 {
-	Type = LightType::Point;
+	_vec3 pos = owner->GetComponent<TransformComponent>()->GetPosition();
 
-	D3DCOLORVALUE value{
-	value.a = ((color >> 24) & 0xFF) / 255.f,
-	value.r = ((color >> 16) & 0xFF) / 255.f,
-	value.g = ((color >> 8) & 0xFF) / 255.f,
-	value.b = ((color >> 0) & 0xFF) / 255.f
-	};
-
-	LightData.Type = D3DLIGHT_POINT;
-	LightData.Diffuse = value;
-	LightData.Specular = LightData.Diffuse;
-	LightData.Ambient = LightData.Diffuse * 0.5f;
-	LightData.Position = owner->GetComponent<TransformComponent>()->GetPosition();
-	LightData.Range = range;
-
-	Is_Enabled = true;
-
-	EngineCore::GetInstance()->GetLightSystem()->RegisterLight(this);
+	lightInfo.position = pos;
 }
 
-void LightComponent::SetDirectionalLight(_vec3 direction, D3DCOLOR color)
+void LightComponent::SetLightInfo(float range, _vec3 color)
 {
-	Type = LightType::Directional;
-
-	D3DCOLORVALUE value{
-	value.a = ((color >> 24) & 0xFF) / 255.f,
-	value.r = ((color >> 16) & 0xFF) / 255.f,
-	value.g = ((color >> 8) & 0xFF) / 255.f,
-	value.b = ((color >> 0) & 0xFF) / 255.f
-	};
-
-	LightData.Type = D3DLIGHT_DIRECTIONAL;
-	LightData.Diffuse = value;
-	LightData.Specular = LightData.Diffuse * 0.3f;
-	LightData.Ambient = LightData.Diffuse * 0.5f;
-	LightData.Direction = direction;
-
-	Is_Enabled = true;
-
-	EngineCore::GetInstance()->GetLightSystem()->RegisterLight(this);
-}
-
-const D3DLIGHT9& LightComponent::GetLightData() const
-{
-	return LightData;
 }
 
 bool LightComponent::IsEnabled() const
 {
-	return Is_Enabled;
+	return isEnable;
 }
 
 void LightComponent::SetEnabled(bool enable)
 {
-	Is_Enabled = enable;
+	isEnable = enable;
 }
 
 void LightComponent::Free()

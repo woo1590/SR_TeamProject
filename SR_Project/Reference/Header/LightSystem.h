@@ -14,6 +14,7 @@ public:
     
     HRESULT Ready_LightSystem();
     void RegisterLight(LightComponent* light);
+    void UnRegisterLight(LightComponent* light);
     void ApplyLight();
 
 private:

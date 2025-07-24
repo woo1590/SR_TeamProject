@@ -5,6 +5,12 @@
 
 namespace Engine
 {
+	typedef struct tagVertexOverlay
+	{
+		_vec4 position;
+		_vec4 color;
+	}VTXOVER;
+
 	typedef struct tagPostProcess
 	{
 		_vec4 position;

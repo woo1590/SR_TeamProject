@@ -12,7 +12,7 @@ namespace Engine
 
 	enum class TEXTURE { Tex_Diffuse, Tex_Cube, Tex_Normal ,Tex_End };
 
-	enum class RENDER_ID { Render_Priority, Render_NonAlpha, Render_Mask, Render_Shadow, Render_Reflect, Render_Alpha, Render_UI, Render_None, Render_End };
+	enum class RENDER_ID { Render_Priority, Render_NonAlpha, Render_Mask, Render_Shadow, Render_Reflect, Render_Alpha, Render_UI, Render_Overlay, Render_None, Render_End };
 
 	enum class MOUSEKEYSTATE { Dim_Lb, Dim_Rb, Dim_Mb, Dim_End };
 	enum class MOUSEMOVESTATE { Dims_X, Dims_Y, Dims_Z, Dims_End };
@@ -41,6 +41,7 @@ namespace Engine
 		ParticleEffect,
 		BackGroundEffect,
 		MiniMap,
+		Overlay,
 		Count
 	};
 

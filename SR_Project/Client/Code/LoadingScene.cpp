@@ -21,6 +21,7 @@
 #include "LoadingUI.h"
 #include "Cursor.h"
 #include "LoadingStone.h"
+#include "Overlay.h"
 
 LoadingScene::LoadingScene(LOADID loadId)
 	:nextSceneID(loadId)
@@ -70,17 +71,44 @@ void LoadingScene::Update(_float dt)
                 EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
             }
         }
-        else 
+        else
         {
-            Scene* nextScene = nullptr;
-            switch (nextSceneID)
+            if (!overlay)
             {
-            case LOADID::Village: nextScene = Village::Create(); break;
-            case LOADID::Stage1:  nextScene = Stage1::Create(); break;
-            case LOADID::Stage2:  nextScene = Stage2::Create(); break;
+                overlay = Overlay::Create(ObjectMgr, ObjectType::Overlay);
+                overlay->SetDuration(1.f);
+                overlay->SetFadeIn(false);
+                overlay->AddRef();
+                ObjectMgr->AddObject(ObjectType::Overlay, overlay);
             }
-            if (nextScene)
-                EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
+            else
+            {
+                if (overlay->IsFinished())
+                {
+
+                    Scene* nextScene = nullptr;
+                    switch (nextSceneID)
+                    {
+                    case LOADID::Village:
+                    {
+                        nextScene = Village::Create();
+
+                    }break;
+                    case LOADID::Stage1:
+                    {
+                        nextScene = Stage1::Create();
+
+                    }break;
+                    case LOADID::Stage2:
+                    {
+                        nextScene = Stage2::Create();
+
+                    }break;
+                    }
+                    if (nextScene)
+                        EngineCore::GetInstance()->GetSceneManager()->SetActiveScene(nextScene);
+                }
+            }
         }
     }
 }

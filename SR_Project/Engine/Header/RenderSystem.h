@@ -51,6 +51,7 @@ private:
     void NonAlphaPass();
     void AlphaPass();
     void PostProcessPass();
+    void OverlayPass();
     void DebugPass();
     void Reset();   
 // --------------------------------------

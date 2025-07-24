@@ -8,6 +8,7 @@ namespace Engine
 
 class Player;
 class WayPointCam;
+class Overlay;
 class Village :
     public Scene
 {
@@ -47,5 +48,7 @@ private:
     WayPointCam* wayCam = nullptr;
 
     std::vector<DynamicBlock*> levers;
+
+    Overlay* overlay = nullptr;
 };
 

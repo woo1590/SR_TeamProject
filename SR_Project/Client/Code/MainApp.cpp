@@ -281,6 +281,7 @@ HRESULT MainApp::LoadDefaultResource()
         resource->LoadShader("../Resource/Shader/FireworkShader.fx", "FireworkShader");
         resource->LoadShader("../Resource/Shader/BloomShader.fx", "BloomShader");
         resource->LoadShader("../Resource/Shader/AlphaShader.fx", "AlphaShader");
+        resource->LoadShader("../Resource/Shader/OverlayShader.fx", "OverlayShader");
     }
 
     /*---------------------Load Material--------------------------*/

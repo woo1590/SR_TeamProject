@@ -5,6 +5,13 @@ enum class LightType { Point, Directional, Spot, Count };
 
 BEGIN(Engine)
 
+struct LightInfo
+{
+    _float range = 0.f;
+    _vec3 position;
+    _vec3 color;
+};
+
 class ENGINE_DLL LightComponent : public ObjectComponent
 {
 private:
@@ -13,20 +20,18 @@ private:
 
 public:
     static LightComponent* Create(Object* owner);
+    void Late_Update(_float dt)override;
 
-    void SetPointLight(float range, D3DCOLOR color);
-    void SetDirectionalLight(_vec3 direction, D3DCOLOR color);
-
-    const D3DLIGHT9& GetLightData()const;
+    void SetLightInfo(float range, _vec3 color);
+    LightInfo GetLightInfo()const { return lightInfo; }
     bool IsEnabled()const;
     void SetEnabled(bool enable);
 
 private:
     void Free()override;
 
-    D3DLIGHT9 LightData{};
-    LightType Type;
-    bool Is_Enabled = true;
+    LightInfo lightInfo{};
+    _bool isEnable = false;
 };
 
 END

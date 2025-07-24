@@ -275,6 +275,7 @@
     <ClInclude Include="..\Header\MiniMapObject.h" />
     <ClInclude Include="..\Header\MiniMapRenderer.h" />
     <ClInclude Include="..\Header\ObjectPool.h" />
+    <ClInclude Include="..\Header\OverlayRenderer.h" />
     <ClInclude Include="..\Header\PanelComponent.h" />
     <ClInclude Include="..\Header\ParticleComponent.h" />
     <ClInclude Include="..\Header\ParticleRenderer.h" />
@@ -440,6 +441,7 @@
     <ClCompile Include="..\Code\MiniMapObject.cpp" />
     <ClCompile Include="..\Code\MiniMapRenderer.cpp" />
     <ClCompile Include="..\Code\ObjectPool.cpp" />
+    <ClCompile Include="..\Code\OverlayRenderer.cpp" />
     <ClCompile Include="..\Code\PanelComponent.cpp" />
     <ClCompile Include="..\Code\ParticleComponent.cpp" />
     <ClCompile Include="..\Code\ParticleRenderer.cpp" />

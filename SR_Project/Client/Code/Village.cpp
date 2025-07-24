@@ -75,6 +75,7 @@
 #include "MiniMapRenderer.h"
 #include "QuestSystem.h"
 #include "CheckPoint.h"
+#include "Overlay.h"
 
 //component
 #include "TransformComponent.h"
@@ -201,6 +202,10 @@ void Village::Load()
 		if (game->IsSceneClear(LOADID::Village))
 		{
 			player->GetComponent<TransformComponent>()->SetPosition(160.f, 10.f, 200.f);
+			overlay = Overlay::Create(ObjectMgr, ObjectType::Overlay);
+			overlay->SetDuration(1.f);
+			overlay->SetFadeIn(true);
+			ObjectMgr->AddObject(ObjectType::Overlay, overlay);
 		}
 		else
 		{
@@ -249,8 +254,7 @@ void Village::Update(_float dt)
 		}
 
 		introTimer += dt;
-	}
-		break;
+	}break;
 	case Village::VillageState::Play:
 	{
 

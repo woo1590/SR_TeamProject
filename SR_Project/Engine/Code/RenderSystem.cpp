@@ -125,6 +125,7 @@ void RenderSystem::Render()
 
 	PostProcessPass();
 	UIPass();
+	OverlayPass();
 	
 	Reset();
 	for (auto& list : RenderList)
@@ -376,6 +377,20 @@ void RenderSystem::PostProcessPass()
 	//}
 
 	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
+}
+
+void RenderSystem::OverlayPass()
+{
+	Device->SetRenderState(D3DRS_ZENABLE, FALSE);
+	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	for (const auto& r : RenderList[(int)RENDER_ID::Render_Overlay])
+		r->Render();
+
+	Device->SetRenderState(D3DRS_ZENABLE, TRUE);
+	Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void RenderSystem::Reset()

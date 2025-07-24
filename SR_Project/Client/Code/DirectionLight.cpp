@@ -34,8 +34,6 @@ HRESULT DirectionLight::Ready_Object()
 {
 	auto transform = AddComponent<TransformComponent>();
 
-	auto light = AddComponent<LightComponent>();
-	light->SetDirectionalLight(_vec3(0.f, 0.f, 1.f), ToD3DXColor(Color::White));
 
 	return S_OK;
 }

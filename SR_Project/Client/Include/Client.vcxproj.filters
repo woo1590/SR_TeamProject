@@ -625,6 +625,9 @@
     <Filter Include="02. Object\CheckPoint">
       <UniqueIdentifier>{66f93ca8-8086-4303-baa6-5f8c7f0c96d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Overlay">
+      <UniqueIdentifier>{571d2426-c82b-455e-af4e-b8e7dee7c7d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -1213,6 +1216,9 @@
     <ClInclude Include="..\Header\CheckPoint.h">
       <Filter>02. Object\CheckPoint</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Overlay.h">
+      <Filter>02. Object\Overlay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1783,6 +1789,9 @@
     <ClCompile Include="..\Code\CheckPoint.cpp">
       <Filter>02. Object\CheckPoint</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Overlay.cpp">
+      <Filter>02. Object\Overlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resource\Shader\BasicShader.fx">
@@ -1847,6 +1856,9 @@
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\BloomShader.fx">
       <Filter>99. Etc\Shader/Fx\PostProcessing</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\OverlayShader.fx">
+      <Filter>99. Etc\Shader/Fx</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

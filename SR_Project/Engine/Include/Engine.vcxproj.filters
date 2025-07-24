@@ -361,6 +361,9 @@
     <Filter Include="06. Object\05. MiniMapObject">
       <UniqueIdentifier>{926c3d61-d4c9-43fa-81af-890c3387cc25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Object Component\Renderer\OverlayRenderer">
+      <UniqueIdentifier>{e509ad25-f315-4a92-9201-a9b4fad97d17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\EngineCore.cpp">
@@ -727,6 +730,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MiniMapObject.cpp">
       <Filter>06. Object\05. MiniMapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\OverlayRenderer.cpp">
+      <Filter>07. Object Component\Renderer\OverlayRenderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1120,6 +1126,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\MiniMapObject.h">
       <Filter>06. Object\05. MiniMapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\OverlayRenderer.h">
+      <Filter>07. Object Component\Renderer\OverlayRenderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

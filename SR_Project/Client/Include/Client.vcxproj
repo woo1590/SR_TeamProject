@@ -246,6 +246,7 @@
     <ClInclude Include="..\Header\Npc.h" />
     <ClInclude Include="..\Header\NPCdolbok.h" />
     <ClInclude Include="..\Header\NPCShop.h" />
+    <ClInclude Include="..\Header\Overlay.h" />
     <ClInclude Include="..\Header\ParticleObj.h" />
     <ClInclude Include="..\Header\Pig.h" />
     <ClInclude Include="..\Header\PigItem.h" />
@@ -437,6 +438,7 @@
     <ClCompile Include="..\Code\Npc.cpp" />
     <ClCompile Include="..\Code\NPCdolbok.cpp" />
     <ClCompile Include="..\Code\NPCShop.cpp" />
+    <ClCompile Include="..\Code\Overlay.cpp" />
     <ClCompile Include="..\Code\ParticleObj.cpp" />
     <ClCompile Include="..\Code\Pig.cpp" />
     <ClCompile Include="..\Code\PigItem.cpp" />
@@ -636,6 +638,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="..\Resource\Shader\MaskShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="..\Resource\Shader\OverlayShader.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

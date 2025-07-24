@@ -7,6 +7,7 @@ namespace Engine
 
 class Player;
 class WayPointCam;
+class Overlay;
 class Stage2 :
     public Scene
 {
@@ -53,5 +54,7 @@ private:
     Object* boss = nullptr;
 
     std::vector<DynamicBlock*> levers;
+
+    Overlay* overlay = nullptr;
 };
 

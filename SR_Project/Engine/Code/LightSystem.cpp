@@ -39,6 +39,11 @@ void LightSystem::RegisterLight(LightComponent* light)
     Lights.push_back(light);
 }
 
+void LightSystem::UnRegisterLight(LightComponent* light)
+{
+    std::erase(Lights, light);
+}
+
 void LightSystem::ApplyLight()
 {
     int index = 0;
@@ -48,8 +53,7 @@ void LightSystem::ApplyLight()
     {
         if (light->IsEnabled())
         {
-            device->SetLight(index, &light->GetLightData());
-            device->LightEnable(index, true);
+            
 
             ++index;
         }

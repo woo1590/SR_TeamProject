@@ -67,6 +67,7 @@
 #include "MiniMapObject.h"
 #include "MiniMapRenderer.h"
 #include "CheckPoint.h"
+#include "Overlay.h"
 
 //component
 #include "TransformComponent.h"
@@ -181,6 +182,11 @@ void Stage1::Load()
 	{
 		UILoader loader;
 		loader.LoadUI(ObjectMgr);
+
+		overlay = Overlay::Create(ObjectMgr, ObjectType::Overlay);
+		overlay->SetDuration(1.f);
+		overlay->SetFadeIn(true);
+		ObjectMgr->AddObject(ObjectType::Overlay, overlay);
 
 		auto skybox = SkyBox::Create(ObjectMgr, ObjectType::SkyBox);
 		skybox->GetComponent<MeshRenderer>()->SetMaterial("Stage1SkyBox_Mtrl");

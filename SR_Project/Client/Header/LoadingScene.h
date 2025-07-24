@@ -5,7 +5,7 @@ class Loader;
 class LoadingUI;
 class Cursor;
 class LoadingStone;
-
+class Overlay;
 class LoadingScene :
     public Scene
 {
@@ -32,5 +32,7 @@ private:
     LoadingStone* loadingStone = nullptr;
 
     bool isLoadComplete = false;
+
+    Overlay* overlay = nullptr;
 };
 
