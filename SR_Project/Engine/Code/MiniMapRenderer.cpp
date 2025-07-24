@@ -128,7 +128,7 @@ void MiniMapRenderer::UpdateMapData(const _vec3& playerPos, ChunkManager* chunkM
 void MiniMapRenderer::UpdateMapData(ObjectManager* objectMgr, ChunkManager* chunkMgr, SceneID sceneID)
 {
     ClearTiles();
-    auto playerTransform = objectMgr->GetFrontObject(ObjectType::Camera)->GetComponent<TransformComponent>();
+    auto playerTransform = objectMgr->GetFrontObject(ObjectType::Player)->GetComponent<TransformComponent>();
     _vec3 playerPos = playerTransform->GetPosition();
 
     MapCenter = D3DXVECTOR2(0.f, 0.f);

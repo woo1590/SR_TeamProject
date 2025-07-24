@@ -167,6 +167,7 @@ void Village::Load()
 	{
 		auto chunkload = EngineCore::GetInstance()->GetChunkLoader();
 		ChunkMgr->SetChunk(chunkload->GetChunks());
+		for (auto& [pair, chunk] : ChunkMgr->GetChunks()) chunk->BuildChunkFace();
 		BlockMgr->LoadDB("VillageMap");
 
 		for (auto& dynamic : ObjectMgr->GetObjectList(ObjectType::DynamicBlock))
@@ -255,10 +256,7 @@ void Village::Update(_float dt)
 	auto Input = EngineCore::GetInstance()->GetInputSystem();
 
 	if (miniMapObject->GetMiniMapRenderer()->GetVisible())
-		miniMapObject->GetMiniMapRenderer()->UpdateMapData(
-			player->GetComponent<TransformComponent>()->GetPosition(),
-														   ChunkMgr,
-														   sceneID);
+		miniMapObject->GetMiniMapRenderer()->UpdateMapData(ObjectMgr, ChunkMgr, sceneID);
 
 	if (Input->IsKeyPressed(N))
 	{
