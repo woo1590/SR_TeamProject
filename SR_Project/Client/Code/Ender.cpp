@@ -31,6 +31,7 @@
 #include "Material.h"
 #include "PhysicsComponent.h"
 #include "EnderDead.h"
+#include "DeadEffect.h"
 
 Ender::Ender(ObjectManager* owner, ObjectType objType)
 	:Boss(owner, objType)
@@ -1007,6 +1008,11 @@ void Ender::PlayDie(_float dt)
 
     if (DieAnim.ElapsedTime > DieAnim.TotalTime)
     {
+        auto effect = DeadEffect::Create(owner, ObjectType::ParticleEffect);
+        effect->SetDeadTime(3.f);
+        effect->GetComponent<TransformComponent>()->SetPosition(GetComponent<TransformComponent>()->GetPosition());
+        owner->AddObject(ObjectType::ParticleEffect, effect);
+
         SetDead();
         DeleteBar();
     }
